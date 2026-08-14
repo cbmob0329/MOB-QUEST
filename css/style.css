@@ -385,3 +385,55 @@
   55%{transform:translate3d(0,70px,0) scale(1.05)}
   100%{transform:translate3d(0,0,0) scale(1)}
 }
+
+/* ===== v10 loading / ultimate hold / command icons / home alignment ===== */
+.loading-detail{display:block;margin-top:8px;font-size:8px;letter-spacing:.12em;color:#dce7f3;font-weight:900}
+
+/* HOME: larger logo, party centered in one straight horizontal row. */
+.brand-box{width:178px!important;height:58px!important}
+.brand-logo{max-width:176px!important;max-height:56px!important}
+.home-stage{left:4%!important;right:4%!important;top:17%!important;bottom:31%!important;align-items:center!important}
+.home-party{align-items:center!important;justify-content:center!important;gap:2px!important}
+.home-member,
+.home-member:nth-child(1),.home-member:nth-child(2),.home-member:nth-child(3),.home-member:nth-child(4),.home-member:nth-child(5){
+  width:24%!important;height:76%!important;margin:0!important;transform:none!important;align-self:center!important;
+}
+.home-sprite{height:calc(100% - 30px)!important}
+.home-member small,.home-member>b{text-align:center!important}
+
+/* Battle command buttons now use icon/02.png - icon/08.png. */
+.command-btn{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:3px 5px!important;text-align:left!important}
+.command-btn .battle-command-icon{width:25px!important;height:25px!important;object-fit:contain!important;flex:0 0 25px!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+.command-btn>span{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;min-width:0!important;line-height:1!important}
+.command-btn>span>b{font-size:7px!important;white-space:nowrap!important}
+.command-btn>span>small{font-size:4px!important;margin-top:3px!important;white-space:nowrap!important}
+.command-btn:disabled .battle-command-icon{opacity:.55}
+
+/* Square ultimate art remains after the top banner, then shakes before disappearing. */
+.ultimate-cutin{background:rgba(16,11,6,.46)!important}
+.ultimate-cutin .cutin-character,.ultimate-cutin .ult-art-wrap{animation:none!important}
+.ult-art-wrap{will-change:transform,opacity!important;backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important}
+.ult-art-wrap img{image-rendering:auto!important;transform:translateZ(0);backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important}
+
+/* Temporary generic ultimate impact effect. Later this is replaceable by a selected magic sprite. */
+.ultimate-impact-fx{
+  position:absolute!important;z-index:88!important;width:156px;height:156px;
+  transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
+  border:8px solid rgba(255,239,177,.95);
+  box-shadow:0 0 0 10px rgba(92,46,108,.50),0 0 0 20px rgba(255,255,255,.18),0 0 34px rgba(255,229,135,.80);
+  animation:ultimateImpactV10 .52s cubic-bezier(.15,.72,.25,1) both;
+}
+.ultimate-impact-fx::before,.ultimate-impact-fx::after{content:"";position:absolute;left:50%;top:50%;width:190px;height:18px;border-radius:999px;background:rgba(255,245,199,.92);transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 16px rgba(255,239,166,.7)}
+.ultimate-impact-fx::after{transform:translate(-50%,-50%) rotate(-45deg)}
+@keyframes ultimateImpactV10{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}58%{opacity:1;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.28)}}
+
+/* Enemy impact must never linger into the next actor. */
+#enemySprite.enemy-damage-impact,.enemy-symbol.enemy-damage-impact{animation-fill-mode:none!important}
+
+@media(max-height:720px){
+  .brand-box{width:158px!important;height:52px!important}.brand-logo{max-width:156px!important;max-height:50px!important}
+  .home-stage{top:15%!important;bottom:30%!important}.home-member{height:72%!important}
+  .command-btn .battle-command-icon{width:22px!important;height:22px!important;flex-basis:22px!important}
+  .command-btn>span>b{font-size:6px!important}
+  .ultimate-impact-fx{width:132px;height:132px}
+}

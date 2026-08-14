@@ -60,3 +60,12 @@ v7 修正
 - パッシブ発動前後に約0.6秒の間を追加
 - SUPER SUB行動前後に約0.6秒の間を追加
 - 敵攻撃モーション完了前の再描画を防止し、敵画像の欠け/消失を修正
+
+[v10 update]
+- SUPER SUB action now clears enemy damage flash before the next actor.
+- Ultimate square art stays 0.5 sec longer than the top cut-in, shakes, then disappears.
+- A temporary generic ultimate impact effect is shown on the enemy after the square art disappears.
+- Battle command buttons use icon/02.png - icon/08.png.
+- Loading screens now preload/decode actual page and battle assets and display real progress.
+- Battle loading preloads party, boss/background, skill frames, command icons, and all party ultimate images.
+- HOME title logo enlarged; four MAIN members aligned in a centered horizontal row.

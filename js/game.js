@@ -43,6 +43,72 @@ function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.boun
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
 function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
 
+const assetPreloadCache=new Map();
+function preloadAsset(src){
+  if(!src)return Promise.resolve(false);
+  if(assetPreloadCache.has(src))return assetPreloadCache.get(src);
+  const task=new Promise(resolve=>{
+    const img=new Image();
+    let settled=false;
+    const done=async ok=>{
+      if(settled)return;settled=true;
+      if(ok&&img.decode){try{await img.decode();}catch(_){}}
+      resolve(ok);
+    };
+    img.onload=()=>done(true);
+    img.onerror=()=>done(false);
+    img.src=src;
+    if(img.complete&&img.naturalWidth>0)done(true);
+  });
+  assetPreloadCache.set(src,task);
+  return task;
+}
+async function preloadAssets(paths,onProgress){
+  const unique=[...new Set((paths||[]).filter(Boolean))];
+  if(!unique.length){onProgress?.(1,1);return;}
+  let done=0;
+  await Promise.all(unique.map(async src=>{await preloadAsset(src);done++;onProgress?.(done,unique.length);}));
+}
+function pageAssets(target){
+  const party=state.party.map(([id])=>player(id)).filter(Boolean);
+  const common=['icon/01.png','play/02.png','mqicon/06.png','mqicon/09.png','mqicon/10.png','mqicon/12.png'];
+  if(target==='tavern')return [...common,'back2/001.png','back/rpgmain.png',...MOB_DATA.players.map(p=>p.image)];
+  if(target==='training')return [...common,'back2/002.png','back/rpgmain.png',...MOB_DATA.players.map(p=>p.image),...MOB_DATA.bosses.map(b=>b.image)];
+  if(target==='adventure'){
+    const area=MOB_DATA.adventure.areas[Math.min(state.adventure.progress,3)];
+    return [...common,area?.bg,area?.fallback,'mqicon/14.png','mqicon/15.png','mqicon/16.png',...party.map(p=>p.image)];
+  }
+  return common;
+}
+function battleAssets(config){
+  const partyList=(config.party||state.party).slice(0,10);
+  const chars=partyList.map(([id])=>player(id)).filter(Boolean);
+  const e=config.enemy||boss(config.bossId);
+  const assets=[
+    'back2/01.png','back/rpgmain.png',
+    'icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png',
+    e?.image,e?.bg,e?.fallbackBg,
+    ...chars.flatMap(c=>[c.image,...(c.ults||[]).map(u=>u.image)]),
+    ...chars.flatMap(c=>(MOB_DATA.elements[normalizeElement(c.attribute)]?.frames||[]))
+  ];
+  return assets;
+}
+async function loadingWithAssets(text,assets){
+  showScreen('loading');
+  $('#loadingText').textContent=text;
+  $('#loadingBar').style.width='0%';
+  const detail=$('#loadingDetail');
+  if(detail)detail.textContent='0%';
+  await preloadAssets(assets,(done,total)=>{
+    const per=Math.round(done/Math.max(1,total)*100);
+    $('#loadingBar').style.width=`${per}%`;
+    if(detail)detail.textContent=`${done} / ${total}　${per}%`;
+  });
+  $('#loadingBar').style.width='100%';
+  if(detail)detail.textContent='READY';
+  await fixedDelay(180);
+}
+
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
 function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){renderHome();showScreen('home');}else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
 
@@ -50,7 +116,7 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
   const overlay=$('#dialogOverlay');$('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
   return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;resolve(btn.dataset.dialogValue);});});
 }
-async function travelTo(target,text,after){showScreen('loading');$('#loadingText').textContent=text;$('#loadingBar').style.width='0%';await delay(80);$('#loadingBar').style.width='100%';await delay(620);if(after)after();showScreen(target);}
+async function travelTo(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);}
 
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
@@ -130,14 +196,25 @@ function pulseAllyDamage(id){const el=$(`[data-ally-id="${id}"]`);if(!el)return;
 async function actionCutin(text,tone='system',duration=500){const el=$('#actionBanner');if(!el){notice(text,tone,duration);await delay(Math.min(duration,520));return;}el.textContent=text;el.dataset.tone=tone;const n=[...text].length;el.style.fontSize=n>=22?'12px':n>=18?'13px':n>=15?'14px':n>=12?'16px':'18px';el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await delay(duration);el.classList.remove('play');await delay(55);}
 async function passiveBeat(text,tone='system',duration=560){await fixedDelay(600);notice(text,tone,duration);}
 function floatNumber(value,kind='damage',target='enemy'){const el=document.createElement('div');el.className=`float-number ${kind}`;el.textContent=(kind==='heal'?'+':'')+Math.round(value);positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),850/state.speed);}
+function clearEnemyImpact(){
+  const el=$('#enemySprite')||$('.enemy-symbol');
+  if(!el)return;
+  el.classList.remove('enemy-hit','enemy-cast','enemy-damage-impact');
+  el.style.filter='';
+}
 function pulseEnemy(cls='hit'){
   const el=$('#enemySprite')||$('.enemy-symbol');
   if(!el)return;
   el.classList.remove('enemy-hit','enemy-cast','enemy-advance','enemy-damage-impact');
+  el.style.filter='';
   void el.offsetWidth;
-  if(cls==='cast')el.classList.add('enemy-cast');
-  else if(cls==='advance')el.classList.add('enemy-advance');
-  else el.classList.add('enemy-damage-impact');
+  const className=cls==='cast'?'enemy-cast':cls==='advance'?'enemy-advance':'enemy-damage-impact';
+  el.classList.add(className);
+  if(cls!=='advance'){
+    const cleanup=()=>{if(el.isConnected){el.classList.remove(className);el.style.filter='';}};
+    el.addEventListener('animationend',cleanup,{once:true});
+    setTimeout(cleanup,520);
+  }
 }
 async function beginEnemyLunge(){
   const screen=$('#battleScreen');
@@ -148,19 +225,31 @@ async function beginEnemyLunge(){
 function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classList.remove('enemy-attacking');}
 function fx(type='slash',target='enemy'){const el=document.createElement('div');el.className=`simple-fx ${type}`;positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),650/state.speed);}
 async function skillSprite(frames,target='enemy'){if(!frames?.length){fx('magic',target);return;}const wrap=$('#skillSpriteFx'),img=$('img',wrap);positionEffect(wrap,target);wrap.hidden=false;for(const src of frames){setImage(img,src,'');await delay(100);}await delay(100);wrap.hidden=true;}
+async function ultimateImpactFx(){
+  const layer=$('#battleFxLayer');
+  if(!layer)return;
+  const el=document.createElement('div');
+  el.className='ultimate-impact-fx';
+  positionEffect(el,'enemy');
+  layer.appendChild(el);
+  await fixedDelay(520);
+  el.remove();
+}
 async function ultimateCutin(a,u){
-  const wrap=$('#ultimateCutin'),char=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
-  const artImg=$('#cutinUltArt');
-  // Hard-cancel every previous animation before showing a new ultimate.
-  [wrap,char,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
-  wrap.classList.remove('play');
-  wrap.hidden=true;
-  wrap.style.display='none';
-  wrap.style.opacity='0';
-  wrap.style.visibility='hidden';
+  const wrap=$('#ultimateCutin'),banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
+  const artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter');
+  const charSrc=a.transformed&&a.id==='yusha'?'play/13.png':a.image;
+
+  // The battle loader already preloads these, but decode again here as a final guard
+  // so even the very first ultimate cannot appear half-painted.
+  await preloadAssets([charSrc,u.image]);
+  [wrap,banner,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
+  wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
+  banner.style.opacity='0';banner.style.visibility='hidden';
+  art.style.opacity='0';art.style.visibility='hidden';
   await new Promise(requestAnimationFrame);
 
-  setImage($('#cutinCharacter'),a.transformed&&a.id==='yusha'?'play/13.png':a.image,'');
+  setImage(charImg,charSrc,'');
   setImage(artImg,u.image,'');
   name.textContent=u.name;
   const n=[...u.name].length;
@@ -168,35 +257,49 @@ async function ultimateCutin(a,u){
   $('#cutinQuote').textContent='';
   $('#cutinUltFallback').textContent=u.name;
 
-  wrap.hidden=false;
-  wrap.style.display='block';
-  wrap.style.opacity='1';
-  wrap.style.visibility='visible';
+  wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
+  banner.style.opacity='1';banner.style.visibility='visible';
+  art.style.opacity='1';art.style.visibility='visible';
 
-  const speed=Math.max(.5,state.speed||1);
-  const bgAnim=wrap.animate([
-    {opacity:0},{opacity:1,offset:.12},{opacity:1,offset:.84},{opacity:0}
-  ],{duration:1260/speed,easing:'ease',fill:'forwards'});
-  const bannerAnim=char.animate([
-    {transform:'translateX(-110%)'},{transform:'translateX(0)'}
-  ],{duration:360/speed,easing:'cubic-bezier(.2,.75,.28,1)',fill:'both'});
-  const artAnim=art.animate([
-    {transform:'translate(-50%,-150%) scale(.78)',opacity:0},
-    {transform:'translate(-50%,-42%) scale(1)',opacity:1,offset:.45},
-    {transform:'translate(-50%,-42%) scale(1.08)',opacity:1}
-  ],{duration:980/speed,easing:'cubic-bezier(.18,.76,.29,1)',fill:'both'});
+  const bannerIn=banner.animate([{transform:'translateX(-110%)',opacity:0},{transform:'translateX(0)',opacity:1}],{duration:300,easing:'cubic-bezier(.2,.75,.28,1)',fill:'forwards'});
+  const artIn=art.animate([
+    {transform:'translate(-50%,-150%) scale(.80)',opacity:0},
+    {transform:'translate(-50%,-42%) scale(1)',opacity:1,offset:.72},
+    {transform:'translate(-50%,-42%) scale(1.06)',opacity:1}
+  ],{duration:650,easing:'cubic-bezier(.18,.76,.29,1)',fill:'forwards'});
+  try{await Promise.all([bannerIn.finished,artIn.finished]);}catch(_){}
 
-  try{await bgAnim.finished;}catch(_){ }
-  // Hard-hide BEFORE cancelling animations so no base CSS frame can flash back in.
-  wrap.style.display='none';
-  wrap.style.opacity='0';
-  wrap.style.visibility='hidden';
-  wrap.hidden=true;
-  [bgAnim,bannerAnim,artAnim].forEach(anim=>{try{anim.cancel();}catch(_){}});
-  [wrap,char,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
-  // Clear the art only after the overlay is already hard-hidden.
-  artImg.removeAttribute('src');
+  // Let the top cut-in read clearly, then remove it first.
+  await fixedDelay(450);
+  const bannerOut=banner.animate([{opacity:1,transform:'translateX(0)'},{opacity:0,transform:'translateX(5%)'}],{duration:150,easing:'ease',fill:'forwards'});
+  try{await bannerOut.finished;}catch(_){}
+  banner.style.opacity='0';banner.style.visibility='hidden';
+
+  // The square art stays exactly 0.5 sec longer than the banner.
+  await fixedDelay(500);
+  const shake=art.animate([
+    {transform:'translate(-50%,-42%) scale(1.06)'},
+    {transform:'translate(calc(-50% - 8px),-42%) scale(1.07)',offset:.18},
+    {transform:'translate(calc(-50% + 8px),-42%) scale(1.07)',offset:.38},
+    {transform:'translate(calc(-50% - 5px),-42%) scale(1.07)',offset:.58},
+    {transform:'translate(calc(-50% + 4px),-42%) scale(1.07)',offset:.76},
+    {transform:'translate(-50%,-42%) scale(1.06)'}
+  ],{duration:300,easing:'ease-in-out',fill:'forwards'});
+  try{await shake.finished;}catch(_){}
+  const artOut=art.animate([{opacity:1},{opacity:0}],{duration:100,easing:'ease-out',fill:'forwards'});
+  try{await artOut.finished;}catch(_){}
+
+  // Hard hide parent BEFORE cancelling animations. This prevents the old one-frame reflash.
+  wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';wrap.hidden=true;
+  banner.style.opacity='0';banner.style.visibility='hidden';
+  art.style.opacity='0';art.style.visibility='hidden';
+  [bannerIn,artIn,bannerOut,shake,artOut].forEach(anim=>{try{anim.cancel();}catch(_){}});
+  [wrap,banner,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
   await new Promise(requestAnimationFrame);
+  artImg.removeAttribute('src');
+
+  // Temporary generic ultimate impact. Later this can be swapped for a selected magic sprite.
+  await ultimateImpactFx();
 }
 
 function enemyDefense(type){const e=state.battle.enemy;let v=type==='magic'?e.res:e.def;if(e.defDebuffTurns>0)v*=1-e.defDebuff;return v;}
@@ -335,7 +438,7 @@ async function bossSpecial(){const e=state.battle.enemy;await actionCutin(`${e.n
   await checkSpecialRevives();renderBattle();await delay(280);
 }
 
-async function superSubAction(a){await fixedDelay(600);await actionCutin(`SUPER SUB! ${a.name}の行動！`,'system',650);try{if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');return;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');return;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');return;}const low=livingField().some(x=>x.hp/x.maxHp<.45);if((a.id==='money'||a.id==='pink'||a.id==='riro')&&low){const h=healField(.12);notice(`SUPER SUPPORT / PARTY HP +${h}`,'heal');return;}const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.45){await performMagic(a,true);return;}await performAttack(a,true);}finally{await fixedDelay(600);}}
+async function superSubAction(a){await fixedDelay(600);await actionCutin(`SUPER SUB! ${a.name}の行動！`,'system',650);try{if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');return;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');return;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');return;}const low=livingField().some(x=>x.hp/x.maxHp<.45);if((a.id==='money'||a.id==='pink'||a.id==='riro')&&low){const h=healField(.12);notice(`SUPER SUPPORT / PARTY HP +${h}`,'heal');return;}const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.45){await performMagic(a,true);return;}await performAttack(a,true);}finally{clearEnemyImpact();await fixedDelay(600);}}
 
 function findGroup(id){const b=state.battle;for(const key of ['mainIds','superIds','reserveIds']){const i=b[key].indexOf(id);if(i>=0)return{key,index:i};}return null;}
 function swapGroupMembers(outId,inId){const b=state.battle,a=findGroup(outId),c=findGroup(inId);if(!a||!c)return false;[b[a.key][a.index],b[c.key][c.index]]=[b[c.key][c.index],b[a.key][a.index]];return true;}
@@ -359,8 +462,12 @@ function escapeAttempt(){notice('「逃げる」の成功率は未設定です',
 function persistAdventureVitals(){if(!state.battle)return;state.adventure.vitals={};state.battle.allies.forEach(a=>{state.adventure.vitals[a.id]={hp:Math.max(0,a.hp),mp:Math.max(0,a.mpNow)};});saveAdventure();}
 function finishBattle(win){const b=state.battle;if(!b||b.finished)return;b.finished=true;b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);notice(win?'VICTORY!':'DEFEAT...','system',1000);if(b.mode==='adventure'&&win){persistAdventureVitals();if(b.enemy.isBoss){state.adventure.completed=true;state.adventure.battleReady=false;}else{state.adventure.progress=Math.min(3,state.adventure.progress+1);state.adventure.battleReady=false;}saveAdventure();}if(b.mode==='adventure'&&!win)restoreCampCheckpoint();$('#resultTitle').textContent=win?'VICTORY':'DEFEAT';$('#resultKicker').textContent=b.mode==='adventure'?(b.enemy.isBoss?'GRASSLAND BOSS':'GRASSLAND BATTLE'):'TRAINING RESULT';$('#resultText').textContent=win?`${b.enemy.name} Lv${b.enemy.level} を撃破！ / ${b.turn}ターン`:(b.mode==='adventure'?`全員がダウンしました。直前のキャンプ地点のデータへ戻ります。`:`${b.enemy.name} Lv${b.enemy.level} / ${b.turn}ターン目で全員ダウン`);$('#resultRetryBtn').style.display=b.mode==='training'?'block':'none';$('#resultSetupBtn').textContent=b.mode==='training'?'トレーニングへ戻る':'キャンプ地点へ戻る';setTimeout(()=>{$('#resultOverlay').hidden=false;},650/state.speed);}
 
-async function startAdventureBattle(){const adv=MOB_DATA.adventure,prog=state.adventure.progress;if(!state.adventure.battleReady)return;if(prog===3){const e=buildBossEnemy(boss(adv.bossId),adv.level+8,Math.min(4,state.party.length));beginBattle({mode:'adventure',returnScreen:'adventure',enemy:e,party:state.party,useAdventureVitals:true});}else{const raw=adv.normalEnemies[prog],area=adv.areas[prog],e=buildNormalEnemy(raw,adv.level+prog*2,Math.min(4,state.party.length),area.bg);beginBattle({mode:'adventure',returnScreen:'adventure',enemy:e,party:state.party,useAdventureVitals:true});}}
-function resetTrainingBattle(){beginBattle({mode:'training',returnScreen:'training',bossId:state.training.bossId,bossLevel:state.training.bossLevel,party:trainingParty()});}
+async function startBattleLoaded(config){
+  await loadingWithAssets('戦闘用画像を読み込んでいます…',battleAssets(config));
+  beginBattle(config);
+}
+async function startAdventureBattle(){const adv=MOB_DATA.adventure,prog=state.adventure.progress;if(!state.adventure.battleReady)return;if(prog===3){const e=buildBossEnemy(boss(adv.bossId),adv.level+8,Math.min(4,state.party.length));await startBattleLoaded({mode:'adventure',returnScreen:'adventure',enemy:e,party:state.party,useAdventureVitals:true});}else{const raw=adv.normalEnemies[prog],area=adv.areas[prog],e=buildNormalEnemy(raw,adv.level+prog*2,Math.min(4,state.party.length),area.bg);await startBattleLoaded({mode:'adventure',returnScreen:'adventure',enemy:e,party:state.party,useAdventureVitals:true});}}
+async function resetTrainingBattle(){await startBattleLoaded({mode:'training',returnScreen:'training',bossId:state.training.bossId,bossLevel:state.training.bossLevel,party:trainingParty()});}
 
 function openHomeAction(action){if(action==='home')return toast('ここがHOMEです');if(['equipment','items','settings'].includes(action))return toast(`${action==='equipment'?'装備':action==='items'?'持ち物':'設定'}は仕様待ちです`);if(action==='castle')return dialog('お城に向かいますか？\nMOB SHOPや宿舎は、まだ詳細仕様待ちです。',[['はい','yes'],['いいえ','no']]).then(v=>{if(v==='yes')toast('お城内部は次の実装対象です');});if(action==='tavern')return dialog('酒場に向かいますか？\nパーティー編成が出来ます！',[['はい','yes','primary'],['いいえ','no']]).then(v=>{if(v==='yes')travelTo('tavern','酒場へ向かっています…',renderTavern);});if(action==='training')return dialog('トレーニングに向かいますか？\nパーティーとボスを自由に設定してテスト戦闘が出来ます！',[['はい','yes','primary'],['いいえ','no']]).then(v=>{if(v==='yes')travelTo('training','トレーニングルームへ向かっています…',renderTraining);});if(action==='adventure')return dialog('冒険に向かいますか？\n今回の目的地は「草原」です！',[['はい','yes','primary'],['いいえ','no']]).then(v=>{if(v==='yes')travelTo('adventure','草原へ出発です！',()=>{renderAdventure();setTimeout(()=>dialog('草原に到着しました！\nまずはじっくり探索してみましょう！\nそれとも一度ゆっくり休みますか？',[['冒険を始める','ok','primary']]),100);});});}
 function randomTraining(){const arr=[...MOB_DATA.players].sort(()=>Math.random()-.5).slice(0,10);state.training.party=arr.map(p=>[p.id,rint(15,80)]);state.training.bossId=pick(MOB_DATA.bosses).id;state.training.bossLevel=rint(15,80);state.training.filter='ALL';renderTraining();}
@@ -377,5 +484,5 @@ function bindEvents(){
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
 }
 
-lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();
+lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);
 })();
