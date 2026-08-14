@@ -73,6 +73,14 @@ async function preloadAssets(paths,onProgress){
   let done=0;
   await Promise.all(unique.map(async src=>{await preloadAsset(src);done++;onProgress?.(done,unique.length);}));
 }
+async function preloadAssetsSafe(paths,timeout=800){
+  try{
+    await Promise.race([
+      preloadAssets(paths),
+      new Promise(resolve=>setTimeout(resolve,timeout))
+    ]);
+  }catch(_){/* visual preload must never stop battle flow */}
+}
 function pageAssets(target){
   const party=state.party.map(([id])=>player(id)).filter(Boolean);
   const common=['icon/01.png','play/02.png','mqicon/06.png','mqicon/09.png','mqicon/10.png','mqicon/12.png'];
@@ -260,73 +268,75 @@ async function ultimateImpactFx(){
   if(!layer)return;
   const el=document.createElement('div');
   el.className='ultimate-impact-fx';
-  positionEffect(el,'enemy');
-  layer.appendChild(el);
-  await fixedDelay(520);
-  el.remove();
+  try{
+    positionEffect(el,'enemy');
+    layer.appendChild(el);
+    await fixedDelay(420);
+  }finally{
+    el.remove();
+  }
 }
 async function ultimateCutin(a,u){
-  const wrap=$('#ultimateCutin'),banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
+  const wrap=$('#ultimateCutin');
+  if(!wrap)return;
+  const banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
   const artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter');
   const charSrc=a.transformed&&a.id==='yusha'?'play/13.png':a.image;
 
-  await preloadAssets([charSrc,u.image]);
+  // Never let image loading stop the turn. Use cache if ready, otherwise continue after a short ceiling.
+  await preloadAssetsSafe([charSrc,u.image],700);
 
-  // Reset every visual state before starting. No previous animation is allowed to survive.
-  [wrap,banner,art].forEach(el=>{
-    if(!el)return;
-    el.getAnimations?.().forEach(anim=>{try{anim.cancel();}catch(_){}});
-    el.classList.remove('ult-v12-banner-in','ult-v12-art-in','ult-v12-art-shake');
-  });
-  wrap.hidden=true;
-  wrap.style.cssText='display:none;opacity:0;visibility:hidden;';
-  banner.style.cssText='opacity:0;visibility:hidden;';
-  art.style.cssText='opacity:0;visibility:hidden;';
-  await new Promise(requestAnimationFrame);
+  const hardHide=()=>{
+    wrap.hidden=true;
+    wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
+    if(banner){banner.style.opacity='0';banner.style.visibility='hidden';banner.style.transform='none';}
+    if(art){art.style.opacity='0';art.style.visibility='hidden';art.style.transform='translate(-50%,-42%) scale(1.06)';}
+  };
 
-  setImage(charImg,charSrc,'');
-  setImage(artImg,u.image,'');
-  if(artImg.decode){try{await artImg.decode();}catch(_){}}
-  name.textContent=u.name;
-  const n=[...u.name].length;
-  name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';
-  $('#cutinQuote').textContent='';
-  $('#cutinUltFallback').textContent=u.name;
+  try{
+    hardHide();
+    if(charImg)setImage(charImg,charSrc,'');
+    if(artImg)setImage(artImg,u.image,'');
+    if(name){
+      name.textContent=u.name;
+      const n=[...u.name].length;
+      name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';
+    }
+    const quote=$('#cutinQuote');if(quote)quote.textContent='';
+    const fallback=$('#cutinUltFallback');if(fallback)fallback.textContent=u.name;
 
-  wrap.hidden=false;
-  wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
-  banner.style.opacity='1';banner.style.visibility='visible';
-  art.style.opacity='1';art.style.visibility='visible';
-  banner.classList.add('ult-v12-banner-in');
-  art.classList.add('ult-v12-art-in');
+    // Force a clean paint before showing.
+    await new Promise(requestAnimationFrame);
+    wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
+    if(banner){banner.style.opacity='1';banner.style.visibility='visible';banner.style.transform='translateX(0)';}
+    if(art){art.style.opacity='1';art.style.visibility='visible';art.style.transform='translate(-50%,-42%) scale(1.06)';}
 
-  // Entry animation + readable hold.
-  await fixedDelay(900);
+    // Main cut-in visible.
+    await fixedDelay(900);
 
-  // Top banner disappears first.
-  banner.style.opacity='0';banner.style.visibility='hidden';
-  banner.classList.remove('ult-v12-banner-in');
+    // Banner disappears first; square art remains for 0.3 sec.
+    if(banner){banner.style.opacity='0';banner.style.visibility='hidden';}
+    await fixedDelay(300);
 
-  // Square image stays exactly 0.3 sec longer.
-  await fixedDelay(300);
+    // Deterministic JS shake. No CSS animationend dependency.
+    if(art){
+      const frames=[-13,13,-10,10,-6,6,0];
+      for(const x of frames){
+        art.style.transform=`translate(calc(-50% + ${x}px),-42%) scale(1.07)`;
+        await fixedDelay(42);
+      }
+    }
 
-  // Shake must visibly complete before the art disappears.
-  art.classList.remove('ult-v12-art-in');
-  void art.offsetWidth;
-  art.classList.add('ult-v12-art-shake');
-  await fixedDelay(420);
-
-  // Hard-hide all ultimate DOM, then clean classes. This avoids a one-frame reflash.
-  wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';wrap.hidden=true;
-  banner.style.opacity='0';banner.style.visibility='hidden';
-  art.style.opacity='0';art.style.visibility='hidden';
-  art.classList.remove('ult-v12-art-shake','ult-v12-art-in');
-  banner.classList.remove('ult-v12-banner-in');
-  await new Promise(requestAnimationFrame);
-  artImg.removeAttribute('src');
-
-  // Temporary ultimate impact effect. This is guaranteed to resolve.
-  await ultimateImpactFx();
+    hardHide();
+    await new Promise(requestAnimationFrame);
+    await ultimateImpactFx();
+  }catch(err){
+    console.error('[MOB QUEST] ultimateCutin recovered:',err);
+    hardHide();
+    // Even when a visual effect fails, resolve so the battle can continue.
+  }finally{
+    hardHide();
+  }
 }
 
 function enemyDefense(type){const e=state.battle.enemy;let v=type==='magic'?e.res:e.def;if(e.defDebuffTurns>0)v*=1-e.defDebuff;return v;}
@@ -477,7 +487,32 @@ async function resolveRequiredReplacements(){const b=state.battle;if(!b||b.finis
   if(!livingRoster().length)finishBattle(false);
 }
 
-async function act(kind,payload){const b=state.battle,a=activeAlly();if(!b||!a||b.busy||b.finished)return;b.busy=true;setCommandDisabled(true);let consumed=true;if(kind==='attack')await performAttack(a);else if(kind==='magic')consumed=await performMagic(a);else if(kind==='ultimate')consumed=await performUltimate(a,payload);else if(kind==='defend'){a.guard=.45;a.guardTurns=1;await actionCutin(`${a.name}の防御！`,'buff',420);notice(`${a.name}は身を守っている！`,'buff');fx('buff',a.id);await delay(220);}else if(kind==='switch')consumed=await performSwitch(payload);if(!consumed){b.busy=false;renderBattle();return;}if(b.enemy.hp<=0)return finishBattle(true);b.queuePos++;b.busy=false;renderBattle();await processQueue();}
+async function act(kind,payload){
+  const b=state.battle,a=activeAlly();
+  if(!b||!a||b.busy||b.finished)return;
+  b.busy=true;setCommandDisabled(true);
+  let consumed=true;
+  try{
+    if(kind==='attack')await performAttack(a);
+    else if(kind==='magic')consumed=await performMagic(a);
+    else if(kind==='ultimate')consumed=await performUltimate(a,payload);
+    else if(kind==='defend'){
+      a.guard=.45;a.guardTurns=1;
+      await actionCutin(`${a.name}の防御！`,'buff',420);
+      notice(`${a.name}は身を守っている！`,'buff');fx('buff',a.id);await delay(220);
+    }else if(kind==='switch')consumed=await performSwitch(payload);
+  }catch(err){
+    console.error('[MOB QUEST] action recovered:',kind,err);
+    // Consume the selected action rather than leaving the battle permanently locked.
+    consumed=true;
+  }
+  if(!consumed){b.busy=false;renderBattle();return;}
+  if(b.enemy.hp<=0){b.busy=false;return finishBattle(true);}
+  b.queuePos++;
+  b.busy=false;
+  renderBattle();
+  await processQueue();
+}
 async function performSwitch(payload){if(!payload)return false;const out=allyById(payload.outId),incoming=allyById(payload.inId);if(!out||!incoming||incoming.dead||incoming.hp<=0||!state.battle.mainIds.includes(out.id))return false;if(!swapGroupMembers(out.id,incoming.id))return false;renderBattle();await actionCutin(`CHANGE! ${out.name} → ${incoming.name}`,'system',700);await delay(180);return true;}
 function openSwitchMenu(){const a=activeAlly();if(!a)return;const candidates=[...superAllies(),...reserveAllies()].filter(x=>!x.dead&&x.hp>0);if(!candidates.length)return notice('入れ替え可能なメンバーがいません','danger');const sheet=$('#skillMenu'),list=$('#skillMenuList');sheet.hidden=false;$('#skillMenuKicker').textContent=`${a.name}の行動 / ターン消費`;$('#skillMenuTitle').textContent='入れ替える';list.innerHTML=`<div class="switch-zone-title super">援護メンバー</div>${superAllies().map(x=>`<button class="skill-item ${x.dead?'disabled':''}" data-switch-in="${x.id}" type="button" ${x.dead?'disabled':''}><span class="ult-thumb"><img src="${x.image}" alt=""><i>${x.symbol}</i></span><div><b>${x.name}</b><small>HP ${Math.ceil(x.hp)} / MP ${Math.floor(x.mpNow)}</small></div><em>援護</em></button>`).join('')}<div class="switch-zone-title reserve">RESERVE</div>${reserveAllies().map(x=>`<button class="skill-item ${x.dead?'disabled':''}" data-switch-in="${x.id}" type="button" ${x.dead?'disabled':''}><span class="ult-thumb"><img src="${x.image}" alt=""><i>${x.symbol}</i></span><div><b>${x.name}</b><small>HP ${Math.ceil(x.hp)} / MP ${Math.floor(x.mpNow)}</small></div><em>RESERVE</em></button>`).join('')}`;bindImages(list);$$('[data-switch-in]',list).forEach(btn=>btn.onclick=()=>{sheet.hidden=true;act('switch',{outId:a.id,inId:btn.dataset.switchIn});});}
 

@@ -14,3 +14,6 @@ Updated from v10:
 - Existing MAIN4 + support2 + reserve4, boss double action, mobile gesture lock, battle cut-ins, impact flashes/shakes remain.
 
 Unconfirmed balance values remain temporary test values.
+
+
+v13 修正: 必殺技演出を固定タイマー＋JSシェイクへ変更。画像ロード/演出エラーが発生しても戦闘キューを復旧する安全処理を追加。
