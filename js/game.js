@@ -19,12 +19,8 @@ const state={
   noticeQueue:[],noticeBusy:false
 };
 
-const SPRITE_TUNE={
-  pink:{home:.88,battle:.88},
-  desert:{home:1.06,battle:1.06}
-};
 const PASSIVE_RATE_SCALE=.80;
-function spriteScale(id,where='battle'){return SPRITE_TUNE[id]?.[where]||1;}
+function spriteScale(){return 1;}
 function passiveChance(base){return Math.random()<(base*PASSIVE_RATE_SCALE);}
 
 function player(id){return MOB_DATA.players.find(x=>x.id===id);}
@@ -125,7 +121,7 @@ async function travelTo(target,text,after){await loadingWithAssets(text,pageAsse
 
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}" style="--sprite-scale:${spriteScale(p.id,'home')}"><div class="home-sprite"><img src="${p.image}" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img src="${p.image}" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -185,7 +181,7 @@ function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allB
 
 function enemyMarkup(e){const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');return`<div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute} <em class="temp-badge">能力値 仮</em></small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>HP</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div><div class="enemy-sprite-wrap">${e.image?`<img id="enemySprite" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}">${e.symbol||'敵'}</div></div>`;}
 function statusText(a){return Object.entries(a.status).filter(([,v])=>v>0).map(([k])=>({poison:'毒',burn:'炎',sleep:'眠',stun:'怯',paralyze:'麻'}[k])).join(' ');}
-function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}" style="--battle-sprite-scale:${spriteScale(a.id,'battle')}"><span class="ally-hud-art"><img src="${a.image}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
+function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${a.image}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
 function superMarkup(a){const next=Math.max(0,a.nextSupportTurn-state.battle.turn);return`<div class="super-chip ${a.dead?'dead':''}" data-ally-id="${a.id}"><span><img src="${a.image}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}`}</small></div><em>${a.dead?'—':next===0?'READY':`+${next}T`}</em></div>`;}
 function benchMarkup(a){return`<div class="bench-chip ${a.dead?'dead':''}" data-ally-id="${a.id}"><span><img src="${a.image}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}`}</small><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div></div></div>`;}
 function renderBattle(){const b=state.battle;if(!b)return;$('#battleTurnLabel').textContent='';$('#enemyArea').innerHTML=enemyMarkup(b.enemy);$('#allyStatus').innerHTML=mainAllies().map(allyMarkup).join('');$('#superStatus').innerHTML=superAllies().length?superAllies().map(superMarkup).join(''):`<div class="no-bench">援護なし</div>`;$('#benchStatus').innerHTML=reserveAllies().length?reserveAllies().map(benchMarkup).join(''):`<div class="no-bench">控えなし</div>`;const e=currentEntry(),a=activeAlly();$('#activeActorBar').innerHTML=a?`<img src="${a.image}" alt=""><div><small>COMMAND / SPD ${Math.round(effective('spd',a))}</small><b>${a.name}</b><span>HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}</span></div>`:e?.type==='super'?`<div><small>AUTO ACTION</small><b>${allyById(e.id)?.name||''}</b></div>`:`<div><small>WAIT</small><b>${b.enemy.name}</b></div>`;bindImages($('#battleScreen'));setCommandDisabled(b.busy||b.finished||!a);}
@@ -259,73 +255,77 @@ async function skillSprite(frames,target='enemy'){
     wrap.style.opacity='0';wrap.hidden=true;wrap.style.display='none';
   }
 }
+async function ultimateImpactFx(){
+  const layer=$('#battleFxLayer');
+  if(!layer)return;
+  const el=document.createElement('div');
+  el.className='ultimate-impact-fx';
+  positionEffect(el,'enemy');
+  layer.appendChild(el);
+  await fixedDelay(520);
+  el.remove();
+}
 async function ultimateCutin(a,u){
   const wrap=$('#ultimateCutin'),banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
   const artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter');
   const charSrc=a.transformed&&a.id==='yusha'?'play/13.png':a.image;
 
-  // The battle loader already preloads these, but decode again here as a final guard
-  // so even the very first ultimate cannot appear half-painted.
   await preloadAssets([charSrc,u.image]);
-  [wrap,banner,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
-  wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
-  banner.style.opacity='0';banner.style.visibility='hidden';
-  art.style.opacity='0';art.style.visibility='hidden';
+
+  // Reset every visual state before starting. No previous animation is allowed to survive.
+  [wrap,banner,art].forEach(el=>{
+    if(!el)return;
+    el.getAnimations?.().forEach(anim=>{try{anim.cancel();}catch(_){}});
+    el.classList.remove('ult-v12-banner-in','ult-v12-art-in','ult-v12-art-shake');
+  });
+  wrap.hidden=true;
+  wrap.style.cssText='display:none;opacity:0;visibility:hidden;';
+  banner.style.cssText='opacity:0;visibility:hidden;';
+  art.style.cssText='opacity:0;visibility:hidden;';
   await new Promise(requestAnimationFrame);
 
   setImage(charImg,charSrc,'');
   setImage(artImg,u.image,'');
+  if(artImg.decode){try{await artImg.decode();}catch(_){}}
   name.textContent=u.name;
   const n=[...u.name].length;
   name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';
   $('#cutinQuote').textContent='';
   $('#cutinUltFallback').textContent=u.name;
 
-  wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
+  wrap.hidden=false;
+  wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
   banner.style.opacity='1';banner.style.visibility='visible';
   art.style.opacity='1';art.style.visibility='visible';
+  banner.classList.add('ult-v12-banner-in');
+  art.classList.add('ult-v12-art-in');
 
-  const bannerIn=banner.animate([{transform:'translateX(-110%)',opacity:0},{transform:'translateX(0)',opacity:1}],{duration:300,easing:'cubic-bezier(.2,.75,.28,1)',fill:'forwards'});
-  const artIn=art.animate([
-    {transform:'translate(-50%,-150%) scale(.80)',opacity:0},
-    {transform:'translate(-50%,-42%) scale(1)',opacity:1,offset:.72},
-    {transform:'translate(-50%,-42%) scale(1.06)',opacity:1}
-  ],{duration:650,easing:'cubic-bezier(.18,.76,.29,1)',fill:'forwards'});
-  try{await Promise.all([bannerIn.finished,artIn.finished]);}catch(_){}
+  // Entry animation + readable hold.
+  await fixedDelay(900);
 
-  // Let the top cut-in read clearly, then remove it first.
-  await fixedDelay(450);
-  const bannerOut=banner.animate([{opacity:1,transform:'translateX(0)'},{opacity:0,transform:'translateX(5%)'}],{duration:150,easing:'ease',fill:'forwards'});
-  try{await bannerOut.finished;}catch(_){}
+  // Top banner disappears first.
   banner.style.opacity='0';banner.style.visibility='hidden';
+  banner.classList.remove('ult-v12-banner-in');
 
-  // The square art stays 0.3 sec longer than the banner.
+  // Square image stays exactly 0.3 sec longer.
   await fixedDelay(300);
-  art.style.opacity='1';art.style.visibility='visible';art.style.transform='translate(-50%,-42%) scale(1.06)';
-  try{artIn.cancel();}catch(_){}
-  const shake=art.animate([
-    {transform:'translate(-50%,-42%) scale(1.06) rotate(0deg)'},
-    {transform:'translate(calc(-50% - 12px),-42%) scale(1.08) rotate(-2deg)',offset:.16},
-    {transform:'translate(calc(-50% + 12px),-42%) scale(1.08) rotate(2deg)',offset:.34},
-    {transform:'translate(calc(-50% - 9px),-42%) scale(1.08) rotate(-1.5deg)',offset:.52},
-    {transform:'translate(calc(-50% + 8px),-42%) scale(1.08) rotate(1.5deg)',offset:.70},
-    {transform:'translate(calc(-50% - 4px),-42%) scale(1.07) rotate(-.7deg)',offset:.84},
-    {transform:'translate(-50%,-42%) scale(1.06) rotate(0deg)'}
-  ],{duration:360,easing:'linear',fill:'forwards'});
-  try{await shake.finished;}catch(_){}
-  const artOut=art.animate([{opacity:1},{opacity:0}],{duration:100,easing:'ease-out',fill:'forwards'});
-  try{await artOut.finished;}catch(_){}
 
-  // Hard hide parent BEFORE cancelling animations. This prevents the old one-frame reflash.
+  // Shake must visibly complete before the art disappears.
+  art.classList.remove('ult-v12-art-in');
+  void art.offsetWidth;
+  art.classList.add('ult-v12-art-shake');
+  await fixedDelay(420);
+
+  // Hard-hide all ultimate DOM, then clean classes. This avoids a one-frame reflash.
   wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';wrap.hidden=true;
   banner.style.opacity='0';banner.style.visibility='hidden';
   art.style.opacity='0';art.style.visibility='hidden';
-  [bannerIn,artIn,bannerOut,shake,artOut].forEach(anim=>{try{anim.cancel();}catch(_){}});
-  [wrap,banner,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
+  art.classList.remove('ult-v12-art-shake','ult-v12-art-in');
+  banner.classList.remove('ult-v12-banner-in');
   await new Promise(requestAnimationFrame);
   artImg.removeAttribute('src');
 
-  // Temporary generic ultimate impact. Later this can be swapped for a selected magic sprite.
+  // Temporary ultimate impact effect. This is guaranteed to resolve.
   await ultimateImpactFx();
 }
 

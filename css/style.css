@@ -510,3 +510,71 @@
 /* v11 iOS-safe logo flex sizing */
 .brand-box{flex:0 0 58%!important;max-width:238px!important}
 @media(max-height:720px){.brand-box{flex-basis:55%!important;max-width:210px!important}}
+
+/* ===== v12: honor uploaded character scale / large HOME logo / stable ultimate ===== */
+/* Do not apply character-specific size correction. The source canvas decides the scale. */
+.home-sprite img{
+  transform:none!important;
+  width:100%!important;height:100%!important;
+  max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+}
+.ally-hud-art img{
+  transform:none!important;
+  width:100%!important;height:100%!important;
+  max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+}
+.ally-hud-card.turn-active .ally-hud-art img{transform:none!important}
+
+/* The title asset has visual whitespace, so give it a genuinely large viewport and scale the whole asset. */
+.home-top{
+  height:calc(122px + var(--safe-top))!important;
+  padding:calc(3px + var(--safe-top)) 6px 0!important;
+  overflow:visible!important;
+}
+.brand-box{
+  position:absolute!important;left:4px!important;top:calc(2px + var(--safe-top))!important;
+  width:76%!important;max-width:330px!important;height:108px!important;
+  flex:none!important;overflow:visible!important;z-index:2!important;
+}
+.brand-logo{
+  display:block!important;width:100%!important;height:100%!important;
+  max-width:none!important;max-height:none!important;
+  object-fit:contain!important;object-position:left top!important;
+  transform:scale(1.26)!important;transform-origin:left top!important;
+}
+.wallet{position:absolute!important;right:6px!important;top:calc(9px + var(--safe-top))!important;z-index:4!important}
+
+/* Robust ultimate animations: no Web Animations API dependency. */
+.ultimate-cutin,.cutin-character,.ult-art-wrap{animation:none!important}
+.ult-v12-banner-in{animation:ultV12BannerIn .30s cubic-bezier(.2,.75,.28,1) both!important}
+.ult-v12-art-in{animation:ultV12ArtIn .66s cubic-bezier(.18,.76,.29,1) both!important}
+.ult-v12-art-shake{
+  opacity:1!important;visibility:visible!important;
+  animation:ultV12Shake .42s linear both!important;
+}
+@keyframes ultV12BannerIn{
+  from{transform:translateX(-110%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+@keyframes ultV12ArtIn{
+  0%{transform:translate(-50%,-150%) scale(.80);opacity:0}
+  72%{transform:translate(-50%,-42%) scale(1);opacity:1}
+  100%{transform:translate(-50%,-42%) scale(1.06);opacity:1}
+}
+@keyframes ultV12Shake{
+  0%,100%{transform:translate(-50%,-42%) scale(1.06) rotate(0deg)}
+  14%{transform:translate(calc(-50% - 14px),-42%) scale(1.08) rotate(-2.4deg)}
+  28%{transform:translate(calc(-50% + 14px),-42%) scale(1.08) rotate(2.4deg)}
+  42%{transform:translate(calc(-50% - 11px),-42%) scale(1.08) rotate(-2deg)}
+  56%{transform:translate(calc(-50% + 11px),-42%) scale(1.08) rotate(2deg)}
+  70%{transform:translate(calc(-50% - 7px),-42%) scale(1.07) rotate(-1.2deg)}
+  84%{transform:translate(calc(-50% + 7px),-42%) scale(1.07) rotate(1.2deg)}
+}
+
+@media(max-height:720px){
+  .home-top{height:calc(108px + var(--safe-top))!important}
+  .brand-box{width:74%!important;max-width:300px!important;height:94px!important}
+  .brand-logo{transform:scale(1.22)!important}
+}
