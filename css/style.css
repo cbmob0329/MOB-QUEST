@@ -129,67 +129,118 @@
   .ally-status{height:79px!important}.ally-hud-art{height:41px!important}
 }
 
-/* ===== v6 readability and battle timing ===== */
+/* ===== v6 battle readability / center cut-in / impact feedback ===== */
+.battle-field{overflow:visible!important}
+.fx-layer{overflow:visible!important;z-index:60!important}
 .center-message{
-  background:linear-gradient(180deg,#efe3cb,#e6d7bd)!important;
-  border:2px solid #4d3c2a!important;
-  color:#2f2418!important;
-  text-shadow:0 1px 0 rgba(255,255,255,.65)!important;
-  box-shadow:0 4px 10px rgba(0,0,0,.22)!important;
-  font-weight:1000!important;
-  letter-spacing:.01em!important;
+  top:88%!important;
+  left:8%!important;right:8%!important;
+  z-index:75!important;
+  min-height:58px!important;
+  font-size:18px!important;
 }
-.center-message[data-tone="damage"],.center-message[data-tone="heal"],.center-message[data-tone="status"],.center-message[data-tone="buff"],.center-message[data-tone="danger"],.center-message[data-tone="system"]{color:#2f2418!important}
+/* Ultimate: technique name is the banner text. Character name is not shown. */
 .cutin-character{
-  top:5.5%!important;height:18%!important;grid-template-columns:74px 1fr!important;
-  background:linear-gradient(180deg,#efe3cb,#e6d7bd)!important;
-  border:2px solid #4d3c2a!important;color:#2f2418!important;
-  box-shadow:0 4px 10px rgba(0,0,0,.22)!important;
+  top:5%!important;height:20%!important;
+  grid-template-columns:78px minmax(0,1fr)!important;
+  gap:10px!important;
 }
-.cutin-character b,.cutin-character p{color:#2f2418!important;text-shadow:0 1px 0 rgba(255,255,255,.65)!important}
-.cutin-character b{font-size:12px!important}
-.cutin-character p{font-size:13px!important;font-weight:1000!important}
-.ult-art-wrap{top:61%!important;width:46%!important;max-width:220px!important;transform:translate(-50%,-50%)!important}
-.ult-art-wrap img,.ult-art-wrap span{border-radius:14px!important}
+.cutin-character b{
+  display:block!important;
+  font-size:17px!important;
+  line-height:1.15!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+.cutin-character p{display:none!important}
+.ult-art-wrap{
+  top:48%!important;
+  width:68%!important;
+  max-width:320px!important;
+  transform:translate(-50%,-28%)!important;
+}
+.ult-art-wrap img,.ult-art-wrap span{border-radius:18px!important}
+/* Enemy visibly steps toward the party before impact. */
+.enemy-advance{animation:enemyAdvanceV6 .48s cubic-bezier(.2,.72,.28,1)!important}
+@keyframes enemyAdvanceV6{
+  0%{transform:translateY(0) scale(1)}
+  58%{transform:translateY(58px) scale(1.07)}
+  100%{transform:translateY(0) scale(1)}
+}
+/* Damage feedback is limited to the struck player card only. */
+.ally-hud-card.damage-flash,.super-chip.damage-flash{
+  background:#e8877d!important;
+  border-color:#6f1713!important;
+  box-shadow:0 0 0 3px rgba(120,20,15,.42),0 4px 12px rgba(0,0,0,.28)!important;
+}
+.ally-hud-card.hud-shake,.super-chip.hud-shake{animation:hudShakeV6 .36s ease!important}
+@keyframes hudShakeV6{
+  0%,100%{transform:translateX(0)}
+  16%{transform:translateX(-7px)}
+  34%{transform:translateX(7px)}
+  52%{transform:translateX(-5px)}
+  70%{transform:translateX(4px)}
+  86%{transform:translateX(-2px)}
+}
 .float-number{
-  font-size:28px!important;
-  font-weight:1000!important;
-  animation:floatNumberLong 1.18s ease-out forwards!important;
+  z-index:85!important;
+  font-size:30px!important;
+  text-shadow:0 3px 0 #000,0 0 8px rgba(0,0,0,.85)!important;
 }
-.float-number.damage,.float-number.crit{
-  color:#d83333!important;
-  text-shadow:
-    0 1px 0 #fff,
-    1px 0 0 #fff,
-    -1px 0 0 #fff,
-    0 -1px 0 #fff,
-    1px 1px 0 #fff,
-    -1px 1px 0 #fff,
-    1px -1px 0 #fff,
-    -1px -1px 0 #fff,
-    0 3px 6px rgba(0,0,0,.28)!important;
-}
-.float-number.heal{color:#2a9c53!important;text-shadow:0 1px 0 #fff,1px 0 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff,0 3px 6px rgba(0,0,0,.2)!important}
-.float-number.damage::after,.float-number.crit::after,.float-number.heal::after{content:''!important}
-.ally-hud-card.turn-active{
-  transform:translateY(-10px) scale(1.08)!important;
-  z-index:3!important;
-}
-.ally-hud-card.turn-active .ally-hud-art{height:52px!important}
-.damage-flash{
-  background:rgba(255,228,228,.96)!important;
-  box-shadow:0 0 0 2px rgba(216,51,51,.55),0 8px 18px rgba(216,51,51,.28)!important;
-}
-.damage-flash .ally-hud-art img,
-.damage-flash>span img{filter:brightness(1.18) saturate(1.35) sepia(.18) hue-rotate(-18deg)!important}
-.hud-shake{animation:hudShakeStrong .42s ease!important}
-.enemy-advance{animation:enemyAdvanceStrong .52s ease!important}
-.enemy-sprite-wrap>img.enemy-advance,
-.enemy-symbol.enemy-advance{filter:drop-shadow(0 10px 8px rgba(0,0,0,.35)) drop-shadow(0 -8px 0 rgba(255,255,255,.16)) drop-shadow(0 -16px 0 rgba(255,255,255,.08))!important}
-@keyframes hudShakeStrong{0%,100%{transform:translateX(0)}15%{transform:translateX(-8px)}30%{transform:translateX(8px)}45%{transform:translateX(-6px)}60%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
-@keyframes enemyAdvanceStrong{0%{transform:translateY(0) scale(1)}35%{transform:translateY(18px) scale(1.03)}55%{transform:translateY(30px) scale(1.08)}75%{transform:translateY(10px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
-@keyframes floatNumberLong{0%{opacity:0;transform:translate(-50%,10px) scale(.72)}12%{opacity:1;transform:translate(-50%,-4px) scale(1.12)}72%{opacity:1;transform:translate(-50%,-20px) scale(1)}100%{opacity:0;transform:translate(-50%,-44px) scale(1)}}
+.simple-fx{z-index:70!important}
+.skill-sprite-fx{z-index:72!important;width:185px!important;height:185px!important}
 @media(max-height:720px){
-  .ult-art-wrap{top:60%!important;width:42%!important}
-  .ally-hud-card.turn-active .ally-hud-art{height:46px!important}
+  .center-message{top:92%!important;min-height:52px!important;font-size:16px!important}
+  .ult-art-wrap{width:64%!important;max-width:280px!important}
+}
+
+/* ===== v6.1 global battle overlays ===== */
+.battle-field{overflow:hidden!important}
+.global-fx-layer{position:absolute!important;inset:0!important;z-index:58!important;overflow:visible!important;pointer-events:none!important}
+.global-center-message{
+  position:absolute!important;
+  top:52%!important;
+  left:8%!important;right:8%!important;
+  z-index:76!important;
+}
+.action-banner{
+  position:absolute;z-index:78;left:8%;right:8%;top:48%;
+  min-height:58px;padding:10px 14px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  background:linear-gradient(180deg,#f2e8d3,#e6d7bb);
+  border:2px solid #33261a;
+  color:#2b1d10;
+  font-size:18px;font-weight:1000;letter-spacing:.03em;
+  text-shadow:1px 1px 0 rgba(255,255,255,.65);
+  box-shadow:0 4px 0 #000,0 8px 0 rgba(0,0,0,.52),0 12px 24px rgba(0,0,0,.28);
+  opacity:0;pointer-events:none;
+}
+.action-banner.play{animation:actionBannerV6 .62s ease both}
+@keyframes actionBannerV6{
+  0%{opacity:0;transform:translateY(8px) scale(.94)}
+  15%,78%{opacity:1;transform:translateY(0) scale(1)}
+  100%{opacity:0;transform:translateY(-5px) scale(1.02)}
+}
+/* Ultimate overlay uses the full battle screen so the square art can be genuinely large. */
+.ultimate-cutin{position:absolute!important;z-index:82!important;inset:0!important;overflow:hidden!important;background:rgba(16,11,6,.48)!important}
+.cutin-character{
+  left:6%!important;right:6%!important;top:12%!important;height:11%!important;
+  grid-template-columns:68px minmax(0,1fr)!important;
+  padding:6px 14px!important;
+}
+.cutin-character img{height:118%!important;align-self:end!important}
+.cutin-character b{font-size:18px!important;letter-spacing:.02em!important;text-shadow:none!important}
+.cutin-character p{display:none!important}
+.ult-art-wrap{
+  top:46%!important;width:72%!important;max-width:340px!important;
+  transform:translate(-50%,-42%)!important;
+}
+.skill-sprite-fx{position:absolute!important;z-index:73!important;width:190px!important;height:190px!important;pointer-events:none!important}
+/* Explicitly keep regular narration in the screen center. */
+.center-message{top:52%!important}
+@media(max-height:720px){
+  .action-banner{top:47%;min-height:52px;font-size:16px}
+  .global-center-message,.center-message{top:52%!important}
+  .cutin-character{top:10%!important;height:12%!important}
+  .ult-art-wrap{width:68%!important;max-width:300px!important;top:45%!important}
 }
