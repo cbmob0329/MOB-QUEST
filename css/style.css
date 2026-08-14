@@ -298,6 +298,7 @@
   .center-message,.global-center-message{font-size:13px!important;min-height:38px!important}
   .ult-art-wrap{width:70%!important;max-width:310px!important}
 }
+<<<<<<< HEAD
 
 /* ===== v8 timing / ultimate flicker / enemy motion fixes ===== */
 .ultimate-cutin[hidden]{display:none!important;opacity:0!important;visibility:hidden!important}
@@ -317,3 +318,5 @@
 .ultimate-cutin.play{animation-fill-mode:both!important}
 .ultimate-cutin.play .cutin-character{animation-fill-mode:both!important}
 .ultimate-cutin.play .ult-art-wrap{animation-fill-mode:both!important}
+=======
+>>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
