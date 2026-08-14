@@ -2,115 +2,166 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>MOB QUEST - Test Battle</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta name="theme-color" content="#0b111a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>MOB QUEST</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <main id="app">
-    <!-- HOME -->
-    <section id="homeScreen" class="screen active">
-      <header class="topbar">
-        <div class="brand">
-          <img src="icon/01.png" alt="MOB QUEST" class="brand-logo" data-fallback="MOB QUEST">
-          <span class="brand-fallback">MOB QUEST</span>
-        </div>
-        <div class="currency">
-          <span class="currency-chip">🪙 <b id="coinValue">12,500</b></span>
-          <span class="currency-chip">◆ <b id="diamondValue">320</b></span>
-        </div>
-      </header>
-
-      <section class="home-stage">
-        <img src="back/01.png" alt="" class="home-bg" aria-hidden="true">
-        <div class="home-overlay"></div>
-        <div class="rotating-ring" aria-hidden="true"></div>
-        <div id="homeParty" class="home-party"></div>
-      </section>
-
-      <nav class="home-menu" aria-label="メインメニュー">
-        <button type="button" class="menu-btn" data-home-action="adventure">
-          <span class="menu-icon">⚔</span>
-          <span>冒険</span>
-        </button>
-        <button type="button" class="menu-btn" data-home-action="party">
-          <span class="menu-icon">👥</span>
-          <span>パーティー</span>
-        </button>
-        <button type="button" class="menu-btn" data-home-action="castle">
-          <span class="menu-icon">🏰</span>
-          <span>お城</span>
-        </button>
-        <button type="button" class="menu-btn primary" data-home-action="test">
-          <span class="menu-icon">🧪</span>
-          <span>テストバトル</span>
-        </button>
-      </nav>
-    </section>
-
-    <!-- SETUP -->
-    <section id="setupScreen" class="screen">
-      <header class="sub-header">
-        <button type="button" id="setupBackBtn" class="ghost-btn">← HOME</button>
-        <div class="header-title">TEST BATTLE SETUP</div>
-        <button type="button" id="randomBtn" class="ghost-btn">ランダム</button>
-      </header>
-
-      <div class="setup-layout">
-        <section class="panel">
-          <div class="panel-title">PLAYER PARTY</div>
-          <div id="playerSetup"></div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-title">ENEMY PARTY</div>
-          <div id="enemySetup"></div>
-        </section>
+<main id="app">
+  <!-- HOME -->
+  <section id="homeScreen" class="screen active home-screen">
+    <img class="screen-bg bg-cover bg-home" src="back/rpgmain.png" data-fallback-src="back/01.png" alt="">
+    <div class="bg-overlay home-overlay"></div>
+    <header class="home-top safe-top">
+      <div class="brand-box">
+        <img src="icon/01.png" class="brand-logo" alt="MOB QUEST">
+        <b class="brand-fallback">MOB QUEST</b>
       </div>
+      <div class="wallet"><span>COIN <b id="coinValue">12,500</b></span><span>◆ <b>320</b></span></div>
+    </header>
 
-      <div class="setup-actions">
-        <button type="button" id="startBattleBtn" class="big-btn primary">戦闘開始</button>
+    <section class="home-stage" aria-label="現在のパーティー">
+      <div id="homeParty" class="home-party"></div>
+      <div class="stage-shadow"></div>
+    </section>
+
+    <nav class="main-menu" aria-label="メインメニュー">
+      <button class="main-menu-btn" data-home-action="adventure" type="button"><span class="menu-icon"><img src="mqicon/01.png" alt=""><i>⚔</i></span><b>冒険</b></button>
+      <button class="main-menu-btn" data-home-action="castle" type="button"><span class="menu-icon"><img src="mqicon/02.png" alt=""><i>♜</i></span><b>お城</b></button>
+      <button class="main-menu-btn" data-home-action="tavern" type="button"><span class="menu-icon"><img src="mqicon/03.png" alt=""><i>♨</i></span><b>酒場</b></button>
+      <button class="main-menu-btn accent" data-home-action="training" type="button"><span class="menu-icon"><img src="mqicon/04.png" alt=""><i>★</i></span><b>トレーニング</b></button>
+    </nav>
+    <nav class="bottom-nav safe-bottom" aria-label="共通メニュー">
+      <button data-home-action="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button>
+      <button data-home-action="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button>
+      <button data-home-action="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button>
+      <button data-home-action="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>
+    </nav>
+  </section>
+
+  <!-- LOADING -->
+  <section id="loadingScreen" class="screen loading-screen">
+    <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay loading-overlay"></div>
+    <div class="loading-box">
+      <img src="play/02.png" alt="" class="loading-pink">
+      <h1>NOW LOADING</h1>
+      <p id="loadingText">冒険の準備をしています…</p>
+      <div class="loading-track"><i id="loadingBar"></i></div>
+    </div>
+  </section>
+
+  <!-- TAVERN -->
+  <section id="tavernScreen" class="screen interior-screen">
+    <img class="screen-bg bg-cover bg-interior" src="back2/001.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay"></div>
+    <header class="page-header safe-top glass"><button class="back-btn" data-back-home type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button">初期編成</button></header>
+    <div class="page-scroll nav-spacer">
+      <section class="panel tavern-intro"><img src="play/02.png" alt=""><div><b>パーティー編成</b><p>メイン4人＋控え最大4人を編成できます。控えは戦闘中も交代できます。</p></div></section>
+      <section class="panel">
+        <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・控え 4/4</span></div>
+        <div id="tavernSlots" class="tavern-slots"></div>
+      </section>
+      <section class="panel">
+        <div class="section-title"><div><small>MEMBERS</small><h2>仲間一覧</h2></div><span class="pill">Lv変更可</span></div>
+        <div id="rosterGrid" class="roster-grid"></div>
+      </section>
+    </div>
+    <button id="savePartyBtn" class="floating-primary safe-floating" type="button">この編成に決定</button>
+    <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
+  </section>
+
+  <!-- TRAINING -->
+  <section id="trainingScreen" class="screen interior-screen">
+    <img class="screen-bg bg-cover bg-interior" src="back2/002.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay"></div>
+    <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1>テスト戦闘</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button">ランダム</button></header>
+    <div class="page-scroll training-scroll nav-spacer">
+      <section class="panel">
+        <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
+        <p class="panel-note">酒場の編成を読み込みます。上4人がメイン、下4人が控えです。戦闘中は「交代」で入れ替えできます。</p>
+        <div id="trainingPartySetup" class="training-party-setup"></div>
+      </section>
+      <section class="panel boss-panel">
+        <div class="section-title"><div><small>BOSS SELECT</small><h2>戦うボス</h2></div><span id="bossCountLabel" class="pill"></span></div>
+        <div class="range-line"><label>BOSS Lv <b id="bossLevelValue">30</b></label><input id="bossLevel" type="range" min="1" max="99" value="30"></div>
+        <div id="bossTabs" class="boss-tabs"></div>
+        <div id="bossGrid" class="boss-grid"></div>
+      </section>
+    </div>
+    <div class="sticky-action safe-bottom-action glass"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
+  </section>
+
+  <!-- ADVENTURE -->
+  <section id="adventureScreen" class="screen adventure-screen">
+    <img id="adventureBg" class="screen-bg bg-cover bg-adventure" src="back/sougen.png" data-fallback-src="back/sougen4.png" alt="">
+    <div class="bg-overlay adventure-overlay"></div>
+    <header class="page-header safe-top glass"><button id="adventureBackBtn" class="back-btn" type="button">←</button><div><span>ADVENTURE</span><h1 id="adventureStageTitle">草原</h1></div><span id="adventureProgress" class="pill">探索 0/4</span></header>
+
+    <section class="adventure-view">
+      <div class="destination-card glass"><small>CURRENT AREA</small><b id="areaName">草原・入口</b><p id="areaDescription">まずはじっくり探索してみましょう！</p></div>
+      <div id="adventureParty" class="adventure-party"></div>
+      <div id="fieldEvent" class="field-event" hidden></div>
+    </section>
+
+    <section class="adventure-menu glass safe-bottom-action">
+      <button id="exploreBtn" class="adventure-command" type="button"><span><img src="mqicon/14.png" alt=""><i>⌕</i></span><b>探索</b><small>周辺を調べる</small></button>
+      <button id="campBtn" class="adventure-command" type="button"><span><img src="mqicon/15.png" alt=""><i>⌂</i></span><b>キャンプ</b><small>HP・MP回復</small></button>
+      <button id="fieldBattleBtn" class="adventure-command locked" type="button" disabled><span><img src="mqicon/16.png" alt=""><i>⚔</i></span><b>バトル</b><small id="fieldBattleHint">探索が必要</small></button>
+    </section>
+  </section>
+
+  <!-- BATTLE -->
+  <section id="battleScreen" class="screen battle-screen">
+    <div class="battle-bg-wrap"><img id="battleBg" class="battle-bg bg-cover" src="back/sougen4.png" alt=""><div class="battle-vignette"></div></div>
+    <header class="battle-header safe-top glass"><button id="battleBackBtn" class="back-btn" type="button">←</button><div><span id="battleModeLabel">TRAINING</span><h1 id="battleTurnLabel">TURN 1</h1></div><div class="battle-speed"><button id="speedBtn" class="mini-btn" type="button">×1</button><button id="autoBtn" class="mini-btn" type="button">AUTO</button></div></header>
+
+    <section class="battle-field">
+      <div id="enemyArea" class="enemy-area"></div>
+      <div id="battleFxLayer" class="fx-layer"></div>
+      <div id="centerMessage" class="center-message"></div>
+      <div id="ultimateCutin" class="ultimate-cutin" hidden>
+        <div class="cutin-character"><img id="cutinCharacter" alt=""><div><b id="cutinName"></b><p id="cutinQuote"></p></div></div>
+        <div class="ult-art-wrap"><img id="cutinUltArt" alt=""><span id="cutinUltFallback">ULTIMATE</span></div>
       </div>
-
-      <p class="helper">
-        画像未配置でも仮表示で動作します。後から <code>play/01.png</code> などを追加してください。
-      </p>
+      <div id="skillSpriteFx" class="skill-sprite-fx" hidden><img alt=""></div>
     </section>
 
-    <!-- BATTLE -->
-    <section id="battleScreen" class="screen">
-      <header class="sub-header battle-header">
-        <button type="button" id="battleBackBtn" class="ghost-btn">← 編成</button>
-        <div id="turnLabel" class="turn-label">TURN 1</div>
-        <button type="button" id="restartBtn" class="ghost-btn">再戦</button>
-      </header>
+    <section class="party-hud glass"><div id="allyStatus" class="ally-status"></div><div class="bench-label">RESERVE</div><div id="benchStatus" class="bench-status"></div></section>
 
-      <section id="battleField" class="battle-field" aria-label="戦闘画面">
-        <div id="enemyUnits" class="unit-row enemy-row"></div>
-        <div id="allyUnits" class="unit-row ally-row"></div>
-
-        <div id="skillBanner" class="skill-banner" aria-live="polite"></div>
-        <div id="centerMessage" class="center-message" aria-live="polite"></div>
-
-        <div id="slashFx" class="slash-fx" aria-hidden="true"></div>
-        <div id="magicFx" class="magic-fx" aria-hidden="true"></div>
-
-        <div class="battle-command">
-          <button type="button" id="attackBtn" class="command-btn primary">通常攻撃</button>
-          <button type="button" id="skillBtn" class="command-btn">必殺技</button>
-          <button type="button" id="autoBtn" class="command-btn">AUTO</button>
-          <button type="button" id="nextTurnBtn" class="command-btn">1ターン</button>
-        </div>
-      </section>
-
-      <section class="battle-log-panel">
-        <div class="panel-title">BATTLE LOG</div>
-        <div id="battleLog" class="battle-log" aria-live="polite"></div>
-      </section>
+    <section class="command-panel glass safe-bottom">
+      <div id="activeActorBar" class="active-actor-bar"></div>
+      <div class="command-grid">
+        <button id="attackBtn" class="command-btn attack" type="button">こうげき<small>ATTACK</small></button>
+        <button id="skillBtn" class="command-btn skill" type="button">技・魔法<small>SKILL</small></button>
+        <button id="ultimateBtn" class="command-btn ultimate" type="button">必殺技<small>ULTIMATE</small></button>
+        <button id="defendBtn" class="command-btn defend" type="button">ぼうぎょ<small>GUARD</small></button>
+        <button id="switchBtn" class="command-btn switch" type="button">交代<small>CHANGE</small></button>
+      </div>
+      <div id="battleNarration" class="battle-narration">戦闘開始！</div>
     </section>
-  </main>
 
-  <script src="js/data.js"></script>
-  <script src="js/game.js"></script>
+    <div id="skillMenu" class="sheet" hidden><div class="sheet-card"><div class="sheet-head"><div><small id="skillMenuKicker">COMMAND</small><h2 id="skillMenuTitle">技を選択</h2></div><button class="sheet-close" data-close-sheet type="button">×</button></div><div id="skillMenuList" class="skill-list"></div></div></div>
+
+    <div id="resultOverlay" class="result-overlay" hidden><div class="result-card"><small id="resultKicker">BATTLE RESULT</small><h2 id="resultTitle">VICTORY</h2><p id="resultText"></p><button id="resultRetryBtn" class="primary-btn wide" type="button">もう一度</button><button id="resultSetupBtn" class="secondary-btn wide" type="button">戻る</button><button id="resultHomeBtn" class="secondary-btn wide" type="button">HOME</button></div></div>
+  </section>
+
+  <!-- DIALOG -->
+  <div id="dialogOverlay" class="dialog-overlay" hidden>
+    <div class="dialog-card">
+      <img id="dialogCharacter" src="play/02.png" alt="モブピンク">
+      <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/game.js"></script>
 </body>
 </html>
