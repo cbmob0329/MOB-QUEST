@@ -61,9 +61,9 @@
     <div class="bg-overlay interior-overlay"></div>
     <header class="page-header safe-top glass"><button class="back-btn" data-back-home type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button">初期編成</button></header>
     <div class="page-scroll nav-spacer">
-      <section class="panel tavern-intro"><img src="play/02.png" alt=""><div><b>パーティー編成</b><p>メイン4人＋控え最大4人を編成できます。控えは戦闘中も交代できます。</p></div></section>
+      <section class="panel tavern-intro"><img src="play/02.png" alt=""><div><b>パーティー編成</b><p>メイン4人＋スーパーサブ2人＋控え4人を編成できます。スーパーサブは2～5ターンごとに自動行動します。</p></div></section>
       <section class="panel">
-        <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・控え 4/4</span></div>
+        <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・控え 4/4</span></div>
         <div id="tavernSlots" class="tavern-slots"></div>
       </section>
       <section class="panel">
@@ -82,8 +82,8 @@
     <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1>テスト戦闘</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button">ランダム</button></header>
     <div class="page-scroll training-scroll nav-spacer">
       <section class="panel">
-        <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
-        <p class="panel-note">酒場の編成を読み込みます。上4人がメイン、下4人が控えです。戦闘中は「交代」で入れ替えできます。</p>
+        <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋SUPER2人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
+        <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
         <div id="trainingPartySetup" class="training-party-setup"></div>
       </section>
       <section class="panel boss-panel">
@@ -131,7 +131,13 @@
       <div id="skillSpriteFx" class="skill-sprite-fx" hidden><img alt=""></div>
     </section>
 
-    <section class="party-hud glass"><div id="allyStatus" class="ally-status"></div><div class="bench-label">RESERVE</div><div id="benchStatus" class="bench-status"></div></section>
+    <section class="party-hud glass">
+      <div id="allyStatus" class="ally-status"></div>
+      <div class="sub-row-label"><b>SUPER SUB</b><small>2～5 TURN AUTO</small></div>
+      <div id="superStatus" class="super-status"></div>
+      <div class="bench-label">RESERVE</div>
+      <div id="benchStatus" class="bench-status"></div>
+    </section>
 
     <section class="command-panel glass safe-bottom">
       <div id="activeActorBar" class="active-actor-bar"></div>
@@ -140,9 +146,10 @@
         <button id="skillBtn" class="command-btn skill" type="button">技・魔法<small>SKILL</small></button>
         <button id="ultimateBtn" class="command-btn ultimate" type="button">必殺技<small>ULTIMATE</small></button>
         <button id="defendBtn" class="command-btn defend" type="button">ぼうぎょ<small>GUARD</small></button>
-        <button id="switchBtn" class="command-btn switch" type="button">交代<small>CHANGE</small></button>
+        <button id="itemBtn" class="command-btn item" type="button">アイテム<small>ITEM</small></button>
+        <button id="escapeBtn" class="command-btn escape" type="button">逃げる<small>ESCAPE</small></button>
+        <button id="switchBtn" class="command-btn switch" type="button">入れ替え<small>CHANGE</small></button>
       </div>
-      <div id="battleNarration" class="battle-narration">戦闘開始！</div>
     </section>
 
     <div id="skillMenu" class="sheet" hidden><div class="sheet-card"><div class="sheet-head"><div><small id="skillMenuKicker">COMMAND</small><h2 id="skillMenuTitle">技を選択</h2></div><button class="sheet-close" data-close-sheet type="button">×</button></div><div id="skillMenuList" class="skill-list"></div></div></div>
