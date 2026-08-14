@@ -128,3 +128,68 @@
   .party-hud{height:132px!important;grid-template-rows:79px 9px 28px!important;bottom:calc(147px + var(--safe-bottom))!important}
   .ally-status{height:79px!important}.ally-hud-art{height:41px!important}
 }
+
+/* ===== v6 readability and battle timing ===== */
+.center-message{
+  background:linear-gradient(180deg,#efe3cb,#e6d7bd)!important;
+  border:2px solid #4d3c2a!important;
+  color:#2f2418!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.65)!important;
+  box-shadow:0 4px 10px rgba(0,0,0,.22)!important;
+  font-weight:1000!important;
+  letter-spacing:.01em!important;
+}
+.center-message[data-tone="damage"],.center-message[data-tone="heal"],.center-message[data-tone="status"],.center-message[data-tone="buff"],.center-message[data-tone="danger"],.center-message[data-tone="system"]{color:#2f2418!important}
+.cutin-character{
+  top:5.5%!important;height:18%!important;grid-template-columns:74px 1fr!important;
+  background:linear-gradient(180deg,#efe3cb,#e6d7bd)!important;
+  border:2px solid #4d3c2a!important;color:#2f2418!important;
+  box-shadow:0 4px 10px rgba(0,0,0,.22)!important;
+}
+.cutin-character b,.cutin-character p{color:#2f2418!important;text-shadow:0 1px 0 rgba(255,255,255,.65)!important}
+.cutin-character b{font-size:12px!important}
+.cutin-character p{font-size:13px!important;font-weight:1000!important}
+.ult-art-wrap{top:61%!important;width:46%!important;max-width:220px!important;transform:translate(-50%,-50%)!important}
+.ult-art-wrap img,.ult-art-wrap span{border-radius:14px!important}
+.float-number{
+  font-size:28px!important;
+  font-weight:1000!important;
+  animation:floatNumberLong 1.18s ease-out forwards!important;
+}
+.float-number.damage,.float-number.crit{
+  color:#d83333!important;
+  text-shadow:
+    0 1px 0 #fff,
+    1px 0 0 #fff,
+    -1px 0 0 #fff,
+    0 -1px 0 #fff,
+    1px 1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px -1px 0 #fff,
+    0 3px 6px rgba(0,0,0,.28)!important;
+}
+.float-number.heal{color:#2a9c53!important;text-shadow:0 1px 0 #fff,1px 0 0 #fff,-1px 0 0 #fff,0 -1px 0 #fff,0 3px 6px rgba(0,0,0,.2)!important}
+.float-number.damage::after,.float-number.crit::after,.float-number.heal::after{content:''!important}
+.ally-hud-card.turn-active{
+  transform:translateY(-10px) scale(1.08)!important;
+  z-index:3!important;
+}
+.ally-hud-card.turn-active .ally-hud-art{height:52px!important}
+.damage-flash{
+  background:rgba(255,228,228,.96)!important;
+  box-shadow:0 0 0 2px rgba(216,51,51,.55),0 8px 18px rgba(216,51,51,.28)!important;
+}
+.damage-flash .ally-hud-art img,
+.damage-flash>span img{filter:brightness(1.18) saturate(1.35) sepia(.18) hue-rotate(-18deg)!important}
+.hud-shake{animation:hudShakeStrong .42s ease!important}
+.enemy-advance{animation:enemyAdvanceStrong .52s ease!important}
+.enemy-sprite-wrap>img.enemy-advance,
+.enemy-symbol.enemy-advance{filter:drop-shadow(0 10px 8px rgba(0,0,0,.35)) drop-shadow(0 -8px 0 rgba(255,255,255,.16)) drop-shadow(0 -16px 0 rgba(255,255,255,.08))!important}
+@keyframes hudShakeStrong{0%,100%{transform:translateX(0)}15%{transform:translateX(-8px)}30%{transform:translateX(8px)}45%{transform:translateX(-6px)}60%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+@keyframes enemyAdvanceStrong{0%{transform:translateY(0) scale(1)}35%{transform:translateY(18px) scale(1.03)}55%{transform:translateY(30px) scale(1.08)}75%{transform:translateY(10px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+@keyframes floatNumberLong{0%{opacity:0;transform:translate(-50%,10px) scale(.72)}12%{opacity:1;transform:translate(-50%,-4px) scale(1.12)}72%{opacity:1;transform:translate(-50%,-20px) scale(1)}100%{opacity:0;transform:translate(-50%,-44px) scale(1)}}
+@media(max-height:720px){
+  .ult-art-wrap{top:60%!important;width:42%!important}
+  .ally-hud-card.turn-active .ally-hud-art{height:46px!important}
+}
