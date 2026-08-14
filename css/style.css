@@ -244,3 +244,57 @@
   .cutin-character{top:10%!important;height:12%!important}
   .ult-art-wrap{width:68%!important;max-width:300px!important;top:45%!important}
 }
+
+
+/* ===== v7 battle timing / readable narration / training fix ===== */
+/* Turn counter is intentionally not shown. */
+#battleTurnLabel{display:none!important}
+.battle-header>div:nth-child(2){display:flex!important;align-items:center!important;justify-content:center!important;height:100%!important}
+.battle-header>div:nth-child(2)>span{font-size:10px!important;letter-spacing:.16em!important;color:#dce4ee!important}
+
+/* Action banner: always one line. Font size is also auto-fitted in JS. */
+.action-banner{
+  left:4%!important;right:4%!important;top:48%!important;
+  min-height:54px!important;padding:8px 10px!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  line-height:1!important;
+  color:#24190f!important;
+  text-shadow:none!important;
+}
+
+/* Situation narration is not the beige action banner. Keep it highly readable. */
+.center-message,.global-center-message{
+  left:9%!important;right:9%!important;top:53%!important;
+  min-height:42px!important;padding:8px 12px!important;
+  border-radius:11px!important;
+  background:rgba(16,21,27,.90)!important;
+  border:1px solid rgba(255,255,255,.60)!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.32)!important;
+  color:#fff!important;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif!important;
+  font-size:15px!important;font-weight:900!important;
+  line-height:1.2!important;letter-spacing:.01em!important;
+  text-shadow:none!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+}
+.center-message[data-tone="damage"],.center-message[data-tone="heal"],.center-message[data-tone="status"],.center-message[data-tone="buff"],.center-message[data-tone="danger"],.center-message[data-tone="system"]{color:#fff!important}
+
+/* Ultimate name banner stays one line and the square art only appears once. */
+.cutin-character{grid-template-columns:60px minmax(0,1fr)!important;padding-left:10px!important;padding-right:10px!important}
+.cutin-character b{
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  line-height:1!important;text-align:left!important;color:#24190f!important;text-shadow:none!important;
+}
+.ult-art-wrap{width:74%!important;max-width:350px!important}
+
+/* Training select controls must remain fully interactive on mobile. */
+.training-slot select,.training-slot input{
+  pointer-events:auto!important;touch-action:manipulation!important;-webkit-user-select:auto!important;user-select:auto!important;
+}
+.training-slot select{position:relative!important;z-index:3!important}
+
+@media(max-height:720px){
+  .action-banner{left:3%!important;right:3%!important;min-height:48px!important;padding:7px 8px!important}
+  .center-message,.global-center-message{font-size:13px!important;min-height:38px!important}
+  .ult-art-wrap{width:70%!important;max-width:310px!important}
+}
