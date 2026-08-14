@@ -1,71 +1,16 @@
-MOB QUEST playable core v4
-==========================
+MOB QUEST playable core v11
 
-このZIPは GitHub 上の既存画像フォルダを残したまま、以下4ファイルを上書きして使う更新版です。
-- index.html
-- css/style.css
-- js/data.js
-- js/game.js
+Updated from v10:
+- HOME title logo enlarged substantially.
+- MAIN party sprites normalized with small per-character visual-scale corrections (Pink smaller, Desert slightly larger).
+- Battle MAIN 4 HUD rebuilt to make character art dominant; name/Lv/HP/MP compressed.
+- Removed the SUPER SUB label from the battle HUD; support members remain visible as a compact row.
+- Battle command buttons now display icon/02.png through icon/08.png only; duplicate text labels removed.
+- Ultimate square-art extra hold changed to 0.3 sec, followed by a stronger explicit shake before disappearance.
+- Magic frame playback now preloads/decodes the selected sequence and waits for paint frames before advancing.
+- Battle loading now preloads only immediate battle assets instead of every ultimate/magic frame for all ten members.
+- Passive activations now use a character-image cut-in and retain timing pauses.
+- Random passive activation rates reduced to 80% of the previous test rates. Guaranteed/passive-by-definition effects remain guaranteed.
+- Existing MAIN4 + support2 + reserve4, boss double action, mobile gesture lock, battle cut-ins, impact flashes/shakes remain.
 
-v4 主な実装
-------------
-・スマホ縦画面専用 / Safe Area対応
-・長押し、画像ドラッグ、ダブルタップ拡大、ピンチズーム抑止
-・HOME / 酒場 / トレーニング / 草原冒険
-・パーティー：MAIN 4 + SUPER SUB 2 + RESERVE 4（最大10人）
-・SUPER SUBは2～5ターンごとに自動行動
-・SUPER SUBは敵全体攻撃を50%ダメージで受ける
-・味方全体回復はMAIN + SUPER SUBへ通常量で適用
-・MAINがDOWNした時、SUPER SUB / RESERVEから交代メンバー選択
-・SUPER SUBがDOWNした時、RESERVEから補充可能
-・全10人DOWNでゲームオーバー
-・冒険ゲームオーバー時は直前のキャンプ保存地点へロールバック
-・キャンプ：全回復 + 冒険進行/所持コイン/編成のチェックポイント保存
-・SPD順ターン制（敵も行動順へ混在）
-・コマンド：攻撃 / 魔法 / 必殺技 / 防御 / アイテム / 逃げる / 入れ替える
-・戦闘ログ欄を撤去
-・ダメージ/回復/状態/DOWN/交代などを中央カットイン表示
-・必殺技：キャラカットイン + ult/画像演出
-・必殺技習得：Lv1 / Lv15 / Lv30 / Lv50（勇者5つ目は特殊枠）
-・状態異常、バフ/デバフ、主要パッシブのテスト処理
-・選択ボスに応じた戦闘背景切替。新しい背景命名規則を優先し、旧背景をfallbackに使用
-
-重要：未確定データ
-------------------
-以下は資料上まだ正式値が決まっていないため、js/data.js の TEMP_BALANCE にテスト用仮値として隔離しています。
-・初期ステータス
-・レベル成長量
-・通常魔法の習得/消費MP/威力
-・通常攻撃および「小/中/大/特大/極大」の正式倍率
-・敵/ボスの能力値
-・ボス必殺技の使用頻度
-・一部バフ/回復倍率
-
-敵が使う通常魔法、アイテム内容、逃走成功率は設定が無いため勝手に作らず、UIの入口のみ実装しています。
-
-画像はZIPへ重複収録していません。既存の back / back2 / play / boss / mqicon / icon / ult / skill フォルダを残してください。
-
-v7 修正
-- 必殺技演出の二重表示を解消。必殺技専用カットインは1回のみ。
-- 味方行動直後に敵行動へ移る場合、実時間で1秒待機。
-- TURN表示を画面・カットインから削除。
-- ダメージは対象頭上のフロート数値のみ。ダメージ数値バナーは廃止。
-- 行動バナーは1行固定＋文字数に応じ自動縮小。
-- 状況説明は白文字＋暗色背景へ変更し、黒文字＋黒影を廃止。
-- トレーニング編成で既存メンバーを選択した場合は該当枠同士を自動交換。
-
-
-[v8]
-- 必殺技終了後のカットイン/正方形画像の再表示を防止
-- パッシブ発動前後に約0.6秒の間を追加
-- SUPER SUB行動前後に約0.6秒の間を追加
-- 敵攻撃モーション完了前の再描画を防止し、敵画像の欠け/消失を修正
-
-[v10 update]
-- SUPER SUB action now clears enemy damage flash before the next actor.
-- Ultimate square art stays 0.5 sec longer than the top cut-in, shakes, then disappears.
-- A temporary generic ultimate impact effect is shown on the enemy after the square art disappears.
-- Battle command buttons use icon/02.png - icon/08.png.
-- Loading screens now preload/decode actual page and battle assets and display real progress.
-- Battle loading preloads party, boss/background, skill frames, command icons, and all party ultimate images.
-- HOME title logo enlarged; four MAIN members aligned in a centered horizontal row.
+Unconfirmed balance values remain temporary test values.

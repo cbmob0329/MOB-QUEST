@@ -437,3 +437,76 @@
   .command-btn>span>b{font-size:6px!important}
   .ultimate-impact-fx{width:132px;height:132px}
 }
+
+/* ===== v11 HOME scale / compact party HUD / icon-only commands / passive cut-in ===== */
+/* HOME logo: intentionally much larger than v10. */
+.home-top{height:calc(98px + var(--safe-top))!important;padding-left:8px!important;padding-right:8px!important;align-items:flex-start!important;padding-top:calc(5px + var(--safe-top))!important}
+.brand-box{width:min(58%,238px)!important;height:84px!important;flex:0 0 min(58%,238px)!important;align-items:flex-start!important}
+.brand-logo{width:100%!important;height:82px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:left top!important}
+.wallet{margin-top:8px!important;gap:3px!important}.wallet span{padding:5px 6px!important;font-size:8px!important}.wallet b{font-size:9px!important}
+
+/* MAIN party uses one baseline, but each sprite can be normalized without changing the uploaded image. */
+.home-stage{top:16%!important;left:3%!important;right:3%!important;bottom:31%!important}
+.home-party{align-items:center!important;justify-content:center!important;gap:0!important}
+.home-member{width:25%!important;height:80%!important;margin:0!important;transform:none!important;align-self:center!important;overflow:visible!important}
+.home-sprite{height:calc(100% - 26px)!important;overflow:visible!important}
+.home-sprite img{transform:scale(var(--sprite-scale,1))!important;transform-origin:center bottom!important;max-width:100%!important;max-height:100%!important}
+.home-member small{font-size:7px!important;line-height:1!important}.home-member>b{font-size:7px!important;line-height:1!important;margin-top:2px!important}
+
+/* Battle party panel: character art is the dominant element, data is compressed below it. */
+.party-hud{height:132px!important;bottom:calc(151px + var(--safe-bottom))!important;padding:3px 4px!important;grid-template-rows:101px 24px!important;gap:3px!important}
+.ally-status{height:101px!important;gap:3px!important}
+.ally-hud-card{padding:2px 2px 3px!important;border-radius:9px!important;justify-content:flex-end!important;overflow:visible!important;min-width:0!important}
+.ally-hud-art{height:68px!important;min-height:68px!important;overflow:visible!important;position:relative!important;display:flex!important;align-items:flex-end!important;justify-content:center!important}
+.ally-hud-art img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:scale(var(--battle-sprite-scale,1))!important;transform-origin:center bottom!important}
+.ally-title-line{height:11px;display:flex;align-items:center;justify-content:space-between;gap:2px;min-width:0;line-height:1}
+.ally-title-line b{font-size:6px;color:#2b2014;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ally-title-line em{font-size:5px;color:#65543f;font-style:normal;font-weight:900;white-space:nowrap}
+.ally-status-mark{position:absolute;top:1px;left:1px;padding:2px 3px;border-radius:999px;background:rgba(69,41,28,.85);color:#fff;font-size:4px;font-style:normal;font-weight:900;line-height:1;z-index:2}
+.ally-hud-line{font-size:4.5px!important;line-height:1!important;margin-top:1px!important;gap:2px!important;white-space:nowrap!important}
+.ally-gauges{margin-top:2px!important;gap:2px!important}.ally-gauges .gauge.tiny{height:4px!important}
+.ally-hud-card.turn-active{transform:translateY(-8px) scale(1.08)!important;z-index:20!important}
+.ally-hud-card.turn-active .ally-hud-art img{transform:scale(var(--battle-sprite-scale,1))!important;filter:drop-shadow(0 5px 5px rgba(0,0,0,.28))!important}
+
+/* No SUPER SUB label in battle. The two support portraits stay as a compact row only. */
+.sub-row-label{display:none!important}
+.super-status{height:24px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:3px!important}
+.super-chip{height:24px!important;padding:1px 3px!important;grid-template-columns:21px 1fr auto!important;border-radius:7px!important}
+.super-chip>span{width:21px!important;height:22px!important}.super-chip b{font-size:5px!important}.super-chip small{font-size:4px!important}.super-chip em{font-size:4px!important}
+.bench-label,.bench-status{display:none!important}
+
+/* Command images already contain their text, so the PNG itself is the button. */
+.command-panel{height:calc(145px + var(--safe-bottom))!important;padding:4px 6px calc(6px + var(--safe-bottom))!important}
+.active-actor-bar{height:26px!important;margin-bottom:3px!important}
+.command-grid{grid-template-columns:repeat(4,1fr)!important;gap:4px!important}
+.command-btn,.command-btn.attack,.command-btn.skill,.command-btn.ultimate,.command-btn.defend,.command-btn.item,.command-btn.switch,.command-btn.escape{
+  height:49px!important;padding:0!important;border:0!important;border-radius:10px!important;background:transparent!important;overflow:hidden!important;box-shadow:none!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.command-btn .battle-command-icon{width:100%!important;height:100%!important;max-width:none!important;object-fit:contain!important;flex:1 1 auto!important;filter:none!important}
+.command-btn>span{display:none!important}.command-btn:active{transform:scale(.97)!important}.command-btn:disabled{opacity:.38!important}
+
+/* Passive cut-in: character portrait + beige retro banner. */
+.passive-cutin{position:absolute;z-index:86;left:6%;right:6%;top:43%;height:86px;display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;gap:7px;padding:4px 12px 4px 4px;border-radius:15px;background:linear-gradient(180deg,#efe3cb,#e3d1b4);border:2px solid #33261a;box-shadow:0 4px 0 #000,0 8px 0 rgba(0,0,0,.55),0 12px 24px rgba(0,0,0,.28);color:#24190f;pointer-events:none;opacity:0}
+.passive-cutin[hidden]{display:none!important}.passive-cutin.play{animation:passiveCutinV11 .62s ease both}
+.passive-cutin>img{width:82px;height:94px;align-self:end;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 3px 3px rgba(0,0,0,.24))}
+.passive-cutin div{min-width:0}.passive-cutin small{display:block;font-size:7px;letter-spacing:.16em;color:#765a37;font-weight:1000;margin-bottom:3px}.passive-cutin b{display:block;font-size:14px;line-height:1.08;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#24190f;text-shadow:none}
+@keyframes passiveCutinV11{0%{opacity:0;transform:translateX(-16px) scale(.97)}14%,78%{opacity:1;transform:translateX(0) scale(1)}100%{opacity:0;transform:translateX(9px) scale(1)}}
+
+/* Magic frames must stay above the enemy and paint as decoded frames, not as a stale hidden image. */
+.skill-sprite-fx{z-index:84!important;width:176px!important;height:176px!important;opacity:1;will-change:opacity,transform;pointer-events:none!important}
+.skill-sprite-fx[hidden]{display:none!important}.skill-sprite-fx img{width:100%!important;height:100%!important;object-fit:contain!important;transform:translateZ(0);backface-visibility:hidden!important}
+
+/* Ultimate art: the extra hold is 0.3s in JS; keep transform available for the explicit shake. */
+.ult-art-wrap{will-change:transform,opacity!important;transform-origin:center center!important}
+
+@media(max-height:720px){
+  .home-top{height:calc(88px + var(--safe-top))!important}.brand-box{width:min(55%,210px)!important;height:72px!important;flex-basis:min(55%,210px)!important}.brand-logo{height:70px!important}
+  .party-hud{height:119px!important;bottom:calc(143px + var(--safe-bottom))!important;grid-template-rows:91px 22px!important}.ally-status{height:91px!important}.ally-hud-art{height:59px!important;min-height:59px!important}.super-status{height:22px!important}.super-chip{height:22px!important}
+  .command-panel{height:calc(138px + var(--safe-bottom))!important}.command-btn{height:45px!important}
+  .passive-cutin{height:76px;grid-template-columns:70px minmax(0,1fr)}.passive-cutin>img{width:70px;height:82px}.passive-cutin b{font-size:12px}
+}
+
+/* v11 iOS-safe logo flex sizing */
+.brand-box{flex:0 0 58%!important;max-width:238px!important}
+@media(max-height:720px){.brand-box{flex-basis:55%!important;max-width:210px!important}}
