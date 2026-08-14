@@ -48,11 +48,15 @@ function bindImages(root=document){$$('img',root).forEach(bindImage);}
 function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
 
 const assetPreloadCache=new Map();
-function preloadAsset(src){
+const assetImageCache=new Map();
+function preloadAsset(src,priority='auto'){
   if(!src)return Promise.resolve(false);
   if(assetPreloadCache.has(src))return assetPreloadCache.get(src);
+  const img=new Image();
+  img.decoding='async';
+  try{img.fetchPriority=priority;}catch(_){}
+  assetImageCache.set(src,img);
   const task=new Promise(resolve=>{
-    const img=new Image();
     let settled=false;
     const done=async ok=>{
       if(settled)return;settled=true;
@@ -80,6 +84,37 @@ async function preloadAssetsSafe(paths,timeout=800){
       new Promise(resolve=>setTimeout(resolve,timeout))
     ]);
   }catch(_){/* visual preload must never stop battle flow */}
+}
+function fastWarmAssetList(){
+  const ult=MOB_DATA.players.flatMap(p=>(p.ults||[]).map(u=>u.image)).filter(Boolean);
+  const magic=Object.values(MOB_DATA.elements).flatMap(e=>e.frames||[]).filter(Boolean);
+  const party=state.party.map(([id])=>player(id)?.image).filter(Boolean);
+  return [...new Set([...party,...ult,...magic])];
+}
+function startFastBackgroundWarmup(){
+  const queue=fastWarmAssetList();
+  let cursor=0;
+  const workers=Math.min(6,queue.length);
+  const run=async()=>{
+    while(cursor<queue.length){
+      const src=queue[cursor++];
+      try{await preloadAsset(src,'low');}catch(_){}
+      await new Promise(r=>setTimeout(r,0));
+    }
+  };
+  for(let i=0;i<workers;i++)run();
+}
+async function ensureDomImageReady(img,src,timeout=650){
+  if(!img||!src)return false;
+  try{await Promise.race([preloadAsset(src,'high'),new Promise(r=>setTimeout(()=>r(false),timeout))]);}catch(_){}
+  const abs=new URL(src,document.baseURI).href;
+  if(img.src!==abs)img.src=src;
+  try{
+    if(img.decode)await Promise.race([img.decode(),new Promise(r=>setTimeout(r,timeout))]);
+    else if(!img.complete)await Promise.race([new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});}),new Promise(r=>setTimeout(r,timeout))]);
+  }catch(_){}
+  await new Promise(requestAnimationFrame);
+  return !!img.naturalWidth;
 }
 function pageAssets(target){
   const party=state.party.map(([id])=>player(id)).filter(Boolean);
@@ -245,20 +280,19 @@ function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classL
 function fx(type='slash',target='enemy'){const el=document.createElement('div');el.className=`simple-fx ${type}`;positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),650/state.speed);}
 async function skillSprite(frames,target='enemy'){
   if(!frames?.length){fx('magic',target);return;}
-  await preloadAssets(frames);
+  frames.forEach(src=>preloadAsset(src,'high'));
   const wrap=$('#skillSpriteFx'),img=$('img',wrap);
   positionEffect(wrap,target);
   wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';
   try{
     for(const src of frames){
       img.classList.remove('asset-missing');
-      img.src=src;
-      if(img.decode){try{await img.decode();}catch(_){}}
+      await ensureDomImageReady(img,src,380);
+      wrap.style.opacity='1';
       await new Promise(requestAnimationFrame);
-      await new Promise(requestAnimationFrame);
-      await fixedDelay(90);
+      await fixedDelay(92);
     }
-    await fixedDelay(70);
+    await fixedDelay(55);
   }finally{
     wrap.style.opacity='0';wrap.hidden=true;wrap.style.display='none';
   }
@@ -281,22 +315,19 @@ async function ultimateCutin(a,u){
   if(!wrap)return;
   const banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
   const artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter');
+  const neon=$('.ult-neon-trace',wrap);
   const charSrc=a.transformed&&a.id==='yusha'?'play/13.png':a.image;
 
-  // Never let image loading stop the turn. Use cache if ready, otherwise continue after a short ceiling.
-  await preloadAssetsSafe([charSrc,u.image],700);
-
   const hardHide=()=>{
-    wrap.hidden=true;
-    wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
+    wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
+    wrap.classList.remove('ult-v14-live');
+    if(neon)neon.classList.remove('active');
     if(banner){banner.style.opacity='0';banner.style.visibility='hidden';banner.style.transform='none';}
-    if(art){art.style.opacity='0';art.style.visibility='hidden';art.style.transform='translate(-50%,-42%) scale(1.06)';}
+    if(art){art.style.opacity='0';art.style.visibility='hidden';art.style.transform='translate(-50%,-42%) scale(1)';}
   };
 
   try{
     hardHide();
-    if(charImg)setImage(charImg,charSrc,'');
-    if(artImg)setImage(artImg,u.image,'');
     if(name){
       name.textContent=u.name;
       const n=[...u.name].length;
@@ -305,27 +336,23 @@ async function ultimateCutin(a,u){
     const quote=$('#cutinQuote');if(quote)quote.textContent='';
     const fallback=$('#cutinUltFallback');if(fallback)fallback.textContent=u.name;
 
-    // Force a clean paint before showing.
-    await new Promise(requestAnimationFrame);
+    if(charImg){charImg.classList.remove('asset-missing');charImg.src=charSrc;}
+    if(artImg){artImg.classList.remove('asset-missing');artImg.src=u.image;}
+    await Promise.all([
+      ensureDomImageReady(charImg,charSrc,700),
+      ensureDomImageReady(artImg,u.image,700)
+    ]);
+
     wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';
-    if(banner){banner.style.opacity='1';banner.style.visibility='visible';banner.style.transform='translateX(0)';}
-    if(art){art.style.opacity='1';art.style.visibility='visible';art.style.transform='translate(-50%,-42%) scale(1.06)';}
+    if(banner){banner.style.opacity='1';banner.style.visibility='visible';}
+    if(art){art.style.opacity='1';art.style.visibility='visible';}
+    wrap.classList.add('ult-v14-live');
+    await new Promise(requestAnimationFrame);
 
-    // Main cut-in visible.
-    await fixedDelay(900);
+    await fixedDelay(1120);
 
-    // Banner disappears first; square art remains for 0.3 sec.
-    if(banner){banner.style.opacity='0';banner.style.visibility='hidden';}
+    if(neon){neon.classList.remove('active');void neon.offsetWidth;neon.classList.add('active');}
     await fixedDelay(300);
-
-    // Deterministic JS shake. No CSS animationend dependency.
-    if(art){
-      const frames=[-13,13,-10,10,-6,6,0];
-      for(const x of frames){
-        art.style.transform=`translate(calc(-50% + ${x}px),-42%) scale(1.07)`;
-        await fixedDelay(42);
-      }
-    }
 
     hardHide();
     await new Promise(requestAnimationFrame);
@@ -333,7 +360,6 @@ async function ultimateCutin(a,u){
   }catch(err){
     console.error('[MOB QUEST] ultimateCutin recovered:',err);
     hardHide();
-    // Even when a visual effect fails, resolve so the battle can continue.
   }finally{
     hardHide();
   }
@@ -546,5 +572,5 @@ function bindEvents(){
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
 }
 
-lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);
+lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);setTimeout(startFastBackgroundWarmup,80);
 })();

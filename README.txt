@@ -17,3 +17,9 @@ Unconfirmed balance values remain temporary test values.
 
 
 v13 修正: 必殺技演出を固定タイマー＋JSシェイクへ変更。画像ロード/演出エラーが発生しても戦闘キューを復旧する安全処理を追加。
+
+
+[MOB QUEST v14]
+- HOME background fast warm cache for ultimate and magic images.
+- Ultimate banner and square art stay synchronized.
+- Final 0.3s neon border trace before impact effect.

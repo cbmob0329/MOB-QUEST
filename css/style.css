@@ -578,3 +578,41 @@
   .brand-box{width:74%!important;max-width:300px!important;height:94px!important}
   .brand-logo{transform:scale(1.22)!important}
 }
+
+/* ===== v14: fast background warmup + synchronized ultimate presentation ===== */
+.ultimate-cutin.ult-v14-live .cutin-character{
+  animation:ultV14BannerDrift 1.42s ease-in-out both!important;
+  transform-origin:center center!important;
+  will-change:transform,opacity!important;
+}
+.ultimate-cutin.ult-v14-live .ult-art-wrap{
+  animation:ultV14ArtSettle .42s cubic-bezier(.18,.76,.29,1) both!important;
+  will-change:transform,opacity!important;
+}
+@keyframes ultV14BannerDrift{
+  0%{transform:translateX(-5px) scale(.985);opacity:0}
+  12%{transform:translateX(0) scale(1);opacity:1}
+  36%{transform:translateX(3px) scale(1.012);opacity:1}
+  61%{transform:translateX(-3px) scale(1.024);opacity:1}
+  82%{transform:translateX(2px) scale(1.034);opacity:1}
+  100%{transform:translateX(0) scale(1.04);opacity:1}
+}
+@keyframes ultV14ArtSettle{
+  0%{transform:translate(-50%,-48%) scale(.94);opacity:0}
+  100%{transform:translate(-50%,-42%) scale(1.06);opacity:1}
+}
+.ult-neon-trace{position:absolute;z-index:9;inset:-5px;pointer-events:none;opacity:0;border-radius:20px;overflow:visible}
+.ult-neon-trace i{position:absolute;display:block;opacity:0;background:#55f7ff;box-shadow:0 0 5px #55f7ff,0 0 10px #55f7ff,0 0 16px #d15cff,0 0 22px rgba(209,92,255,.8)}
+.ult-neon-trace .n-top{left:0;top:0;height:3px;width:0;border-radius:999px}
+.ult-neon-trace .n-right{right:0;top:0;width:3px;height:0;border-radius:999px;background:#b369ff}
+.ult-neon-trace .n-bottom{right:0;bottom:0;height:3px;width:0;border-radius:999px;background:#ff62d6}
+.ult-neon-trace .n-left{left:0;bottom:0;width:3px;height:0;border-radius:999px}
+.ult-neon-trace.active{opacity:1}
+.ult-neon-trace.active .n-top{animation:ultNeonTop .075s linear forwards!important}
+.ult-neon-trace.active .n-right{animation:ultNeonRight .075s .075s linear forwards!important}
+.ult-neon-trace.active .n-bottom{animation:ultNeonBottom .075s .15s linear forwards!important}
+.ult-neon-trace.active .n-left{animation:ultNeonLeft .075s .225s linear forwards!important}
+@keyframes ultNeonTop{from{width:0;opacity:1}to{width:100%;opacity:1}}
+@keyframes ultNeonRight{from{height:0;opacity:1}to{height:100%;opacity:1}}
+@keyframes ultNeonBottom{from{width:0;opacity:1}to{width:100%;opacity:1}}
+@keyframes ultNeonLeft{from{height:0;opacity:1}to{height:100%;opacity:1}}
