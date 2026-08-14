@@ -128,38 +128,102 @@ function allyTargetPoint(id){const root=$(`[data-ally-id="${id}"]`)||null;if(!ro
 function positionEffect(el,target='enemy'){const p=(target==='enemy'||!target)?enemyTargetPoint():allyTargetPoint(target);el.style.left=p.left;el.style.top=p.top;}
 function pulseAllyDamage(id){const el=$(`[data-ally-id="${id}"]`);if(!el)return;el.classList.remove('damage-flash','hud-shake');void el.offsetWidth;el.classList.add('damage-flash','hud-shake');}
 async function actionCutin(text,tone='system',duration=500){const el=$('#actionBanner');if(!el){notice(text,tone,duration);await delay(Math.min(duration,520));return;}el.textContent=text;el.dataset.tone=tone;const n=[...text].length;el.style.fontSize=n>=22?'12px':n>=18?'13px':n>=15?'14px':n>=12?'16px':'18px';el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await delay(duration);el.classList.remove('play');await delay(55);}
-<<<<<<< HEAD
 async function passiveBeat(text,tone='system',duration=560){await fixedDelay(600);notice(text,tone,duration);}
-=======
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
 function floatNumber(value,kind='damage',target='enemy'){const el=document.createElement('div');el.className=`float-number ${kind}`;el.textContent=(kind==='heal'?'+':'')+Math.round(value);positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),850/state.speed);}
-function pulseEnemy(cls='hit'){const el=$('#enemySprite')||$('.enemy-symbol');if(!el)return;el.classList.remove('enemy-hit','enemy-cast','enemy-advance');void el.offsetWidth;el.classList.add(cls==='cast'?'enemy-cast':cls==='advance'?'enemy-advance':'enemy-hit');}
+function pulseEnemy(cls='hit'){
+  const el=$('#enemySprite')||$('.enemy-symbol');
+  if(!el)return;
+  el.classList.remove('enemy-hit','enemy-cast','enemy-advance','enemy-damage-impact');
+  void el.offsetWidth;
+  if(cls==='cast')el.classList.add('enemy-cast');
+  else if(cls==='advance')el.classList.add('enemy-advance');
+  else el.classList.add('enemy-damage-impact');
+}
+async function beginEnemyLunge(){
+  const screen=$('#battleScreen');
+  if(screen)screen.classList.add('enemy-attacking');
+  pulseEnemy('advance');
+  await fixedDelay(520);
+}
+function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classList.remove('enemy-attacking');}
 function fx(type='slash',target='enemy'){const el=document.createElement('div');el.className=`simple-fx ${type}`;positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),650/state.speed);}
 async function skillSprite(frames,target='enemy'){if(!frames?.length){fx('magic',target);return;}const wrap=$('#skillSpriteFx'),img=$('img',wrap);positionEffect(wrap,target);wrap.hidden=false;for(const src of frames){setImage(img,src,'');await delay(100);}await delay(100);wrap.hidden=true;}
-<<<<<<< HEAD
-async function ultimateCutin(a,u){const wrap=$('#ultimateCutin'),name=$('#cutinName');setImage($('#cutinCharacter'),a.transformed&&a.id==='yusha'?'play/13.png':a.image,'');setImage($('#cutinUltArt'),u.image,'');name.textContent=u.name;const n=[...u.name].length;name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';$('#cutinQuote').textContent='';$('#cutinUltFallback').textContent=u.name;wrap.hidden=false;wrap.style.opacity='1';wrap.style.visibility='visible';wrap.classList.remove('play');void wrap.offsetWidth;wrap.classList.add('play');await delay(1350);wrap.style.opacity='0';wrap.style.visibility='hidden';wrap.hidden=true;wrap.classList.remove('play');}
-=======
-async function ultimateCutin(a,u){const wrap=$('#ultimateCutin'),name=$('#cutinName');setImage($('#cutinCharacter'),a.transformed&&a.id==='yusha'?'play/13.png':a.image,'');setImage($('#cutinUltArt'),u.image,'');name.textContent=u.name;const n=[...u.name].length;name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';$('#cutinQuote').textContent='';$('#cutinUltFallback').textContent=u.name;wrap.classList.remove('play');wrap.hidden=false;void wrap.offsetWidth;wrap.classList.add('play');await delay(1350);wrap.classList.remove('play');wrap.hidden=true;$('#cutinUltArt').removeAttribute('src');}
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
+async function ultimateCutin(a,u){
+  const wrap=$('#ultimateCutin'),char=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
+  const artImg=$('#cutinUltArt');
+  // Hard-cancel every previous animation before showing a new ultimate.
+  [wrap,char,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
+  wrap.classList.remove('play');
+  wrap.hidden=true;
+  wrap.style.display='none';
+  wrap.style.opacity='0';
+  wrap.style.visibility='hidden';
+  await new Promise(requestAnimationFrame);
+
+  setImage($('#cutinCharacter'),a.transformed&&a.id==='yusha'?'play/13.png':a.image,'');
+  setImage(artImg,u.image,'');
+  name.textContent=u.name;
+  const n=[...u.name].length;
+  name.style.fontSize=n>=18?'12px':n>=15?'13px':n>=12?'15px':'18px';
+  $('#cutinQuote').textContent='';
+  $('#cutinUltFallback').textContent=u.name;
+
+  wrap.hidden=false;
+  wrap.style.display='block';
+  wrap.style.opacity='1';
+  wrap.style.visibility='visible';
+
+  const speed=Math.max(.5,state.speed||1);
+  const bgAnim=wrap.animate([
+    {opacity:0},{opacity:1,offset:.12},{opacity:1,offset:.84},{opacity:0}
+  ],{duration:1260/speed,easing:'ease',fill:'forwards'});
+  const bannerAnim=char.animate([
+    {transform:'translateX(-110%)'},{transform:'translateX(0)'}
+  ],{duration:360/speed,easing:'cubic-bezier(.2,.75,.28,1)',fill:'both'});
+  const artAnim=art.animate([
+    {transform:'translate(-50%,-150%) scale(.78)',opacity:0},
+    {transform:'translate(-50%,-42%) scale(1)',opacity:1,offset:.45},
+    {transform:'translate(-50%,-42%) scale(1.08)',opacity:1}
+  ],{duration:980/speed,easing:'cubic-bezier(.18,.76,.29,1)',fill:'both'});
+
+  try{await bgAnim.finished;}catch(_){ }
+  // Hard-hide BEFORE cancelling animations so no base CSS frame can flash back in.
+  wrap.style.display='none';
+  wrap.style.opacity='0';
+  wrap.style.visibility='hidden';
+  wrap.hidden=true;
+  [bgAnim,bannerAnim,artAnim].forEach(anim=>{try{anim.cancel();}catch(_){}});
+  [wrap,char,art].forEach(el=>el?.getAnimations?.().forEach(anim=>anim.cancel()));
+  // Clear the art only after the overlay is already hard-hidden.
+  artImg.removeAttribute('src');
+  await new Promise(requestAnimationFrame);
+}
 
 function enemyDefense(type){const e=state.battle.enemy;let v=type==='magic'?e.res:e.def;if(e.defDebuffTurns>0)v*=1-e.defDebuff;return v;}
 function calcDamage(attacker,type,power,crit=0){const source=type==='magic'?effective('mag',attacker):effective('atk',attacker),def=enemyDefense(type);let d=Math.max(1,source*power-def*.34)*(.91+Math.random()*.18);const c=Math.random()<Math.max(TEMP_BALANCE.critRate,crit||0);if(c)d*=TEMP_BALANCE.critPower;return{value:Math.round(d),crit:c};}
 function calcEnemyDamage(target,power,type='physical'){const e=state.battle.enemy,source=(type==='magic'?e.mag:e.atk)*(e.atkBuffTurns>0?1+e.atkBuff:1),def=type==='magic'?effective('res',target):effective('def',target);return Math.max(1,Math.round((source*power-def*.32)*(.9+Math.random()*.2)));}
 function wakeEnemyOnHit(){const e=state.battle.enemy;if(e.status.sleep>0&&Math.random()<.70){e.status.sleep=0;notice(`${e.name}は眠りから覚めた！`,'status');}}
-function applyEnemyDamage(a,power,type='physical',crit=0){const e=state.battle.enemy,r=calcDamage(a,type,power,crit);let d=r.value;if(e.shieldTurns>0)d=Math.round(d*(1-(e.damageReduction||.2)));e.hp=Math.max(0,e.hp-d);floatNumber(d,r.crit?'crit':'damage','enemy');fx(type==='magic'?'magic':'slash');pulseEnemy();wakeEnemyOnHit();renderBattle();return{...r,value:d};}
+function applyEnemyDamage(a,power,type='physical',crit=0){
+  const e=state.battle.enemy,r=calcDamage(a,type,power,crit);
+  let d=r.value;
+  if(e.shieldTurns>0)d=Math.round(d*(1-(e.damageReduction||.2)));
+  e.hp=Math.max(0,e.hp-d);
+  // Rebuild first, then animate the NEW enemy DOM so the flash/shake is not erased.
+  renderBattle();
+  floatNumber(d,r.crit?'crit':'damage','enemy');
+  fx(type==='magic'?'magic':'slash','enemy');
+  pulseEnemy('hit');
+  wakeEnemyOnHit();
+  return{...r,value:d};
+}
 function heal(a,amount){if(a.dead)return 0;const before=a.hp;a.hp=Math.min(a.maxHp,a.hp+amount);const h=Math.round(a.hp-before);if(h>0)floatNumber(h,'heal',a.id);return h;}
 function healField(ratio){let total=0;livingField().forEach(a=>total+=heal(a,a.maxHp*ratio));renderBattle();return total;}
 function restoreMpField(ratio){livingField().forEach(a=>a.mpNow=Math.min(a.maxMp,a.mpNow+a.maxMp*ratio));renderBattle();}
 function cleanse(a){Object.keys(a.status).forEach(k=>a.status[k]=0);}
 function applyBossStatus(kind,chance,turns=3){const e=state.battle.enemy;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(e.status[kind],e.isBoss?rint(1,2):turns);return true;}
 
-<<<<<<< HEAD
 async function checkSpecialRevives(){const field=fieldAllies(),pink=field.find(a=>a.id==='pink'&&!a.dead&&!a.pinkReviveUsed);for(const a of field){if(a.dead&&a.id==='lilith'&&!a.lilithReviveUsed){await passiveBeat('ウルモブリリス！','system');a.dead=false;a.lilithReviveUsed=true;a.transformed=true;a.hp=Math.round(a.maxHp*.60);a.atk*=1.2;a.mag*=1.2;a.def*=1.2;a.res*=1.2;a.spd*=1.2;renderBattle();notice('モブリリスが復活！','heal',650);await fixedDelay(600);}else if(a.dead&&pink&&!pink.pinkReviveUsed&&a.id!=='pink'){await passiveBeat('支える力！','system');pink.pinkReviveUsed=true;pink.hp=Math.max(1,Math.floor(pink.hp*.5));a.dead=false;a.hp=Math.round(a.maxHp*.35);renderBattle();notice(`${a.name}が復活！`,'heal',650);await fixedDelay(600);break;}}}
 async function maybeArtistCleanse(target){const riro=livingField().find(a=>a.id==='riro');if(riro&&target&&Math.random()<.5){await passiveBeat('アーティスト・マインド！','system');cleanse(target);notice(`${target.name}の状態異常を解除！`,'status');await fixedDelay(600);return true;}return false;}
-=======
-async function checkSpecialRevives(){const field=fieldAllies(),pink=field.find(a=>a.id==='pink'&&!a.dead&&!a.pinkReviveUsed);for(const a of field){if(a.dead&&a.id==='lilith'&&!a.lilithReviveUsed){a.dead=false;a.lilithReviveUsed=true;a.transformed=true;a.hp=Math.round(a.maxHp*.60);a.atk*=1.2;a.mag*=1.2;a.def*=1.2;a.res*=1.2;a.spd*=1.2;notice('モブリリスがウルモブリリスへ変身して復活！','system',950);renderBattle();await delay(400);}else if(a.dead&&pink&&!pink.pinkReviveUsed&&a.id!=='pink'){pink.pinkReviveUsed=true;pink.hp=Math.max(1,Math.floor(pink.hp*.5));a.dead=false;a.hp=Math.round(a.maxHp*.35);notice(`支える力！ ${a.name}が復活！`,'heal',900);renderBattle();await delay(400);break;}}}
-function maybeArtistCleanse(target){const riro=livingField().find(a=>a.id==='riro');if(riro&&target&&Math.random()<.5){cleanse(target);notice(`${target.name}の状態異常を解除！`,'status');return true;}return false;}
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
 function isSuper(a){return state.battle.superIds.includes(a.id);}
 async function damageAlly(a,power,type='physical',superHalf=false){
   if(!a||a.dead)return 0;
@@ -170,11 +234,7 @@ async function damageAlly(a,power,type='physical',superHalf=false){
   if(a.damageCutTurns>0)d=Math.round(d*(1-a.damageCut));
   if(state.battle.teamGuardTurns>0)d=Math.round(d*(1-state.battle.teamGuard));
   if(a.id==='yusha'&&state.battle.yushaGuardTurns>0)d=Math.round(d*(1-state.battle.yushaGuard));
-<<<<<<< HEAD
   const desert=livingField().find(x=>x.id==='desert');if(desert&&Math.random()<.20){await passiveBeat('サバクノマモリビト！','system');d=Math.round(d*.8);await fixedDelay(600);}
-=======
-  const desert=livingField().find(x=>x.id==='desert');if(desert&&Math.random()<.20)d=Math.round(d*.8);
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
   a.hp=Math.max(0,a.hp-d);
   if(a.hp<=0)a.dead=true;
   renderBattle();
@@ -184,17 +244,10 @@ async function damageAlly(a,power,type='physical',superHalf=false){
   if(a.dead)notice(`${a.name} DOWN`,'danger',850);
   return d;
 }
-<<<<<<< HEAD
 async function inflictAllyStatus(a,kind,turns){if(!a||a.dead)return false;const resist=.2; if(Math.random()<resist)return false;a.status[kind]=Math.max(a.status[kind],turns);if(await maybeArtistCleanse(a))return false;return true;}
 
 async function performAttack(a,auto=false){await actionCutin(`${a.name}の攻撃！`,'system',480);let crit=a.id==='denden'?.20:TEMP_BALANCE.critRate;let r=applyEnemyDamage(a,1,'physical',crit);if(a.id==='tetsu'&&state.battle.enemy.hp>0&&Math.random()<.30){await passiveBeat('テツの意志！','system');const r2=applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate);await fixedDelay(600);}await delay(auto?190:260);}
 async function performMagic(a,auto=false){const element=normalizeElement(a.attribute),s=MOB_DATA.elements[element];if(a.mpNow<s.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=s.cost;await actionCutin(`${a.name}の${s.spell}！`,'system',560);await skillSprite(s.frames,'enemy');const r=applyEnemyDamage(a,s.power,'magic');if(a.id==='jerry'&&element==='雷'&&state.battle.enemy.hp>0&&Math.random()<.5){await passiveBeat('ダブルサンダー！','system');await skillSprite(s.frames,'enemy');const r2=applyEnemyDamage(a,s.power*.9,'magic');await fixedDelay(600);}await delay(auto?170:240);return true;}
-=======
-async function inflictAllyStatus(a,kind,turns){if(!a||a.dead)return false;const resist=.2; if(Math.random()<resist)return false;a.status[kind]=Math.max(a.status[kind],turns);if(maybeArtistCleanse(a))return false;return true;}
-
-async function performAttack(a,auto=false){await actionCutin(`${a.name}の攻撃！`,'system',480);let crit=a.id==='denden'?.20:TEMP_BALANCE.critRate;let r=applyEnemyDamage(a,1,'physical',crit);if(a.id==='tetsu'&&state.battle.enemy.hp>0&&Math.random()<.30){await delay(150);notice('テツの意志！ 2回攻撃！','system',500);const r2=applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate);}await delay(auto?190:260);}
-async function performMagic(a,auto=false){const element=normalizeElement(a.attribute),s=MOB_DATA.elements[element];if(a.mpNow<s.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=s.cost;await actionCutin(`${a.name}の${s.spell}！`,'system',560);await skillSprite(s.frames,'enemy');const r=applyEnemyDamage(a,s.power,'magic');if(a.id==='jerry'&&element==='雷'&&state.battle.enemy.hp>0&&Math.random()<.5){await delay(130);notice('ダブルサンダー！','system');await skillSprite(s.frames,'enemy');const r2=applyEnemyDamage(a,s.power*.9,'magic');}await delay(auto?170:240);return true;}
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
 async function performUltimate(a,u){if(a.mpNow<u.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=u.cost;await ultimateCutin(a,u);let total=0,r;const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{r=applyEnemyDamage(a,power,type,crit);total+=r.value;await delay(90);return r;};
   switch(u.kind){
     case'selfAllBuff':a.allBuff=.20;a.allBuffTurns=rint(3,5);a.damageCut=.10;a.damageCutTurns=a.allBuffTurns;fx('buff');notice('ALL STATUS ↑↑ / DAMAGE CUT','buff');break;
@@ -238,37 +291,33 @@ function tickBuffs(){const b=state.battle,e=b.enemy;for(const k of ['shieldTurns
 function initiativeSpeed(entry){if(entry.type==='enemy'){const e=state.battle.enemy;return e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1);}const a=allyById(entry.id);return a?effective('spd',a):0;}
 async function startRound(){const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();if(b.enemy.hp<=0)return finishBattle(true);if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
   for(const a of fieldAllies().filter(x=>!x.dead)){
-<<<<<<< HEAD
     if(a.id==='nekoku'&&Math.random()<.30){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){await passiveBeat('癒しのプニプニ！','heal');const h=heal(target,target.maxHp*.14);if(h)notice(`${target.name} HP +${h}`,'heal');await fixedDelay(600);}}
     if(a.id==='money'&&Math.random()<.30){await passiveBeat('マニーは海を渡る！','heal');const m=Math.round(a.maxMp*.12);a.mpNow=Math.min(a.maxMp,a.mpNow+m);notice(`MP +${m}`,'heal');await fixedDelay(600);}
     if(a.id==='naraku'){await passiveBeat('魔王の系譜！','buff');a.narakuStacks++;a.allBuff=Math.min(.80,a.narakuStacks*.10);a.allBuffTurns=99;notice(`ALL STATUS ↑${a.narakuStacks*10}%`,'buff');await fixedDelay(600);}
-=======
-    if(a.id==='nekoku'&&Math.random()<.30){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){const h=heal(target,target.maxHp*.14);if(h)notice(`癒しのプニプニ！ +${h} HP`,'heal');}}
-    if(a.id==='money'&&Math.random()<.30){const m=Math.round(a.maxMp*.12);a.mpNow=Math.min(a.maxMp,a.mpNow+m);notice(`マニーは海を渡る！ MP +${m}`,'heal');}
-    if(a.id==='naraku'){a.narakuStacks++;a.allBuff=Math.min(.80,a.narakuStacks*.10);a.allBuffTurns=99;notice(`魔王の系譜！ ALL STATUS ↑${a.narakuStacks*10}%`,'buff');}
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
   }
-  b.queue=[...livingMain().map(a=>({type:'ally',id:a.id})),{type:'enemy'},...livingSuper().filter(a=>b.turn>=a.nextSupportTurn).map(a=>({type:'super',id:a.id}))].sort((x,y)=>initiativeSpeed(y)-initiativeSpeed(x)+((Math.random()-.5)*.01));b.busy=false;renderBattle();await processQueue();
+  const enemyEntries=b.enemy.isBoss?[{type:'enemy',action:1},{type:'enemy',action:2}]:[{type:'enemy',action:1}];b.queue=[...livingMain().map(a=>({type:'ally',id:a.id})),...enemyEntries,...livingSuper().filter(a=>b.turn>=a.nextSupportTurn).map(a=>({type:'super',id:a.id}))].sort((x,y)=>initiativeSpeed(y)-initiativeSpeed(x)+((Math.random()-.5)*.01));b.busy=false;renderBattle();await processQueue();
 }
 async function processQueue(){const b=state.battle;if(!b||b.finished||b.busy)return;while(b.queuePos<b.queue.length){const e=b.queue[b.queuePos];if(e.type==='ally'){const a=allyById(e.id);if(!a||a.dead||!b.mainIds.includes(a.id)){b.queuePos++;continue;}if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');b.queuePos++;await delay(300);continue;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');b.queuePos++;await delay(300);continue;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');b.queuePos++;await delay(300);continue;}renderBattle();if(b.auto)setTimeout(autoAct,100);return;}
-    if(e.type==='enemy'){const prev=b.queue[b.queuePos-1];if(prev&&(prev.type==='ally'||prev.type==='super'))await fixedDelay(1000);b.busy=true;renderBattle();await enemyAction();b.busy=false;b.queuePos++;if(b.finished)return;await resolveRequiredReplacements();if(b.finished)return;continue;}
+    if(e.type==='enemy'){const prev=b.queue[b.queuePos-1];if(prev&&(prev.type==='ally'||prev.type==='super'))await fixedDelay(1000);else if(prev&&prev.type==='enemy')await fixedDelay(600);b.busy=true;renderBattle();await enemyAction(e.action||1);b.busy=false;b.queuePos++;if(b.finished)return;await resolveRequiredReplacements();if(b.finished)return;continue;}
     if(e.type==='super'){const a=allyById(e.id);if(!a||a.dead||!b.superIds.includes(a.id)){b.queuePos++;continue;}b.busy=true;renderBattle();await superSubAction(a);a.nextSupportTurn=b.turn+rint(2,5);b.busy=false;b.queuePos++;if(b.enemy.hp<=0)return finishBattle(true);continue;}
   }
   await endRound();
 }
 async function endRound(){const b=state.battle;if(!b||b.finished)return;tickBuffs();b.turn++;await delay(120);startRound();}
 
-async function enemyAction(){const b=state.battle,e=b.enemy;if(e.hp<=0)return finishBattle(true);if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}const special=e.isBoss&&b.turn%TEMP_BALANCE.bossSpecialEvery===0;if(special)await bossSpecial();else await bossNormal();if(!livingRoster().length)finishBattle(false);}
-<<<<<<< HEAD
-async function bossNormal(){const e=state.battle.enemy,t=pick(livingMain());if(!t)return;await actionCutin(`${e.name}の攻撃！`,'danger',520);pulseEnemy('advance');await fixedDelay(520);const d=await damageAlly(t,1,'physical',false);await delay(320);}
+async function enemyAction(actionIndex=1){const b=state.battle,e=b.enemy;if(e.hp<=0)return finishBattle(true);if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}const special=e.isBoss&&actionIndex===1&&b.turn%TEMP_BALANCE.bossSpecialEvery===0;if(special)await bossSpecial();else await bossNormal();if(!livingRoster().length)finishBattle(false);}
+async function bossNormal(){
+  const e=state.battle.enemy,t=pick(livingMain());if(!t)return;
+  await actionCutin(`${e.name}の攻撃！`,'danger',520);
+  await beginEnemyLunge();
+  try{
+    await damageAlly(t,1,'physical',false);
+    await delay(320);
+  }finally{endEnemyLunge();}
+}
 async function aoeHit(power,type='physical'){let total=0;for(const a of [...livingMain()]){total+=await damageAlly(a,power,type,false);await delay(70);}for(const a of [...livingSuper()]){total+=await damageAlly(a,power,type,true);await delay(70);}return total;}
-async function bossSpecial(){const e=state.battle.enemy;await actionCutin(`${e.name}の${e.special}！`,'danger',700);pulseEnemy('advance');await fixedDelay(520);let t,d,total=0;const hit=async(target,m=e.power||1.5,type='physical')=>{const x=await damageAlly(target,m,type,false);await delay(80);return x;};
-=======
-async function bossNormal(){const e=state.battle.enemy,t=pick(livingMain());if(!t)return;await actionCutin(`${e.name}の攻撃！`,'danger',520);pulseEnemy('advance');await delay(430);const d=await damageAlly(t,1,'physical',false);await delay(320);}
-async function aoeHit(power,type='physical'){let total=0;for(const a of [...livingMain()]){total+=await damageAlly(a,power,type,false);await delay(70);}for(const a of [...livingSuper()]){total+=await damageAlly(a,power,type,true);await delay(70);}return total;}
-async function bossSpecial(){const e=state.battle.enemy;await actionCutin(`${e.name}の${e.special}！`,'danger',700);pulseEnemy('advance');await delay(430);let t,d,total=0;const hit=async(target,m=e.power||1.5,type='physical')=>{const x=await damageAlly(target,m,type,false);await delay(80);return x;};
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
-  switch(e.kind){
+async function bossSpecial(){const e=state.battle.enemy;await actionCutin(`${e.name}の${e.special}！`,'danger',700);await beginEnemyLunge();let t,d,total=0;const hit=async(target,m=e.power||1.5,type='physical')=>{const x=await damageAlly(target,m,type,false);await delay(80);return x;};
+  try{switch(e.kind){
     case'shield':e.damageReduction=.20;e.shieldTurns=3;fx('buff');notice('DAMAGE CUT 20%','buff');break;
     case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t);if(Math.random()<.5&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
     case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,e.power,'magic');if(Math.random()<.5&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
@@ -282,15 +331,11 @@ async function bossSpecial(){const e=state.battle.enemy;await actionCutin(`${e.n
     case'aoeStun':total=await aoeHit(e.power,'magic');for(const a of livingMain())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);for(const a of livingSuper())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);notice('ひるみ判定','status');break;
     case'aoe':total=await aoeHit(e.power,e.attribute.includes('火')||e.attribute.includes('闇')?'magic':'physical');break;
     case'single':default:t=pick(livingMain());if(t){d=await hit(t,e.power||1.55);}break;
-  }
+  }}finally{endEnemyLunge();}
   await checkSpecialRevives();renderBattle();await delay(280);
 }
 
-<<<<<<< HEAD
 async function superSubAction(a){await fixedDelay(600);await actionCutin(`SUPER SUB! ${a.name}の行動！`,'system',650);try{if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');return;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');return;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');return;}const low=livingField().some(x=>x.hp/x.maxHp<.45);if((a.id==='money'||a.id==='pink'||a.id==='riro')&&low){const h=healField(.12);notice(`SUPER SUPPORT / PARTY HP +${h}`,'heal');return;}const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.45){await performMagic(a,true);return;}await performAttack(a,true);}finally{await fixedDelay(600);}}
-=======
-async function superSubAction(a){await actionCutin(`SUPER SUB! ${a.name}の行動！`,'system',650);if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');return;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');return;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');return;}const low=livingField().some(x=>x.hp/x.maxHp<.45);if((a.id==='money'||a.id==='pink'||a.id==='riro')&&low){const h=healField(.12);notice(`SUPER SUPPORT / PARTY HP +${h}`,'heal');return;}const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.45){await performMagic(a,true);return;}await performAttack(a,true);}
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
 
 function findGroup(id){const b=state.battle;for(const key of ['mainIds','superIds','reserveIds']){const i=b[key].indexOf(id);if(i>=0)return{key,index:i};}return null;}
 function swapGroupMembers(outId,inId){const b=state.battle,a=findGroup(outId),c=findGroup(inId);if(!a||!c)return false;[b[a.key][a.index],b[c.key][c.index]]=[b[c.key][c.index],b[a.key][a.index]];return true;}

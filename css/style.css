@@ -298,7 +298,6 @@
   .center-message,.global-center-message{font-size:13px!important;min-height:38px!important}
   .ult-art-wrap{width:70%!important;max-width:310px!important}
 }
-<<<<<<< HEAD
 
 /* ===== v8 timing / ultimate flicker / enemy motion fixes ===== */
 .ultimate-cutin[hidden]{display:none!important;opacity:0!important;visibility:hidden!important}
@@ -318,5 +317,71 @@
 .ultimate-cutin.play{animation-fill-mode:both!important}
 .ultimate-cutin.play .cutin-character{animation-fill-mode:both!important}
 .ultimate-cutin.play .ult-art-wrap{animation-fill-mode:both!important}
-=======
->>>>>>> f5d5f3c85c3783f8d2cdadb3b553bf84e6667d44
+
+/* ===== v9 definitive ultimate / active turn / enemy layer / boss double action ===== */
+/* Ultimate presentation is driven only by Web Animations API in JS. No CSS animation may restart it. */
+.ultimate-cutin,
+.ultimate-cutin.play,
+.ultimate-cutin .cutin-character,
+.ultimate-cutin.play .cutin-character,
+.ultimate-cutin .ult-art-wrap,
+.ultimate-cutin.play .ult-art-wrap{
+  animation:none!important;
+}
+.ultimate-cutin[hidden]{display:none!important;opacity:0!important;visibility:hidden!important}
+
+/* Make the character whose command turn is active unmistakably larger. */
+.ally-hud-card.turn-active{
+  position:relative!important;
+  z-index:14!important;
+  transform:translateY(-11px) scale(1.10)!important;
+  transform-origin:center bottom!important;
+  overflow:visible!important;
+}
+.ally-hud-card.turn-active .ally-hud-art{
+  overflow:visible!important;
+}
+.ally-hud-card.turn-active .ally-hud-art img{
+  transform:translateY(-4px) scale(1.20)!important;
+  transform-origin:center bottom!important;
+  filter:drop-shadow(0 5px 5px rgba(0,0,0,.28))!important;
+}
+
+/* During an enemy lunge, lift the whole battle field above the party HUD.
+   This fixes the enemy body being hidden behind the beige player panel. */
+.battle-screen.enemy-attacking .battle-field{
+  z-index:10!important;
+  overflow:visible!important;
+}
+.battle-screen.enemy-attacking .enemy-area,
+.battle-screen.enemy-attacking .enemy-sprite-wrap,
+.battle-screen.enemy-attacking #enemySprite,
+.battle-screen.enemy-attacking .enemy-symbol{
+  z-index:18!important;
+  overflow:visible!important;
+}
+.battle-screen.enemy-attacking .party-hud{z-index:8!important}
+.battle-screen.enemy-attacking .command-panel{z-index:12!important}
+
+/* Enemy receives its own small shake + red flash on impact. */
+#enemySprite.enemy-damage-impact,
+.enemy-symbol.enemy-damage-impact{
+  animation:enemyDamageImpactV9 .38s ease!important;
+  transform-origin:center bottom!important;
+}
+@keyframes enemyDamageImpactV9{
+  0%{transform:translateX(0);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  18%{transform:translateX(-5px);filter:sepia(1) saturate(7) hue-rotate(-24deg) brightness(1.18) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  38%{transform:translateX(5px);filter:sepia(1) saturate(7) hue-rotate(-24deg) brightness(1.18) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  60%{transform:translateX(-3px);filter:sepia(.75) saturate(5) hue-rotate(-24deg) brightness(1.10) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  82%{transform:translateX(2px);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  100%{transform:translateX(0);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+}
+
+/* Keep the enemy fully visible for the whole downward attack motion. */
+.enemy-advance{animation:enemyAdvanceV9 .52s cubic-bezier(.18,.72,.28,1)!important}
+@keyframes enemyAdvanceV9{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  55%{transform:translate3d(0,70px,0) scale(1.05)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
