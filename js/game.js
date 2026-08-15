@@ -184,14 +184,14 @@ function applyHomeCommonScale(){
     const fitHeight=(rowHeight*.58)/naturalHeightMax;
     const scale=Math.min(HOME_COMMON_SCALE_MAX,fitWidth,fitHeight);
     valid.forEach(img=>{
-      img.style.width=`${Math.max(1,Math.round(img.naturalWidth*scale))}px`;
-      img.style.height=`${Math.max(1,Math.round(img.naturalHeight*scale))}px`;
+      img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');
+      img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');
     });
   });
 }
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=19" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=20" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
   bindImages($('#homeParty'));
   applyHomeCommonScale();
 }
