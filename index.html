@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body>
 <main id="app">
@@ -51,7 +51,7 @@
       <img src="play/02.png" alt="" class="loading-pink">
       <h1>NOW LOADING</h1>
       <p id="loadingText">冒険の準備をしています…</p>
-      <div class="loading-track"><i id="loadingBar"></i></div>
+      <div class="loading-track"><i id="loadingBar"></i></div><small id="loadingDetail" class="loading-detail">0%</small>
     </div>
   </section>
 
@@ -127,15 +127,15 @@
     <div id="battleFxLayer" class="fx-layer global-fx-layer"></div>
     <div id="centerMessage" class="center-message global-center-message"></div>
     <div id="actionBanner" class="action-banner"></div>
+    <div id="passiveCutin" class="passive-cutin" hidden><img id="passiveCutinCharacter" alt=""><div><small>PASSIVE</small><b id="passiveCutinText"></b></div></div>
     <div id="ultimateCutin" class="ultimate-cutin" hidden>
       <div class="cutin-character"><img id="cutinCharacter" alt=""><div><b id="cutinName"></b><p id="cutinQuote"></p></div></div>
-      <div class="ult-art-wrap"><img id="cutinUltArt" alt=""><span id="cutinUltFallback">ULTIMATE</span></div>
+      <div class="ult-art-wrap"><img id="cutinUltArt" alt=""><span id="cutinUltFallback">ULTIMATE</span><div class="ult-neon-trace" aria-hidden="true"><i class="n-top"></i><i class="n-right"></i><i class="n-bottom"></i><i class="n-left"></i></div></div>
     </div>
     <div id="skillSpriteFx" class="skill-sprite-fx" hidden><img alt=""></div>
 
     <section class="party-hud glass">
       <div id="allyStatus" class="ally-status"></div>
-      <div class="sub-row-label"><b>SUPER SUB</b><small>2～5 TURN AUTO</small></div>
       <div id="superStatus" class="super-status"></div>
       <div class="bench-label">RESERVE</div>
       <div id="benchStatus" class="bench-status"></div>
@@ -144,13 +144,13 @@
     <section class="command-panel glass safe-bottom">
       <div id="activeActorBar" class="active-actor-bar"></div>
       <div class="command-grid">
-        <button id="attackBtn" class="command-btn attack" type="button">こうげき<small>ATTACK</small></button>
-        <button id="skillBtn" class="command-btn skill" type="button">技・魔法<small>SKILL</small></button>
-        <button id="ultimateBtn" class="command-btn ultimate" type="button">必殺技<small>ULTIMATE</small></button>
-        <button id="defendBtn" class="command-btn defend" type="button">ぼうぎょ<small>GUARD</small></button>
-        <button id="itemBtn" class="command-btn item" type="button">アイテム<small>ITEM</small></button>
-        <button id="escapeBtn" class="command-btn escape" type="button">逃げる<small>ESCAPE</small></button>
-        <button id="switchBtn" class="command-btn switch" type="button">入れ替え<small>CHANGE</small></button>
+        <button id="attackBtn" class="command-btn attack" type="button" aria-label="攻撃"><img class="battle-command-icon" src="icon/02.png" alt="攻撃"></button>
+        <button id="skillBtn" class="command-btn skill" type="button" aria-label="魔法"><img class="battle-command-icon" src="icon/03.png" alt="魔法"></button>
+        <button id="ultimateBtn" class="command-btn ultimate" type="button" aria-label="必殺技"><img class="battle-command-icon" src="icon/04.png" alt="必殺技"></button>
+        <button id="defendBtn" class="command-btn defend" type="button" aria-label="防御"><img class="battle-command-icon" src="icon/05.png" alt="防御"></button>
+        <button id="itemBtn" class="command-btn item" type="button" aria-label="アイテム"><img class="battle-command-icon" src="icon/06.png" alt="アイテム"></button>
+        <button id="switchBtn" class="command-btn switch" type="button" aria-label="入れ替え"><img class="battle-command-icon" src="icon/07.png" alt="入れ替え"></button>
+        <button id="escapeBtn" class="command-btn escape" type="button" aria-label="逃げる"><img class="battle-command-icon" src="icon/08.png" alt="逃げる"></button>
       </div>
     </section>
 
@@ -170,7 +170,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js"></script>
-<script src="js/game.js"></script>
+<script src="js/data.js?v=15"></script>
+<script src="js/game.js?v=15"></script>
 </body>
 </html>

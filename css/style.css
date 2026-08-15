@@ -34,7 +34,6 @@
 
 
 /* v3: MAIN 4 + RESERVE 4 */
-.home-member{width:24%;margin:0 -1.1%}.home-member:nth-child(5){display:none}
 .formation-zone-label{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0;color:#aeb9c8}.formation-zone-label.first{padding-top:0}.formation-zone-label.reserve-start{margin-top:5px;padding-top:8px;border-top:1px solid rgba(255,255,255,.10)}.formation-zone-label b{font-size:8px;letter-spacing:.12em;color:#7fb7e4}.formation-zone-label span{font-size:6px}.formation-zone-label.reserve-start b{color:#d6a6e7}
 .tavern-slot{grid-template-columns:48px 1fr 56px 62px}.tavern-slot.main-slot{border-left:3px solid #6ca9d7}.tavern-slot.reserve-slot{border-left:3px solid #9d6fb1;background:#191e31}.tavern-slot.swap-selected{box-shadow:inset 0 0 0 2px #f0c35d}.slot-actions{display:flex!important;gap:4px!important;align-items:center}.slot-actions button{width:28px!important;height:28px!important;border-radius:9px!important;background:#26384d!important;color:#fff!important;font-size:12px}.slot-actions button:last-child{background:#3b2630!important;color:#f3a8ae!important}
 .training-zone-title{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0;border-top:1px solid transparent}.training-zone-title.reserve{margin-top:6px;padding-top:9px;border-top-color:rgba(255,255,255,.10)}.training-zone-title b{font-size:9px;color:#7fb7e4;letter-spacing:.12em}.training-zone-title.reserve b{color:#d7a7e9}.training-zone-title small{font-size:6px;color:#9ca9b8}.training-slot.main-slot{border-left:3px solid #6ca9d7}.training-slot.reserve-slot{border-left:3px solid #9d6fb1;background:#191e31}.training-slot-info{min-width:0}.training-slot-info>small{display:block;font-size:6px;color:#8fb5d4;margin:0 0 2px}.training-slot.reserve-slot .training-slot-info>small{color:#c9a0d9}
@@ -297,4 +296,350 @@
   .action-banner{left:3%!important;right:3%!important;min-height:48px!important;padding:7px 8px!important}
   .center-message,.global-center-message{font-size:13px!important;min-height:38px!important}
   .ult-art-wrap{width:70%!important;max-width:310px!important}
+}
+
+/* ===== v8 timing / ultimate flicker / enemy motion fixes ===== */
+.ultimate-cutin[hidden]{display:none!important;opacity:0!important;visibility:hidden!important}
+.ultimate-cutin:not([hidden]){display:block}
+/* Let the enemy finish its downward lunge instead of being clipped at the field edge. */
+.battle-field{overflow:visible!important}
+.enemy-area,.enemy-sprite-wrap{overflow:visible!important}
+.enemy-sprite-wrap{z-index:6}
+.enemy-sprite-wrap>img,.enemy-symbol{will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.enemy-advance{animation:enemyAdvanceV8 .50s cubic-bezier(.18,.72,.28,1)!important}
+@keyframes enemyAdvanceV8{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  56%{transform:translate3d(0,48px,0) scale(1.04)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
+/* Keep the final animation frame until the overlay is hard-hidden; prevents end-of-ultimate snap/reflash. */
+.ultimate-cutin.play{animation-fill-mode:both!important}
+.ultimate-cutin.play .cutin-character{animation-fill-mode:both!important}
+.ultimate-cutin.play .ult-art-wrap{animation-fill-mode:both!important}
+
+/* ===== v9 definitive ultimate / active turn / enemy layer / boss double action ===== */
+/* Ultimate presentation is driven only by Web Animations API in JS. No CSS animation may restart it. */
+.ultimate-cutin,
+.ultimate-cutin.play,
+.ultimate-cutin .cutin-character,
+.ultimate-cutin.play .cutin-character,
+.ultimate-cutin .ult-art-wrap,
+.ultimate-cutin.play .ult-art-wrap{
+  animation:none!important;
+}
+.ultimate-cutin[hidden]{display:none!important;opacity:0!important;visibility:hidden!important}
+
+/* Make the character whose command turn is active unmistakably larger. */
+.ally-hud-card.turn-active{
+  position:relative!important;
+  z-index:14!important;
+  transform:translateY(-11px) scale(1.10)!important;
+  transform-origin:center bottom!important;
+  overflow:visible!important;
+}
+.ally-hud-card.turn-active .ally-hud-art{
+  overflow:visible!important;
+}
+.ally-hud-card.turn-active .ally-hud-art img{
+  transform:translateY(-4px) scale(1.20)!important;
+  transform-origin:center bottom!important;
+  filter:drop-shadow(0 5px 5px rgba(0,0,0,.28))!important;
+}
+
+/* During an enemy lunge, lift the whole battle field above the party HUD.
+   This fixes the enemy body being hidden behind the beige player panel. */
+.battle-screen.enemy-attacking .battle-field{
+  z-index:10!important;
+  overflow:visible!important;
+}
+.battle-screen.enemy-attacking .enemy-area,
+.battle-screen.enemy-attacking .enemy-sprite-wrap,
+.battle-screen.enemy-attacking #enemySprite,
+.battle-screen.enemy-attacking .enemy-symbol{
+  z-index:18!important;
+  overflow:visible!important;
+}
+.battle-screen.enemy-attacking .party-hud{z-index:8!important}
+.battle-screen.enemy-attacking .command-panel{z-index:12!important}
+
+/* Enemy receives its own small shake + red flash on impact. */
+#enemySprite.enemy-damage-impact,
+.enemy-symbol.enemy-damage-impact{
+  animation:enemyDamageImpactV9 .38s ease!important;
+  transform-origin:center bottom!important;
+}
+@keyframes enemyDamageImpactV9{
+  0%{transform:translateX(0);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  18%{transform:translateX(-5px);filter:sepia(1) saturate(7) hue-rotate(-24deg) brightness(1.18) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  38%{transform:translateX(5px);filter:sepia(1) saturate(7) hue-rotate(-24deg) brightness(1.18) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  60%{transform:translateX(-3px);filter:sepia(.75) saturate(5) hue-rotate(-24deg) brightness(1.10) drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  82%{transform:translateX(2px);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+  100%{transform:translateX(0);filter:drop-shadow(0 9px 7px rgba(0,0,0,.4))}
+}
+
+/* Keep the enemy fully visible for the whole downward attack motion. */
+.enemy-advance{animation:enemyAdvanceV9 .52s cubic-bezier(.18,.72,.28,1)!important}
+@keyframes enemyAdvanceV9{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  55%{transform:translate3d(0,70px,0) scale(1.05)}
+  100%{transform:translate3d(0,0,0) scale(1)}
+}
+
+/* ===== v10 loading / ultimate hold / command icons / home alignment ===== */
+.loading-detail{display:block;margin-top:8px;font-size:8px;letter-spacing:.12em;color:#dce7f3;font-weight:900}
+
+/* Battle command buttons now use icon/02.png - icon/08.png. */
+.command-btn{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:3px 5px!important;text-align:left!important}
+.command-btn .battle-command-icon{width:25px!important;height:25px!important;object-fit:contain!important;flex:0 0 25px!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+.command-btn>span{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;min-width:0!important;line-height:1!important}
+.command-btn>span>b{font-size:7px!important;white-space:nowrap!important}
+.command-btn>span>small{font-size:4px!important;margin-top:3px!important;white-space:nowrap!important}
+.command-btn:disabled .battle-command-icon{opacity:.55}
+
+/* Square ultimate art remains after the top banner, then shakes before disappearing. */
+.ultimate-cutin{background:rgba(16,11,6,.46)!important}
+.ultimate-cutin .cutin-character,.ultimate-cutin .ult-art-wrap{animation:none!important}
+.ult-art-wrap{will-change:transform,opacity!important;backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important}
+.ult-art-wrap img{image-rendering:auto!important;transform:translateZ(0);backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important}
+
+/* Temporary generic ultimate impact effect. Later this is replaceable by a selected magic sprite. */
+.ultimate-impact-fx{
+  position:absolute!important;z-index:88!important;width:156px;height:156px;
+  transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
+  border:8px solid rgba(255,239,177,.95);
+  box-shadow:0 0 0 10px rgba(92,46,108,.50),0 0 0 20px rgba(255,255,255,.18),0 0 34px rgba(255,229,135,.80);
+  animation:ultimateImpactV10 .52s cubic-bezier(.15,.72,.25,1) both;
+}
+.ultimate-impact-fx::before,.ultimate-impact-fx::after{content:"";position:absolute;left:50%;top:50%;width:190px;height:18px;border-radius:999px;background:rgba(255,245,199,.92);transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 16px rgba(255,239,166,.7)}
+.ultimate-impact-fx::after{transform:translate(-50%,-50%) rotate(-45deg)}
+@keyframes ultimateImpactV10{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}58%{opacity:1;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.28)}}
+
+/* Enemy impact must never linger into the next actor. */
+#enemySprite.enemy-damage-impact,.enemy-symbol.enemy-damage-impact{animation-fill-mode:none!important}
+
+@media(max-height:720px){
+  .brand-box{width:158px!important;height:52px!important}.brand-logo{max-width:156px!important;max-height:50px!important}
+  .home-stage{top:15%!important;bottom:30%!important}.home-member{height:72%!important}
+  .command-btn .battle-command-icon{width:22px!important;height:22px!important;flex-basis:22px!important}
+  .command-btn>span>b{font-size:6px!important}
+  .ultimate-impact-fx{width:132px;height:132px}
+}
+
+/* ===== v11 HOME scale / compact party HUD / icon-only commands / passive cut-in ===== */
+/* Battle party panel: character art is the dominant element, data is compressed below it. */
+.party-hud{height:132px!important;bottom:calc(151px + var(--safe-bottom))!important;padding:3px 4px!important;grid-template-rows:101px 24px!important;gap:3px!important}
+.ally-status{height:101px!important;gap:3px!important}
+.ally-hud-card{padding:2px 2px 3px!important;border-radius:9px!important;justify-content:flex-end!important;overflow:visible!important;min-width:0!important}
+.ally-hud-art{height:68px!important;min-height:68px!important;overflow:visible!important;position:relative!important;display:flex!important;align-items:flex-end!important;justify-content:center!important}
+.ally-hud-art img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:scale(var(--battle-sprite-scale,1))!important;transform-origin:center bottom!important}
+.ally-title-line{height:11px;display:flex;align-items:center;justify-content:space-between;gap:2px;min-width:0;line-height:1}
+.ally-title-line b{font-size:6px;color:#2b2014;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ally-title-line em{font-size:5px;color:#65543f;font-style:normal;font-weight:900;white-space:nowrap}
+.ally-status-mark{position:absolute;top:1px;left:1px;padding:2px 3px;border-radius:999px;background:rgba(69,41,28,.85);color:#fff;font-size:4px;font-style:normal;font-weight:900;line-height:1;z-index:2}
+.ally-hud-line{font-size:4.5px!important;line-height:1!important;margin-top:1px!important;gap:2px!important;white-space:nowrap!important}
+.ally-gauges{margin-top:2px!important;gap:2px!important}.ally-gauges .gauge.tiny{height:4px!important}
+.ally-hud-card.turn-active{transform:translateY(-8px) scale(1.08)!important;z-index:20!important}
+.ally-hud-card.turn-active .ally-hud-art img{transform:scale(var(--battle-sprite-scale,1))!important;filter:drop-shadow(0 5px 5px rgba(0,0,0,.28))!important}
+
+/* No SUPER SUB label in battle. The two support portraits stay as a compact row only. */
+.sub-row-label{display:none!important}
+.super-status{height:24px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:3px!important}
+.super-chip{height:24px!important;padding:1px 3px!important;grid-template-columns:21px 1fr auto!important;border-radius:7px!important}
+.super-chip>span{width:21px!important;height:22px!important}.super-chip b{font-size:5px!important}.super-chip small{font-size:4px!important}.super-chip em{font-size:4px!important}
+.bench-label,.bench-status{display:none!important}
+
+/* Command images already contain their text, so the PNG itself is the button. */
+.command-panel{height:calc(145px + var(--safe-bottom))!important;padding:4px 6px calc(6px + var(--safe-bottom))!important}
+.active-actor-bar{height:26px!important;margin-bottom:3px!important}
+.command-grid{grid-template-columns:repeat(4,1fr)!important;gap:4px!important}
+.command-btn,.command-btn.attack,.command-btn.skill,.command-btn.ultimate,.command-btn.defend,.command-btn.item,.command-btn.switch,.command-btn.escape{
+  height:49px!important;padding:0!important;border:0!important;border-radius:10px!important;background:transparent!important;overflow:hidden!important;box-shadow:none!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.command-btn .battle-command-icon{width:100%!important;height:100%!important;max-width:none!important;object-fit:contain!important;flex:1 1 auto!important;filter:none!important}
+.command-btn>span{display:none!important}.command-btn:active{transform:scale(.97)!important}.command-btn:disabled{opacity:.38!important}
+
+/* Passive cut-in: character portrait + beige retro banner. */
+.passive-cutin{position:absolute;z-index:86;left:6%;right:6%;top:43%;height:86px;display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;gap:7px;padding:4px 12px 4px 4px;border-radius:15px;background:linear-gradient(180deg,#efe3cb,#e3d1b4);border:2px solid #33261a;box-shadow:0 4px 0 #000,0 8px 0 rgba(0,0,0,.55),0 12px 24px rgba(0,0,0,.28);color:#24190f;pointer-events:none;opacity:0}
+.passive-cutin[hidden]{display:none!important}.passive-cutin.play{animation:passiveCutinV11 .62s ease both}
+.passive-cutin>img{width:82px;height:94px;align-self:end;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 3px 3px rgba(0,0,0,.24))}
+.passive-cutin div{min-width:0}.passive-cutin small{display:block;font-size:7px;letter-spacing:.16em;color:#765a37;font-weight:1000;margin-bottom:3px}.passive-cutin b{display:block;font-size:14px;line-height:1.08;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#24190f;text-shadow:none}
+@keyframes passiveCutinV11{0%{opacity:0;transform:translateX(-16px) scale(.97)}14%,78%{opacity:1;transform:translateX(0) scale(1)}100%{opacity:0;transform:translateX(9px) scale(1)}}
+
+/* Magic frames must stay above the enemy and paint as decoded frames, not as a stale hidden image. */
+.skill-sprite-fx{z-index:84!important;width:176px!important;height:176px!important;opacity:1;will-change:opacity,transform;pointer-events:none!important}
+.skill-sprite-fx[hidden]{display:none!important}.skill-sprite-fx img{width:100%!important;height:100%!important;object-fit:contain!important;transform:translateZ(0);backface-visibility:hidden!important}
+
+/* Ultimate art: the extra hold is 0.3s in JS; keep transform available for the explicit shake. */
+.ult-art-wrap{will-change:transform,opacity!important;transform-origin:center center!important}
+
+@media(max-height:720px){
+  .home-top{height:calc(88px + var(--safe-top))!important}.brand-box{width:min(55%,210px)!important;height:72px!important;flex-basis:min(55%,210px)!important}.brand-logo{height:70px!important}
+  .party-hud{height:119px!important;bottom:calc(143px + var(--safe-bottom))!important;grid-template-rows:91px 22px!important}.ally-status{height:91px!important}.ally-hud-art{height:59px!important;min-height:59px!important}.super-status{height:22px!important}.super-chip{height:22px!important}
+  .command-panel{height:calc(138px + var(--safe-bottom))!important}.command-btn{height:45px!important}
+  .passive-cutin{height:76px;grid-template-columns:70px minmax(0,1fr)}.passive-cutin>img{width:70px;height:82px}.passive-cutin b{font-size:12px}
+}
+
+/* ===== v12: honor uploaded character scale / large HOME logo / stable ultimate ===== */
+/* Robust ultimate animations: no Web Animations API dependency. */
+.ultimate-cutin,.cutin-character,.ult-art-wrap{animation:none!important}
+.ult-v12-banner-in{animation:ultV12BannerIn .30s cubic-bezier(.2,.75,.28,1) both!important}
+.ult-v12-art-in{animation:ultV12ArtIn .66s cubic-bezier(.18,.76,.29,1) both!important}
+.ult-v12-art-shake{
+  opacity:1!important;visibility:visible!important;
+  animation:ultV12Shake .42s linear both!important;
+}
+@keyframes ultV12BannerIn{
+  from{transform:translateX(-110%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+@keyframes ultV12ArtIn{
+  0%{transform:translate(-50%,-150%) scale(.80);opacity:0}
+  72%{transform:translate(-50%,-42%) scale(1);opacity:1}
+  100%{transform:translate(-50%,-42%) scale(1.06);opacity:1}
+}
+@keyframes ultV12Shake{
+  0%,100%{transform:translate(-50%,-42%) scale(1.06) rotate(0deg)}
+  14%{transform:translate(calc(-50% - 14px),-42%) scale(1.08) rotate(-2.4deg)}
+  28%{transform:translate(calc(-50% + 14px),-42%) scale(1.08) rotate(2.4deg)}
+  42%{transform:translate(calc(-50% - 11px),-42%) scale(1.08) rotate(-2deg)}
+  56%{transform:translate(calc(-50% + 11px),-42%) scale(1.08) rotate(2deg)}
+  70%{transform:translate(calc(-50% - 7px),-42%) scale(1.07) rotate(-1.2deg)}
+  84%{transform:translate(calc(-50% + 7px),-42%) scale(1.07) rotate(1.2deg)}
+}
+
+/* ===== v14: fast background warmup + synchronized ultimate presentation ===== */
+.ultimate-cutin.ult-v14-live .cutin-character{
+  animation:ultV14BannerDrift 1.42s ease-in-out both!important;
+  transform-origin:center center!important;
+  will-change:transform,opacity!important;
+}
+.ultimate-cutin.ult-v14-live .ult-art-wrap{
+  animation:ultV14ArtSettle .42s cubic-bezier(.18,.76,.29,1) both!important;
+  will-change:transform,opacity!important;
+}
+@keyframes ultV14BannerDrift{
+  0%{transform:translateX(-5px) scale(.985);opacity:0}
+  12%{transform:translateX(0) scale(1);opacity:1}
+  36%{transform:translateX(3px) scale(1.012);opacity:1}
+  61%{transform:translateX(-3px) scale(1.024);opacity:1}
+  82%{transform:translateX(2px) scale(1.034);opacity:1}
+  100%{transform:translateX(0) scale(1.04);opacity:1}
+}
+@keyframes ultV14ArtSettle{
+  0%{transform:translate(-50%,-48%) scale(.94);opacity:0}
+  100%{transform:translate(-50%,-42%) scale(1.06);opacity:1}
+}
+.ult-neon-trace{position:absolute;z-index:9;inset:-5px;pointer-events:none;opacity:0;border-radius:20px;overflow:visible}
+.ult-neon-trace i{position:absolute;display:block;opacity:0;background:#55f7ff;box-shadow:0 0 5px #55f7ff,0 0 10px #55f7ff,0 0 16px #d15cff,0 0 22px rgba(209,92,255,.8)}
+.ult-neon-trace .n-top{left:0;top:0;height:3px;width:0;border-radius:999px}
+.ult-neon-trace .n-right{right:0;top:0;width:3px;height:0;border-radius:999px;background:#b369ff}
+.ult-neon-trace .n-bottom{right:0;bottom:0;height:3px;width:0;border-radius:999px;background:#ff62d6}
+.ult-neon-trace .n-left{left:0;bottom:0;width:3px;height:0;border-radius:999px}
+.ult-neon-trace.active{opacity:1}
+.ult-neon-trace.active .n-top{animation:ultNeonTop .075s linear forwards!important}
+.ult-neon-trace.active .n-right{animation:ultNeonRight .075s .075s linear forwards!important}
+.ult-neon-trace.active .n-bottom{animation:ultNeonBottom .075s .15s linear forwards!important}
+.ult-neon-trace.active .n-left{animation:ultNeonLeft .075s .225s linear forwards!important}
+@keyframes ultNeonTop{from{width:0;opacity:1}to{width:100%;opacity:1}}
+@keyframes ultNeonRight{from{height:0;opacity:1}to{height:100%;opacity:1}}
+@keyframes ultNeonBottom{from{width:0;opacity:1}to{width:100%;opacity:1}}
+@keyframes ultNeonLeft{from{height:0;opacity:1}to{height:100%;opacity:1}}
+
+
+/* ===== v15 CANONICAL HOME =====
+   The uploaded play/*.png canvas is the source of truth for character size.
+   No per-character scale, nth-child scale, translate, or CSS variable correction is allowed here. */
+.home-top{
+  height:calc(122px + var(--safe-top))!important;
+  padding:calc(3px + var(--safe-top)) 6px 0!important;
+  overflow:visible!important;
+}
+.brand-box{
+  position:absolute!important;
+  left:4px!important;
+  top:calc(2px + var(--safe-top))!important;
+  width:76%!important;
+  max-width:330px!important;
+  height:108px!important;
+  flex:none!important;
+  overflow:visible!important;
+  z-index:2!important;
+}
+.brand-logo{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:left top!important;
+  transform:scale(1.26)!important;
+  transform-origin:left top!important;
+}
+.wallet{
+  position:absolute!important;
+  right:6px!important;
+  top:calc(9px + var(--safe-top))!important;
+  z-index:4!important;
+}
+.home-stage{
+  left:3%!important;
+  right:3%!important;
+  top:16%!important;
+  bottom:31%!important;
+  align-items:center!important;
+}
+.home-party{
+  width:100%!important;
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+}
+.home-member,
+.home-member:nth-child(1),
+.home-member:nth-child(2),
+.home-member:nth-child(3),
+.home-member:nth-child(4),
+.home-member:nth-child(5){
+  display:flex!important;
+  width:25%!important;
+  height:80%!important;
+  margin:0!important;
+  transform:none!important;
+  align-self:center!important;
+  overflow:visible!important;
+  z-index:1!important;
+}
+.home-sprite{
+  width:100%!important;
+  height:calc(100% - 26px)!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  overflow:visible!important;
+}
+.home-sprite img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  transform-origin:center bottom!important;
+}
+.home-member small,.home-member>b{
+  text-align:center!important;
+  line-height:1!important;
+}
+@media(max-height:720px){
+  .home-top{height:calc(108px + var(--safe-top))!important}
+  .brand-box{width:74%!important;max-width:300px!important;height:94px!important}
+  .brand-logo{transform:scale(1.22)!important}
+  .home-stage{top:15%!important;bottom:30%!important}
+  .home-member{height:78%!important}
 }
