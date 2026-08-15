@@ -691,3 +691,76 @@
 @media(max-height:720px){
   .home-stage{top:14.5%!important;bottom:30.5%!important}
 }
+
+/* ===== v21: mobile asset pipeline / smooth magic / complete ultimate frame ===== */
+/* Magic: all decoded frames are stacked once, then only opacity changes during playback. */
+.skill-sprite-fx{
+  position:absolute!important;
+  z-index:84!important;
+  width:min(46vw,184px)!important;
+  height:min(46vw,184px)!important;
+  overflow:visible!important;
+  contain:layout style!important;
+}
+.skill-sprite-fx .skill-frame{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  transform:none!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  pointer-events:none!important;
+}
+.skill-sprite-fx .skill-frame.active{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+/* Ultimate: a fixed safe square stage prevents portrait Safari from clipping large art. */
+.ultimate-cutin{
+  overflow:visible!important;
+  isolation:isolate!important;
+}
+.ultimate-cutin .ult-art-wrap{
+  left:50%!important;
+  top:47%!important;
+  width:min(72vw,38vh,330px)!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:1/1!important;
+  overflow:visible!important;
+  transform-origin:center center!important;
+}
+.ultimate-cutin .ult-art-wrap>img,
+.ultimate-cutin .ult-art-wrap>span{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  clip-path:none!important;
+}
+.ultimate-cutin .ult-art-wrap>span{display:none!important}
+.ultimate-cutin .ult-art-wrap>img.asset-missing+span{display:flex!important}
+.ultimate-cutin .ult-neon-trace{overflow:visible!important}
+
+@media(max-height:720px){
+  .ultimate-cutin .ult-art-wrap{
+    top:46%!important;
+    width:min(69vw,36vh,285px)!important;
+  }
+  .skill-sprite-fx{width:min(43vw,168px)!important;height:min(43vw,168px)!important}
+}
+\n\n/* ===== v22: procedural weapon + attribute normal-attack animations ===== */\n.weapon-attack-fx{\n  position:absolute;z-index:86;width:142px;height:142px;pointer-events:none;\n  transform:translate(-50%,-50%);overflow:visible;contain:layout style;\n  --fx-rate:1;--e1:#f4f1df;--e2:#ffffff;--e3:rgba(255,255,255,.55);\n}\n.weapon-attack-fx.element-fire{--e1:#ff5b32;--e2:#ffc247;--e3:rgba(255,71,28,.68)}\n.weapon-attack-fx.element-water{--e1:#37b8ff;--e2:#9feaff;--e3:rgba(30,144,255,.62)}\n.weapon-attack-fx.element-thunder{--e1:#ffe23f;--e2:#f8fbff;--e3:rgba(163,105,255,.7)}\n.weapon-attack-fx.element-earth{--e1:#a26a36;--e2:#e1bd67;--e3:rgba(93,62,33,.62)}\n.weapon-attack-fx.element-wind{--e1:#7ce7c4;--e2:#d8fff1;--e3:rgba(73,203,162,.6)}\n.weapon-attack-fx.element-light{--e1:#fff7a8;--e2:#ffffff;--e3:rgba(255,233,103,.65)}\n.weapon-attack-fx.element-dark{--e1:#7022b8;--e2:#dd65ff;--e3:rgba(29,12,47,.78)}\n.weapon-attack-fx.element-neutral{--e1:#e7edf2;--e2:#ffffff;--e3:rgba(164,177,188,.58)}\n.weapon-attack-fx i,.weapon-attack-fx span{position:absolute;display:block;box-sizing:border-box}\n\n/* Large sword: slow, thick, heavy diagonal hit. */\n.weapon-greatsword .w-blade{left:50%;top:50%;width:118px;height:18px;border-radius:999px;background:var(--e2);border:4px solid #171717;box-shadow:0 0 0 4px var(--e1);transform-origin:center}\n.weapon-greatsword .w-blade-a{animation:wGreatA calc(360ms * var(--fx-rate)) cubic-bezier(.16,.72,.3,1) both}\n.weapon-greatsword .w-blade-b{animation:wGreatB calc(360ms * var(--fx-rate)) cubic-bezier(.16,.72,.3,1) both}\n.weapon-greatsword .w-core{left:50%;top:50%;width:38px;height:38px;border:5px solid var(--e1);border-radius:50%;animation:wCore calc(360ms * var(--fx-rate)) ease-out both}\n@keyframes wGreatA{0%{opacity:0;transform:translate(-50%,-50%) rotate(-58deg) scaleX(.08)}28%{opacity:1}68%{transform:translate(-50%,-50%) rotate(-34deg) scaleX(1)}100%{opacity:0;transform:translate(-50%,-50%) rotate(-24deg) scaleX(1.16)}}\n@keyframes wGreatB{0%,24%{opacity:0;transform:translate(-50%,-50%) rotate(38deg) scaleX(.08)}48%{opacity:.95}82%{transform:translate(-50%,-50%) rotate(52deg) scaleX(.82)}100%{opacity:0;transform:translate(-50%,-50%) rotate(56deg) scaleX(1)}}\n\n/* Katana: fast thin multi-slash. */\n.weapon-katana .w-katana{left:50%;top:50%;width:124px;height:7px;border-radius:999px;background:var(--e2);border:2px solid #171717;box-shadow:0 0 0 2px var(--e1);opacity:0}\n.weapon-katana .k1{animation:wKatana1 calc(270ms * var(--fx-rate)) ease-out both}\n.weapon-katana .k2{animation:wKatana2 calc(270ms * var(--fx-rate)) 45ms ease-out both}\n.weapon-katana .k3{animation:wKatana3 calc(250ms * var(--fx-rate)) 80ms ease-out both}\n@keyframes wKatana1{0%{opacity:0;transform:translate(-50%,-50%) rotate(-18deg) scaleX(.06)}24%,72%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(-18deg) scaleX(1.1)}}\n@keyframes wKatana2{0%{opacity:0;transform:translate(-50%,-50%) rotate(35deg) scaleX(.06)}24%,72%{opacity:.95}100%{opacity:0;transform:translate(-50%,-50%) rotate(35deg) scaleX(1.02)}}\n@keyframes wKatana3{0%{opacity:0;transform:translate(-50%,-50%) rotate(2deg) scaleX(.06)}28%,68%{opacity:.8}100%{opacity:0;transform:translate(-50%,-50%) rotate(2deg) scaleX(.86)}}\n\n/* One-hand sword fallback. */\n.weapon-sword .w-sword-arc{left:50%;top:50%;width:104px;height:104px;border:10px solid transparent;border-top-color:var(--e1);border-right-color:var(--e2);border-radius:50%;animation:wSword calc(330ms * var(--fx-rate)) ease-out both}\n.weapon-sword .w-core{left:50%;top:50%;width:28px;height:28px;border-radius:50%;background:var(--e1);animation:wCore calc(330ms * var(--fx-rate)) ease-out both}\n@keyframes wSword{0%{opacity:0;transform:translate(-50%,-50%) rotate(-100deg) scale(.35)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(65deg) scale(1.15)}}\n\n/* Spear: the whole effect travels from actor to target. */\n.weapon-spear{width:64px;height:64px}\n.weapon-spear .w-pierce{left:50%;top:50%;width:72px;height:9px;border-radius:999px;background:var(--e2);border:2px solid #171717;box-shadow:0 0 0 3px var(--e1);transform:translate(-50%,-50%) rotate(-52deg)}\n.weapon-spear .w-spear-ring{left:50%;top:50%;width:42px;height:42px;border:5px solid var(--e1);border-radius:50%;transform:translate(-50%,-50%)}\n.weapon-spear .w-core{left:50%;top:50%;width:13px;height:13px;border-radius:50%;background:var(--e2);transform:translate(-50%,-50%)}\n.weapon-spear{animation:wTravel calc(350ms * var(--fx-rate)) cubic-bezier(.17,.72,.25,1) both}\n@keyframes wTravel{0%{opacity:.15;transform:translate(-50%,-50%) translate(0,0) scale(.65)}18%{opacity:1}72%{opacity:1;transform:translate(-50%,-50%) translate(var(--travel-x),var(--travel-y)) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--travel-x),var(--travel-y)) scale(1.28)}}\n\n/* Gun: compact projectile, long trail and small impact. */\n.weapon-gun{width:34px;height:34px;animation:wGunTravel calc(320ms * var(--fx-rate)) cubic-bezier(.12,.7,.22,1) both}\n.weapon-gun .w-bullet{left:50%;top:50%;width:22px;height:10px;border-radius:999px;background:var(--e2);border:2px solid #171717;box-shadow:0 0 0 3px var(--e1);transform:translate(-50%,-50%) rotate(-58deg)}\n.weapon-gun .w-trail{right:12px;top:50%;width:48px;height:5px;border-radius:999px;background:linear-gradient(90deg,transparent,var(--e1));transform:translateY(-50%) rotate(-58deg);transform-origin:right center}\n.weapon-gun .w-gun-impact{left:50%;top:50%;width:34px;height:34px;border:5px solid var(--e2);border-radius:50%;opacity:0;animation:wGunPop calc(320ms * var(--fx-rate)) ease-out both}\n@keyframes wGunTravel{0%{opacity:0;transform:translate(-50%,-50%) translate(0,0) scale(.75)}12%{opacity:1}78%{opacity:1;transform:translate(-50%,-50%) translate(var(--travel-x),var(--travel-y)) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--travel-x),var(--travel-y)) scale(1.12)}}\n@keyframes wGunPop{0%,65%{opacity:0;transform:translate(-50%,-50%) scale(.15)}78%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}}\n\n/* Staff: rune circles + orb, intentionally different from the magic command sprites. */\n.weapon-staff .w-rune{left:50%;top:50%;border:5px solid var(--e1);border-radius:50%;transform:translate(-50%,-50%)}\n.weapon-staff .r1{width:92px;height:92px;border-style:dashed;animation:wRune1 calc(390ms * var(--fx-rate)) ease-out both}\n.weapon-staff .r2{width:58px;height:58px;border-color:var(--e2);animation:wRune2 calc(390ms * var(--fx-rate)) ease-out both}\n.weapon-staff .w-orb{left:50%;top:50%;width:27px;height:27px;border-radius:50%;background:var(--e2);border:4px solid #171717;box-shadow:0 0 0 6px var(--e1);animation:wOrb calc(390ms * var(--fx-rate)) ease-out both}\n@keyframes wRune1{0%{opacity:0;transform:translate(-50%,-50%) rotate(-90deg) scale(.3)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(90deg) scale(1.25)}}\n@keyframes wRune2{0%{opacity:0;transform:translate(-50%,-50%) rotate(80deg) scale(.2)}28%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(-80deg) scale(1.05)}}\n@keyframes wOrb{0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}40%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.9)}}\n@keyframes wCore{0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}35%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(2)}}\n\n/* Attribute layer. Weapon silhouette stays readable while each element gets its own motion language. */\n.weapon-attack-fx .e-overlay{inset:0;pointer-events:none}\n.weapon-attack-fx .e-overlay i{left:50%;top:50%;width:13px;height:13px;background:var(--e1);border:2px solid #171717;opacity:0}\n.element-fire .e-overlay i{border-radius:55% 55% 55% 8%;animation:eFire calc(380ms * var(--fx-rate)) ease-out both}\n.element-water .e-overlay i{border-radius:50%;background:transparent;border:4px solid var(--e1);animation:eWater calc(420ms * var(--fx-rate)) ease-out both}\n.element-thunder .e-overlay i{width:7px;height:25px;background:var(--e1);clip-path:polygon(55% 0,100% 0,65% 40%,100% 40%,28% 100%,45% 55%,0 55%);border:0;animation:eThunder calc(340ms * var(--fx-rate)) steps(2,end) both}\n.element-earth .e-overlay i{width:16px;height:13px;border-radius:3px;background:var(--e1);animation:eEarth calc(410ms * var(--fx-rate)) ease-out both}\n.element-wind .e-overlay i{width:37px;height:16px;background:transparent;border:4px solid var(--e1);border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;animation:eWind calc(410ms * var(--fx-rate)) ease-out both}\n.element-light .e-overlay i{width:7px;height:32px;border:0;border-radius:999px;background:var(--e2);transform-origin:center bottom;animation:eLight calc(370ms * var(--fx-rate)) ease-out both}\n.element-dark .e-overlay i{border-radius:50%;background:var(--e1);border:3px solid var(--e2);animation:eDark calc(430ms * var(--fx-rate)) ease-out both}\n.element-neutral .e-overlay i{width:9px;height:28px;border-radius:999px;background:var(--e2);border:0;animation:eNeutral calc(350ms * var(--fx-rate)) ease-out both}\n.weapon-attack-fx .e-overlay i:nth-child(1){--a:0deg;animation-delay:0ms}.weapon-attack-fx .e-overlay i:nth-child(2){--a:60deg;animation-delay:18ms}.weapon-attack-fx .e-overlay i:nth-child(3){--a:120deg;animation-delay:36ms}.weapon-attack-fx .e-overlay i:nth-child(4){--a:180deg;animation-delay:54ms}.weapon-attack-fx .e-overlay i:nth-child(5){--a:240deg;animation-delay:72ms}.weapon-attack-fx .e-overlay i:nth-child(6){--a:300deg;animation-delay:90ms}\n@keyframes eFire{0%,18%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(0) scale(.4)}35%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-66px) scale(1.15)}}\n@keyframes eWater{0%,12%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-12px) scale(.25)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-57px) scale(1.45)}}\n@keyframes eThunder{0%,20%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-13px) scale(.45)}28%,65%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-62px) scale(1.05)}}\n@keyframes eEarth{0%,18%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-8px) scale(.4)}35%{opacity:1}78%{opacity:1;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-49px) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-55px) scale(.8)}}\n@keyframes eWind{0%,16%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-12px) scale(.35)}34%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(calc(var(--a) + 120deg)) translateY(-66px) scale(1.15)}}\n@keyframes eLight{0%,14%{opacity:0;transform:translate(-50%,-100%) rotate(var(--a)) translateY(-8px) scaleY(.2)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-100%) rotate(var(--a)) translateY(-63px) scaleY(1.25)}}\n@keyframes eDark{0%,18%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-8px) scale(.25)}36%{opacity:.95}100%{opacity:0;transform:translate(-50%,-50%) rotate(calc(var(--a) - 75deg)) translateY(-53px) scale(1.4)}}\n@keyframes eNeutral{0%,18%{opacity:0;transform:translate(-50%,-100%) rotate(var(--a)) translateY(-6px) scaleY(.2)}38%{opacity:.9}100%{opacity:0;transform:translate(-50%,-100%) rotate(var(--a)) translateY(-55px) scaleY(1)}}\n.weapon-attack-fx.quick{filter:saturate(1.1) brightness(1.08)}\n@media(max-width:380px){.weapon-attack-fx{width:126px;height:126px}}\n
