@@ -170,37 +170,23 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
 }
 async function travelTo(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);}
 
-function applyHomePartyScale(){
-  const root=$('#homeParty');
-  if(!root)return;
-  const imgs=$$('[data-home-party-img]',root);
-  const members=$$('.home-member',root);
-  if(!imgs.length||!members.length)return;
-  const ready=imgs.map(img=>img.complete&&img.naturalWidth?Promise.resolve():new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});}));
-  Promise.all(ready).then(()=>{
-    const valid=imgs.filter(img=>img.naturalWidth&&img.naturalHeight);
-    if(!valid.length)return;
-
-    // 4枚の「画像そのものの比率」は維持するが、HOME内では共通の物差しで縮小する。
-    // natural pixel をそのまま画面サイズへ持ち込まず、スマホ向けの基準身長を上限にする。
-    const maxH=Math.max(...valid.map(img=>img.naturalHeight));
-    const maxW=Math.max(...valid.map(img=>img.naturalWidth));
-    const memberW=members[0]?.getBoundingClientRect().width||88;
-    const rootH=root.getBoundingClientRect().height||420;
-
-    const targetH=Math.min(265,Math.max(185,rootH*0.46));
-    const targetW=Math.min(105,Math.max(72,memberW*0.90));
-    const scale=Math.min(targetH/maxH,targetW/maxW);
-
-    valid.forEach(img=>{
-      img.style.width=`${Math.max(1,Math.round(img.naturalWidth*scale))}px`;
-      img.style.height=`${Math.max(1,Math.round(img.naturalHeight*scale))}px`;
-    });
-  });
-}
+// HOMEでの見た目サイズはこの1か所だけで管理する。
+// 素材画像そのものは変更せず、例外キャラだけ最小限の視覚補正を行う。
+const HOME_VISUAL_SCALE=Object.freeze({
+  default:1.00,
+  pink:0.80,
+  desert:1.18
+});
+function homeVisualScale(id){return HOME_VISUAL_SCALE[id]??HOME_VISUAL_SCALE.default;}
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=17" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));applyHomePartyScale();
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{
+    const p=player(id);
+    if(!p)return'';
+    const visualScale=homeVisualScale(id);
+    return`<div class="home-member slot-${i}" style="--home-visual-scale:${visualScale}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=18" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`;
+  }).join('');
+  bindImages($('#homeParty'));
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -608,6 +594,5 @@ function bindEvents(){
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
 }
 
-window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomePartyScale();});
 lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);setTimeout(startFastBackgroundWarmup,80);
 })();
