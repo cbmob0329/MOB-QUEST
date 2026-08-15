@@ -180,20 +180,27 @@ function applyHomePartyScale(){
   Promise.all(ready).then(()=>{
     const valid=imgs.filter(img=>img.naturalWidth&&img.naturalHeight);
     if(!valid.length)return;
+
+    // 4枚の「画像そのものの比率」は維持するが、HOME内では共通の物差しで縮小する。
+    // natural pixel をそのまま画面サイズへ持ち込まず、スマホ向けの基準身長を上限にする。
     const maxH=Math.max(...valid.map(img=>img.naturalHeight));
     const maxW=Math.max(...valid.map(img=>img.naturalWidth));
-    const boxH=Math.max(120,Math.round(root.clientHeight*0.78));
-    const boxW=Math.max(56,Math.round((members[0]?.clientWidth||88)*0.96));
-    const scale=Math.min(boxH/maxH, boxW/maxW);
+    const memberW=members[0]?.getBoundingClientRect().width||88;
+    const rootH=root.getBoundingClientRect().height||420;
+
+    const targetH=Math.min(265,Math.max(185,rootH*0.46));
+    const targetW=Math.min(105,Math.max(72,memberW*0.90));
+    const scale=Math.min(targetH/maxH,targetW/maxW);
+
     valid.forEach(img=>{
-      img.style.width=`${Math.round(img.naturalWidth*scale)}px`;
-      img.style.height=`${Math.round(img.naturalHeight*scale)}px`;
+      img.style.width=`${Math.max(1,Math.round(img.naturalWidth*scale))}px`;
+      img.style.height=`${Math.max(1,Math.round(img.naturalHeight*scale))}px`;
     });
   });
 }
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=16" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));applyHomePartyScale();
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=17" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));applyHomePartyScale();
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
