@@ -170,9 +170,30 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
 }
 async function travelTo(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);}
 
+function applyHomePartyScale(){
+  const root=$('#homeParty');
+  if(!root)return;
+  const imgs=$$('[data-home-party-img]',root);
+  const members=$$('.home-member',root);
+  if(!imgs.length||!members.length)return;
+  const ready=imgs.map(img=>img.complete&&img.naturalWidth?Promise.resolve():new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});}));
+  Promise.all(ready).then(()=>{
+    const valid=imgs.filter(img=>img.naturalWidth&&img.naturalHeight);
+    if(!valid.length)return;
+    const maxH=Math.max(...valid.map(img=>img.naturalHeight));
+    const maxW=Math.max(...valid.map(img=>img.naturalWidth));
+    const boxH=Math.max(120,Math.round(root.clientHeight*0.78));
+    const boxW=Math.max(56,Math.round((members[0]?.clientWidth||88)*0.96));
+    const scale=Math.min(boxH/maxH, boxW/maxW);
+    valid.forEach(img=>{
+      img.style.width=`${Math.round(img.naturalWidth*scale)}px`;
+      img.style.height=`${Math.round(img.naturalHeight*scale)}px`;
+    });
+  });
+}
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img src="${p.image}" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=16" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');bindImages($('#homeParty'));applyHomePartyScale();
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -580,5 +601,6 @@ function bindEvents(){
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
 }
 
+window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomePartyScale();});
 lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);setTimeout(startFastBackgroundWarmup,80);
 })();
