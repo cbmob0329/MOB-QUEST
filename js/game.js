@@ -8,12 +8,6 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const ASSET_REV='15';
-function assetUrl(src){
-  if(!src||/^(data:|blob:)/i.test(src))return src;
-  const join=src.includes('?')?'&':'?';
-  return src.includes('mqv=')?src:`${src}${join}mqv=${ASSET_REV}`;
-}
 
 const screens={home:$('#homeScreen'),loading:$('#loadingScreen'),tavern:$('#tavernScreen'),training:$('#trainingScreen'),adventure:$('#adventureScreen'),battle:$('#battleScreen')};
 const defaultParty=[['yusha',30],['pink',30],['desert',30],['nyoro',30],['nekoku',30],['jerry',30],['denden',30],['money',30],['riro',30],['tetsu',30]];
@@ -49,20 +43,19 @@ function defaultAdventure(){return {progress:0,battleReady:false,completed:false
 function loadAdventure(){try{const v=JSON.parse(localStorage.getItem('mobQuestAdventureV4'));return v&&typeof v==='object'?{...defaultAdventure(),...v}:defaultAdventure();}catch(_){return defaultAdventure();}}
 function saveAdventure(){try{localStorage.setItem('mobQuestAdventureV4',JSON.stringify(state.adventure));}catch(_){} }
 
-function bindImage(img){if(!img)return;if(img.dataset.bound!=='1'){img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=assetUrl(f);return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}const raw=img.getAttribute('src');if(raw&&img.dataset.assetRev!==ASSET_REV){img.dataset.assetRev=ASSET_REV;const v=assetUrl(raw);if(img.src!==new URL(v,document.baseURI).href)img.src=v;}}
+function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
-function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.dataset.assetRev=ASSET_REV;img.src=assetUrl(src);bindImage(img);}
+function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
 
 const assetPreloadCache=new Map();
 const assetImageCache=new Map();
 function preloadAsset(src,priority='auto'){
   if(!src)return Promise.resolve(false);
-  const url=assetUrl(src);
-  if(assetPreloadCache.has(url))return assetPreloadCache.get(url);
+  if(assetPreloadCache.has(src))return assetPreloadCache.get(src);
   const img=new Image();
   img.decoding='async';
   try{img.fetchPriority=priority;}catch(_){}
-  assetImageCache.set(url,img);
+  assetImageCache.set(src,img);
   const task=new Promise(resolve=>{
     let settled=false;
     const done=async ok=>{
@@ -72,10 +65,10 @@ function preloadAsset(src,priority='auto'){
     };
     img.onload=()=>done(true);
     img.onerror=()=>done(false);
-    img.src=url;
+    img.src=src;
     if(img.complete&&img.naturalWidth>0)done(true);
   });
-  assetPreloadCache.set(url,task);
+  assetPreloadCache.set(src,task);
   return task;
 }
 async function preloadAssets(paths,onProgress){
@@ -114,9 +107,8 @@ function startFastBackgroundWarmup(){
 async function ensureDomImageReady(img,src,timeout=650){
   if(!img||!src)return false;
   try{await Promise.race([preloadAsset(src,'high'),new Promise(r=>setTimeout(()=>r(false),timeout))]);}catch(_){}
-  const versioned=assetUrl(src);
-  const abs=new URL(versioned,document.baseURI).href;
-  if(img.src!==abs)img.src=versioned;
+  const abs=new URL(src,document.baseURI).href;
+  if(img.src!==abs)img.src=src;
   try{
     if(img.decode)await Promise.race([img.decode(),new Promise(r=>setTimeout(r,timeout))]);
     else if(!img.complete)await Promise.race([new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});}),new Promise(r=>setTimeout(r,timeout))]);
@@ -170,23 +162,38 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
 }
 async function travelTo(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);}
 
-// HOMEでの見た目サイズはこの1か所だけで管理する。
-// 素材画像そのものは変更せず、例外キャラだけ最小限の視覚補正を行う。
-const HOME_VISUAL_SCALE=Object.freeze({
-  default:1.00,
-  pink:0.80,
-  desert:1.18
-});
-function homeVisualScale(id){return HOME_VISUAL_SCALE[id]??HOME_VISUAL_SCALE.default;}
+const HOME_COMMON_SCALE_MAX=0.16;
+function applyHomeCommonScale(){
+  const root=$('#homeParty');
+  if(!root)return;
+  const imgs=$$('[data-home-party-img]',root);
+  if(!imgs.length)return;
+  const wait=imgs.map(img=>img.complete&&img.naturalWidth?Promise.resolve():new Promise(resolve=>{
+    const done=()=>resolve();
+    img.addEventListener('load',done,{once:true});
+    img.addEventListener('error',done,{once:true});
+  }));
+  Promise.all(wait).then(()=>{
+    const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);
+    if(!valid.length)return;
+    const naturalWidthTotal=valid.reduce((sum,img)=>sum+img.naturalWidth,0);
+    const naturalHeightMax=Math.max(...valid.map(img=>img.naturalHeight));
+    const rowWidth=Math.max(1,root.clientWidth-10);
+    const rowHeight=Math.max(1,root.clientHeight-34);
+    const fitWidth=rowWidth/naturalWidthTotal;
+    const fitHeight=(rowHeight*.58)/naturalHeightMax;
+    const scale=Math.min(HOME_COMMON_SCALE_MAX,fitWidth,fitHeight);
+    valid.forEach(img=>{
+      img.style.width=`${Math.max(1,Math.round(img.naturalWidth*scale))}px`;
+      img.style.height=`${Math.max(1,Math.round(img.naturalHeight*scale))}px`;
+    });
+  });
+}
 function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{
-    const p=player(id);
-    if(!p)return'';
-    const visualScale=homeVisualScale(id);
-    return`<div class="home-member slot-${i}" style="--home-visual-scale:${visualScale}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=18" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`;
-  }).join('');
+  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${p.image}?mqv=19" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
   bindImages($('#homeParty'));
+  applyHomeCommonScale();
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -594,5 +601,6 @@ function bindEvents(){
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
 }
 
+window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();});
 lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();preloadAssets(['icon/01.png','back/rpgmain.png',...state.party.slice(0,4).map(([id])=>player(id)?.image)]);setTimeout(startFastBackgroundWarmup,80);
 })();

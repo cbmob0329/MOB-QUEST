@@ -34,6 +34,7 @@
 
 
 /* v3: MAIN 4 + RESERVE 4 */
+.home-member{width:24%;margin:0 -1.1%}.home-member:nth-child(5){display:none}
 .formation-zone-label{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0;color:#aeb9c8}.formation-zone-label.first{padding-top:0}.formation-zone-label.reserve-start{margin-top:5px;padding-top:8px;border-top:1px solid rgba(255,255,255,.10)}.formation-zone-label b{font-size:8px;letter-spacing:.12em;color:#7fb7e4}.formation-zone-label span{font-size:6px}.formation-zone-label.reserve-start b{color:#d6a6e7}
 .tavern-slot{grid-template-columns:48px 1fr 56px 62px}.tavern-slot.main-slot{border-left:3px solid #6ca9d7}.tavern-slot.reserve-slot{border-left:3px solid #9d6fb1;background:#191e31}.tavern-slot.swap-selected{box-shadow:inset 0 0 0 2px #f0c35d}.slot-actions{display:flex!important;gap:4px!important;align-items:center}.slot-actions button{width:28px!important;height:28px!important;border-radius:9px!important;background:#26384d!important;color:#fff!important;font-size:12px}.slot-actions button:last-child{background:#3b2630!important;color:#f3a8ae!important}
 .training-zone-title{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:4px 4px 0;border-top:1px solid transparent}.training-zone-title.reserve{margin-top:6px;padding-top:9px;border-top-color:rgba(255,255,255,.10)}.training-zone-title b{font-size:9px;color:#7fb7e4;letter-spacing:.12em}.training-zone-title.reserve b{color:#d7a7e9}.training-zone-title small{font-size:6px;color:#9ca9b8}.training-slot.main-slot{border-left:3px solid #6ca9d7}.training-slot.reserve-slot{border-left:3px solid #9d6fb1;background:#191e31}.training-slot-info{min-width:0}.training-slot-info>small{display:block;font-size:6px;color:#8fb5d4;margin:0 0 2px}.training-slot.reserve-slot .training-slot-info>small{color:#c9a0d9}
@@ -388,6 +389,18 @@
 /* ===== v10 loading / ultimate hold / command icons / home alignment ===== */
 .loading-detail{display:block;margin-top:8px;font-size:8px;letter-spacing:.12em;color:#dce7f3;font-weight:900}
 
+/* HOME: larger logo, party centered in one straight horizontal row. */
+.brand-box{width:178px!important;height:58px!important}
+.brand-logo{max-width:176px!important;max-height:56px!important}
+.home-stage{left:4%!important;right:4%!important;top:17%!important;bottom:31%!important;align-items:center!important}
+.home-party{align-items:center!important;justify-content:center!important;gap:2px!important}
+.home-member,
+.home-member:nth-child(1),.home-member:nth-child(2),.home-member:nth-child(3),.home-member:nth-child(4),.home-member:nth-child(5){
+  width:24%!important;height:76%!important;margin:0!important;transform:none!important;align-self:center!important;
+}
+.home-sprite{height:calc(100% - 30px)!important}
+.home-member small,.home-member>b{text-align:center!important}
+
 /* Battle command buttons now use icon/02.png - icon/08.png. */
 .command-btn{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;padding:3px 5px!important;text-align:left!important}
 .command-btn .battle-command-icon{width:25px!important;height:25px!important;object-fit:contain!important;flex:0 0 25px!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
@@ -426,6 +439,20 @@
 }
 
 /* ===== v11 HOME scale / compact party HUD / icon-only commands / passive cut-in ===== */
+/* HOME logo: intentionally much larger than v10. */
+.home-top{height:calc(98px + var(--safe-top))!important;padding-left:8px!important;padding-right:8px!important;align-items:flex-start!important;padding-top:calc(5px + var(--safe-top))!important}
+.brand-box{width:min(58%,238px)!important;height:84px!important;flex:0 0 min(58%,238px)!important;align-items:flex-start!important}
+.brand-logo{width:100%!important;height:82px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:left top!important}
+.wallet{margin-top:8px!important;gap:3px!important}.wallet span{padding:5px 6px!important;font-size:8px!important}.wallet b{font-size:9px!important}
+
+/* MAIN party uses one baseline, but each sprite can be normalized without changing the uploaded image. */
+.home-stage{top:16%!important;left:3%!important;right:3%!important;bottom:31%!important}
+.home-party{align-items:center!important;justify-content:center!important;gap:0!important}
+.home-member{width:25%!important;height:80%!important;margin:0!important;transform:none!important;align-self:center!important;overflow:visible!important}
+.home-sprite{height:calc(100% - 26px)!important;overflow:visible!important}
+.home-sprite img{transform:scale(var(--sprite-scale,1))!important;transform-origin:center bottom!important;max-width:100%!important;max-height:100%!important}
+.home-member small{font-size:7px!important;line-height:1!important}.home-member>b{font-size:7px!important;line-height:1!important;margin-top:2px!important}
+
 /* Battle party panel: character art is the dominant element, data is compressed below it. */
 .party-hud{height:132px!important;bottom:calc(151px + var(--safe-bottom))!important;padding:3px 4px!important;grid-template-rows:101px 24px!important;gap:3px!important}
 .ally-status{height:101px!important;gap:3px!important}
@@ -480,7 +507,45 @@
   .passive-cutin{height:76px;grid-template-columns:70px minmax(0,1fr)}.passive-cutin>img{width:70px;height:82px}.passive-cutin b{font-size:12px}
 }
 
+/* v11 iOS-safe logo flex sizing */
+.brand-box{flex:0 0 58%!important;max-width:238px!important}
+@media(max-height:720px){.brand-box{flex-basis:55%!important;max-width:210px!important}}
+
 /* ===== v12: honor uploaded character scale / large HOME logo / stable ultimate ===== */
+/* Do not apply character-specific size correction. The source canvas decides the scale. */
+.home-sprite img{
+  transform:none!important;
+  width:100%!important;height:100%!important;
+  max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+}
+.ally-hud-art img{
+  transform:none!important;
+  width:100%!important;height:100%!important;
+  max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;object-position:center bottom!important;
+}
+.ally-hud-card.turn-active .ally-hud-art img{transform:none!important}
+
+/* The title asset has visual whitespace, so give it a genuinely large viewport and scale the whole asset. */
+.home-top{
+  height:calc(122px + var(--safe-top))!important;
+  padding:calc(3px + var(--safe-top)) 6px 0!important;
+  overflow:visible!important;
+}
+.brand-box{
+  position:absolute!important;left:4px!important;top:calc(2px + var(--safe-top))!important;
+  width:76%!important;max-width:330px!important;height:108px!important;
+  flex:none!important;overflow:visible!important;z-index:2!important;
+}
+.brand-logo{
+  display:block!important;width:100%!important;height:100%!important;
+  max-width:none!important;max-height:none!important;
+  object-fit:contain!important;object-position:left top!important;
+  transform:scale(1.26)!important;transform-origin:left top!important;
+}
+.wallet{position:absolute!important;right:6px!important;top:calc(9px + var(--safe-top))!important;z-index:4!important}
+
 /* Robust ultimate animations: no Web Animations API dependency. */
 .ultimate-cutin,.cutin-character,.ult-art-wrap{animation:none!important}
 .ult-v12-banner-in{animation:ultV12BannerIn .30s cubic-bezier(.2,.75,.28,1) both!important}
@@ -506,6 +571,12 @@
   56%{transform:translate(calc(-50% + 11px),-42%) scale(1.08) rotate(2deg)}
   70%{transform:translate(calc(-50% - 7px),-42%) scale(1.07) rotate(-1.2deg)}
   84%{transform:translate(calc(-50% + 7px),-42%) scale(1.07) rotate(1.2deg)}
+}
+
+@media(max-height:720px){
+  .home-top{height:calc(108px + var(--safe-top))!important}
+  .brand-box{width:74%!important;max-width:300px!important;height:94px!important}
+  .brand-logo{transform:scale(1.22)!important}
 }
 
 /* ===== v14: fast background warmup + synchronized ultimate presentation ===== */
@@ -546,105 +617,7 @@
 @keyframes ultNeonBottom{from{width:0;opacity:1}to{width:100%;opacity:1}}
 @keyframes ultNeonLeft{from{height:0;opacity:1}to{height:100%;opacity:1}}
 
-
-/* ===== v15 CANONICAL HOME =====
-   The uploaded play/*.png canvas is the source of truth for character size.
-   No per-character scale, nth-child scale, translate, or CSS variable correction is allowed here. */
-.home-top{
-  height:calc(122px + var(--safe-top))!important;
-  padding:calc(3px + var(--safe-top)) 6px 0!important;
-  overflow:visible!important;
-}
-.brand-box{
-  position:absolute!important;
-  left:4px!important;
-  top:calc(2px + var(--safe-top))!important;
-  width:76%!important;
-  max-width:330px!important;
-  height:108px!important;
-  flex:none!important;
-  overflow:visible!important;
-  z-index:2!important;
-}
-.brand-logo{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  object-position:left top!important;
-  transform:scale(1.26)!important;
-  transform-origin:left top!important;
-}
-.wallet{
-  position:absolute!important;
-  right:6px!important;
-  top:calc(9px + var(--safe-top))!important;
-  z-index:4!important;
-}
-.home-stage{
-  left:3%!important;
-  right:3%!important;
-  top:16%!important;
-  bottom:31%!important;
-  align-items:center!important;
-}
-.home-party{
-  width:100%!important;
-  height:100%!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:0!important;
-}
-.home-member,
-.home-member:nth-child(1),
-.home-member:nth-child(2),
-.home-member:nth-child(3),
-.home-member:nth-child(4),
-.home-member:nth-child(5){
-  display:flex!important;
-  width:25%!important;
-  height:80%!important;
-  margin:0!important;
-  transform:none!important;
-  align-self:center!important;
-  overflow:visible!important;
-  z-index:1!important;
-}
-.home-sprite{
-  width:100%!important;
-  height:calc(100% - 26px)!important;
-  display:flex!important;
-  align-items:flex-end!important;
-  justify-content:center!important;
-  overflow:visible!important;
-}
-.home-sprite img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:100%!important;
-  max-height:100%!important;
-  object-fit:contain!important;
-  object-position:center bottom!important;
-  transform:none!important;
-  transform-origin:center bottom!important;
-}
-.home-member small,.home-member>b{
-  text-align:center!important;
-  line-height:1!important;
-}
-@media(max-height:720px){
-  .home-top{height:calc(108px + var(--safe-top))!important}
-  .brand-box{width:74%!important;max-width:300px!important;height:94px!important}
-  .brand-logo{transform:scale(1.22)!important}
-  .home-stage{top:15%!important;bottom:30%!important}
-  .home-member{height:78%!important}
-}
-
-/* ===== v16 HOME party natural-size normalization ===== */
+/* ===== v19 HOME: source-image balance + one shared scale ===== */
 .home-stage{
   left:4%!important;
   right:4%!important;
@@ -656,13 +629,14 @@
 }
 .home-party{
   position:relative!important;
+  z-index:2!important;
   width:100%!important;
   height:100%!important;
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   align-items:end!important;
   justify-items:center!important;
-  column-gap:0!important;
+  gap:0!important;
 }
 .home-member,
 .home-member:nth-child(1),
@@ -670,20 +644,22 @@
 .home-member:nth-child(3),
 .home-member:nth-child(4),
 .home-member:nth-child(5){
+  position:relative!important;
   width:100%!important;
   height:100%!important;
   margin:0!important;
   transform:none!important;
-  filter:drop-shadow(0 8px 7px rgba(0,0,0,.35))!important;
+  z-index:auto!important;
   display:flex!important;
   flex-direction:column!important;
   justify-content:flex-end!important;
   align-items:center!important;
-  z-index:auto!important;
+  overflow:visible!important;
+  filter:drop-shadow(0 7px 6px rgba(0,0,0,.34))!important;
 }
 .home-sprite{
   width:100%!important;
-  height:calc(100% - 38px)!important;
+  height:calc(100% - 28px)!important;
   display:flex!important;
   align-items:flex-end!important;
   justify-content:center!important;
@@ -696,38 +672,22 @@
   max-height:none!important;
   object-fit:unset!important;
   object-position:center bottom!important;
-  flex:none!important;
   transform:none!important;
+  transform-origin:center bottom!important;
+  flex:none!important;
 }
-.home-member small,
-.home-member>b{
+.home-member small,.home-member>b{
   display:block!important;
   max-width:100%!important;
   text-align:center!important;
   white-space:nowrap!important;
   overflow:hidden!important;
   text-overflow:ellipsis!important;
-  text-shadow:0 2px 3px rgba(0,0,0,.8)!important;
+  line-height:1.05!important;
+  text-shadow:0 2px 3px rgba(0,0,0,.82)!important;
 }
-.home-member small{font-size:7px!important;line-height:1.05!important}
-.home-member>b{font-size:7px!important;line-height:1.05!important}
+.home-member small{font-size:7px!important}
+.home-member>b{font-size:7px!important;margin-top:2px!important}
 @media(max-height:720px){
   .home-stage{top:14.5%!important;bottom:30.5%!important}
 }
-
-/* ===== v17 HOME common-scale size cap ===== */
-.home-stage{top:16%!important;bottom:31%!important}
-.home-party{align-items:end!important}
-.home-member{justify-content:flex-end!important}
-.home-sprite{
-  height:calc(100% - 36px)!important;
-  min-height:0!important;
-}
-.home-sprite img{
-  width:auto!important;
-  height:auto!important;
-  max-width:none!important;
-  max-height:none!important;
-  transform:none!important;
-}
-\n\n/* ===== v18 HOME visual scale: single source of truth ===== */\n.home-stage{\n  left:4%!important;right:4%!important;top:16%!important;bottom:31%!important;\n  display:flex!important;align-items:flex-end!important;justify-content:center!important;\n}\n.home-party{\n  position:relative!important;width:100%!important;height:100%!important;\n  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;\n  align-items:end!important;justify-items:center!important;column-gap:0!important;\n}\n.home-member,\n.home-member:nth-child(1),.home-member:nth-child(2),.home-member:nth-child(3),\n.home-member:nth-child(4),.home-member:nth-child(5){\n  width:100%!important;height:100%!important;margin:0!important;\n  transform:none!important;z-index:auto!important;\n  display:flex!important;flex-direction:column!important;justify-content:flex-end!important;align-items:center!important;\n  filter:drop-shadow(0 8px 7px rgba(0,0,0,.35))!important;\n}\n.home-sprite{\n  width:100%!important;height:calc(100% - 38px)!important;min-height:0!important;\n  display:flex!important;align-items:flex-end!important;justify-content:center!important;overflow:visible!important;\n}\n.home-sprite img{\n  width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;\n  object-fit:contain!important;object-position:center bottom!important;\n  transform:scale(var(--home-visual-scale,1))!important;\n  transform-origin:center bottom!important;\n}\n.home-member small,.home-member>b{\n  display:block!important;max-width:100%!important;text-align:center!important;white-space:nowrap!important;\n  overflow:hidden!important;text-overflow:ellipsis!important;line-height:1.05!important;\n  text-shadow:0 2px 3px rgba(0,0,0,.8)!important;\n}\n.home-member small{font-size:7px!important}.home-member>b{font-size:7px!important}\n@media(max-height:720px){.home-stage{top:14.5%!important;bottom:30.5%!important}}\n
