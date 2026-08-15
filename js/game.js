@@ -8,6 +8,12 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
+const ASSET_REV='15';
+function assetUrl(src){
+  if(!src||/^(data:|blob:)/i.test(src))return src;
+  const join=src.includes('?')?'&':'?';
+  return src.includes('mqv=')?src:`${src}${join}mqv=${ASSET_REV}`;
+}
 
 const screens={home:$('#homeScreen'),loading:$('#loadingScreen'),tavern:$('#tavernScreen'),training:$('#trainingScreen'),adventure:$('#adventureScreen'),battle:$('#battleScreen')};
 const defaultParty=[['yusha',30],['pink',30],['desert',30],['nyoro',30],['nekoku',30],['jerry',30],['denden',30],['money',30],['riro',30],['tetsu',30]];
@@ -43,19 +49,20 @@ function defaultAdventure(){return {progress:0,battleReady:false,completed:false
 function loadAdventure(){try{const v=JSON.parse(localStorage.getItem('mobQuestAdventureV4'));return v&&typeof v==='object'?{...defaultAdventure(),...v}:defaultAdventure();}catch(_){return defaultAdventure();}}
 function saveAdventure(){try{localStorage.setItem('mobQuestAdventureV4',JSON.stringify(state.adventure));}catch(_){} }
 
-function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
+function bindImage(img){if(!img)return;if(img.dataset.bound!=='1'){img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=assetUrl(f);return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}const raw=img.getAttribute('src');if(raw&&img.dataset.assetRev!==ASSET_REV){img.dataset.assetRev=ASSET_REV;const v=assetUrl(raw);if(img.src!==new URL(v,document.baseURI).href)img.src=v;}}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
-function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
+function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.dataset.assetRev=ASSET_REV;img.src=assetUrl(src);bindImage(img);}
 
 const assetPreloadCache=new Map();
 const assetImageCache=new Map();
 function preloadAsset(src,priority='auto'){
   if(!src)return Promise.resolve(false);
-  if(assetPreloadCache.has(src))return assetPreloadCache.get(src);
+  const url=assetUrl(src);
+  if(assetPreloadCache.has(url))return assetPreloadCache.get(url);
   const img=new Image();
   img.decoding='async';
   try{img.fetchPriority=priority;}catch(_){}
-  assetImageCache.set(src,img);
+  assetImageCache.set(url,img);
   const task=new Promise(resolve=>{
     let settled=false;
     const done=async ok=>{
@@ -65,10 +72,10 @@ function preloadAsset(src,priority='auto'){
     };
     img.onload=()=>done(true);
     img.onerror=()=>done(false);
-    img.src=src;
+    img.src=url;
     if(img.complete&&img.naturalWidth>0)done(true);
   });
-  assetPreloadCache.set(src,task);
+  assetPreloadCache.set(url,task);
   return task;
 }
 async function preloadAssets(paths,onProgress){
@@ -107,8 +114,9 @@ function startFastBackgroundWarmup(){
 async function ensureDomImageReady(img,src,timeout=650){
   if(!img||!src)return false;
   try{await Promise.race([preloadAsset(src,'high'),new Promise(r=>setTimeout(()=>r(false),timeout))]);}catch(_){}
-  const abs=new URL(src,document.baseURI).href;
-  if(img.src!==abs)img.src=src;
+  const versioned=assetUrl(src);
+  const abs=new URL(versioned,document.baseURI).href;
+  if(img.src!==abs)img.src=versioned;
   try{
     if(img.decode)await Promise.race([img.decode(),new Promise(r=>setTimeout(r,timeout))]);
     else if(!img.complete)await Promise.race([new Promise(r=>{img.addEventListener('load',r,{once:true});img.addEventListener('error',r,{once:true});}),new Promise(r=>setTimeout(r,timeout))]);
