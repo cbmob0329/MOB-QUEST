@@ -867,14 +867,15 @@
 .training-enemy-toolbar{display:flex;justify-content:flex-end;gap:5px;margin:0 0 8px}.training-enemy-toolbar .mini-btn{padding:0 8px}
 .enemy-catalog-grid{grid-template-columns:1fr 1fr}.enemy-catalog-card{min-height:84px;grid-template-columns:50px 1fr;padding:5px}.enemy-catalog-card>span{height:68px}.enemy-catalog-card b{font-size:7px}.enemy-catalog-card small,.enemy-catalog-card em{font-size:5px}.enemy-catalog-card b:first-child{color:#f8fbff}
 
-/* Battle field: one to four enemies. The target keeps a clear cyan outline. */
+/* Battle field: one to four enemies in one horizontal line. Targeting is shown without a rectangular frame. */
 .enemy-area{inset:3px 3% 0!important;display:grid!important;gap:4px!important;align-items:stretch!important;justify-items:stretch!important;grid-auto-flow:row!important;overflow:visible!important}
 .enemy-area.enemy-count-1{grid-template-columns:1fr!important;grid-template-rows:1fr!important;padding:0 12%!important}
 .enemy-area.enemy-count-2{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:1fr!important}
 .enemy-area.enemy-count-3{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:1fr!important}
-.enemy-area.enemy-count-4{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important}
-.enemy-unit{appearance:none;-webkit-appearance:none;min-width:0;min-height:0;width:100%;height:100%;position:relative;padding:2px!important;border-radius:10px!important;background:rgba(7,12,18,.12)!important;border:1px solid transparent!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;overflow:visible!important;text-align:left!important;color:#fff!important}
-.enemy-unit.selected{border-color:rgba(126,211,255,.9)!important;background:rgba(31,83,118,.16)!important;box-shadow:inset 0 0 0 1px rgba(126,211,255,.34),0 0 9px rgba(75,175,230,.22)!important}
+.enemy-area.enemy-count-4{grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-template-rows:1fr!important;padding:0!important;gap:2px!important}
+.enemy-unit{appearance:none;-webkit-appearance:none;min-width:0;min-height:0;width:100%;height:100%;position:relative;padding:2px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;overflow:visible!important;text-align:left!important;color:#fff!important}
+.enemy-unit.selected{border:0!important;background:transparent!important;box-shadow:none!important;outline:0!important}
+.enemy-unit.selected .enemy-sprite-wrap{filter:drop-shadow(0 0 4px rgba(120,218,255,.8)) drop-shadow(0 0 8px rgba(43,137,194,.35))}
 .enemy-unit.dead{opacity:.28!important;filter:grayscale(.75)!important}
 .enemy-unit .enemy-nameplate{width:100%!important;flex:0 0 auto!important;padding:4px 5px!important;border-radius:8px!important;background:rgba(7,12,18,.76)!important;box-shadow:0 3px 8px rgba(0,0,0,.18)!important}
 .enemy-unit .enemy-nameplate>div:first-child{display:block!important;min-width:0}.enemy-unit .enemy-nameplate b{display:block;font-size:7px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.enemy-unit .enemy-nameplate small{display:block;font-size:5px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.enemy-unit .enemy-nameplate .gauge{height:5px!important;margin-top:3px!important}.enemy-unit .enemy-nameplate p{font-size:5px!important;margin-top:1px!important}.enemy-unit .enemy-nameplate p b{font-size:5px!important}.enemy-unit .enemy-tags{height:0!important;margin:0!important;overflow:visible!important}.enemy-unit .enemy-tags em{font-size:4px!important;padding:1px 3px!important}
@@ -896,3 +897,15 @@
   .enemy-count-4 .enemy-unit .enemy-nameplate small{display:none!important}
   .training-enemy-slot.filled{height:66px}.training-enemy-select{height:56px}.training-enemy-select>span{height:52px}
 }
+
+
+/* ===== v24: horizontal enemy line / frameless targets / optional training party slots ===== */
+.enemy-area.enemy-count-1{grid-template-columns:1fr!important;grid-template-rows:1fr!important;padding:0 12%!important}
+.enemy-area.enemy-count-2{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:1fr!important}
+.enemy-area.enemy-count-3{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:1fr!important}
+.enemy-area.enemy-count-4{grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-template-rows:1fr!important;padding:0!important;gap:2px!important}
+.enemy-unit,.enemy-unit.selected{border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;border-radius:0!important}
+.enemy-unit.selected .enemy-sprite-wrap{filter:drop-shadow(0 0 4px rgba(120,218,255,.8)) drop-shadow(0 0 8px rgba(43,137,194,.35))}
+.enemy-count-4 .enemy-unit{padding:1px!important}.enemy-count-4 .enemy-unit .enemy-sprite-wrap{width:100%!important;align-self:center!important}.enemy-count-4 .enemy-unit .enemy-nameplate{padding:2px 2px!important}.enemy-count-4 .enemy-unit .enemy-nameplate b{font-size:5px!important}.enemy-count-4 .enemy-unit .enemy-nameplate small,.enemy-count-4 .enemy-unit .enemy-nameplate p,.enemy-count-4 .enemy-unit .enemy-tags{display:none!important}.enemy-count-4 .enemy-target-mark{font-size:3px;right:1px;bottom:1px;padding:1px 2px}
+.training-slot.empty{opacity:.72;background:rgba(13,22,31,.62)!important}.training-slot.empty>span{border-style:dashed!important}.training-empty-mark{display:flex!important;align-items:center;justify-content:center;width:100%;height:100%;font-size:20px!important;color:#8ea2b4!important;font-style:normal!important}.training-slot select option[value=""]{color:#8ea2b4}
+@media(max-width:380px){.enemy-count-4 .enemy-unit .enemy-nameplate b{font-size:4.5px!important}.enemy-count-4 .enemy-target-mark{display:none!important}}
