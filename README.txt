@@ -23,3 +23,14 @@ v13 修正: 必殺技演出を固定タイマー＋JSシェイクへ変更。画
 - HOME background fast warm cache for ultimate and magic images.
 - Ultimate banner and square art stay synchronized.
 - Final 0.3s neon border trace before impact effect.
+
+
+v21: TRAINING critical-load reduction, 2-worker idle warm cache, stacked pre-decoded magic frames, and iOS-safe ultimate square stage.
+
+
+[v22] 仮素材なし武器・属性通常攻撃演出
+- 大剣 / 太刀 / 片手剣 / 槍 / 銃 / 杖で通常攻撃モーションを分岐
+- 火 / 水 / 雷 / 地 / 風 / 光 / 闇 / 無で追加エフェクトを分岐
+- 専用画像は不要。CSS/DOMのみで描画
+- 必殺技演出とv21画像読み込み方式は変更なし
+- 将来専用スプライトを用意した場合はこの仮演出を置換可能
