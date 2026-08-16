@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=22">
+  <link rel="stylesheet" href="css/style.css?v=23">
 </head>
 <body>
 <main id="app">
@@ -86,11 +86,13 @@
         <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
         <div id="trainingPartySetup" class="training-party-setup"></div>
       </section>
-      <section class="panel boss-panel">
-        <div class="section-title"><div><small>BOSS SELECT</small><h2>戦うボス</h2></div><span id="bossCountLabel" class="pill"></span></div>
-        <div class="range-line"><label>BOSS Lv <b id="bossLevelValue">30</b></label><input id="bossLevel" type="range" min="1" max="99" value="30"></div>
+      <section class="panel boss-panel enemy-setup-panel">
+        <div class="section-title"><div><small>ENEMY SETUP</small><h2>対戦相手を自由に設定</h2></div><span id="bossCountLabel" class="pill"></span></div>
+        <p class="panel-note">敵は1～4体。スロットを選んでからモンスターをタップすると配置できます。同じ敵を複数置くことも可能です。ボスは2回行動します。</p>
+        <div id="trainingEnemySlots" class="training-enemy-slots"></div>
+        <div class="training-enemy-toolbar"><button id="trainingEnemyAddBtn" class="mini-btn" type="button">空き枠を選択</button><button id="trainingEnemyClearBtn" class="mini-btn" type="button">敵を全削除</button></div>
         <div id="bossTabs" class="boss-tabs"></div>
-        <div id="bossGrid" class="boss-grid"></div>
+        <div id="bossGrid" class="boss-grid enemy-catalog-grid"></div>
       </section>
     </div>
     <div class="sticky-action safe-bottom-action glass"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
@@ -170,7 +172,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=22"></script>
-<script src="js/game.js?v=22"></script>
+<script src="js/data.js?v=23"></script>
+<script src="js/game.js?v=23"></script>
 </body>
 </html>

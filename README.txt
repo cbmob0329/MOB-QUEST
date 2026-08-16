@@ -1,36 +1,36 @@
-MOB QUEST playable core v11
+MOB QUEST playable core v23
 
-Updated from v10:
-- HOME title logo enlarged substantially.
-- MAIN party sprites normalized with small per-character visual-scale corrections (Pink smaller, Desert slightly larger).
-- Battle MAIN 4 HUD rebuilt to make character art dominant; name/Lv/HP/MP compressed.
-- Removed the SUPER SUB label from the battle HUD; support members remain visible as a compact row.
-- Battle command buttons now display icon/02.png through icon/08.png only; duplicate text labels removed.
-- Ultimate square-art extra hold changed to 0.3 sec, followed by a stronger explicit shake before disappearance.
-- Magic frame playback now preloads/decodes the selected sequence and waits for paint frames before advancing.
-- Battle loading now preloads only immediate battle assets instead of every ultimate/magic frame for all ten members.
-- Passive activations now use a character-image cut-in and retain timing pauses.
-- Random passive activation rates reduced to 80% of the previous test rates. Guaranteed/passive-by-definition effects remain guaranteed.
-- Existing MAIN4 + support2 + reserve4, boss double action, mobile gesture lock, battle cut-ins, impact flashes/shakes remain.
+[Monster / Adventure / Training expansion]
+- 草原・砂漠・田舎町・ネオン街・マグマ・海底の通常モンスター、中ボス、ボスを登録。
+- ユーザー指定のLv帯・属性・画像・既知の技/必殺を反映。
+- 未設定の通常技/魔法は属性と役割に応じた仮AI/仮技として隔離実装。
+- 通常 / 中ボス / ボスで別のTEMP_BALANCEステータス成長式を使用。
+- 2～4体戦は敵1体ごとの攻撃倍率を人数に応じて抑え、理不尽な集中火力を軽減。
+- ボスは従来どおり2回行動。
 
-Unconfirmed balance values remain temporary test values.
+[Training]
+- 敵を1～4体まで自由に設定可能。
+- 同じ敵の複数配置、各敵のLv 1～99変更、通常敵/中ボス/ボス混成に対応。
+- 草原～海底の新規敵に加え、従来の後半ボスもトレーニングカタログに維持。
+- ランダム設定も1～4体の敵編成に対応。
 
+[Adventure]
+- 1ワールド = AREA1～AREA4。
+- 各AREAで 探索→バトル を3回。1・2戦目はエリア通常敵からランダム1～4体。
+- 4体出現は4%で低確率。
+- 3戦目は設定済み中ボス/ボス編成。
+- AREA4クリアで次ワールドへ移動。現在は草原→砂漠→田舎町→ネオン街→マグマ→海底まで。
+- マグマAREA3はモブブリザード＋モブフレイム撃破後、モブフレザードの第2ウェーブ。
+- レアのモブギミックは冒険で撃破すると10000 COIN。
 
-v13 修正: 必殺技演出を固定タイマー＋JSシェイクへ変更。画像ロード/演出エラーが発生しても戦闘キューを復旧する安全処理を追加。
+[Multi enemy battle]
+- 1～4体を同時表示し、敵をタップしてターゲット変更可能。
+- HP、Lv、属性、状態異常を敵ごとに管理。
+- 敵ごとの行動順、複数ボス2回行動、次ウェーブに対応。
 
+[Source gaps kept temporary]
+- 田舎町AREA1のモブダンサーは画像/属性が資料に無いため、enemy/45.png・火属性を仮使用。
+- モブエースは資料にLv/技が無いため、トレーニング用Lv32・仮AI扱い。冒険AREA4には入れていない。
+- 正式な敵ステータス、通常魔法/技の詳細は今後差し替え可能。
 
-[MOB QUEST v14]
-- HOME background fast warm cache for ultimate and magic images.
-- Ultimate banner and square art stay synchronized.
-- Final 0.3s neon border trace before impact effect.
-
-
-v21: TRAINING critical-load reduction, 2-worker idle warm cache, stacked pre-decoded magic frames, and iOS-safe ultimate square stage.
-
-
-[v22] 仮素材なし武器・属性通常攻撃演出
-- 大剣 / 太刀 / 片手剣 / 槍 / 銃 / 杖で通常攻撃モーションを分岐
-- 火 / 水 / 雷 / 地 / 風 / 光 / 闇 / 無で追加エフェクトを分岐
-- 専用画像は不要。CSS/DOMのみで描画
-- 必殺技演出とv21画像読み込み方式は変更なし
-- 将来専用スプライトを用意した場合はこの仮演出を置換可能
+v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+element attack FX are retained.
