@@ -86,6 +86,7 @@ v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+elemen
 v28:
 - 草原AREA4ボス撃破後のリザルトは「HOMEへ戻る」。砂漠到着イベントは次にHOMEから冒険へ入った時に開始。
 - イベント中の通常冒険パーティーをCSSでも強制非表示にし、イベントキャラとの二重表示を防止。
+<<<<<<< HEAD
 
 v29
 - Story NEXT button moved to upper-right scene control.
@@ -114,3 +115,5 @@ v29
 - プレイヤーIDも jessie に統一。旧セーブの jerry ID は読み込み時に自動変換。
 - play/06.png、雷属性、槍・銃、ダブルサンダー等の既存性能はそのまま継承。
 - 部族村イベントのモブジェシーと通常プレイヤーデータを同一キャラクターとして統一。
+=======
+>>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
