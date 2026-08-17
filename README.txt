@@ -51,3 +51,66 @@ MOB QUEST playable core v23
 - 正式な敵ステータス、通常魔法/技の詳細は今後差し替え可能。
 
 v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+element attack FX are retained.
+
+
+[v25]
+- Progression added through 砂漠Ⅱ and 魔王城 based on latest boss/enemy sheet.
+- モブリリス player image changed to play/14.png.
+- Initial party level changed to Lv5. Player base stat curve targets ~HP1200 at Lv99 and up to HP1500 at Lv120 after clearing 魔王城.
+- Removed enemy-count/party-size automatic weakening. Enemy stats are fixed by level/category.
+- Enemy sprite scale no longer changes with 1–4 enemies. Normal mobs use the 4-enemy footprint; slimes/small mobs are smaller, elites only slightly larger, bosses larger.
+- Fixed enemy hit flash/shake selector for actual PNG sprites.
+- Pure buff/heal ultimates no longer play enemy impact FX; buff/heal FX are placed on allies.
+- Reactive passives such as サバクノマモリビト display earlier.
+- Settings now includes full local save-data deletion for testing.
+
+[v26]
+- 冒険イベント/会話演出を砂漠～海底まで導入（未定のレコード名は未定のまま）
+- セリフ吹き出し、ナレーション、フェード、ビックリマーク、落下/シェイク/フラッシュ演出
+- ネオン街クリア後にモブエース3ターン強制終了イベント戦
+- 砂漠/田舎町/ネオン街/マグマ/海底で仲間加入イベント
+- 設定からテストモード：Lv1～120、現在パーティー一括Lv設定、戦闘×5 ON/OFF
+- 設定から全データ削除し、勇者+モブピンク Lv5からイベントを再テスト可能
+- 冒険中キャラをPNGの相対サイズを維持した共通倍率表示へ変更
+- play画像を?v=相当のmqv=26で統一し、旧巨大PNGキャッシュの一瞬表示を抑止
+
+
+[v27]
+- Story event underlay party is hidden while events are active (no duplicate actors).
+- Desert arrival staging: current party left, Desert right at the higher adventure-event baseline.
+- Desert now fades in only after Pink says "誰か来ますよ！".
+- Script newlines are now interpreted as separate speech bubbles (one source line per bubble).
+- Bubble position/arrow is recalculated for each speaking actor.
+
+
+v28:
+- 草原AREA4ボス撃破後のリザルトは「HOMEへ戻る」。砂漠到着イベントは次にHOMEから冒険へ入った時に開始。
+- イベント中の通常冒険パーティーをCSSでも強制非表示にし、イベントキャラとの二重表示を防止。
+
+v29
+- Story NEXT button moved to upper-right scene control.
+- Event party uses up to 6 actors per row / 2 rows; duplicate adventure party layer is forcibly hidden.
+- Denden/Money/Nyoro entrance size reduced; source-line speech remains one bubble per line.
+- Adventure image decode gate prevents native-size PNG flash.
+- AREA1 normal encounters fixed to 2 enemies; AREA2+ 2-4. Exploration no longer reveals enemy names.
+- Target marker changed to a small overhead arrow; enemy HP plate moved closer to the enemy.
+- Rock/Golem/Boss/Dragon/Frezard display scales adjusted without count-dependent scaling.
+- Main elite/boss is centered when accompanied by attendants.
+- Magma AREA3 Blizzard+Flame fusion animation added before giant Frezard appearance.
+- Clearing every AREA boss/mid-boss returns to HOME (post-boss event plays first when defined).
+
+
+=== v31 ===
+- 最新イベント台本を導入: 草原、草原II、部族村の到着・中ボス前後・ボス前後。
+- AREAごとの3戦目に pre/post story hook を追加。
+- 複数のイベント敵を同時表示可能。
+- 単独の中ボス/ボス+側近編成は中ボスを中央寄せ。
+- モブネプ表記をモブネプチューンへ更新。
+- モブジェシーは正式プレイヤーキャラクターとして play/06.png を使用。
+
+
+=== v32 ===
+- モブジェリーを正式に「モブジェシー」へ改名。
+- プレイヤーIDも jessie に統一。旧セーブの jerry ID は読み込み時に自動変換。
+- play/06.png、雷属性、槍・銃、ダブルサンダー等の既存性能はそのまま継承。
+- 部族村イベントのモブジェシーと通常プレイヤーデータを同一キャラクターとして統一。
