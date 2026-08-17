@@ -1052,3 +1052,49 @@
 @keyframes storyScreenShake{0%,100%{transform:translate(0,0)}18%{transform:translate(-6px,3px)}36%{transform:translate(6px,-2px)}54%{transform:translate(-4px,2px)}72%{transform:translate(3px,-1px)}}
 @media(max-height:720px){.story-party-line{bottom:8%;height:27%}.story-guest{bottom:23%;height:min(32vh,205px)}.story-bubble>p{font-size:11px}.story-narration p{font-size:11px}}
 .story-scene{opacity:1;transition:opacity .35s ease}.story-scene.closing{opacity:0}
+
+
+/* ===== MOB QUEST v27 story staging / one-line speech ===== */
+/* The event character layer owns the scene; the normal adventure actors are hidden by JS. */
+.story-scene.story-layout-party-left .story-party-line{
+  left:4%!important;
+  right:auto!important;
+  width:48%!important;
+  bottom:25%!important;
+  height:29%!important;
+  justify-content:flex-start!important;
+  gap:2px!important;
+}
+/* Keep the event art size from v26; only its stage position changes. */
+.story-scene.story-layout-party-left .story-party-actor{
+  height:100%!important;
+}
+.story-guest.side-right{
+  left:auto!important;
+  right:7%!important;
+  bottom:25%!important;
+  transform:translate(0,12px)!important;
+}
+.story-guest.side-right.visible{transform:translate(0,0)!important}
+.story-guest.side-left{
+  left:7%!important;
+  right:auto!important;
+  bottom:25%!important;
+  transform:translate(0,12px)!important;
+}
+.story-guest.side-left.visible{transform:translate(0,0)!important}
+.story-bubble{
+  min-height:82px!important;
+  max-width:calc(100% - 16px)!important;
+  padding:9px 10px 8px!important;
+}
+.story-bubble>p{
+  white-space:normal!important;
+  margin:0!important;
+  padding:0 1px 7px!important;
+  line-height:1.45!important;
+}
+@media(max-height:720px){
+  .story-scene.story-layout-party-left .story-party-line{bottom:23%!important;height:28%!important}
+  .story-guest.side-right,.story-guest.side-left{bottom:23%!important}
+}

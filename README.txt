@@ -73,3 +73,11 @@ v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+elemen
 - 設定から全データ削除し、勇者+モブピンク Lv5からイベントを再テスト可能
 - 冒険中キャラをPNGの相対サイズを維持した共通倍率表示へ変更
 - play画像を?v=相当のmqv=26で統一し、旧巨大PNGキャッシュの一瞬表示を抑止
+
+
+[v27]
+- Story event underlay party is hidden while events are active (no duplicate actors).
+- Desert arrival staging: current party left, Desert right at the higher adventure-event baseline.
+- Desert now fades in only after Pink says "誰か来ますよ！".
+- Script newlines are now interpreted as separate speech bubbles (one source line per bubble).
+- Bubble position/arrow is recalculated for each speaking actor.

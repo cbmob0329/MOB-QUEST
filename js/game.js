@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=26;
+const GAME_ASSET_VERSION=27;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -361,23 +361,47 @@ async function renderStoryParty(){
   const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(valid.length){const sum=valid.reduce((a,i)=>a+i.naturalWidth,0),maxH=Math.max(...valid.map(i=>i.naturalHeight));const sc=Math.min(.115,(root.clientWidth-8)/Math.max(1,sum),(root.clientHeight-4)/Math.max(1,maxH));valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});}
 }
-async function openStoryScene(worldId,areaIndex=0){
-  const sc=$('#storyScene'),bg=storySceneBg(worldId,areaIndex);setImage($('#adventureBg'),bg.bg,bg.fallback);$('#fieldEvent').hidden=true;sc.classList.remove('closing','shake');sc.hidden=false;$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;await renderStoryParty();await fixedDelay(330);
+async function openStoryScene(worldId,areaIndex=0,layout='default'){
+  const sc=$('#storyScene'),bg=storySceneBg(worldId,areaIndex),underParty=$('#adventureParty');
+  setImage($('#adventureBg'),bg.bg,bg.fallback);$('#fieldEvent').hidden=true;
+  // Story actors are the only character layer during an event. The normal adventure party
+  // must never remain visible behind them.
+  if(underParty)underParty.hidden=true;
+  sc.classList.remove('closing','shake','story-layout-party-left');
+  if(layout==='partyLeftGuestRight')sc.classList.add('story-layout-party-left');
+  sc.hidden=false;$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;await renderStoryParty();await fixedDelay(330);
 }
 async function closeStoryScene(forceHome=false){
-  const sc=$('#storyScene');sc.classList.add('closing');await fixedDelay(350);sc.hidden=true;sc.classList.remove('closing','shake');$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;
+  const sc=$('#storyScene');sc.classList.add('closing');await fixedDelay(350);sc.hidden=true;sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;
+  const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
   if(forceHome){renderHome();showScreen('home');}else{renderAdventure();showScreen('adventure');}
 }
 function storyAnchor(key){return $(`[data-story-actor="${key}"]`,$('#storyScene'))||($('#storyGuest').dataset.storyActor===key?$('#storyGuest'):null);}
 function setStorySpeaking(key,on){$$('.story-party-actor',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
-async function storySay(key,text,displayName=null,anchorKey=null){
-  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key);$('#storySpeaker').textContent=displayName||info.name||'???';$('#storyText').textContent=text;bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
+async function storySayLine(key,line,displayName=null,anchorKey=null){
+  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key);
+  $('#storySpeaker').textContent=displayName||info.name||'???';$('#storyText').textContent=line;
+  // One source-script line = one bubble. Keep short lines compact, but cap width on phones.
+  const visualChars=Math.max(String(line||'').length,String(displayName||info.name||'').length);
+  bubble.style.width=`${clamp(132+Math.max(0,visualChars-5)*10,156,300)}px`;
+  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
   await nextPaint();const scene=$('#storyScene').getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
-  if(anchor){const ar=anchor.getBoundingClientRect(),cx=ar.left-scene.left+ar.width/2;left=clamp(cx-br.width/2,8,scene.width-br.width-8);top=clamp(ar.top-scene.top-br.height-18,70,scene.height-br.height-25);bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);}else bubble.classList.add('no-arrow');
-  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');await storyWaitButton($('#storyNextBtn'));bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
+  if(anchor){
+    const ar=anchor.getBoundingClientRect(),cx=ar.left-scene.left+ar.width/2;
+    left=clamp(cx-br.width/2,8,scene.width-br.width-8);
+    top=clamp(ar.top-scene.top-br.height-14,54,scene.height-br.height-22);
+    bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+  }else bubble.classList.add('no-arrow');
+  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
+  await storyWaitButton($('#storyNextBtn'));bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
+}
+async function storySay(key,text,displayName=null,anchorKey=null){
+  const lines=String(text??'').split(/\r?\n/).filter(line=>line.length>0);
+  if(!lines.length)lines.push('');
+  for(const line of lines)await storySayLine(key,line,displayName,anchorKey);
 }
 async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyWaitButton($('#storyNarrationNext'));box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
-async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key);g.dataset.storyActor=key;g.className='story-guest';g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
+async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key);g.dataset.storyActor=key;g.className='story-guest';if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
 async function storyHideGuest(){const g=$('#storyGuest');g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';}
 async function storyExclaim(key){const g=$('#storyGuestMark');if($('#storyGuest').dataset.storyActor===key){g.hidden=false;void g.offsetWidth;await fixedDelay(700);g.hidden=true;}else{const a=storyAnchor(key);if(a){const mark=document.createElement('i');mark.className='story-mark';mark.textContent='!';a.appendChild(mark);await fixedDelay(700);mark.remove();}}await fixedDelay(500);}
 async function storyFlash(){const f=$('#storyFlash');f.classList.remove('play');void f.offsetWidth;f.classList.add('play');await fixedDelay(460);f.classList.remove('play');await fixedDelay(500);}
@@ -389,8 +413,8 @@ async function renderStoryPartyWithTemp(tempId){const root=$('#storyPartyLine'),
 async function storyJoinKeepGuest(id,message){storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 
 const STORY_EVENTS={
-  'arrival:desert':{worldId:'desert',area:0,steps:[
-    ['guest','desert'],['say','pink','ケホッ、ケホッ、\n凄い砂埃ですね、、\nん？\n誰か来ますよ！'],['say','desert','旅人か？\n今はやめておけ'],['say','pink','僕たちは国王の命令で\n魔王を倒すべく旅をしているのであります！'],['say','desert','なおさらやめておけ\nやつらの力は強大だ\nたった2人で何が出来る？'],['say','pink','ふぅ、、\nこのお方は勇者様です‼︎'],['say','desert','・・・勇者？\nそんなはずは、、'],['exclaim','desert'],['say','desert','いや、間違いなく勇者だ'],['say','pink','その通り！あなた見る目ありますねー！'],['say','desert','こんな日が来るとはな\nいいだろう\n俺も同行する'],['say','pink','大変ありがたいです！\nここのボスはミラモブと聞いています\n早速案内してください！'],['say','desert','やつは強い\nだが勇者ならあるいわ'],['join','desert','モブデザートが仲間に加わった！']
+  'arrival:desert':{worldId:'desert',area:0,layout:'partyLeftGuestRight',steps:[
+    ['say','pink','ケホッ、ケホッ、\n凄い砂埃ですね、、\nん？\n誰か来ますよ！'],['guestRight','desert'],['say','desert','旅人か？\n今はやめておけ'],['say','pink','僕たちは国王の命令で\n魔王を倒すべく旅をしているのであります！'],['say','desert','なおさらやめておけ\nやつらの力は強大だ\nたった2人で何が出来る？'],['say','pink','ふぅ、、\nこのお方は勇者様です‼︎'],['say','desert','・・・勇者？\nそんなはずは、、'],['exclaim','desert'],['say','desert','いや、間違いなく勇者だ'],['say','pink','その通り！あなた見る目ありますねー！'],['say','desert','こんな日が来るとはな\nいいだろう\n俺も同行する'],['say','pink','大変ありがたいです！\nここのボスはミラモブと聞いています\n早速案内してください！'],['say','desert','やつは強い\nだが勇者ならあるいわ'],['join','desert','モブデザートが仲間に加わった！']
   ]},
   'pre:desert':{worldId:'desert',area:3,steps:[
     ['guest','mira'],['say','mira','何者だ？'],['say','desert','久しぶりだな、ミラモブ'],['say','mira','モブデザートか\n今更何をしに来た？\n王位にも就けず、魔物にもなれない半端者が'],['say','desert','用があるのは私ではない\nまあ、私もなくはないのだがな'],['say','pink','やいやいやい！\nやいやーい！'],['say','mira','なんだそのゴミは？'],['say','pink','ゴ、ゴミ、、'],['say','desert','そいつはいいとして\nもう1人を見てみろ'],['say','mira','こいつは・・'],['say','pink','このお方は勇者様だぞ！\n強いのだぞ！'],['say','mira','なるほど\nお前が強気に出られる理由はこれか\nこの私も\n舐められたものだ！'],['say','desert','来るぞ！']
@@ -441,6 +465,7 @@ async function runStorySteps(steps=[]){
     else if(type==='sayOff')await storySay(a,b,c||a,null);
     else if(type==='narrate')await storyNarrate(a);
     else if(type==='guest')await storyShowGuest(a);
+    else if(type==='guestRight')await storyShowGuest(a,{side:'right'});
     else if(type==='guestSlow')await storyShowGuest(a,{slow:true});
     else if(type==='guestDrop'){await storyShowGuest(a,{drop:true});await storyImpact(b||'ドン！ッ');}
     else if(type==='guestDropDodge'){await storyShowGuest(a,{drop:true});await storyImpact(b||'ドン！ッ',true);}
@@ -468,7 +493,7 @@ async function runNeonPostStory(){
 }
 async function runStoryEvent(key){
   const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;
-  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0);await runStorySteps(ev.steps||[]);}markStoryDone(key);await closeStoryScene(!!ev.forceHome);return true;}finally{storyBusy=false;}
+  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default');await runStorySteps(ev.steps||[]);}markStoryDone(key);await closeStoryScene(!!ev.forceHome);return true;}finally{storyBusy=false;}
 }
 async function maybeRunArrivalStory(){const w=currentWorld();if(!w)return false;const key=`arrival:${w.id}`;if(STORY_EVENTS[key]&&!storyDone(key))return await runStoryEvent(key);return false;}
 async function runPendingPostStory(){const p=state.adventure.pendingPostStory;if(!p?.key)return false;const key=p.key;if(storyDone(key)){state.adventure.pendingPostStory=null;saveAdventure();return false;}const ran=await runStoryEvent(key);if(ran){state.adventure.pendingPostStory=null;saveAdventure();const ev=STORY_EVENTS[key];if(!ev?.forceHome){renderAdventure();showScreen('adventure');await maybeRunArrivalStory();}}return ran;}
