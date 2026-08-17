@@ -1098,3 +1098,10 @@
   .story-scene.story-layout-party-left .story-party-line{bottom:23%!important;height:28%!important}
   .story-guest.side-right,.story-guest.side-left{bottom:23%!important}
 }
+
+
+/* ===== MOB QUEST v28 grassland transition / story layer safety ===== */
+/* v26/v27 uses display:flex!important for the adventure party. Without this rule,
+   setting hidden=true from the story engine can be overridden and the normal party
+   remains visible behind event actors. */
+.adventure-party[hidden]{display:none!important;visibility:hidden!important;opacity:0!important}

@@ -81,3 +81,8 @@ v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+elemen
 - Desert now fades in only after Pink says "誰か来ますよ！".
 - Script newlines are now interpreted as separate speech bubbles (one source line per bubble).
 - Bubble position/arrow is recalculated for each speaking actor.
+
+
+v28:
+- 草原AREA4ボス撃破後のリザルトは「HOMEへ戻る」。砂漠到着イベントは次にHOMEから冒険へ入った時に開始。
+- イベント中の通常冒険パーティーをCSSでも強制非表示にし、イベントキャラとの二重表示を防止。
