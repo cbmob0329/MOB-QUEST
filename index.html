@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=22">
+  <link rel="stylesheet" href="css/style.css?v=26">
 </head>
 <body>
 <main id="app">
@@ -86,11 +86,13 @@
         <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
         <div id="trainingPartySetup" class="training-party-setup"></div>
       </section>
-      <section class="panel boss-panel">
-        <div class="section-title"><div><small>BOSS SELECT</small><h2>戦うボス</h2></div><span id="bossCountLabel" class="pill"></span></div>
-        <div class="range-line"><label>BOSS Lv <b id="bossLevelValue">30</b></label><input id="bossLevel" type="range" min="1" max="99" value="30"></div>
+      <section class="panel boss-panel enemy-setup-panel">
+        <div class="section-title"><div><small>ENEMY SETUP</small><h2>対戦相手を自由に設定</h2></div><span id="bossCountLabel" class="pill"></span></div>
+        <p class="panel-note">敵は1～4体。スロットを選んでからモンスターをタップすると配置できます。同じ敵を複数置くことも可能です。ボスは2回行動します。</p>
+        <div id="trainingEnemySlots" class="training-enemy-slots"></div>
+        <div class="training-enemy-toolbar"><button id="trainingEnemyAddBtn" class="mini-btn" type="button">空き枠を選択</button><button id="trainingEnemyClearBtn" class="mini-btn" type="button">敵を全削除</button></div>
         <div id="bossTabs" class="boss-tabs"></div>
-        <div id="bossGrid" class="boss-grid"></div>
+        <div id="bossGrid" class="boss-grid enemy-catalog-grid"></div>
       </section>
     </div>
     <div class="sticky-action safe-bottom-action glass"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
@@ -113,6 +115,17 @@
       <button id="campBtn" class="adventure-command" type="button"><span><img src="mqicon/15.png" alt=""><i>⌂</i></span><b>キャンプ</b><small>HP・MP回復</small></button>
       <button id="fieldBattleBtn" class="adventure-command locked" type="button" disabled><span><img src="mqicon/16.png" alt=""><i>⚔</i></span><b>バトル</b><small id="fieldBattleHint">探索が必要</small></button>
     </section>
+
+    <!-- STORY EVENT -->
+    <div id="storyScene" class="story-scene" hidden>
+      <div class="story-scene-shade"></div>
+      <div id="storyFlash" class="story-flash"></div>
+      <div id="storyImpact" class="story-impact" hidden></div>
+      <div id="storyPartyLine" class="story-party-line"></div>
+      <div id="storyGuest" class="story-guest" hidden><img id="storyGuestImg" alt=""><span id="storyGuestFallback">?</span><i id="storyGuestMark" class="story-mark" hidden>!</i></div>
+      <div id="storyBubble" class="story-bubble" hidden><b id="storySpeaker"></b><p id="storyText"></p><button id="storyNextBtn" type="button">次へ</button></div>
+      <div id="storyNarration" class="story-narration" hidden><p id="storyNarrationText"></p><button id="storyNarrationNext" type="button">次へ</button></div>
+    </div>
   </section>
 
   <!-- BATTLE -->
@@ -159,10 +172,26 @@
     <div id="resultOverlay" class="result-overlay" hidden><div class="result-card"><small id="resultKicker">BATTLE RESULT</small><h2 id="resultTitle">VICTORY</h2><p id="resultText"></p><button id="resultRetryBtn" class="primary-btn wide" type="button">もう一度</button><button id="resultSetupBtn" class="secondary-btn wide" type="button">戻る</button><button id="resultHomeBtn" class="secondary-btn wide" type="button">HOME</button></div></div>
   </section>
 
+  <!-- SETTINGS / TEST MODE -->
+  <div id="settingsOverlay" class="settings-overlay" hidden>
+    <div class="settings-card">
+      <div class="settings-head"><div><small>SETTINGS</small><h2>設定</h2></div><button id="settingsCloseBtn" class="sheet-close" type="button">×</button></div>
+      <section class="settings-section test-mode-section">
+        <div class="settings-row"><div><b>テストモード</b><small>Lv自由設定・高速戦闘など、制作確認用の機能です。</small></div><button id="testModeToggle" class="settings-toggle" type="button">OFF</button></div>
+        <div id="testModeControls" class="test-mode-controls">
+          <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
+          <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
+          <p class="settings-note">テストモード中は酒場・トレーニングでも Lv1～120 を自由に設定できます。</p>
+        </div>
+      </section>
+      <section class="settings-section danger-section"><div><b>テストデータ</b><small>イベントや冒険を最初から何度でも確認できます。</small></div><button id="deleteDataBtn" class="danger-btn" type="button">全データ削除</button></section>
+    </div>
+  </div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=26" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -170,7 +199,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=22"></script>
-<script src="js/game.js?v=22"></script>
+<script src="js/data.js?v=26"></script>
+<script src="js/game.js?v=26"></script>
 </body>
 </html>
