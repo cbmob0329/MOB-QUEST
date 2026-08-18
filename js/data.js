@@ -228,8 +228,8 @@ TEMP_BALANCE.playerTargets={
 // Fixed enemy stats: no weakening and no HP scaling based on enemy count or party size.
 TEMP_BALANCE.enemyProfiles={
   normal:{hpBase:110,hpPerLevel:10.5,atkBase:28,atkPerLevel:6.0,magBase:27,magPerLevel:5.9,defBase:18,defPerLevel:3.7,resBase:18,resPerLevel:3.7,spdBase:18,spdPerLevel:2.7},
-  elite:{hpBase:350,hpPerLevel:24,atkBase:38,atkPerLevel:6.5,magBase:38,magPerLevel:6.5,defBase:25,defPerLevel:4.1,resBase:25,resPerLevel:4.1,spdBase:22,spdPerLevel:2.8},
-  boss:{hpBase:650,hpPerLevel:46,atkBase:45,atkPerLevel:6.8,magBase:45,magPerLevel:6.8,defBase:35,defPerLevel:4.7,resBase:35,resPerLevel:4.7,spdBase:25,spdPerLevel:2.9}
+  elite:{hpBase:400,hpPerLevel:27,atkBase:38,atkPerLevel:6.5,magBase:38,magPerLevel:6.5,defBase:25,defPerLevel:4.1,resBase:25,resPerLevel:4.1,spdBase:22,spdPerLevel:2.8},
+  boss:{hpBase:780,hpPerLevel:52,atkBase:45,atkPerLevel:6.8,magBase:45,magPerLevel:6.8,defBase:35,defPerLevel:4.7,resBase:35,resPerLevel:4.7,spdBase:25,spdPerLevel:2.9}
 };
 Object.assign(MOB_DATA.elements['火'],{cost:9,power:1.18});
 Object.assign(MOB_DATA.elements['水'],{cost:9,power:1.18});

@@ -1569,3 +1569,7 @@
   .story-guest.story-guest-enemy.story-enemy-winged{bottom:49%!important}
   .story-guest-group{bottom:47%!important;height:24%!important}
 }
+
+
+/* ===== MOB QUEST v38 visual balance ===== */
+/* Regular enemies are slightly larger in JS. Guardian gets a per-enemy lower baseline; Neon Barus gets a per-enemy scale boost. */

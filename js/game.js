@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=36;
+const GAME_ASSET_VERSION=38;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -424,11 +424,11 @@ function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
     const sc=Math.min(lastStoryPartyScale||.14,.17);
     sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(multi?.25:.32),scene.height*(multi?.22:.25));
   }else{
-    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2550,.155,.205)*(multi?.88:1);
+    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2550,.155,.205)*(multi?.88:1),tune=enemyVisualTune(info);
     const mul={small:.82,normal:1.00,elite:1.16,rock:1.24,golem:1.32,boss:1.72,dragon:1.98,frezard:2.08}[kind]||1;
     const maxW=scene.width*({small:.30,normal:.39,elite:.46,rock:.50,golem:.54,boss:.84,dragon:.92,frezard:.94}[kind]||.42)*(multi?.76:1);
     const maxH=scene.height*({small:.19,normal:.24,elite:.28,rock:.31,golem:.34,boss:.45,dragon:.50,frezard:.54}[kind]||.25)*(multi?.90:1);
-    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,base*mul,maxW,maxH);
+    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,base*mul*tune.scale,maxW,maxH);
   }
   holder.style.setProperty('width',`${sz.w}px`,'important');
   holder.style.setProperty('height',`${sz.h}px`,'important');
@@ -766,9 +766,16 @@ function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allB
 
 function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
 function enemyIsWinged(e){return /バード|ピヨ|ホーク|テンデビ|ヒノデビ|サキュバス|ドラゴン|ギドラ|フレザード|フェニックス/.test(e?.name||'');}
-function battleEnemyNaturalScale(root,kind){
-  const w=root?.clientWidth||440,base=clamp(w/2450,.165,.225);
-  return base*({small:.82,normal:1.00,elite:1.12,rock:1.24,golem:1.36,boss:1.90,dragon:2.18,frezard:2.28}[kind]||1);
+function enemyVisualTune(e){
+  const id=e?.id||e?.enemyTemplate?.id||'';
+  const name=e?.name||e?.enemyTemplate?.name||'';
+  if(id==='boss-neon'||name==='モブネオンバルス')return{scale:1.28,y:0};
+  if(id==='boss-guardian'||name==='モブガーディアン')return{scale:1.12,y:14};
+  return{scale:1,y:0};
+}
+function battleEnemyNaturalScale(root,kind,e=null){
+  const w=root?.clientWidth||440,base=clamp(w/2450,.165,.225),tune=enemyVisualTune(e||{});
+  return base*({small:.90,normal:1.10,elite:1.18,rock:1.30,golem:1.42,boss:1.90,dragon:2.18,frezard:2.28}[kind]||1)*tune.scale;
 }
 function applyEnemyVisualSizes(root=$('#enemyArea')){
   if(!root)return;
@@ -777,11 +784,13 @@ function applyEnemyVisualSizes(root=$('#enemyArea')){
     const place=()=>{
       if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
       const kind=['small','normal','elite','rock','golem','boss','dragon','frezard'].find(k=>unit.classList.contains(`enemy-size-${k}`))||'normal';
+      const enemy=enemyByUid(unit.dataset.enemyTarget),tune=enemyVisualTune(enemy||{}),wrap=$('.enemy-sprite-wrap',unit);
       const field=$('#battle-field')||$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};
-      const maxW=(fr.width||root.clientWidth)*({small:.24,normal:.29,elite:.34,rock:.38,golem:.42,boss:.80,dragon:.88,frezard:.92}[kind]||.30);
-      const maxH=(fr.height||root.clientHeight)*({small:.28,normal:.34,elite:.39,rock:.42,golem:.45,boss:.72,dragon:.79,frezard:.84}[kind]||.35);
-      const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind),maxW,maxH);
+      const maxW=(fr.width||root.clientWidth)*({small:.27,normal:.32,elite:.36,rock:.40,golem:.44,boss:.82,dragon:.88,frezard:.92}[kind]||.32);
+      const maxH=(fr.height||root.clientHeight)*({small:.31,normal:.38,elite:.42,rock:.45,golem:.48,boss:.74,dragon:.79,frezard:.84}[kind]||.38);
+      const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind,enemy),maxW,maxH);
       img.style.setProperty('width',`${sz.w}px`,'important');img.style.setProperty('height',`${sz.h}px`,'important');
+      if(tune.y&&wrap)wrap.style.setProperty('transform',`translateY(${tune.y}px)`,'important');
       requestAnimationFrame(()=>positionEnemyTargetMarks(root));
     };
     place();if(!img.complete)img.addEventListener('load',place,{once:true});
@@ -997,13 +1006,20 @@ function calcDamage(attacker,type,power,crit=0,e=targetEnemy()){const source=typ
 function calcEnemyDamage(target,power,type='physical'){const e=actingEnemy()||state.battle.enemy;if(!e)return 0;const source=(type==='magic'?e.mag:e.atk)*(e.atkBuffTurns>0?1+e.atkBuff:1)*(e.groupAttackScale||1),def=type==='magic'?effective('res',target):effective('def',target);return Math.max(1,Math.round((source*power-def*.50)*(.9+Math.random()*.2)));}
 function wakeEnemyOnHit(e){if(e?.status.sleep>0&&Math.random()<.70){e.status.sleep=0;notice(`${e.name}は眠りから覚めた！`,'status');}}
 function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=true;state.battle?.defeatedEnemies?.push({uid:e.uid,name:e.name,level:e.level,coinReward:e.coinReward||0});}
-function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true){
+function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
   if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);let d=r.value;if(e.shieldTurns>0)d=Math.round(d*(1-(e.damageReduction||.2)));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=state.battle?.mode==='story'&&state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);
   if(e.hp<=0){recordEnemyDefeat(e);if(state.battle.targetEnemyId===uid){const next=livingEnemies().find(x=>x.uid!==uid);state.battle.targetEnemyId=next?.uid||null;if(!state.battle.actingEnemyId)state.battle.enemy=next||e;}}
-  renderBattle();floatNumber(d,r.crit?'crit':'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
+  renderBattle();floatNumber(d,r.crit?'crit':'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);if(showHitPulse)pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
 }
 function applyEnemyDamage(a,power,type='physical',crit=0,showGenericFx=true){return applyEnemyDamageTo(a,targetEnemy(),power,type,crit,showGenericFx);}
-async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',statusChance=0,statusTurns=3){let total=0;const targets=[...livingEnemies()];for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,true);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(65);}return total;}
+async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',statusChance=0,statusTurns=3){
+  let total=0;const targets=[...livingEnemies()];if(!targets.length)return 0;
+  /* v38: an allied all-target attack visually hits every living enemy at the same moment. */
+  const fxKind=type==='magic'?'magic':'slash';
+  for(const e of targets){fx(fxKind,`enemy:${e.uid}`);pulseEnemy('hit',e.uid);}
+  await delay(55);
+  for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,false,false);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(45);}return total;
+}
 function applyEnemyStatusTo(e,kind,chance,turns=3){if(!e||e.hp<=0)return false;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(e.status[kind],e.isBoss?rint(1,2):turns);return true;}
 function heal(a,amount){if(a.dead)return 0;const before=a.hp;a.hp=Math.min(a.maxHp,a.hp+amount);const h=Math.round(a.hp-before);if(h>0)floatNumber(h,'heal',a.id);return h;}
 function healField(ratio){let total=0;livingField().forEach(a=>total+=heal(a,a.maxHp*ratio));renderBattle();return total;}
@@ -1066,7 +1082,7 @@ async function performUltimate(a,u){if(a.mpNow<u.cost){notice('MPが足りない
     case'selfSpdAttack':await hit();a.spdBuff=.18;a.spdBuffTurns=3;notice('SPD ↑','buff');break;
     case'playerSinglePlusAoe':await hit();await aoe(u.aoePower||.70,u.type||'magic');break;
     case'playerSinglePlusAoeParalyze':await hit();await aoe(u.aoePower||1.35,u.type||'physical',0,'paralyze',u.chance||.10,2);notice('敵全体にマヒ判定！','status');break;
-    case'multiAttack':{const n=rint(u.hits?.[0]||3,u.hits?.[1]||6);for(let i=0;i<n&&livingEnemies().length;i++)await hitEnemy(pick(livingEnemies()),u.power,u.type||'physical');notice(`${n} HIT`,'system',420);break;}
+    case'multiAttack':{const n=rint(u.hits?.[0]||3,u.hits?.[1]||6),multiScale=a.id==='denden'?.82:.90,hitPower=(u.power||1)*multiScale;for(let i=0;i<n&&livingEnemies().length;i++)await hitEnemy(pick(livingEnemies()),hitPower,u.type||'physical');notice(`${n} HIT`,'system',420);break;}
     case'teamRecovery':healField(.16);restoreMpField(.10);livingField().forEach(x=>{x.defBuff=.12;x.defBuffTurns=3;});notice('PARTY HP/MP RECOVER / DEF ↑','heal');break;
     case'stunAttack':await hit();if(lastHitEnemy&&applyEnemyStatusTo(lastHitEnemy,'stun',u.chance||.1,1))notice(`${lastHitEnemy.name}をひるませた！`,'status');break;
     case'aoeStun':await aoe(u.power,u.type||'physical',0,'stun',u.chance||.1,1);notice('敵全体にひるみ判定！','status');break;
