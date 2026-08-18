@@ -128,3 +128,11 @@ v33: LOADING watchdog fix. Individual asset requests time out after 3.2s, whole 
 - Event guest size rebalanced.
 - Boss/dragon/frezard, rock, golem presentation enlarged; enemy count does not change art scale.
 - Small-monster HP/name plate moved closer to the sprite.
+
+
+=== v35 ===
+- 2人イベントの味方画像を縮小し、少人数でも巨大化しないよう再調整。
+- イベント敵/ゲストを味方より上段へ配置し、画像同士の重なりを軽減。
+- 敵HPプレートを画像と別の通常レイアウト行へ変更し、小型敵の足元への被りを解消。
+- 羽・飛行系モンスターを地上型より少し上へ表示。
+- ターゲット▼は画像のobject-fit実描画位置をJSで計算し、頭上付近へ追従。

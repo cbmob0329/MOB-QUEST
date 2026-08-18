@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=34;
+const GAME_ASSET_VERSION=35;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -734,10 +734,27 @@ function availableUlts(a){return a.ults.filter((u,i)=>i<4?a.level>=[1,15,30,50][
 function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allBuff;if(stat==='atk'&&obj.atkBuffTurns>0)v*=1+obj.atkBuff;if(stat==='atk'&&obj.atkDebuffTurns>0)v*=1-obj.atkDebuff;if(stat==='def'&&obj.defBuffTurns>0)v*=1+obj.defBuff;if(stat==='spd'&&obj.spdBuffTurns>0)v*=1+obj.spdBuff;if(stat==='spd'&&obj.spdDebuffTurns>0)v*=1-(obj.spdDebuff||0);return v;}
 
 function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
+function enemyIsWinged(e){return /バード|ピヨ|ホーク|テンデビ|ヒノデビ|サキュバス|ドラゴン|ギドラ|フレザード|フェニックス/.test(e?.name||'');}
+function positionEnemyTargetMarks(root=$('#enemyArea')){
+  if(!root)return;
+  $$('[data-enemy-target]',root).forEach(unit=>{
+    const mark=$('.enemy-target-mark',unit),wrap=$('.enemy-sprite-wrap',unit),img=$('.enemy-sprite',unit);
+    if(!mark||!wrap)return;
+    const place=()=>{
+      const w=wrap.clientWidth,h=wrap.clientHeight,nw=img?.naturalWidth||0,nh=img?.naturalHeight||0;
+      if(!(w>0&&h>0&&nw>0&&nh>0)){mark.style.top='46%';return;}
+      const scale=Math.min(w/nw,h/nh),paintedH=nh*scale,paintTop=Math.max(0,h-paintedH);
+      mark.style.top=`${Math.max(1,paintTop-11)}px`;
+      mark.style.bottom='auto';
+    };
+    place();
+    if(img&&!img.complete)img.addEventListener('load',place,{once:true});
+  });
+}
 function enemyMarkup(e){
   const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
   const selected=state.battle?.targetEnemyId===e.uid&&e.hp>0,dead=e.hp<=0;
-  return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div></button>`;
+  return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${enemyIsWinged(e)?'enemy-winged':''} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div></button>`;
 }
 function statusText(a){return Object.entries(a.status).filter(([,v])=>v>0).map(([k])=>({poison:'毒',burn:'炎',sleep:'眠',stun:'怯',paralyze:'麻'}[k])).join(' ');}
 function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
@@ -747,7 +764,7 @@ function renderBattle(){
   const b=state.battle;if(!b)return;targetEnemy();$('#battleTurnLabel').textContent='';const enemies=b.enemies||[];const area=$('#enemyArea');area.className=`enemy-area enemy-count-${Math.max(1,enemies.length)}`;area.innerHTML=enemies.map(enemyMarkup).join('');
   $('#allyStatus').innerHTML=mainAllies().map(allyMarkup).join('');$('#superStatus').innerHTML=superAllies().length?superAllies().map(superMarkup).join(''):`<div class="no-bench">援護なし</div>`;$('#benchStatus').innerHTML=reserveAllies().length?reserveAllies().map(benchMarkup).join(''):`<div class="no-bench">控えなし</div>`;
   const entry=currentEntry(),a=activeAlly(),acting=entry?.type==='enemy'?enemyByUid(entry.enemyId):null,target=targetEnemy();$('#activeActorBar').innerHTML=a?`<img src="${versionedPlay(a.image)}" alt=""><div><small>COMMAND / SPD ${Math.round(effective('spd',a))}</small><b>${a.name}</b><span>HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}</span></div>`:entry?.type==='super'?`<div><small>AUTO ACTION</small><b>${allyById(entry.id)?.name||''}</b></div>`:`<div><small>${acting?'ENEMY ACTION':'TARGET'}</small><b>${acting?.name||target?.name||''}</b></div>`;
-  bindImages($('#battleScreen'));$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
+  bindImages($('#battleScreen'));positionEnemyTargetMarks(area);requestAnimationFrame(()=>positionEnemyTargetMarks(area));$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
 }
 function setCommandDisabled(dis){['attackBtn','skillBtn','ultimateBtn','defendBtn','itemBtn','escapeBtn','switchBtn'].forEach(id=>{const el=$('#'+id);if(el)el.disabled=dis;});}
 

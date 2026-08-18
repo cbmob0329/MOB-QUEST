@@ -1254,3 +1254,91 @@
   .enemy-unit.enemy-size-dragon{--enemy-scale:2.62!important}
   .enemy-unit.enemy-size-frezard{--enemy-scale:2.78!important}
 }
+
+
+/* ===== MOB QUEST v35 event scale / enemy HUD / target positioning ===== */
+/* Two-character story scenes must read as a party, not as two full-screen portraits. */
+.story-party-line[data-party-count="1"] .story-party-actor{
+  flex-basis:34%!important;width:34%!important;height:78%!important;
+}
+.story-party-line[data-party-count="2"] .story-party-actor{
+  flex-basis:23%!important;width:23%!important;height:72%!important;
+}
+.story-party-line[data-party-count="3"] .story-party-actor{
+  flex-basis:22%!important;width:22%!important;height:78%!important;
+}
+.story-party-line[data-party-count="4"] .story-party-actor{
+  flex-basis:19%!important;width:19%!important;height:82%!important;
+}
+.story-scene.story-layout-party-left .story-party-line[data-party-count="2"] .story-party-actor{
+  flex-basis:39%!important;width:39%!important;height:74%!important;
+}
+.story-scene.story-layout-party-left .story-party-line[data-party-count="3"] .story-party-actor{
+  flex-basis:31%!important;width:31%!important;height:78%!important;
+}
+
+/* Event enemies/guests stand on a clearly higher stage than the player party. */
+.story-guest,
+.story-guest.side-right{
+  bottom:33%!important;
+}
+.story-guest-group{
+  bottom:35%!important;
+}
+.story-guest.guest-compact,
+.story-guest.guest-compact.side-right{
+  bottom:32%!important;
+}
+
+/* Enemy HP is a separate HUD row below the sprite, never painted over its feet. */
+.enemy-unit,
+.enemy-count-1 .enemy-unit,
+.enemy-count-2 .enemy-unit,
+.enemy-count-3 .enemy-unit,
+.enemy-count-4 .enemy-unit{
+  padding:0 1px 4px!important;
+}
+.enemy-unit .enemy-nameplate,
+.enemy-count-1 .enemy-unit .enemy-nameplate,
+.enemy-count-2 .enemy-unit .enemy-nameplate,
+.enemy-count-3 .enemy-unit .enemy-nameplate,
+.enemy-count-4 .enemy-unit .enemy-nameplate{
+  position:relative!important;
+  z-index:14!important;
+  left:auto!important;right:auto!important;bottom:auto!important;
+  flex:0 0 auto!important;
+  width:94%!important;
+  margin:2px auto 0!important;
+  align-self:center!important;
+}
+.enemy-unit.enemy-size-small .enemy-nameplate{
+  bottom:auto!important;
+  margin-top:4px!important;
+}
+.enemy-unit.enemy-size-small .enemy-sprite-wrap{
+  margin-bottom:0!important;
+}
+
+/* Flying/winged monsters float slightly above grounded monsters. */
+.enemy-unit.enemy-winged .enemy-sprite-wrap{
+  transform:translateY(-10px) scale(var(--enemy-scale,1))!important;
+}
+.enemy-unit.enemy-winged.enemy-size-boss .enemy-sprite-wrap,
+.enemy-unit.enemy-winged.enemy-size-dragon .enemy-sprite-wrap{
+  transform:translateY(-14px) scale(var(--enemy-scale,1))!important;
+}
+
+/* Target arrow is positioned by JS against the actual object-fit image bounds. */
+.enemy-target-mark,
+.enemy-unit.enemy-size-small .enemy-target-mark{
+  left:50%!important;right:auto!important;bottom:auto!important;
+  padding:0!important;margin:0!important;
+  transform:translateX(-50%)!important;
+  font-size:8px!important;line-height:1!important;
+}
+
+@media(max-height:720px){
+  .story-party-line[data-party-count="2"] .story-party-actor{flex-basis:22%!important;width:22%!important;height:70%!important}
+  .story-guest,.story-guest.side-right{bottom:31%!important}
+  .story-guest-group{bottom:33%!important}
+}
