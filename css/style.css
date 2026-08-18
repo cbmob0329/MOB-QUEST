@@ -1521,3 +1521,51 @@
   .story-guest.story-guest-enemy.story-enemy-winged{bottom:42%!important}
   .story-guest-group{bottom:41%!important;height:25%!important}
 }
+
+
+/* ===== MOB QUEST v37 boss scale / event layer / story depth ===== */
+.story-party-line{
+  bottom:11%!important;
+  height:26%!important;
+  overflow:visible!important;
+}
+.story-scene.story-layout-party-left .story-party-line{
+  bottom:11%!important;
+  height:26%!important;
+}
+.story-party-line[data-party-count="2"] .story-party-actor{
+  flex-basis:21.5%!important;width:21.5%!important;height:68%!important;
+}
+.story-party-line[data-party-count="3"] .story-party-actor{
+  flex-basis:20.5%!important;width:20.5%!important;height:74%!important;
+}
+.story-party-line[data-party-count="4"] .story-party-actor{
+  flex-basis:18.5%!important;width:18.5%!important;height:78%!important;
+}
+.story-party-line[data-party-count="3"] .story-party-actor:nth-child(1){z-index:2!important}
+.story-party-line[data-party-count="3"] .story-party-actor:nth-child(2){z-index:4!important}
+.story-party-line[data-party-count="3"] .story-party-actor:nth-child(3){z-index:1!important}
+.story-party-line[data-party-count="2"] .story-party-actor:nth-child(1){z-index:3!important}
+.story-party-line[data-party-count="2"] .story-party-actor:nth-child(2){z-index:2!important}
+.story-guest.story-guest-player,
+.story-guest.story-guest-player.side-right,
+.story-guest.story-guest-player.side-left{
+  bottom:11%!important;
+}
+.story-guest.story-guest-enemy,
+.story-guest.story-guest-enemy.side-right,
+.story-guest.story-guest-enemy.side-left{
+  bottom:48%!important;
+}
+.story-guest.story-guest-enemy.story-enemy-winged{bottom:51%!important}
+.story-guest-group{
+  bottom:49%!important;
+  height:25%!important;
+}
+@media(max-height:720px){
+  .story-party-line{bottom:10%!important;height:25%!important}
+  .story-scene.story-layout-party-left .story-party-line{bottom:10%!important;height:25%!important}
+  .story-guest.story-guest-enemy,.story-guest.story-guest-enemy.side-right,.story-guest.story-guest-enemy.side-left{bottom:46%!important}
+  .story-guest.story-guest-enemy.story-enemy-winged{bottom:49%!important}
+  .story-guest-group{bottom:47%!important;height:24%!important}
+}

@@ -399,7 +399,8 @@ async function sizeStoryPartyImages(root){
   const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
   const rowH=Math.max(1,(root.clientHeight-4)/rows);
   /* v36: keep the asset-authored relative size, but make the event party a little smaller than v35. */
-  const cap=count<=2?.16:count<=3?.145:count<=4?.13:count<=6?.112:.096;
+  /* v37: story party should sit lower/smaller so guests and bosses never collide with it. */
+  const cap=count<=2?.148:count<=3?.134:count<=4?.124:count<=6?.108:.094;
   const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);
   lastStoryPartyScale=sc;
   valid.forEach(img=>{
@@ -423,10 +424,10 @@ function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
     const sc=Math.min(lastStoryPartyScale||.14,.17);
     sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(multi?.25:.32),scene.height*(multi?.22:.25));
   }else{
-    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2700,.14,.18)*(multi?.84:1);
-    const mul={small:.82,normal:.96,elite:1.04,rock:1.10,golem:1.16,boss:1.22,dragon:1.30,frezard:1.38}[kind]||1;
-    const maxW=scene.width*({small:.30,normal:.37,elite:.42,rock:.44,golem:.48,boss:.72,dragon:.82,frezard:.86}[kind]||.40)*(multi?.72:1);
-    const maxH=scene.height*({small:.19,normal:.23,elite:.25,rock:.25,golem:.27,boss:.31,dragon:.34,frezard:.36}[kind]||.24)*(multi?.88:1);
+    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2550,.155,.205)*(multi?.88:1);
+    const mul={small:.82,normal:1.00,elite:1.16,rock:1.24,golem:1.32,boss:1.72,dragon:1.98,frezard:2.08}[kind]||1;
+    const maxW=scene.width*({small:.30,normal:.39,elite:.46,rock:.50,golem:.54,boss:.84,dragon:.92,frezard:.94}[kind]||.42)*(multi?.76:1);
+    const maxH=scene.height*({small:.19,normal:.24,elite:.28,rock:.31,golem:.34,boss:.45,dragon:.50,frezard:.54}[kind]||.25)*(multi?.90:1);
     sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,base*mul,maxW,maxH);
   }
   holder.style.setProperty('width',`${sz.w}px`,'important');
@@ -766,8 +767,8 @@ function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allB
 function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
 function enemyIsWinged(e){return /バード|ピヨ|ホーク|テンデビ|ヒノデビ|サキュバス|ドラゴン|ギドラ|フレザード|フェニックス/.test(e?.name||'');}
 function battleEnemyNaturalScale(root,kind){
-  const w=root?.clientWidth||440,base=clamp(w/2600,.15,.19);
-  return base*({small:.82,normal:.96,elite:1.02,rock:1.08,golem:1.14,boss:1.18,dragon:1.24,frezard:1.30}[kind]||1);
+  const w=root?.clientWidth||440,base=clamp(w/2450,.165,.225);
+  return base*({small:.82,normal:1.00,elite:1.12,rock:1.24,golem:1.36,boss:1.90,dragon:2.18,frezard:2.28}[kind]||1);
 }
 function applyEnemyVisualSizes(root=$('#enemyArea')){
   if(!root)return;
@@ -777,8 +778,8 @@ function applyEnemyVisualSizes(root=$('#enemyArea')){
       if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
       const kind=['small','normal','elite','rock','golem','boss','dragon','frezard'].find(k=>unit.classList.contains(`enemy-size-${k}`))||'normal';
       const field=$('#battle-field')||$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};
-      const maxW=(fr.width||root.clientWidth)*({small:.24,normal:.29,elite:.31,rock:.34,golem:.38,boss:.67,dragon:.78,frezard:.84}[kind]||.30);
-      const maxH=(fr.height||root.clientHeight)*({small:.28,normal:.34,elite:.36,rock:.38,golem:.40,boss:.58,dragon:.66,frezard:.70}[kind]||.35);
+      const maxW=(fr.width||root.clientWidth)*({small:.24,normal:.29,elite:.34,rock:.38,golem:.42,boss:.80,dragon:.88,frezard:.92}[kind]||.30);
+      const maxH=(fr.height||root.clientHeight)*({small:.28,normal:.34,elite:.39,rock:.42,golem:.45,boss:.72,dragon:.79,frezard:.84}[kind]||.35);
       const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind),maxW,maxH);
       img.style.setProperty('width',`${sz.w}px`,'important');img.style.setProperty('height',`${sz.h}px`,'important');
       requestAnimationFrame(()=>positionEnemyTargetMarks(root));
