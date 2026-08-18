@@ -86,3 +86,71 @@ v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+elemen
 v28:
 - 草原AREA4ボス撃破後のリザルトは「HOMEへ戻る」。砂漠到着イベントは次にHOMEから冒険へ入った時に開始。
 - イベント中の通常冒険パーティーをCSSでも強制非表示にし、イベントキャラとの二重表示を防止。
+
+v29
+- Story NEXT button moved to upper-right scene control.
+- Event party uses up to 6 actors per row / 2 rows; duplicate adventure party layer is forcibly hidden.
+- Denden/Money/Nyoro entrance size reduced; source-line speech remains one bubble per line.
+- Adventure image decode gate prevents native-size PNG flash.
+- AREA1 normal encounters fixed to 2 enemies; AREA2+ 2-4. Exploration no longer reveals enemy names.
+- Target marker changed to a small overhead arrow; enemy HP plate moved closer to the enemy.
+- Rock/Golem/Boss/Dragon/Frezard display scales adjusted without count-dependent scaling.
+- Main elite/boss is centered when accompanied by attendants.
+- Magma AREA3 Blizzard+Flame fusion animation added before giant Frezard appearance.
+- Clearing every AREA boss/mid-boss returns to HOME (post-boss event plays first when defined).
+
+
+=== v31 ===
+- 最新イベント台本を導入: 草原、草原II、部族村の到着・中ボス前後・ボス前後。
+- AREAごとの3戦目に pre/post story hook を追加。
+- 複数のイベント敵を同時表示可能。
+- 単独の中ボス/ボス+側近編成は中ボスを中央寄せ。
+- モブネプ表記をモブネプチューンへ更新。
+- モブジェシーは正式プレイヤーキャラクターとして play/06.png を使用。
+
+
+=== v32 ===
+- モブジェリーを正式に「モブジェシー」へ改名。
+- プレイヤーIDも jessie に統一。旧セーブの jerry ID は読み込み時に自動変換。
+- play/06.png、雷属性、槍・銃、ダブルサンダー等の既存性能はそのまま継承。
+- 部族村イベントのモブジェシーと通常プレイヤーデータを同一キャラクターとして統一。
+
+
+v33: LOADING watchdog fix. Individual asset requests time out after 3.2s, whole loading gates after 5.2s, boot recovery added. index.html in this ZIP contains no Git conflict markers.
+
+
+=== v34 ===
+- HOME party character display removed; HOME no longer preloads/decodes player PNGs.
+- Story events advance by tapping anywhere on the event screen. Visible NEXT/TAP labels removed.
+- One pending tap resolves one line only, preventing rapid double-tap skipping/selection.
+- Speech bubbles now anchor to the actual visible character image bounds.
+- Event party scaling corrected: up to 6 per row, 1-3 characters are no longer tiny.
+- Event guest size rebalanced.
+- Boss/dragon/frezard, rock, golem presentation enlarged; enemy count does not change art scale.
+- Small-monster HP/name plate moved closer to the sprite.
+
+
+=== v36 ===
+- 2人イベントの味方画像を縮小し、少人数でも巨大化しないよう再調整。
+- イベント敵/ゲストを味方より上段へ配置し、画像同士の重なりを軽減。
+- 敵HPプレートを画像と別の通常レイアウト行へ変更し、小型敵の足元への被りを解消。
+- 羽・飛行系モンスターを地上型より少し上へ表示。
+- ターゲット▼は画像のobject-fit実描画位置をJSで計算し、頭上付近へ追従。
+
+=== v36 ===
+- イベントパーティーをv35より少し小さくし、下側へ移動。
+- イベント画像の max-width/max-height による個別縮小を廃止し、素材側で調整した相対サイズを保持。モブピンクだけ不自然に大きく見える原因を修正。
+- イベントで新加入するプレイヤーキャラは、その場のイベントパーティーと同一のピクセル倍率で表示。
+- イベント敵は味方より上段へ分離。敵画像は naturalWidth/naturalHeight を基準に表示し、ボス・ドラゴン等は素材の大きさを活かす。
+- 戦闘敵画像もCSS transform拡大を廃止し、naturalWidth/naturalHeight基準の縮小表示へ変更。1～4体で同じ4スロット基準を使用。
+- 小型敵HPプレートを画像の下へ離し、ターゲット▼を実PNGの頭上へ直接追従。
+- AREA1～3の中ボス撃破後は冒険画面へ継続。HOMEへ戻るのはAREA4ボス撃破時のみ。
+
+
+[v38]
+- モブネオンバルスを個別に拡大。
+- モブガーディアンを個別に拡大し、戦闘位置を少し下へ。
+- 通常雑魚敵を全体的に少し拡大。
+- 味方全体攻撃は生存中の敵全員へ同時エフェクト。
+- プレイヤー側連撃を軽く弱体化（モブデンデンはやや強めに調整）。
+- 中ボス・ボスのHPを少し増加。

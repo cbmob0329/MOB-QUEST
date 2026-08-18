@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=28;
+const GAME_ASSET_VERSION=38;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -29,7 +29,8 @@ const PASSIVE_RATE_SCALE=.80;
 function spriteScale(){return 1;}
 function passiveChance(base){return Math.random()<(base*PASSIVE_RATE_SCALE);}
 
-function player(id){return MOB_DATA.players.find(x=>x.id===id);}
+function canonicalPlayerId(id){return id==='jerry'?'jessie':id;}
+function player(id){const cid=canonicalPlayerId(id);return MOB_DATA.players.find(x=>x.id===cid);}
 function boss(id){return MOB_DATA.bosses.find(x=>x.id===id);}
 function enemyTemplate(id){return MOB_DATA.enemyCatalog?.find(x=>x.id===id)||null;}
 function legacyBossTemplate(b){return{id:`legacy-${b.id}`,bossId:b.id,name:b.name,stage:b.stage,category:'boss',attribute:b.attribute,image:b.image,symbol:b.symbol||'敵',levelMin:50,levelMax:50,special:b.special,kind:b.kind,power:b.power,hits:b.hits,bg:b.bg,fallbackBg:b.fallbackBg,trainingLegacy:true};}
@@ -48,7 +49,7 @@ function saveParty(){try{localStorage.setItem('mobQuestPartyV4',JSON.stringify(s
 function loadParty(){
   try{
     const raw=localStorage.getItem('mobQuestPartyV4')||localStorage.getItem('mobQuestPartyV3')||localStorage.getItem('mobQuestPartyV2');
-    const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])&&!seen.has(x[0])&&(seen.add(x[0])||true)).map(x=>[x[0],clamp(Number(x[1])||1,1,120)]).slice(0,10);if(clean.length)return clean;}
+    const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])).map(x=>[canonicalPlayerId(x[0]),clamp(Number(x[1])||1,1,120)]).filter(x=>!seen.has(x[0])&&(seen.add(x[0])||true)).slice(0,10);if(clean.length)return clean;}
   }catch(_){}
   return defaultParty.map(x=>[...x]);
 }
@@ -75,15 +76,24 @@ function preloadAsset(src,priority='auto'){
   assetImageCache.set(src,img);
   const task=new Promise(resolve=>{
     let settled=false;
+    let watchdog=0;
     const done=async ok=>{
-      if(settled)return;settled=true;
-      if(ok&&img.decode){try{await img.decode();}catch(_){}}
-      resolve(ok);
+      if(settled)return;
+      settled=true;
+      clearTimeout(watchdog);
+      img.onload=null;
+      img.onerror=null;
+      if(ok&&img.decode){
+        try{await Promise.race([img.decode(),new Promise(r=>setTimeout(r,900))]);}catch(_){}
+      }
+      resolve(!!ok);
     };
     img.onload=()=>done(true);
     img.onerror=()=>done(false);
-    img.src=src;
-    if(img.complete&&img.naturalWidth>0)done(true);
+    /* A stalled GitHub Pages/image request must never freeze the whole game. */
+    watchdog=setTimeout(()=>done(false),3200);
+    try{img.src=src;}catch(_){done(false);return;}
+    if(img.complete)done(img.naturalWidth>0);
   });
   assetPreloadCache.set(src,task);
   return task;
@@ -92,7 +102,12 @@ async function preloadAssets(paths,onProgress){
   const unique=[...new Set((paths||[]).filter(Boolean))];
   if(!unique.length){onProgress?.(1,1);return;}
   let done=0;
-  await Promise.all(unique.map(async src=>{await preloadAsset(src);done++;onProgress?.(done,unique.length);}));
+  await Promise.allSettled(unique.map(async src=>{
+    try{return await preloadAsset(src);}finally{
+      done++;
+      onProgress?.(done,unique.length);
+    }
+  }));
 }
 async function preloadAssetsSafe(paths,timeout=800){
   try{
@@ -181,18 +196,26 @@ async function loadingWithAssets(text,assets){
   $('#loadingBar').style.width='0%';
   const detail=$('#loadingDetail');
   if(detail)detail.textContent='0%';
-  await preloadAssets(assets,(done,total)=>{
+  let acceptingProgress=true;
+  const preloadJob=preloadAssets(assets,(done,total)=>{
+    if(!acceptingProgress)return;
     const per=Math.round(done/Math.max(1,total)*100);
     $('#loadingBar').style.width=`${per}%`;
     if(detail)detail.textContent=`${done} / ${total}　${per}%`;
   });
+  /* Second watchdog: even an unexpected browser/network bug cannot trap the player on LOADING. */
+  const timedOut=await Promise.race([
+    preloadJob.then(()=>false).catch(()=>false),
+    new Promise(resolve=>setTimeout(()=>resolve(true),5200))
+  ]);
+  acceptingProgress=false;
   $('#loadingBar').style.width='100%';
-  if(detail)detail.textContent='READY';
-  await fixedDelay(180);
+  if(detail)detail.textContent=timedOut?'READY / SKIP':'READY';
+  await fixedDelay(timedOut?80:140);
 }
 
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
-function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){renderHome();showScreen('home');}else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
+function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){goHome();}else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
 
 async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
   const overlay=$('#dialogOverlay');$('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
@@ -211,37 +234,23 @@ async function travelTo(target,text,after){
 }
 
 const HOME_COMMON_SCALE_MAX=0.16;
-function applyHomeCommonScale(){
-  const root=$('#homeParty');
-  if(!root)return;
-  const imgs=$$('[data-home-party-img]',root);
-  if(!imgs.length)return;
-  const wait=imgs.map(img=>img.complete&&img.naturalWidth?Promise.resolve():new Promise(resolve=>{
-    const done=()=>resolve();
-    img.addEventListener('load',done,{once:true});
-    img.addEventListener('error',done,{once:true});
-  }));
-  Promise.all(wait).then(()=>{
-    const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);
-    if(!valid.length)return;
-    const naturalWidthTotal=valid.reduce((sum,img)=>sum+img.naturalWidth,0);
-    const naturalHeightMax=Math.max(...valid.map(img=>img.naturalHeight));
-    const rowWidth=Math.max(1,root.clientWidth-10);
-    const rowHeight=Math.max(1,root.clientHeight-34);
-    const fitWidth=rowWidth/naturalWidthTotal;
-    const fitHeight=(rowHeight*.58)/naturalHeightMax;
-    const scale=Math.min(HOME_COMMON_SCALE_MAX,fitWidth,fitHeight);
-    valid.forEach(img=>{
-      img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');
-      img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');
-    });
-  });
+async function applyHomeCommonScale(){
+  /* v34: HOME no longer renders party character PNGs. Kept as a no-op so old resize hooks stay safe. */
+  return;
 }
-function renderHome(){
+async function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${versionedPlay(p.image)}" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
-  bindImages($('#homeParty'));
-  applyHomeCommonScale();
+}
+async function goHome(){
+  /* HOME deliberately avoids player PNGs: this removes the native-size flash and unnecessary decode work. */
+  showScreen('loading');
+  $('#loadingText').textContent='HOMEを準備しています…';
+  $('#loadingBar').style.width='35%';
+  const detail=$('#loadingDetail');if(detail)detail.textContent='HOME';
+  await preloadAssetsSafe(['back/rpgmain.png','icon/01.png'],900);
+  $('#loadingBar').style.width='100%';if(detail)detail.textContent='READY';
+  await renderHome();
+  showScreen('home');
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -305,33 +314,45 @@ function renderTraining(){
   $$('[data-training-enemy-id]').forEach(btn=>btn.onclick=()=>{const t=trainingEnemyTemplate(btn.dataset.trainingEnemyId),i=state.training.activeEnemySlot;state.training.enemySlots[i]={id:t.id,level:t.levelMin||1};const next=state.training.enemySlots.findIndex((x,j)=>j>i&&!x);if(next>=0)state.training.activeEnemySlot=next;renderTraining();});
 }
 function renderSelectedBoss(){const list=trainingEnemyList(),partyCount=trainingParty().length,names=list.map(x=>trainingEnemyTemplate(x.id)?.name).filter(Boolean);$('#selectedBossMini').innerHTML=`<b>味方 ${partyCount}人 / 敵 ${list.length}体：${names.join(' / ')||'未設定'}</b><small>味方は空き枠ありでOK。敵は1～4体まで自由に設定できます</small>`;$('#startTrainingBattleBtn').disabled=!list.length||!partyCount;}
-function weightedEnemyCount(){const r=Math.random();return r<.48?1:r<.80?2:r<.96?3:4;}
+function weightedEnemyCount(areaIndex=0){
+  // AREA 1 is always a two-enemy field battle. AREA 2+ uses 2-4 enemies, with four still uncommon.
+  if(Number(areaIndex)===0)return 2;
+  const r=Math.random();return r<.55?2:r<.90?3:4;
+}
 function weightedNormalTemplate(world,exclude=[]){
   const pool=(world.normalIds||[]).map(enemyTemplate).filter(Boolean).filter(t=>!exclude.includes(t.id));if(!pool.length)return null;
   const weighted=[];for(const t of pool){const weight=t.rare?1:8;for(let i=0;i<weight;i++)weighted.push(t);}return pick(weighted);
 }
 function expandEncounterEntries(entries=[]){const out=[];for(const x of entries){const q=clamp(Number(x.qty)||1,1,4);for(let i=0;i<q;i++)out.push({id:x.id,level:x.level});}return out.slice(0,4);}
+function arrangeBossFormation(entries=[]){
+  const list=[...entries];if(list.length<3)return list;
+  // Put the main elite/boss in the visual centre while keeping attendants at their normal size/order.
+  let primary=list.findIndex(x=>{const t=trainingEnemyTemplate(x.id);return t?.category==='boss';});
+  if(primary<0)primary=list.findIndex(x=>trainingEnemyTemplate(x.id)?.category==='elite');
+  if(primary<0)return list;
+  const [main]=list.splice(primary,1),insertAt=list.length>=3?2:1;list.splice(insertAt,0,main);return list.slice(0,4);
+}
 function createAdventureEncounter(){
-  const w=currentWorld(),area=currentArea(),battleIndex=clamp(state.adventure.battleIndex||0,0,2);
-  if(battleIndex===2){const first=expandEncounterEntries(area.boss||[]),waves=[first];if(area.nextWave?.length)waves.push(expandEncounterEntries(area.nextWave));return{waves,bossBattle:true,label:`${w.name} ${area.name} 中ボス/ボス`};}
-  const count=weightedEnemyCount(),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return{waves:[list],bossBattle:false,label:`${w.name} ${area.name} 通常戦`};
+  const w=currentWorld(),area=currentArea(),battleIndex=clamp(state.adventure.battleIndex||0,0,2),areaIndex=clamp(state.adventure.areaIndex||0,0,3);
+  if(battleIndex===2){const first=arrangeBossFormation(expandEncounterEntries(area.boss||[])),waves=[first];if(area.nextWave?.length)waves.push(arrangeBossFormation(expandEncounterEntries(area.nextWave)));return{waves,bossBattle:true,label:`${w.name} ${area.name} 中ボス/ボス`};}
+  const count=weightedEnemyCount(areaIndex),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return{waves:[list],bossBattle:false,label:`${w.name} ${area.name} 通常戦`};
 }
 function encounterNames(enc){return(enc?.waves?.[0]||[]).map(x=>{const t=trainingEnemyTemplate(x.id);return`${t?.name||x.id} Lv${x.level}`;}).join(' / ');}
 
 const ADVENTURE_COMMON_SCALE_MAX=.14;
-function applyAdventurePartyScale(){
+function setAdventureVisualLoading(on){const gate=$('#adventureVisualLoader'),root=$('#adventureParty');if(gate)gate.hidden=!on;if(root)root.classList.toggle('visual-loading',!!on);}
+async function applyAdventurePartyScale(){
   const root=$('#adventureParty');if(!root)return;
-  const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length)return;
-  const ready=imgs.map(async img=>{
+  const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(imgs.map(async img=>{
     if(!(img.complete&&img.naturalWidth))await new Promise(resolve=>{const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});});
     try{if(img.decode&&img.naturalWidth)await img.decode();}catch(_){}
-  });
-  Promise.all(ready).then(()=>{
-    const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
-    const sumW=valid.reduce((a,img)=>a+img.naturalWidth,0),maxH=Math.max(...valid.map(img=>img.naturalHeight));
-    const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
-    valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');img.classList.add('size-ready');});
-  });
+  }));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length){setAdventureVisualLoading(false);return;}
+  const sumW=valid.reduce((a,img)=>a+img.naturalWidth,0),maxH=Math.max(...valid.map(img=>img.naturalHeight));
+  const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
+  valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');img.classList.add('size-ready');});
+  await nextPaint();setAdventureVisualLoading(false);
 }
 
 /* ===== v26 STORY EVENT ENGINE ===== */
@@ -339,9 +360,13 @@ let storyBusy=false;
 const STORY_GUESTS={
   mira:'boss-mira',guardian:'boss-guardian',neonBoss:'boss-neon',ace:'boss-ace',dragon:'boss-dragon',nepu:'boss-nepu'
 };
+/* v32: モブジェシー is the canonical play/06.png player character. */
+const STORY_ONLY_ACTORS={};
+let storySceneExtras=[];
 function storyActorInfo(key){
+  const e=STORY_ONLY_ACTORS[key];if(e)return{key,...e,image:versionedPlay(e.image),player:false,eventOnly:true};
   const p=player(key);if(p)return{key,name:p.name,image:versionedPlay(p.image),symbol:p.symbol||'仲',player:true};
-  const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false};
+  const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false,category:t.category||'normal',enemyTemplate:t,sizeClass:enemySizeClass(t),winged:enemyIsWinged(t)};
   return{key,name:key||'???',image:'',symbol:'?'};
 }
 function storyFlags(){if(!state.adventure.storyFlags||typeof state.adventure.storyFlags!=='object')state.adventure.storyFlags={};return state.adventure.storyFlags;}
@@ -349,35 +374,98 @@ function storyDone(key){return!!storyFlags()[key];}
 function markStoryDone(key){storyFlags()[key]=true;saveAdventure();}
 function storyWorld(id){return(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id)||currentWorld();}
 function storySceneBg(worldId,areaIndex=0){const w=storyWorld(worldId),a=w?.areas?.[clamp(areaIndex,0,3)];return{bg:a?.bg||w?.fieldFallback||'back/rpgmain.png',fallback:w?.fieldFallback||'back/rpgmain.png'};}
-function storyWaitButton(btn){return new Promise(resolve=>{const done=e=>{e?.stopPropagation?.();btn.removeEventListener('click',done);resolve();};btn.addEventListener('click',done,{once:true});});}
+let storyTapResolve=null;
+let storyTapReadyAt=0;
+function storyAdvanceWait(){
+  return new Promise(resolve=>{storyTapResolve=resolve;storyTapReadyAt=performance.now()+80;});
+}
+function handleStoryTapAdvance(e){
+  if(!storyTapResolve||performance.now()<storyTapReadyAt)return;
+  e?.preventDefault?.();e?.stopPropagation?.();
+  const resolve=storyTapResolve;storyTapResolve=null;storyTapReadyAt=0;resolve();
+}
 async function readyStoryImage(img,src){
   img.classList.remove('size-ready','asset-missing');if(!src){img.classList.add('asset-missing');return false;}
   img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}
   await nextPaint();if(img.naturalWidth){img.classList.add('size-ready');return true;}img.classList.add('asset-missing');return false;
 }
-async function renderStoryParty(){
-  const root=$('#storyPartyLine');const list=state.party.map(([id,lv])=>({p:player(id),lv})).filter(x=>x.p);
-  root.innerHTML=list.map(({p,lv})=>`<div class="story-party-actor" data-story-actor="${p.id}"><img data-story-party-img src="${versionedPlay(p.image)}" alt="${p.name}"><span hidden>${p.symbol}</span></div>`).join('');bindImages(root);
-  const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
-  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(valid.length){const sum=valid.reduce((a,i)=>a+i.naturalWidth,0),maxH=Math.max(...valid.map(i=>i.naturalHeight));const sc=Math.min(.115,(root.clientWidth-8)/Math.max(1,sum),(root.clientHeight-4)/Math.max(1,maxH));valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});}
+let lastStoryPartyScale=.14;
+async function sizeStoryPartyImages(root){
+  const imgs=$$('[data-story-party-img]',root);
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
+  const count=valid.length,rows=Math.max(1,Math.ceil(count/6));
+  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
+  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
+  const rowH=Math.max(1,(root.clientHeight-4)/rows);
+  /* v36: keep the asset-authored relative size, but make the event party a little smaller than v35. */
+  /* v37: story party should sit lower/smaller so guests and bosses never collide with it. */
+  const cap=count<=2?.148:count<=3?.134:count<=4?.124:count<=6?.108:.094;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);
+  lastStoryPartyScale=sc;
+  valid.forEach(img=>{
+    img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*sc))}px`,'important');
+    img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*sc))}px`,'important');
+    img.classList.add('size-ready');
+  });
 }
-async function openStoryScene(worldId,areaIndex=0,layout='default'){
-  const sc=$('#storyScene'),bg=storySceneBg(worldId,areaIndex),underParty=$('#adventureParty');
+function fitNaturalSize(nw,nh,scale,maxW,maxH){
+  if(!(nw>0&&nh>0))return{w:1,h:1,scale:0};
+  const s=Math.min(scale,maxW/nw,maxH/nh,1);
+  return{w:Math.max(1,Math.round(nw*s)),h:Math.max(1,Math.round(nh*s)),scale:s};
+}
+function storyEnemyScaleKind(info){return info?.sizeClass||enemySizeClass(info?.enemyTemplate||info||{});}
+function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return;
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  let sz;
+  if(info?.player){
+    /* New allies use exactly the same source-pixel scale as the visible event party. */
+    const sc=Math.min(lastStoryPartyScale||.14,.17);
+    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(multi?.25:.32),scene.height*(multi?.22:.25));
+  }else{
+    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2550,.155,.205)*(multi?.88:1),tune=enemyVisualTune(info);
+    const mul={small:.82,normal:1.00,elite:1.16,rock:1.24,golem:1.32,boss:1.72,dragon:1.98,frezard:2.08}[kind]||1;
+    const maxW=scene.width*({small:.30,normal:.39,elite:.46,rock:.50,golem:.54,boss:.84,dragon:.92,frezard:.94}[kind]||.42)*(multi?.76:1);
+    const maxH=scene.height*({small:.19,normal:.24,elite:.28,rock:.31,golem:.34,boss:.45,dragon:.50,frezard:.54}[kind]||.25)*(multi?.90:1);
+    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,base*mul*tune.scale,maxW,maxH);
+  }
+  holder.style.setProperty('width',`${sz.w}px`,'important');
+  holder.style.setProperty('height',`${sz.h}px`,'important');
+}
+
+async function renderStoryParty(extraIds=null){
+  const root=$('#storyPartyLine');
+  const list=state.party.map(([id])=>storyActorInfo(id)).filter(x=>x?.image);
+  const extras=[...storySceneExtras,...(Array.isArray(extraIds)?extraIds:(extraIds?[extraIds]:[]))];
+  for(const id of extras){const info=storyActorInfo(id);if(info?.image&&!list.some(x=>x.key===info.key))list.push(info);}
+  root.dataset.partyCount=String(list.length);
+  root.innerHTML=list.map(p=>`<div class="story-party-actor" data-story-actor="${p.key}"><img data-story-party-img src="${p.image}" alt="${p.name}"><span hidden>${p.symbol||'仲'}</span></div>`).join('');
+  bindImages(root);await sizeStoryPartyImages(root);
+}
+async function openStoryScene(worldId,areaIndex=0,layout='default',extras=[]){
+  const sc=$('#storyScene'),bg=storySceneBg(worldId,areaIndex),underParty=$('#adventureParty'),advScreen=$('#adventureScreen');
   setImage($('#adventureBg'),bg.bg,bg.fallback);$('#fieldEvent').hidden=true;
-  // Story actors are the only character layer during an event. The normal adventure party
-  // must never remain visible behind them.
-  if(underParty)underParty.hidden=true;
-  sc.classList.remove('closing','shake','story-layout-party-left');
-  if(layout==='partyLeftGuestRight')sc.classList.add('story-layout-party-left');
-  sc.hidden=false;$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;await renderStoryParty();await fixedDelay(330);
+  if(advScreen)advScreen.classList.add('story-event-active');if(underParty)underParty.hidden=true;setAdventureVisualLoading(true);
+  sc.classList.remove('closing','shake','story-layout-party-left');if(layout==='partyLeftGuestRight')sc.classList.add('story-layout-party-left');
+  storySceneExtras=Array.isArray(extras)?extras.filter(Boolean):[];
+  $('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;storyTapResolve=null;
+  // Layout and decode first while invisible so a raw PNG can never flash at native size.
+  sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';setAdventureVisualLoading(false);await fixedDelay(240);
 }
 async function closeStoryScene(forceHome=false){
-  const sc=$('#storyScene');sc.classList.add('closing');await fixedDelay(350);sc.hidden=true;sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;
-  const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
-  if(forceHome){renderHome();showScreen('home');}else{renderAdventure();showScreen('adventure');}
+  const sc=$('#storyScene');sc.classList.add('closing');storyTapResolve=null;await fixedDelay(350);sc.hidden=true;sc.style.visibility='';sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyPartyLine').innerHTML='';storySceneExtras=[];
+  const advScreen=$('#adventureScreen');if(advScreen)advScreen.classList.remove('story-event-active');const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
+  if(forceHome){await goHome();}else{renderAdventure();showScreen('adventure');}
 }
 function storyAnchor(key){return $(`[data-story-actor="${key}"]`,$('#storyScene'))||($('#storyGuest').dataset.storyActor===key?$('#storyGuest'):null);}
-function setStorySpeaking(key,on){$$('.story-party-actor',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
+function storyAnchorRect(anchor){
+  if(!anchor)return null;
+  const img=anchor.matches?.('img')?anchor:anchor.querySelector?.('img.size-ready,img:not(.asset-missing)');
+  const target=(img&&img.getBoundingClientRect().width>0)?img:anchor;
+  return target.getBoundingClientRect();
+}
+function setStorySpeaking(key,on){$$('.story-party-actor,.story-guest-multi',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
 async function storySayLine(key,line,displayName=null,anchorKey=null){
   const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key);
   $('#storySpeaker').textContent=displayName||info.name||'???';$('#storyText').textContent=line;
@@ -387,29 +475,46 @@ async function storySayLine(key,line,displayName=null,anchorKey=null){
   bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
   await nextPaint();const scene=$('#storyScene').getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
   if(anchor){
-    const ar=anchor.getBoundingClientRect(),cx=ar.left-scene.left+ar.width/2;
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;
     left=clamp(cx-br.width/2,8,scene.width-br.width-8);
-    top=clamp(ar.top-scene.top-br.height-14,54,scene.height-br.height-22);
+    /* Point to the actual character art. If there is no room above, place the bubble just above the lower UI, never over a distant enemy. */
+    top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);
     bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
   }else bubble.classList.add('no-arrow');
   bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
-  await storyWaitButton($('#storyNextBtn'));bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
+  await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
 }
 async function storySay(key,text,displayName=null,anchorKey=null){
   const lines=String(text??'').split(/\r?\n/).filter(line=>line.length>0);
   if(!lines.length)lines.push('');
   for(const line of lines)await storySayLine(key,line,displayName,anchorKey);
 }
-async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyWaitButton($('#storyNarrationNext'));box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
-async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key);g.dataset.storyActor=key;g.className='story-guest';if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
-async function storyHideGuest(){const g=$('#storyGuest');g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';}
+async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyAdvanceWait();box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
+async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key),duplicate=storyAnchor(key);g.dataset.storyActor=key;g.className='story-guest';g.classList.add(info.player?'story-guest-player':'story-guest-enemy');if(!info.player){g.classList.add(`story-enemy-${storyEnemyScaleKind(info)}`);if(info.winged)g.classList.add('story-enemy-winged');}if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');if(duplicate&&duplicate!==g){duplicate.classList.add('guest-duplicate-hidden');g.dataset.hiddenPartyActor=key;}else delete g.dataset.hiddenPartyActor;g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);applyStoryGuestNaturalSize(g,img,info);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
+async function storyHideGuest(){const g=$('#storyGuest'),hiddenKey=g.dataset.hiddenPartyActor;g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';if(hiddenKey){const a=$(`[data-story-actor="${hiddenKey}"]`,$('#storyScene'));a?.classList.remove('guest-duplicate-hidden');delete g.dataset.hiddenPartyActor;}}
+async function storyShowGuests(keys=[],opt={}){
+  await storyHideGuest().catch(()=>{});
+  const group=$('#storyGuestGroup'),ids=(keys||[]).filter(Boolean).slice(0,4);if(!ids.length)return;
+  group.hidden=false;group.className='story-guest-group';group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
+  bindImages(group);
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
+  await nextPaint();group.classList.add('visible');await fixedDelay(opt.slow?950:520);await fixedDelay(500);
+}
+async function storyHideGuests(){const group=$('#storyGuestGroup');if(group.hidden)return;group.classList.remove('visible');await fixedDelay(480);group.hidden=true;group.innerHTML='';group.dataset.count='0';}
 async function storyExclaim(key){const g=$('#storyGuestMark');if($('#storyGuest').dataset.storyActor===key){g.hidden=false;void g.offsetWidth;await fixedDelay(700);g.hidden=true;}else{const a=storyAnchor(key);if(a){const mark=document.createElement('i');mark.className='story-mark';mark.textContent='!';a.appendChild(mark);await fixedDelay(700);mark.remove();}}await fixedDelay(500);}
 async function storyFlash(){const f=$('#storyFlash');f.classList.remove('play');void f.offsetWidth;f.classList.add('play');await fixedDelay(460);f.classList.remove('play');await fixedDelay(500);}
 async function storyImpact(text='ドン！ッ',dodge=false){if(dodge){const acts=$$('.story-party-actor',$('#storyPartyLine'));acts.forEach((a,i)=>a.classList.add(i%2?'dodge-right':'dodge-left'));}const sc=$('#storyScene'),el=$('#storyImpact');el.textContent=text;el.hidden=false;sc.classList.add('shake');el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await fixedDelay(720);sc.classList.remove('shake');el.hidden=true;el.classList.remove('play');$$('.story-party-actor',$('#storyPartyLine')).forEach(a=>a.classList.remove('dodge-left','dodge-right'));await fixedDelay(500);}
+async function storySayDual(keyA,lineA,keyB,lineB){
+  const scene=$('#storyScene'),make=(key,line)=>{const info=storyActorInfo(key),anchor=storyAnchor(key),b=document.createElement('div');b.className='story-bubble story-bubble-temp';b.innerHTML=`<b></b><p></p>`;b.querySelector('b').textContent=info.name;b.querySelector('p').textContent=line;b.style.width=`${clamp(150+String(line||'').length*7,168,250)}px`;scene.appendChild(b);return{b,anchor,key};};
+  const items=[make(keyA,lineA),make(keyB,lineB)];await nextPaint();const sr=scene.getBoundingClientRect();for(const it of items){const br=it.b.getBoundingClientRect(),ar=it.anchor?.getBoundingClientRect();let left=(sr.width-br.width)/2,top=sr.height*.18;if(ar){const cx=ar.left-sr.left+ar.width/2;left=clamp(cx-br.width/2,6,sr.width-br.width-6);top=clamp(ar.top-sr.top-br.height-14,52,sr.height-br.height-20);it.b.style.setProperty('--arrow-x',`${clamp(cx-left,20,br.width-20)}px`);}else it.b.classList.add('no-arrow');it.b.style.left=`${left}px`;it.b.style.top=`${top}px`;setStorySpeaking(it.key,true);it.b.classList.add('show');}
+  // If both bubbles overlap, separate them horizontally while keeping each arrow aimed at its speaker.
+  const [a,b]=items.map(x=>x.b.getBoundingClientRect());if(!(a.right+4<b.left||b.right+4<a.left)){items[0].b.style.left='6px';items[1].b.style.left=`${Math.max(6,sr.width-items[1].b.offsetWidth-6)}px`;}
+  await storyAdvanceWait();for(const it of items){it.b.classList.remove('show');setStorySpeaking(it.key,false);}await fixedDelay(500);items.forEach(it=>it.b.remove());
+}
 function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.party.length?Math.round(state.party.reduce((s,x)=>s+(Number(x[1])||5),0)/state.party.length):5;state.party.push([id,clamp(avg,5,120)]);saveParty();state.training.party=state.party.map(x=>[...x]);}
 async function storyJoinStep(id,message){await storyHideGuest();storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
-async function storyTempActor(id){const p=player(id);if(!p)return;let el=$(`[data-story-actor=\"${id}\"]`,$('#storyPartyLine'));if(el)return;el=document.createElement('div');el.className='story-party-actor';el.dataset.storyActor=id;el.innerHTML=`<img data-story-party-img src=\"${versionedPlay(p.image)}\" alt=\"${p.name}\"><span hidden>${p.symbol}</span>`;$('#storyPartyLine').appendChild(el);bindImages(el);await renderStoryPartyWithTemp(id);}
-async function renderStoryPartyWithTemp(tempId){const root=$('#storyPartyLine'),temp=player(tempId),base=state.party.map(([id])=>player(id)).filter(Boolean);const list=[...base];if(temp&&!list.some(p=>p.id===temp.id))list.push(temp);root.innerHTML=list.map(p=>`<div class=\"story-party-actor\" data-story-actor=\"${p.id}\"><img data-story-party-img src=\"${versionedPlay(p.image)}\" alt=\"${p.name}\"><span hidden>${p.symbol}</span></div>`).join('');bindImages(root);const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(valid.length){const sum=valid.reduce((a,i)=>a+i.naturalWidth,0),maxH=Math.max(...valid.map(i=>i.naturalHeight));const sc=Math.min(.115,(root.clientWidth-8)/Math.max(1,sum),(root.clientHeight-4)/Math.max(1,maxH));valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});}}
+async function storyTempActor(id){const p=player(id);if(!p)return;await renderStoryParty(id);}
+async function renderStoryPartyWithTemp(tempId){await renderStoryParty(tempId);}
 async function storyJoinKeepGuest(id,message){storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 
 const STORY_EVENTS={
@@ -439,7 +544,7 @@ const STORY_EVENTS={
   ]},
   'post:neon':{worldId:'neon',area:3,custom:'neonPost'},
   'arrival:magma':{worldId:'magma',area:0,steps:[
-    ['say','denden','暑いでやんすー\nオイラ暑いの嫌いでやんすー'],['say','money','うるさいわね\nこっちまで暑くなるじゃない！'],['say','desert','砂漠も暑いが、ここはもっと過酷だな'],['say','pink','ここでも誰か案内してくれると良いのですが'],['say','money','そんな都合よく・・'],['guestDropDodge','nyoro','ドン！ッ'],['say','nyoro','おー・・\n痛いニョロ・・'],['say','pink','あなたさてはここに詳しいですね！'],['say','money','ボスのところに案内しなさい！'],['say','nyoro','ニョロ！？'],['say','denden','まあ待つでやんす'],['sayAs','pink','お前が言うな！！\n（であります）','モブマニー＆モブピンク'],['say','desert','俺が事情を説明しよう'],['narrate','モブニョロに事情を説明した'],['say','nyoro','お～！勇者様！\nお会いできて嬉しいニョロ！'],['say','desert','ここのボスはどんなやつだ？'],['say','nyoro','恐ろしいドラゴンニョロ・・'],['say','denden','ドラゴンニョロ・・\n変な名前でやんす'],['say','desert','気にせず続けてくれ'],['say','nyoro','先代の王モブフェニックス様との死闘は\nそりゃ～凄かったニョロ\nでも結局最後はモブドラゴンが勝ったニョロ\nそれからというもの、\n魔王軍が住みついて大変ニョロ・・'],['say','pink','どこも同じでありますね・・'],['say','denden','ドラゴンか\n会ってみたいでやんすね！'],['join','nyoro','モブニョロが仲間に加わった！']
+    ['say','denden','暑いでやんすー\nオイラ暑いの嫌いでやんすー'],['say','money','うるさいわね\nこっちまで暑くなるじゃない！'],['say','desert','砂漠も暑いが、ここはもっと過酷だな'],['say','pink','ここでも誰か案内してくれると良いのですが'],['say','money','そんな都合よく・・'],['guestDropDodge','nyoro','ドン！ッ'],['say','nyoro','おー・・\n痛いニョロ・・'],['say','pink','あなたさてはここに詳しいですね！'],['say','money','ボスのところに案内しなさい！'],['say','nyoro','ニョロ！？'],['say','denden','まあ待つでやんす'],['sayDual','money','お前が言うな！！','pink','お前が言うな！！（であります）'],['say','desert','俺が事情を説明しよう'],['narrate','モブニョロに事情を説明した'],['say','nyoro','お～！勇者様！\nお会いできて嬉しいニョロ！'],['say','desert','ここのボスはどんなやつだ？'],['say','nyoro','恐ろしいドラゴンニョロ・・'],['say','denden','ドラゴンニョロ・・\n変な名前でやんす'],['say','desert','気にせず続けてくれ'],['say','nyoro','先代の王モブフェニックス様との死闘は\nそりゃ～凄かったニョロ\nでも結局最後はモブドラゴンが勝ったニョロ\nそれからというもの、\n魔王軍が住みついて大変ニョロ・・'],['say','pink','どこも同じでありますね・・'],['say','denden','ドラゴンか\n会ってみたいでやんすね！'],['join','nyoro','モブニョロが仲間に加わった！']
   ]},
   'pre:magma':{worldId:'magma',area:3,steps:[
     ['guest','dragon'],['say','dragon','私に何か用か？'],['say','money','想像以上にドラゴンね・・！'],['say','denden','かっけえでやんす！'],['say','pink','これは手ごわいですよ・・！'],['say','dragon','目障りなやつらだ\n命惜しくば立ち去れ'],['say','desert','風格もさすがだな\nだが、去るわけにはいかん'],['say','nyoro','やるしかないニョロね！'],['say','dragon','手加減はせぬぞ！！']
@@ -456,15 +561,99 @@ const STORY_EVENTS={
   'post:sea':{worldId:'sea',area:3,keepGuest:'nepu',steps:[
     ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinKeepGuest','nekoku','6枚目のレコード「ケロの衣装」を手に入れた！']
   ]}
-};
+ };
+
+/* ===== v32 story expansion: 草原 / 草原Ⅱ / 部族村 ===== */
+Object.assign(STORY_EVENTS,{
+  'arrival:grassland':{worldId:'grassland',area:0,steps:[
+    ['say','pink','いよいよ冒険の始まりですね！\nウキウキ、ワクワクであります！']
+  ]},
+  'pre:grassland:0':{worldId:'grassland',area:0,steps:[
+    ['guest','g-savanna'],['say','pink','やや！\n手ごわいモンスターが出ましたよ！'],['say','pink','Areaを進むに中ボスを倒しましょう！']
+  ]},
+  'post:grassland:0':{worldId:'grassland',area:0,steps:[
+    ['say','pink','さすがは勇者様であります！\n先へ進みましょう！']
+  ]},
+  'pre:grassland:1':{worldId:'grassland',area:1,steps:[
+    ['guest','g-iwakiri'],['say','pink','見るからに危険ですね・・\n気を引き締めてかかりましょう！']
+  ]},
+  'pre:grassland:2':{worldId:'grassland',area:2,steps:[
+    ['guest','g-axe'],['narrate','相手は1人ですが、\nそれだけ強力です！\n全力で挑みましょう！']
+  ]},
+  'pre:grassland:3':{worldId:'grassland',area:3,steps:[
+    ['guest','boss-hawk'],['say','boss-hawk','来客とは珍しいな\n何者だ？'],['say','pink','我々は勇者パーティー！\nここにあるレコードを譲ってもらいたい！'],['say','boss-hawk','戯言を\n現代に勇者の名など通用しない\n早々に立ち去るがよい'],['say','pink','ぐぬぬ・・\nここまで来たら引けません！\n戦いましょう！'],['say','boss-hawk','覚悟だけは認めてやる\n来い！']
+  ]},
+  'post:grassland:3':{worldId:'grassland',area:3,steps:[
+    ['say','pink','やはりボスは強いですね・・\nでもこれでレコード入手です！'],['narrate','1枚目のレコード「」を手に入れた！'],['say','pink','まずは王様に報告に行きましょう！']
+  ]},
+
+  'arrival:grassland2':{worldId:'grassland2',area:0,steps:[
+    ['say','pink','この場所ももう懐かしいですね・・\n急ぎましょう\nモブホークと再び決戦です！']
+  ]},
+  'pre:grassland2:0':{worldId:'grassland2',area:0,steps:[
+    ['guest','g2-tsuru'],['say','g2-tsuru','申し訳ないが、お帰りいただこうか'],['say','pink','そうはいかない！'],['say','denden','いざ勝負でやんす！']
+  ]},
+  'post:grassland2:0':{worldId:'grassland2',area:0,steps:[
+    ['say','desert','同じ地だと思って油断しないことだな\nモブホークもきっと、\n強大な力を得ているだろう']
+  ]},
+  'pre:grassland2:1':{worldId:'grassland2',area:1,steps:[
+    ['guest','g2-merakero'],['say','g2-merakero','メラメラメラーーー！'],['say','nyoro','気合い入っているニョロね・・！'],['say','nekoku','オラ、カエルは苦手だ']
+  ]},
+  'post:grassland2:1':{worldId:'grassland2',area:1,steps:[
+    ['say','money','アツいカエルだったわね'],['say','denden','漢でやんした！']
+  ]},
+  'pre:grassland2:2':{worldId:'grassland2',area:2,steps:[
+    ['guest','g2-keroking'],['say','g2-keroking','私はケロの王ケロキング！\nモブホーク様の命により\nお前たちをここで仕留める！'],['say','desert','受けて立つ！'],['say','pink','ここを倒せばもうすぐであります！\nみなさん頑張りましょう！']
+  ]},
+  'post:grassland2:2':{worldId:'grassland2',area:2,steps:[
+    ['say','desert','さあ、先へ進もう'],['say','nyoro','キング、立派だったニョロ！']
+  ]},
+  'pre:grassland2:3':{worldId:'grassland2',area:3,steps:[
+    ['guest','boss-hawk2'],['say','boss-hawk2','クククク・・・\nようやく来たな'],['say','pink','往生際が悪いであります！'],['say','money','あんた一度負けてるって聞いたよ？'],['say','nekoku','オラ焼き鳥大好きだ'],['say','boss-hawk2','勇者よ、お前を認め\n魔王様から力を得た\n新たな私の強さ\n受け止める勇気があるかな？'],['say','denden','みんな、構えるでやんす！']
+  ]},
+  'post:grassland2:3':{worldId:'grassland2',area:3,steps:[
+    ['guest','boss-hawk2'],['say','boss-hawk2','貴様ら如きに・・・'],['hideGuest'],['say','pink','なんとか勝てました・・！'],['say','desert','レコードは手に入らないが、\n必要な戦いだったな'],['say','pink','王様に報告に行きましょう！']
+  ]},
+
+  'arrival:tribe':{worldId:'tribe',area:0,steps:[
+    ['say','pink','なんだか不思議な雰囲気でありますね'],['say','nekoku','オラ初めて見る景色だ'],['say','denden','ビリビリしそうな香りがするでやんす'],['say','desert','で、そこのお前が案内でもしてくれるのか？'],['sayOff','???','あら、気が付いていたの？\n中々やるわね'],['guest','jessie'],['say','jessie','私はネオン街の保安官\n通報を受けてこの村に来たの\nモブジェシーよ\nよろしくね'],['say','money','ネオン街！？\n私も、私も！'],['say','jessie','知っているわ\nモブマニーでしょ？\n私を覚えてない？'],['say','money','うーん\n私、魔王に封印されてたから'],['say','jessie','本当にそう？'],['say','money','え？'],['say','jessie','まあ、いずれ分かるわ'],['say','desert','この村は、どういう村なんだ？'],['say','jessie','魔王軍と直接は関係ないわ\nただ、あの町と関係はあるの'],['say','pink','あの町と繋がりが！？'],['say','jessie','ええ\nネオン街、部族村\nこの2つがあの町と大きく関係がある'],['say','pink','詳しく知りたいであります！'],['say','jessie','それもまたいずれね\nとにかく\nこの村は危険がいっぱいよ\n手を貸してあげるから油断しないことね']
+  ]},
+  'pre:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[
+    ['guest','t-kukuri'],['say','t-kukuri','タチサレ・・'],['say','pink','幹部の登場であります！'],['say','denden','気合い入れるでやんす！']
+  ]},
+  'post:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[
+    ['say','money','不気味だったわね・・'],['say','jessie','あなたたちも十分不気味よ'],['say','money','そういう意味じゃないわよ！'],['say','nyoro','喧嘩はやめるニョロ～！']
+  ]},
+  'pre:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[
+    ['guest','t-tough'],['say','t-tough','全く、大変な時に来たね君たち'],['say','pink','まともそうな人であります！'],['say','desert','そんなはずがないだろう'],['say','t-tough','まともかはともかく\n俺は連中とは違うよ'],['say','jessie','そう？\n危ないやつにしか出せないオーラよ'],['say','t-tough','これはこれは保安官\n大人しく影に隠れていてはどうですか？'],['say','jessie','あなた・・'],['say','nekoku','ん？'],['say','t-tough','まあお喋りはこれくらいにして\nやりますか\n他に道はないだろう？']
+  ]},
+  'post:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[
+    ['say','nyoro','強かったニョロ・・'],['say','denden','この村はみんな強いでやんす'],['say','jessie','さあ、しっかり休んで先へ行きましょう']
+  ]},
+  'pre:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[
+    ['guests',['t-hisui','t-ryugo']],['say','t-hisui','天よ・・こやつらに災いを'],['say','t-ryugo','もてなすぞ、客人'],['say','nekoku','強そうな2人だなー'],['say','money','みんな最初から飛ばしていくわよ！']
+  ]},
+  'post:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[
+    ['say','jessie','おかしい・・'],['say','desert','どうした？'],['say','jessie','この2人はこの村の長だったはず'],['say','money','なんで戦う前に言わないのよ！'],['say','jessie','腰が引けちゃうでしょ？'],['say','nyoro','それはそうだニョロ'],['say','desert','ということは\nさらに上がいるということか'],['say','jessie','そうなるわね'],['say','pink','大丈夫！\n力を合わせて進むであります！\n・・・・\nあります！'],['say','jessie','すっかり怖がっちゃって・・'],['say','denden','でも進むしかないでやんす！']
+  ]},
+  'pre:tribe:3':{worldId:'tribe',area:3,extras:['jessie'],steps:[
+    ['guests',['boss-debuff','boss-berserk']],['say','boss-debuff','・・・・'],['say','boss-berserk','・・・・'],['say','jessie','もはや言葉すらないのね'],['say','denden','これが魔王の魔力でやんすか・・'],['say','nyoro','こ、怖いニョロ・・'],['say','money','うー・・\nさっさとやるわよ！'],['say','desert','やつらの力\n歴戦の魔王たちと近いものを感じる\n力を合わせ、全員で戦うぞ！'],['say','denden','もちろんでやんす！']
+  ]},
+  'post:tribe:3':{worldId:'tribe',area:3,extras:['jessie'],steps:[
+    ['say','jessie','任務完了'],['say','desert','魔王とは、\n一体どこまで・・'],['say','pink','とりあえず王様に報告です！\nどうやらここにレコードは無いようです'],['say','jessie','私も行くわ\n魔王を倒さないと\n何も進まなそうだしね'],['say','nyoro','心強いニョロ！\nモブジェシー、強いニョロ！']
+  ]}
+});
 
 async function runStorySteps(steps=[]){
   for(const st of steps){const [type,a,b,c,d]=st;
     if(type==='say')await storySay(a,b,c,d);
     else if(type==='sayAs')await storySay(a,b,c,a);
+    else if(type==='sayDual')await storySayDual(a,b,c,d);
     else if(type==='sayOff')await storySay(a,b,c||a,null);
     else if(type==='narrate')await storyNarrate(a);
     else if(type==='guest')await storyShowGuest(a);
+    else if(type==='guests')await storyShowGuests(a,b||{});
+    else if(type==='hideGuests')await storyHideGuests();
     else if(type==='guestRight')await storyShowGuest(a,{side:'right'});
     else if(type==='guestSlow')await storyShowGuest(a,{slow:true});
     else if(type==='guestDrop'){await storyShowGuest(a,{drop:true});await storyImpact(b||'ドン！ッ');}
@@ -491,31 +680,32 @@ async function runNeonPostStory(){
   await openStoryScene('neon',3);await storyShowGuest('ace',{slow:true});
   await storySay('ace','見事だ\nここまでとは思わなかったぞ');await storySay('pink','なんて強さでありますか・・');await storySay('ace','一先ずは引いてやろう\n次に会う時が楽しみだ');await storyHideGuest();await storySay('desert','もっと強さが必要だな');await storySay('money','強力な武器も必要ね');await storyNarrate('4つ目のレコードを手に入れた！');
 }
-async function runStoryEvent(key){
-  const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;
-  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default');await runStorySteps(ev.steps||[]);}markStoryDone(key);await closeStoryScene(!!ev.forceHome);return true;}finally{storyBusy=false;}
+async function runStoryEvent(key,forceHomeOverride=false){
+  const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;
+  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default',ev.extras||[]);await runStorySteps(ev.steps||[]);}markStoryDone(key);ok=true;}finally{storyBusy=false;}
+  const goHome=!!(ev.forceHome||forceHomeOverride);if(ok){await closeStoryScene(goHome);if(!goHome&&screens.adventure.classList.contains('active'))renderAdventure();}return ok;
 }
 async function maybeRunArrivalStory(){const w=currentWorld();if(!w)return false;const key=`arrival:${w.id}`;if(STORY_EVENTS[key]&&!storyDone(key))return await runStoryEvent(key);return false;}
-async function runPendingPostStory(){const p=state.adventure.pendingPostStory;if(!p?.key)return false;const key=p.key;if(storyDone(key)){state.adventure.pendingPostStory=null;saveAdventure();return false;}const ran=await runStoryEvent(key);if(ran){state.adventure.pendingPostStory=null;saveAdventure();const ev=STORY_EVENTS[key];if(!ev?.forceHome){renderAdventure();showScreen('adventure');await maybeRunArrivalStory();}}return ran;}
+async function runPendingPostStory(suppressArrival=false,forceHomeAfter=false){const p=state.adventure.pendingPostStory;if(!p?.key)return false;const key=p.key;if(storyDone(key)){state.adventure.pendingPostStory=null;saveAdventure();return false;}const ran=await runStoryEvent(key,forceHomeAfter);if(ran){state.adventure.pendingPostStory=null;saveAdventure();const ev=STORY_EVENTS[key];if(!suppressArrival&&!forceHomeAfter&&!ev?.forceHome){renderAdventure();showScreen('adventure');await maybeRunArrivalStory();}}return ran;}
 async function handleAdventureEntry(){if(state.adventure.pendingPostStory){if(await runPendingPostStory())return;}await maybeRunArrivalStory();}
 
 function renderAdventure(){
-  const w=currentWorld(),area=currentArea(),wi=state.adventure.worldIndex||0,ai=state.adventure.areaIndex||0,bi=state.adventure.battleIndex||0;
+  const w=currentWorld(),area=currentArea(),bi=state.adventure.battleIndex||0;
   $('#adventureStageTitle').textContent=state.adventure.completed?'魔王城までCLEAR':w.name;
   $('#adventureProgress').textContent=state.adventure.completed?'CLEAR':`${area.name}　戦闘 ${bi+1}/3`;
   $('#areaName').textContent=state.adventure.completed?'魔王城までの冒険完了':`${w.name}・${area.name}`;
   const pending=state.adventure.pendingEncounter;
-  $('#areaDescription').textContent=state.adventure.completed?'現在設定済みの草原～魔王城ルートをクリアしました。Lv上限が120になりました。':state.adventure.battleReady?`${pending?.bossBattle?'強敵':'モンスター'}を発見！ ${encounterNames(pending)}`:`探索 → バトルを3回行うと次のAREAへ進みます。3戦目は中ボス/ボスです。`;
-  setImage($('#adventureBg'),area.bg,w.fieldFallback);
-  $('#adventureParty').innerHTML=state.party.slice(0,4).map(([id,lv])=>{const p=player(id);return p?`<div><img data-adventure-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span><small>Lv${lv}</small></div>`:'';}).join('');
-  const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||state.adventure.completed||storyBusy;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':state.adventure.battleReady?(pending?.bossBattle?'中ボス / BOSS':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||state.adventure.completed||storyBusy;bindImages($('#adventureScreen'));applyAdventurePartyScale();
+  $('#areaDescription').textContent=state.adventure.completed?'現在設定済みの草原～魔王城ルートをクリアしました。Lv上限が120になりました。':state.adventure.battleReady?(pending?.bossBattle?'強い気配がする。準備ができたら戦闘へ。':'敵の気配を感じる。何が現れるかは戦闘まで分からない。'):`探索 → バトルを3回行うと次のAREAへ進みます。3戦目は中ボス/ボスです。`;
+  setImage($('#adventureBg'),area.bg,w.fieldFallback);setAdventureVisualLoading(true);
+  const partyRoot=$('#adventureParty');partyRoot.innerHTML=state.party.slice(0,4).map(([id,lv])=>{const p=player(id);return p?`<div><img data-adventure-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span><small>Lv${lv}</small></div>`:'';}).join('');
+  const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||state.adventure.completed||storyBusy;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':state.adventure.battleReady?(pending?.bossBattle?'強敵の気配':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||state.adventure.completed||storyBusy;bindImages($('#adventureScreen'));applyAdventurePartyScale();
 }
 async function exploreField(){
   if(state.adventure.completed||state.adventure.battleReady)return;const w=currentWorld(),area=currentArea();$('#fieldEvent').hidden=false;$('#fieldEvent').innerHTML=`<b>探索中...</b><small>${w.name}・${area.name}</small>`;await delay(500);
-  const enc=createAdventureEncounter();state.adventure.pendingEncounter=enc;state.adventure.battleReady=true;saveAdventure();$('#fieldEvent').innerHTML=`<b>${enc.bossBattle?'STRONG ENCOUNTER':'ENCOUNTER'}</b><p>${encounterNames(enc)}</p>`;renderAdventure();await delay(900);$('#fieldEvent').hidden=true;
+  const enc=createAdventureEncounter();state.adventure.pendingEncounter=enc;state.adventure.battleReady=true;saveAdventure();$('#fieldEvent').innerHTML=`<b>${enc.bossBattle?'強い気配を感じる…':'敵の気配を感じる…'}</b><p>戦闘まで正体は分からない</p>`;renderAdventure();await delay(720);$('#fieldEvent').hidden=true;
 }
 function saveCampCheckpoint(){state.adventure.vitals=null;state.adventure.checkpoint={worldIndex:state.adventure.worldIndex,areaIndex:state.adventure.areaIndex,battleIndex:state.adventure.battleIndex,battleReady:false,completed:state.adventure.completed,pendingEncounter:null,vitals:null,coins:state.coins,party:clone(state.party)};saveAdventure();saveParty();toast('キャンプで全回復し、現在のAREAを保存しました');}
-function restoreCampCheckpoint(){const cp=state.adventure.checkpoint;if(cp){state.adventure={...state.adventure,...clone(cp),checkpoint:clone(cp)};state.coins=cp.coins;if(Array.isArray(cp.party)){state.party=clone(cp.party);saveParty();}}else state.adventure=defaultAdventure();saveAdventure();}
+function restoreCampCheckpoint(){const cp=state.adventure.checkpoint;if(cp){state.adventure={...state.adventure,...clone(cp),checkpoint:clone(cp)};state.coins=cp.coins;if(Array.isArray(cp.party)){state.party=clone(cp.party).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);saveParty();}}else state.adventure=defaultAdventure();saveAdventure();}
 
 function growthValue(lv,curve){lv=clamp(Number(lv)||1,1,120);const [v1,v99,v120=v99]=curve;if(lv<=99){const t=(lv-1)/98;return Math.round(v1+(v99-v1)*t);}const t=(lv-99)/21;return Math.round(v99+(v120-v99)*t);}
 function baseStats(p,lv){const t=TEMP_BALANCE.playerTargets?.[p.id];if(!t){const old=TEMP_BALANCE.playerGrowth[p.id],b=TEMP_BALANCE.base;return{maxHp:Math.round(b.hp+old.hp*lv),maxMp:Math.round(b.mp+old.mp*lv),atk:Math.round(b.atk+old.atk*lv),mag:Math.round(b.mag+old.mag*lv),def:Math.round(b.def+old.def*lv),res:Math.round(b.res+old.res*lv),spd:Math.round(b.spd+old.spd*lv)};}return{maxHp:growthValue(lv,t.hp),maxMp:growthValue(lv,t.mp),atk:growthValue(lv,t.atk),mag:growthValue(lv,t.mag),def:growthValue(lv,t.def),res:growthValue(lv,t.res),spd:growthValue(lv,t.spd)};}
@@ -532,7 +722,13 @@ function buildEnemyFromTemplate(t,lv,partySize=4,groupSize=1,bg='',fallbackBg=''
 }
 function buildBossEnemy(b,lv,size){return buildEnemyFromTemplate(trainingEnemyCatalog().find(t=>t.bossId===b?.id)||legacyBossTemplate(b),lv,size,1,b?.bg,b?.fallbackBg);}
 function buildNormalEnemy(raw,lv,size,bg){const t={...raw,id:raw.id||`legacy-normal-${raw.name}`,category:'normal',image:raw.image||'',levelMin:lv,levelMax:lv};return buildEnemyFromTemplate(t,lv,size,1,bg,'back/sougen.png');}
-function buildEnemyWave(records,partySize,bg,fallbackBg){const expanded=[];for(const r of records||[]){const t=trainingEnemyTemplate(r.id)||r.template||r;if(!t)continue;const q=clamp(Number(r.qty)||1,1,4);for(let i=0;i<q;i++)expanded.push({t,level:r.level||t.levelMin||1});}const count=Math.max(1,expanded.length);return expanded.slice(0,4).map(x=>buildEnemyFromTemplate(x.t,x.level,partySize,count,bg,fallbackBg)).filter(Boolean);}
+function arrangeEnemyWaveCenter(items){
+  const list=[...(items||[])].slice(0,4);if(list.length<3)return list;
+  const bosses=list.filter(x=>x.t?.category==='boss'),elites=list.filter(x=>x.t?.category==='elite');
+  const lead=bosses.length===1?bosses[0]:(bosses.length===0&&elites.length===1?elites[0]:null);if(!lead)return list;
+  const from=list.indexOf(lead),to=Math.floor((list.length-1)/2);if(from>=0&&from!==to){list.splice(from,1);list.splice(to,0,lead);}return list;
+}
+function buildEnemyWave(records,partySize,bg,fallbackBg){const expanded=[];for(const r of records||[]){const t=trainingEnemyTemplate(r.id)||r.template||r;if(!t)continue;const q=clamp(Number(r.qty)||1,1,4);for(let i=0;i<q;i++)expanded.push({t,level:r.level||t.levelMin||1});}const ordered=arrangeEnemyWaveCenter(expanded),count=Math.max(1,ordered.length);return ordered.map(x=>buildEnemyFromTemplate(x.t,x.level,partySize,count,bg,fallbackBg)).filter(Boolean);}
 function beginBattle(config){
   if(state.test?.enabled&&state.test?.fast5)state.speed=5;else if(state.speed===5)state.speed=1;
   const partyList=(config.party||state.party).slice(0,10),vitals=config.useAdventureVitals?state.adventure.vitals:null,allies=partyList.map(([id,lv])=>buildAlly(player(id),lv,vitals?.[id])),partySize=Math.min(4,allies.length);
@@ -568,11 +764,57 @@ function activeAlly(){const e=currentEntry();return e?.type==='ally'?allyById(e.
 function availableUlts(a){return a.ults.filter((u,i)=>i<4?a.level>=[1,15,30,50][i]:a.id==='yusha');}
 function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allBuff;if(stat==='atk'&&obj.atkBuffTurns>0)v*=1+obj.atkBuff;if(stat==='atk'&&obj.atkDebuffTurns>0)v*=1-obj.atkDebuff;if(stat==='def'&&obj.defBuffTurns>0)v*=1+obj.defBuff;if(stat==='spd'&&obj.spdBuffTurns>0)v*=1+obj.spdBuff;if(stat==='spd'&&obj.spdDebuffTurns>0)v*=1-(obj.spdDebuff||0);return v;}
 
-function enemySizeClass(e){if(e.category==='boss')return'boss';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(e.name||''))return'small';return'normal';}
+function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
+function enemyIsWinged(e){return /バード|ピヨ|ホーク|テンデビ|ヒノデビ|サキュバス|ドラゴン|ギドラ|フレザード|フェニックス/.test(e?.name||'');}
+function enemyVisualTune(e){
+  const id=e?.id||e?.enemyTemplate?.id||'';
+  const name=e?.name||e?.enemyTemplate?.name||'';
+  if(id==='boss-neon'||name==='モブネオンバルス')return{scale:1.28,y:0};
+  if(id==='boss-guardian'||name==='モブガーディアン')return{scale:1.12,y:14};
+  return{scale:1,y:0};
+}
+function battleEnemyNaturalScale(root,kind,e=null){
+  const w=root?.clientWidth||440,base=clamp(w/2450,.165,.225),tune=enemyVisualTune(e||{});
+  return base*({small:.90,normal:1.10,elite:1.18,rock:1.30,golem:1.42,boss:1.90,dragon:2.18,frezard:2.28}[kind]||1)*tune.scale;
+}
+function applyEnemyVisualSizes(root=$('#enemyArea')){
+  if(!root)return;
+  $$('[data-enemy-target]',root).forEach(unit=>{
+    const img=$('.enemy-sprite',unit);if(!img)return;
+    const place=()=>{
+      if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
+      const kind=['small','normal','elite','rock','golem','boss','dragon','frezard'].find(k=>unit.classList.contains(`enemy-size-${k}`))||'normal';
+      const enemy=enemyByUid(unit.dataset.enemyTarget),tune=enemyVisualTune(enemy||{}),wrap=$('.enemy-sprite-wrap',unit);
+      const field=$('#battle-field')||$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};
+      const maxW=(fr.width||root.clientWidth)*({small:.27,normal:.32,elite:.36,rock:.40,golem:.44,boss:.82,dragon:.88,frezard:.92}[kind]||.32);
+      const maxH=(fr.height||root.clientHeight)*({small:.31,normal:.38,elite:.42,rock:.45,golem:.48,boss:.74,dragon:.79,frezard:.84}[kind]||.38);
+      const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind,enemy),maxW,maxH);
+      img.style.setProperty('width',`${sz.w}px`,'important');img.style.setProperty('height',`${sz.h}px`,'important');
+      if(tune.y&&wrap)wrap.style.setProperty('transform',`translateY(${tune.y}px)`,'important');
+      requestAnimationFrame(()=>positionEnemyTargetMarks(root));
+    };
+    place();if(!img.complete)img.addEventListener('load',place,{once:true});
+  });
+}
+function positionEnemyTargetMarks(root=$('#enemyArea')){
+  if(!root)return;
+  $$('[data-enemy-target]',root).forEach(unit=>{
+    const mark=$('.enemy-target-mark',unit),wrap=$('.enemy-sprite-wrap',unit),img=$('.enemy-sprite',unit);
+    if(!mark||!wrap)return;
+    const place=()=>{
+      if(!img||!(img.getBoundingClientRect().width>0)){mark.style.top='4px';mark.style.left='50%';return;}
+      const wr=wrap.getBoundingClientRect(),ir=img.getBoundingClientRect();
+      mark.style.left=`${ir.left-wr.left+ir.width/2}px`;
+      mark.style.top=`${Math.max(0,ir.top-wr.top-10)}px`;
+      mark.style.bottom='auto';
+    };
+    place();if(img&&!img.complete)img.addEventListener('load',place,{once:true});
+  });
+}
 function enemyMarkup(e){
   const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
   const selected=state.battle?.targetEnemyId===e.uid&&e.hp>0,dead=e.hp<=0;
-  return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div></div>${selected?'<span class="enemy-target-mark">TARGET</span>':''}</button>`;
+  return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${enemyIsWinged(e)?'enemy-winged':''} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div></button>`;
 }
 function statusText(a){return Object.entries(a.status).filter(([,v])=>v>0).map(([k])=>({poison:'毒',burn:'炎',sleep:'眠',stun:'怯',paralyze:'麻'}[k])).join(' ');}
 function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
@@ -582,7 +824,7 @@ function renderBattle(){
   const b=state.battle;if(!b)return;targetEnemy();$('#battleTurnLabel').textContent='';const enemies=b.enemies||[];const area=$('#enemyArea');area.className=`enemy-area enemy-count-${Math.max(1,enemies.length)}`;area.innerHTML=enemies.map(enemyMarkup).join('');
   $('#allyStatus').innerHTML=mainAllies().map(allyMarkup).join('');$('#superStatus').innerHTML=superAllies().length?superAllies().map(superMarkup).join(''):`<div class="no-bench">援護なし</div>`;$('#benchStatus').innerHTML=reserveAllies().length?reserveAllies().map(benchMarkup).join(''):`<div class="no-bench">控えなし</div>`;
   const entry=currentEntry(),a=activeAlly(),acting=entry?.type==='enemy'?enemyByUid(entry.enemyId):null,target=targetEnemy();$('#activeActorBar').innerHTML=a?`<img src="${versionedPlay(a.image)}" alt=""><div><small>COMMAND / SPD ${Math.round(effective('spd',a))}</small><b>${a.name}</b><span>HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}</span></div>`:entry?.type==='super'?`<div><small>AUTO ACTION</small><b>${allyById(entry.id)?.name||''}</b></div>`:`<div><small>${acting?'ENEMY ACTION':'TARGET'}</small><b>${acting?.name||target?.name||''}</b></div>`;
-  bindImages($('#battleScreen'));$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
+  bindImages($('#battleScreen'));applyEnemyVisualSizes(area);positionEnemyTargetMarks(area);requestAnimationFrame(()=>{applyEnemyVisualSizes(area);positionEnemyTargetMarks(area);});$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
 }
 function setCommandDisabled(dis){['attackBtn','skillBtn','ultimateBtn','defendBtn','itemBtn','escapeBtn','switchBtn'].forEach(id=>{const el=$('#'+id);if(el)el.disabled=dis;});}
 
@@ -614,7 +856,7 @@ function fx(type='slash',target){if(target==null)target=(type==='buff'||type==='
    Weapon determines motion/shape; attribute determines the secondary impact animation. */
 const NORMAL_ATTACK_WEAPON={
   yusha:'greatsword',pink:'greatsword',desert:'katana',nyoro:'gun',nekoku:'spear',
-  jerry:'spear',denden:'gun',money:'staff',riro:'spear',tetsu:'katana',lilith:'staff',naraku:'katana'
+  jessie:'spear',denden:'gun',money:'staff',riro:'spear',tetsu:'katana',lilith:'staff',naraku:'katana'
 };
 function weaponKind(a){
   if(NORMAL_ATTACK_WEAPON[a?.id])return NORMAL_ATTACK_WEAPON[a.id];
@@ -764,13 +1006,20 @@ function calcDamage(attacker,type,power,crit=0,e=targetEnemy()){const source=typ
 function calcEnemyDamage(target,power,type='physical'){const e=actingEnemy()||state.battle.enemy;if(!e)return 0;const source=(type==='magic'?e.mag:e.atk)*(e.atkBuffTurns>0?1+e.atkBuff:1)*(e.groupAttackScale||1),def=type==='magic'?effective('res',target):effective('def',target);return Math.max(1,Math.round((source*power-def*.50)*(.9+Math.random()*.2)));}
 function wakeEnemyOnHit(e){if(e?.status.sleep>0&&Math.random()<.70){e.status.sleep=0;notice(`${e.name}は眠りから覚めた！`,'status');}}
 function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=true;state.battle?.defeatedEnemies?.push({uid:e.uid,name:e.name,level:e.level,coinReward:e.coinReward||0});}
-function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true){
+function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
   if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);let d=r.value;if(e.shieldTurns>0)d=Math.round(d*(1-(e.damageReduction||.2)));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=state.battle?.mode==='story'&&state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);
   if(e.hp<=0){recordEnemyDefeat(e);if(state.battle.targetEnemyId===uid){const next=livingEnemies().find(x=>x.uid!==uid);state.battle.targetEnemyId=next?.uid||null;if(!state.battle.actingEnemyId)state.battle.enemy=next||e;}}
-  renderBattle();floatNumber(d,r.crit?'crit':'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
+  renderBattle();floatNumber(d,r.crit?'crit':'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);if(showHitPulse)pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
 }
 function applyEnemyDamage(a,power,type='physical',crit=0,showGenericFx=true){return applyEnemyDamageTo(a,targetEnemy(),power,type,crit,showGenericFx);}
-async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',statusChance=0,statusTurns=3){let total=0;const targets=[...livingEnemies()];for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,true);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(65);}return total;}
+async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',statusChance=0,statusTurns=3){
+  let total=0;const targets=[...livingEnemies()];if(!targets.length)return 0;
+  /* v38: an allied all-target attack visually hits every living enemy at the same moment. */
+  const fxKind=type==='magic'?'magic':'slash';
+  for(const e of targets){fx(fxKind,`enemy:${e.uid}`);pulseEnemy('hit',e.uid);}
+  await delay(55);
+  for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,false,false);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(45);}return total;
+}
 function applyEnemyStatusTo(e,kind,chance,turns=3){if(!e||e.hp<=0)return false;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(e.status[kind],e.isBoss?rint(1,2):turns);return true;}
 function heal(a,amount){if(a.dead)return 0;const before=a.hp;a.hp=Math.min(a.maxHp,a.hp+amount);const h=Math.round(a.hp-before);if(h>0)floatNumber(h,'heal',a.id);return h;}
 function healField(ratio){let total=0;livingField().forEach(a=>total+=heal(a,a.maxHp*ratio));renderBattle();return total;}
@@ -803,7 +1052,7 @@ async function damageAlly(a,power,type='physical',superHalf=false){
 async function inflictAllyStatus(a,kind,turns){if(!a||a.dead)return false;const resist=.2; if(Math.random()<resist)return false;a.status[kind]=Math.max(a.status[kind],turns);if(await maybeArtistCleanse(a))return false;return true;}
 
 async function performAttack(a,auto=false){await actionCutin(`${a.name}の攻撃！`,'system',480);let crit=TEMP_BALANCE.critRate,denPassive=false;if(a.id==='denden'&&passiveChance(.20)){await passiveBeat(a,'デンデン・ムキムキ・カナリツヨイ！');crit=1;denPassive=true;}const nyoroAoe=a.id==='nyoro'&&livingEnemies().length>1&&passiveChance(.70);if(nyoroAoe)await passiveBeat(a,'マグマスイミング！');await weaponElementAttackFx(a);if(nyoroAoe)await playerAoeDamage(a,1,'physical',crit);else applyEnemyDamage(a,1,'physical',crit,false);if(denPassive)await fixedDelay(600);if(a.id==='tetsu'&&livingEnemies().length&&passiveChance(.30)){await passiveBeat(a,'テツの意志！');await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate,false);await fixedDelay(600);}await delay(auto?150:220);}
-async function performMagic(a,auto=false){const element=normalizeElement(a.attribute),s=MOB_DATA.elements[element];if(a.mpNow<s.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=s.cost;const magicReady=preloadAssets(s.frames);await actionCutin(`${a.name}の${s.spell}！`,'system',560);await magicReady;await skillSprite(s.frames,'enemy');const r=applyEnemyDamage(a,s.power,'magic');if(a.id==='jerry'&&element==='雷'&&state.battle.enemy.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(s.frames,'enemy');const r2=applyEnemyDamage(a,s.power*.9,'magic');await fixedDelay(600);}await delay(auto?170:240);return true;}
+async function performMagic(a,auto=false){const element=normalizeElement(a.attribute),s=MOB_DATA.elements[element];if(a.mpNow<s.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=s.cost;const magicReady=preloadAssets(s.frames);await actionCutin(`${a.name}の${s.spell}！`,'system',560);await magicReady;await skillSprite(s.frames,'enemy');const r=applyEnemyDamage(a,s.power,'magic');if(a.id==='jessie'&&element==='雷'&&state.battle.enemy.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(s.frames,'enemy');const r2=applyEnemyDamage(a,s.power*.9,'magic');await fixedDelay(600);}await delay(auto?170:240);return true;}
 async function performUltimate(a,u){if(a.mpNow<u.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=u.cost;await ultimateCutin(a,u);let total=0,r,lastHitEnemy=null;
   const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(90);return r;};
   const hitEnemy=async(e,power=u.power,type=u.type||'physical',crit=u.crit||0)=>{lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(80);return r;};
@@ -833,7 +1082,7 @@ async function performUltimate(a,u){if(a.mpNow<u.cost){notice('MPが足りない
     case'selfSpdAttack':await hit();a.spdBuff=.18;a.spdBuffTurns=3;notice('SPD ↑','buff');break;
     case'playerSinglePlusAoe':await hit();await aoe(u.aoePower||.70,u.type||'magic');break;
     case'playerSinglePlusAoeParalyze':await hit();await aoe(u.aoePower||1.35,u.type||'physical',0,'paralyze',u.chance||.10,2);notice('敵全体にマヒ判定！','status');break;
-    case'multiAttack':{const n=rint(u.hits?.[0]||3,u.hits?.[1]||6);for(let i=0;i<n&&livingEnemies().length;i++)await hitEnemy(pick(livingEnemies()),u.power,u.type||'physical');notice(`${n} HIT`,'system',420);break;}
+    case'multiAttack':{const n=rint(u.hits?.[0]||3,u.hits?.[1]||6),multiScale=a.id==='denden'?.82:.90,hitPower=(u.power||1)*multiScale;for(let i=0;i<n&&livingEnemies().length;i++)await hitEnemy(pick(livingEnemies()),hitPower,u.type||'physical');notice(`${n} HIT`,'system',420);break;}
     case'teamRecovery':healField(.16);restoreMpField(.10);livingField().forEach(x=>{x.defBuff=.12;x.defBuffTurns=3;});notice('PARTY HP/MP RECOVER / DEF ↑','heal');break;
     case'stunAttack':await hit();if(lastHitEnemy&&applyEnemyStatusTo(lastHitEnemy,'stun',u.chance||.1,1))notice(`${lastHitEnemy.name}をひるませた！`,'status');break;
     case'aoeStun':await aoe(u.power,u.type||'physical',0,'stun',u.chance||.1,1);notice('敵全体にひるみ判定！','status');break;
@@ -863,8 +1112,14 @@ async function applyRoundDots(){
 }
 function tickBuffs(){const b=state.battle;for(const e of b.enemies||[])for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0)e[k]--;if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
 function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
+async function playFrezardFusion(){
+  const b=state.battle,field=$('#battleField')||$('#battleScreen'),layer=$('#battleFxLayer');if(!b||!field||!layer)return;const fr=field.getBoundingClientRect(),center={x:fr.width*.5,y:fr.height*.43},sources=(b.enemies||[]).slice(0,2);const ghosts=[];
+  for(const e of sources){const vis=enemyVisual(e.uid),r=vis?.getBoundingClientRect();if(!vis||!r)continue;const img=document.createElement('img');img.className='fusion-ghost';img.src=e.image||'';img.style.left=`${r.left-fr.left+r.width/2}px`;img.style.top=`${r.top-fr.top+r.height/2}px`;img.style.width=`${Math.max(42,r.width)}px`;img.style.height=`${Math.max(42,r.height)}px`;img.style.setProperty('--merge-x',`${center.x-(r.left-fr.left+r.width/2)}px`);img.style.setProperty('--merge-y',`${center.y-(r.top-fr.top+r.height/2)}px`);layer.appendChild(img);ghosts.push(img);}
+  await nextPaint();ghosts.forEach(g=>g.classList.add('merge'));await actionCutin('2人の魔物は合体した！','danger',850);await fixedDelay(120);ghosts.forEach(g=>g.remove());await storyFlashBattle();
+}
+async function storyFlashBattle(){const el=document.createElement('div');el.className='battle-fusion-flash';$('#battleFxLayer')?.appendChild(el);await fixedDelay(260);el.remove();}
 async function spawnNextEnemyWave(){
-  const b=state.battle;if(!b?.pendingWaveConfigs?.length)return false;const records=b.pendingWaveConfigs.shift(),next=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!next.length)return false;b.enemies=next;b.targetEnemyId=next[0].uid;b.enemy=next[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();await actionCutin('ENEMY PHASE CHANGE!','danger',650);notice(`${next.map(e=>e.name).join('・')}が現れた！`,'danger',900);await fixedDelay(450);b.turn++;b.busy=false;startRound();return true;
+  const b=state.battle;if(!b?.pendingWaveConfigs?.length)return false;const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard');if(isFrezard)await playFrezardFusion();const next=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!next.length)return false;b.enemies=next;b.targetEnemyId=next[0].uid;b.enemy=next[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();if(isFrezard){await actionCutin('モブフレザードが出現！','danger',650);}else{await actionCutin('ENEMY PHASE CHANGE!','danger',650);notice(`${next.map(e=>e.name).join('・')}が現れた！`,'danger',900);}await fixedDelay(450);b.turn++;b.busy=false;startRound();return true;
 }
 async function handleEnemyWaveClear(){if(livingEnemies().length)return false;if(state.battle.pendingWaveConfigs?.length)return await spawnNextEnemyWave();finishBattle(true);return true;}
 async function startRound(){
@@ -1019,7 +1274,7 @@ function finishBattle(win){
   $('#resultKicker').textContent=b.mode==='adventure'?(b.config?.adventureLabel||`${currentWorld()?.name||'冒険'} BATTLE`):'TRAINING RESULT';
   $('#resultText').textContent=win?`${summary} を撃破！ / ${b.turn}ターン${bonusCoin?` / +${bonusCoin.toLocaleString()} COIN`:''}`:(b.mode==='adventure'?`全員がダウンしました。直前のキャンプ地点のデータへ戻ります。`:`${summary} / ${b.turn}ターン目で全員ダウン`);
   $('#resultRetryBtn').style.display=b.mode==='training'?'block':'none';
-  $('#resultSetupBtn').textContent=b.mode==='training'?'トレーニングへ戻る':(b.config?.returnHomeAfterWorldClear?'HOMEへ戻る':'冒険へ戻る');
+  $('#resultSetupBtn').textContent=b.mode==='training'?'トレーニングへ戻る':(b.config?.returnHomeAfterAreaClear?'HOMEへ戻る':'冒険へ戻る');
   setTimeout(()=>{$('#resultOverlay').hidden=false;},650/state.speed);
 }
 
@@ -1037,13 +1292,16 @@ function trainingBattleBackground(list){
 async function startAdventureBattle(){
   if(!state.adventure.battleReady||state.adventure.completed||storyBusy)return;
   const enc=state.adventure.pendingEncounter||createAdventureEncounter(),w=currentWorld(),area=currentArea();
-  const finalAreaBoss=(state.adventure.areaIndex||0)===3&&(state.adventure.battleIndex||0)===2&&!!enc.bossBattle;
-  const preKey=finalAreaBoss?`pre:${w.id}`:'';
-  if(preKey&&STORY_EVENTS[preKey]&&!storyDone(preKey))await runStoryEvent(preKey);
+  const areaIndex=state.adventure.areaIndex||0,bossEncounter=(state.adventure.battleIndex||0)===2&&!!enc.bossBattle;
+  const specificPre=bossEncounter?`pre:${w.id}:${areaIndex}`:'',legacyPre=(bossEncounter&&areaIndex===3)?`pre:${w.id}`:'';
+  const preKey=STORY_EVENTS[specificPre]?specificPre:(STORY_EVENTS[legacyPre]?legacyPre:'');
+  if(preKey&&!storyDone(preKey))await runStoryEvent(preKey);
   state.adventure.pendingEncounter=enc;saveAdventure();
-  const postKey=finalAreaBoss&&STORY_EVENTS[`post:${w.id}`]?`post:${w.id}`:'';
-  const returnHomeAfterWorldClear=finalAreaBoss&&w.id==='grassland';
-  await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterWorldClear});
+  const specificPost=bossEncounter?`post:${w.id}:${areaIndex}`:'',legacyPost=(bossEncounter&&areaIndex===3)?`post:${w.id}`:'';
+  const postKey=STORY_EVENTS[specificPost]?specificPost:(STORY_EVENTS[legacyPost]?legacyPost:'');
+  /* v36: only AREA 4's boss sends the player HOME. AREA 1-3 mid-bosses continue in Adventure. */
+  const returnHomeAfterAreaClear=!!(bossEncounter&&areaIndex===3);
+  await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterAreaClear});
 }
 async function resetTrainingBattle(){
   const list=trainingEnemyList().map(x=>({id:x.id,level:x.level}));if(!list.length)return toast('敵を1体以上設定してください');const party=trainingParty();if(!party.length)return toast('味方を1人以上設定してください');
@@ -1086,14 +1344,15 @@ function randomTraining(){
 
 function lockMobileGestures(){document.addEventListener('contextmenu',e=>e.preventDefault());document.addEventListener('dragstart',e=>e.preventDefault());document.addEventListener('selectstart',e=>{if(!['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))e.preventDefault();});['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));document.addEventListener('touchmove',e=>{if(e.touches?.length>1)e.preventDefault();},{passive:false});let last=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-last<300)e.preventDefault();last=now;},{passive:false});document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});}
 function bindEvents(){
-  $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{renderHome();showScreen('home');});
-  $('#tavernResetBtn').onclick=()=>{state.party=defaultParty.map(x=>[...x]);state.tavernSwapIndex=null;renderTavern();};$('#savePartyBtn').onclick=()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);renderHome();toast('パーティーを保存しました');showScreen('home');};
-  $('#trainingBackBtn').onclick=()=>{renderHome();showScreen('home');};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
-  $('#adventureBackBtn').onclick=()=>{renderHome();showScreen('home');};$('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=saveCampCheckpoint;$('#fieldBattleBtn').onclick=startAdventureBattle;
+  const storyScene=$('#storyScene');if(storyScene){storyScene.addEventListener('pointerup',handleStoryTapAdvance,{passive:false});storyScene.addEventListener('contextmenu',e=>e.preventDefault());}
+  $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{goHome();});
+  $('#tavernResetBtn').onclick=()=>{state.party=defaultParty.map(x=>[...x]);state.tavernSwapIndex=null;renderTavern();};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');await goHome();};
+  $('#trainingBackBtn').onclick=()=>{goHome();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
+  $('#adventureBackBtn').onclick=()=>{goHome();};$('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=saveCampCheckpoint;$('#fieldBattleBtn').onclick=startAdventureBattle;
   $('#battleBackBtn').onclick=()=>{if(!state.battle)return;state.battle.auto=false;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};
   $('#attackBtn').onclick=()=>act('attack');$('#skillBtn').onclick=()=>openSkillMenu('magic');$('#ultimateBtn').onclick=()=>openSkillMenu('ultimate');$('#defendBtn').onclick=()=>act('defend');$('#itemBtn').onclick=openItemMenu;$('#escapeBtn').onclick=escapeAttempt;$('#switchBtn').onclick=openSwitchMenu;$$('[data-close-sheet]').forEach(b=>b.onclick=()=>{$('#skillMenu').hidden=true;});
   $('#autoBtn').onclick=()=>{const b=state.battle;if(!b||b.finished)return;b.auto=!b.auto;$('#autoBtn').classList.toggle('active',b.auto);$('#autoBtn').textContent=b.auto?'AUTO ON':'AUTO';if(b.auto&&!b.busy&&activeAlly())autoAct();};$('#speedBtn').onclick=()=>{const speeds=state.test?.enabled?[1,1.5,2,5]:[1,1.5,2];let i=speeds.indexOf(state.speed);if(i<0)i=0;state.speed=speeds[(i+1)%speeds.length];$('#speedBtn').textContent=`×${state.speed}`;};
-  $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){if(state.battle.config?.returnHomeAfterWorldClear){renderHome();showScreen('home');return;}renderAdventure();showScreen('adventure');await runPendingPostStory();}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
+  $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=async()=>{const b=state.battle;$('#resultOverlay').hidden=true;if(b?.mode==='adventure'&&state.adventure.pendingPostStory){renderAdventure();showScreen('adventure');await runPendingPostStory(true,true);}await goHome();};
   $('#settingsCloseBtn').onclick=closeSettings;
   $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;}saveTestSettings();renderSettings();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
   $('#testFastToggle').onclick=()=>{if(!state.test.enabled)return;state.test.fast5=!state.test.fast5;saveTestSettings();renderSettings();toast(state.test.fast5?'戦闘速度 ×5 をON':'戦闘速度 ×5 をOFF');};
@@ -1102,7 +1361,16 @@ function bindEvents(){
 }
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png',...state.party.slice(0,4).map(([id])=>versionedPlay(player(id)?.image)).filter(Boolean)]);
+lockMobileGestures();initCommonNav();bindImages();bindEvents();
+/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
+(async()=>{
+  try{await goHome();}
+  catch(err){
+    console.error('[MOB QUEST] HOME boot recovery',err);
+    try{await renderHome();}catch(_){}
+    showScreen('home');
+  }
+})();
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
