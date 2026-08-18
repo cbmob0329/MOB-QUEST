@@ -8,11 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-<<<<<<< HEAD
-const GAME_ASSET_VERSION=32;
-=======
-const GAME_ASSET_VERSION=28;
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
+const GAME_ASSET_VERSION=33;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -53,11 +49,7 @@ function saveParty(){try{localStorage.setItem('mobQuestPartyV4',JSON.stringify(s
 function loadParty(){
   try{
     const raw=localStorage.getItem('mobQuestPartyV4')||localStorage.getItem('mobQuestPartyV3')||localStorage.getItem('mobQuestPartyV2');
-<<<<<<< HEAD
     const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])).map(x=>[canonicalPlayerId(x[0]),clamp(Number(x[1])||1,1,120)]).filter(x=>!seen.has(x[0])&&(seen.add(x[0])||true)).slice(0,10);if(clean.length)return clean;}
-=======
-    const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])&&!seen.has(x[0])&&(seen.add(x[0])||true)).map(x=>[x[0],clamp(Number(x[1])||1,1,120)]).slice(0,10);if(clean.length)return clean;}
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   }catch(_){}
   return defaultParty.map(x=>[...x]);
 }
@@ -84,15 +76,24 @@ function preloadAsset(src,priority='auto'){
   assetImageCache.set(src,img);
   const task=new Promise(resolve=>{
     let settled=false;
+    let watchdog=0;
     const done=async ok=>{
-      if(settled)return;settled=true;
-      if(ok&&img.decode){try{await img.decode();}catch(_){}}
-      resolve(ok);
+      if(settled)return;
+      settled=true;
+      clearTimeout(watchdog);
+      img.onload=null;
+      img.onerror=null;
+      if(ok&&img.decode){
+        try{await Promise.race([img.decode(),new Promise(r=>setTimeout(r,900))]);}catch(_){}
+      }
+      resolve(!!ok);
     };
     img.onload=()=>done(true);
     img.onerror=()=>done(false);
-    img.src=src;
-    if(img.complete&&img.naturalWidth>0)done(true);
+    /* A stalled GitHub Pages/image request must never freeze the whole game. */
+    watchdog=setTimeout(()=>done(false),3200);
+    try{img.src=src;}catch(_){done(false);return;}
+    if(img.complete)done(img.naturalWidth>0);
   });
   assetPreloadCache.set(src,task);
   return task;
@@ -101,7 +102,12 @@ async function preloadAssets(paths,onProgress){
   const unique=[...new Set((paths||[]).filter(Boolean))];
   if(!unique.length){onProgress?.(1,1);return;}
   let done=0;
-  await Promise.all(unique.map(async src=>{await preloadAsset(src);done++;onProgress?.(done,unique.length);}));
+  await Promise.allSettled(unique.map(async src=>{
+    try{return await preloadAsset(src);}finally{
+      done++;
+      onProgress?.(done,unique.length);
+    }
+  }));
 }
 async function preloadAssetsSafe(paths,timeout=800){
   try{
@@ -190,22 +196,26 @@ async function loadingWithAssets(text,assets){
   $('#loadingBar').style.width='0%';
   const detail=$('#loadingDetail');
   if(detail)detail.textContent='0%';
-  await preloadAssets(assets,(done,total)=>{
+  let acceptingProgress=true;
+  const preloadJob=preloadAssets(assets,(done,total)=>{
+    if(!acceptingProgress)return;
     const per=Math.round(done/Math.max(1,total)*100);
     $('#loadingBar').style.width=`${per}%`;
     if(detail)detail.textContent=`${done} / ${total}　${per}%`;
   });
+  /* Second watchdog: even an unexpected browser/network bug cannot trap the player on LOADING. */
+  const timedOut=await Promise.race([
+    preloadJob.then(()=>false).catch(()=>false),
+    new Promise(resolve=>setTimeout(()=>resolve(true),5200))
+  ]);
+  acceptingProgress=false;
   $('#loadingBar').style.width='100%';
-  if(detail)detail.textContent='READY';
-  await fixedDelay(180);
+  if(detail)detail.textContent=timedOut?'READY / SKIP':'READY';
+  await fixedDelay(timedOut?80:140);
 }
 
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
-<<<<<<< HEAD
 function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){goHome();}else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
-=======
-function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){renderHome();showScreen('home');}else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 
 async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
   const overlay=$('#dialogOverlay');$('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
@@ -260,7 +270,6 @@ async function applyHomeCommonScale(){
 }
 async function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-<<<<<<< HEAD
   const root=$('#homeParty');
   root.classList.add('home-visual-loading');
   root.innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
@@ -272,11 +281,6 @@ async function goHome(){
   await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','icon/01.png',...partyAssets]);
   await renderHome();
   showScreen('home');
-=======
-  $('#homeParty').innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${versionedPlay(p.image)}" alt="${p.name}"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
-  bindImages($('#homeParty'));
-  applyHomeCommonScale();
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
@@ -366,7 +370,6 @@ function createAdventureEncounter(){
 function encounterNames(enc){return(enc?.waves?.[0]||[]).map(x=>{const t=trainingEnemyTemplate(x.id);return`${t?.name||x.id} Lv${x.level}`;}).join(' / ');}
 
 const ADVENTURE_COMMON_SCALE_MAX=.14;
-<<<<<<< HEAD
 function setAdventureVisualLoading(on){const gate=$('#adventureVisualLoader'),root=$('#adventureParty');if(gate)gate.hidden=!on;if(root)root.classList.toggle('visual-loading',!!on);}
 async function applyAdventurePartyScale(){
   const root=$('#adventureParty');if(!root)return;
@@ -380,21 +383,6 @@ async function applyAdventurePartyScale(){
   const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
   valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');img.classList.add('size-ready');});
   await nextPaint();setAdventureVisualLoading(false);
-=======
-function applyAdventurePartyScale(){
-  const root=$('#adventureParty');if(!root)return;
-  const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length)return;
-  const ready=imgs.map(async img=>{
-    if(!(img.complete&&img.naturalWidth))await new Promise(resolve=>{const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});});
-    try{if(img.decode&&img.naturalWidth)await img.decode();}catch(_){}
-  });
-  Promise.all(ready).then(()=>{
-    const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
-    const sumW=valid.reduce((a,img)=>a+img.naturalWidth,0),maxH=Math.max(...valid.map(img=>img.naturalHeight));
-    const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
-    valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');img.classList.add('size-ready');});
-  });
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 
 /* ===== v26 STORY EVENT ENGINE ===== */
@@ -402,15 +390,11 @@ let storyBusy=false;
 const STORY_GUESTS={
   mira:'boss-mira',guardian:'boss-guardian',neonBoss:'boss-neon',ace:'boss-ace',dragon:'boss-dragon',nepu:'boss-nepu'
 };
-<<<<<<< HEAD
 /* v32: モブジェシー is the canonical play/06.png player character. */
 const STORY_ONLY_ACTORS={};
 let storySceneExtras=[];
 function storyActorInfo(key){
   const e=STORY_ONLY_ACTORS[key];if(e)return{key,...e,image:versionedPlay(e.image),player:false,eventOnly:true};
-=======
-function storyActorInfo(key){
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   const p=player(key);if(p)return{key,name:p.name,image:versionedPlay(p.image),symbol:p.symbol||'仲',player:true};
   const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false};
   return{key,name:key||'???',image:'',symbol:'?'};
@@ -421,16 +405,12 @@ function markStoryDone(key){storyFlags()[key]=true;saveAdventure();}
 function storyWorld(id){return(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id)||currentWorld();}
 function storySceneBg(worldId,areaIndex=0){const w=storyWorld(worldId),a=w?.areas?.[clamp(areaIndex,0,3)];return{bg:a?.bg||w?.fieldFallback||'back/rpgmain.png',fallback:w?.fieldFallback||'back/rpgmain.png'};}
 function storyWaitButton(btn){return new Promise(resolve=>{const done=e=>{e?.stopPropagation?.();btn.removeEventListener('click',done);resolve();};btn.addEventListener('click',done,{once:true});});}
-<<<<<<< HEAD
 async function storyAdvanceWait(){const btn=$('#storyAdvanceBtn');btn.hidden=false;await storyWaitButton(btn);btn.hidden=true;}
-=======
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 async function readyStoryImage(img,src){
   img.classList.remove('size-ready','asset-missing');if(!src){img.classList.add('asset-missing');return false;}
   img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}
   await nextPaint();if(img.naturalWidth){img.classList.add('size-ready');return true;}img.classList.add('asset-missing');return false;
 }
-<<<<<<< HEAD
 async function sizeStoryPartyImages(root){
   const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
@@ -465,31 +445,6 @@ async function closeStoryScene(forceHome=false){
 }
 function storyAnchor(key){return $(`[data-story-actor="${key}"]`,$('#storyScene'))||($('#storyGuest').dataset.storyActor===key?$('#storyGuest'):null);}
 function setStorySpeaking(key,on){$$('.story-party-actor,.story-guest-multi',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
-=======
-async function renderStoryParty(){
-  const root=$('#storyPartyLine');const list=state.party.map(([id,lv])=>({p:player(id),lv})).filter(x=>x.p);
-  root.innerHTML=list.map(({p,lv})=>`<div class="story-party-actor" data-story-actor="${p.id}"><img data-story-party-img src="${versionedPlay(p.image)}" alt="${p.name}"><span hidden>${p.symbol}</span></div>`).join('');bindImages(root);
-  const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
-  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(valid.length){const sum=valid.reduce((a,i)=>a+i.naturalWidth,0),maxH=Math.max(...valid.map(i=>i.naturalHeight));const sc=Math.min(.115,(root.clientWidth-8)/Math.max(1,sum),(root.clientHeight-4)/Math.max(1,maxH));valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});}
-}
-async function openStoryScene(worldId,areaIndex=0,layout='default'){
-  const sc=$('#storyScene'),bg=storySceneBg(worldId,areaIndex),underParty=$('#adventureParty');
-  setImage($('#adventureBg'),bg.bg,bg.fallback);$('#fieldEvent').hidden=true;
-  // Story actors are the only character layer during an event. The normal adventure party
-  // must never remain visible behind them.
-  if(underParty)underParty.hidden=true;
-  sc.classList.remove('closing','shake','story-layout-party-left');
-  if(layout==='partyLeftGuestRight')sc.classList.add('story-layout-party-left');
-  sc.hidden=false;$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;await renderStoryParty();await fixedDelay(330);
-}
-async function closeStoryScene(forceHome=false){
-  const sc=$('#storyScene');sc.classList.add('closing');await fixedDelay(350);sc.hidden=true;sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;
-  const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
-  if(forceHome){renderHome();showScreen('home');}else{renderAdventure();showScreen('adventure');}
-}
-function storyAnchor(key){return $(`[data-story-actor="${key}"]`,$('#storyScene'))||($('#storyGuest').dataset.storyActor===key?$('#storyGuest'):null);}
-function setStorySpeaking(key,on){$$('.story-party-actor',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 async function storySayLine(key,line,displayName=null,anchorKey=null){
   const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key);
   $('#storySpeaker').textContent=displayName||info.name||'???';$('#storyText').textContent=line;
@@ -505,18 +460,13 @@ async function storySayLine(key,line,displayName=null,anchorKey=null){
     bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
   }else bubble.classList.add('no-arrow');
   bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
-<<<<<<< HEAD
   await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
-=======
-  await storyWaitButton($('#storyNextBtn'));bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 async function storySay(key,text,displayName=null,anchorKey=null){
   const lines=String(text??'').split(/\r?\n/).filter(line=>line.length>0);
   if(!lines.length)lines.push('');
   for(const line of lines)await storySayLine(key,line,displayName,anchorKey);
 }
-<<<<<<< HEAD
 async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyAdvanceWait();box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
 async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key),duplicate=storyAnchor(key);g.dataset.storyActor=key;g.className='story-guest';if(['denden','money','nyoro'].includes(key))g.classList.add('guest-compact');if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');if(duplicate&&duplicate!==g){duplicate.classList.add('guest-duplicate-hidden');g.dataset.hiddenPartyActor=key;}else delete g.dataset.hiddenPartyActor;g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
 async function storyHideGuest(){const g=$('#storyGuest'),hiddenKey=g.dataset.hiddenPartyActor;g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';if(hiddenKey){const a=$(`[data-story-actor="${hiddenKey}"]`,$('#storyScene'));a?.classList.remove('guest-duplicate-hidden');delete g.dataset.hiddenPartyActor;}}
@@ -543,18 +493,6 @@ function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.
 async function storyJoinStep(id,message){await storyHideGuest();storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 async function storyTempActor(id){const p=player(id);if(!p)return;await renderStoryParty(id);}
 async function renderStoryPartyWithTemp(tempId){await renderStoryParty(tempId);}
-=======
-async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyWaitButton($('#storyNarrationNext'));box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
-async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key);g.dataset.storyActor=key;g.className='story-guest';if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
-async function storyHideGuest(){const g=$('#storyGuest');g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';}
-async function storyExclaim(key){const g=$('#storyGuestMark');if($('#storyGuest').dataset.storyActor===key){g.hidden=false;void g.offsetWidth;await fixedDelay(700);g.hidden=true;}else{const a=storyAnchor(key);if(a){const mark=document.createElement('i');mark.className='story-mark';mark.textContent='!';a.appendChild(mark);await fixedDelay(700);mark.remove();}}await fixedDelay(500);}
-async function storyFlash(){const f=$('#storyFlash');f.classList.remove('play');void f.offsetWidth;f.classList.add('play');await fixedDelay(460);f.classList.remove('play');await fixedDelay(500);}
-async function storyImpact(text='ドン！ッ',dodge=false){if(dodge){const acts=$$('.story-party-actor',$('#storyPartyLine'));acts.forEach((a,i)=>a.classList.add(i%2?'dodge-right':'dodge-left'));}const sc=$('#storyScene'),el=$('#storyImpact');el.textContent=text;el.hidden=false;sc.classList.add('shake');el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await fixedDelay(720);sc.classList.remove('shake');el.hidden=true;el.classList.remove('play');$$('.story-party-actor',$('#storyPartyLine')).forEach(a=>a.classList.remove('dodge-left','dodge-right'));await fixedDelay(500);}
-function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.party.length?Math.round(state.party.reduce((s,x)=>s+(Number(x[1])||5),0)/state.party.length):5;state.party.push([id,clamp(avg,5,120)]);saveParty();state.training.party=state.party.map(x=>[...x]);}
-async function storyJoinStep(id,message){await storyHideGuest();storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
-async function storyTempActor(id){const p=player(id);if(!p)return;let el=$(`[data-story-actor=\"${id}\"]`,$('#storyPartyLine'));if(el)return;el=document.createElement('div');el.className='story-party-actor';el.dataset.storyActor=id;el.innerHTML=`<img data-story-party-img src=\"${versionedPlay(p.image)}\" alt=\"${p.name}\"><span hidden>${p.symbol}</span>`;$('#storyPartyLine').appendChild(el);bindImages(el);await renderStoryPartyWithTemp(id);}
-async function renderStoryPartyWithTemp(tempId){const root=$('#storyPartyLine'),temp=player(tempId),base=state.party.map(([id])=>player(id)).filter(Boolean);const list=[...base];if(temp&&!list.some(p=>p.id===temp.id))list.push(temp);root.innerHTML=list.map(p=>`<div class=\"story-party-actor\" data-story-actor=\"${p.id}\"><img data-story-party-img src=\"${versionedPlay(p.image)}\" alt=\"${p.name}\"><span hidden>${p.symbol}</span></div>`).join('');bindImages(root);const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(valid.length){const sum=valid.reduce((a,i)=>a+i.naturalWidth,0),maxH=Math.max(...valid.map(i=>i.naturalHeight));const sc=Math.min(.115,(root.clientWidth-8)/Math.max(1,sum),(root.clientHeight-4)/Math.max(1,maxH));valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});}}
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 async function storyJoinKeepGuest(id,message){storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 
 const STORY_EVENTS={
@@ -584,11 +522,7 @@ const STORY_EVENTS={
   ]},
   'post:neon':{worldId:'neon',area:3,custom:'neonPost'},
   'arrival:magma':{worldId:'magma',area:0,steps:[
-<<<<<<< HEAD
     ['say','denden','暑いでやんすー\nオイラ暑いの嫌いでやんすー'],['say','money','うるさいわね\nこっちまで暑くなるじゃない！'],['say','desert','砂漠も暑いが、ここはもっと過酷だな'],['say','pink','ここでも誰か案内してくれると良いのですが'],['say','money','そんな都合よく・・'],['guestDropDodge','nyoro','ドン！ッ'],['say','nyoro','おー・・\n痛いニョロ・・'],['say','pink','あなたさてはここに詳しいですね！'],['say','money','ボスのところに案内しなさい！'],['say','nyoro','ニョロ！？'],['say','denden','まあ待つでやんす'],['sayDual','money','お前が言うな！！','pink','お前が言うな！！（であります）'],['say','desert','俺が事情を説明しよう'],['narrate','モブニョロに事情を説明した'],['say','nyoro','お～！勇者様！\nお会いできて嬉しいニョロ！'],['say','desert','ここのボスはどんなやつだ？'],['say','nyoro','恐ろしいドラゴンニョロ・・'],['say','denden','ドラゴンニョロ・・\n変な名前でやんす'],['say','desert','気にせず続けてくれ'],['say','nyoro','先代の王モブフェニックス様との死闘は\nそりゃ～凄かったニョロ\nでも結局最後はモブドラゴンが勝ったニョロ\nそれからというもの、\n魔王軍が住みついて大変ニョロ・・'],['say','pink','どこも同じでありますね・・'],['say','denden','ドラゴンか\n会ってみたいでやんすね！'],['join','nyoro','モブニョロが仲間に加わった！']
-=======
-    ['say','denden','暑いでやんすー\nオイラ暑いの嫌いでやんすー'],['say','money','うるさいわね\nこっちまで暑くなるじゃない！'],['say','desert','砂漠も暑いが、ここはもっと過酷だな'],['say','pink','ここでも誰か案内してくれると良いのですが'],['say','money','そんな都合よく・・'],['guestDropDodge','nyoro','ドン！ッ'],['say','nyoro','おー・・\n痛いニョロ・・'],['say','pink','あなたさてはここに詳しいですね！'],['say','money','ボスのところに案内しなさい！'],['say','nyoro','ニョロ！？'],['say','denden','まあ待つでやんす'],['sayAs','pink','お前が言うな！！\n（であります）','モブマニー＆モブピンク'],['say','desert','俺が事情を説明しよう'],['narrate','モブニョロに事情を説明した'],['say','nyoro','お～！勇者様！\nお会いできて嬉しいニョロ！'],['say','desert','ここのボスはどんなやつだ？'],['say','nyoro','恐ろしいドラゴンニョロ・・'],['say','denden','ドラゴンニョロ・・\n変な名前でやんす'],['say','desert','気にせず続けてくれ'],['say','nyoro','先代の王モブフェニックス様との死闘は\nそりゃ～凄かったニョロ\nでも結局最後はモブドラゴンが勝ったニョロ\nそれからというもの、\n魔王軍が住みついて大変ニョロ・・'],['say','pink','どこも同じでありますね・・'],['say','denden','ドラゴンか\n会ってみたいでやんすね！'],['join','nyoro','モブニョロが仲間に加わった！']
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   ]},
   'pre:magma':{worldId:'magma',area:3,steps:[
     ['guest','dragon'],['say','dragon','私に何か用か？'],['say','money','想像以上にドラゴンね・・！'],['say','denden','かっけえでやんす！'],['say','pink','これは手ごわいですよ・・！'],['say','dragon','目障りなやつらだ\n命惜しくば立ち去れ'],['say','desert','風格もさすがだな\nだが、去るわけにはいかん'],['say','nyoro','やるしかないニョロね！'],['say','dragon','手加減はせぬぞ！！']
@@ -605,7 +539,6 @@ const STORY_EVENTS={
   'post:sea':{worldId:'sea',area:3,keepGuest:'nepu',steps:[
     ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinKeepGuest','nekoku','6枚目のレコード「ケロの衣装」を手に入れた！']
   ]}
-<<<<<<< HEAD
  };
 
 /* ===== v32 story expansion: 草原 / 草原Ⅱ / 部族村 ===== */
@@ -688,26 +621,17 @@ Object.assign(STORY_EVENTS,{
     ['say','jessie','任務完了'],['say','desert','魔王とは、\n一体どこまで・・'],['say','pink','とりあえず王様に報告です！\nどうやらここにレコードは無いようです'],['say','jessie','私も行くわ\n魔王を倒さないと\n何も進まなそうだしね'],['say','nyoro','心強いニョロ！\nモブジェシー、強いニョロ！']
   ]}
 });
-=======
-};
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 
 async function runStorySteps(steps=[]){
   for(const st of steps){const [type,a,b,c,d]=st;
     if(type==='say')await storySay(a,b,c,d);
     else if(type==='sayAs')await storySay(a,b,c,a);
-<<<<<<< HEAD
     else if(type==='sayDual')await storySayDual(a,b,c,d);
     else if(type==='sayOff')await storySay(a,b,c||a,null);
     else if(type==='narrate')await storyNarrate(a);
     else if(type==='guest')await storyShowGuest(a);
     else if(type==='guests')await storyShowGuests(a,b||{});
     else if(type==='hideGuests')await storyHideGuests();
-=======
-    else if(type==='sayOff')await storySay(a,b,c||a,null);
-    else if(type==='narrate')await storyNarrate(a);
-    else if(type==='guest')await storyShowGuest(a);
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
     else if(type==='guestRight')await storyShowGuest(a,{side:'right'});
     else if(type==='guestSlow')await storyShowGuest(a,{slow:true});
     else if(type==='guestDrop'){await storyShowGuest(a,{drop:true});await storyImpact(b||'ドン！ッ');}
@@ -734,7 +658,6 @@ async function runNeonPostStory(){
   await openStoryScene('neon',3);await storyShowGuest('ace',{slow:true});
   await storySay('ace','見事だ\nここまでとは思わなかったぞ');await storySay('pink','なんて強さでありますか・・');await storySay('ace','一先ずは引いてやろう\n次に会う時が楽しみだ');await storyHideGuest();await storySay('desert','もっと強さが必要だな');await storySay('money','強力な武器も必要ね');await storyNarrate('4つ目のレコードを手に入れた！');
 }
-<<<<<<< HEAD
 async function runStoryEvent(key,forceHomeOverride=false){
   const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;
   try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default',ev.extras||[]);await runStorySteps(ev.steps||[]);}markStoryDone(key);ok=true;}finally{storyBusy=false;}
@@ -746,33 +669,14 @@ async function handleAdventureEntry(){if(state.adventure.pendingPostStory){if(aw
 
 function renderAdventure(){
   const w=currentWorld(),area=currentArea(),bi=state.adventure.battleIndex||0;
-=======
-async function runStoryEvent(key){
-  const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;
-  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default');await runStorySteps(ev.steps||[]);}markStoryDone(key);await closeStoryScene(!!ev.forceHome);return true;}finally{storyBusy=false;}
-}
-async function maybeRunArrivalStory(){const w=currentWorld();if(!w)return false;const key=`arrival:${w.id}`;if(STORY_EVENTS[key]&&!storyDone(key))return await runStoryEvent(key);return false;}
-async function runPendingPostStory(){const p=state.adventure.pendingPostStory;if(!p?.key)return false;const key=p.key;if(storyDone(key)){state.adventure.pendingPostStory=null;saveAdventure();return false;}const ran=await runStoryEvent(key);if(ran){state.adventure.pendingPostStory=null;saveAdventure();const ev=STORY_EVENTS[key];if(!ev?.forceHome){renderAdventure();showScreen('adventure');await maybeRunArrivalStory();}}return ran;}
-async function handleAdventureEntry(){if(state.adventure.pendingPostStory){if(await runPendingPostStory())return;}await maybeRunArrivalStory();}
-
-function renderAdventure(){
-  const w=currentWorld(),area=currentArea(),wi=state.adventure.worldIndex||0,ai=state.adventure.areaIndex||0,bi=state.adventure.battleIndex||0;
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   $('#adventureStageTitle').textContent=state.adventure.completed?'魔王城までCLEAR':w.name;
   $('#adventureProgress').textContent=state.adventure.completed?'CLEAR':`${area.name}　戦闘 ${bi+1}/3`;
   $('#areaName').textContent=state.adventure.completed?'魔王城までの冒険完了':`${w.name}・${area.name}`;
   const pending=state.adventure.pendingEncounter;
-<<<<<<< HEAD
   $('#areaDescription').textContent=state.adventure.completed?'現在設定済みの草原～魔王城ルートをクリアしました。Lv上限が120になりました。':state.adventure.battleReady?(pending?.bossBattle?'強い気配がする。準備ができたら戦闘へ。':'敵の気配を感じる。何が現れるかは戦闘まで分からない。'):`探索 → バトルを3回行うと次のAREAへ進みます。3戦目は中ボス/ボスです。`;
   setImage($('#adventureBg'),area.bg,w.fieldFallback);setAdventureVisualLoading(true);
   const partyRoot=$('#adventureParty');partyRoot.innerHTML=state.party.slice(0,4).map(([id,lv])=>{const p=player(id);return p?`<div><img data-adventure-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span><small>Lv${lv}</small></div>`:'';}).join('');
   const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||state.adventure.completed||storyBusy;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':state.adventure.battleReady?(pending?.bossBattle?'強敵の気配':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||state.adventure.completed||storyBusy;bindImages($('#adventureScreen'));applyAdventurePartyScale();
-=======
-  $('#areaDescription').textContent=state.adventure.completed?'現在設定済みの草原～魔王城ルートをクリアしました。Lv上限が120になりました。':state.adventure.battleReady?`${pending?.bossBattle?'強敵':'モンスター'}を発見！ ${encounterNames(pending)}`:`探索 → バトルを3回行うと次のAREAへ進みます。3戦目は中ボス/ボスです。`;
-  setImage($('#adventureBg'),area.bg,w.fieldFallback);
-  $('#adventureParty').innerHTML=state.party.slice(0,4).map(([id,lv])=>{const p=player(id);return p?`<div><img data-adventure-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span><small>Lv${lv}</small></div>`:'';}).join('');
-  const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||state.adventure.completed||storyBusy;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':state.adventure.battleReady?(pending?.bossBattle?'中ボス / BOSS':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||state.adventure.completed||storyBusy;bindImages($('#adventureScreen'));applyAdventurePartyScale();
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 async function exploreField(){
   if(state.adventure.completed||state.adventure.battleReady)return;const w=currentWorld(),area=currentArea();$('#fieldEvent').hidden=false;$('#fieldEvent').innerHTML=`<b>探索中...</b><small>${w.name}・${area.name}</small>`;await delay(500);
@@ -838,19 +742,11 @@ function activeAlly(){const e=currentEntry();return e?.type==='ally'?allyById(e.
 function availableUlts(a){return a.ults.filter((u,i)=>i<4?a.level>=[1,15,30,50][i]:a.id==='yusha');}
 function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allBuff;if(stat==='atk'&&obj.atkBuffTurns>0)v*=1+obj.atkBuff;if(stat==='atk'&&obj.atkDebuffTurns>0)v*=1-obj.atkDebuff;if(stat==='def'&&obj.defBuffTurns>0)v*=1+obj.defBuff;if(stat==='spd'&&obj.spdBuffTurns>0)v*=1+obj.spdBuff;if(stat==='spd'&&obj.spdDebuffTurns>0)v*=1-(obj.spdDebuff||0);return v;}
 
-<<<<<<< HEAD
 function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
 function enemyMarkup(e){
   const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
   const selected=state.battle?.targetEnemyId===e.uid&&e.hp>0,dead=e.hp<=0;
   return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div></button>`;
-=======
-function enemySizeClass(e){if(e.category==='boss')return'boss';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(e.name||''))return'small';return'normal';}
-function enemyMarkup(e){
-  const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
-  const selected=state.battle?.targetEnemyId===e.uid&&e.hp>0,dead=e.hp<=0;
-  return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-nameplate"><div><b>${e.name}</b><small>Lv${e.level} / ${e.attribute}</small></div><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><p><span>${dead?'DOWN':'HP'}</span><b>${Math.ceil(e.hp).toLocaleString()} / ${e.maxHp.toLocaleString()}</b></p><div class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</div></div><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div></div>${selected?'<span class="enemy-target-mark">TARGET</span>':''}</button>`;
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 function statusText(a){return Object.entries(a.status).filter(([,v])=>v>0).map(([k])=>({poison:'毒',burn:'炎',sleep:'眠',stun:'怯',paralyze:'麻'}[k])).join(' ');}
 function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
@@ -1303,11 +1199,7 @@ function finishBattle(win){
   $('#resultKicker').textContent=b.mode==='adventure'?(b.config?.adventureLabel||`${currentWorld()?.name||'冒険'} BATTLE`):'TRAINING RESULT';
   $('#resultText').textContent=win?`${summary} を撃破！ / ${b.turn}ターン${bonusCoin?` / +${bonusCoin.toLocaleString()} COIN`:''}`:(b.mode==='adventure'?`全員がダウンしました。直前のキャンプ地点のデータへ戻ります。`:`${summary} / ${b.turn}ターン目で全員ダウン`);
   $('#resultRetryBtn').style.display=b.mode==='training'?'block':'none';
-<<<<<<< HEAD
   $('#resultSetupBtn').textContent=b.mode==='training'?'トレーニングへ戻る':(b.config?.returnHomeAfterAreaClear?'HOMEへ戻る':'冒険へ戻る');
-=======
-  $('#resultSetupBtn').textContent=b.mode==='training'?'トレーニングへ戻る':(b.config?.returnHomeAfterWorldClear?'HOMEへ戻る':'冒険へ戻る');
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   setTimeout(()=>{$('#resultOverlay').hidden=false;},650/state.speed);
 }
 
@@ -1325,7 +1217,6 @@ function trainingBattleBackground(list){
 async function startAdventureBattle(){
   if(!state.adventure.battleReady||state.adventure.completed||storyBusy)return;
   const enc=state.adventure.pendingEncounter||createAdventureEncounter(),w=currentWorld(),area=currentArea();
-<<<<<<< HEAD
   const areaIndex=state.adventure.areaIndex||0,bossEncounter=(state.adventure.battleIndex||0)===2&&!!enc.bossBattle;
   const specificPre=bossEncounter?`pre:${w.id}:${areaIndex}`:'',legacyPre=(bossEncounter&&areaIndex===3)?`pre:${w.id}`:'';
   const preKey=STORY_EVENTS[specificPre]?specificPre:(STORY_EVENTS[legacyPre]?legacyPre:'');
@@ -1335,15 +1226,6 @@ async function startAdventureBattle(){
   const postKey=STORY_EVENTS[specificPost]?specificPost:(STORY_EVENTS[legacyPost]?legacyPost:'');
   const returnHomeAfterAreaClear=!!enc.bossBattle;
   await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterAreaClear});
-=======
-  const finalAreaBoss=(state.adventure.areaIndex||0)===3&&(state.adventure.battleIndex||0)===2&&!!enc.bossBattle;
-  const preKey=finalAreaBoss?`pre:${w.id}`:'';
-  if(preKey&&STORY_EVENTS[preKey]&&!storyDone(preKey))await runStoryEvent(preKey);
-  state.adventure.pendingEncounter=enc;saveAdventure();
-  const postKey=finalAreaBoss&&STORY_EVENTS[`post:${w.id}`]?`post:${w.id}`:'';
-  const returnHomeAfterWorldClear=finalAreaBoss&&w.id==='grassland';
-  await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterWorldClear});
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
 }
 async function resetTrainingBattle(){
   const list=trainingEnemyList().map(x=>({id:x.id,level:x.level}));if(!list.length)return toast('敵を1体以上設定してください');const party=trainingParty();if(!party.length)return toast('味方を1人以上設定してください');
@@ -1393,11 +1275,7 @@ function bindEvents(){
   $('#battleBackBtn').onclick=()=>{if(!state.battle)return;state.battle.auto=false;if(state.battle.mode==='adventure'){renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};
   $('#attackBtn').onclick=()=>act('attack');$('#skillBtn').onclick=()=>openSkillMenu('magic');$('#ultimateBtn').onclick=()=>openSkillMenu('ultimate');$('#defendBtn').onclick=()=>act('defend');$('#itemBtn').onclick=openItemMenu;$('#escapeBtn').onclick=escapeAttempt;$('#switchBtn').onclick=openSwitchMenu;$$('[data-close-sheet]').forEach(b=>b.onclick=()=>{$('#skillMenu').hidden=true;});
   $('#autoBtn').onclick=()=>{const b=state.battle;if(!b||b.finished)return;b.auto=!b.auto;$('#autoBtn').classList.toggle('active',b.auto);$('#autoBtn').textContent=b.auto?'AUTO ON':'AUTO';if(b.auto&&!b.busy&&activeAlly())autoAct();};$('#speedBtn').onclick=()=>{const speeds=state.test?.enabled?[1,1.5,2,5]:[1,1.5,2];let i=speeds.indexOf(state.speed);if(i<0)i=0;state.speed=speeds[(i+1)%speeds.length];$('#speedBtn').textContent=`×${state.speed}`;};
-<<<<<<< HEAD
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=async()=>{const b=state.battle;$('#resultOverlay').hidden=true;if(b?.mode==='adventure'&&state.adventure.pendingPostStory){renderAdventure();showScreen('adventure');await runPendingPostStory(true,true);}await goHome();};
-=======
-  $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;$('#resultOverlay').hidden=true;if(state.battle.mode==='adventure'){if(state.battle.config?.returnHomeAfterWorldClear){renderHome();showScreen('home');return;}renderAdventure();showScreen('adventure');await runPendingPostStory();}else{renderTraining();showScreen('training');}};$('#resultHomeBtn').onclick=()=>{$('#resultOverlay').hidden=true;renderHome();showScreen('home');};
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
   $('#settingsCloseBtn').onclick=closeSettings;
   $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;}saveTestSettings();renderSettings();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
   $('#testFastToggle').onclick=()=>{if(!state.test.enabled)return;state.test.fast5=!state.test.fast5;saveTestSettings();renderSettings();toast(state.test.fast5?'戦闘速度 ×5 をON':'戦闘速度 ×5 をOFF');};
@@ -1406,11 +1284,16 @@ function bindEvents(){
 }
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-<<<<<<< HEAD
-lockMobileGestures();initCommonNav();bindImages();bindEvents();goHome();
-=======
-lockMobileGestures();initCommonNav();bindImages();bindEvents();renderHome();
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png',...state.party.slice(0,4).map(([id])=>versionedPlay(player(id)?.image)).filter(Boolean)]);
+lockMobileGestures();initCommonNav();bindImages();bindEvents();
+/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
+(async()=>{
+  try{await goHome();}
+  catch(err){
+    console.error('[MOB QUEST] HOME boot recovery',err);
+    try{await renderHome();}catch(_){}
+    showScreen('home');
+  }
+})();
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png',...state.party.slice(0,4).map(([id])=>versionedPlay(player(id)?.image)).filter(Boolean)]).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();

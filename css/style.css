@@ -1105,7 +1105,6 @@
    setting hidden=true from the story engine can be overridden and the normal party
    remains visible behind event actors. */
 .adventure-party[hidden]{display:none!important;visibility:hidden!important;opacity:0!important}
-<<<<<<< HEAD
 
 
 /* ===== MOB QUEST v29 event / adventure / enemy presentation fixes ===== */
@@ -1196,5 +1195,3 @@
   .story-guest-group{bottom:29%;height:min(25vh,158px);gap:5px}
   .story-guest-multi{width:min(26vw,108px)}
 }
-=======
->>>>>>> 6dadd92fbf49c13658edcafc1dc438348f2ed894
