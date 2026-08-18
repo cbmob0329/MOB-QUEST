@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=33">
+  <link rel="stylesheet" href="css/style.css?v=34">
 </head>
 <body>
 <main id="app">
@@ -23,11 +23,6 @@
       </div>
       <div class="wallet"><span>COIN <b id="coinValue">12,500</b></span><span>◆ <b>320</b></span></div>
     </header>
-
-    <section class="home-stage" aria-label="現在のパーティー">
-      <div id="homeParty" class="home-party"></div>
-      <div class="stage-shadow"></div>
-    </section>
 
     <nav class="main-menu" aria-label="メインメニュー">
       <button class="main-menu-btn" data-home-action="adventure" type="button"><span class="menu-icon"><img src="mqicon/01.png" alt=""><i>⚔</i></span><b>冒険</b></button>
@@ -127,7 +122,6 @@
         <div id="storyGuest" class="story-guest" hidden><img id="storyGuestImg" alt=""><span id="storyGuestFallback">?</span><i id="storyGuestMark" class="story-mark" hidden>!</i></div>
       <div id="storyBubble" class="story-bubble" hidden><b id="storySpeaker"></b><p id="storyText"></p><button id="storyNextBtn" class="story-legacy-next" type="button" hidden>次へ</button></div>
       <div id="storyNarration" class="story-narration" hidden><p id="storyNarrationText"></p><button id="storyNarrationNext" class="story-legacy-next" type="button" hidden>次へ</button></div>
-      <button id="storyAdvanceBtn" class="story-advance-btn" type="button" hidden>次へ</button>
     </div>
   </section>
 
@@ -194,7 +188,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=32" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=34" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -202,7 +196,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=33"></script>
-<script src="js/game.js?v=33"></script>
+<script src="js/data.js?v=34"></script>
+<script src="js/game.js?v=34"></script>
 </body>
 </html>

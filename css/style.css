@@ -1195,3 +1195,62 @@
   .story-guest-group{bottom:29%;height:min(25vh,158px);gap:5px}
   .story-guest-multi{width:min(26vw,108px)}
 }
+
+
+/* ===== MOB QUEST v34 interaction/layout correction ===== */
+/* HOME: party art removed. This also removes the native-size player-PNG flash from HOME. */
+.home-stage,.home-party,.stage-shadow{display:none!important}
+
+/* Story: advance by tapping anywhere in the event scene. No visible NEXT/TAP instruction. */
+.story-advance-btn,.story-legacy-next{display:none!important}
+.story-scene{touch-action:manipulation!important;-webkit-user-select:none!important;user-select:none!important}
+.story-bubble,.story-narration{pointer-events:none!important}
+
+/* Event party layout: maximum 6 per row, but small parties are allowed to occupy sensible width. */
+.story-party-line{left:4%!important;right:4%!important;bottom:19%!important;height:31%!important;display:flex!important;flex-wrap:wrap-reverse!important;align-content:flex-end!important;align-items:flex-end!important;justify-content:center!important;gap:0!important}
+.story-party-actor{height:50%!important;min-width:0!important;flex:0 0 16.666%!important;width:16.666%!important}
+.story-party-line[data-party-count="1"] .story-party-actor{flex-basis:70%!important;width:70%!important;height:100%!important}
+.story-party-line[data-party-count="2"] .story-party-actor{flex-basis:42%!important;width:42%!important;height:100%!important}
+.story-party-line[data-party-count="3"] .story-party-actor{flex-basis:31%!important;width:31%!important;height:100%!important}
+.story-party-line[data-party-count="4"] .story-party-actor{flex-basis:24%!important;width:24%!important;height:100%!important}
+.story-party-line[data-party-count="5"] .story-party-actor{flex-basis:19.5%!important;width:19.5%!important;height:100%!important}
+.story-party-line[data-party-count="6"] .story-party-actor{flex-basis:16.666%!important;width:16.666%!important;height:100%!important}
+.story-scene.story-layout-party-left .story-party-line{left:3%!important;right:42%!important;bottom:20%!important;height:31%!important;justify-content:flex-start!important}
+.story-scene.story-layout-party-left .story-party-line[data-party-count="2"] .story-party-actor{flex-basis:47%!important;width:47%!important}
+.story-scene.story-layout-party-left .story-party-line[data-party-count="3"] .story-party-actor{flex-basis:32%!important;width:32%!important}
+
+/* Event guest scale: balanced against the corrected party, not a giant full-height illustration. */
+.story-guest{bottom:21%!important;width:min(34vw,142px)!important;height:min(30vh,205px)!important}
+.story-guest.side-right{right:5%!important;left:auto!important;bottom:21%!important;width:min(34vw,142px)!important;height:min(30vh,205px)!important}
+.story-guest.side-right.visible{transform:translate(0,0)!important}
+.story-guest.guest-compact,.story-guest.guest-compact.side-right{width:min(28vw,116px)!important;height:min(25vh,165px)!important}
+
+/* Speech bubble follows the actual character image. Keep it compact enough that its tail reads unambiguously. */
+.story-bubble{max-width:72vw!important;border-width:3px!important;box-shadow:0 7px 0 rgba(0,0,0,.20),0 11px 24px rgba(0,0,0,.18)!important}
+.story-bubble::after{bottom:-13px!important;width:18px!important;height:18px!important}
+
+/* Enemy art sizing is independent of enemy count. Sidekicks stay normal; bosses are intentionally imposing. */
+.enemy-unit.enemy-size-small{--enemy-scale:.72!important;padding-bottom:6px!important}
+.enemy-unit.enemy-size-normal{--enemy-scale:1.00!important}
+.enemy-unit.enemy-size-elite{--enemy-scale:1.10!important}
+.enemy-unit.enemy-size-rock{--enemy-scale:1.42!important}
+.enemy-unit.enemy-size-golem{--enemy-scale:1.62!important}
+.enemy-unit.enemy-size-boss{--enemy-scale:2.34!important}
+.enemy-unit.enemy-size-dragon{--enemy-scale:2.90!important}
+.enemy-unit.enemy-size-frezard{--enemy-scale:3.08!important}
+.enemy-unit .enemy-sprite-wrap,.enemy-count-1 .enemy-unit .enemy-sprite-wrap,.enemy-count-2 .enemy-unit .enemy-sprite-wrap,.enemy-count-3 .enemy-unit .enemy-sprite-wrap,.enemy-count-4 .enemy-unit .enemy-sprite-wrap{overflow:visible!important;transform:scale(var(--enemy-scale,1))!important;transform-origin:center bottom!important}
+.battle-field{overflow:hidden!important}
+.battle-screen.enemy-attacking .battle-field{overflow:visible!important}
+
+/* Small monsters: their HP plate is pulled closer to their feet. */
+.enemy-unit.enemy-size-small .enemy-nameplate{bottom:5px!important}
+.enemy-unit.enemy-size-small .enemy-sprite-wrap{margin-bottom:-4px!important}
+.enemy-unit.enemy-size-small .enemy-target-mark{top:0!important}
+
+@media(max-height:720px){
+  .story-party-line{bottom:17%!important;height:29%!important}
+  .story-guest{bottom:20%!important;height:min(26vh,172px)!important}
+  .enemy-unit.enemy-size-boss{--enemy-scale:2.12!important}
+  .enemy-unit.enemy-size-dragon{--enemy-scale:2.62!important}
+  .enemy-unit.enemy-size-frezard{--enemy-scale:2.78!important}
+}

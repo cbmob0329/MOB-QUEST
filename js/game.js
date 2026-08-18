@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=33;
+const GAME_ASSET_VERSION=34;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -235,50 +235,20 @@ async function travelTo(target,text,after){
 
 const HOME_COMMON_SCALE_MAX=0.16;
 async function applyHomeCommonScale(){
-  const root=$('#homeParty');
-  if(!root)return;
-  root.classList.add('home-visual-loading');
-  const imgs=$$('[data-home-party-img]',root);
-  if(!imgs.length){root.classList.remove('home-visual-loading');return;}
-  await Promise.all(imgs.map(async img=>{
-    if(!(img.complete&&img.naturalWidth)){
-      await new Promise(resolve=>{
-        const done=()=>resolve();
-        img.addEventListener('load',done,{once:true});
-        img.addEventListener('error',done,{once:true});
-      });
-    }
-    try{if(img.decode)await img.decode();}catch(_){}
-  }));
-  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);
-  if(valid.length){
-    const naturalWidthTotal=valid.reduce((sum,img)=>sum+img.naturalWidth,0);
-    const naturalHeightMax=Math.max(...valid.map(img=>img.naturalHeight));
-    const rowWidth=Math.max(1,root.clientWidth-10);
-    const rowHeight=Math.max(1,root.clientHeight-34);
-    const fitWidth=rowWidth/naturalWidthTotal;
-    const fitHeight=(rowHeight*.58)/naturalHeightMax;
-    const scale=Math.min(HOME_COMMON_SCALE_MAX,fitWidth,fitHeight);
-    valid.forEach(img=>{
-      img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');
-      img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');
-    });
-  }
-  /* Never reveal a native-size frame. Wait until the browser has painted the final scaled geometry twice. */
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  root.classList.remove('home-visual-loading');
+  /* v34: HOME no longer renders party character PNGs. Kept as a no-op so old resize hooks stay safe. */
+  return;
 }
 async function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
-  const root=$('#homeParty');
-  root.classList.add('home-visual-loading');
-  root.innerHTML=state.party.slice(0,4).map(([id,lv],i)=>{const p=player(id);return p?`<div class="home-member slot-${i}"><div class="home-sprite"><img data-home-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><span>${p.symbol}</span></div><small>${p.name}</small><b>Lv${lv}</b></div>`:'';}).join('');
-  bindImages(root);
-  await applyHomeCommonScale();
 }
 async function goHome(){
-  const partyAssets=state.party.slice(0,4).map(([id])=>versionedPlay(player(id)?.image)).filter(Boolean);
-  await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','icon/01.png',...partyAssets]);
+  /* HOME deliberately avoids player PNGs: this removes the native-size flash and unnecessary decode work. */
+  showScreen('loading');
+  $('#loadingText').textContent='HOMEを準備しています…';
+  $('#loadingBar').style.width='35%';
+  const detail=$('#loadingDetail');if(detail)detail.textContent='HOME';
+  await preloadAssetsSafe(['back/rpgmain.png','icon/01.png'],900);
+  $('#loadingBar').style.width='100%';if(detail)detail.textContent='READY';
   await renderHome();
   showScreen('home');
 }
@@ -404,21 +374,35 @@ function storyDone(key){return!!storyFlags()[key];}
 function markStoryDone(key){storyFlags()[key]=true;saveAdventure();}
 function storyWorld(id){return(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id)||currentWorld();}
 function storySceneBg(worldId,areaIndex=0){const w=storyWorld(worldId),a=w?.areas?.[clamp(areaIndex,0,3)];return{bg:a?.bg||w?.fieldFallback||'back/rpgmain.png',fallback:w?.fieldFallback||'back/rpgmain.png'};}
-function storyWaitButton(btn){return new Promise(resolve=>{const done=e=>{e?.stopPropagation?.();btn.removeEventListener('click',done);resolve();};btn.addEventListener('click',done,{once:true});});}
-async function storyAdvanceWait(){const btn=$('#storyAdvanceBtn');btn.hidden=false;await storyWaitButton(btn);btn.hidden=true;}
+let storyTapResolve=null;
+let storyTapReadyAt=0;
+function storyAdvanceWait(){
+  return new Promise(resolve=>{storyTapResolve=resolve;storyTapReadyAt=performance.now()+80;});
+}
+function handleStoryTapAdvance(e){
+  if(!storyTapResolve||performance.now()<storyTapReadyAt)return;
+  e?.preventDefault?.();e?.stopPropagation?.();
+  const resolve=storyTapResolve;storyTapResolve=null;storyTapReadyAt=0;resolve();
+}
 async function readyStoryImage(img,src){
   img.classList.remove('size-ready','asset-missing');if(!src){img.classList.add('asset-missing');return false;}
   img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}
   await nextPaint();if(img.naturalWidth){img.classList.add('size-ready');return true;}img.classList.add('asset-missing');return false;
 }
 async function sizeStoryPartyImages(root){
-  const imgs=$$('[data-story-party-img]',root);await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  const imgs=$$('[data-story-party-img]',root);
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
-  const rowSums=[];for(let i=0;i<valid.length;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
-  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight)),rows=Math.max(1,Math.ceil(valid.length/6));
-  const rowH=Math.max(1,(root.clientHeight-4)/rows);const sc=Math.min(.115,(root.clientWidth-8)/maxRowW,rowH/maxH);
+  const count=valid.length,rows=Math.max(1,Math.ceil(count/6));
+  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
+  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
+  const rowH=Math.max(1,(root.clientHeight-4)/rows);
+  /* The previous .115 ceiling made a 2-person event party tiny. Asset-side relative sizes are preserved. */
+  const cap=count<=2?.19:count<=3?.17:count<=4?.145:count<=6?.12:.105;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.98)/maxH);
   valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});
 }
+
 async function renderStoryParty(extraIds=null){
   const root=$('#storyPartyLine');
   const list=state.party.map(([id])=>storyActorInfo(id)).filter(x=>x?.image);
@@ -434,16 +418,22 @@ async function openStoryScene(worldId,areaIndex=0,layout='default',extras=[]){
   if(advScreen)advScreen.classList.add('story-event-active');if(underParty)underParty.hidden=true;setAdventureVisualLoading(true);
   sc.classList.remove('closing','shake','story-layout-party-left');if(layout==='partyLeftGuestRight')sc.classList.add('story-layout-party-left');
   storySceneExtras=Array.isArray(extras)?extras.filter(Boolean):[];
-  $('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyAdvanceBtn').hidden=true;
+  $('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;storyTapResolve=null;
   // Layout and decode first while invisible so a raw PNG can never flash at native size.
   sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';setAdventureVisualLoading(false);await fixedDelay(240);
 }
 async function closeStoryScene(forceHome=false){
-  const sc=$('#storyScene');sc.classList.add('closing');$('#storyAdvanceBtn').hidden=true;await fixedDelay(350);sc.hidden=true;sc.style.visibility='';sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyPartyLine').innerHTML='';storySceneExtras=[];
+  const sc=$('#storyScene');sc.classList.add('closing');storyTapResolve=null;await fixedDelay(350);sc.hidden=true;sc.style.visibility='';sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyPartyLine').innerHTML='';storySceneExtras=[];
   const advScreen=$('#adventureScreen');if(advScreen)advScreen.classList.remove('story-event-active');const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
   if(forceHome){await goHome();}else{renderAdventure();showScreen('adventure');}
 }
 function storyAnchor(key){return $(`[data-story-actor="${key}"]`,$('#storyScene'))||($('#storyGuest').dataset.storyActor===key?$('#storyGuest'):null);}
+function storyAnchorRect(anchor){
+  if(!anchor)return null;
+  const img=anchor.matches?.('img')?anchor:anchor.querySelector?.('img.size-ready,img:not(.asset-missing)');
+  const target=(img&&img.getBoundingClientRect().width>0)?img:anchor;
+  return target.getBoundingClientRect();
+}
 function setStorySpeaking(key,on){$$('.story-party-actor,.story-guest-multi',$('#storyScene')).forEach(el=>el.classList.toggle('speaking',on&&el.dataset.storyActor===key));const g=$('#storyGuest');g.classList.toggle('speaking',!!(on&&g.dataset.storyActor===key));}
 async function storySayLine(key,line,displayName=null,anchorKey=null){
   const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key);
@@ -454,9 +444,10 @@ async function storySayLine(key,line,displayName=null,anchorKey=null){
   bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
   await nextPaint();const scene=$('#storyScene').getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
   if(anchor){
-    const ar=anchor.getBoundingClientRect(),cx=ar.left-scene.left+ar.width/2;
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;
     left=clamp(cx-br.width/2,8,scene.width-br.width-8);
-    top=clamp(ar.top-scene.top-br.height-14,54,scene.height-br.height-22);
+    /* Point to the actual character art. If there is no room above, place the bubble just above the lower UI, never over a distant enemy. */
+    top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);
     bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
   }else bubble.classList.add('no-arrow');
   bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
@@ -1268,6 +1259,7 @@ function randomTraining(){
 
 function lockMobileGestures(){document.addEventListener('contextmenu',e=>e.preventDefault());document.addEventListener('dragstart',e=>e.preventDefault());document.addEventListener('selectstart',e=>{if(!['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))e.preventDefault();});['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));document.addEventListener('touchmove',e=>{if(e.touches?.length>1)e.preventDefault();},{passive:false});let last=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-last<300)e.preventDefault();last=now;},{passive:false});document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});}
 function bindEvents(){
+  const storyScene=$('#storyScene');if(storyScene){storyScene.addEventListener('pointerup',handleStoryTapAdvance,{passive:false});storyScene.addEventListener('contextmenu',e=>e.preventDefault());}
   $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{goHome();});
   $('#tavernResetBtn').onclick=()=>{state.party=defaultParty.map(x=>[...x]);state.tavernSwapIndex=null;renderTavern();};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');await goHome();};
   $('#trainingBackBtn').onclick=()=>{goHome();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
@@ -1294,6 +1286,6 @@ lockMobileGestures();initCommonNav();bindImages();bindEvents();
     showScreen('home');
   }
 })();
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png',...state.party.slice(0,4).map(([id])=>versionedPlay(player(id)?.image)).filter(Boolean)]).catch(()=>{});
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();

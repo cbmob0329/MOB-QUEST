@@ -117,3 +117,14 @@ v29
 
 
 v33: LOADING watchdog fix. Individual asset requests time out after 3.2s, whole loading gates after 5.2s, boot recovery added. index.html in this ZIP contains no Git conflict markers.
+
+
+=== v34 ===
+- HOME party character display removed; HOME no longer preloads/decodes player PNGs.
+- Story events advance by tapping anywhere on the event screen. Visible NEXT/TAP labels removed.
+- One pending tap resolves one line only, preventing rapid double-tap skipping/selection.
+- Speech bubbles now anchor to the actual visible character image bounds.
+- Event party scaling corrected: up to 6 per row, 1-3 characters are no longer tiny.
+- Event guest size rebalanced.
+- Boss/dragon/frezard, rock, golem presentation enlarged; enemy count does not change art scale.
+- Small-monster HP/name plate moved closer to the sprite.
