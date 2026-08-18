@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=35;
+const GAME_ASSET_VERSION=36;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -366,7 +366,7 @@ let storySceneExtras=[];
 function storyActorInfo(key){
   const e=STORY_ONLY_ACTORS[key];if(e)return{key,...e,image:versionedPlay(e.image),player:false,eventOnly:true};
   const p=player(key);if(p)return{key,name:p.name,image:versionedPlay(p.image),symbol:p.symbol||'仲',player:true};
-  const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false};
+  const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false,category:t.category||'normal',enemyTemplate:t,sizeClass:enemySizeClass(t),winged:enemyIsWinged(t)};
   return{key,name:key||'???',image:'',symbol:'?'};
 }
 function storyFlags(){if(!state.adventure.storyFlags||typeof state.adventure.storyFlags!=='object')state.adventure.storyFlags={};return state.adventure.storyFlags;}
@@ -389,6 +389,7 @@ async function readyStoryImage(img,src){
   img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}
   await nextPaint();if(img.naturalWidth){img.classList.add('size-ready');return true;}img.classList.add('asset-missing');return false;
 }
+let lastStoryPartyScale=.14;
 async function sizeStoryPartyImages(root){
   const imgs=$$('[data-story-party-img]',root);
   await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
@@ -397,10 +398,39 @@ async function sizeStoryPartyImages(root){
   const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
   const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
   const rowH=Math.max(1,(root.clientHeight-4)/rows);
-  /* The previous .115 ceiling made a 2-person event party tiny. Asset-side relative sizes are preserved. */
-  const cap=count<=2?.19:count<=3?.17:count<=4?.145:count<=6?.12:.105;
-  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.98)/maxH);
-  valid.forEach(img=>{img.style.width=`${Math.max(1,Math.round(img.naturalWidth*sc))}px`;img.style.height=`${Math.max(1,Math.round(img.naturalHeight*sc))}px`;img.classList.add('size-ready');});
+  /* v36: keep the asset-authored relative size, but make the event party a little smaller than v35. */
+  const cap=count<=2?.16:count<=3?.145:count<=4?.13:count<=6?.112:.096;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);
+  lastStoryPartyScale=sc;
+  valid.forEach(img=>{
+    img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*sc))}px`,'important');
+    img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*sc))}px`,'important');
+    img.classList.add('size-ready');
+  });
+}
+function fitNaturalSize(nw,nh,scale,maxW,maxH){
+  if(!(nw>0&&nh>0))return{w:1,h:1,scale:0};
+  const s=Math.min(scale,maxW/nw,maxH/nh,1);
+  return{w:Math.max(1,Math.round(nw*s)),h:Math.max(1,Math.round(nh*s)),scale:s};
+}
+function storyEnemyScaleKind(info){return info?.sizeClass||enemySizeClass(info?.enemyTemplate||info||{});}
+function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return;
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  let sz;
+  if(info?.player){
+    /* New allies use exactly the same source-pixel scale as the visible event party. */
+    const sc=Math.min(lastStoryPartyScale||.14,.17);
+    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(multi?.25:.32),scene.height*(multi?.22:.25));
+  }else{
+    const kind=storyEnemyScaleKind(info),base=clamp(scene.width/2700,.14,.18)*(multi?.84:1);
+    const mul={small:.82,normal:.96,elite:1.04,rock:1.10,golem:1.16,boss:1.22,dragon:1.30,frezard:1.38}[kind]||1;
+    const maxW=scene.width*({small:.30,normal:.37,elite:.42,rock:.44,golem:.48,boss:.72,dragon:.82,frezard:.86}[kind]||.40)*(multi?.72:1);
+    const maxH=scene.height*({small:.19,normal:.23,elite:.25,rock:.25,golem:.27,boss:.31,dragon:.34,frezard:.36}[kind]||.24)*(multi?.88:1);
+    sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,base*mul,maxW,maxH);
+  }
+  holder.style.setProperty('width',`${sz.w}px`,'important');
+  holder.style.setProperty('height',`${sz.h}px`,'important');
 }
 
 async function renderStoryParty(extraIds=null){
@@ -459,14 +489,14 @@ async function storySay(key,text,displayName=null,anchorKey=null){
   for(const line of lines)await storySayLine(key,line,displayName,anchorKey);
 }
 async function storyNarrate(text){const box=$('#storyNarration');$('#storyNarrationText').textContent=text;box.hidden=false;await nextPaint();box.classList.add('show');await storyAdvanceWait();box.classList.remove('show');await fixedDelay(500);box.hidden=true;}
-async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key),duplicate=storyAnchor(key);g.dataset.storyActor=key;g.className='story-guest';if(['denden','money','nyoro'].includes(key))g.classList.add('guest-compact');if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');if(duplicate&&duplicate!==g){duplicate.classList.add('guest-duplicate-hidden');g.dataset.hiddenPartyActor=key;}else delete g.dataset.hiddenPartyActor;g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
+async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#storyGuestImg'),info=storyActorInfo(key),duplicate=storyAnchor(key);g.dataset.storyActor=key;g.className='story-guest';g.classList.add(info.player?'story-guest-player':'story-guest-enemy');if(!info.player){g.classList.add(`story-enemy-${storyEnemyScaleKind(info)}`);if(info.winged)g.classList.add('story-enemy-winged');}if(opt.side==='right')g.classList.add('side-right');else if(opt.side==='left')g.classList.add('side-left');if(duplicate&&duplicate!==g){duplicate.classList.add('guest-duplicate-hidden');g.dataset.hiddenPartyActor=key;}else delete g.dataset.hiddenPartyActor;g.hidden=false;$('#storyGuestFallback').textContent=info.symbol||'?';await readyStoryImage(img,info.image);applyStoryGuestNaturalSize(g,img,info);if(opt.slow)g.classList.add('fade-slow');g.classList.add('visible');if(opt.drop){g.classList.add('drop');$('#storyScene').classList.add('shake');}await fixedDelay(opt.drop?760:(opt.slow?1050:520));g.classList.remove('drop');$('#storyScene').classList.remove('shake');await fixedDelay(500);}
 async function storyHideGuest(){const g=$('#storyGuest'),hiddenKey=g.dataset.hiddenPartyActor;g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';if(hiddenKey){const a=$(`[data-story-actor="${hiddenKey}"]`,$('#storyScene'));a?.classList.remove('guest-duplicate-hidden');delete g.dataset.hiddenPartyActor;}}
 async function storyShowGuests(keys=[],opt={}){
   await storyHideGuest().catch(()=>{});
   const group=$('#storyGuestGroup'),ids=(keys||[]).filter(Boolean).slice(0,4);if(!ids.length)return;
-  group.hidden=false;group.className='story-guest-group';group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key);return `<div class="story-guest-multi" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
+  group.hidden=false;group.className='story-guest-group';group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
-  await Promise.all($$('img',group).map(async img=>{const src=img.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth)img.classList.add('size-ready');else img.classList.add('asset-missing');}));
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
   await nextPaint();group.classList.add('visible');await fixedDelay(opt.slow?950:520);await fixedDelay(500);
 }
 async function storyHideGuests(){const group=$('#storyGuestGroup');if(group.hidden)return;group.classList.remove('visible');await fixedDelay(480);group.hidden=true;group.innerHTML='';group.dataset.count='0';}
@@ -735,20 +765,40 @@ function effective(stat,obj){let v=obj[stat];if(obj.allBuffTurns>0)v*=1+obj.allB
 
 function enemySizeClass(e){const n=e.name||'';if(/フレザード/.test(n))return'frezard';if(e.category==='boss'&&/ドラゴン|ギドラ|ドラファラ/.test(n))return'dragon';if(e.category==='boss')return'boss';if(/ゴーレム/.test(n))return'golem';if(/ロック/.test(n))return'rock';if(e.category==='elite')return'elite';if(/スライム|ピヨ|ミスト|プルフ|ジョーロ|テンデビ|ミニブック|プニ|バブル/.test(n))return'small';return'normal';}
 function enemyIsWinged(e){return /バード|ピヨ|ホーク|テンデビ|ヒノデビ|サキュバス|ドラゴン|ギドラ|フレザード|フェニックス/.test(e?.name||'');}
+function battleEnemyNaturalScale(root,kind){
+  const w=root?.clientWidth||440,base=clamp(w/2600,.15,.19);
+  return base*({small:.82,normal:.96,elite:1.02,rock:1.08,golem:1.14,boss:1.18,dragon:1.24,frezard:1.30}[kind]||1);
+}
+function applyEnemyVisualSizes(root=$('#enemyArea')){
+  if(!root)return;
+  $$('[data-enemy-target]',root).forEach(unit=>{
+    const img=$('.enemy-sprite',unit);if(!img)return;
+    const place=()=>{
+      if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
+      const kind=['small','normal','elite','rock','golem','boss','dragon','frezard'].find(k=>unit.classList.contains(`enemy-size-${k}`))||'normal';
+      const field=$('#battle-field')||$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};
+      const maxW=(fr.width||root.clientWidth)*({small:.24,normal:.29,elite:.31,rock:.34,golem:.38,boss:.67,dragon:.78,frezard:.84}[kind]||.30);
+      const maxH=(fr.height||root.clientHeight)*({small:.28,normal:.34,elite:.36,rock:.38,golem:.40,boss:.58,dragon:.66,frezard:.70}[kind]||.35);
+      const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind),maxW,maxH);
+      img.style.setProperty('width',`${sz.w}px`,'important');img.style.setProperty('height',`${sz.h}px`,'important');
+      requestAnimationFrame(()=>positionEnemyTargetMarks(root));
+    };
+    place();if(!img.complete)img.addEventListener('load',place,{once:true});
+  });
+}
 function positionEnemyTargetMarks(root=$('#enemyArea')){
   if(!root)return;
   $$('[data-enemy-target]',root).forEach(unit=>{
     const mark=$('.enemy-target-mark',unit),wrap=$('.enemy-sprite-wrap',unit),img=$('.enemy-sprite',unit);
     if(!mark||!wrap)return;
     const place=()=>{
-      const w=wrap.clientWidth,h=wrap.clientHeight,nw=img?.naturalWidth||0,nh=img?.naturalHeight||0;
-      if(!(w>0&&h>0&&nw>0&&nh>0)){mark.style.top='46%';return;}
-      const scale=Math.min(w/nw,h/nh),paintedH=nh*scale,paintTop=Math.max(0,h-paintedH);
-      mark.style.top=`${Math.max(1,paintTop-11)}px`;
+      if(!img||!(img.getBoundingClientRect().width>0)){mark.style.top='4px';mark.style.left='50%';return;}
+      const wr=wrap.getBoundingClientRect(),ir=img.getBoundingClientRect();
+      mark.style.left=`${ir.left-wr.left+ir.width/2}px`;
+      mark.style.top=`${Math.max(0,ir.top-wr.top-10)}px`;
       mark.style.bottom='auto';
     };
-    place();
-    if(img&&!img.complete)img.addEventListener('load',place,{once:true});
+    place();if(img&&!img.complete)img.addEventListener('load',place,{once:true});
   });
 }
 function enemyMarkup(e){
@@ -764,7 +814,7 @@ function renderBattle(){
   const b=state.battle;if(!b)return;targetEnemy();$('#battleTurnLabel').textContent='';const enemies=b.enemies||[];const area=$('#enemyArea');area.className=`enemy-area enemy-count-${Math.max(1,enemies.length)}`;area.innerHTML=enemies.map(enemyMarkup).join('');
   $('#allyStatus').innerHTML=mainAllies().map(allyMarkup).join('');$('#superStatus').innerHTML=superAllies().length?superAllies().map(superMarkup).join(''):`<div class="no-bench">援護なし</div>`;$('#benchStatus').innerHTML=reserveAllies().length?reserveAllies().map(benchMarkup).join(''):`<div class="no-bench">控えなし</div>`;
   const entry=currentEntry(),a=activeAlly(),acting=entry?.type==='enemy'?enemyByUid(entry.enemyId):null,target=targetEnemy();$('#activeActorBar').innerHTML=a?`<img src="${versionedPlay(a.image)}" alt=""><div><small>COMMAND / SPD ${Math.round(effective('spd',a))}</small><b>${a.name}</b><span>HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}</span></div>`:entry?.type==='super'?`<div><small>AUTO ACTION</small><b>${allyById(entry.id)?.name||''}</b></div>`:`<div><small>${acting?'ENEMY ACTION':'TARGET'}</small><b>${acting?.name||target?.name||''}</b></div>`;
-  bindImages($('#battleScreen'));positionEnemyTargetMarks(area);requestAnimationFrame(()=>positionEnemyTargetMarks(area));$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
+  bindImages($('#battleScreen'));applyEnemyVisualSizes(area);positionEnemyTargetMarks(area);requestAnimationFrame(()=>{applyEnemyVisualSizes(area);positionEnemyTargetMarks(area);});$$('[data-enemy-target]',area).forEach(btn=>btn.onclick=()=>setEnemyTarget(btn.dataset.enemyTarget));setCommandDisabled(b.busy||b.finished||!a);
 }
 function setCommandDisabled(dis){['attackBtn','skillBtn','ultimateBtn','defendBtn','itemBtn','escapeBtn','switchBtn'].forEach(id=>{const el=$('#'+id);if(el)el.disabled=dis;});}
 
@@ -1232,7 +1282,8 @@ async function startAdventureBattle(){
   state.adventure.pendingEncounter=enc;saveAdventure();
   const specificPost=bossEncounter?`post:${w.id}:${areaIndex}`:'',legacyPost=(bossEncounter&&areaIndex===3)?`post:${w.id}`:'';
   const postKey=STORY_EVENTS[specificPost]?specificPost:(STORY_EVENTS[legacyPost]?legacyPost:'');
-  const returnHomeAfterAreaClear=!!enc.bossBattle;
+  /* v36: only AREA 4's boss sends the player HOME. AREA 1-3 mid-bosses continue in Adventure. */
+  const returnHomeAfterAreaClear=!!(bossEncounter&&areaIndex===3);
   await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterAreaClear});
 }
 async function resetTrainingBattle(){

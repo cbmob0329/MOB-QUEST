@@ -1342,3 +1342,182 @@
   .story-guest,.story-guest.side-right{bottom:31%!important}
   .story-guest-group{bottom:33%!important}
 }
+
+/* ===== MOB QUEST v36 event party / natural enemy size / AREA flow polish ===== */
+/* Event party: preserve the PNG-authored relative size instead of squeezing each image into its actor box. */
+.story-party-line{
+  bottom:13%!important;
+  height:28%!important;
+  overflow:visible!important;
+}
+.story-party-actor{
+  overflow:visible!important;
+}
+.story-party-actor img{
+  width:auto!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+}
+.story-scene.story-layout-party-left .story-party-line{
+  bottom:13%!important;
+  height:28%!important;
+}
+
+/* A character who is about to join uses the same baseline/scale as the existing event party. */
+.story-guest.story-guest-player,
+.story-guest.story-guest-player.side-right,
+.story-guest.story-guest-player.side-left{
+  bottom:13%!important;
+  max-width:none!important;
+  max-height:none!important;
+}
+.story-guest.story-guest-player img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+
+/* Enemies have their own upper stage so they never stand on top of the party. */
+.story-guest.story-guest-enemy,
+.story-guest.story-guest-enemy.side-right,
+.story-guest.story-guest-enemy.side-left{
+  bottom:42%!important;
+  max-width:none!important;
+  max-height:none!important;
+}
+.story-guest.story-guest-enemy.story-enemy-winged{bottom:44%!important}
+.story-guest-group{
+  bottom:43%!important;
+  height:27%!important;
+  align-items:flex-end!important;
+  overflow:visible!important;
+}
+.story-guest-multi{
+  flex:0 0 auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.story-guest-multi img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+
+/* Battle field always reserves four equal slots, so a 1-enemy fight and a 4-enemy fight use the same scale basis. */
+.enemy-area,
+.enemy-area.enemy-count-1,
+.enemy-area.enemy-count-2,
+.enemy-area.enemy-count-3,
+.enemy-area.enemy-count-4{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  gap:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.enemy-unit,
+.enemy-count-1 .enemy-unit,
+.enemy-count-2 .enemy-unit,
+.enemy-count-3 .enemy-unit,
+.enemy-count-4 .enemy-unit{
+  flex:0 0 25%!important;
+  width:25%!important;
+  max-width:25%!important;
+  min-width:0!important;
+  overflow:visible!important;
+  padding:0 1px 3px!important;
+}
+
+/* v36 sizes enemy art from naturalWidth/naturalHeight in JS. Do not enlarge a fitted bitmap with CSS transforms. */
+.enemy-unit .enemy-sprite-wrap,
+.enemy-count-1 .enemy-unit .enemy-sprite-wrap,
+.enemy-count-2 .enemy-unit .enemy-sprite-wrap,
+.enemy-count-3 .enemy-unit .enemy-sprite-wrap,
+.enemy-count-4 .enemy-unit .enemy-sprite-wrap{
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  overflow:visible!important;
+  transform:none!important;
+  transform-origin:center bottom!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+}
+.enemy-unit.enemy-winged .enemy-sprite-wrap,
+.enemy-unit.enemy-winged.enemy-size-boss .enemy-sprite-wrap,
+.enemy-unit.enemy-winged.enemy-size-dragon .enemy-sprite-wrap{
+  transform:translateY(-8px)!important;
+}
+.enemy-unit .enemy-sprite-wrap>img,
+.enemy-count-1 .enemy-unit .enemy-sprite-wrap>img,
+.enemy-count-2 .enemy-unit .enemy-sprite-wrap>img,
+.enemy-count-3 .enemy-unit .enemy-sprite-wrap>img,
+.enemy-count-4 .enemy-unit .enemy-sprite-wrap>img{
+  width:auto!important;
+  height:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+}
+
+/* HP plate is below the rendered art, including small monsters. */
+.enemy-unit .enemy-nameplate,
+.enemy-count-1 .enemy-unit .enemy-nameplate,
+.enemy-count-2 .enemy-unit .enemy-nameplate,
+.enemy-count-3 .enemy-unit .enemy-nameplate,
+.enemy-count-4 .enemy-unit .enemy-nameplate{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:94%!important;
+  margin:6px auto 0!important;
+  flex:0 0 auto!important;
+}
+.enemy-unit.enemy-size-small .enemy-nameplate{
+  margin-top:7px!important;
+  bottom:auto!important;
+}
+.enemy-unit.enemy-size-small .enemy-sprite-wrap{margin-bottom:0!important}
+
+/* The tiny target arrow hugs the real rendered PNG bounds; JS supplies left/top. */
+.enemy-target-mark,
+.enemy-unit.enemy-size-small .enemy-target-mark{
+  position:absolute!important;
+  right:auto!important;
+  bottom:auto!important;
+  padding:0!important;
+  margin:0!important;
+  width:auto!important;
+  height:auto!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:#f7fbff!important;
+  font-size:8px!important;
+  line-height:1!important;
+  text-shadow:0 1px 2px #000,0 0 3px #000!important;
+  transform:translateX(-50%)!important;
+}
+
+@media(max-height:720px){
+  .story-party-line,.story-scene.story-layout-party-left .story-party-line{bottom:11%!important;height:26%!important}
+  .story-guest.story-guest-player{bottom:11%!important}
+  .story-guest.story-guest-enemy{bottom:40%!important}
+  .story-guest.story-guest-enemy.story-enemy-winged{bottom:42%!important}
+  .story-guest-group{bottom:41%!important;height:25%!important}
+}
