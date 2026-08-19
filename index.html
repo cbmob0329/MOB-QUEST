@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=49">
+  <link rel="stylesheet" href="css/style.css?v=50">
 </head>
 <body>
 <main id="app">
@@ -64,18 +64,15 @@
           <button data-tavern-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>酒場を出る</small></button>
         </div>
       </section>
-      <div id="tavernPartyPanel" hidden>
-        <section class="panel">
-          <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・SUB 4/4</span></div>
-          <div id="tavernSlots" class="tavern-slots"></div>
-        </section>
-        <section class="panel">
-          <div class="section-title"><div><small>MEMBERS</small><h2>仲間一覧</h2></div><span class="pill">Lv変更可</span></div>
-          <div id="rosterGrid" class="roster-grid"></div>
-        </section>
+    </div>
+    <div id="tavernPartyPopup" class="facility-popup" hidden>
+      <div id="tavernPartyPanel" class="facility-popup-card tavern-party-popup-card">
+        <div class="settings-head"><div><small>PARTY FORMATION</small><h2>パーティー編成</h2></div><button id="tavernPartyCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="party-popup-summary"><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・SUB 4/4</span><p id="tavernPartyGuide">入れ替えたいメンバーを1人タップしてください</p></div>
+        <div id="tavernSlots" class="tavern-slots tavern-simple-slots"></div>
+        <button id="savePartyBtn" class="primary-btn tavern-party-confirm" type="button">この編成に決定</button>
       </div>
     </div>
-    <button id="savePartyBtn" class="floating-primary safe-floating" type="button" hidden>この編成に決定</button>
     <div id="tavernDrinkPopup" class="facility-popup" hidden>
       <div class="facility-popup-card">
         <div class="settings-head"><div><small>DRINK SHOP</small><h2>ドリンク購入</h2></div><button id="tavernDrinkCloseBtn" class="sheet-close" type="button">×</button></div>
@@ -129,7 +126,10 @@
     <div class="bg-overlay interior-overlay"></div>
     <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1 id="trainingPageTitle">トレーニング</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button" hidden>ランダム</button></header>
     <div class="page-scroll training-scroll nav-spacer">
-      <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせてメニューを選ぼう！</p></div></div>
+      <div class="training-host-row">
+        <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせてメニューを選ぼう！</p></div></div>
+        <button id="trainingHomeQuick" class="training-home-quick" type="button" aria-label="HOME"><img src="mqicon/06.png" alt="HOME"><b>HOME</b></button>
+      </div>
       <div id="trainingModeCarousel" class="training-mode-carousel training-main-grid" aria-label="トレーニングメニュー"></div>
       <div id="trainingTestPanel" hidden>
         <section class="panel">
@@ -146,9 +146,14 @@
           <div id="bossGrid" class="boss-grid enemy-catalog-grid"></div>
         </section>
       </div>
-      <div id="trainingFeaturePanel" hidden></div>
     </div>
-    <div id="trainingStickyAction" class="sticky-action safe-bottom-action glass"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
+    <div id="trainingFeaturePopup" class="facility-popup" hidden>
+      <div class="facility-popup-card training-feature-popup-card">
+        <div class="settings-head"><div><small>TRAINING MENU</small><h2 id="trainingFeaturePopupTitle">トレーニング</h2></div><button id="trainingFeatureCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div id="trainingFeaturePanel"></div>
+      </div>
+    </div>
+    <div id="trainingStickyAction" class="sticky-action safe-bottom-action glass" hidden style="display:none"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
   </section>
 
   <!-- TRAINING QUEST -->
@@ -308,7 +313,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=49" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=50" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -316,7 +321,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=49"></script>
-<script src="js/game.js?v=49"></script>
+<script src="js/data.js?v=50"></script>
+<script src="js/game.js?v=50"></script>
 </body>
 </html>
