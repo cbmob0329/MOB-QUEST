@@ -1,21 +1,32 @@
-MOB QUEST v41
-2026-08-18 追加要素版
+MOB QUEST v44
 
-・戦闘コマンドを8枠化：攻撃 / 魔法 / 特技 / 必殺技 / 防御 / アイテム / 入れ替え / 逃げる
-・特技コマンド基盤追加（正式な技名・消費・威力が未設定のため現在は武器種別の仮特技）
-・トレーニングを横スクロールメニュー化
-  テスト戦闘 / 冒険日記 / 経験値ターンテーブル / ゴールドターンテーブル / ボスターンテーブル
-・冒険日記：クリア済みエリア、イベント/セリフなし、探索あり、中ボスあり、AREA4は通常敵4体
-・経験値/ゴールドターンテーブル：4AREA、1AREA1戦、指定レコード消費、指定背景/特殊スライム
-・ボスターンテーブル：撃破済みボス/中ボスから編成、難易度選択、ボスレコード消費、コンテニュー3枚
-・酒場ドリンクショップ追加、進行度で品揃え解放
-・キャンプで所持ドリンクセットを使用可能
-・探索で経験値/ゴールド/ボスレコードを5%/6%/4%抽選
-・通常冒険の中ボス撃破40%、AREA4ボス撃破100%でランダムなレコード1枚
-・レコード36/37/38を持ち物へ追加
+武器システム追加版
 
-未確定のため仮/保留：
-・特技の正式データ（現在は仮特技）
-・ターンテーブル特殊敵の獲得EXP/COIN絶対値（現行報酬式への倍率で仮設定）
-・ボスターンテーブル限定アイテム本体
-・モブネオンコットンジュースセット(item/29.png)の「HP全回復」以外の未記載効果
+・wepon/01.png～wepon/88.png を武器カタログへ登録
+・性能/価格が確定している01～13を初期武器ショップへ追加
+・MAIN武器 / SUB武器 / MEDAL×3 を実装
+・SUB武器はステータス50%、特性100%
+・MEDALは元武器ステータス10%、特性100%
+・同じ武器3個（未装備分）を鍛冶屋でメダル1個へ変換
+・キャラクターごとの装備可能武器種を反映
+・MAIN武器の武器種/属性を通常攻撃エフェクトへ反映
+・01～13の武器特性を戦闘へ反映
+・キャンプ → パーティー → 装備 からも変更可能
+・14～88は指示書に性能/価格がないため、名称/武器種/属性/画像のみ先行登録。未定値は作成していません。
+
+注意:
+フォルダ名は指示書どおり wepon/ を使用します。
+
+
+v43: 正しい武器指示書を反映。SEASON 1～5 / 01～88の価格・能力・特性を登録。初期ショップはSEASON 1のみ。テストモードでは全武器購入可。
+
+
+[v44]
+- Player base stats lowered for equipment/future growth headroom. Lv99 strong targets: HP/MP 1200, ATK/SPD 600, DEF 550, MAG 580, MND 570; weak stats roughly 120 lower. Lv120 strong: HP/MP 1500, other stats about +100.
+- RES is displayed as MND.
+- DQ10 initial-job EXP-to-level table used through Lv120.
+- DQ10-like battle EXP/G pacing; field G remains modest, dedicated Gold quests are the main money source.
+- Metal slime family: HP 4/8/25, metal body (non-critical damage = 1), EXP 1206/12060/48240.
+- Mid-boss: 1-2 actions. Boss: 2-3 actions. Reappearing normal versions: 1 action.
+- Mid-boss/boss HP curves increased.
+- Attribute relation table finalized from uploaded rules; Fire/Water rules preserved and remaining elements completed consistently.

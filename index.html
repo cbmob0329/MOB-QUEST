@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=41">
+  <link rel="stylesheet" href="css/style.css?v=44">
 </head>
 <body>
 <main id="app">
@@ -72,6 +72,23 @@
       </section>
     </div>
     <button id="savePartyBtn" class="floating-primary safe-floating" type="button">この編成に決定</button>
+    <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
+  </section>
+
+  <!-- EQUIPMENT / WEAPON SHOP / BLACKSMITH -->
+  <section id="equipmentScreen" class="screen interior-screen equipment-screen">
+    <img class="screen-bg bg-cover bg-interior" src="back2/001.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay"></div>
+    <header class="page-header safe-top glass"><button id="equipmentBackBtn" class="back-btn" type="button">←</button><div><span>EQUIPMENT</span><h1>装備</h1></div><span id="equipmentCoin" class="pill">0 G</span></header>
+    <div class="page-scroll nav-spacer equipment-scroll">
+      <div class="equipment-tabs glass">
+        <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
+        <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
+        <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
+        <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
+      </div>
+      <div id="equipmentContent"></div>
+    </div>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
 
@@ -242,10 +259,18 @@
     </div>
   </div>
 
+  <!-- WEAPON PICKER -->
+  <div id="weaponPickerOverlay" class="weapon-picker-overlay" hidden>
+    <div class="weapon-picker-card">
+      <div class="settings-head"><div><small>SELECT WEAPON</small><h2 id="weaponPickerTitle">武器を選択</h2></div><button id="weaponPickerCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="weaponPickerList" class="weapon-picker-list"></div>
+    </div>
+  </div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=40" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=44" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -253,7 +278,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=41"></script>
-<script src="js/game.js?v=41"></script>
+<script src="js/data.js?v=44"></script>
+<script src="js/game.js?v=44"></script>
 </body>
 </html>
