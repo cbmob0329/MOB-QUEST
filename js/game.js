@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=47;
+const GAME_ASSET_VERSION=49;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -141,9 +141,10 @@ function renderEquipment(){
     bindImages(root);$$('[data-buy-weapon]',root).forEach(b=>b.onclick=()=>buyWeapon(b.dataset.buyWeapon));return;
   }
   if(equipmentTab==='smith'){
-    const list=WEAPONS.filter(w=>weaponOwned(w.id)>0);
-    root.innerHTML=`<section class="panel"><div class="section-title"><div><small>BLACKSMITH</small><h2>鍛冶屋・メダル化</h2></div><span class="pill">武器3個 → メダル1個</span></div><p class="panel-note">装備中ではない同じ武器を3個消費します。メダルは武器ステータスの10%と武器特性を引き継ぎます。</p><div class="weapon-list">${list.length?list.map(w=>weaponCardMarkup(w,{smith:true})).join(''):'<div class="camp-empty-note">武器を所持していません。</div>'}</div></section>`;
-    bindImages(root);$$('[data-forge-medal]',root).forEach(b=>b.onclick=()=>forgeWeaponMedal(b.dataset.forgeMedal));return;
+    const list=WEAPONS.filter(w=>freeWeaponCount(w.id)>=3);
+    root.innerHTML=`<section class="panel smith-host-panel"><div class="facility-host-card smith-host"><img src="play/002.png" alt="モブゴンゾー"><div><small>BLACKSMITH</small><h2>モブゴンゾー</h2><p>今日はどうする？</p></div></div><div class="smith-action-grid"><button data-smith-action="forge" type="button"><b>メダル錬成</b><small>武器3個 → メダル1個</small></button><button data-smith-action="equip" type="button"><b>メダル装備・入れ替え</b><small>装備画面で3枠を編集</small></button><button data-smith-action="home" type="button"><b>HOME</b><small>鍛冶屋を出る</small></button></div></section><section class="panel" id="smithForgeList"><div class="section-title"><div><small>MEDAL FORGE</small><h2>どの武器をメダルにするんだ？</h2></div><span class="pill">3個消費</span></div><div class="weapon-list">${list.length?list.map(w=>weaponCardMarkup(w,{smith:true})).join(''):'<div class="camp-empty-note">と、思ったが<br>メダルに出来る武器が無いようだ</div>'}</div></section>`;
+    bindImages(root);$$('[data-forge-medal]',root).forEach(b=>b.onclick=()=>forgeWeaponMedal(b.dataset.forgeMedal));
+    $$('[data-smith-action]',root).forEach(b=>b.onclick=()=>{const a=b.dataset.smithAction;if(a==='forge')$('#smithForgeList')?.scrollIntoView({behavior:'smooth',block:'start'});else if(a==='equip'){equipmentTab='equip';renderEquipment();}else if(a==='home')leaveBlacksmith();});return;
   }
   if(equipmentTab==='catalog'){
     root.innerHTML=`<section class="panel"><div class="section-title"><div><small>WEAPON CATALOG</small><h2>登録武器</h2></div><span class="pill">${WEAPONS.length}種</span></div><p class="panel-note">正しい武器指示書のSEASON 1～5、01～88を全登録しています。MAINは100%、SUBはステータス50%、MEDALはステータス10%・特性100%です。</p><div class="weapon-catalog-grid">${WEAPONS.map(w=>`<div class="weapon-catalog-card ready"><img src="${w.image}" alt="${w.name}" loading="lazy" decoding="async"><b>${w.id}. ${w.name}</b><small>SEASON ${w.season} / ${w.type} / ${w.attribute}</small><em>${weaponStatsText(w)} / ${w.price.toLocaleString()}G</em><p>${weaponTraitText(w)}</p></div>`).join('')}</div></section>`;bindImages(root);return;
@@ -163,7 +164,15 @@ function renderEquipment(){
   $$('[data-equip-slot]',root).forEach(b=>b.onclick=()=>openWeaponPicker(p.id,b.dataset.equipSlot,Number(b.dataset.equipIndex||0),()=>renderEquipment()));
 }
 async function buyWeapon(id){const w=weaponById(id);if(!w?.price)return;if(state.coins<w.price)return toast('ゴールドが足りません');const a=await dialog(`${w.name}を購入しますか？\n${w.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'WEAPON SHOP');if(a!=='yes')return;state.coins-=w.price;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();renderEquipment();}
-async function forgeWeaponMedal(id){const w=weaponById(id);if(!w)return;if(freeWeaponCount(id)<3)return toast('未装備の同じ武器が3個必要です');const a=await dialog(`${w.name}を3個消費してメダルを1個作りますか？`,[['作る','yes','primary'],['やめる','no']],'BLACKSMITH');if(a!=='yes')return;state.meta.weapons[id]=weaponOwned(id)-3;addMedal(id,1);saveMeta();renderEquipment();toast(`${w.name}メダルを作成しました`);}
+async function runSmithHammerFx(){const fx=$('#smithHammerFx');if(!fx){await fixedDelay(3000);return;}fx.hidden=false;await fixedDelay(3000);fx.hidden=true;}
+async function forgeWeaponMedal(id){
+  const w=weaponById(id);if(!w)return;
+  if(freeWeaponCount(id)<3){await dialog('と、思ったが\nメダルに出来る武器が無いようだ',[['戻る','back','primary']],'モブゴンゾー','play/002.png');return renderEquipment();}
+  const a=await dialog(`${w.name}\nこの武器でいいのか？`,[['はい','yes','primary'],['いいえ','no']],'モブゴンゾー','play/002.png');if(a!=='yes')return renderEquipment();
+  toast('よし来た！');await runSmithHammerFx();
+  state.meta.weapons[id]=Math.max(0,weaponOwned(id)-3);addMedal(id,1);saveMeta();
+  await dialog(`よし！出来たぞ！\n「${w.name}メダルを手に入れた！」`,[['OK','ok','primary']],'モブゴンゾー','play/002.png');renderEquipment();
+}
 function openWeaponPicker(pid,kind,index=0,onDone=null){
   pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid),overlay=$('#weaponPickerOverlay'),list=$('#weaponPickerList');weaponPickerContext={pid,kind,index,onDone};
   $('#weaponPickerTitle').textContent=`${p.name} / ${weaponEquipSlotName(kind,index)}`;
@@ -185,13 +194,13 @@ function addItem(id,n=1){if(!state.meta.inventory)state.meta.inventory={};state.
 function consumeItem(id,n=1){if(itemCount(id)<n)return false;state.meta.inventory[id]=itemCount(id)-n;saveMeta();return true;}
 function tentCount(){return Math.max(0,Number(state.meta?.inventory?.['mob-tent'])||0);}
 
-const screens={home:$('#homeScreen'),loading:$('#loadingScreen'),tavern:$('#tavernScreen'),equipment:$('#equipmentScreen'),training:$('#trainingScreen'),quest:$('#questScreen'),adventure:$('#adventureScreen'),battle:$('#battleScreen')};
+const screens={home:$('#homeScreen'),loading:$('#loadingScreen'),tavern:$('#tavernScreen'),castle:$('#castleScreen'),equipment:$('#equipmentScreen'),training:$('#trainingScreen'),quest:$('#questScreen'),adventure:$('#adventureScreen'),battle:$('#battleScreen')};
 const defaultParty=[['yusha',5],['pink',5]];
 const initialMeta=loadMeta();
 const initialCoins=Number(initialMeta.coins);
 const state={
   party:loadParty(), coins:Number.isFinite(initialCoins)?initialCoins:12500, meta:initialMeta,
-  training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'test'},
+  training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu'},
   quest:null,
   adventure:loadAdventure(),
   battle:null, speed:1, tavernSwapIndex:null,
@@ -347,8 +356,9 @@ async function ensureDomImageReady(img,src,timeout=650){
 function pageAssets(target){
   const party=state.party.map(([id])=>player(id)).filter(Boolean);
   const common=['icon/01.png',versionedPlay('play/02.png'),'mqicon/06.png','mqicon/09.png','mqicon/10.png','mqicon/12.png'];
-  if(target==='tavern')return [...common,'back2/001.png',...party.map(p=>versionedPlay(p.image))];
-  if(target==='training'){const first=state.training.enemySlots?.find(Boolean);return ['back2/002.png',trainingEnemyTemplate(first?.id)?.image];}
+  if(target==='tavern')return [...common,'back2/001.png',versionedPlay('play/001.png'),'icon/11.png','icon/13.png',...party.map(p=>versionedPlay(p.image))];
+  if(target==='castle')return [...common,'back/rpgmain.png',versionedPlay('play/002.png'),versionedPlay('play/004.png'),versionedPlay('play/005.png')];
+  if(target==='training'){const first=state.training.enemySlots?.find(Boolean);return ['back2/002.png',versionedPlay('play/003.png'),'icon/14.png','icon/15.png','icon/16.png','icon/17.png','mqicon/06.png',trainingEnemyTemplate(first?.id)?.image];}
   if(target==='adventure'){const w=currentWorld(),area=currentArea();return [...common,area?.bg,w?.fieldFallback,'mqicon/14.png','mqicon/15.png','mqicon/16.png',...party.slice(0,6).map(p=>versionedPlay(p.image))];}
   return common;
 }
@@ -399,12 +409,28 @@ async function loadingWithAssets(text,assets){
 }
 
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
-function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.nav==='home'){goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
+function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
 
-async function dialog(text,choices=[['OK','ok']],speaker='モブピンク'){
-  const overlay=$('#dialogOverlay');$('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
+async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter');
+  $('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;
+  if(img){setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
+  $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
   return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;resolve(btn.dataset.dialogValue);});});
 }
+function facilityFlag(key){try{return localStorage.getItem(`mobQuestFacilitySeen:${key}`)==='1';}catch(_){return false;}}
+function markFacilityFlag(key){try{localStorage.setItem(`mobQuestFacilitySeen:${key}`,'1');}catch(_){}}
+async function facilityIntro(key,{speaker,image,first='',repeat=''}){
+  const seen=facilityFlag(key),text=seen?repeat:first;
+  if(text)await dialog(text,[['OK','ok','primary']],speaker,image);
+  if(!seen)markFacilityFlag(key);
+}
+async function showFacilityExit(image,text,theme='blue'){
+  const wrap=$('#facilityExitBanner'),img=$('#facilityExitImage'),label=$('#facilityExitText');if(!wrap)return;
+  setImage(img,versionedPlay(image),'');label.textContent=text;wrap.className=`facility-exit-banner theme-${theme}`;wrap.hidden=false;await fixedDelay(1050);wrap.hidden=true;
+}
+let tavernView='menu';
+let equipmentFacilityOrigin='';
 async function travelTo(target,text,after){
   if(target==='training'){
     /* v21: a short critical preload only; the setup screen becomes interactive immediately afterwards. */
@@ -457,19 +483,41 @@ function consumeDrink(id,n=1){if(drinkCount(id)<n)return false;state.meta.drinkS
 function renderTavernDrinkShop(){
   const root=$('#tavernDrinkShop');if(!root)return;const unlocked=unlockedDrinkIds();$('#drinkShopCoin').textContent=`${state.coins.toLocaleString()} G`;
   root.innerHTML=DRINK_SETS.filter(d=>unlocked.has(d.id)).map(d=>`<button class="drink-shop-item ${drinkCount(d.id)>0?'owned':''}" data-buy-drink="${d.id}" type="button"><img src="${d.image}" alt="${d.name}"><div><b>${d.name}</b><small>${d.desc}</small><em>${d.price.toLocaleString()}G / 所持 ${drinkCount(d.id)}</em></div></button>`).join('');
-  bindImages(root);$$('[data-buy-drink]',root).forEach(b=>b.onclick=async()=>{const d=DRINK_SETS.find(x=>x.id===b.dataset.buyDrink);if(!d)return;if(state.coins<d.price)return toast('ゴールドが足りません');const ans=await dialog(`${d.name}を購入しますか？\n${d.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'DRINK SHOP');if(ans!=='yes')return;state.coins-=d.price;state.meta.coins=state.coins;addDrink(d.id,1);saveMeta();renderTavernDrinkShop();});
+  bindImages(root);$$('[data-buy-drink]',root).forEach(b=>b.onclick=async()=>{const d=DRINK_SETS.find(x=>x.id===b.dataset.buyDrink);if(!d)return;if(state.coins<d.price)return toast('ゴールドが足りません');const ans=await dialog(`${d.name}を購入しますか？\n${d.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'モブイルカエル','play/001.png');if(ans!=='yes')return;state.coins-=d.price;state.meta.coins=state.coins;addDrink(d.id,1);saveMeta();renderTavernDrinkShop();});
 }
 function renderTavern(){
+  const landing=$('#tavernLanding'),partyPanel=$('#tavernPartyPanel'),save=$('#savePartyBtn'),reset=$('#tavernResetBtn');
+  if(landing)landing.hidden=tavernView!=='menu';
+  if(partyPanel)partyPanel.hidden=tavernView!=='party';
+  if(save)save.hidden=tavernView!=='party';
+  if(reset)reset.hidden=tavernView!=='party';
   const levels=new Map(state.party.map(([id,lv])=>[id,lv]));
   const m=Math.min(4,state.party.length),s=Math.max(0,Math.min(2,state.party.length-4)),r=Math.max(0,state.party.length-6);
-  $('#tavernPartyCount').textContent=`MAIN ${m}/4・SUPER ${s}/2・控え ${r}/4`;
-  $('#tavernSlots').innerHTML=Array.from({length:10},(_,i)=>{const slot=state.party[i],z=zoneForIndex(i);const prefix=`<div class="formation-zone-label ${i===0?'first':''} ${i===4?'super-start':''} ${i===6?'reserve-start':''}"><b>${z.key}</b><span>${z.label} ${z.n}</span></div>`;if(!slot)return`${prefix}<div class="tavern-slot empty ${z.cls}"><b>EMPTY</b><small>${z.label}を選択</small></div>`;const p=player(slot[0]);const selected=state.tavernSwapIndex===i;return`${prefix}<div class="tavern-slot ${z.cls} ${selected?'swap-selected':''}"><span><img src="${versionedPlay(p.image)}" alt="${p.name}" loading="lazy" decoding="async"><i>${p.symbol}</i></span><div><b>${p.name}</b><small>${p.attribute} / ${p.role}</small></div><label>Lv<input class="tavern-level" data-id="${p.id}" type="number" min="1" max="${playerLevelCap()}" inputmode="numeric" value="${slot[1]}"></label><div class="slot-actions"><button data-swap-slot="${i}" type="button">↕</button><button data-remove-member="${p.id}" type="button">×</button></div></div>`;}).join('');
-  $('#rosterGrid').innerHTML=MOB_DATA.players.map(p=>rosterCard(p,state.party.some(x=>x[0]===p.id),levels.get(p.id)||5)).join('');renderTavernDrinkShop();bindImages($('#tavernScreen'));
+  $('#tavernPartyCount').textContent=`MAIN ${m}/4・SUPER ${s}/2・SUB ${r}/4`;
+  $('#tavernSlots').innerHTML=Array.from({length:10},(_,i)=>{
+    const slot=state.party[i],z=zoneForIndex(i),start=i===0||i===4||i===6;
+    const groupClass=i<4?'main':i<6?'super':'sub';
+    const groupName=i<4?'メインパーティー':i<6?'スーパーサブ':'サブパーティー';
+    const prefix=start?`<div class="formation-zone-label formation-banner ${groupClass}"><b>${groupName}</b><span>${i<4?'戦闘開始メンバー':i<6?'自動支援メンバー':'待機・交代メンバー'}</span></div>`:'';
+    if(!slot)return`${prefix}<div class="tavern-slot empty ${z.cls}"><b>EMPTY</b><small>${z.label}を選択</small></div>`;
+    const p=player(slot[0]),selected=state.tavernSwapIndex===i;
+    return`${prefix}<div class="tavern-slot ${z.cls} ${selected?'swap-selected':''}"><span><img src="${versionedPlay(p.image)}" alt="${p.name}" loading="lazy" decoding="async"><i>${p.symbol}</i></span><div><b>${p.name}</b><small>${p.attribute} / ${p.role}</small></div><label>Lv<input class="tavern-level" data-id="${p.id}" type="number" min="1" max="${playerLevelCap()}" inputmode="numeric" value="${slot[1]}"></label><div class="slot-actions"><button data-swap-slot="${i}" type="button">↕</button><button data-remove-member="${p.id}" type="button">×</button></div></div>`;
+  }).join('');
+  $('#rosterGrid').innerHTML=MOB_DATA.players.map(p=>rosterCard(p,state.party.some(x=>x[0]===p.id),levels.get(p.id)||5)).join('');
+  renderTavernDrinkShop();bindImages($('#tavernScreen'));
   $$('.tavern-level').forEach(i=>i.onchange=()=>{const x=state.party.find(v=>v[0]===i.dataset.id);if(x)x[1]=clamp(Number(i.value)||1,1,playerLevelCap());});
   $$('[data-remove-member]').forEach(b=>b.onclick=()=>{if(state.party.length<=1)return toast('最低1人は必要です');state.party=state.party.filter(x=>x[0]!==b.dataset.removeMember);state.tavernSwapIndex=null;renderTavern();});
   $$('[data-swap-slot]').forEach(b=>b.onclick=()=>{const idx=Number(b.dataset.swapSlot);if(state.tavernSwapIndex===null){state.tavernSwapIndex=idx;toast('入れ替えるもう1人を選んでください');return renderTavern();}if(state.tavernSwapIndex===idx){state.tavernSwapIndex=null;return renderTavern();}const a=state.tavernSwapIndex;if(state.party[a]&&state.party[idx])[state.party[a],state.party[idx]]=[state.party[idx],state.party[a]];state.tavernSwapIndex=null;renderTavern();});
-  $$('[data-roster-id]').forEach(b=>b.onclick=()=>{const id=b.dataset.rosterId;const idx=state.party.findIndex(x=>x[0]===id);if(idx>=0){if(state.party.length<=1)return toast('最低1人は必要です');state.party.splice(idx,1);}else{if(state.party.length>=10)return toast('MAIN4＋SUPER2＋控え4で最大10人です');state.party.push([id,5]);}state.tavernSwapIndex=null;renderTavern();});
+  $$('[data-roster-id]').forEach(b=>b.onclick=()=>{const id=b.dataset.rosterId,idx=state.party.findIndex(x=>x[0]===id);if(idx>=0){if(state.party.length<=1)return toast('最低1人は必要です');state.party.splice(idx,1);}else{if(state.party.length>=10)return toast('MAIN4＋SUPER2＋SUB4で最大10人です');state.party.push([id,5]);}state.tavernSwapIndex=null;renderTavern();});
 }
+function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#tavernDrinkPopup').hidden=true;renderTavern();}
+function showTavernParty(){tavernView='party';renderTavern();}
+function showTavernDrinks(){renderTavernDrinkShop();$('#tavernDrinkPopup').hidden=false;}
+async function enterTavern(){
+  tavernView='menu';renderTavern();
+  await facilityIntro('tavern',{speaker:'モブイルカエル',image:'play/001.png',first:'いらっしゃい♪\nここは酒場です\nパーティー編成や\nドリンクの購入が出来ます\nドリンクは\nキャンプで飲むことで\n様々な効果を得ることが出来ます',repeat:'いらっしゃいませ♪\nゆっくりしていってくださいね！'});
+}
+async function leaveTavern(){await showFacilityExit('play/001.png','また来てくださいね♪','pink');await goHome();}
 
 const TRAINING_MODES=[
   {id:'test',name:'テスト戦闘',icon:'mqicon/04.png',desc:'自由設定'},
@@ -490,8 +538,40 @@ const BOSS_DIFFICULTIES={
   veryhard:{id:'veryhard',name:'ベリーハード',cost:1,recommended:65,itemRate:.40},
   inferno:{id:'inferno',name:'インフェルノ',cost:1,recommended:90,itemRate:.60}
 };
-function setTrainingMode(mode){if(!TRAINING_MODES.some(x=>x.id===mode))mode='test';state.training.mode=mode;renderTraining();requestAnimationFrame(()=>{$(`[data-training-mode="${mode}"]`)?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});});}
-function renderTrainingModeCarousel(){const root=$('#trainingModeCarousel');if(!root)return;const mode=state.training.mode||'test';root.innerHTML=TRAINING_MODES.map(m=>`<button class="training-mode-card ${m.id===mode?'active':''}" data-training-mode="${m.id}" type="button"><img src="${m.icon}" alt="${m.name}"><b>${m.name}</b><small>${m.desc}</small></button>`).join('');bindImages(root);const cards=$$('[data-training-mode]',root);cards.forEach(b=>b.onclick=()=>setTrainingMode(b.dataset.trainingMode));let raf=0;root.onscroll=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{const rr=root.getBoundingClientRect(),cx=rr.left+rr.width/2;let best=null,dist=1e9;for(const c of cards){const r=c.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-cx);if(d<dist){dist=d;best=c;}}cards.forEach(c=>c.classList.toggle('active',c===best));});};}
+const TRAINING_GUIDE_TEXT={
+  journal:'ここでは一度クリアしたエリアを\n再探索出来るよ！\n経験値を積んだり\nアイテムを探そう！',
+  exp:'ここでは\n経験値レコードを消費して\n経験値エリアに入れるよ！\nたくさん経験を積もう！',
+  gold:'ここでは\nゴールドレコードを消費して\nゴールドエリアに入れるよ！\nコインをたくさん稼ごう！',
+  boss:'ここでは\nボスレコードを消費して\nボスエリアに入れるよ！\n強敵と戦って\nここでしか手に入らない\nレアアクセサリーを\n獲得しよう！'
+};
+async function showTrainingModeGuide(mode){
+  const text=TRAINING_GUIDE_TEXT[mode];if(!text||facilityFlag(`training:${mode}`))return;
+  await dialog(text,[['OK','ok','primary']],'モブコーチ','play/003.png');markFacilityFlag(`training:${mode}`);
+}
+async function setTrainingMode(mode){
+  if(mode==='home')return leaveTraining();
+  if(mode==='test'&&!state.test?.enabled)return;
+  if(mode!=='menu'&&!TRAINING_MODES.some(x=>x.id===mode))mode='menu';
+  state.training.mode=mode;renderTraining();
+  if(['journal','exp','gold','boss'].includes(mode))await showTrainingModeGuide(mode);
+}
+function renderTrainingModeCarousel(){
+  const root=$('#trainingModeCarousel');if(!root)return;
+  const mode=state.training.mode||'menu';
+  const base=TRAINING_MODES.filter(m=>m.id!=='test');
+  const cards=[...base];if(state.test?.enabled)cards.push(TRAINING_MODES.find(m=>m.id==='test'));
+  cards.push({id:'home',name:'HOME',icon:'mqicon/06.png',desc:'トレーニングを出る'});
+  root.innerHTML=cards.filter(Boolean).map(m=>`<button class="training-mode-card ${m.id===mode?'active':''} ${m.id==='home'?'home-card':''} ${m.id==='test'?'test-card':''}" data-training-mode="${m.id}" type="button"><img src="${m.icon}" alt="${m.name}"><b>${m.name}</b><small>${m.desc}</small></button>`).join('');
+  bindImages(root);$$('[data-training-mode]',root).forEach(b=>b.onclick=()=>setTrainingMode(b.dataset.trainingMode));
+}
+async function enterTraining(){
+  state.training.mode='menu';renderTraining();
+  if(!facilityFlag('training')){
+    await dialog('よく来たね！\nここでは一度クリアしたエリアを\n再探索したり\nレコードを使って\n経験値やコインを\n稼ぐことが出来るよ！\n難しいことは何も無いから\nとにかくレッツトレーニングだ！',[['OK','ok','primary']],'モブコーチ','play/003.png');
+    markFacilityFlag('training');
+  }
+}
+async function leaveTraining(){await showFacilityExit('play/003.png','毎日来てね！レッツトレーニング！','blue');await goHome();}
 function clearedJournalWorlds(){const worlds=MOB_DATA.adventureWorlds||[];return worlds.filter((w,i)=>state.adventure.completed||(Number(state.adventure.worldIndex)||0)>i);}
 function recordCountForMode(mode){return itemCount(mode==='exp'?'36':mode==='gold'?'37':'38');}
 function renderTrainingFeature(mode){
@@ -542,7 +622,7 @@ async function questCamp(){const q=state.quest;if(!q||q.campUsed)return;const ha
 async function startQuestBattle(){const q=state.quest;if(!q||q.finished||q.type==='journal'&&!q.battleReady)return;const configs=currentQuestConfigs();if(!configs.length)return toast('出現可能な敵がいません');const bg=questBackground();await startBattleLoaded({mode:'quest',returnScreen:'quest',enemyConfigs:configs,party:state.party,questVitals:q.vitals,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:q.type==='boss'||configs.some(x=>trainingEnemyTemplate(x.id)?.category==='boss'),questType:q.type,questArea:q.areaIndex,questDifficulty:q.difficulty||'',adventureLabel:questTitleText()});}
 function persistQuestVitals(){const q=state.quest,b=state.battle;if(!q||!b)return;q.vitals={};b.allies.forEach(a=>{q.vitals[a.id]={hp:Math.max(0,a.hp),mp:Math.max(0,a.mpNow),dead:!!a.dead,status:clone(a.status||{})};});}
 function advanceQuestAfterWin(){const q=state.quest;if(!q)return;if(q.type==='journal'){q.battleReady=false;q.explored=false;q.battleIndex++;if(q.battleIndex<3)return;q.battleIndex=0;}q.areaIndex++;q.campUsed=false;if(q.areaIndex>=4)q.finished=true;}
-function endQuestToTraining(){state.quest=null;setTrainingMode(state.training.mode||'test');showScreen('training');}
+function endQuestToTraining(){state.quest=null;setTrainingMode(state.training.mode||'menu');showScreen('training');}
 function ensureTrainingParty(){
   if(!Array.isArray(state.training.party))state.training.party=state.party.map(x=>[...x]);
   const src=state.training.party,seen=new Set();
@@ -559,11 +639,13 @@ function ensureTrainingEnemies(){
 function trainingEnemyList(){return ensureTrainingEnemies().filter(Boolean);}
 function enemyCategoryLabel(t){return t.category==='boss'?'BOSS':t.category==='elite'?'中ボス':'モンスター';}
 function renderTraining(){
+  if(state.training.mode==='test'&&!state.test?.enabled)state.training.mode='menu';
   renderTrainingModeCarousel();
-  const mode=state.training.mode||'test',isTest=mode==='test';
-  $('#trainingPageTitle').textContent=isTest?'テスト戦闘':(TRAINING_MODES.find(x=>x.id===mode)?.name||'トレーニング');
-  $('#trainingRandomBtn').style.display=isTest?'block':'none';
-  $('#trainingTestPanel').hidden=!isTest;$('#trainingFeaturePanel').hidden=isTest;$('#trainingStickyAction').hidden=!isTest;
+  const mode=state.training.mode||'menu',isTest=mode==='test',isFeature=['journal','exp','gold','boss'].includes(mode);
+  $('#trainingPageTitle').textContent=mode==='menu'?'トレーニング':isTest?'テスト戦闘':(TRAINING_MODES.find(x=>x.id===mode)?.name||'トレーニング');
+  $('#trainingRandomBtn').style.display=isTest&&state.test?.enabled?'block':'none';
+  $('#trainingTestPanel').hidden=!isTest;$('#trainingFeaturePanel').hidden=!isFeature;$('#trainingStickyAction').hidden=!isTest;
+  if(mode==='menu')return;
   if(!isTest){renderTrainingFeature(mode);return;}
   ensureTrainingParty();ensureTrainingEnemies();
   const setup=state.training.party;
@@ -746,11 +828,19 @@ function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
   holder.style.setProperty('height',`${sz.h}px`,'important');
 }
 
+function storyDisplayPartyIds(extraIds=null){
+  const visible=state.party.map(([id])=>canonicalPlayerId(id)).filter(Boolean).slice(0,6);
+  const extras=[...storySceneExtras,...(Array.isArray(extraIds)?extraIds:(extraIds?[extraIds]:[]))].map(canonicalPlayerId).filter(Boolean);
+  for(const id of extras){
+    if(visible.includes(id))continue;
+    if(visible.length<6)visible.push(id);
+    else visible[visible.length-1]=id;
+  }
+  return [...new Set(visible)];
+}
 async function renderStoryParty(extraIds=null){
   const root=$('#storyPartyLine');
-  const list=state.party.map(([id])=>storyActorInfo(id)).filter(x=>x?.image);
-  const extras=[...storySceneExtras,...(Array.isArray(extraIds)?extraIds:(extraIds?[extraIds]:[]))];
-  for(const id of extras){const info=storyActorInfo(id);if(info?.image&&!list.some(x=>x.key===info.key))list.push(info);}
+  const list=storyDisplayPartyIds(extraIds).map(id=>storyActorInfo(id)).filter(x=>x?.image);
   root.dataset.partyCount=String(list.length);
   root.innerHTML=list.map(p=>`<div class="story-party-actor" data-story-actor="${p.key}"><img data-story-party-img src="${p.image}" alt="${p.name}"><span hidden>${p.symbol||'仲'}</span></div>`).join('');
   bindImages(root);await sizeStoryPartyImages(root);
@@ -861,7 +951,12 @@ async function checkBattleHpDialogue(){
 
 function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.party.length?Math.round(state.party.reduce((s,x)=>s+(Number(x[1])||5),0)/state.party.length):5;state.party.push([id,clamp(avg,5,120)]);if(state.meta?.exp&&state.meta.exp[id]==null)state.meta.exp[id]=0;saveParty();saveMeta();state.training.party=state.party.map(x=>[...x]);}
 async function storyJoinStep(id,message){await storyHideGuest();storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
-async function storyTempActor(id){const p=player(id);if(!p)return;await renderStoryParty(id);}
+async function storyTempActor(id){
+  const p=player(id);if(!p)return;
+  const guest=$('#storyGuest');
+  if(guest?.dataset.storyActor===canonicalPlayerId(id))await storyHideGuest();
+  await renderStoryParty(id);
+}
 async function renderStoryPartyWithTemp(tempId){await renderStoryParty(tempId);}
 async function storyJoinKeepGuest(id,message){storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 
@@ -1409,6 +1504,16 @@ function enemyVisualTune(e){
   const name=e?.name||e?.enemyTemplate?.name||'';
   if(id==='boss-neon'||name==='モブネオンバルス')return{scale:1.28,y:0};
   if(id==='boss-guardian'||name==='モブガーディアン')return{scale:1.12,y:14};
+  if(['t-ohno','t-jukon','t-warrior','t-kiba'].includes(id))return{scale:1.16,y:6};
+  if(id==='boss-debuff'||name==='モブデーバフ')return{scale:1.08,y:10,z:24};
+  if(id==='boss-debuff2'||name==='モブデーバフ第二形態')return{scale:1.12,y:6,z:24};
+  if(id==='boss-berserk'||name==='モブバーサク')return{scale:1.16,y:2};
+  if(id==='boss-berserk2'||name==='モブバーサク第二形態')return{scale:1.20,y:0};
+  if(id==='n2-kodora'||name==='モブネオコドラ')return{scale:.92,y:8};
+  if(id==='boss-neomaster'||name==='モブネオマスター')return{scale:1.42,y:-2};
+  if(id==='m2-buster'||name==='モブマグバスター'||name==='モブマグマスター')return{scale:1.42,y:0};
+  if(id==='boss-dragon2'||name==='モブドラゴンⅡ')return{scale:1.22,y:0};
+  if(id==='boss-gidora'||name==='モブギドラ')return{scale:1.34,y:-2};
   return{scale:1,y:0};
 }
 function battleEnemyNaturalScale(root,kind,e=null){
@@ -1417,7 +1522,7 @@ function battleEnemyNaturalScale(root,kind,e=null){
 }
 function applyEnemyVisualSizes(root=$('#enemyArea')){
   if(!root)return;
-  $$('[data-enemy-target]',root).forEach(unit=>{
+  $('[data-enemy-target]',root).forEach(unit=>{
     const img=$('.enemy-sprite',unit);if(!img)return;
     const place=()=>{
       if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
@@ -1428,7 +1533,9 @@ function applyEnemyVisualSizes(root=$('#enemyArea')){
       const maxH=(fr.height||root.clientHeight)*({small:.31,normal:.38,elite:.42,rock:.45,golem:.48,boss:.74,dragon:.79,frezard:.84}[kind]||.38);
       const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,battleEnemyNaturalScale(root,kind,enemy),maxW,maxH);
       img.style.setProperty('width',`${sz.w}px`,'important');img.style.setProperty('height',`${sz.h}px`,'important');
-      if(tune.y&&wrap)wrap.style.setProperty('transform',`translateY(${tune.y}px)`,'important');
+      if(wrap)wrap.style.setProperty('transform',`translateY(${tune.y||0}px)`,'important');
+      if(Number.isFinite(tune.z))unit.style.setProperty('z-index',String(tune.z),'important');
+      else unit.style.removeProperty('z-index');
       requestAnimationFrame(()=>positionEnemyTargetMarks(root));
     };
     place();if(!img.complete)img.addEventListener('load',place,{once:true});
@@ -1456,8 +1563,9 @@ function enemyMarkup(e){
   return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${enemyIsWinged(e)?'enemy-winged':''} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div class="enemy-name-row"><b style="font-size:${nameSize}px!important">${e.name}</b><small>Lv${e.level}</small>${tags.length?`<span class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</span>`:''}</div><div class="enemy-hp-row"><span>${dead?'DOWN':'HP'}</span><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><b>${Math.ceil(e.hp).toLocaleString()}/${e.maxHp.toLocaleString()}</b></div></div></button>`;
 }
 function statusText(a){return Object.entries(a.status).filter(([,v])=>v>0).map(([k])=>({poison:'毒',burn:'炎',sleep:'眠',stun:'怯',paralyze:'麻'}[k])).join(' ');}
-function allyMarkup(a){const st=statusText(a);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-gauges"><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div><div class="gauge tiny"><i class="mp" style="width:${pct(a.mpNow,a.maxMp)}%"></i></div></div></button>`;}
-function superMarkup(a){const next=Math.max(0,a.nextSupportTurn-state.battle.turn);return`<div class="super-chip ${a.dead?'dead':''}" data-ally-id="${a.id}"><span><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}`}</small></div><em>${a.dead?'—':next===0?'READY':`+${next}T`}</em></div>`;}
+function allyHpTone(a){const r=a.maxHp>0?a.hp/a.maxHp:0;return r<=.30?'danger':r<=.60?'warning':'safe';}
+function allyMarkup(a){const st=statusText(a),hpPct=pct(a.hp,a.maxHp),mpPct=pct(a.mpNow,a.maxMp);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span>MP ${Math.floor(a.mpNow)}/${a.maxMp}</span></div><div class="ally-hp-bar ${allyHpTone(a)}"><i style="width:${hpPct}%"></i></div><div class="ally-mp-bar"><i style="width:${mpPct}%"></i></div></button>`;}
+function superMarkup(a){const next=Math.max(0,a.nextSupportTurn-state.battle.turn);return`<div class="super-chip ${a.dead?'dead':''}" data-ally-id="${a.id}"><span><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}`}</small><div class="super-hp-bar ${allyHpTone(a)}"><i style="width:${pct(a.hp,a.maxHp)}%"></i></div></div><em>${a.dead?'—':next===0?'READY':`+${next}T`}</em></div>`;}
 function benchMarkup(a){return`<div class="bench-chip ${a.dead?'dead':''}" data-ally-id="${a.id}"><span><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / MP ${Math.floor(a.mpNow)}`}</small><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div></div></div>`;}
 function renderBattle(){
   const b=state.battle;if(!b)return;targetEnemy();$('#battleTurnLabel').textContent='';const enemies=b.enemies||[];const area=$('#enemyArea');area.className=`enemy-area enemy-count-${Math.max(1,enemies.length)}`;area.innerHTML=enemies.map(enemyMarkup).join('');
@@ -2032,7 +2140,25 @@ function advanceAdventureAfterWin(){
 }
 const DQ10_EXP_TO_NEXT=[7,15,26,40,59,87,128,184,264,370,512,691,920,1200,1540,1946,2423,2975,3609,4324,5127,6012,6985,8036,9165,10364,11629,12961,14359,15826,17362,18969,20650,22404,24232,26136,28118,30180,32319,34541,36844,39231,41704,44262,46907,49641,52464,55381,58387,61488,67917,71537,75271,79117,83073,87137,91308,95585,99971,104464,109062,113764,118569,123479,128492,133606,138820,144133,149547,155060,160688,166466,172442,178667,185192,192068,199346,199346,199346,199346,199346,199346,199346,199346,249346,299346,349346,399346,449346,599346,749346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,997720,1036094,1074468,1112842,1151216,1189590,1227964,1266338,1304712,1343086];
 function expToNext(level){level=clamp(Number(level)||1,1,120);return level>=120?Infinity:DQ10_EXP_TO_NEXT[level-1];}
-function enemyReward(e){const lv=Math.max(1,Number(e.level)||1),cat=e.category||'normal';let exp,coin;if(Number.isFinite(Number(e.rewardExp)))exp=Math.max(0,Math.round(Number(e.rewardExp)));else{const next=expToNext(Math.min(lv,119)),rate=cat==='boss'?1.25:cat==='elite'?.45:.08;exp=Math.max(1,Math.round(next*rate*(Number(e.rewardExpScale)||1)));}if(Number.isFinite(Number(e.rewardCoin)))coin=Math.max(0,Math.round(Number(e.rewardCoin)));else if(Number.isFinite(Number(e.rewardCoinBase)))coin=Math.max(0,Math.round(Number(e.rewardCoinBase)+(Number(e.rewardCoinPerLevel)||0)*lv));else{const base=cat==='boss'?(20+lv*6):cat==='elite'?(8+lv*2.4):(2+lv*.70);coin=Math.max(1,Math.round(base*(Number(e.rewardCoinScale)||1)));}coin+=Number(e.coinReward)||0;return{exp,coin};}
+function enemyReward(e){
+  const lv=Math.max(1,Number(e.level)||1),cat=e.category||'normal';
+  let exp,coin;
+  if(Number.isFinite(Number(e.rewardExp)))exp=Math.max(0,Math.round(Number(e.rewardExp)));
+  else{
+    const next=expToNext(Math.min(lv,119));
+    const baseRate=cat==='boss'?0.48:cat==='elite'?0.18:0.03;
+    const rate=baseRate*(Number(e.rewardExpScale)||1);
+    exp=Math.max(1,Math.round(next*rate));
+  }
+  if(Number.isFinite(Number(e.rewardCoin)))coin=Math.max(0,Math.round(Number(e.rewardCoin)));
+  else if(Number.isFinite(Number(e.rewardCoinBase)))coin=Math.max(0,Math.round(Number(e.rewardCoinBase)+(Number(e.rewardCoinPerLevel)||0)*lv));
+  else{
+    const base=cat==='boss'?(20+lv*6):cat==='elite'?(8+lv*2.4):(2+lv*.70);
+    coin=Math.max(1,Math.round(base*(Number(e.rewardCoinScale)||1)));
+  }
+  coin+=Number(e.coinReward)||0;
+  return{exp,coin};
+}
 function calcBattleRewards(b){let exp=0,coin=0;for(const e of b?.defeatedEnemies||[]){const r=enemyReward(e);exp+=r.exp;coin+=r.coin;}return{exp,coin};}
 function learnedBetween(p,oldLv,newLv){const out=[],req=[1,15,30,50];for(let i=0;i<Math.min(4,p.ults?.length||0);i++)if(oldLv<req[i]&&newLv>=req[i])out.push(p.ults[i].name);return out;}
 function applyProgressRewards(b,vitalsObj=null,buff=null){let reward=calcBattleRewards(b);if(buff?.exp)reward.exp=Math.round(reward.exp*(1+buff.exp));if(buff?.gold)reward.coin=Math.round(reward.coin*(1+buff.gold));const weaponGold=Math.max(0,...(b?.allies||[]).map(a=>weaponGoldBonus(a)));if(weaponGold>0)reward.coin=Math.round(reward.coin*(1+weaponGold));const changes=[];state.coins+=reward.coin;state.meta.coins=state.coins;if(!state.meta.exp)state.meta.exp={};const cap=playerLevelCap();for(const slot of state.party){const id=slot[0],p=player(id);if(!p)continue;const startLv=slot[1],oldStats=baseStats(p,startLv);let lv=startLv,xp=Math.max(0,Number(state.meta.exp[id])||0)+reward.exp;while(lv<cap&&xp>=expToNext(lv)){xp-=expToNext(lv);lv++;}state.meta.exp[id]=xp;if(lv>startLv){slot[1]=lv;const ns=baseStats(p,lv),learned=learnedBetween(p,startLv,lv);changes.push({id,name:p.name,image:p.image,oldLevel:startLv,newLevel:lv,stats:{HP:ns.maxHp-oldStats.maxHp,MP:ns.maxMp-oldStats.maxMp,ATK:ns.atk-oldStats.atk,MAG:ns.mag-oldStats.mag,DEF:ns.def-oldStats.def,MND:ns.res-oldStats.res,SPD:ns.spd-oldStats.spd},learned});const v=vitalsObj?.[id];if(v&&!v.dead){v.hp=Math.min(ns.maxHp,Math.max(0,Number(v.hp)||0)+(ns.maxHp-oldStats.maxHp));v.mp=Math.min(ns.maxMp,Math.max(0,Number(v.mp)||0)+(ns.maxMp-oldStats.maxMp));}}}saveParty();saveMeta();return{...reward,changes};}
@@ -2146,14 +2272,30 @@ async function deleteAllGameData(){
   try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('mobQuest')&&key!=='mobQuestTestSettingsV1')localStorage.removeItem(key);}}catch(_){}
   location.reload();
 }
+function renderCastle(){bindImages($('#castleScreen'));}
+async function enterCastle(){renderCastle();}
+async function openBlacksmithFacility(){
+  await facilityIntro('smith',{speaker:'モブゴンゾー',image:'play/002.png',first:'ん？なんだ？\n冷やかしなら帰ってくれ！\nえ？違う？\nなんだ最初からそう言えよ！\nここでは武器を3つ持ってくることで\nメダルを作ってやるぞ！\nメダルは武器に装着できて\n武器能力の10％と\n武器特性を引き継げるぞ！\nメダルは3つまでしか\n装備出来ないから\nじっくり選ぶんだ！\n心配しなくても\n取り替えは無料だ！',repeat:'よく来たな！\nいい武器手に入れたか？'});
+  equipmentFacilityOrigin='smith';equipmentTab='smith';equipmentPlayerId=state.party[0]?.[0]||'yusha';renderEquipment();showScreen('equipment');
+}
+async function leaveBlacksmith(){await showFacilityExit('play/002.png','また来てくれよな！','redblack');equipmentFacilityOrigin='';await goHome();}
+async function openMagicFacility(){
+  await dialog('魔法錬成は現在準備中です。',[['戻る','back','primary']],'モブローブ','play/004.png');
+  await showFacilityExit('play/004.png','いつでもお待ちしています！','purple');showScreen('castle');
+}
+async function openMobShopFacility(){
+  await facilityIntro('mobshop',{speaker:'モブリュック',image:'play/005.png',first:'いーらっしゃいませー！\nモブショップへようこそ！\nアイテムいっぱい見て行ってくださいね！',repeat:'いーらっしゃいませー！'});
+  await dialog('商品メニューは現在準備中です。',[['戻る','back','primary']],'モブリュック','play/005.png');
+  await showFacilityExit('play/005.png','お気をつけて！','blue');showScreen('castle');
+}
 function openHomeAction(action){
   if(action==='home')return toast('ここがHOMEです');
   if(action==='equipment')return openEquipmentScreen();
   if(action==='items')return toast('持ち物は仕様待ちです');
   if(action==='settings')return openSettings();
-  if(action==='castle')return dialog('お城に向かいますか？\nMOB SHOPや宿舎は、まだ詳細仕様待ちです。',[['はい','yes'],['いいえ','no']]).then(v=>{if(v==='yes')toast('お城内部は次の実装対象です');});
-  if(action==='tavern')return dialog('酒場に向かいますか？\nパーティー編成が出来ます！',[['はい','yes','primary'],['いいえ','no']]).then(v=>{if(v==='yes')travelTo('tavern','酒場へ向かっています…',renderTavern);});
-  if(action==='training')return dialog('トレーニングに向かいますか？\n敵を1～4体、種類・人数・Lvまで自由に設定して戦えます！',[['はい','yes','primary'],['いいえ','no']]).then(v=>{if(v==='yes')travelTo('training','トレーニングルームへ向かっています…',renderTraining);});
+  if(action==='castle')return dialog('お城に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('castle','お城へ向かっています…',renderCastle);await enterCastle();}});
+  if(action==='tavern')return dialog('酒場に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('tavern','酒場へ向かっています…',renderTavern);await enterTavern();}});
+  if(action==='training')return dialog('トレーニングに向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('training','トレーニングルームへ向かっています…',renderTraining);await enterTraining();}});
   if(action==='adventure'){const w=currentWorld();return dialog(`冒険に向かいますか？\n現在の目的地は「${w?.name||'草原'}」です！`,[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}});}
 }
 function randomTraining(){
@@ -2167,18 +2309,19 @@ function lockMobileGestures(){const editable=el=>['INPUT','SELECT','TEXTAREA'].i
 function bindEvents(){
   const storyScene=$('#storyScene');if(storyScene){storyScene.addEventListener('pointerup',handleStoryTapAdvance,{passive:false});storyScene.addEventListener('contextmenu',e=>e.preventDefault());}
   $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{goHome();});
-  $('#equipmentBackBtn').onclick=()=>goHome();$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});
-  $('#tavernResetBtn').onclick=()=>{state.party=defaultParty.map(x=>[...x]);state.tavernSwapIndex=null;renderTavern();};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');await goHome();};
-  $('#trainingBackBtn').onclick=()=>{goHome();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
+  $('#castleBackBtn').onclick=()=>goHome();$$('[data-castle-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.castleMenu;if(a==='smith')openBlacksmithFacility();else if(a==='magic')openMagicFacility();else if(a==='shop')openMobShopFacility();else goHome();});
+  $('#equipmentBackBtn').onclick=()=>{if(equipmentFacilityOrigin==='smith')leaveBlacksmith();else goHome();};$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});
+  $('#tavernBackBtn').onclick=()=>{if(tavernView!=='menu')showTavernMenu();else leaveTavern();};$('#tavernResetBtn').onclick=()=>{state.party=defaultParty.map(x=>[...x]);state.tavernSwapIndex=null;renderTavern();};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else leaveTavern();});
+  $('#trainingBackBtn').onclick=()=>{if((state.training.mode||'menu')!=='menu'){state.training.mode='menu';renderTraining();}else leaveTraining();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
   $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=startAdventureBattle;
-  $('#questBackBtn').onclick=async()=>{if(!state.quest)return setTrainingMode(state.training.mode||'test');const a=await dialog('クエストを中断してトレーニングへ戻りますか？',[['はい','yes','primary'],['いいえ','no']],'QUEST');if(a==='yes')endQuestToTraining();};$('#questExploreBtn').onclick=questExplore;$('#questCampBtn').onclick=questCamp;$('#questBattleBtn').onclick=startQuestBattle;
+  $('#questBackBtn').onclick=async()=>{if(!state.quest)return setTrainingMode(state.training.mode||'menu');const a=await dialog('クエストを中断してトレーニングへ戻りますか？',[['はい','yes','primary'],['いいえ','no']],'QUEST');if(a==='yes')endQuestToTraining();};$('#questExploreBtn').onclick=questExplore;$('#questCampBtn').onclick=questCamp;$('#questBattleBtn').onclick=startQuestBattle;
   $('#battleBackBtn').onclick=()=>{if(!state.battle||state.battle.mode!=='training')return;state.battle.auto=false;renderTraining();showScreen('training');};
   $('#campCloseBtn').onclick=closeCamp;$$('[data-camp-action]').forEach(b=>b.onclick=()=>{const a=b.dataset.campAction;if(a==='tent')useCampTent();else if(a==='chair')useCampChair();else if(a==='party')renderCampPartyMenu();else renderCampDrinks();});
   $('#attackBtn').onclick=()=>act('attack');$('#skillBtn').onclick=()=>openSkillMenu('magic');$('#specialBtn').onclick=()=>openSkillMenu('special');$('#ultimateBtn').onclick=()=>openSkillMenu('ultimate');$('#defendBtn').onclick=()=>act('defend');$('#itemBtn').onclick=openItemMenu;$('#escapeBtn').onclick=escapeAttempt;$('#switchBtn').onclick=openSwitchMenu;$$('[data-close-sheet]').forEach(b=>b.onclick=()=>{$('#skillMenu').hidden=true;});
   $('#autoBtn').onclick=()=>{const b=state.battle;if(!b||b.finished)return;b.auto=!b.auto;$('#autoBtn').classList.toggle('active',b.auto);$('#autoBtn').textContent=b.auto?'AUTO ON':'AUTO';if(b.auto&&!b.busy&&activeAlly())autoAct();};$('#speedBtn').onclick=()=>{const speeds=state.test?.enabled?[1,1.5,2,5]:[1,1.5,2];let i=speeds.indexOf(state.speed);if(i<0)i=0;state.speed=speeds[(i+1)%speeds.length];$('#speedBtn').textContent=`×${state.speed}`;};
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(b.config?.explorationAmbush){if(b.resultWin)completeExplorationUnlock();else{renderAdventure();showScreen('adventure');}return;}if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');return;}if(b.mode==='quest'){if(!b.resultWin){if(state.quest?.type==='boss'&&(state.test?.enabled||itemCount('38')>=3)){const a=await dialog('ボスレコードを3枚消費してコンテニューしますか？',[['はい','yes','primary'],['いいえ','no']],'CONTINUE');if(a==='yes'&&(state.test?.enabled||consumeItem('38',3))){state.quest.vitals=freshQuestVitals();renderQuestScreen();showScreen('quest');return;}}endQuestToTraining();return;}if(state.quest?.finished){toast('4 AREA CLEAR！');endQuestToTraining();return;}renderQuestScreen();showScreen('quest');return;}renderTraining();showScreen('training');};
   $('#settingsCloseBtn').onclick=closeSettings;
-  $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;}saveTestSettings();renderSettings();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
+  $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;if(state.training.mode==='test')state.training.mode='menu';}saveTestSettings();renderSettings();if(screens.training.classList.contains('active'))renderTraining();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
   $('#testFastToggle').onclick=()=>{if(!state.test.enabled)return;state.test.fast5=!state.test.fast5;saveTestSettings();renderSettings();toast(state.test.fast5?'戦闘速度 ×5 をON':'戦闘速度 ×5 をOFF');};
   $('#applyTestLevelBtn').onclick=()=>{if(!state.test.enabled)return;const lv=clamp(Number($('#testLevelInput').value)||5,1,120);state.party=state.party.map(([id])=>[id,lv]);state.adventure.vitals=null;saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);renderSettings();toast(`現在のパーティーをLv${lv}に設定しました / HP・MP全回復`);};
   $('#testItemsMaxBtn').onclick=grantTestItemsMax;

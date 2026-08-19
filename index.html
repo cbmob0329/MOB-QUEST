@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=47">
+  <link rel="stylesheet" href="css/style.css?v=49">
 </head>
 <body>
 <main id="app">
@@ -51,27 +51,58 @@
   </section>
 
   <!-- TAVERN -->
-  <section id="tavernScreen" class="screen interior-screen">
+  <section id="tavernScreen" class="screen interior-screen facility-screen">
     <img class="screen-bg bg-cover bg-interior" src="back2/001.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay interior-overlay"></div>
-    <header class="page-header safe-top glass"><button class="back-btn" data-back-home type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button">初期編成</button></header>
+    <header class="page-header safe-top glass"><button id="tavernBackBtn" class="back-btn" type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button" hidden>初期編成</button></header>
     <div class="page-scroll nav-spacer">
-      <section class="panel tavern-intro"><img src="play/02.png" alt=""><div><b>パーティー編成</b><p>メイン4人＋スーパーサブ2人＋控え4人を編成できます。スーパーサブは2～5ターンごとに自動行動します。</p></div></section>
-      <section class="panel">
-        <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・控え 4/4</span></div>
-        <div id="tavernSlots" class="tavern-slots"></div>
+      <section id="tavernLanding" class="facility-landing">
+        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>パーティー編成とキャンプ用ドリンクの酒場です。</p></div></div>
+        <div class="facility-menu-grid tavern-menu-grid">
+          <button data-tavern-menu="party" type="button"><img src="icon/11.png" alt=""><b>パーティー編成</b><small>仲間と隊列を編成</small></button>
+          <button data-tavern-menu="drink" type="button"><img src="icon/13.png" alt=""><b>ドリンク購入</b><small>キャンプ用ドリンク</small></button>
+          <button data-tavern-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>酒場を出る</small></button>
+        </div>
       </section>
-      <section class="panel">
-        <div class="section-title"><div><small>MEMBERS</small><h2>仲間一覧</h2></div><span class="pill">Lv変更可</span></div>
-        <div id="rosterGrid" class="roster-grid"></div>
-      </section>
-      <section class="panel">
-        <div class="section-title"><div><small>DRINK SHOP</small><h2>キャンプ用ドリンク</h2></div><span id="drinkShopCoin" class="pill">0 G</span></div>
-        <p class="panel-note">購入したドリンクセットは冒険中のキャンプで使用します。ストーリー進行で品揃えが増えます。</p>
+      <div id="tavernPartyPanel" hidden>
+        <section class="panel">
+          <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・SUB 4/4</span></div>
+          <div id="tavernSlots" class="tavern-slots"></div>
+        </section>
+        <section class="panel">
+          <div class="section-title"><div><small>MEMBERS</small><h2>仲間一覧</h2></div><span class="pill">Lv変更可</span></div>
+          <div id="rosterGrid" class="roster-grid"></div>
+        </section>
+      </div>
+    </div>
+    <button id="savePartyBtn" class="floating-primary safe-floating" type="button" hidden>この編成に決定</button>
+    <div id="tavernDrinkPopup" class="facility-popup" hidden>
+      <div class="facility-popup-card">
+        <div class="settings-head"><div><small>DRINK SHOP</small><h2>ドリンク購入</h2></div><button id="tavernDrinkCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="section-title"><div><small>CAMP DRINK</small><h2>キャンプ用ドリンク</h2></div><span id="drinkShopCoin" class="pill">0 G</span></div>
+        <p class="panel-note">購入したドリンクセットは冒険中のキャンプで使用します。</p>
         <div id="tavernDrinkShop" class="drink-shop-grid"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
+  </section>
+
+  <!-- CASTLE -->
+  <section id="castleScreen" class="screen interior-screen facility-screen">
+    <img class="screen-bg bg-cover bg-interior" src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay"></div>
+    <header class="page-header safe-top glass"><button id="castleBackBtn" class="back-btn" type="button">←</button><div><span>CASTLE</span><h1>お城</h1></div><span class="pill">FACILITIES</span></header>
+    <div class="page-scroll nav-spacer">
+      <section class="facility-landing">
+        <div class="castle-title-card"><small>CASTLE FACILITIES</small><h2>城内施設</h2><p>担当キャラクターの施設を選んでください。</p></div>
+        <div class="facility-menu-grid castle-menu-grid">
+          <button data-castle-menu="smith" type="button"><img src="play/002.png" alt="モブゴンゾー"><b>鍛冶屋</b><small>モブゴンゾー</small></button>
+          <button data-castle-menu="magic" type="button"><img src="play/004.png" alt="モブローブ"><b>魔法錬成</b><small>モブローブ</small></button>
+          <button data-castle-menu="shop" type="button"><img src="play/005.png" alt="モブリュック"><b>モブショップ</b><small>モブリュック</small></button>
+          <button data-castle-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>お城を出る</small></button>
+        </div>
       </section>
     </div>
-    <button id="savePartyBtn" class="floating-primary safe-floating" type="button">この編成に決定</button>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
 
@@ -93,13 +124,14 @@
   </section>
 
   <!-- TRAINING -->
-  <section id="trainingScreen" class="screen interior-screen">
+  <section id="trainingScreen" class="screen interior-screen facility-screen">
     <img class="screen-bg bg-cover bg-interior" src="back2/002.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay interior-overlay"></div>
-    <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1 id="trainingPageTitle">トレーニング</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button">ランダム</button></header>
+    <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1 id="trainingPageTitle">トレーニング</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button" hidden>ランダム</button></header>
     <div class="page-scroll training-scroll nav-spacer">
-      <div id="trainingModeCarousel" class="training-mode-carousel" aria-label="トレーニングメニュー"></div>
-      <div id="trainingTestPanel">
+      <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせてメニューを選ぼう！</p></div></div>
+      <div id="trainingModeCarousel" class="training-mode-carousel training-main-grid" aria-label="トレーニングメニュー"></div>
+      <div id="trainingTestPanel" hidden>
         <section class="panel">
           <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋SUPER2人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
           <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
@@ -261,6 +293,8 @@
     </div>
   </div>
 
+  <div id="smithHammerFx" class="smith-hammer-fx" hidden><div><b>カンカン！</b><b>カンカン！</b><b>カンカン！</b></div></div>
+
   <!-- WEAPON PICKER -->
   <div id="weaponPickerOverlay" class="weapon-picker-overlay" hidden>
     <div class="weapon-picker-card">
@@ -269,10 +303,12 @@
     </div>
   </div>
 
+  <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=47" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=49" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -280,7 +316,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=47"></script>
-<script src="js/game.js?v=47"></script>
+<script src="js/data.js?v=49"></script>
+<script src="js/game.js?v=49"></script>
 </body>
 </html>

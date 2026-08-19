@@ -1776,3 +1776,100 @@
 .story-energy-orb{position:absolute;z-index:94;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#f6f1b3;box-shadow:0 0 10px rgba(246,241,179,.85),0 0 22px rgba(255,255,255,.45);pointer-events:none;transform:translate(0,0) scale(1);opacity:.95;transition:transform 1.18s cubic-bezier(.22,.72,.3,1),opacity 1.18s ease}
 .story-energy-orb.move{transform:translate(var(--orb-x),var(--orb-y)) scale(.65);opacity:.42}
 .story-party-actor.story-faded-out{opacity:0!important;transition:opacity .55s ease!important}
+
+/* ===== MOB QUEST v49 facilities / training hub / readable HUD ===== */
+.facility-screen .page-scroll{padding-top:12px}
+.facility-landing{display:grid;gap:12px}
+.facility-host-card,.castle-title-card{position:relative;z-index:3;display:grid;grid-template-columns:92px 1fr;align-items:center;gap:12px;padding:11px 13px;border-radius:20px;background:rgba(250,241,218,.94);border:2px solid rgba(75,58,39,.35);box-shadow:0 8px 20px rgba(0,0,0,.28);color:#2d251d}
+.facility-host-card>img{width:92px;height:104px;object-fit:contain;object-position:center bottom}
+.facility-host-card small,.castle-title-card small{display:block;font-size:8px;font-weight:1000;letter-spacing:.14em;color:#806849}
+.facility-host-card h2,.castle-title-card h2{margin:2px 0 4px;font-size:18px;line-height:1.1}
+.facility-host-card p,.castle-title-card p{margin:0;font-size:10px;line-height:1.55;color:#5e4c39;font-weight:800}
+.castle-title-card{grid-template-columns:1fr;padding:16px}
+.castle-title-card h2{font-size:22px}
+.facility-menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.facility-menu-grid>button{min-height:146px;padding:9px 7px 11px;border-radius:20px;background:linear-gradient(180deg,rgba(27,43,62,.96),rgba(13,23,35,.97));border:1px solid rgba(255,255,255,.18);box-shadow:0 8px 18px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center}
+.facility-menu-grid>button:active{transform:translateY(1px)}
+.facility-menu-grid>button img{width:92px;height:84px;object-fit:contain}
+.facility-menu-grid>button b{font-size:13px;line-height:1.25}
+.facility-menu-grid>button small{font-size:8px;line-height:1.35;color:#aebdce}
+.tavern-menu-grid>button{min-height:165px}
+.tavern-menu-grid>button img{width:104px;height:98px}
+.tavern-menu-grid>button:last-child{grid-column:1/-1;min-height:120px;display:grid;grid-template-columns:100px 1fr;grid-template-rows:auto auto;column-gap:8px;text-align:left}
+.tavern-menu-grid>button:last-child img{grid-row:1/3;width:92px;height:86px}
+.facility-popup{position:absolute;z-index:84;inset:0;background:rgba(3,7,12,.76);display:flex;align-items:flex-end;padding-bottom:calc(60px + var(--safe-bottom))}
+.facility-popup[hidden]{display:none!important}
+.facility-popup-card{width:100%;max-height:79%;overflow-y:auto;padding:13px 11px 18px;border-radius:24px 24px 0 0;background:#101a27;border-top:1px solid var(--line);box-shadow:0 -18px 40px rgba(0,0,0,.42);touch-action:pan-y}
+
+/* Tavern party bands: beige banner + requested red / green / blue grouping. */
+.formation-banner{grid-column:1/-1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:34px!important;padding:6px 10px!important;border-radius:10px!important;background:#eadfc7!important;border:1px solid #7e6b51!important;color:#2d251c!important;margin:5px 0 1px!important}
+.formation-banner b{font-size:11px!important}.formation-banner span{font-size:7px!important;color:#6e5b45!important}
+.formation-banner.main{border-left:7px solid #b8413e!important}.formation-banner.super{border-left:7px solid #4d9c61!important}.formation-banner.sub{border-left:7px solid #3978b8!important}
+.tavern-slot.main-slot{border-left:4px solid #b8413e!important;background:rgba(74,31,34,.72)!important}
+.tavern-slot.super-slot{border-left:4px solid #4d9c61!important;background:rgba(31,72,48,.72)!important}
+.tavern-slot.reserve-slot{border-left:4px solid #3978b8!important;background:rgba(29,53,82,.76)!important}
+
+/* Training landing: four main systems + HOME, plus test only while test mode is enabled. */
+.training-main-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important;overflow:visible!important;padding:4px 0 13px!important;scroll-snap-type:none!important}
+.training-main-grid .training-mode-card{min-height:158px!important;min-width:0!important;flex:none!important;transform:none!important;padding:10px 7px 12px!important;border-radius:20px!important;background:rgba(14,25,38,.95)!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.training-main-grid .training-mode-card.active{transform:none!important;background:rgba(45,72,99,.98)!important;border-color:#8bc8ef!important;box-shadow:0 0 0 2px rgba(111,190,235,.22),0 8px 18px rgba(0,0,0,.30)!important}
+.training-main-grid .training-mode-card img{width:96px!important;height:91px!important;object-fit:contain!important}
+.training-main-grid .training-mode-card b{font-size:12px!important;line-height:1.25!important}
+.training-main-grid .training-mode-card small{font-size:8px!important;line-height:1.4!important;color:#bdc9d7!important}
+.training-main-grid .training-mode-card.home-card{grid-column:1/-1;min-height:112px!important;display:grid!important;grid-template-columns:105px 1fr!important;grid-template-rows:auto auto!important;column-gap:8px!important;text-align:left!important}
+.training-main-grid .training-mode-card.home-card img{grid-row:1/3;width:95px!important;height:84px!important}
+.training-main-grid .training-mode-card.test-card{border-color:#d4b86b!important;background:rgba(55,48,31,.95)!important}
+
+/* Recommended levels / record costs were too small. */
+.training-feature-card{padding:14px!important;border-radius:18px!important}
+.training-feature-card .feature-head{grid-template-columns:78px 1fr!important;gap:11px!important}
+.training-feature-card img{width:78px!important;height:78px!important}
+.training-feature-card h3{font-size:16px!important;line-height:1.2!important}
+.training-feature-card p{font-size:12px!important;line-height:1.45!important;color:#e3e9ef!important;font-weight:900!important;margin:6px 0!important}
+.training-feature-card .feature-meta{gap:7px!important;margin-top:9px!important}
+.training-feature-card .feature-meta span{padding:6px 9px!important;font-size:9px!important;font-weight:900!important}
+.training-feature-card button{height:44px!important;font-size:11px!important}
+.record-count-line span{font-size:9px!important;padding:6px 9px!important;font-weight:900!important}
+.training-feature-card+.training-feature-card{margin-top:2px}
+#trainingFeaturePanel .section-title h2{font-size:16px!important}
+#trainingFeaturePanel .section-title .pill{font-size:9px!important;min-height:30px!important;padding:0 10px!important}
+
+/* Battle party HP: prominent percentage-colored bar. */
+.ally-hud-card{padding-bottom:4px!important}
+.ally-hud-line{display:flex!important;justify-content:space-between!important;gap:2px!important;white-space:nowrap!important;font-size:5.4px!important;font-weight:900!important;color:#3e3327!important;line-height:1.05!important}
+.ally-hp-bar,.ally-mp-bar,.super-hp-bar{position:relative;width:100%;overflow:hidden;border-radius:999px;background:rgba(54,43,31,.20);border:1px solid rgba(54,43,31,.22)}
+.ally-hp-bar{height:7px;margin-top:3px}
+.ally-mp-bar{height:3px;margin-top:2px}
+.ally-hp-bar i,.ally-mp-bar i,.super-hp-bar i{display:block;height:100%;transition:width .25s ease}
+.ally-hp-bar.safe i,.super-hp-bar.safe i{background:#4cae64}
+.ally-hp-bar.warning i,.super-hp-bar.warning i{background:#e79335}
+.ally-hp-bar.danger i,.super-hp-bar.danger i{background:#d8463f}
+.ally-mp-bar i{background:#4c82c7}
+.super-hp-bar{height:4px;margin-top:2px}
+
+/* Blacksmith facility menu and forging animation. */
+.smith-host-panel{display:grid;gap:10px}
+.smith-action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.smith-action-grid button{min-height:64px;padding:8px;border-radius:13px;background:#1b2a3c;border:1px solid rgba(255,255,255,.12);text-align:left}
+.smith-action-grid button:last-child{grid-column:1/-1}
+.smith-action-grid b{display:block;font-size:10px}.smith-action-grid small{display:block;margin-top:3px;font-size:7px;color:#aeb8c5}
+.smith-hammer-fx{position:absolute;z-index:135;inset:0;background:rgba(4,6,9,.78);display:flex;align-items:center;justify-content:center;pointer-events:none}
+.smith-hammer-fx[hidden]{display:none!important}
+.smith-hammer-fx>div{display:flex;flex-direction:column;align-items:center;gap:8px}
+.smith-hammer-fx b{font-size:34px;color:#fff1c2;text-shadow:0 4px 0 #342413,0 0 14px rgba(255,203,92,.75);opacity:0;animation:smithKankan 1s ease-in-out infinite}
+.smith-hammer-fx b:nth-child(2){animation-delay:.22s}.smith-hammer-fx b:nth-child(3){animation-delay:.44s}
+@keyframes smithKankan{0%,100%{opacity:0;transform:scale(.72) rotate(-4deg)}25%,65%{opacity:1;transform:scale(1.08) rotate(2deg)}}
+
+/* Staff exit banner. */
+.facility-exit-banner{position:absolute;z-index:140;left:4%;right:4%;bottom:calc(84px + var(--safe-bottom));display:flex;align-items:center;justify-content:center;pointer-events:none}
+.facility-exit-banner[hidden]{display:none!important}
+.facility-exit-banner>div{width:100%;min-height:92px;border-radius:18px;border:2px solid rgba(255,255,255,.72);box-shadow:0 12px 30px rgba(0,0,0,.40);display:grid;grid-template-columns:90px 1fr;align-items:center;padding:5px 13px 5px 4px}
+.facility-exit-banner img{width:90px;height:96px;object-fit:contain;align-self:end}
+.facility-exit-banner b{font-size:15px;line-height:1.4;text-align:center;text-shadow:0 2px 2px rgba(0,0,0,.38)}
+.facility-exit-banner.theme-pink>div{background:#d45692}.facility-exit-banner.theme-blue>div{background:#5a9ecb}.facility-exit-banner.theme-purple>div{background:#8662b2}.facility-exit-banner.theme-redblack>div{background:linear-gradient(135deg,#9d302d,#15171c)}
+
+@media(max-width:390px){
+  .facility-menu-grid>button{min-height:136px}.facility-menu-grid>button img{width:82px;height:78px}
+  .training-main-grid .training-mode-card{min-height:146px!important}.training-main-grid .training-mode-card img{width:86px!important;height:82px!important}
+  .training-feature-card p{font-size:11px!important}
+}

@@ -389,3 +389,58 @@ const v45World=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
   const buster=enemyById('m2-buster');
   if(buster)buster.actionCount=2; // source: 確定2回攻撃
 }
+
+// ===== MOB QUEST v48 : story display / balance pass =====
+// Party roles are intentionally more distinct, late-game bosses get clearer identities,
+// and requested encounter-specific size / pacing adjustments are handled in game.js.
+TEMP_BALANCE.playerTargets={
+  yusha:{hp:[125,1180,1400],mp:[105,1140,1360],atk:[42,600,740],mag:[40,540,670],def:[40,520,650],res:[38,500,620],spd:[38,520,640]},
+  pink:{hp:[145,1220,1450],mp:[80,900,1100],atk:[33,430,520],mag:[24,290,360],def:[50,640,790],res:[46,600,740],spd:[24,320,390]},
+  desert:{hp:[112,1060,1260],mp:[85,960,1160],atk:[49,660,810],mag:[20,260,320],def:[34,430,520],res:[30,390,470],spd:[48,640,790]},
+  nyoro:{hp:[115,1080,1300],mp:[100,1180,1420],atk:[36,500,610],mag:[40,560,690],def:[32,410,500],res:[40,540,650],spd:[46,620,760]},
+  nekoku:{hp:[132,1240,1500],mp:[92,980,1180],atk:[44,590,720],mag:[24,320,400],def:[42,560,700],res:[34,450,560],spd:[32,420,520]},
+  jessie:{hp:[110,1040,1240],mp:[115,1250,1500],atk:[30,400,500],mag:[48,670,820],def:[28,370,450],res:[42,570,690],spd:[47,640,780]},
+  denden:{hp:[118,1100,1320],mp:[90,990,1180],atk:[47,650,800],mag:[28,360,450],def:[34,440,540],res:[30,390,480],spd:[50,680,840]},
+  money:{hp:[108,1020,1240],mp:[125,1340,1600],atk:[26,350,430],mag:[50,690,840],def:[30,400,490],res:[48,650,800],spd:[36,490,600]},
+  riro:{hp:[122,1150,1380],mp:[115,1230,1480],atk:[30,400,500],mag:[44,610,760],def:[36,470,580],res:[50,680,820],spd:[42,560,690]},
+  tetsu:{hp:[155,1320,1580],mp:[72,820,980],atk:[46,620,760],mag:[18,220,280],def:[56,720,880],res:[34,450,560],spd:[20,260,320]},
+  lilith:{hp:[105,980,1180],mp:[120,1300,1560],atk:[28,360,440],mag:[52,720,880],def:[28,360,440],res:[46,620,760],spd:[44,590,720]},
+  naraku:{hp:[135,1260,1520],mp:[110,1210,1460],atk:[52,700,860],mag:[46,640,790],def:[42,560,690],res:[42,560,690],spd:[34,450,550]}
+};
+
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const setEnemy=(id,props={})=>{
+    const e=enemyById(id);if(!e)return;
+    const {mods,...rest}=props;
+    if(mods)e.mods={...(e.mods||{}),...mods};
+    Object.assign(e,rest);
+  };
+
+  // 部族村：雑魚を少し手強くしつつ、役割を明確化。
+  setEnemy('t-ohno',{mods:{hp:1.14,atk:1.18,def:1.08}});
+  setEnemy('t-jukon',{mods:{hp:1.06,mag:1.22,res:1.16},normalAttackType:'magic'});
+  setEnemy('t-warrior',{mods:{hp:1.22,def:1.18,atk:1.08,spd:0.94}});
+  setEnemy('t-kiba',{mods:{hp:1.08,atk:1.12,spd:1.18}});
+  setEnemy('t-kukuri',{actionCount:2,mods:{atk:1.12,spd:1.22,def:0.96}});
+  setEnemy('t-tough',{mods:{hp:1.28,def:1.26,atk:1.08,spd:0.80}});
+  setEnemy('t-hisui',{actionCount:2,mods:{hp:1.08,mag:1.24,res:1.22,spd:1.06},normalAttackType:'magic'});
+  setEnemy('t-ryugo',{actionCount:2,mods:{hp:1.10,atk:1.24,spd:1.12}});
+  setEnemy('boss-debuff',{actionCount:2,mods:{hp:1.18,atk:1.02,def:1.28,res:1.20,spd:0.94}});
+  setEnemy('boss-berserk',{actionCount:2,mods:{hp:1.10,atk:1.30,def:0.94,res:0.94,spd:1.18}});
+  setEnemy('boss-debuff2',{actionCount:2,mods:{hp:1.24,atk:1.08,def:1.34,res:1.28,spd:0.96}});
+  setEnemy('boss-berserk2',{actionCount:2,mods:{hp:1.16,atk:1.38,def:0.98,res:0.96,spd:1.20}});
+
+  // ネオン街Ⅱ：中ボス/ボスの個性を強化。
+  setEnemy('n2-tiger',{actionCount:2,mods:{hp:1.14,atk:1.20,spd:1.12}});
+  setEnemy('n2-kodora',{mods:{hp:0.90,mag:1.22,res:1.08,spd:1.06},normalAttackType:'magic'});
+  setEnemy('n2-palette',{actionCount:2,mods:{hp:1.06,mag:1.24,res:1.18,spd:1.06},normalAttackType:'magic'});
+  setEnemy('boss-neomaster',{actionCount:2,mods:{hp:1.22,atk:0.98,mag:1.34,def:1.12,res:1.28,spd:1.06},normalAttackType:'magic'});
+
+  // マグマⅡ：後半らしく圧を強化。
+  setEnemy('m2-yogan',{actionCount:2,mods:{hp:1.08,mag:1.18,res:1.10}});
+  setEnemy('m2-salamander',{actionCount:2,mods:{hp:1.10,atk:1.18,mag:1.14,spd:1.06}});
+  setEnemy('m2-buster',{actionCount:2,mods:{hp:1.24,atk:1.30,def:1.12,res:1.04,spd:1.02}});
+  setEnemy('boss-dragon2',{actionCount:2,mods:{hp:1.18,atk:1.18,mag:1.22,def:1.10,res:1.12}});
+  setEnemy('boss-gidora',{actionCount:2,mods:{hp:1.30,atk:1.22,mag:1.30,def:1.14,res:1.16,spd:1.06}});
+}
