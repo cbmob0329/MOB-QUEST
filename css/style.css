@@ -2008,3 +2008,91 @@
 /* Exploration reward: slightly calmer and easier to read during the longer hold. */
 .explore-reward b,#questExploreResult b{font-size:13px!important;line-height:1.4!important}
 .explore-reward small,#questExploreResult small{font-size:9px!important}
+
+
+/* ===== MOB QUEST v52 battle-start / facility readability fixes ===== */
+/* Facility dialogue: source-script line remains one dialogue step. Keep short Japanese lines
+   physically on one line; only JS-balanced long lines use the intentional newline. */
+.dialog-overlay.facility-line-talk .dialog-card{
+  grid-template-columns:96px minmax(0,1fr)!important;
+  gap:9px!important;
+  padding:12px 12px!important;
+}
+.dialog-overlay.facility-line-talk .dialog-card>img{
+  width:96px!important;
+  height:142px!important;
+}
+.dialog-overlay.facility-line-talk .dialog-body{min-width:0!important;overflow:visible!important}
+.dialog-overlay.facility-line-talk .dialog-body>small{
+  font-size:13px!important;
+  color:#8fc7f1!important;
+}
+.dialog-overlay.facility-line-talk .dialog-body>p{
+  font-size:var(--facility-line-font,17px)!important;
+  line-height:1.42!important;
+  font-weight:1000!important;
+  white-space:pre!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  text-wrap:nowrap!important;
+  letter-spacing:0!important;
+  width:max-content!important;
+  max-width:100%!important;
+}
+.dialog-body>p{
+  text-wrap:pretty!important;
+  line-break:strict!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+}
+
+/* Drink shop: all text must remain legible on the wooden beige theme. */
+#tavernDrinkPopup .settings-head small,
+#tavernDrinkPopup .section-title small{
+  color:#744a28!important;
+  opacity:1!important;
+  font-weight:1000!important;
+}
+#tavernDrinkPopup .settings-head h2,
+#tavernDrinkPopup .section-title h2{
+  color:#2d2118!important;
+  text-shadow:none!important;
+}
+#tavernDrinkPopup .panel-note,
+#tavernDrinkPopup p,
+#tavernDrinkPopup .drink-shop-item small{
+  color:#5c432e!important;
+  opacity:1!important;
+  font-weight:800!important;
+}
+#tavernDrinkPopup .drink-shop-item b{
+  color:#2d2118!important;
+  font-weight:1000!important;
+  text-shadow:none!important;
+}
+#tavernDrinkPopup .drink-shop-item em{
+  color:#74401f!important;
+  font-weight:1000!important;
+  opacity:1!important;
+}
+#tavernDrinkPopup #drinkShopCoin,
+#tavernDrinkPopup .pill{
+  background:#67462d!important;
+  color:#fff7e8!important;
+  border-color:#96714b!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.35)!important;
+}
+#tavernDrinkPopup .sheet-close{
+  background:#5d432e!important;
+  color:#fff8ea!important;
+  border:1px solid #8d6a48!important;
+}
+#tavernDrinkPopup .drink-shop-item{
+  box-shadow:0 3px 8px rgba(80,50,24,.12)!important;
+}
+
+@media(max-width:390px){
+  .dialog-overlay.facility-line-talk .dialog-card{grid-template-columns:86px minmax(0,1fr)!important;gap:7px!important;padding:10px!important}
+  .dialog-overlay.facility-line-talk .dialog-card>img{width:86px!important;height:132px!important}
+  .dialog-overlay.facility-line-talk .dialog-body>p{font-size:min(var(--facility-line-font,16px),16px)!important}
+}

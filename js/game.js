@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=51;
+const GAME_ASSET_VERSION=52;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -230,12 +230,12 @@ function enemyTemplate(id){return MOB_DATA.enemyCatalog?.find(x=>x.id===id)||nul
 function legacyBossTemplate(b){return{id:`legacy-${b.id}`,bossId:b.id,name:b.name,stage:b.stage,category:'boss',attribute:b.attribute,image:b.image,symbol:b.symbol||'敵',levelMin:50,levelMax:50,special:b.special,kind:b.kind,power:b.power,hits:b.hits,skillType:b.skillType||'physical',normalAttackType:b.normalAttackType||'physical',bg:b.bg,fallbackBg:b.fallbackBg,trainingLegacy:true};}
 function trainingEnemyCatalog(){const base=[...(MOB_DATA.enemyCatalog||[])],seen=new Set(base.map(x=>x.bossId).filter(Boolean));for(const b of MOB_DATA.bosses||[])if(!seen.has(b.id))base.push(legacyBossTemplate(b));return base;}
 const SPECIAL_ENEMIES=[
-  {id:'sp-metal',name:'モブメタルスライム',stage:'経験値',category:'normal',attribute:'無',image:'spenemy/001.png',symbol:'経',levelMin:2,levelMax:52,escapeRate:.30,metalBody:true,fixedHp:4,rewardExp:1206,rewardCoin:14,actionCount:1,mods:{spd:1.35}},
-  {id:'sp-metal-coin',name:'モブメタルコインスライム',stage:'経験値',category:'normal',attribute:'無',image:'spenemy/002.png',symbol:'経',levelMin:12,levelMax:52,escapeRate:.40,metalBody:true,fixedHp:8,rewardExp:12060,rewardCoin:24,actionCount:1,mods:{spd:1.42}},
-  {id:'sp-metal-king',name:'モブキングメタルスライム',stage:'経験値',category:'elite',attribute:'無',image:'spenemy/003.png',symbol:'王',levelMin:26,levelMax:52,escapeRate:.20,metalBody:true,fixedHp:25,rewardExp:48240,rewardCoin:36,actionCount:1,mods:{spd:1.35}},
-  {id:'sp-gold',name:'モブゴールドスライム',stage:'ゴールド',category:'normal',attribute:'光',image:'spenemy/004.png',symbol:'G',levelMin:2,levelMax:52,rewardExpScale:.35,rewardCoinBase:900,rewardCoinPerLevel:26,actionCount:1,mods:{hp:.78,def:1.45,res:1.45,spd:1.25}},
-  {id:'sp-gold-coin',name:'モブゴールドコインスライム',stage:'ゴールド',category:'normal',attribute:'光',image:'spenemy/005.png',symbol:'G',levelMin:12,levelMax:52,rewardExpScale:.45,rewardCoinBase:2400,rewardCoinPerLevel:48,actionCount:1,mods:{hp:.84,def:1.55,res:1.55,spd:1.30}},
-  {id:'sp-gold-king',name:'モブキングゴールドスライム',stage:'ゴールド',category:'elite',attribute:'光',image:'spenemy/006.png',symbol:'王',levelMin:26,levelMax:52,rewardExpScale:.60,rewardCoinBase:6500,rewardCoinPerLevel:95,actionCount:1,mods:{hp:.72,def:1.7,res:1.7,spd:1.28}}
+  {id:'sp-metal',name:'モブメタルスライム',stage:'経験値',category:'normal',attribute:'無',image:'spenemy/001.png',symbol:'経',levelMin:2,levelMax:52,escapeRate:.30,metalBody:true,fixedHp:4,rewardExp:1206,rewardCoin:14,actionCount:1,normalAttackType:'physical',mods:{spd:1.35}},
+  {id:'sp-metal-coin',name:'モブメタルコインスライム',stage:'経験値',category:'normal',attribute:'無',image:'spenemy/002.png',symbol:'経',levelMin:12,levelMax:52,escapeRate:.40,metalBody:true,fixedHp:8,rewardExp:12060,rewardCoin:24,actionCount:1,normalAttackType:'physical',mods:{spd:1.42}},
+  {id:'sp-metal-king',name:'モブキングメタルスライム',stage:'経験値',category:'elite',attribute:'無',image:'spenemy/003.png',symbol:'王',levelMin:26,levelMax:52,escapeRate:.20,metalBody:true,fixedHp:25,rewardExp:48240,rewardCoin:36,actionCount:1,normalAttackType:'physical',mods:{spd:1.35}},
+  {id:'sp-gold',name:'モブゴールドスライム',stage:'ゴールド',category:'normal',attribute:'光',image:'spenemy/004.png',symbol:'G',levelMin:2,levelMax:52,rewardExpScale:.35,rewardCoinBase:900,rewardCoinPerLevel:26,actionCount:1,normalAttackType:'physical',mods:{hp:.78,def:1.45,res:1.45,spd:1.25}},
+  {id:'sp-gold-coin',name:'モブゴールドコインスライム',stage:'ゴールド',category:'normal',attribute:'光',image:'spenemy/005.png',symbol:'G',levelMin:12,levelMax:52,rewardExpScale:.45,rewardCoinBase:2400,rewardCoinPerLevel:48,actionCount:1,normalAttackType:'physical',mods:{hp:.84,def:1.55,res:1.55,spd:1.30}},
+  {id:'sp-gold-king',name:'モブキングゴールドスライム',stage:'ゴールド',category:'elite',attribute:'光',image:'spenemy/006.png',symbol:'王',levelMin:26,levelMax:52,rewardExpScale:.60,rewardCoinBase:6500,rewardCoinPerLevel:95,actionCount:1,normalAttackType:'physical',mods:{hp:.72,def:1.7,res:1.7,spd:1.28}}
 ];
 function specialEnemyTemplate(id){return SPECIAL_ENEMIES.find(x=>x.id===id)||null;}
 function trainingEnemyTemplate(id){return enemyTemplate(id)||specialEnemyTemplate(id)||trainingEnemyCatalog().find(x=>x.id===id)||null;}
@@ -437,7 +437,17 @@ async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
   speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';choices.innerHTML='';
   overlay.classList.add('facility-line-talk');overlay.hidden=false;
   for(const line of lines){
-    textEl.textContent=line;
+    /* One source line = one dialogue step. Short lines stay on one visual line;
+       genuinely long lines are split near the centre so 1-2 characters never dangle alone. */
+    const chars=[...line];
+    let displayLine=line;
+    if(chars.length>18){
+      const cut=Math.max(8,Math.min(chars.length-8,Math.round(chars.length/2)));
+      displayLine=chars.slice(0,cut).join('')+'\n'+chars.slice(cut).join('');
+    }
+    textEl.textContent=displayLine;
+    textEl.dataset.lineLength=String(chars.length);
+    textEl.style.setProperty('--facility-line-font',chars.length>22?'14px':chars.length>17?'15px':'17px');
     await new Promise(resolve=>{
       let ready=false;const timer=setTimeout(()=>ready=true,90);
       const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};
@@ -445,7 +455,7 @@ async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
     });
     await fixedDelay(120);
   }
-  overlay.hidden=true;overlay.classList.remove('facility-line-talk');choices.innerHTML='';
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
 }
 async function facilityIntro(key,{speaker,image,first='',repeat=''}){
   const seen=facilityFlag(key),text=seen?repeat:first;
@@ -1566,7 +1576,7 @@ function battleEnemyNaturalScale(root,kind,e=null){
 }
 function applyEnemyVisualSizes(root=$('#enemyArea')){
   if(!root)return;
-  $('[data-enemy-target]',root).forEach(unit=>{
+  $$('[data-enemy-target]',root).forEach(unit=>{
     const img=$('.enemy-sprite',unit);if(!img)return;
     const place=()=>{
       if(!(img.naturalWidth>0&&img.naturalHeight>0))return;
@@ -2387,5 +2397,3 @@ preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','ico
 setTimeout(startFastBackgroundWarmup,1400);
 })();
 
-// v51 safety: special turntable enemies always have an explicit normal attack family.
-for(const e of SPECIAL_ENEMIES){if(!e.normalAttackType)e.normalAttackType='physical';if(e.special&&!e.skillType)e.skillType='physical';}
