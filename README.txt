@@ -25,3 +25,12 @@ MOB QUEST playable core v46
 [v46 hotfix]
 - Fixed battle transition freeze at NOW LOADING / READY caused by missing WEAPON_STAT_KEYS after weapon-data refactor.
 - Restored weapon stat application key list used when building player battle stats.
+
+
+[v47]
+- ボス(7)・冒険イベント(3)を反映
+- ネオン街II / マグマIIのイベント追加
+- ネオマスターHP70%/40%戦闘カットイン
+- モブドラゴンII→モブギドラ戦闘中変身
+- 海底報酬にモブトマトジュースセット追加
+- ネオン街II AREA1側近・マグマII敵名/2回行動修正

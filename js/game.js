@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=46;
+const GAME_ASSET_VERSION=47;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -626,7 +626,24 @@ function arrangeBossFormation(entries=[]){
 function createAdventureEncounter(){
   const w=currentWorld(),area=currentArea(),battleIndex=clamp(state.adventure.battleIndex||0,0,2),areaIndex=clamp(state.adventure.areaIndex||0,0,3);
   if(battleIndex===2){
-    const tagWave=rows=>arrangeBossFormation(expandEncounterEntries(rows||[])).map(r=>({...r,encounterRole:r.escort?'escort':(areaIndex===3?'boss':'midboss')}));
+    const tagWave=rows=>{
+      const formed=arrangeBossFormation(expandEncounterEntries(rows||[]));
+      if(areaIndex===3){
+        return formed.map(r=>{const t=trainingEnemyTemplate(r.id),role=(t?.category==='boss'&&!r.escort)?'boss':'escort';return{...r,encounterRole:role,actionCount:r.actionCount??(role==='escort'?1:undefined)};});
+      }
+      const uniqueDistinct=formed.every(r=>!r.escort&&Number(r.sourceQty||1)===1);
+      const allElite=formed.length>0&&formed.every(r=>trainingEnemyTemplate(r.id)?.category==='elite');
+      // Source rule: if up to three individually introduced mid-bosses appear together, all remain mid-bosses.
+      // Otherwise normal/repeated attendants are escorts and act once.
+      const allAreIntroducedMidBosses=uniqueDistinct&&allElite&&formed.length<=3;
+      let chosen=new Set();
+      if(allAreIntroducedMidBosses)formed.forEach((_,i)=>chosen.add(i));
+      else{
+        formed.forEach((r,i)=>{const t=trainingEnemyTemplate(r.id);if(!r.escort&&(t?.category==='boss'||(t?.category==='elite'&&t?.special)))chosen.add(i);});
+        if(!chosen.size){const i=formed.findIndex(r=>!r.escort&&(trainingEnemyTemplate(r.id)?.category==='elite'||trainingEnemyTemplate(r.id)?.category==='boss'));if(i>=0)chosen.add(i);}
+      }
+      return formed.map((r,i)=>{const role=chosen.has(i)?'midboss':'escort';return{...r,encounterRole:role,actionCount:r.actionCount??(role==='escort'?1:undefined)};});
+    };
     const first=tagWave(area.boss||[]),waves=[first];if(area.nextWave?.length)waves.push(tagWave(area.nextWave));
     return{waves,bossBattle:true,label:`${w.name} ${area.name} 中ボス/ボス`};
   }
@@ -810,6 +827,38 @@ async function storySayDual(keyA,lineA,keyB,lineB){
   const [a,b]=items.map(x=>x.b.getBoundingClientRect());if(!(a.right+4<b.left||b.right+4<a.left)){items[0].b.style.left='6px';items[1].b.style.left=`${Math.max(6,sr.width-items[1].b.offsetWidth-6)}px`;}
   await storyAdvanceWait();for(const it of items){it.b.classList.remove('show');setStorySpeaking(it.key,false);}await fixedDelay(500);items.forEach(it=>it.b.remove());
 }
+
+async function storySoftLight(){
+  const scene=$('#storyScene');if(!scene)return;
+  const el=document.createElement('div');el.className='story-soft-light';scene.appendChild(el);
+  await nextPaint();el.classList.add('show');await fixedDelay(220);el.classList.remove('show');await fixedDelay(260);el.remove();
+}
+async function storyTransformGuest(toKey){
+  await storyHideGuest();await storySoftLight();await storyShowGuest(toKey,{slow:true});
+}
+async function storyEnergyTransfer(fromKey,toKey){
+  const scene=$('#storyScene'),from=storyAnchor(fromKey),to=storyAnchor(toKey);if(!scene||!from||!to){await storySoftLight();return;}
+  const sr=scene.getBoundingClientRect(),fr=storyAnchorRect(from),tr=storyAnchorRect(to),orb=document.createElement('i');
+  orb.className='story-energy-orb';orb.style.left=`${fr.left-sr.left+fr.width/2}px`;orb.style.top=`${fr.top-sr.top+fr.height*.45}px`;scene.appendChild(orb);
+  await nextPaint();orb.style.setProperty('--orb-x',`${tr.left-fr.left+(tr.width-fr.width)/2}px`);orb.style.setProperty('--orb-y',`${tr.top-fr.top+(tr.height-fr.height)*.45}px`);orb.classList.add('move');
+  await fixedDelay(1250);orb.remove();
+}
+async function storyFadePartyExcept(key){
+  const root=$('#storyPartyLine');if(!root)return;for(const a of $$('.story-party-actor',root))if(a.dataset.storyActor!==key)a.classList.add('story-faded-out');await fixedDelay(620);
+}
+function storyJoinSilent(id){storyJoin(id);}
+async function storyRewardDrink(id,text){addDrink(String(id),1);await storyNarrate(text||`${DRINK_SETS.find(d=>d.id===String(id))?.name||'ドリンクセット'}を1つ手に入れた！`);}
+async function enemyStoryCutin(e,text,duration=900){
+  if(!e)return;await passiveCutin({id:`enemy-story-${e.id}`,image:e.image,name:e.name,transformed:false},`${e.name}\n${text}`,duration);
+}
+async function checkBattleHpDialogue(){
+  const b=state.battle;if(!b||b.finished)return;b.storyHpFlags=b.storyHpFlags||{};
+  const neo=(b.enemies||[]).find(e=>e.id==='boss-neomaster'&&e.hp>0);if(!neo)return;
+  const rate=neo.hp/Math.max(1,neo.maxHp);
+  if(rate<=.70&&!b.storyHpFlags.neo70){b.storyHpFlags.neo70=true;await enemyStoryCutin(neo,'やりますね\nではギアを上げますよ',920);}
+  if(rate<=.40&&!b.storyHpFlags.neo40){b.storyHpFlags.neo40=true;await enemyStoryCutin(neo,'なるほど\nこれは強力だ・・',920);}
+}
+
 function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.party.length?Math.round(state.party.reduce((s,x)=>s+(Number(x[1])||5),0)/state.party.length):5;state.party.push([id,clamp(avg,5,120)]);if(state.meta?.exp&&state.meta.exp[id]==null)state.meta.exp[id]=0;saveParty();saveMeta();state.training.party=state.party.map(x=>[...x]);}
 async function storyJoinStep(id,message){await storyHideGuest();storyJoin(id);await renderStoryParty();await storyNarrate(message||`${player(id)?.name||id}が仲間に加わった！`);}
 async function storyTempActor(id){const p=player(id);if(!p)return;await renderStoryParty(id);}
@@ -1065,6 +1114,76 @@ Object.assign(STORY_EVENTS,{
 // Jessie accompanies the party from the end of the tribe-village chapter onward.
 if(STORY_EVENTS['post:tribe:3']&&!STORY_EVENTS['post:tribe:3'].steps.some(st=>st[0]==='join'&&st[1]==='jessie'))STORY_EVENTS['post:tribe:3'].steps.push(['join','jessie','モブジェシーが仲間に加わった！']);
 
+
+
+// ===== MOB QUEST v47 : latest story/event sheet (3) =====
+// Existing earlier scenes remain unchanged unless explicitly updated below.
+Object.assign(STORY_EVENTS,{
+  'arrival:sea':{worldId:'sea',area:0,steps:[
+    ['say','nyoro','うわー空が海ニョロ！'],['say','money','海底だからね\n・・・・・\n美しい景色ね'],['say','denden','おっかないお魚がたくさんでやんす！'],['say','desert','とにかく進んでみよう'],['say','pink','みなさん、警戒を怠らず！']
+  ]},
+  'post:sea:0':{worldId:'sea',area:0,steps:[
+    ['say','pink','こんなのが続くのでありますか・・？'],['say','denden','元気出すでやんす！\nみんなで頑張るでやんす！']
+  ]},
+  'pre:sea:1':{worldId:'sea',area:1,steps:[
+    ['guest','s-jones'],['say','s-jones','強力な覇気を感じる\nやはり、本物の勇者か\nそして・・'],['say','nyoro','すごい迫力ニョロ・・！'],['say','desert','これは骨が折れそうだ'],['say','s-jones','私も本気で挑ませてもらう\nさあ、力を示せ！']
+  ]},
+  'post:sea':{worldId:'sea',area:3,steps:[
+    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinSilent','nekoku'],['say','nepu','モブマニー\nこれを'],['say','money','ん？'],['rewardDrink','19','モブトマトジュースセットを1つ手に入れた！'],['say','money','なんで私に？'],['say','nepu','道中、皆と飲むがいい'],['say','money','ありがとう・・？'],['narrate','6枚目のレコード「ケロの衣装」を手に入れた！']
+  ]},
+
+  'arrival:neon2':{worldId:'neon2',area:0,steps:[
+    ['say','jessie','ようやく帰ってこれた'],['say','denden','そういえば\nここの保安官でやんしたねー'],['say','money','うっ・・・'],['say','nekoku','ん？大丈夫か？'],['say','money','頭が・・\n割れそう・・'],['say','nyoro','少し休むニョロ！'],['say','money','だめ・・\n急がない・・と・・'],['say','desert','先に進むべきだ\n立ち止まっても状況は変わらない'],['say','pink','モブマニー・・\n頑張るであります!!\n僕たちがフォローするであります!!'],['say','jessie','そうね、急ぎましょう！']
+  ]},
+  'pre:neon2:0':{worldId:'neon2',area:0,steps:[
+    ['guest','n2-tiger'],['say','n2-tiger','侵入者発見\n排除する'],['say','money','しん・・にゅう・・\n侵入・・者・・'],['say','jessie','急いだ方が良さそうね']
+  ]},
+  'post:neon2:0':{worldId:'neon2',area:0,steps:[['say','denden','次次次～！\nでやんす！']]},
+  'pre:neon2:1':{worldId:'neon2',area:1,steps:[
+    ['guests',['n2-tama','n2-kodora']],['say','nyoro','なんだかキュートな子達だニョロ'],['say','jessie','油断しないで\nネオン街にか弱い子なんていない'],['say','desert','お前達を見ていれば分かる'],['say','denden','でも可愛いでやんす～'],['say','money','・・・・・']
+  ]},
+  'post:neon2:1':{worldId:'neon2',area:1,steps:[
+    ['say','nekoku','オラ、この場所見覚えがあるぞ'],['say','jessie','今更？\n海底はネオン街出身が多いのよ'],['say','nekoku','そうだ\n国王様に連れて来てもらったんだ'],['say','desert','国王はネオン街出身なのか？'],['say','nekoku','いや、女王様がネオン街出身だ'],['say','jessie','そうだったわね']
+  ]},
+  'pre:neon2:2':{worldId:'neon2',area:2,steps:[
+    ['guest','n2-palette'],['say','n2-palette','止まれ'],['say','denden','派手なやつが来たでやんす！'],['say','money','モブ・・パレット・・'],['say','jessie','モブマニー、\n今は何も考えなくていい\n私たちに任せて'],['say','nyoro','素早く倒すニョロ！'],['say','n2-palette','悪いが\nここまでだ\n魔王などどうでもいいが\nマスター様の言うこと絶対だ'],['say','desert','魔王の傘下じゃないだと？'],['say','n2-palette','マスター様に考えがあってのこと\n私は従うまでだ\n勇者であろうと容赦はしない'],['say','nekoku','オラ、モブマニーを守る！']
+  ]},
+  'post:neon2:2':{worldId:'neon2',area:2,steps:[
+    ['guest','n2-palette'],['say','n2-palette','見事だ\nお前たちは強い\n・・・・・\n魔王との戦い、\n楽しみにしているぞ'],['hideGuest']
+  ]},
+  'pre:neon2:3':{worldId:'neon2',area:3,steps:[
+    ['guest','boss-neomaster'],['say','boss-neomaster','よくぞここまで来ました\nこれも運命というやつですね\n勇者よ、あなたには何が見える？\nこの戦いの先に、何を見る？'],['say','pink','洗脳する気であります！！\n聞かなくていいであります！'],['say','jessie','そんなせこいことしないわ\nこの人はネオン街のマスターよ'],['say','boss-neomaster','モブジェシー\nお久しぶりです\n随分と長いこと旅をしましたね\nお互いに'],['say','jessie','そうね\nまさかあなたと対峙するなんて\n思ってもみなかったわ'],['say','boss-neomaster','これも運命です\nモブマニー\nあなたも元気そうですね'],['say','money','・・・？\nあな・・た・・は？'],['say','boss-neomaster','そうか\nそうですね\n封印が解かれて間もない\nしかし\n時間もない'],['say','jessie','急いでいるの\n分かるでしょう？\n戦いは避けられない'],['say','desert','話しはまとまったようだな\nお前達とやつに\nどんな関わりがあるかは知らない\nだが、俺は俺の使命を全うする\nお前達が敵でないと分かって良かった\nやつを倒すぞ！'],['say','pink','やつを倒せば、\n魔王城への扉が開かれるであります！\nみなさん、やるであります！']
+  ]},
+  'post:neon2:3':{worldId:'neon2',area:3,steps:[
+    ['guest','boss-neomaster'],['say','jessie','私たちの勝ちね・・'],['say','boss-neomaster','素晴らしい力です\n魔王の力は強大\nしかし\nあなたたちなら・・'],['say','money','マスター・・\nネオン街の\nマスター・・'],['say','nyoro','モブマニー、\nまだ良くならないニョロ・・'],['say','boss-neomaster','モブマニー\n最後に\n私の力を・・'],['energyTransfer','boss-neomaster','money'],['say','jessie','マスター・・！'],['softLight'],['hideGuest'],['say','money','・・・・あれ？'],['say','denden','正気に戻ったでやんすか！？'],['say','desert','気分はどうだ？'],['say','money','うん、平気\n意識はあったんだけど\n頭がもやもやしてたの\nでももう大丈夫！\n次へ行きましょう！'],['say','jessie','良かった・・'],['fadePartyExcept','jessie'],['say','jessie','マスター・・\n必ずやり遂げて見せます']
+  ]},
+
+  'arrival:magma2':{worldId:'magma2',area:0,steps:[
+    ['say','nyoro','帰って来たニョロ～！\nやっぱり落ち着くニョロ'],['say','denden','故郷は特別でやんすからね～'],['say','money','相変わらず暑いわね'],['say','jessie','ここも強敵だらけよ\n油断せず進みましょう']
+  ]},
+  'pre:magma2:0':{worldId:'magma2',area:0,steps:[
+    ['guest','m2-yogan'],['say','nekoku','すんごいスライムだなー'],['say','desert','スライムにしては\n魔力が高すぎる'],['say','nyoro','たぶん変異体ニョロ！\nマグマではよくあるニョロ！'],['say','money','魔力なら負けないわ！']
+  ]},
+  'post:magma2:0':{worldId:'magma2',area:0,steps:[
+    ['say','jessie','危険なモンスター・・'],['say','desert','そうだな\nやはり急がねば'],['say','pink','こんなのが増えたら大変であります！']
+  ]},
+  'pre:magma2:1':{worldId:'magma2',area:1,steps:[
+    ['guest','m2-salamander'],['say','denden','オイラやっぱり\n暑いの嫌いでやんす'],['say','nyoro','あいつはこのエリアでも\n特に熱いモンスターニョロ！'],['say','jessie','モブサラマンダーね？\n聞いたことがあるわ'],['say','pink','倒して、\n少しでも涼しくするであります！']
+  ]},
+  'pre:magma2:2':{worldId:'magma2',area:2,steps:[
+    ['guest','m2-buster'],['say','m2-buster','勇者一行よ\nお前達の命運も\nここまでだ'],['say','desert','なんだこいつは・・\nモブドラゴンと同じ魔力？'],['say','nyoro','あいつは魔界に行ったはずニョロ・・\nモブドラゴンと\n同じくらいの力を持っているニョロ！'],['sayAs','m2-buster','その通り\n我らは魔王様より\n同じ魔力を与えられている','モブマグマスター'],['say','money','同じ？\nなんでそんなに強気なの？'],['say','denden','オイラたちは\nモブドラゴンを倒しているでやんす！'],['sayAs','m2-buster','無知と言うのは\n楽なものだな','モブマグマスター']
+  ]},
+  'post:magma2:2':{worldId:'magma2',area:2,steps:[
+    ['guest','m2-buster'],['say','m2-buster','これで完成するのだ\n全てを滅ぼす\n最強のドラゴンが・・'],['hideGuest'],['say','denden','もっと凄いドラゴン・・\n会ってみたいでやんす']
+  ]},
+  'pre:magma2:3':{worldId:'magma2',area:3,steps:[
+    ['guest','dragon'],['say','dragon','待ちわびたぞ\nこの時を\n勇者よ\nお前ともう一度\n戦いたかった'],['say','desert','さらに力が上がっている'],['say','jessie','大変な戦いになりそうね'],['say','money','ドラゴンとの決戦、\n燃えるわ！'],['say','dragon','勇者よ\n覚悟するのだ！！'],['guestTransform','boss-dragon2'],['say','nyoro','気を付けるニョロ！\nこれが本来の姿ニョロ！']
+  ]},
+  'post:magma2:3':{worldId:'magma2',area:3,steps:[
+    ['guest','dragon'],['say','dragon','私の負けだ\n最後に\n素晴らしい戦いが出来た\nもう\n思い残すことは無い'],['say','pink','モブドラゴン！\n立派でありました！\n僕は勇者の相棒として\nお前を決して忘れないであります！'],['say','dragon','ふふふっ・・\n勇者の相棒\nモブピンクよ\nお前も素晴らしい戦士だ\n魔王様にどこまで通用するか\n業火の地獄で見ていてやろう'],['hideGuest'],['say','desert','さあ魔王は近い'],['say','jessie','ゴールが見えて来たわね'],['say','nyoro','魔王・・\nもう怖くないニョロ！'],['say','denden','やってやんべ！\nでやんす！'],['say','nekoku','オラ、戦うぞ！'],['say','money','なんだかんだ\n勇者パーティーって感じになったわね']
+  ]}
+});
+
 async function runStorySteps(steps=[]){
   for(const st of steps){const [type,a,b,c,d]=st;
     if(type==='say')await storySay(a,b,c,d);
@@ -1087,6 +1206,12 @@ async function runStorySteps(steps=[]){
     else if(type==='join')await storyJoinStep(a,b);
     else if(type==='joinKeepGuest')await storyJoinKeepGuest(a,b);
     else if(type==='tempActor')await storyTempActor(a);
+    else if(type==='joinSilent')storyJoinSilent(a);
+    else if(type==='rewardDrink')await storyRewardDrink(a,b);
+    else if(type==='guestTransform')await storyTransformGuest(a);
+    else if(type==='energyTransfer')await storyEnergyTransfer(a,b);
+    else if(type==='softLight')await storySoftLight();
+    else if(type==='fadePartyExcept')await storyFadePartyExcept(a);
     else if(type==='wait')await fixedDelay(Number(a)||500);
   }
 }
@@ -1732,8 +1857,9 @@ async function playFrezardFusion(){
 async function storyFlashBattle(){const el=document.createElement('div');el.className='battle-fusion-flash';$('#battleFxLayer')?.appendChild(el);await fixedDelay(260);el.remove();}
 async function spawnNextEnemyWave(){
   const b=state.battle;if(!b?.pendingWaveConfigs?.length)return false;
-  const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2');
+  const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'),isGidora=records.some(r=>r.id==='boss-gidora');
   if(isFrezard)await playFrezardFusion();
+  if(isGidora){const oldDragon=(b.enemies||[]).find(e=>e.id==='boss-dragon2');if(oldDragon)await enemyStoryCutin(oldDragon,`素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！`,1200);await storyFlashBattle();}
   const next=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!next.length)return false;
   b.enemies=next;b.targetEnemyId=next[0].uid;b.enemy=next[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();
   if(isFrezard){
@@ -1746,6 +1872,8 @@ async function spawnNextEnemyWave(){
     await fixedDelay(260);await actionCutin('モブマニー「なんてオーラなの・・」','system',760);
     await fixedDelay(260);await actionCutin('モブニョロ「こ、怖いニョロ・・」','system',760);
     await fixedDelay(260);await actionCutin('モブデンデン「やってやるでやんす！」','system',760);
+  }else if(isGidora){
+    await actionCutin('モブギドラに変身！','danger',760);
   }else{
     await actionCutin('ENEMY PHASE CHANGE!','danger',650);notice(`${next.map(e=>e.name).join('・')}が現れた！`,'danger',900);
   }
@@ -1763,7 +1891,7 @@ async function handleForcedEnemyPhase(){
 }
 async function handleEnemyWaveClear(){if(livingEnemies().length)return false;if(state.battle.pendingWaveConfigs?.length)return await spawnNextEnemyWave();finishBattle(true);return true;}
 async function startRound(){
-  const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();if(b.forcePhaseChange){b.busy=false;return handleForcedEnemyPhase();}if(!livingEnemies().length){b.busy=false;return handleEnemyWaveClear();}if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
+  const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();await checkBattleHpDialogue();if(b.forcePhaseChange){b.busy=false;return handleForcedEnemyPhase();}if(!livingEnemies().length){b.busy=false;return handleEnemyWaveClear();}if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
   for(const a of fieldAllies().filter(x=>!x.dead)){
     if(a.id==='nekoku'&&passiveChance(.30)){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){await passiveBeat(a,'癒しのプニプニ！');const h=heal(target,target.maxHp*.14);if(h)notice(`${target.name} HP +${h}`,'heal');await fixedDelay(600);}}
     if(a.id==='money'&&passiveChance(.30)){await passiveBeat(a,'マニーは海を渡る！');const m=Math.round(a.maxMp*.12);a.mpNow=Math.min(a.maxMp,a.mpNow+m);notice(`MP +${m}`,'heal');await fixedDelay(600);}
@@ -1780,7 +1908,7 @@ async function processQueue(){
   const b=state.battle;if(!b||b.finished||b.busy)return;while(b.queuePos<b.queue.length){const entry=b.queue[b.queuePos];
     if(entry.type==='ally'){const a=allyById(entry.id);if(!a||a.dead||!b.mainIds.includes(a.id)){b.queuePos++;continue;}if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');b.queuePos++;await delay(300);continue;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');b.queuePos++;await delay(300);continue;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');b.queuePos++;await delay(300);continue;}renderBattle();if(b.auto)setTimeout(autoAct,100);return;}
     if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(!e||e.hp<=0){b.queuePos++;continue;}const prev=b.queue[b.queuePos-1];if(prev&&(prev.type==='ally'||prev.type==='super'))await fixedDelay(1000);else if(prev&&prev.type==='enemy')await fixedDelay(600);b.busy=true;b.actingEnemyId=e.uid;b.enemy=e;renderBattle();await enemyAction(entry.action||1,e.uid);b.actingEnemyId=null;b.enemy=targetEnemy();b.busy=false;b.queuePos++;if(b.finished)return;await resolveRequiredReplacements();if(b.finished)return;continue;}
-    if(entry.type==='super'){const a=allyById(entry.id);if(!a||a.dead||!b.superIds.includes(a.id)){b.queuePos++;continue;}b.busy=true;renderBattle();await superSubAction(a);a.nextSupportTurn=b.turn+rint(2,5);b.busy=false;b.queuePos++;if(b.forcePhaseChange){if(await handleForcedEnemyPhase())return;}if(!livingEnemies().length){if(await handleEnemyWaveClear())return;}continue;}
+    if(entry.type==='super'){const a=allyById(entry.id);if(!a||a.dead||!b.superIds.includes(a.id)){b.queuePos++;continue;}b.busy=true;renderBattle();await superSubAction(a);await checkBattleHpDialogue();a.nextSupportTurn=b.turn+rint(2,5);b.busy=false;b.queuePos++;if(b.forcePhaseChange){if(await handleForcedEnemyPhase())return;}if(!livingEnemies().length){if(await handleEnemyWaveClear())return;}continue;}
   }await endRound();
 }
 async function endRound(){const b=state.battle;if(!b||b.finished)return;tickBuffs();b.turn++;if(b.mode==='story'&&b.config?.scriptedTurnLimit&&b.turn>Number(b.config.scriptedTurnLimit)){return finishScriptedBattle();}await delay(120);startRound();}
@@ -1862,6 +1990,7 @@ async function act(kind,payload){
     consumed=true;
   }
   if(!consumed){b.busy=false;renderBattle();return;}
+  await checkBattleHpDialogue();
   if(b.forcePhaseChange){b.busy=false;renderBattle();if(await handleForcedEnemyPhase())return;}
   if(!livingEnemies().length){
     b.busy=false;

@@ -367,3 +367,25 @@ const v45World=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
     const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.actionCount=2;
   }
 }
+
+
+// ===== MOB QUEST v47 : boss sheet (7) corrections =====
+// Latest uploaded boss sheet is authoritative for these encounter changes.
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const worldById=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+
+  const neon2=worldById('neon2');
+  if(neon2){
+    // AREA 1: Neo Tiger is the centre mid-boss, Neon Slimes are one-action escorts.
+    neon2.areas[0].boss=[{id:'n2-slime',level:61,qty:2},{id:'n2-tiger',level:67}];
+    // AREA 3: Palette Leon is the centre enemy; formation helper centres the unique elite.
+    neon2.areas[2].boss=[{id:'n2-banken',level:66},{id:'n2-golem',level:66},{id:'n2-palette',level:68}];
+  }
+
+  const yogan=enemyById('m2-yogan');
+  if(yogan)yogan.name='モブヨーガンスライム';
+
+  const buster=enemyById('m2-buster');
+  if(buster)buster.actionCount=2; // source: 確定2回攻撃
+}
