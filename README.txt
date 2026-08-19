@@ -1,4 +1,4 @@
-MOB QUEST playable core v45
+MOB QUEST playable core v46
 
 今回の更新
 - 最新「ボス(6)」の敵編成・攻撃種別を反映
@@ -20,3 +20,8 @@ MOB QUEST playable core v45
 注意
 - 最新ストーリー資料は「ネオン街II」の見出しで終了しているため、その先の新規会話は追加していません。
 - 既存の必殺技演出、武器、ターンテーブル、キャンプ、探索、RESULT、育成仕様は保持しています。
+
+
+[v46 hotfix]
+- Fixed battle transition freeze at NOW LOADING / READY caused by missing WEAPON_STAT_KEYS after weapon-data refactor.
+- Restored weapon stat application key list used when building player battle stats.
