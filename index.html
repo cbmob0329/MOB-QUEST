@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=44">
+  <link rel="stylesheet" href="css/style.css?v=45">
 </head>
 <body>
 <main id="app">
@@ -251,8 +251,10 @@
         <div class="settings-row"><div><b>テストモード</b><small>Lv自由設定・高速戦闘など、制作確認用の機能です。</small></div><button id="testModeToggle" class="settings-toggle" type="button">OFF</button></div>
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
+          <div id="testLevelRoster" class="test-level-roster"></div>
+          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダルをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
-          <p class="settings-note">テストモード中は酒場・トレーニングでも Lv1～120 を自由に設定できます。</p>
+          <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
       </section>
       <section class="settings-section danger-section"><div><b>テストデータ</b><small>イベントや冒険を最初から何度でも確認できます。</small></div><button id="deleteDataBtn" class="danger-btn" type="button">全データ削除</button></section>
@@ -270,7 +272,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=44" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=45" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -278,7 +280,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=44"></script>
-<script src="js/game.js?v=44"></script>
+<script src="js/data.js?v=45"></script>
+<script src="js/game.js?v=45"></script>
 </body>
 </html>
