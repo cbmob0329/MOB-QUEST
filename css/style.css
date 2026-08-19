@@ -1938,3 +1938,73 @@
   .training-host-row{grid-template-columns:minmax(0,1fr) 82px}.training-home-quick img{width:70px;height:70px}.training-main-grid .training-mode-card img{width:108px!important;height:98px!important}.training-main-grid .training-mode-card b{font-size:12px!important}
   .tavern-simple-member{grid-template-columns:52px 1fr}.tavern-simple-member>span{width:52px;height:62px}.tavern-simple-member b{font-size:10px}
 }
+
+
+/* ===== MOB QUEST v51 record quest / dialogue wrapping / requested facility colors ===== */
+/* Japanese dialogue should not leave only one or two characters on a new line. */
+.dialog-body>p,
+.dialog-overlay.facility-line-talk .dialog-body>p,
+.facility-host-card p,
+.castle-title-card p,
+.training-feature-card p,
+.panel-note,
+.drink-shop-item small{
+  line-break:strict!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  text-wrap:balance;
+}
+.dialog-overlay.facility-line-talk .dialog-body>p{
+  max-width:100%!important;
+  letter-spacing:0!important;
+}
+
+/* Record-area header has no escape button. */
+#questBackBtn[hidden]{display:none!important}
+#questDescription{font-size:11px!important;line-height:1.55!important;font-weight:800!important}
+#questAreaName{font-size:18px!important}
+#questModeLabel{font-size:9px!important}
+#questAreaPill{font-size:10px!important}
+
+/* Drink purchase popup: temporary warm beige / wood treatment. */
+#tavernDrinkPopup .facility-popup-card{
+  background:
+    repeating-linear-gradient(0deg,rgba(91,61,31,.07) 0 2px,rgba(255,255,255,.025) 2px 8px),
+    linear-gradient(180deg,#ead9b8 0%,#d8bc8a 52%,#c9a979 100%)!important;
+  color:#32271c!important;
+  border-top:2px solid #8b6a43!important;
+}
+#tavernDrinkPopup .settings-head small,
+#tavernDrinkPopup .settings-head h2,
+#tavernDrinkPopup .section-title h2{color:#32271c!important}
+#tavernDrinkPopup .drink-shop-item{
+  background:rgba(255,247,228,.82)!important;
+  border:1px solid rgba(91,66,39,.35)!important;
+  color:#32271c!important;
+}
+#tavernDrinkPopup .drink-shop-item small{color:#604d38!important}
+#tavernDrinkPopup .drink-shop-item em{color:#7c4b25!important;font-weight:1000!important}
+
+/* Adventure Journal: temporary metallic-orange panel background. */
+#trainingFeaturePopup[data-mode="journal"] .facility-popup-card{
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.13),transparent 23% 72%,rgba(255,255,255,.08)),
+    linear-gradient(180deg,#9b4e1f 0%,#c86d27 18%,#824019 52%,#d27b2e 78%,#743719 100%)!important;
+  border-top:2px solid #f0a35f!important;
+}
+#trainingFeaturePopup[data-mode="journal"] .training-feature-card{
+  background:rgba(20,24,29,.82)!important;
+  border:1px solid rgba(255,209,155,.28)!important;
+}
+#trainingFeaturePopup[data-mode="journal"] .panel{
+  background:rgba(20,24,29,.48)!important;
+  border-color:rgba(255,218,178,.28)!important;
+}
+
+/* Record confirmation and feature cards remain readable even when the player lacks records. */
+.training-feature-card.locked{opacity:.72!important}
+.training-feature-card.locked button:not(:disabled){opacity:1!important;filter:none!important}
+
+/* Exploration reward: slightly calmer and easier to read during the longer hold. */
+.explore-reward b,#questExploreResult b{font-size:13px!important;line-height:1.4!important}
+.explore-reward small,#questExploreResult small{font-size:9px!important}
