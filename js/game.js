@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=53;
+const GAME_ASSET_VERSION=55;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -468,6 +468,7 @@ async function showFacilityExit(image,text,theme='blue'){
 }
 let tavernView='menu';
 let castleView='menu';
+let castleQtyState={itemId:null,qty:1};
 let equipmentFacilityOrigin='';
 async function travelTo(target,text,after){
   if(target==='training'){
@@ -2334,7 +2335,7 @@ function setCastleHeader(kicker,title,pill=''){
 function setCastleBackground(src,fallback='back2/003.png'){
   const bg=$('#castleBg');if(!bg)return;setImage(bg,src,fallback);
 }
-function castleHomeButton(){return `<button class="castle-room-home" data-castle-home type="button"><img src="mqicon/06.png" alt="HOME"><b>HOME</b><small>城メニューへ</small></button>`;}
+function castleHomeButton(extraClass=''){return `<button class="castle-room-home ${extraClass}" data-castle-home type="button"><img src="mqicon/06.png" alt="HOME"><b>HOME</b><small>城メニューへ</small></button>`;}
 function renderCastle(){
   castleView='menu';
   setCastleBackground('back2/003.png','back/rpgmain.png');
@@ -2348,22 +2349,48 @@ async function enterCastle(){renderCastle();}
 function renderThroneRoom(){
   castleView='throne';setCastleBackground('back/king1.png','back2/003.png');setCastleHeader('ROYAL CHAMBER','王の間','REPORT');
   const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view throne-room-view';
-  root.innerHTML=`<section class="castle-room-stage throne-stage"><button class="castle-actor castle-actor-arm" data-castle-actor="arm" type="button"><img src="play/008.png" alt="モブライトアーム"><b>モブライトアーム</b></button><button class="castle-actor castle-actor-king" data-castle-actor="king" type="button"><img src="play/007.png" alt="モブスライムキング"><b>モブスライムキング</b></button><div id="castleSpeech" class="castle-speech" hidden><small></small><p></p></div>${castleHomeButton()}</section>`;
+  root.innerHTML=`<section class="castle-room-stage throne-stage"><button class="castle-actor castle-actor-arm" data-castle-actor="arm" type="button"><img src="play/008.png" alt="モブライトアーム"><b>モブライトアーム</b></button><button class="castle-actor castle-actor-king" data-castle-actor="king" type="button"><img src="play/007.png" alt="モブスライムキング"><b>モブスライムキング</b></button><div id="castleSpeech" class="castle-speech" hidden><small></small><p></p></div>${castleHomeButton('throne-home')}</section>`;
   bindImages(root);bindCastleContentEvents();
 }
-function showCastleSpeech(speaker,text,side='center'){
-  const box=$('#castleSpeech');if(!box)return;box.className=`castle-speech side-${side}`;$('small',box).textContent=speaker;$('p',box).textContent=text;box.hidden=false;clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},2400);
+function showCastleSpeech(speaker,text,actorEl=null,side='center'){
+  const box=$('#castleSpeech');if(!box)return;
+  box.className=`castle-speech side-${side}`;
+  $('small',box).textContent=speaker;
+  $('p',box).textContent=text;
+  box.hidden=false;
+  box.style.left='';box.style.top='';box.style.width='';box.style.transform='';box.style.removeProperty('--tail-x');
+  const stage=box.parentElement;
+  if(actorEl&&stage){
+    const stageRect=stage.getBoundingClientRect();
+    const actorRect=actorEl.getBoundingClientRect();
+    const stageWidth=stageRect.width||320;
+    const bubbleWidth=Math.min(Math.max(stageWidth*0.5,220),Math.min(stageWidth-24,360));
+    const anchorX=(actorRect.left+actorRect.width*0.5)-stageRect.left;
+    const left=Math.max(12,Math.min(anchorX-bubbleWidth/2,stageWidth-bubbleWidth-12));
+    let top=(actorRect.top-stageRect.top)-118;
+    if(side==='left')top-=8;
+    if(side==='center')top-=6;
+    top=Math.max(18,top);
+    const tailX=Math.max(34,Math.min(anchorX-left,bubbleWidth-34));
+    box.style.left=`${left}px`;
+    box.style.top=`${top}px`;
+    box.style.width=`${bubbleWidth}px`;
+    box.style.transform='none';
+    box.style.setProperty('--tail-x',`${tailX}px`);
+  }
+  clearTimeout(showCastleSpeech.timer);
+  showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},2800);
 }
-function castleActorSpeak(kind){
-  if(kind==='king')showCastleSpeech('モブスライムキング',pick(['頼むぞ、運命はお主たちにかかっている！','時には休息も大事じゃぞ！','装備は整っておるか？','城の設備はどんどん使ってくれ！']),'center');
-  else showCastleSpeech('モブライトアーム',pick(['みなさん、お気をつけて','ここはお任せを！','城は私が守ります！']),'left');
+function castleActorSpeak(kind,actorEl){
+  if(kind==='king')showCastleSpeech('モブスライムキング',pick(['頼むぞ、運命はお主たちにかかっている！','時には休息も大事じゃぞ！','装備は整っておるか？','城の設備はどんどん使ってくれ！']),actorEl,'center');
+  else showCastleSpeech('モブライトアーム',pick(['みなさん、お気をつけて','ここはお任せを！','城は私が守ります！']),actorEl,'left');
 }
 async function renderInnRoom(){
   castleView='inn';setCastleBackground('back/king3.png','back2/003.png');setCastleHeader('CASTLE INN','宿舎','REST');
   const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view inn-room-view';
   root.innerHTML=`<section class="castle-room-stage inn-stage"><button class="castle-actor castle-actor-inn" data-innkeeper type="button"><img src="play/006.png" alt="モブミータ"><b>モブミータ</b><small>タップして話す</small></button>${castleHomeButton()}</section>`;
   bindImages(root);bindCastleContentEvents();
-  await facilityTalk('ようそこ！\n自由に休んでいってね！','モブミータ','play/006.png');
+  await facilityTalk('ようこそ！\n自由に休んでいってね！','モブミータ','play/006.png');
 }
 function fullHealAtCastleInn(){
   const v=ensureAdventureVitals();
@@ -2374,7 +2401,14 @@ async function castleFadeMessage(text,work){
   const f=$('#castleFade'),label=$('#castleFadeText');if(!f)return;if(label)label.textContent='';f.hidden=false;await nextPaint();f.classList.add('dark');await fixedDelay(650);if(work)await work();if(label)label.textContent=text;await fixedDelay(1050);f.classList.remove('dark');await fixedDelay(650);f.hidden=true;if(label)label.textContent='';
 }
 async function askInnRest(){
-  const a=await dialog('休んでいきますか？',[['はい','yes','primary'],['いいえ','no']],'モブミータ','play/006.png');if(a!=='yes')return;await castleFadeMessage('勇者一行はゆっくり休んだ！',async()=>fullHealAtCastleInn());
+  const a=await dialog('休んでいきますか？',[['はい','yes','primary'],['いいえ','no']],'モブミータ','play/006.png');
+  if(a!=='yes')return;
+  const f=$('#castleFade'),label=$('#castleFadeText');if(!f)return;
+  if(label)label.textContent='';f.hidden=false;await nextPaint();f.classList.add('dark');await fixedDelay(650);
+  fullHealAtCastleInn();
+  if(label)label.textContent='勇者一行はゆっくり休んだ！';await fixedDelay(1050);
+  if(label)label.textContent='パーティーが全回復した！';await fixedDelay(1150);
+  f.classList.remove('dark');await fixedDelay(650);f.hidden=true;if(label)label.textContent='';
 }
 function renderMobShopRoom(){
   castleView='shop';setCastleBackground('back/king2.png','back2/003.png');setCastleHeader('MOB SHOP','MOB SHOP','ITEM');
@@ -2389,14 +2423,32 @@ function renderCastleShopGrid(){
   const root=$('#castleShopGrid'),coin=$('#castleShopCoins');if(!root)return;if(coin)coin.textContent=`${state.coins.toLocaleString()} G`;
   const goods=GAME_ITEMS.filter(it=>Number(it.id)>=1&&Number(it.id)<=18);
   root.innerHTML=goods.map((it,i)=>`<button class="castle-shop-item wood-${i%2?'blue':'pink'}" data-buy-castle-item="${it.id}" type="button"><img src="${it.image}" alt="${it.name}"><div><b>${it.name}</b><small>${itemEffectText(it)}</small><em>${it.price.toLocaleString()}G / 所持 ${itemCount(it.id)}</em></div></button>`).join('');
-  bindImages(root);$$('[data-buy-castle-item]',root).forEach(btn=>btn.onclick=()=>buyCastleItem(btn.dataset.buyCastleItem));
+  bindImages(root);$$('[data-buy-castle-item]',root).forEach(btn=>btn.onclick=()=>openCastleQtyPopup(btn.dataset.buyCastleItem));
 }
 function openCastleShopPopup(){renderCastleShopGrid();$('#castleShopPopup').hidden=false;}
-function closeCastleShopPopup(){$('#castleShopPopup').hidden=true;}
-async function buyCastleItem(id){
-  const it=itemData(id);if(!it||Number(it.id)>18)return;if(state.coins<it.price)return facilityTalk('ゴールドが足りないよ！','モブマテリア','play/005.png');
-  const a=await dialog(`${it.name}を購入しますか？\n${it.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'モブマテリア','play/005.png');if(a!=='yes')return;
-  state.coins-=it.price;state.meta.coins=state.coins;addItem(it.id,1);saveMeta();renderCastleShopGrid();await facilityTalk('毎度あり！','モブマテリア','play/005.png');
+function closeCastleShopPopup(){closeCastleQtyPopup();$('#castleShopPopup').hidden=true;}
+function renderCastleQtyPopup(){
+  const it=itemData(castleQtyState.itemId),popup=$('#castleQtyPopup');if(!it||!popup)return;
+  const qty=Math.max(1,Math.min(99,Number(castleQtyState.qty)||1));castleQtyState.qty=qty;
+  const total=it.price*qty,over=total>state.coins;
+  $('#castleQtyImage').src=it.image;$('#castleQtyImage').alt=it.name;
+  $('#castleQtyName').textContent=it.name;$('#castleQtyUnitPrice').textContent=`1個 ${it.price.toLocaleString()} G`;
+  $('#castleQtyValue').textContent=String(qty);$('#castleQtyTotal').textContent=`${total.toLocaleString()} G`;
+  $('#castleQtyTotal').classList.toggle('over-budget',over);$('#castleQtyWallet').textContent=`${state.coins.toLocaleString()} G`;
+  $('#castleQtyMinusBtn').disabled=qty<=1;$('#castleQtyPlusBtn').disabled=qty>=99;
+  $('#castleQtyBuyBtn').classList.toggle('over-budget',over);
+}
+function openCastleQtyPopup(id){
+  const it=itemData(id);if(!it||Number(it.id)>18)return;
+  castleQtyState={itemId:String(id),qty:1};renderCastleQtyPopup();$('#castleQtyPopup').hidden=false;
+}
+function closeCastleQtyPopup(){const popup=$('#castleQtyPopup');if(popup)popup.hidden=true;castleQtyState={itemId:null,qty:1};}
+function changeCastleQty(delta){if(!castleQtyState.itemId)return;castleQtyState.qty=Math.max(1,Math.min(99,(Number(castleQtyState.qty)||1)+delta));renderCastleQtyPopup();}
+async function buyCastleItemQty(){
+  const it=itemData(castleQtyState.itemId);if(!it||Number(it.id)>18)return;
+  const qty=Math.max(1,Math.min(99,Number(castleQtyState.qty)||1)),total=it.price*qty;
+  if(state.coins<total){await facilityTalk('ゴールドが足りないよ！','モブマテリア','play/005.png');renderCastleQtyPopup();return;}
+  state.coins-=total;state.meta.coins=state.coins;addItem(it.id,qty);saveMeta();closeCastleQtyPopup();renderCastleShopGrid();await facilityTalk('毎度あり！','モブマテリア','play/005.png');
 }
 function renderRecordRoom(){
   castleView='records';setCastleBackground('back/king4.png','back2/003.png');setCastleHeader('RECORD ROOM','レコードルーム','LOCKED');
@@ -2425,7 +2477,7 @@ function bindCastleContentEvents(){
   root.onclick=e=>{
     const menu=e.target.closest('[data-castle-menu]');if(menu)return openCastleRoom(menu.dataset.castleMenu);
     if(e.target.closest('[data-castle-home]'))return returnCastleMenu();
-    const actor=e.target.closest('[data-castle-actor]');if(actor)return castleActorSpeak(actor.dataset.castleActor);
+    const actor=e.target.closest('[data-castle-actor]');if(actor)return castleActorSpeak(actor.dataset.castleActor,actor);
     if(e.target.closest('[data-innkeeper]'))return askInnRest();
     if(e.target.closest('[data-open-castle-shop]'))return openCastleShopPopup();
   };
@@ -2460,6 +2512,7 @@ function bindEvents(){
   const storyScene=$('#storyScene');if(storyScene){storyScene.addEventListener('pointerup',handleStoryTapAdvance,{passive:false});storyScene.addEventListener('contextmenu',e=>e.preventDefault());}
   $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{goHome();});
   $('#castleBackBtn').onclick=castleBackOrHome;$('#castleShopCloseBtn').onclick=closeCastleShopPopup;$('#castleShopPopup').addEventListener('click',e=>{if(e.target===$('#castleShopPopup'))closeCastleShopPopup();});
+  $('#castleQtyCloseBtn').onclick=closeCastleQtyPopup;$('#castleQtyMinusBtn').onclick=()=>changeCastleQty(-1);$('#castleQtyPlusBtn').onclick=()=>changeCastleQty(1);$('#castleQtyBuyBtn').onclick=buyCastleItemQty;$('#castleQtyPopup').addEventListener('click',e=>{if(e.target===$('#castleQtyPopup'))closeCastleQtyPopup();});
   $('#equipmentBackBtn').onclick=()=>{if(equipmentFacilityOrigin==='smith')leaveBlacksmith();else goHome();};$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});
   $('#tavernBackBtn').onclick=()=>{if(!$('#tavernPartyPopup').hidden||!$('#tavernDrinkPopup').hidden)return showTavernMenu();leaveTavern();};$('#tavernResetBtn').onclick=()=>{};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernPartyCloseBtn').onclick=showTavernMenu;$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else leaveTavern();});
   $('#trainingBackBtn').onclick=()=>{if(!$('#trainingFeaturePopup').hidden){state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();return;}if((state.training.mode||'menu')!=='menu'){state.training.mode='menu';renderTraining();return;}leaveTraining();};$('#trainingHomeQuick').onclick=leaveTraining;$('#trainingFeatureCloseBtn').onclick=()=>{state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=52">
+  <link rel="stylesheet" href="css/style.css?v=55">
 </head>
 <body>
 <main id="app">
@@ -99,6 +99,25 @@
       </div>
     </div>
 
+
+    <div id="castleQtyPopup" class="castle-qty-popup" hidden>
+      <div class="castle-qty-card">
+        <button id="castleQtyCloseBtn" class="castle-qty-close" type="button">×</button>
+        <div class="castle-qty-item">
+          <img id="castleQtyImage" src="item/01.png" alt="">
+          <div><small>購入するアイテム</small><b id="castleQtyName">アイテム</b><em id="castleQtyUnitPrice">0G</em></div>
+        </div>
+        <p>購入数を選んでください</p>
+        <div class="castle-qty-stepper">
+          <button id="castleQtyMinusBtn" type="button">−</button>
+          <strong id="castleQtyValue">1</strong>
+          <button id="castleQtyPlusBtn" type="button">＋</button>
+        </div>
+        <div class="castle-qty-total"><span>合計</span><b id="castleQtyTotal">0 G</b></div>
+        <div class="castle-qty-wallet"><span>所持金</span><b id="castleQtyWallet">0 G</b></div>
+        <button id="castleQtyBuyBtn" class="primary-btn castle-qty-buy" type="button">購入する</button>
+      </div>
+    </div>
     <div id="castleFade" class="castle-fade" hidden><div id="castleFadeText"></div></div>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
@@ -313,7 +332,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=53" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=55" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -321,7 +340,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=53"></script>
-<script src="js/game.js?v=53"></script>
+<script src="js/data.js?v=55"></script>
+<script src="js/game.js?v=55"></script>
 </body>
 </html>
