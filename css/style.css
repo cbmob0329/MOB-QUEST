@@ -2096,3 +2096,42 @@
   .dialog-overlay.facility-line-talk .dialog-card>img{width:86px!important;height:132px!important}
   .dialog-overlay.facility-line-talk .dialog-body>p{font-size:min(var(--facility-line-font,16px),16px)!important}
 }
+
+/* ===== MOB QUEST v53 : Castle / throne / inn / item shop ===== */
+.castle-screen .castle-overlay{background:linear-gradient(to bottom,rgba(5,9,14,.24),rgba(5,9,14,.04) 42%,rgba(5,9,14,.64) 88%)}
+.castle-content{padding-left:10px!important;padding-right:10px!important}
+.castle-menu-stage{display:flex;flex-direction:column;gap:14px;min-height:calc(100% - 12px)}
+.castle-main-icons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:2px 2px 8px}
+.castle-main-icons>button{min-height:176px;padding:9px 7px 12px;border-radius:22px;background:linear-gradient(180deg,rgba(27,43,62,.95),rgba(11,20,31,.96));border:1px solid rgba(255,255,255,.20);box-shadow:0 9px 21px rgba(0,0,0,.34);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center}
+.castle-main-icons>button img{width:118px;height:112px;object-fit:contain}
+.castle-main-icons>button b{font-size:17px;line-height:1.2}
+.castle-main-icons>button small{font-size:10px;color:#e4c989;font-weight:1000;letter-spacing:.12em}
+.castle-room-view{overflow:hidden!important;padding:0 0 calc(60px + var(--safe-bottom))!important}
+.castle-room-stage{position:relative;width:100%;height:100%;min-height:100%;overflow:hidden}
+.castle-room-home{position:absolute;z-index:15;left:16px;bottom:calc(72px + var(--safe-bottom));width:104px;min-height:106px;padding:6px;border-radius:18px;background:rgba(12,21,32,.90);border:1px solid rgba(255,255,255,.22);box-shadow:0 8px 18px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.castle-room-home img{width:62px;height:62px;object-fit:contain}
+.castle-room-home b{font-size:15px}.castle-room-home small{font-size:8px;color:#b9c6d4}
+.castle-actor{position:absolute;z-index:8;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;filter:drop-shadow(0 8px 8px rgba(0,0,0,.32));overflow:visible}
+.castle-actor img{width:100%;height:100%;object-fit:contain;object-position:center bottom}
+.castle-actor b,.castle-actor small{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;text-shadow:0 2px 4px #000;color:#fff}
+.castle-actor b{bottom:-3px;font-size:12px}.castle-actor small{bottom:-18px;font-size:8px;color:#dce6f0}
+.castle-actor-king{width:44%;height:48%;left:34%;bottom:14%;z-index:9}
+.castle-actor-arm{width:32%;height:39%;left:6%;bottom:15%;z-index:8}
+.castle-speech{position:absolute;z-index:18;top:11%;left:50%;transform:translateX(-50%);width:min(88%,390px);padding:12px 14px 14px;border-radius:22px;background:#fff;color:#17202b;border:4px solid #20262d;box-shadow:0 8px 0 rgba(0,0,0,.24)}
+.castle-speech[hidden]{display:none!important}.castle-speech small{display:block;font-size:12px;font-weight:1000;color:#48647d}.castle-speech p{margin:4px 0 0;font-size:18px;line-height:1.4;font-weight:1000}
+.castle-speech.side-left{left:37%}
+.castle-actor-inn{width:46%;height:48%;left:27%;bottom:15%}
+.mobshop-host{position:absolute;z-index:8;right:7%;bottom:16%;width:42%;height:48%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;filter:drop-shadow(0 8px 8px rgba(0,0,0,.32))}
+.mobshop-host img{width:100%;height:90%;object-fit:contain;object-position:center bottom}.mobshop-host>div{margin-top:-3px;padding:4px 9px;border-radius:999px;background:rgba(15,22,31,.84);text-align:center}.mobshop-host small{display:block;font-size:7px;color:#b9c5d3;letter-spacing:.12em}.mobshop-host b{display:block;font-size:11px}
+.castle-shop-open{position:absolute;z-index:14;left:18%;top:20%;width:42%;min-height:150px;padding:8px;border-radius:22px;background:rgba(250,239,210,.94);border:2px solid rgba(87,58,42,.38);color:#3b281e;box-shadow:0 10px 24px rgba(0,0,0,.34);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.castle-shop-open img{width:92px;height:92px;object-fit:contain}.castle-shop-open b{font-size:16px}
+.record-room-lock{position:absolute;z-index:10;left:50%;top:43%;transform:translate(-50%,-50%);width:76%;padding:18px 15px;border-radius:24px;background:rgba(9,16,26,.90);border:1px solid rgba(255,255,255,.20);text-align:center;box-shadow:0 12px 28px rgba(0,0,0,.38)}
+.record-room-lock img{width:120px;height:120px;object-fit:contain;filter:grayscale(.6) brightness(.78)}.record-room-lock b{display:block;font-size:24px;letter-spacing:.18em;margin:4px 0}.record-room-lock p{font-size:12px;line-height:1.5;color:#c3ceda;margin:0}
+.castle-shop-popup{z-index:90!important}.castle-shop-card{position:relative;background:linear-gradient(90deg,rgba(247,198,215,.97) 0 50%,rgba(192,220,245,.97) 50% 100%)!important;color:#32271f!important;border-top:3px solid rgba(85,61,46,.30)!important}
+.castle-shop-card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;background:repeating-linear-gradient(0deg,rgba(112,76,47,.18) 0 2px,transparent 2px 10px)}
+.castle-shop-card>*{position:relative;z-index:1}.castle-shop-card .settings-head small{color:#624d3c!important}.castle-shop-card .settings-head h2{color:#2c221b!important}.castle-shop-card .sheet-close{background:#26384e!important;color:#fff!important}
+.castle-shop-headline{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px;padding:7px 9px;border-radius:13px;background:rgba(255,248,232,.72);border:1px solid rgba(76,58,43,.20)}.castle-shop-headline span{font-size:10px;font-weight:1000;letter-spacing:.14em;color:#725541}.castle-shop-headline b{font-size:13px;color:#5b2f22}
+.castle-shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.castle-shop-item{min-height:108px;padding:7px;border-radius:16px;border:1px solid rgba(73,54,42,.24);display:grid;grid-template-columns:64px 1fr;gap:7px;align-items:center;text-align:left;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 4px 9px rgba(73,46,39,.14)}
+.castle-shop-item.wood-pink{background:repeating-linear-gradient(0deg,#f9d8df 0 10px,#f4ced8 10px 20px)}.castle-shop-item.wood-blue{background:repeating-linear-gradient(0deg,#d5e9f7 0 10px,#c9e1f3 10px 20px)}
+.castle-shop-item img{width:64px;height:70px;object-fit:contain}.castle-shop-item b{display:block;font-size:12px;line-height:1.25;color:#2f241d}.castle-shop-item small{display:block;margin:3px 0;font-size:9px;line-height:1.35;color:#56483e}.castle-shop-item em{display:block;font-style:normal;font-size:9px;font-weight:1000;color:#7a3d2d}
+.castle-fade{position:absolute;z-index:120;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .65s ease;pointer-events:none}.castle-fade[hidden]{display:none!important}.castle-fade.dark{background:#000}.castle-fade>div{max-width:84%;font-size:17px;line-height:1.5;font-weight:1000;color:#fff;text-align:center;opacity:0;transition:opacity .30s ease}.castle-fade.dark>div:not(:empty){opacity:1}
+@media(max-width:380px){.castle-main-icons>button{min-height:154px}.castle-main-icons>button img{width:100px;height:96px}.castle-main-icons>button b{font-size:15px}.castle-actor-king{width:45%;height:45%}.castle-actor-arm{width:31%;height:37%}.castle-speech p{font-size:16px}.castle-shop-grid{grid-template-columns:1fr}.castle-shop-item{min-height:92px}}

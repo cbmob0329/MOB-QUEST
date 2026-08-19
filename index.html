@@ -85,21 +85,21 @@
   </section>
 
   <!-- CASTLE -->
-  <section id="castleScreen" class="screen interior-screen facility-screen">
-    <img class="screen-bg bg-cover bg-interior" src="back/rpgmain.png" alt="">
-    <div class="bg-overlay interior-overlay"></div>
-    <header class="page-header safe-top glass"><button id="castleBackBtn" class="back-btn" type="button">←</button><div><span>CASTLE</span><h1>お城</h1></div><span class="pill">FACILITIES</span></header>
-    <div class="page-scroll nav-spacer">
-      <section class="facility-landing">
-        <div class="castle-title-card"><small>CASTLE FACILITIES</small><h2>城内施設</h2><p>担当キャラクターの施設を選んでください。</p></div>
-        <div class="facility-menu-grid castle-menu-grid">
-          <button data-castle-menu="smith" type="button"><img src="play/002.png" alt="モブゴンゾー"><b>鍛冶屋</b><small>モブゴンゾー</small></button>
-          <button data-castle-menu="magic" type="button"><img src="play/004.png" alt="モブローブ"><b>魔法錬成</b><small>モブローブ</small></button>
-          <button data-castle-menu="shop" type="button"><img src="play/005.png" alt="モブリュック"><b>モブショップ</b><small>モブリュック</small></button>
-          <button data-castle-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>お城を出る</small></button>
-        </div>
-      </section>
+  <section id="castleScreen" class="screen interior-screen facility-screen castle-screen">
+    <img id="castleBg" class="screen-bg bg-cover bg-interior" src="back2/003.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay castle-overlay"></div>
+    <header class="page-header safe-top glass"><button id="castleBackBtn" class="back-btn" type="button">←</button><div><span id="castleHeaderKicker">CASTLE</span><h1 id="castleHeaderTitle">お城</h1></div><span id="castleHeaderPill" class="pill">FACILITIES</span></header>
+    <div id="castleContent" class="page-scroll nav-spacer castle-content"></div>
+
+    <div id="castleShopPopup" class="facility-popup castle-shop-popup" hidden>
+      <div class="facility-popup-card castle-shop-card">
+        <div class="settings-head"><div><small>MOB SHOP</small><h2>アイテム購入</h2></div><button id="castleShopCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="castle-shop-headline"><span>ITEM SHOP</span><b id="castleShopCoins">0 G</b></div>
+        <div id="castleShopGrid" class="castle-shop-grid"></div>
+      </div>
     </div>
+
+    <div id="castleFade" class="castle-fade" hidden><div id="castleFadeText"></div></div>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
 
@@ -313,7 +313,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=52" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=53" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -321,7 +321,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=52"></script>
-<script src="js/game.js?v=52"></script>
+<script src="js/data.js?v=53"></script>
+<script src="js/game.js?v=53"></script>
 </body>
 </html>
