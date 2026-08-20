@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 MOB QUEST v57
-=======
-MOB QUEST v56
->>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 バトルプログラム追加版
 
 MOB QUEST playable core v46
