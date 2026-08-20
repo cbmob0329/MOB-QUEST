@@ -1,156 +1,70 @@
-MOB QUEST v24
+MOB QUEST v57
+バトルプログラム追加版
+
+MOB QUEST playable core v46
 
 今回の更新
-- 冒険ルートを草原～マグマⅡまで拡張。アップロードされた最新ボス.txtのレベル・画像・技を反映。
-- 未設定技は属性/役割に応じた仮AI。通常/中ボス/ボスのステータスはLvと人数に応じて自動バランス。
-- トレーニングの味方10枠を空きにでき、1人以上いれば戦闘開始可能。
-- 敵は1～4体を必ず横一列表示。敵を囲っていた外側の四角い選択枠を削除。
-- 味方の全体攻撃を正式仕様に合わせて修正。モブピンク/デザート/ニョロ/ジェリー/デンデン/テツ/リリス/ナラク等の全体必殺を複数敵へ適用。
-- モブニョロ「マグマスイミング」: 通常攻撃が70%で敵全体攻撃。
-- マグマⅡ「マグポヨ～」: 全体火属性小ダメージ + ATK 5%ダウンを仮実装。
-- マグマⅡAREA4はモブドラゴンⅡ撃破後にモブギドラへ変身/次ウェーブ。
+- 最新「ボス(6)」の敵編成・攻撃種別を反映
+- 未指定だった敵の通常攻撃を物理/魔法へ明示分類
+- 未指定だったボス必殺を物理/魔法/精神/物理&魔法へ補完
+- 中ボスは基本1～2回行動
+- 中ボスの側近は1回行動
+- 複数の中ボス本人が同時初登場する編成は、それぞれ1～2回行動
+- ボスは従来通り2～3回行動
+- モブフレザード / モブジョーンズ / モブバイオリンは資料通り確定2回行動
+- 後のエリアで通常モンスター扱いになった旧中ボスは1回行動
+- 部族村ボスは片方を倒した時点で両方が第二形態へ移行しHP全回復
+- マグマ合体後、部族村変身後の戦闘中カットイン会話追加
+- 最新ストーリーの砂漠・田舎町・マグマ・海底・部族村更新を反映
+- 田舎町IIの到着～AREA4ボス後までイベント追加
+- テストモードでキャラクター別Lv1～120設定可能
+- テストモード「アイテムMAX」で消耗品/テント/ドリンク/レコード/武器/メダルをMAX化
 
-注記
-- ストーリーイベントは未実装。モブエースの3ターン絶対勝利イベントは設定を保持しつつ、現段階ではトレーニング用の強敵として扱います。
-- 部族村AREA4は現戦闘エンジン上、モブデーバフ+モブバーサク撃破後に第二形態2体が出る2ウェーブ戦として実装しています。
-- ユーザー未指定の通常敵技は（仮）表記の一時設定です。
-
-MOB QUEST playable core v23
-
-[Monster / Adventure / Training expansion]
-- 草原・砂漠・田舎町・ネオン街・マグマ・海底の通常モンスター、中ボス、ボスを登録。
-- ユーザー指定のLv帯・属性・画像・既知の技/必殺を反映。
-- 未設定の通常技/魔法は属性と役割に応じた仮AI/仮技として隔離実装。
-- 通常 / 中ボス / ボスで別のTEMP_BALANCEステータス成長式を使用。
-- 2～4体戦は敵1体ごとの攻撃倍率を人数に応じて抑え、理不尽な集中火力を軽減。
-- ボスは従来どおり2回行動。
-
-[Training]
-- 敵を1～4体まで自由に設定可能。
-- 同じ敵の複数配置、各敵のLv 1～99変更、通常敵/中ボス/ボス混成に対応。
-- 草原～海底の新規敵に加え、従来の後半ボスもトレーニングカタログに維持。
-- ランダム設定も1～4体の敵編成に対応。
-
-[Adventure]
-- 1ワールド = AREA1～AREA4。
-- 各AREAで 探索→バトル を3回。1・2戦目はエリア通常敵からランダム1～4体。
-- 4体出現は4%で低確率。
-- 3戦目は設定済み中ボス/ボス編成。
-- AREA4クリアで次ワールドへ移動。現在は草原→砂漠→田舎町→ネオン街→マグマ→海底まで。
-- マグマAREA3はモブブリザード＋モブフレイム撃破後、モブフレザードの第2ウェーブ。
-- レアのモブギミックは冒険で撃破すると10000 COIN。
-
-[Multi enemy battle]
-- 1～4体を同時表示し、敵をタップしてターゲット変更可能。
-- HP、Lv、属性、状態異常を敵ごとに管理。
-- 敵ごとの行動順、複数ボス2回行動、次ウェーブに対応。
-
-[Source gaps kept temporary]
-- 田舎町AREA1のモブダンサーは画像/属性が資料に無いため、enemy/45.png・火属性を仮使用。
-- モブエースは資料にLv/技が無いため、トレーニング用Lv32・仮AI扱い。冒険AREA4には入れていない。
-- 正式な敵ステータス、通常魔法/技の詳細は今後差し替え可能。
-
-v20 HOME common scale, v21 asset/magic/ultimate stabilization, v22 weapon+element attack FX are retained.
+注意
+- 最新ストーリー資料は「ネオン街II」の見出しで終了しているため、その先の新規会話は追加していません。
+- 既存の必殺技演出、武器、ターンテーブル、キャンプ、探索、RESULT、育成仕様は保持しています。
 
 
-[v25]
-- Progression added through 砂漠Ⅱ and 魔王城 based on latest boss/enemy sheet.
-- モブリリス player image changed to play/14.png.
-- Initial party level changed to Lv5. Player base stat curve targets ~HP1200 at Lv99 and up to HP1500 at Lv120 after clearing 魔王城.
-- Removed enemy-count/party-size automatic weakening. Enemy stats are fixed by level/category.
-- Enemy sprite scale no longer changes with 1–4 enemies. Normal mobs use the 4-enemy footprint; slimes/small mobs are smaller, elites only slightly larger, bosses larger.
-- Fixed enemy hit flash/shake selector for actual PNG sprites.
-- Pure buff/heal ultimates no longer play enemy impact FX; buff/heal FX are placed on allies.
-- Reactive passives such as サバクノマモリビト display earlier.
-- Settings now includes full local save-data deletion for testing.
-
-[v26]
-- 冒険イベント/会話演出を砂漠～海底まで導入（未定のレコード名は未定のまま）
-- セリフ吹き出し、ナレーション、フェード、ビックリマーク、落下/シェイク/フラッシュ演出
-- ネオン街クリア後にモブエース3ターン強制終了イベント戦
-- 砂漠/田舎町/ネオン街/マグマ/海底で仲間加入イベント
-- 設定からテストモード：Lv1～120、現在パーティー一括Lv設定、戦闘×5 ON/OFF
-- 設定から全データ削除し、勇者+モブピンク Lv5からイベントを再テスト可能
-- 冒険中キャラをPNGの相対サイズを維持した共通倍率表示へ変更
-- play画像を?v=相当のmqv=26で統一し、旧巨大PNGキャッシュの一瞬表示を抑止
+[v46 hotfix]
+- Fixed battle transition freeze at NOW LOADING / READY caused by missing WEAPON_STAT_KEYS after weapon-data refactor.
+- Restored weapon stat application key list used when building player battle stats.
 
 
-[v27]
-- Story event underlay party is hidden while events are active (no duplicate actors).
-- Desert arrival staging: current party left, Desert right at the higher adventure-event baseline.
-- Desert now fades in only after Pink says "誰か来ますよ！".
-- Script newlines are now interpreted as separate speech bubbles (one source line per bubble).
-- Bubble position/arrow is recalculated for each speaking actor.
+[v47]
+- ボス(7)・冒険イベント(3)を反映
+- ネオン街II / マグマIIのイベント追加
+- ネオマスターHP70%/40%戦闘カットイン
+- モブドラゴンII→モブギドラ戦闘中変身
+- 海底報酬にモブトマトジュースセット追加
+- ネオン街II AREA1側近・マグマII敵名/2回行動修正
+
+[v49 2026-08-19]
+- 施設導入：酒場 / お城 / 鍛冶屋 / トレーニング / 魔法錬成（準備中） / モブショップ（商品仕様待ち）
+- 担当キャラ会話：play/001～005.png を施設会話・退出バナーに使用
+- 酒場：大アイコン式メニュー（パーティー編成 / ドリンク購入 / HOME）、ドリンクはポップアップ化
+- 酒場編成：メイン=赤、スーパーサブ=緑、サブ=青の区分をベージュバナーで表示
+- 鍛冶屋：モブゴンゾー初回/再訪会話、メダル錬成候補は未装備3個以上のみ、3秒カンカン演出を追加
+- トレーニング：通常時は 冒険日記 / 経験値 / ゴールド / ボス / HOME の5大アイコン
+- テスト戦闘はテストモードON時のみ6つ目のアイコンとして表示
+- 各ターンテーブル初回説明をモブコーチで表示
+- 推奨Lv・レコード必要数・難易度情報を大きく表示
+- 戦闘パーティーHPバー追加：>60%緑 / 31～60%オレンジ / 30%以下赤
+
+[v50 2026-08-19]
+- 施設初回/再訪会話を改行単位の1行ずつ画面タップ進行へ変更
+- 施設・ダイアログ・推奨Lv/必要レコード等の文字を拡大
+- トレーニングを大アイコン中心へ再設計、HOMEをモブコーチ横へ移動、アイコンは枠なし＋微小フロート
+- 冒険日記/経験値/ゴールド/ボスターンテーブルをポップアップ表示
+- テスト戦闘はテストモードON時のみ表示、OFF時は戦闘開始UIも完全非表示
+- 酒場パーティー編成をポップアップ＋2人タップ入れ替え式へ簡略化
+- キャンプ編成の案内も同じ2人タップ方式へ統一
+- ドリンク購入後「ありがとうございます🎵」を表示
+- メダル枠は所持メダルのみ選択可能。通常武器をメダルとして表示/装着しないよう防御を追加
+- 武器特性は維持し、武器ステータスのみ全体を少し低下。最上位120級は約90以内に抑制
 
 
-v28:
-- 草原AREA4ボス撃破後のリザルトは「HOMEへ戻る」。砂漠到着イベントは次にHOMEから冒険へ入った時に開始。
-- イベント中の通常冒険パーティーをCSSでも強制非表示にし、イベントキャラとの二重表示を防止。
+v51: レコード消費確認、レコードエリア退出ロック、戦闘開始安定化、探索アイテム表示時間延長、施設会話改行改善、酒場ドリンク木製ベージュ、冒険日記メタリックオレンジ。
 
-v29
-- Story NEXT button moved to upper-right scene control.
-- Event party uses up to 6 actors per row / 2 rows; duplicate adventure party layer is forcibly hidden.
-- Denden/Money/Nyoro entrance size reduced; source-line speech remains one bubble per line.
-- Adventure image decode gate prevents native-size PNG flash.
-- AREA1 normal encounters fixed to 2 enemies; AREA2+ 2-4. Exploration no longer reveals enemy names.
-- Target marker changed to a small overhead arrow; enemy HP plate moved closer to the enemy.
-- Rock/Golem/Boss/Dragon/Frezard display scales adjusted without count-dependent scaling.
-- Main elite/boss is centered when accompanied by attendants.
-- Magma AREA3 Blizzard+Flame fusion animation added before giant Frezard appearance.
-- Clearing every AREA boss/mid-boss returns to HOME (post-boss event plays first when defined).
+v52: 戦闘開始時エラー修正、施設1行会話の不自然な端数改行修正、ドリンクショップ文字コントラスト改善。
 
-
-=== v31 ===
-- 最新イベント台本を導入: 草原、草原II、部族村の到着・中ボス前後・ボス前後。
-- AREAごとの3戦目に pre/post story hook を追加。
-- 複数のイベント敵を同時表示可能。
-- 単独の中ボス/ボス+側近編成は中ボスを中央寄せ。
-- モブネプ表記をモブネプチューンへ更新。
-- モブジェシーは正式プレイヤーキャラクターとして play/06.png を使用。
-
-
-=== v32 ===
-- モブジェリーを正式に「モブジェシー」へ改名。
-- プレイヤーIDも jessie に統一。旧セーブの jerry ID は読み込み時に自動変換。
-- play/06.png、雷属性、槍・銃、ダブルサンダー等の既存性能はそのまま継承。
-- 部族村イベントのモブジェシーと通常プレイヤーデータを同一キャラクターとして統一。
-
-
-v33: LOADING watchdog fix. Individual asset requests time out after 3.2s, whole loading gates after 5.2s, boot recovery added. index.html in this ZIP contains no Git conflict markers.
-
-
-=== v34 ===
-- HOME party character display removed; HOME no longer preloads/decodes player PNGs.
-- Story events advance by tapping anywhere on the event screen. Visible NEXT/TAP labels removed.
-- One pending tap resolves one line only, preventing rapid double-tap skipping/selection.
-- Speech bubbles now anchor to the actual visible character image bounds.
-- Event party scaling corrected: up to 6 per row, 1-3 characters are no longer tiny.
-- Event guest size rebalanced.
-- Boss/dragon/frezard, rock, golem presentation enlarged; enemy count does not change art scale.
-- Small-monster HP/name plate moved closer to the sprite.
-
-
-=== v36 ===
-- 2人イベントの味方画像を縮小し、少人数でも巨大化しないよう再調整。
-- イベント敵/ゲストを味方より上段へ配置し、画像同士の重なりを軽減。
-- 敵HPプレートを画像と別の通常レイアウト行へ変更し、小型敵の足元への被りを解消。
-- 羽・飛行系モンスターを地上型より少し上へ表示。
-- ターゲット▼は画像のobject-fit実描画位置をJSで計算し、頭上付近へ追従。
-
-=== v36 ===
-- イベントパーティーをv35より少し小さくし、下側へ移動。
-- イベント画像の max-width/max-height による個別縮小を廃止し、素材側で調整した相対サイズを保持。モブピンクだけ不自然に大きく見える原因を修正。
-- イベントで新加入するプレイヤーキャラは、その場のイベントパーティーと同一のピクセル倍率で表示。
-- イベント敵は味方より上段へ分離。敵画像は naturalWidth/naturalHeight を基準に表示し、ボス・ドラゴン等は素材の大きさを活かす。
-- 戦闘敵画像もCSS transform拡大を廃止し、naturalWidth/naturalHeight基準の縮小表示へ変更。1～4体で同じ4スロット基準を使用。
-- 小型敵HPプレートを画像の下へ離し、ターゲット▼を実PNGの頭上へ直接追従。
-- AREA1～3の中ボス撃破後は冒険画面へ継続。HOMEへ戻るのはAREA4ボス撃破時のみ。
-
-
-[v38]
-- モブネオンバルスを個別に拡大。
-- モブガーディアンを個別に拡大し、戦闘位置を少し下へ。
-- 通常雑魚敵を全体的に少し拡大。
-- 味方全体攻撃は生存中の敵全員へ同時エフェクト。
-- プレイヤー側連撃を軽く弱体化（モブデンデンはやや強めに調整）。
-- 中ボス・ボスのHPを少し増加。
+v53: お城を正式な4施設メニューへ更新（王の間 / 宿舎 / MOB SHOP / レコードルーム）。王の間にモブスライムキング・モブライトアームを配置してタップ会話、宿舎にモブミータの全回復、MOB SHOPにモブマテリアとitem/01～18の購入、レコードルームLOCKを追加。MOB SHOPはピンク/青木目UI、購入後「毎度あり！」、各サブルームHOMEは城メニューへ戻る。

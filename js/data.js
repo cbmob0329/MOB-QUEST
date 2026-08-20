@@ -1,4 +1,4 @@
-// MOB QUEST v26
+// MOB QUEST v42
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -299,3 +299,211 @@ MOB_DATA.adventureWorlds.push(
     {name:'AREA 4',bg:'back/maoh4.png',boss:[{id:'boss-maou-castle',level:95}]}
   ]}
 );
+
+
+// ===== MOB QUEST v45 : latest balance / enemy typing / encounter data =====
+// Equipment-free player growth targets from v44 are preserved so future weapons and growth systems have room to matter.
+TEMP_BALANCE.playerTargets={
+  yusha:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[45,600,700],mag:[43,580,680],def:[38,490,590],res:[39,510,610],spd:[40,540,640]},
+  pink:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[35,480,580],mag:[39,520,620],def:[42,550,650],res:[43,570,670],spd:[35,480,580]},
+  desert:{hp:[130,1200,1500],mp:[90,1080,1380],atk:[45,600,700],mag:[35,460,560],def:[38,490,590],res:[35,450,550],spd:[40,540,640]},
+  nyoro:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[45,600,700],mag:[39,520,620],def:[34,430,530],res:[35,450,550],spd:[45,600,700]},
+  nekoku:{hp:[130,1200,1500],mp:[90,1080,1380],atk:[45,600,700],mag:[35,460,560],def:[42,550,650],res:[39,510,610],spd:[40,540,640]},
+  jessie:{hp:[110,1080,1380],mp:[100,1140,1440],atk:[40,540,640],mag:[43,580,680],def:[34,430,530],res:[39,510,610],spd:[45,600,700]},
+  denden:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[45,600,700],mag:[39,520,620],def:[38,490,590],res:[39,510,610],spd:[45,600,700]},
+  money:{hp:[110,1080,1380],mp:[110,1200,1500],atk:[35,480,580],mag:[43,580,680],def:[34,430,530],res:[43,570,670],spd:[40,540,640]},
+  riro:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[40,540,640],mag:[39,520,620],def:[38,490,590],res:[43,570,670],spd:[45,600,700]},
+  tetsu:{hp:[130,1200,1500],mp:[90,1080,1380],atk:[45,600,700],mag:[35,460,560],def:[42,550,650],res:[35,450,550],spd:[40,540,640]},
+  lilith:{hp:[110,1080,1380],mp:[110,1200,1500],atk:[35,480,580],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]},
+  naraku:{hp:[130,1200,1500],mp:[100,1140,1440],atk:[45,600,700],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]}
+};
+TEMP_BALANCE.enemyProfiles={
+  normal:{hpBase:80,hpPerLevel:9,hpQuad:.10,atkBase:18,atkPerLevel:3.3,atkQuad:.002,magBase:18,magPerLevel:3.25,magQuad:.002,defBase:15,defPerLevel:2.6,defQuad:.002,resBase:15,resPerLevel:2.6,resQuad:.002,spdBase:16,spdPerLevel:3.2,spdQuad:.001},
+  elite:{hpBase:220,hpPerLevel:28,hpQuad:.42,atkBase:24,atkPerLevel:3.65,atkQuad:.003,magBase:24,magPerLevel:3.60,magQuad:.003,defBase:20,defPerLevel:2.9,defQuad:.0025,resBase:20,resPerLevel:2.9,resQuad:.0025,spdBase:18,spdPerLevel:3.5,spdQuad:.0015},
+  boss:{hpBase:420,hpPerLevel:42,hpQuad:.90,atkBase:30,atkPerLevel:4.0,atkQuad:.004,magBase:30,magPerLevel:4.0,magQuad:.004,defBase:26,defPerLevel:3.15,defQuad:.003,resBase:26,resPerLevel:3.15,resQuad:.003,spdBase:20,spdPerLevel:3.8,spdQuad:.0018}
+};
+
+// Latest boss document explicitly identifies these named techniques as physical / magic / mental / hybrid.
+const V45_BOSS_SKILL_TYPES={
+  hawk:'physical',mira:'physical',guardian:'mental',neon:'magic',ace:'magic',dragon:'magic',nepu:'physical',hawk2:'physical',
+  debuff:'physical',debuff2:'physical',berserk:'physical',berserk2:'physical',dendenBoss:'physical',umiDenden:'physical',moneyBoss:'magic',neoMaster:'magic',
+  dragon2:'magic',gidora:'magic',dorafara:'magic',gladi:'physical',lilithBoss:'magic',maou:'magic',natalie:'magic',smith:'physical',unlock:'hybrid',
+  yamigami:'magic',yamigami2:'magic',yamigamiDark:'magic',enma:'magic',enma2:'magic',enmaFinal:'magic'
+};
+for(const b of MOB_DATA.bosses||[]){
+  b.skillType=V45_BOSS_SKILL_TYPES[b.id]||b.skillType||'physical';
+  if(b.id==='umiDenden')b.name='モブウミデンデン';
+}
+
+// Every enemy now has an explicit regular attack family. Most ordinary weapon/body attacks are physical;
+// obvious caster/energy archetypes use magic so MND has a consistent purpose even when a special is not selected.
+const V45_MAGIC_NORMAL_IDS=new Set([
+  'd-yamikamen','r-nullblue','r-denchi','n-naga','n-energy','n-darknaga','m-hinodevi','m-bombthrow','s-mist','s-doctor','s-sorcerer',
+  't-jukon','r2-akui','r2-shitsui','r2-yamai','n2-naga','n2-energy','n2-darknaga','m2-hinodevi','m2-bombthrow','d2-yamikamen',
+  'c-minibook','c-loopmagic','c-killwitch','c-succubus'
+]);
+for(const e of MOB_DATA.enemyCatalog||[]){
+  if(!e.normalAttackType)e.normalAttackType=V45_MAGIC_NORMAL_IDS.has(e.id)?'magic':'physical';
+  if(e.bossId){const bt=V45_BOSS_SKILL_TYPES[e.bossId];if(bt&&!e.skillType)e.skillType=bt;}
+  if(e.special&&!e.skillType&&e.kind!=='shield'&&e.kind!=='enemyHeal')e.skillType='physical';
+  if(e.kind==='shield'&&!e.skillType)e.skillType='mental';
+  if(e.id==='boss-umidenden')e.name='モブウミデンデン';
+}
+
+// Latest encounter composition corrections.
+const v45World=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+{
+  const w=v45World('desert');if(w){w.areas[2].boss=[{id:'d-deathhead',level:10,qty:2}];}
+  const w2=v45World('rural');if(w2){w2.areas[1].boss=[{id:'r-knife',level:15,qty:2},{id:'r-captain',level:18}];}
+  const w3=v45World('rural2');if(w3){w3.areas[0].boss=[{id:'r2-adancer',level:56,qty:2},{id:'r2-violin',level:62}];}
+}
+
+
+// v45 latest boss sheet: final encounter corrections and explicit fixed-action mid-bosses.
+{
+  const sea=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='sea');
+  if(sea)sea.areas[1].boss=[{id:'s-marine',level:42,qty:2},{id:'s-jones',level:43}];
+  for(const id of ['m-frezard','s-jones','r2-violin']){
+    const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.actionCount=2;
+  }
+}
+
+
+// ===== MOB QUEST v47 : boss sheet (7) corrections =====
+// Latest uploaded boss sheet is authoritative for these encounter changes.
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const worldById=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+
+  const neon2=worldById('neon2');
+  if(neon2){
+    // AREA 1: Neo Tiger is the centre mid-boss, Neon Slimes are one-action escorts.
+    neon2.areas[0].boss=[{id:'n2-slime',level:61,qty:2},{id:'n2-tiger',level:67}];
+    // AREA 3: Palette Leon is the centre enemy; formation helper centres the unique elite.
+    neon2.areas[2].boss=[{id:'n2-banken',level:66},{id:'n2-golem',level:66},{id:'n2-palette',level:68}];
+  }
+
+  const yogan=enemyById('m2-yogan');
+  if(yogan)yogan.name='モブヨーガンスライム';
+
+  const buster=enemyById('m2-buster');
+  if(buster)buster.actionCount=2; // source: 確定2回攻撃
+}
+
+// ===== MOB QUEST v48 : story display / balance pass =====
+// Party roles are intentionally more distinct, late-game bosses get clearer identities,
+// and requested encounter-specific size / pacing adjustments are handled in game.js.
+TEMP_BALANCE.playerTargets={
+  yusha:{hp:[125,1180,1400],mp:[105,1140,1360],atk:[42,600,740],mag:[40,540,670],def:[40,520,650],res:[38,500,620],spd:[38,520,640]},
+  pink:{hp:[145,1220,1450],mp:[80,900,1100],atk:[33,430,520],mag:[24,290,360],def:[50,640,790],res:[46,600,740],spd:[24,320,390]},
+  desert:{hp:[112,1060,1260],mp:[85,960,1160],atk:[49,660,810],mag:[20,260,320],def:[34,430,520],res:[30,390,470],spd:[48,640,790]},
+  nyoro:{hp:[115,1080,1300],mp:[100,1180,1420],atk:[36,500,610],mag:[40,560,690],def:[32,410,500],res:[40,540,650],spd:[46,620,760]},
+  nekoku:{hp:[132,1240,1500],mp:[92,980,1180],atk:[44,590,720],mag:[24,320,400],def:[42,560,700],res:[34,450,560],spd:[32,420,520]},
+  jessie:{hp:[110,1040,1240],mp:[115,1250,1500],atk:[30,400,500],mag:[48,670,820],def:[28,370,450],res:[42,570,690],spd:[47,640,780]},
+  denden:{hp:[118,1100,1320],mp:[90,990,1180],atk:[47,650,800],mag:[28,360,450],def:[34,440,540],res:[30,390,480],spd:[50,680,840]},
+  money:{hp:[108,1020,1240],mp:[125,1340,1600],atk:[26,350,430],mag:[50,690,840],def:[30,400,490],res:[48,650,800],spd:[36,490,600]},
+  riro:{hp:[122,1150,1380],mp:[115,1230,1480],atk:[30,400,500],mag:[44,610,760],def:[36,470,580],res:[50,680,820],spd:[42,560,690]},
+  tetsu:{hp:[155,1320,1580],mp:[72,820,980],atk:[46,620,760],mag:[18,220,280],def:[56,720,880],res:[34,450,560],spd:[20,260,320]},
+  lilith:{hp:[105,980,1180],mp:[120,1300,1560],atk:[28,360,440],mag:[52,720,880],def:[28,360,440],res:[46,620,760],spd:[44,590,720]},
+  naraku:{hp:[135,1260,1520],mp:[110,1210,1460],atk:[52,700,860],mag:[46,640,790],def:[42,560,690],res:[42,560,690],spd:[34,450,550]}
+};
+
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const setEnemy=(id,props={})=>{
+    const e=enemyById(id);if(!e)return;
+    const {mods,...rest}=props;
+    if(mods)e.mods={...(e.mods||{}),...mods};
+    Object.assign(e,rest);
+  };
+
+  // 部族村：雑魚を少し手強くしつつ、役割を明確化。
+  setEnemy('t-ohno',{mods:{hp:1.14,atk:1.18,def:1.08}});
+  setEnemy('t-jukon',{mods:{hp:1.06,mag:1.22,res:1.16},normalAttackType:'magic'});
+  setEnemy('t-warrior',{mods:{hp:1.22,def:1.18,atk:1.08,spd:0.94}});
+  setEnemy('t-kiba',{mods:{hp:1.08,atk:1.12,spd:1.18}});
+  setEnemy('t-kukuri',{actionCount:2,mods:{atk:1.12,spd:1.22,def:0.96}});
+  setEnemy('t-tough',{mods:{hp:1.28,def:1.26,atk:1.08,spd:0.80}});
+  setEnemy('t-hisui',{actionCount:2,mods:{hp:1.08,mag:1.24,res:1.22,spd:1.06},normalAttackType:'magic'});
+  setEnemy('t-ryugo',{actionCount:2,mods:{hp:1.10,atk:1.24,spd:1.12}});
+  setEnemy('boss-debuff',{actionCount:2,mods:{hp:1.18,atk:1.02,def:1.28,res:1.20,spd:0.94}});
+  setEnemy('boss-berserk',{actionCount:2,mods:{hp:1.10,atk:1.30,def:0.94,res:0.94,spd:1.18}});
+  setEnemy('boss-debuff2',{actionCount:2,mods:{hp:1.24,atk:1.08,def:1.34,res:1.28,spd:0.96}});
+  setEnemy('boss-berserk2',{actionCount:2,mods:{hp:1.16,atk:1.38,def:0.98,res:0.96,spd:1.20}});
+
+  // ネオン街Ⅱ：中ボス/ボスの個性を強化。
+  setEnemy('n2-tiger',{actionCount:2,mods:{hp:1.14,atk:1.20,spd:1.12}});
+  setEnemy('n2-kodora',{mods:{hp:0.90,mag:1.22,res:1.08,spd:1.06},normalAttackType:'magic'});
+  setEnemy('n2-palette',{actionCount:2,mods:{hp:1.06,mag:1.24,res:1.18,spd:1.06},normalAttackType:'magic'});
+  setEnemy('boss-neomaster',{actionCount:2,mods:{hp:1.22,atk:0.98,mag:1.34,def:1.12,res:1.28,spd:1.06},normalAttackType:'magic'});
+
+  // マグマⅡ：後半らしく圧を強化。
+  setEnemy('m2-yogan',{actionCount:2,mods:{hp:1.08,mag:1.18,res:1.10}});
+  setEnemy('m2-salamander',{actionCount:2,mods:{hp:1.10,atk:1.18,mag:1.14,spd:1.06}});
+  setEnemy('m2-buster',{actionCount:2,mods:{hp:1.24,atk:1.30,def:1.12,res:1.04,spd:1.02}});
+  setEnemy('boss-dragon2',{actionCount:2,mods:{hp:1.18,atk:1.18,mag:1.22,def:1.10,res:1.12}});
+  setEnemy('boss-gidora',{actionCount:2,mods:{hp:1.30,atk:1.22,mag:1.30,def:1.14,res:1.16,spd:1.06}});
+}
+
+// ===== MOB QUEST v58 : latest ボス(8) authoritative update =====
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const worldById=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+  const bossById=id=>(MOB_DATA.bosses||[]).find(b=>b.id===id);
+  const setEnemy=(id,props={})=>{const e=enemyById(id);if(!e)return null;const {mods,...rest}=props;if(mods)e.mods={...(e.mods||{}),...mods};Object.assign(e,rest);return e;};
+  const clearAction=id=>{const e=enemyById(id);if(e)delete e.actionCount;};
+
+  // The latest sheet only fixes action counts where it explicitly says 確定2回行動/攻撃.
+  for(const id of ['t-kukuri','t-hisui','t-ryugo','n2-tiger','n2-palette','boss-neomaster','m2-yogan','m2-salamander','boss-dragon2','boss-gidora'])clearAction(id);
+  for(const id of ['m-frezard','s-jones','r2-violin','m2-buster','d2-mirabuster','d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'])setEnemy(id,{actionCount:2});
+
+  // Latest encounter compositions.
+  const grass=worldById('grassland');if(grass)grass.areas[0].boss=[{id:'g-beaver',level:4,qty:2},{id:'g-savanna',level:6}];
+  const desert=worldById('desert');if(desert)desert.areas[2].boss=[{id:'d-deathhead',level:10,qty:2}];
+  const rural=worldById('rural');if(rural){rural.areas[0].boss=[{id:'r-dancer',level:15,qty:2},{id:'r-scouter',level:18}];rural.areas[1].boss=[{id:'r-knife',level:15,qty:2},{id:'r-captain',level:18}];}
+  const sea=worldById('sea');if(sea)sea.areas[1].boss=[{id:'s-marine',level:42,qty:2},{id:'s-jones',level:43}];
+  const grass2=worldById('grassland2');if(grass2)grass2.areas[3].boss=[{id:'g2-savanna',level:56,qty:2},{id:'boss-hawk2',level:60}];
+  const rural2=worldById('rural2');if(rural2)rural2.areas[0].boss=[{id:'r2-adancer',level:56,qty:2},{id:'r2-violin',level:62}];
+  const neon2=worldById('neon2');if(neon2){neon2.areas[0].boss=[{id:'n2-slime',level:61,qty:2},{id:'n2-tiger',level:67}];neon2.areas[2].boss=[{id:'n2-banken',level:66},{id:'n2-golem',level:66},{id:'n2-palette',level:68}];}
+  const magma2=worldById('magma2');if(magma2){magma2.areas[0].boss=[{id:'m2-heatrock',level:65,qty:2},{id:'m2-yogan',level:68}];magma2.areas[1].boss=[{id:'m2-golem',level:65,qty:2},{id:'m2-salamander',level:68}];magma2.areas[2].boss=[{id:'m2-bomber',level:65,qty:2},{id:'m2-buster',level:68}];magma2.areas[3].boss=[{id:'boss-dragon2',level:70}];magma2.areas[3].nextWave=[{id:'boss-gidora',level:75}];}
+
+  // 砂漠Ⅱ: exact skills / phases from the latest sheet.
+  setEnemy('boss-mira-d2',{name:'ミラモブ',attribute:'闇',levelMin:66,levelMax:66,special:'ミラモブポイズン',kind:'poisonSingle',power:1.25,chance:.50,skillType:'physical'});
+  setEnemy('boss-mira2-d2',{name:'ミラモブⅡ',attribute:'闇',levelMin:72,levelMax:72,special:'ミラモブポイズン',kind:'poisonSingle',power:1.35,chance:.50,skillType:'physical'});
+  setEnemy('d2-mirabuster',{actionCount:2,special:'バニッシュフレイム',kind:'aoeStunChance',power:.64,chance:.10,skillType:'magic',specialOptions:[
+    {special:'バニッシュフレイム',kind:'aoeStunChance',power:.64,chance:.10,skillElement:'闇',skillType:'magic'},
+    {special:'ソウル・オーバー・ミラバスター',kind:'aoe',power:1.18,skillElement:'闇',skillType:'magic'}
+  ]});
+  setEnemy('d2-miraearth',{actionCount:2,special:'グラビディクラッシュ',kind:'singleSpdDown',power:1.08,debuff:.12,skillElement:'地',skillType:'physical',specialOptions:[
+    {special:'グラビディクラッシュ',kind:'singleSpdDown',power:1.08,debuff:.12,skillElement:'地',skillType:'physical'},
+    {special:'ソウル・アース・グラビディクラッシュ',kind:'aoe',power:1.16,skillElement:'地',skillType:'physical'}
+  ]});
+  setEnemy('d2-mirakarami',{actionCount:2,special:'ホワイトミイラフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',specialOptions:[
+    {special:'ホワイトミイラフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic'},
+    {special:'ソウル・ヘル・ミイラフレイム',kind:'single',power:1.72,skillElement:'火',skillType:'magic'}
+  ]});
+  setEnemy('d2-miranight',{actionCount:2,special:'シャドウ・オーラ・スパイラル',kind:'sleepSingle',power:1.08,chance:.30,skillElement:'水',skillType:'magic',specialOptions:[
+    {special:'シャドウ・オーラ・スパイラル',kind:'sleepSingle',power:1.08,chance:.30,skillElement:'水',skillType:'magic'},
+    {special:'ソウル・ダイダル・スパイラル',kind:'aoe',power:1.18,skillElement:'水',skillType:'magic'}
+  ]});
+  setEnemy('d2-miratime',{actionCount:2,special:'デザート・ストーム・タイム',kind:'aoeParalyzeChance',power:.66,chance:.20,skillElement:'光',skillType:'magic',specialOptions:[
+    {special:'デザート・ストーム・タイム',kind:'aoeParalyzeChance',power:.66,chance:.20,skillElement:'光',skillType:'magic'},
+    {special:'ソウル・マジック・ゴーストタイム',kind:'stunSingle',power:1.12,chance:.70,skillElement:'光',skillType:'magic'}
+  ]});
+  const pharaoh=setEnemy('boss-dorafara',{name:'ミラモブファラオ',stage:'砂漠Ⅱ',attribute:'光・闇',image:'boss/20.png',symbol:'鏡',levelMin:78,levelMax:78,bossId:'dorafara',special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82,skillElement:'光・闇',skillType:'magic',specialOptions:[
+    {special:'ミラモブポイズン',kind:'poisonSingle',power:1.28,chance:.50,skillElement:'闇',skillType:'physical'},
+    {special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82,skillElement:'光・闇',skillType:'magic',buff:.15}
+  ]});
+  const pharaohBoss=bossById('dorafara');if(pharaohBoss)Object.assign(pharaohBoss,{name:'ミラモブファラオ',attribute:'光・闇',image:'boss/20.png',symbol:'鏡',special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82});
+
+  const d2=worldById('desert2');if(d2){
+    d2.areas[0].boss=[{id:'boss-mira-d2',level:66}];d2.areas[0].nextWave=[{id:'boss-mira2-d2',level:72}];delete d2.areas[0].nextWaves;
+    d2.areas[1].boss=[{id:'d2-slamummy',level:63,escort:true,actionCount:1},{id:'d2-mirabuster',level:70,actionCount:2},{id:'d2-twinsoul',level:66,escort:true,actionCount:1}];delete d2.areas[1].nextWave;delete d2.areas[1].nextWaves;
+    d2.areas[2].boss=[{id:'d2-miraearth',level:70,actionCount:2},{id:'d2-mirakarami',level:70,actionCount:2}];
+    d2.areas[2].nextWaves=[
+      [{id:'d2-miranight',level:70,actionCount:2},{id:'d2-miratime',level:70,actionCount:2}],
+      [{id:'d2-miraearth',level:70,actionCount:1,startingHpRate:.30},{id:'d2-mirakarami',level:70,actionCount:1,startingHpRate:.30},{id:'d2-miranight',level:70,actionCount:1,startingHpRate:.30},{id:'d2-miratime',level:70,actionCount:1,startingHpRate:.30}]
+    ];delete d2.areas[2].nextWave;
+    d2.areas[3].boss=[{id:'boss-dorafara',level:78}];delete d2.areas[3].nextWave;delete d2.areas[3].nextWaves;
+  }
+}

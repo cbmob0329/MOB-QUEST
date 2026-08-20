@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=38">
+  <link rel="stylesheet" href="css/style.css?v=58">
 </head>
 <body>
 <main id="app">
@@ -51,53 +51,151 @@
   </section>
 
   <!-- TAVERN -->
-  <section id="tavernScreen" class="screen interior-screen">
+  <section id="tavernScreen" class="screen interior-screen facility-screen">
     <img class="screen-bg bg-cover bg-interior" src="back2/001.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay interior-overlay"></div>
-    <header class="page-header safe-top glass"><button class="back-btn" data-back-home type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button">初期編成</button></header>
+    <header class="page-header safe-top glass"><button id="tavernBackBtn" class="back-btn" type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button" hidden>初期編成</button></header>
     <div class="page-scroll nav-spacer">
-      <section class="panel tavern-intro"><img src="play/02.png" alt=""><div><b>パーティー編成</b><p>メイン4人＋スーパーサブ2人＋控え4人を編成できます。スーパーサブは2～5ターンごとに自動行動します。</p></div></section>
-      <section class="panel">
-        <div class="section-title"><div><small>PARTY FORMATION</small><h2>現在のパーティー</h2></div><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・控え 4/4</span></div>
-        <div id="tavernSlots" class="tavern-slots"></div>
-      </section>
-      <section class="panel">
-        <div class="section-title"><div><small>MEMBERS</small><h2>仲間一覧</h2></div><span class="pill">Lv変更可</span></div>
-        <div id="rosterGrid" class="roster-grid"></div>
+      <section id="tavernLanding" class="facility-landing">
+        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>パーティー編成とキャンプ用ドリンクの酒場です。</p></div></div>
+        <div class="facility-menu-grid tavern-menu-grid">
+          <button data-tavern-menu="party" type="button"><img src="icon/11.png" alt=""><b>パーティー編成</b><small>仲間と隊列を編成</small></button>
+          <button data-tavern-menu="drink" type="button"><img src="icon/13.png" alt=""><b>ドリンク購入</b><small>キャンプ用ドリンク</small></button>
+          <button data-tavern-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>酒場を出る</small></button>
+        </div>
       </section>
     </div>
-    <button id="savePartyBtn" class="floating-primary safe-floating" type="button">この編成に決定</button>
+    <div id="tavernPartyPopup" class="facility-popup" hidden>
+      <div id="tavernPartyPanel" class="facility-popup-card tavern-party-popup-card">
+        <div class="settings-head"><div><small>PARTY FORMATION</small><h2>パーティー編成</h2></div><button id="tavernPartyCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="party-popup-summary"><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・SUB 4/4</span><p id="tavernPartyGuide">入れ替えたいメンバーを1人タップしてください</p></div>
+        <div id="tavernSlots" class="tavern-slots tavern-simple-slots"></div>
+        <button id="savePartyBtn" class="primary-btn tavern-party-confirm" type="button">この編成に決定</button>
+      </div>
+    </div>
+    <div id="tavernDrinkPopup" class="facility-popup" hidden>
+      <div class="facility-popup-card">
+        <div class="settings-head"><div><small>DRINK SHOP</small><h2>ドリンク購入</h2></div><button id="tavernDrinkCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="section-title"><div><small>CAMP DRINK</small><h2>キャンプ用ドリンク</h2></div><span id="drinkShopCoin" class="pill">0 G</span></div>
+        <p class="panel-note">購入したドリンクセットは冒険中のキャンプで使用します。</p>
+        <div id="tavernDrinkShop" class="drink-shop-grid"></div>
+      </div>
+    </div>
+    <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
+  </section>
+
+  <!-- CASTLE -->
+  <section id="castleScreen" class="screen interior-screen facility-screen castle-screen">
+    <img id="castleBg" class="screen-bg bg-cover bg-interior" src="back2/003.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay castle-overlay"></div>
+    <header class="page-header safe-top glass"><button id="castleBackBtn" class="back-btn" type="button">←</button><div><span id="castleHeaderKicker">CASTLE</span><h1 id="castleHeaderTitle">お城</h1></div><span id="castleHeaderPill" class="pill">FACILITIES</span></header>
+    <div id="castleContent" class="page-scroll nav-spacer castle-content"></div>
+
+    <div id="castleShopPopup" class="facility-popup castle-shop-popup" hidden>
+      <div class="facility-popup-card castle-shop-card">
+        <div class="settings-head"><div><small>MOB SHOP</small><h2>アイテム購入</h2></div><button id="castleShopCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="castle-shop-headline"><span>ITEM SHOP</span><b id="castleShopCoins">0 G</b></div>
+        <div id="castleShopGrid" class="castle-shop-grid"></div>
+      </div>
+    </div>
+
+
+    <div id="castleQtyPopup" class="castle-qty-popup" hidden>
+      <div class="castle-qty-card">
+        <button id="castleQtyCloseBtn" class="castle-qty-close" type="button">×</button>
+        <div class="castle-qty-item">
+          <img id="castleQtyImage" src="item/01.png" alt="">
+          <div><small>購入するアイテム</small><b id="castleQtyName">アイテム</b><em id="castleQtyUnitPrice">0G</em></div>
+        </div>
+        <p>購入数を選んでください</p>
+        <div class="castle-qty-stepper">
+          <button id="castleQtyMinusBtn" type="button">−</button>
+          <strong id="castleQtyValue">1</strong>
+          <button id="castleQtyPlusBtn" type="button">＋</button>
+        </div>
+        <div class="castle-qty-total"><span>合計</span><b id="castleQtyTotal">0 G</b></div>
+        <div class="castle-qty-wallet"><span>所持金</span><b id="castleQtyWallet">0 G</b></div>
+        <button id="castleQtyBuyBtn" class="primary-btn castle-qty-buy" type="button">購入する</button>
+      </div>
+    </div>
+    <div id="castleFade" class="castle-fade" hidden><div id="castleFadeText"></div></div>
+    <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
+  </section>
+
+  <!-- EQUIPMENT / WEAPON SHOP / BLACKSMITH -->
+  <section id="equipmentScreen" class="screen interior-screen equipment-screen">
+    <img class="screen-bg bg-cover bg-interior" src="back2/001.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="bg-overlay interior-overlay"></div>
+    <header class="page-header safe-top glass"><button id="equipmentBackBtn" class="back-btn" type="button">←</button><div><span>EQUIPMENT</span><h1>装備</h1></div><span id="equipmentCoin" class="pill">0 G</span></header>
+    <div class="page-scroll nav-spacer equipment-scroll">
+      <div class="equipment-tabs glass">
+        <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
+        <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
+        <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
+        <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
+      </div>
+      <div id="equipmentContent"></div>
+    </div>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
 
   <!-- TRAINING -->
-  <section id="trainingScreen" class="screen interior-screen">
+  <section id="trainingScreen" class="screen interior-screen facility-screen">
     <img class="screen-bg bg-cover bg-interior" src="back2/002.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay interior-overlay"></div>
-    <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1>テスト戦闘</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button">ランダム</button></header>
+    <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1 id="trainingPageTitle">トレーニング</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button" hidden>ランダム</button></header>
     <div class="page-scroll training-scroll nav-spacer">
-      <section class="panel">
-        <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋SUPER2人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
-        <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
-        <div id="trainingPartySetup" class="training-party-setup"></div>
-      </section>
-      <section class="panel boss-panel enemy-setup-panel">
-        <div class="section-title"><div><small>ENEMY SETUP</small><h2>対戦相手を自由に設定</h2></div><span id="bossCountLabel" class="pill"></span></div>
-        <p class="panel-note">敵は1～4体。スロットを選んでからモンスターをタップすると配置できます。同じ敵を複数置くことも可能です。ボスは2回行動します。</p>
-        <div id="trainingEnemySlots" class="training-enemy-slots"></div>
-        <div class="training-enemy-toolbar"><button id="trainingEnemyAddBtn" class="mini-btn" type="button">空き枠を選択</button><button id="trainingEnemyClearBtn" class="mini-btn" type="button">敵を全削除</button></div>
-        <div id="bossTabs" class="boss-tabs"></div>
-        <div id="bossGrid" class="boss-grid enemy-catalog-grid"></div>
-      </section>
+      <div class="training-host-row">
+        <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせて<br>メニューを選ぼう！</p></div></div>
+        <button id="trainingHomeQuick" class="training-home-quick" type="button" aria-label="HOME"><img src="mqicon/06.png" alt="HOME"><b>HOME</b></button>
+      </div>
+      <div id="trainingModeCarousel" class="training-mode-carousel training-main-grid" aria-label="トレーニングメニュー"></div>
+      <div id="trainingTestPanel" hidden>
+        <section class="panel">
+          <div class="section-title"><div><small>PLAYER PARTY</small><h2>メイン4人＋SUPER2人＋控え4人</h2></div><button id="allLevelBtn" class="mini-btn" type="button">全員 Lv50</button></div>
+          <p class="panel-note">酒場の編成を読み込みます。MAIN4人、SUPER SUB2人、RESERVE4人です。SUPER SUBは2～5ターンごとに自動行動します。</p>
+          <div id="trainingPartySetup" class="training-party-setup"></div>
+        </section>
+        <section class="panel boss-panel enemy-setup-panel">
+          <div class="section-title"><div><small>ENEMY SETUP</small><h2>対戦相手を自由に設定</h2></div><span id="bossCountLabel" class="pill"></span></div>
+          <p class="panel-note">敵は1～4体。スロットを選んでからモンスターをタップすると配置できます。同じ敵を複数置くことも可能です。ボスは2回行動します。</p>
+          <div id="trainingEnemySlots" class="training-enemy-slots"></div>
+          <div class="training-enemy-toolbar"><button id="trainingEnemyAddBtn" class="mini-btn" type="button">空き枠を選択</button><button id="trainingEnemyClearBtn" class="mini-btn" type="button">敵を全削除</button></div>
+          <div id="bossTabs" class="boss-tabs"></div>
+          <div id="bossGrid" class="boss-grid enemy-catalog-grid"></div>
+        </section>
+      </div>
     </div>
-    <div class="sticky-action safe-bottom-action glass"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
+    <div id="trainingFeaturePopup" class="facility-popup" hidden>
+      <div class="facility-popup-card training-feature-popup-card">
+        <div class="settings-head"><div><small>TRAINING MENU</small><h2 id="trainingFeaturePopupTitle">トレーニング</h2></div><button id="trainingFeatureCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div id="trainingFeaturePanel"></div>
+      </div>
+    </div>
+    <div id="trainingStickyAction" class="sticky-action safe-bottom-action glass" hidden style="display:none"><div id="selectedBossMini" class="selected-mini"></div><button id="startTrainingBattleBtn" class="primary-btn" type="button">戦闘開始</button></div>
+  </section>
+
+  <!-- TRAINING QUEST -->
+  <section id="questScreen" class="screen quest-screen">
+    <img id="questBg" class="screen-bg bg-cover bg-adventure" src="back/metal.png" alt="">
+    <div class="bg-overlay adventure-overlay"></div>
+    <header class="page-header safe-top glass"><button id="questBackBtn" class="back-btn" type="button">←</button><div><span id="questKicker">TRAINING QUEST</span><h1 id="questTitle">経験値ターンテーブル</h1></div><span id="questAreaPill" class="pill">AREA 1 / 4</span></header>
+    <section class="quest-view">
+      <div class="quest-card glass"><small id="questModeLabel">QUEST</small><b id="questAreaName">AREA 1</b><p id="questDescription"></p></div>
+      <div id="questExploreResult" class="quest-explore-result" hidden></div>
+    </section>
+    <section class="quest-menu glass safe-bottom-action">
+      <button id="questExploreBtn" class="adventure-command" type="button"><span><img src="mqicon/14.png" alt=""><i>⌕</i></span><b>探索</b><small>周囲を調べる</small></button>
+      <button id="questCampBtn" class="adventure-command" type="button"><span><img src="mqicon/15.png" alt=""><i>⌂</i></span><b>キャンプ</b><small>1 AREA 1回</small></button>
+      <button id="questBattleBtn" class="adventure-command" type="button"><span><img src="mqicon/16.png" alt=""><i>⚔</i></span><b>バトル</b><small id="questBattleHint">戦闘可能</small></button>
+    </section>
   </section>
 
   <!-- ADVENTURE -->
   <section id="adventureScreen" class="screen adventure-screen">
     <img id="adventureBg" class="screen-bg bg-cover bg-adventure" src="back/sougen.png" data-fallback-src="back/sougen4.png" alt="">
     <div class="bg-overlay adventure-overlay"></div>
-    <header class="page-header safe-top glass"><button id="adventureBackBtn" class="back-btn" type="button">←</button><div><span>ADVENTURE</span><h1 id="adventureStageTitle">草原</h1></div><span id="adventureProgress" class="pill">探索 0/4</span></header>
+    <header class="page-header adventure-header safe-top glass"><span class="adventure-header-spacer"></span><div><span>ADVENTURE</span><h1 id="adventureStageTitle">草原</h1></div><span id="adventureProgress" class="pill">探索 0/4</span></header>
 
     <section class="adventure-view">
       <div class="destination-card glass"><small>CURRENT AREA</small><b id="areaName">草原・入口</b><p id="areaDescription">まずはじっくり探索してみましょう！</p></div>
@@ -111,6 +209,31 @@
       <button id="campBtn" class="adventure-command" type="button"><span><img src="mqicon/15.png" alt=""><i>⌂</i></span><b>キャンプ</b><small>HP・MP回復</small></button>
       <button id="fieldBattleBtn" class="adventure-command locked" type="button" disabled><span><img src="mqicon/16.png" alt=""><i>⚔</i></span><b>バトル</b><small id="fieldBattleHint">探索が必要</small></button>
     </section>
+
+    <!-- CAMP -->
+    <div id="campOverlay" class="camp-overlay" hidden>
+      <div class="camp-card">
+        <div class="camp-head"><div><small>CAMP</small><h2 id="campTitle">キャンプ</h2><p id="campUsageText">このAREAで1回だけ休憩できます</p></div><button id="campCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div id="campMainMenu" class="camp-main-menu">
+          <button data-camp-action="tent" type="button"><span><img src="icon/10.png" alt="テント"></span><b>テント</b><small>モブテント×<em id="campTentCount">0</em></small></button>
+          <button data-camp-action="party" type="button"><span><img src="icon/11.png" alt="パーティー"></span><b>パーティー</b><small>編成・持ち物・状態</small></button>
+          <button data-camp-action="chair" type="button"><span><img src="icon/12.png" alt="椅子"></span><b>椅子</b><small>HP・MP 30%回復</small></button>
+          <button data-camp-action="drink" type="button"><span><img src="icon/13.png" alt="ドリンク"></span><b>ドリンク</b><small>ドリンクセット</small></button>
+        </div>
+        <div id="campSubPanel" class="camp-sub-panel" hidden></div>
+      </div>
+    </div>
+    <div id="campFade" class="camp-fade" hidden><div id="campFadeText"></div></div>
+
+    <!-- EXPLORATION EVENT -->
+    <div id="exploreOverlay" class="explore-overlay" hidden>
+      <div class="explore-card">
+        <small>EXPLORE</small>
+        <h2 id="exploreTitle">勇者一行は周囲を探索した</h2>
+        <div id="exploreLoading" class="explore-loading">探索中<span id="exploreDots">.</span></div>
+        <div id="exploreReward" class="explore-reward" hidden><img id="exploreRewardImg" alt=""><b id="exploreRewardText"></b><p id="exploreRewardSub"></p></div>
+      </div>
+    </div>
 
     <!-- STORY EVENT -->
     <div id="storyScene" class="story-scene" hidden>
@@ -156,6 +279,7 @@
       <div class="command-grid">
         <button id="attackBtn" class="command-btn attack" type="button" aria-label="攻撃"><img class="battle-command-icon" src="icon/02.png" alt="攻撃"></button>
         <button id="skillBtn" class="command-btn skill" type="button" aria-label="魔法"><img class="battle-command-icon" src="icon/03.png" alt="魔法"></button>
+        <button id="specialBtn" class="command-btn special" type="button" aria-label="特技"><img class="battle-command-icon" src="icon/09.png" alt="特技"></button>
         <button id="ultimateBtn" class="command-btn ultimate" type="button" aria-label="必殺技"><img class="battle-command-icon" src="icon/04.png" alt="必殺技"></button>
         <button id="defendBtn" class="command-btn defend" type="button" aria-label="防御"><img class="battle-command-icon" src="icon/05.png" alt="防御"></button>
         <button id="itemBtn" class="command-btn item" type="button" aria-label="アイテム"><img class="battle-command-icon" src="icon/06.png" alt="アイテム"></button>
@@ -166,7 +290,13 @@
 
     <div id="skillMenu" class="sheet" hidden><div class="sheet-card"><div class="sheet-head"><div><small id="skillMenuKicker">COMMAND</small><h2 id="skillMenuTitle">技を選択</h2></div><button class="sheet-close" data-close-sheet type="button">×</button></div><div id="skillMenuList" class="skill-list"></div></div></div>
 
-    <div id="resultOverlay" class="result-overlay" hidden><div class="result-card"><small id="resultKicker">BATTLE RESULT</small><h2 id="resultTitle">VICTORY</h2><p id="resultText"></p><button id="resultRetryBtn" class="primary-btn wide" type="button">もう一度</button><button id="resultSetupBtn" class="secondary-btn wide" type="button">戻る</button><button id="resultHomeBtn" class="secondary-btn wide" type="button">HOME</button></div></div>
+    <div id="resultOverlay" class="result-overlay" hidden><div class="result-card">
+      <small id="resultKicker">BATTLE RESULT</small><h2 id="resultTitle">VICTORY</h2><p id="resultText"></p>
+      <div id="resultRewards" class="result-rewards" hidden><div><small>EXP</small><b id="resultExp">+0</b></div><div><small>COIN</small><b id="resultCoin">+0</b></div></div>
+      <div id="resultDrops" class="result-drops" hidden></div><div id="resultProgression" class="result-progression" hidden></div>
+      <button id="resultRetryBtn" class="primary-btn wide" type="button">もう一度</button>
+      <button id="resultSetupBtn" class="primary-btn wide result-next" type="button">NEXT</button>
+    </div></div>
   </section>
 
   <!-- SETTINGS / TEST MODE -->
@@ -177,18 +307,32 @@
         <div class="settings-row"><div><b>テストモード</b><small>Lv自由設定・高速戦闘など、制作確認用の機能です。</small></div><button id="testModeToggle" class="settings-toggle" type="button">OFF</button></div>
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
+          <div id="testLevelRoster" class="test-level-roster"></div>
+          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダルをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
-          <p class="settings-note">テストモード中は酒場・トレーニングでも Lv1～120 を自由に設定できます。</p>
+          <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
       </section>
       <section class="settings-section danger-section"><div><b>テストデータ</b><small>イベントや冒険を最初から何度でも確認できます。</small></div><button id="deleteDataBtn" class="danger-btn" type="button">全データ削除</button></section>
     </div>
   </div>
 
+  <div id="smithHammerFx" class="smith-hammer-fx" hidden><div><b>カンカン！</b><b>カンカン！</b><b>カンカン！</b></div></div>
+
+  <!-- WEAPON PICKER -->
+  <div id="weaponPickerOverlay" class="weapon-picker-overlay" hidden>
+    <div class="weapon-picker-card">
+      <div class="settings-head"><div><small>SELECT WEAPON</small><h2 id="weaponPickerTitle">武器を選択</h2></div><button id="weaponPickerCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="weaponPickerList" class="weapon-picker-list"></div>
+    </div>
+  </div>
+
+  <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=38" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=56" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -196,7 +340,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=38"></script>
-<script src="js/game.js?v=38"></script>
+<script src="js/data.js?v=58"></script>
+<script src="js/game.js?v=58"></script>
 </body>
 </html>
