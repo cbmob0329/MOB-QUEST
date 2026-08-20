@@ -444,6 +444,7 @@ TEMP_BALANCE.playerTargets={
   setEnemy('boss-dragon2',{actionCount:2,mods:{hp:1.18,atk:1.18,mag:1.22,def:1.10,res:1.12}});
   setEnemy('boss-gidora',{actionCount:2,mods:{hp:1.30,atk:1.22,mag:1.30,def:1.14,res:1.16,spd:1.06}});
 }
+<<<<<<< HEAD
 
 // ===== MOB QUEST v58 : latest ボス(8) authoritative update =====
 {
@@ -507,3 +508,5 @@ TEMP_BALANCE.playerTargets={
     d2.areas[3].boss=[{id:'boss-dorafara',level:78}];delete d2.areas[3].nextWave;delete d2.areas[3].nextWaves;
   }
 }
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1

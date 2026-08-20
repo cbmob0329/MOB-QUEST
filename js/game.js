@@ -8,7 +8,11 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
+<<<<<<< HEAD
 const GAME_ASSET_VERSION=58;
+=======
+const GAME_ASSET_VERSION=56;
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -173,7 +177,11 @@ function renderEquipment(){
   bindImages(root);$$('[data-equip-player]',root).forEach(b=>b.onclick=()=>{equipmentPlayerId=b.dataset.equipPlayer;renderEquipment();});
   $$('[data-equip-slot]',root).forEach(b=>b.onclick=()=>openWeaponPicker(p.id,b.dataset.equipSlot,Number(b.dataset.equipIndex||0),()=>renderEquipment()));
 }
+<<<<<<< HEAD
 async function buyWeapon(id){const w=weaponById(id);if(!w?.price)return;if(state.coins<w.price)return toast('ゴールドが足りません');const a=await dialog(`${w.name}を購入しますか？\n${w.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'WEAPON SHOP');if(a!=='yes')return;state.coins-=w.price;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();renderEquipment();await dialog('毎度！大事に使ってくれ！',[['OK','ok','primary']],'WEAPON SHOP');}
+=======
+async function buyWeapon(id){const w=weaponById(id);if(!w?.price)return;if(state.coins<w.price)return toast('ゴールドが足りません');const a=await dialog(`${w.name}を購入しますか？\n${w.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'WEAPON SHOP');if(a!=='yes')return;state.coins-=w.price;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();renderEquipment();}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 async function runSmithHammerFx(){const fx=$('#smithHammerFx');if(!fx){await fixedDelay(3000);return;}fx.hidden=false;await fixedDelay(3000);fx.hidden=true;}
 async function forgeWeaponMedal(id){
   const w=weaponById(id);if(!w)return;
@@ -505,7 +513,11 @@ async function goHome(){
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
 function rosterCard(p,selected,level){return `<button class="roster-card ${selected?'selected':''}" data-roster-id="${p.id}" type="button"><span class="roster-art"><img src="${versionedPlay(p.image)}" alt="${p.name}" loading="lazy" decoding="async"><i>${p.symbol}</i></span><b>${p.name}</b><small>${p.attribute} / ${p.weapon}</small><em>Lv${level}</em></button>`;}
 function worldCleared(id){const worlds=MOB_DATA.adventureWorlds||[],idx=worlds.findIndex(w=>w.id===id);if(idx<0)return false;return !!state.adventure.completed||(Number(state.adventure.worldIndex)||0)>idx;}
+<<<<<<< HEAD
 function syncDefeatedHistoryFromProgress(){for(const w of MOB_DATA.adventureWorlds||[]){if(!worldCleared(w.id))continue;for(const a of w.areas||[]){const rows=[...(a.boss||[]),...(a.nextWave||[]),...(a.nextWaves||[]).flat()];for(const r of rows){const t=trainingEnemyTemplate(r.id);if(!t)continue;if(t.category==='boss'&&!state.meta.defeatedBosses.includes(t.id))state.meta.defeatedBosses.push(t.id);if(t.category==='elite'&&!state.meta.defeatedElites.includes(t.id))state.meta.defeatedElites.push(t.id);}}}saveMeta();}
+=======
+function syncDefeatedHistoryFromProgress(){for(const w of MOB_DATA.adventureWorlds||[]){if(!worldCleared(w.id))continue;for(const a of w.areas||[])for(const r of [...(a.boss||[]),...(a.nextWave||[])]){const t=trainingEnemyTemplate(r.id);if(!t)continue;if(t.category==='boss'&&!state.meta.defeatedBosses.includes(t.id))state.meta.defeatedBosses.push(t.id);if(t.category==='elite'&&!state.meta.defeatedElites.includes(t.id))state.meta.defeatedElites.push(t.id);}}saveMeta();}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 function unlockedDrinkIds(){
   const ids=new Set(['19','20','21','32','33','34','22']);
   if(worldCleared('grassland'))ids.add('23');
@@ -862,9 +874,13 @@ function createAdventureEncounter(){
       }
       return formed.map((r,i)=>{const role=chosen.has(i)?'midboss':'escort';return{...r,encounterRole:role,actionCount:r.actionCount??(role==='escort'?1:undefined)};});
     };
+<<<<<<< HEAD
     const first=tagWave(area.boss||[]),waves=[first];
     if(Array.isArray(area.nextWaves)&&area.nextWaves.length){for(const wave of area.nextWaves)if(wave?.length)waves.push(tagWave(wave));}
     else if(area.nextWave?.length)waves.push(tagWave(area.nextWave));
+=======
+    const first=tagWave(area.boss||[]),waves=[first];if(area.nextWave?.length)waves.push(tagWave(area.nextWave));
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
     return{waves,bossBattle:true,label:`${w.name} ${area.name} 中ボス/ボス`};
   }
   const count=weightedEnemyCount(areaIndex),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1),encounterRole:'normal'});}return{waves:[list],bossBattle:false,label:`${w.name} ${area.name} 通常戦`};
@@ -967,11 +983,19 @@ function applyStoryGuestNaturalSize(holder,img,info,{multi=false}={}){
 }
 
 function storyDisplayPartyIds(extraIds=null){
+<<<<<<< HEAD
   const visible=state.party.map(([id])=>canonicalPlayerId(id)).filter(Boolean).slice(0,12);
   const extras=[...storySceneExtras,...(Array.isArray(extraIds)?extraIds:(extraIds?[extraIds]:[]))].map(canonicalPlayerId).filter(Boolean);
   for(const id of extras){
     if(visible.includes(id))continue;
     if(visible.length<12)visible.push(id);
+=======
+  const visible=state.party.map(([id])=>canonicalPlayerId(id)).filter(Boolean).slice(0,6);
+  const extras=[...storySceneExtras,...(Array.isArray(extraIds)?extraIds:(extraIds?[extraIds]:[]))].map(canonicalPlayerId).filter(Boolean);
+  for(const id of extras){
+    if(visible.includes(id))continue;
+    if(visible.length<6)visible.push(id);
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
     else visible[visible.length-1]=id;
   }
   return [...new Set(visible)];
@@ -1071,6 +1095,7 @@ async function storyEnergyTransfer(fromKey,toKey){
   await nextPaint();orb.style.setProperty('--orb-x',`${tr.left-fr.left+(tr.width-fr.width)/2}px`);orb.style.setProperty('--orb-y',`${tr.top-fr.top+(tr.height-fr.height)*.45}px`);orb.classList.add('move');
   await fixedDelay(1250);orb.remove();
 }
+<<<<<<< HEAD
 async function storyDarkEnergyTransfer(fromKey,toKey){
   const scene=$('#storyScene'),from=storyAnchor(fromKey),to=storyAnchor(toKey);if(!scene||!from||!to)return;
   const sr=scene.getBoundingClientRect(),fr=storyAnchorRect(from),tr=storyAnchorRect(to),orb=document.createElement('i');
@@ -1080,6 +1105,8 @@ async function storyDarkEnergyTransfer(fromKey,toKey){
 }
 async function storyDarkGlowGuest(){const g=$('#storyGuest');if(!g||g.hidden)return;g.classList.add('story-dark-glow');await fixedDelay(820);g.classList.remove('story-dark-glow');}
 async function storyFadeActor(key){const a=storyAnchor(key);if(!a)return;a.classList.add('story-faded-out');await fixedDelay(620);}
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 async function storyFadePartyExcept(key){
   const root=$('#storyPartyLine');if(!root)return;for(const a of $$('.story-party-actor',root))if(a.dataset.storyActor!==key)a.classList.add('story-faded-out');await fixedDelay(620);
 }
@@ -1090,6 +1117,7 @@ async function enemyStoryCutin(e,text,duration=900){
 }
 async function checkBattleHpDialogue(){
   const b=state.battle;if(!b||b.finished)return;b.storyHpFlags=b.storyHpFlags||{};
+<<<<<<< HEAD
   const neo=(b.enemies||[]).find(e=>e.id==='boss-neomaster'&&e.hp>0);
   if(neo){
     const rate=neo.hp/Math.max(1,neo.maxHp);
@@ -1112,6 +1140,12 @@ async function checkBattleHpDialogue(){
   }
   if(karami&&karami.hp<=0&&!b.storyHpFlags.d2KaramiDown){b.storyHpFlags.d2KaramiDown=true;await enemyStoryCutin(karami,'くそ・・俺がやられるとはな・・',800);}
   if(earth&&earth.hp<=0&&!b.storyHpFlags.d2EarthDown){b.storyHpFlags.d2EarthDown=true;await enemyStoryCutin(earth,'貴様ら如きにこの私が・・！',800);}
+=======
+  const neo=(b.enemies||[]).find(e=>e.id==='boss-neomaster'&&e.hp>0);if(!neo)return;
+  const rate=neo.hp/Math.max(1,neo.maxHp);
+  if(rate<=.70&&!b.storyHpFlags.neo70){b.storyHpFlags.neo70=true;await enemyStoryCutin(neo,'やりますね\nではギアを上げますよ',920);}
+  if(rate<=.40&&!b.storyHpFlags.neo40){b.storyHpFlags.neo40=true;await enemyStoryCutin(neo,'なるほど\nこれは強力だ・・',920);}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 }
 
 function storyJoin(id){if(state.party.some(x=>x[0]===id))return;const avg=state.party.length?Math.round(state.party.reduce((s,x)=>s+(Number(x[1])||5),0)/state.party.length):5;state.party.push([id,clamp(avg,5,120)]);if(state.meta?.exp&&state.meta.exp[id]==null)state.meta.exp[id]=0;saveParty();saveMeta();state.training.party=state.party.map(x=>[...x]);}
@@ -1444,6 +1478,7 @@ Object.assign(STORY_EVENTS,{
   ]}
 });
 
+<<<<<<< HEAD
 
 // ===== MOB QUEST v58 : 冒険イベント最新稿（砂漠Ⅱ） =====
 Object.assign(STORY_EVENTS,{
@@ -1564,6 +1599,8 @@ Object.assign(STORY_EVENTS,{
   ]}
 });
 
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 async function runStorySteps(steps=[]){
   for(const st of steps){const [type,a,b,c,d]=st;
     if(type==='say')await storySay(a,b,c,d);
@@ -1590,11 +1627,16 @@ async function runStorySteps(steps=[]){
     else if(type==='rewardDrink')await storyRewardDrink(a,b);
     else if(type==='guestTransform')await storyTransformGuest(a);
     else if(type==='energyTransfer')await storyEnergyTransfer(a,b);
+<<<<<<< HEAD
     else if(type==='darkEnergyTransfer')await storyDarkEnergyTransfer(a,b);
     else if(type==='darkGlowGuest')await storyDarkGlowGuest();
     else if(type==='softLight')await storySoftLight();
     else if(type==='fadePartyExcept')await storyFadePartyExcept(a);
     else if(type==='fadeActor')await storyFadeActor(a);
+=======
+    else if(type==='softLight')await storySoftLight();
+    else if(type==='fadePartyExcept')await storyFadePartyExcept(a);
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
     else if(type==='wait')await fixedDelay(Number(a)||500);
   }
 }
@@ -1793,7 +1835,10 @@ function enemyVisualTune(e){
   const name=e?.name||e?.enemyTemplate?.name||'';
   if(id==='boss-neon'||name==='モブネオンバルス')return{scale:1.28,y:0};
   if(id==='boss-guardian'||name==='モブガーディアン')return{scale:1.12,y:14};
+<<<<<<< HEAD
   if(id==='g-beaver'||id==='g2-beaver'||name==='モブビーバー')return{scale:.88,y:4};
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   if(['t-ohno','t-jukon','t-warrior','t-kiba'].includes(id))return{scale:1.16,y:6};
   if(id==='boss-debuff'||name==='モブデーバフ')return{scale:1.08,y:10,z:24};
   if(id==='boss-debuff2'||name==='モブデーバフ第二形態')return{scale:1.12,y:6,z:24};
@@ -2044,7 +2089,11 @@ async function ultimateCutin(a,u){
   }
 }
 
+<<<<<<< HEAD
 function enemyDefense(type,e=targetEnemy()){if(!e)return 0;let v=type==='magic'?e.res:e.def;if(type!=='magic'&&e.defBuffTurns>0)v*=1+(e.defBuff||0);if(e.defDebuffTurns>0)v*=1-e.defDebuff;return v;}
+=======
+function enemyDefense(type,e=targetEnemy()){if(!e)return 0;let v=type==='magic'?e.res:e.def;if(e.defDebuffTurns>0)v*=1-e.defDebuff;return v;}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 /* v44 formal attribute relations. Supplied Fire/Water rules preserved; blanks completed as one consistent cycle. */
 const ELEMENT_RELATIONS={
   火:{strong:'地',weak:'水'},水:{strong:'火',weak:'雷'},雷:{strong:'水',weak:'風'},風:{strong:'雷',weak:'光'},
@@ -2102,9 +2151,13 @@ function calcEnemyDamage(target,power,type='physical'){
   else if(type==='hybrid'){source=((e.atk+e.mag)/2)*buff;def=(effective('def',target)+effective('res',target))/2;}
   else{source=e.atk*buff;def=effective('def',target);}
   const attrMul=elementDamageMultiplier(e.attribute||'無',target?.attribute||'無');
+<<<<<<< HEAD
   const raw=(source*power-def*.30)*(.9+Math.random()*.2)*attrMul;
   const naturalFloor=Math.max(2,source*Math.max(.08,.10*power)*attrMul);
   return Math.max(1,Math.round(Math.max(raw,naturalFloor)));
+=======
+  return Math.max(1,Math.round((source*power-def*.50)*(.9+Math.random()*.2)*attrMul));
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 }
 function wakeEnemyOnHit(e){if(e?.status.sleep>0&&Math.random()<.70){e.status.sleep=0;notice(`${e.name}は眠りから覚めた！`,'status');}}
 function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=true;state.battle?.defeatedEnemies?.push({uid:e.uid,id:e.id,name:e.name,level:e.level,category:e.category,coinReward:e.coinReward||0,rewardExp:e.rewardExp,rewardCoin:e.rewardCoin,rewardCoinBase:e.rewardCoinBase,rewardCoinPerLevel:e.rewardCoinPerLevel,rewardExpScale:e.rewardExpScale||1,rewardCoinScale:e.rewardCoinScale||1});}
@@ -2266,11 +2319,17 @@ async function storyFlashBattle(){const el=document.createElement('div');el.clas
 async function storyDarkBattlePulse(){const el=document.createElement('div');el.className='battle-dark-pulse';$('#battleFxLayer')?.appendChild(el);await nextPaint();el.classList.add('show');await fixedDelay(420);el.classList.remove('show');await fixedDelay(260);el.remove();}
 async function spawnNextEnemyWave(){
   const b=state.battle;if(!b?.pendingWaveConfigs?.length)return false;
+<<<<<<< HEAD
   const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'),isGidora=records.some(r=>r.id==='boss-gidora'),isMira2=records.some(r=>r.id==='boss-mira2-d2'),isD2Pair2=records.length===2&&records.some(r=>r.id==='d2-miranight')&&records.some(r=>r.id==='d2-miratime'),isD2Revive=records.length===4&&records.every(r=>['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'].includes(r.id))&&records.every(r=>Number(r.startingHpRate)===.30);
   if(isFrezard)await playFrezardFusion();
   if(isGidora){const oldDragon=(b.enemies||[]).find(e=>e.id==='boss-dragon2');if(oldDragon)await enemyStoryCutin(oldDragon,`素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！`,1200);await storyFlashBattle();}
   if(isMira2){const oldMira=(b.enemies||[]).find(e=>e.id==='boss-mira-d2');if(oldMira)await enemyStoryCutin(oldMira,'いいぞ\nそうこなくては\n面白くない！！',920);await storyDarkBattlePulse();}
   if(isD2Revive){await actionCutin('モブマニー「・・・・？\nなんだろう\n嫌な予感がする」','system',880);await fixedDelay(180);await actionCutin('モブデザート「終わってないのか？」','system',720);await fixedDelay(180);await storyDarkBattlePulse();await actionCutin('モブミラタイム「ソウル・タイム・ミラー・・！！」','danger',980);}
+=======
+  const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'),isGidora=records.some(r=>r.id==='boss-gidora');
+  if(isFrezard)await playFrezardFusion();
+  if(isGidora){const oldDragon=(b.enemies||[]).find(e=>e.id==='boss-dragon2');if(oldDragon)await enemyStoryCutin(oldDragon,`素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！`,1200);await storyFlashBattle();}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   const next=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!next.length)return false;
   b.enemies=next;b.targetEnemyId=next[0].uid;b.enemy=next[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();
   if(isFrezard){
@@ -2285,6 +2344,7 @@ async function spawnNextEnemyWave(){
     await fixedDelay(260);await actionCutin('モブデンデン「やってやるでやんす！」','system',760);
   }else if(isGidora){
     await actionCutin('モブギドラに変身！','danger',760);
+<<<<<<< HEAD
   }else if(isMira2){
     await actionCutin('ミラモブⅡに変身した！','danger',760);
   }else if(isD2Pair2){
@@ -2304,6 +2364,8 @@ async function spawnNextEnemyWave(){
     await fixedDelay(180);await actionCutin('モブマニー「みんな、私に任せて！」','system',720);
     for(const a of livingField()){const h=Math.round(a.maxHp*.30),before=a.hp;a.hp=Math.min(a.maxHp,a.hp+h);if(a.hp>before)floatNumber(a.hp-before,'heal',a.id);}
     renderBattle();await actionCutin('モブマニーの魔力により\n全員のHPが少し回復した！','heal',900);
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   }else{
     await actionCutin('ENEMY PHASE CHANGE!','danger',650);notice(`${next.map(e=>e.name).join('・')}が現れた！`,'danger',900);
   }
@@ -2366,11 +2428,16 @@ async function enemyAction(actionIndex=1,enemyId){
 async function bossNormal(){const e=actingEnemy()||state.battle.enemy,t=pick(livingMain());if(!e||!t)return;const type=e.normalAttackType||'physical';await actionCutin(`${e.name}の攻撃！`,'danger',520);await beginEnemyLunge(e.uid);try{await damageAlly(t,1,type,false,e.attribute);await delay(320);}finally{endEnemyLunge();}}
 async function aoeHit(power,type='physical',element=''){let total=0;const el=element||actingEnemy()?.attribute||'無';for(const a of [...livingMain()]){total+=await damageAlly(a,power,type,false,el);await delay(70);}for(const a of [...livingSuper()]){total+=await damageAlly(a,power,type,true,el);await delay(70);}return total;}
 async function bossSpecial(spec){
+<<<<<<< HEAD
   const e=actingEnemy()||state.battle.enemy;if(!e)return;spec=spec||enemySpecialSpec(e);await actionCutin(`${e.name}の${spec.special}！`,'danger',700);await beginEnemyLunge(e.uid);let t,d,total=0;const attackElement=spec.skillElement||e.attribute||'無',mainPower=enemyMainSkillPower(e,spec);const hit=async(target,m=null,type=spec.skillType||'physical')=>{const x=await damageAlly(target,m==null?mainPower:m,type,false,attackElement);await delay(80);return x;};const aoe=async(m=null,type='physical')=>aoeHit(m==null?mainPower:m,type,attackElement);
+=======
+  const e=actingEnemy()||state.battle.enemy;if(!e)return;spec=spec||enemySpecialSpec(e);await actionCutin(`${e.name}の${spec.special}！`,'danger',700);await beginEnemyLunge(e.uid);let t,d,total=0;const attackElement=spec.skillElement||e.attribute||'無';const hit=async(target,m=spec.power||1.0,type=spec.skillType||'physical')=>{const x=await damageAlly(target,m,type,false,attackElement);await delay(80);return x;};const aoe=async(m,type='physical')=>aoeHit(m,type,attackElement);
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   try{switch(spec.kind){
     case'shield':e.damageReduction=.20;e.shieldTurns=3;for(const ally of livingEnemies())if(ally.uid!==e.uid){ally.allyShieldReduction=.10;ally.allyShieldTurns=3;fx('buff',`enemy:${ally.uid}`);}fx('buff',`enemy:${e.uid}`);notice('自身20% / 味方10% DAMAGE CUT','buff');break;
     case'reviveMummy':{const dead=(state.battle.enemies||[]).find(x=>x.hp<=0&&String(x.name).includes('ミイラ'));if(dead){dead.hp=Math.max(1,Math.round(dead.maxHp*.45));dead.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0};notice(`${dead.name}が復活！`,'heal',800);floatNumber(dead.hp,'heal',`enemy:${dead.uid}`);}else{t=pick(livingMain());if(t)await hit(t,.72,'magic');}break;}
     case'enemyHeal':{const target=[...livingEnemies()].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]||e;if(target){const h=Math.round(target.maxHp*(spec.power||.18));target.hp=Math.min(target.maxHp,target.hp+h);floatNumber(h,'heal',`enemy:${target.uid}`);notice(`${target.name} HP回復`,'heal');}break;}
+<<<<<<< HEAD
     case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(Math.random()<(spec.chance??.10)&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
     case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,null,'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
     case'stunSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??1)){await inflictAllyStatus(t,'stun',1);notice(`${t.name}はひるんだ！`,'status');}}break;
@@ -2390,6 +2457,25 @@ async function bossSpecial(spec){
     case'aoeStun':total=await aoe(null,'magic');for(const a of livingMain())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);for(const a of livingSuper())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);notice('ひるみ判定','status');break;
     case'aoe':total=await aoe(null,spec.skillType||((spec.skillElement||e.attribute).includes('火')||(spec.skillElement||e.attribute).includes('闇')?'magic':'physical'));break;
     case'single':default:t=pick(livingMain());if(t)d=await hit(t,null,spec.skillType||'physical');break;
+=======
+    case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t,spec.power||.82,spec.skillType||'physical');if(Math.random()<(spec.chance??.10)&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
+    case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,spec.power,'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
+    case'stunSingle':t=pick(livingMain());if(t){d=await hit(t,spec.power,'magic');await inflictAllyStatus(t,'stun',1);notice(`${t.name}はひるんだ！`,'status');}break;
+    case'doubleSingleStun':t=pick(livingMain());if(t){total+=await hit(t,spec.power,'magic');if(!t.dead)total+=await hit(t,spec.power,'magic');await inflictAllyStatus(t,'stun',1);notice(`${t.name}はひるんだ！`,'status');}break;
+    case'singlePlusAoe':t=pick(livingMain());if(t)total+=await hit(t,spec.power,'magic');total+=await aoe(.52,'magic');break;
+    case'singleSpdDown':t=pick(livingMain());if(t){total+=await hit(t,spec.power||1.0,spec.skillType||'physical');t.spdDebuff=Math.max(t.spdDebuff||0,spec.debuff||.12);t.spdDebuffTurns=Math.max(t.spdDebuffTurns||0,3);notice(`${t.name} SPD ↓`,'status');}break;
+    case'aoeParalyzeChance':total=await aoe(spec.power||.64,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.20))await inflictAllyStatus(a,'paralyze',2);break;
+    case'healAoeBoss':total=await aoe(spec.power||1.25,spec.skillType||'magic');{const h=Math.round(e.maxHp*(spec.heal||.06));e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);fx('buff',`enemy:${e.uid}`);notice(`${e.name} HP +${h}`,'heal');}break;
+    case'aoeAtkDown':total=await aoe(spec.power||.68,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()]){a.atkDebuff=Math.max(a.atkDebuff||0,spec.debuff||.05);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,3);}notice(`PARTY ATK ↓${Math.round((spec.debuff||.05)*100)}%`,'status');break;
+    case'aoeStunChance':total=await aoe(spec.power||.68,spec.skillType||'physical');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.03))await inflictAllyStatus(a,'stun',1);break;
+    case'multi':case'multiFixed':{const n=rint(spec.hits?.[0]||3,spec.hits?.[1]||6);for(let i=0;i<n&&livingMain().length;i++)total+=await hit(pick(livingMain()),spec.power);notice(`${n} HIT`,'system',420);break;}
+    case'healSingle':t=pick(livingMain());if(t)d=await hit(t,spec.power,'magic');{const h=Math.round(e.maxHp*.06);e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);notice(`BOSS HP +${h}`,'heal');}break;
+    case'buffAoe':e.atkBuff=.18;e.atkBuffTurns=3;total=await aoe(spec.power,'magic');notice('ATK ↑','buff');break;
+    case'doubleAoe':for(let n=0;n<2;n++)total+=await aoe(spec.power,'physical');notice('2 HIT','system',420);break;
+    case'aoeStun':total=await aoe(spec.power,'magic');for(const a of livingMain())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);for(const a of livingSuper())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);notice('ひるみ判定','status');break;
+    case'aoe':total=await aoe(spec.power||.68,spec.skillType||((spec.skillElement||e.attribute).includes('火')||(spec.skillElement||e.attribute).includes('闇')?'magic':'physical'));break;
+    case'single':default:t=pick(livingMain());if(t)d=await hit(t,spec.power||.82,spec.skillType||'physical');break;
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   }}finally{endEnemyLunge();}await checkSpecialRevives();renderBattle();await delay(280);
 }
 
@@ -2423,8 +2509,12 @@ async function act(kind,payload){
       if(hpRate>0){const h=heal(a,a.maxHp*hpRate);if(h)notice(`武器特性 / HP +${h}`,'heal',480);}
       if(mpRate>0){const before=a.mpNow;a.mpNow=Math.min(a.maxMp,a.mpNow+a.maxMp*mpRate);const g=Math.floor(a.mpNow-before);if(g>0)notice(`武器特性 / MP +${g}`,'heal',480);}
       await delay(220);
+<<<<<<< HEAD
     }else if(kind==='item')consumed=await performBattleItem(a,payload);
     else if(kind==='switch')consumed=await performSwitch(payload);
+=======
+    }else if(kind==='switch')consumed=await performSwitch(payload);
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
   }catch(err){
     console.error('[MOB QUEST] action recovered:',kind,err);
     // Consume the selected action rather than leaving the battle permanently locked.
@@ -2449,11 +2539,15 @@ function openSwitchMenu(){const a=activeAlly();if(!a)return;const candidates=[..
 
 async function autoAct(){const b=state.battle,a=activeAlly();if(!b||!a||!b.auto||b.busy||b.finished)return;const usable=availableUlts(a).filter(u=>a.mpNow>=u.cost);if(usable.length&&Math.random()<.32)return act('ultimate',pick(usable));const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.30)return act('magic');return act('attack');}
 function openSkillMenu(type){const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;if(type==='magic'){const s=MOB_DATA.elements[normalizeElement(a.attribute)];s.frames?.forEach(src=>preloadAsset(src,'high'));$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='魔法';list.innerHTML=`<button class="skill-item" data-use-magic type="button"><span class="skill-symbol">${normalizeElement(a.attribute)}</span><div><b>${s.spell}<em class="temp-badge">仮</em></b><small>${TEMP_BALANCE.magicNote}</small></div><em>MP ${s.cost} 仮</em></button>`;$('[data-use-magic]',list).onclick=()=>{$('#skillMenu').hidden=true;act('magic');};}else if(type==='special'){const t=temporaryTechnique(a);$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='特技';list.innerHTML=`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-use-special type="button"><span class="skill-symbol">技</span><div><b>${t.name}<em class="temp-badge">仮</em></b><small>斬撃・打撃・特殊攻撃の正式データが未設定のため、武器種に合わせた仮特技です。</small></div><em>MP ${t.cost} 仮</em></button>`;$('[data-use-special]',list).onclick=()=>{if(a.mpNow<t.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special');};}else{const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?[1,15,30,50][i]:null,ok=unlocked.includes(u);return`<button class="skill-item ${!ok?'locked':''} ${ok&&a.mpNow<u.cost?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?` / Lv${req}で習得`:''}</small></div><em>${ok?`MP ${u.cost} 仮`:`LOCK`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=()=>{const u=a.ults[Number(btn.dataset.ultIndex)];if(!availableUlts(a).includes(u))return;if(a.mpNow<u.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('ultimate',u);});}}
+<<<<<<< HEAD
 function battleItemCandidates(it){const all=state.battle?.allies||[];if(it.type==='revive')return all.filter(a=>a.dead||a.hp<=0);return all.filter(a=>!a.dead&&a.hp>0);}
 function battleItemCanUseOn(it,t){if(!it||!t)return false;if(it.type==='revive')return !!t.dead||t.hp<=0;if(t.dead||t.hp<=0)return false;if(it.type==='hp')return t.hp<t.maxHp;if(it.type==='mp')return t.mpNow<t.maxMp;if(it.type==='cure')return Number(t.status?.[it.status]||0)>0;if(it.type==='cureAll')return Object.values(t.status||{}).some(v=>Number(v)>0);if(it.type==='hpmp'||it.type==='full')return t.hp<t.maxHp||t.mpNow<t.maxMp;if(it.type==='battleBuff')return true;return false;}
 function openItemMenu(){const list=$('#skillMenuList'),usable=GAME_ITEMS.filter(it=>it.type!=='record'&&itemCount(it.id)>0);$('#skillMenu').hidden=false;$('#skillMenuKicker').textContent='ITEM';$('#skillMenuTitle').textContent='アイテム';list.innerHTML=usable.length?usable.map(it=>`<button class="skill-item battle-item-entry" data-battle-item="${it.id}" type="button"><span class="ult-thumb"><img src="${it.image}" alt="${it.name}"><i>道</i></span><div><b>${it.name}</b><small>${itemEffectText(it)}</small></div><em>×${itemCount(it.id)}</em></button>`).join(''):`<div class="switch-guide">戦闘で使えるアイテムを所持していません。</div>`;bindImages(list);$$('[data-battle-item]',list).forEach(btn=>btn.onclick=()=>openBattleItemTargets(btn.dataset.battleItem));}
 function openBattleItemTargets(id){const it=itemData(id),list=$('#skillMenuList');if(!it||itemCount(id)<1)return openItemMenu();if(it.type==='partyHp'){$('#skillMenu').hidden=true;return act('item',{id});}const candidates=battleItemCandidates(it);$('#skillMenuKicker').textContent=`${it.name} / ×${itemCount(id)}`;$('#skillMenuTitle').textContent=it.type==='revive'?'復活させるメンバー':'使用するメンバー';list.innerHTML=candidates.length?candidates.map(t=>`<button class="skill-item ${battleItemCanUseOn(it,t)?'':'disabled'}" data-battle-item-target="${t.id}" type="button" ${battleItemCanUseOn(it,t)?'':'disabled'}><span class="ult-thumb"><img src="${versionedPlay(t.image)}" alt="${t.name}"><i>${t.symbol||'仲'}</i></span><div><b>${t.name}</b><small>${t.dead?'DOWN':`HP ${Math.ceil(t.hp)}/${t.maxHp} / MP ${Math.floor(t.mpNow)}/${t.maxMp}`}</small></div><em>${t.dead?'DOWN':'選択'}</em></button>`).join(''):`<div class="switch-guide">今このアイテムを使用できるメンバーはいません。</div>`;bindImages(list);$$('[data-battle-item-target]',list).forEach(btn=>btn.onclick=()=>{$('#skillMenu').hidden=true;act('item',{id,targetId:btn.dataset.battleItemTarget});});}
 async function performBattleItem(user,payload){const it=itemData(payload?.id);if(!it||it.type==='record'||itemCount(it.id)<1){notice('このアイテムは使えません','danger');return false;}let target=payload?.targetId?allyById(payload.targetId):null,ok=false,msg='';if(it.type==='partyHp'){const targets=livingField().filter(t=>t.hp<t.maxHp);if(!targets.length){notice('HPが減っているメンバーはいません','system');return false;}if(!consumeItem(it.id,1))return false;await actionCutin(`${user.name}は${it.name}を使った！`,'system',520);for(const t of targets)heal(t,it.amount||150);ok=true;msg='味方全体のHPが回復した！';}else{if(!target||!battleItemCanUseOn(it,target)){notice('今はこのアイテムを使用できません','system');return false;}if(!consumeItem(it.id,1))return false;await actionCutin(`${user.name}は${it.name}を使った！`,'system',520);if(it.type==='hp'){const n=rint(it.min,it.max),before=target.hp;target.hp=Math.min(target.maxHp,target.hp+n);floatNumber(target.hp-before,'heal',target.id);msg=`${target.name}のHPが回復した！`;ok=true;}else if(it.type==='mp'){const n=rint(it.min,it.max),before=target.mpNow;target.mpNow=Math.min(target.maxMp,target.mpNow+n);msg=`${target.name}のMPが${Math.floor(target.mpNow-before)}回復した！`;ok=true;}else if(it.type==='cure'){target.status[it.status]=0;msg=`${target.name}の状態異常が治った！`;ok=true;}else if(it.type==='cureAll'){for(const k of Object.keys(target.status||{}))target.status[k]=0;msg=`${target.name}の状態異常が全て治った！`;ok=true;}else if(it.type==='hpmp'){const h=Math.min(200,target.maxHp-target.hp),m=Math.min(200,target.maxMp-target.mpNow);target.hp+=h;target.mpNow+=m;if(h)floatNumber(h,'heal',target.id);msg=`${target.name}のHPとMPが回復した！`;ok=true;}else if(it.type==='full'){const h=target.maxHp-target.hp;target.hp=target.maxHp;target.mpNow=target.maxMp;if(h)floatNumber(h,'heal',target.id);msg=`${target.name}のHPとMPが全回復した！`;ok=true;}else if(it.type==='battleBuff'){const turns=rint(it.minTurns||3,it.maxTurns||4);if(it.stat==='ATK'){target.atkBuff=Math.max(target.atkBuff||0,it.ratio||.20);target.atkBuffTurns=Math.max(target.atkBuffTurns||0,turns);}else{target.defBuff=Math.max(target.defBuff||0,it.ratio||.20);target.defBuffTurns=Math.max(target.defBuffTurns||0,turns);}fx('buff',target.id);msg=`${target.name}の${it.stat}が${turns}ターン上がった！`;ok=true;}else if(it.type==='revive'){target.dead=false;target.hp=Math.max(1,Math.round(target.maxHp*(it.ratio||.50)));target.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0};msg=`${target.name}が復活した！`;ok=true;}}if(!ok)return false;renderBattle();notice(msg,'heal',720);await delay(260);return true;}
+=======
+function openItemMenu(){const list=$('#skillMenuList');$('#skillMenu').hidden=false;$('#skillMenuKicker').textContent='ITEM';$('#skillMenuTitle').textContent='アイテム';list.innerHTML=`<div class="switch-guide">アイテム効果・所持数・復活アイテムの設定がまだ無いため、現在はコマンド枠のみ実装しています。</div>`;}
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
 function escapeAttempt(){notice('「逃げる」の成功率は未設定です','system',850);}
 
 function persistAdventureVitals(){if(!state.battle)return;state.adventure.vitals={};state.battle.allies.forEach(a=>{state.adventure.vitals[a.id]={hp:Math.max(0,a.hp),mp:Math.max(0,a.mpNow),dead:!!a.dead,status:clone(a.status||{})};});saveAdventure();}

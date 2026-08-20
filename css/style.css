@@ -2234,6 +2234,7 @@
   .battle-program-card b{font-size:15px}.battle-program-card small{font-size:10px}
   .battle-program-reward{grid-template-columns:1fr 58px auto}.battle-program-reward img{width:54px;height:54px}
 }
+<<<<<<< HEAD
 
 
 /* ===== MOB QUEST v57 battle feedback / command / equipment readability ===== */
@@ -2264,3 +2265,5 @@
   position:absolute;z-index:76;inset:0;background:rgba(11,6,18,0);pointer-events:none;transition:background .38s ease;
 }
 .battle-dark-pulse.show{background:rgba(11,6,18,.62)}
+=======
+>>>>>>> 2ce45b874fb6863e9911ef706ba6a2c10ce80da1
