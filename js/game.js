@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=55;
+const GAME_ASSET_VERSION=56;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -210,7 +210,7 @@ const initialMeta=loadMeta();
 const initialCoins=Number(initialMeta.coins);
 const state={
   party:loadParty(), coins:Number.isFinite(initialCoins)?initialCoins:12500, meta:initialMeta,
-  training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu'},
+  training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null},
   quest:null,
   adventure:loadAdventure(),
   battle:null, speed:1, tavernSwapIndex:null,
@@ -368,7 +368,7 @@ function pageAssets(target){
   const common=['icon/01.png',versionedPlay('play/02.png'),'mqicon/06.png','mqicon/09.png','mqicon/10.png','mqicon/12.png'];
   if(target==='tavern')return [...common,'back2/001.png',versionedPlay('play/001.png'),'icon/11.png','icon/13.png',...party.map(p=>versionedPlay(p.image))];
   if(target==='castle')return [...common,'back2/003.png','back/king1.png','back/king2.png','back/king3.png','back/king4.png','icon/18.png','icon/19.png','icon/20.png','icon/21.png',versionedPlay('play/005.png'),versionedPlay('play/006.png'),versionedPlay('play/007.png'),versionedPlay('play/008.png')];
-  if(target==='training'){const first=state.training.enemySlots?.find(Boolean);return ['back2/002.png',versionedPlay('play/003.png'),'icon/14.png','icon/15.png','icon/16.png','icon/17.png','mqicon/06.png',trainingEnemyTemplate(first?.id)?.image];}
+  if(target==='training'){const first=state.training.enemySlots?.find(Boolean);return ['back2/002.png',versionedPlay('play/003.png'),'icon/14.png','icon/15.png','icon/16.png','icon/17.png','icon/22.png','mqicon/06.png',trainingEnemyTemplate(first?.id)?.image];}
   if(target==='adventure'){const w=currentWorld(),area=currentArea();return [...common,area?.bg,w?.fieldFallback,'mqicon/14.png','mqicon/15.png','mqicon/16.png',...party.slice(0,6).map(p=>versionedPlay(p.image))];}
   return common;
 }
@@ -556,11 +556,36 @@ async function leaveTavern(){await showFacilityExit('play/001.png','また来て
 
 const TRAINING_MODES=[
   {id:'test',name:'テスト戦闘',icon:'mqicon/04.png',desc:'自由設定'},
+  {id:'program',name:'バトルプログラム',icon:'icon/22.png',desc:'シーズン制バトル'},
   {id:'journal',name:'冒険日記',icon:'icon/14.png',desc:'クリア済みエリアを再体験'},
   {id:'exp',name:'経験値ターンテーブル',icon:'icon/15.png',desc:'経験値レコードを使用'},
   {id:'gold',name:'ゴールドターンテーブル',icon:'icon/16.png',desc:'ゴールドレコードを使用'},
   {id:'boss',name:'ボスターンテーブル',icon:'icon/17.png',desc:'撃破済みボスへ挑戦'}
 ];
+const BATTLE_PROGRAM_SEASONS=[
+  {id:1,name:'シーズン1',unlock:()=>true,bg:'back/sougen.png',fallback:'back2/02.png',rewardId:'01',programs:[
+    {id:'s1-1',no:1,label:'スライム Lv.3',enemies:[{id:'g-slime',level:3}]},
+    {id:'s1-2',no:2,label:'スライム ×2 Lv.3',enemies:[{id:'g-slime',level:3},{id:'g-slime',level:3}]}
+  ]},
+  {id:2,name:'シーズン2',unlock:()=>worldCleared('grassland'),bg:'back/sougen.png',fallback:'back2/02.png',rewardId:'02',programs:[
+    {id:'s2-3',no:3,label:'モブロック ×3 Lv.6',enemies:[{id:'g-rock',level:6},{id:'g-rock',level:6},{id:'g-rock',level:6}]},
+    {id:'s2-4',no:4,label:'モブテンデビ ×3 Lv.6',enemies:[{id:'g-tendevi',level:6},{id:'g-tendevi',level:6},{id:'g-tendevi',level:6}]},
+    {id:'s2-5',no:5,label:'モブジョーロ ×3 Lv.6',enemies:[{id:'g-jouro',level:6},{id:'g-jouro',level:6},{id:'g-jouro',level:6}]},
+    {id:'s2-6',no:6,label:'モブバード Lv.6 / ピヨミドリ・ピヨレッド Lv.5',enemies:[{id:'g-bird',level:6},{id:'g-piyo-green',level:5},{id:'g-piyo-red',level:5}]},
+    {id:'s2-7',no:7,label:'モブビーバー ×3 Lv.6',enemies:[{id:'g-beaver',level:6},{id:'g-beaver',level:6},{id:'g-beaver',level:6}]}
+  ]}
+];
+function ensureBattleProgramMeta(){
+  if(!state.meta.battleProgram||typeof state.meta.battleProgram!=='object')state.meta.battleProgram={cleared:{},seasonRewards:{}};
+  state.meta.battleProgram.cleared=state.meta.battleProgram.cleared||{};
+  state.meta.battleProgram.seasonRewards=state.meta.battleProgram.seasonRewards||{};
+  return state.meta.battleProgram;
+}
+function battleProgramSeason(id){return BATTLE_PROGRAM_SEASONS.find(s=>s.id===Number(id))||null;}
+function battleProgramById(id){for(const season of BATTLE_PROGRAM_SEASONS){const program=season.programs.find(p=>p.id===id);if(program)return{season,program};}return null;}
+function availableBattleProgramSeasons(){return BATTLE_PROGRAM_SEASONS.filter(s=>s.programs.length&&s.unlock());}
+function battleProgramCleared(id){return !!ensureBattleProgramMeta().cleared[id];}
+function battleProgramSeasonClear(season){return !!season?.programs?.length&&season.programs.every(p=>battleProgramCleared(p.id));}
 const TURNTABLE_DIFFICULTIES={
   normal:{id:'normal',name:'ノーマル',cost:1,recommended:5},
   hard:{id:'hard',name:'ハード',cost:3,recommended:15},
@@ -574,6 +599,7 @@ const BOSS_DIFFICULTIES={
   inferno:{id:'inferno',name:'インフェルノ',cost:1,recommended:90,itemRate:.60}
 };
 const TRAINING_GUIDE_TEXT={
+  program:'ここではモンスターと戦って報酬を得ることが出来るぞ！\nシーズンのプログラムをすべてクリアすると、\nアイテムを獲得だ！\n経験値やコインももらえるから、\n積極的に挑戦しよう！',
   journal:'ここでは一度クリアしたエリアを\n再探索出来るよ！\n経験値を積んだり\nアイテムを探そう！',
   exp:'ここでは\n経験値レコードを消費して\n経験値エリアに入れるよ！\nたくさん経験を積もう！',
   gold:'ここでは\nゴールドレコードを消費して\nゴールドエリアに入れるよ！\nコインをたくさん稼ごう！',
@@ -589,7 +615,7 @@ async function setTrainingMode(mode){
   if(mode!=='menu'&&!TRAINING_MODES.some(x=>x.id===mode))mode='menu';
   state.training.mode=mode;
   renderTraining();
-  if(['journal','exp','gold','boss'].includes(mode)){
+  if(['program','journal','exp','gold','boss'].includes(mode)){
     await showTrainingModeGuide(mode);
     const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode=mode;}
     const title=$('#trainingFeaturePopupTitle');if(title)title.textContent=TRAINING_MODES.find(x=>x.id===mode)?.name||'トレーニング';
@@ -617,8 +643,62 @@ async function enterTraining(){
 async function leaveTraining(){await showFacilityExit('play/003.png','毎日来てね！レッツトレーニング！','blue');await goHome();}
 function clearedJournalWorlds(){const worlds=MOB_DATA.adventureWorlds||[];return worlds.filter((w,i)=>state.adventure.completed||(Number(state.adventure.worldIndex)||0)>i);}
 function recordCountForMode(mode){return itemCount(mode==='exp'?'36':mode==='gold'?'37':'38');}
+function renderBattleProgramSeasonSelect(){
+  const root=$('#trainingFeaturePanel');if(!root)return;
+  const seasons=availableBattleProgramSeasons();
+  ensureBattleProgramMeta();
+  state.training.programSeason=null;
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM</small><h2>シーズンを選択</h2></div><span class="pill">CLEAR PROGRAM</span></div><p class="panel-note">好きなシーズンを選んで、プログラムをクリアしていこう。</p><div class="battle-program-season-grid">${seasons.map(season=>{const cleared=season.programs.filter(p=>battleProgramCleared(p.id)).length,done=battleProgramSeasonClear(season);return`<button class="battle-program-season ${done?'complete':''}" data-program-season="${season.id}" type="button"><span>SEASON ${season.id}</span><b>${season.name}</b><small>${cleared} / ${season.programs.length} CLEAR</small>${done?'<em>COMPLETE</em>':''}</button>`;}).join('')||'<div class="camp-empty-note">現在挑戦できるシーズンはありません。</div>'}</div></section>`;
+  $$('[data-program-season]',root).forEach(btn=>btn.onclick=()=>renderBattleProgramList(Number(btn.dataset.programSeason)));
+}
+function renderBattleProgramList(seasonId){
+  const root=$('#trainingFeaturePanel'),season=battleProgramSeason(seasonId);if(!root||!season||!season.unlock())return renderBattleProgramSeasonSelect();
+  state.training.programSeason=season.id;
+  const reward=itemData(season.rewardId),clearedCount=season.programs.filter(p=>battleProgramCleared(p.id)).length;
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>全クリ報酬</small><b>${reward?.name||'ITEM'}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map(program=>{const done=battleProgramCleared(program.id),enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}</span><div><b>${program.label}</b><small>${enemyText}</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
+  bindImages(root);
+  $('[data-program-back]',root).onclick=renderBattleProgramSeasonSelect;
+  $$('[data-program-id]',root).forEach(btn=>btn.onclick=()=>confirmBattleProgram(btn.dataset.programId));
+}
+async function confirmBattleProgram(programId){
+  const found=battleProgramById(programId);if(!found||!found.season.unlock())return;
+  const answer=await dialog('このプログラムに挑戦するかい？',[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');
+  if(answer!=='yes')return;
+  await facilityTalk('レッツトレーニング！武運を祈る！','モブコーチ','play/003.png');
+  return startBattleProgram(found.season,found.program);
+}
+async function startBattleProgram(season,program){
+  state.quest={type:'program',seasonId:season.id,programId:program.id,programNo:program.no,areaIndex:0,battleIndex:0,battleReady:true,explored:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:season.bg,fallbackBg:season.fallback,pendingSeasonReward:false,newProgramClear:false};
+  const pop=$('#trainingFeaturePopup');if(pop)pop.hidden=true;
+  await startBattleLoaded({mode:'quest',returnScreen:'training',enemyConfigs:program.enemies.map(x=>({...x})),party:state.party,questVitals:state.quest.vitals,bg:season.bg,fallbackBg:season.fallback,bossBattle:false,questType:'program',adventureLabel:`バトルプログラム / ${season.name} / PROGRAM ${program.no}`});
+}
+function markBattleProgramWin(){
+  const q=state.quest;if(!q||q.type!=='program')return;
+  const meta=ensureBattleProgramMeta(),found=battleProgramById(q.programId);if(!found)return;
+  q.newProgramClear=!meta.cleared[q.programId];
+  meta.cleared[q.programId]=true;
+  q.pendingSeasonReward=battleProgramSeasonClear(found.season)&&!meta.seasonRewards[found.season.id];
+  q.finished=true;saveMeta();
+}
+async function finishBattleProgramReturn(win){
+  const q=state.quest,found=q?battleProgramById(q.programId):null,season=found?.season||null;
+  const pendingReward=!!q?.pendingSeasonReward;
+  state.quest=null;
+  state.training.mode='program';
+  renderTraining();showScreen('training');
+  const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='program';}
+  $('#trainingFeaturePopupTitle').textContent='バトルプログラム';
+  if(season)renderBattleProgramList(season.id);else renderBattleProgramSeasonSelect();
+  if(!win){await facilityTalk('惜しかったね！\n次はクリアを目指して頑張ろう！','モブコーチ','play/003.png');return;}
+  if(pendingReward&&season){
+    const reward=itemData(season.rewardId);
+    await facilityTalk(`ナイスクリア！\nこのシーズンを全てクリアしたね！\n${reward?.name||'アイテム'}をプレゼントだ！\n受け取ってくれ！`,'モブコーチ','play/003.png');
+    if(reward){addItem(reward.id,1);ensureBattleProgramMeta().seasonRewards[season.id]=true;saveMeta();await facilityTalk(`${reward.name}を手に入れた！`,'ITEM GET',reward.image);}
+  }else await facilityTalk('ナイスクリア！\nこの調子で頑張ってくれ！','モブコーチ','play/003.png');
+}
 function renderTrainingFeature(mode){
   const root=$('#trainingFeaturePanel');root.hidden=false;const testFree=!!state.test?.enabled;if(mode==='boss')syncDefeatedHistoryFromProgress();
+  if(mode==='program'){if(state.training.programSeason)return renderBattleProgramList(state.training.programSeason);return renderBattleProgramSeasonSelect();}
   if(mode==='journal'){
     const worlds=clearedJournalWorlds();root.innerHTML=`<section class="panel"><div class="section-title"><div><small>ADVENTURE JOURNAL</small><h2>クリア済みストーリーを再体験</h2></div><span class="pill">イベントなし</span></div><p class="panel-note">探索とバトルで経験値・コインを獲得できます。中ボスは出現しますがAREA4のボスは出現せず、エリアモンスター4体が出現します。</p><div class="training-feature-grid">${worlds.length?worlds.map((w,i)=>`<article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><h3>${w.name}</h3><p>4 AREA / 探索あり / セリフ・イベントなし</p></div></div><button data-start-journal="${(MOB_DATA.adventureWorlds||[]).indexOf(w)}" type="button">冒険日記を開始</button></article>`).join(''):'<div class="camp-empty-note">まだクリア済みのエリアがありません。</div>'}</div></section>`;$$('[data-start-journal]',root).forEach(b=>b.onclick=()=>startTrainingQuest('journal',{worldIndex:Number(b.dataset.startJournal)}));bindImages(root);return;
   }
@@ -649,7 +729,7 @@ async function startTrainingQuest(type,opt={}){
 }
 function questWorld(){return state.quest?.type==='journal'?MOB_DATA.adventureWorlds?.[state.quest.worldIndex]:null;}
 function questBackground(){const q=state.quest;if(!q)return{bg:'back/metal.png',fallback:'back2/002.png'};if(q.type==='journal'){const w=questWorld(),a=w?.areas?.[q.areaIndex];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/002.png'};}if(q.type==='exp')return{bg:q.areaIndex===3?'back/metal2.png':'back/metal.png',fallback:'back2/002.png'};if(q.type==='gold')return{bg:q.areaIndex===3?'back/gold2.png':'back/gold.png',fallback:'back2/002.png'};return{bg:q.areaIndex===3?'back/boss2.png':'back/boss.png',fallback:'back2/002.png'};}
-function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
+function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;if(q.type==='program'){const f=battleProgramById(q.programId);return `バトルプログラム / ${f?.season?.name||''} / PROGRAM ${q.programNo||''}`;}return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
 function renderQuestScreen(){const q=state.quest;if(!q)return renderTraining();const bg=questBackground();setImage($('#questBg'),bg.bg,bg.fallback);$('#questTitle').textContent=questTitleText();$('#questKicker').textContent=q.type==='journal'?'ADVENTURE JOURNAL':'TRAINING QUEST';$('#questAreaPill').textContent=`AREA ${q.areaIndex+1} / 4`;$('#questAreaName').textContent=`AREA ${q.areaIndex+1}`;$('#questModeLabel').textContent=q.type==='journal'?(questWorld()?.name||'JOURNAL'):(q.difficulty||'').toUpperCase();$('#questDescription').textContent=q.type==='journal'?`戦闘 ${q.battleIndex+1}/3。イベント・セリフは発生しません。`:'探索なし。キャンプとバトルのみ。クリアかゲームオーバーまで退出できません。';const back=$('#questBackBtn');if(back){back.hidden=q.type!=='journal';back.style.display=q.type==='journal'?'':'none';}const explore=$('#questExploreBtn');explore.style.display=q.type==='journal'?'flex':'none';explore.disabled=q.type==='journal'&&(q.battleReady||q.finished);const battleBtn=$('#questBattleBtn');battleBtn.disabled=q.finished||(q.type==='journal'&&!q.battleReady);battleBtn.onclick=startQuestBattle;$('#questBattleHint').textContent=q.finished?'CLEAR':q.type==='journal'?(q.battleReady?'戦闘可能':'探索が必要'):'戦闘開始';$('#questCampBtn').disabled=q.campUsed||q.finished;$('#questCampBtn small').textContent=q.campUsed?'このAREAは休憩済み':'1 AREA 1回';$('#questExploreResult').hidden=true;bindImages($('#questScreen'));}
 function questNormalConfigs(world,count){const used=[],out=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(world,used);if(!t)t=weightedNormalTemplate(world,[]);if(!t)break;used.push(t.id);out.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return out;}
 function journalEncounter(){const q=state.quest,w=questWorld(),a=w?.areas?.[q.areaIndex];if(!w||!a)return[];if(q.battleIndex<2)return questNormalConfigs(w,weightedEnemyCount(q.areaIndex));if(q.areaIndex===3)return questNormalConfigs(w,4);return expandEncounterEntries(a.boss||[]).filter(x=>trainingEnemyTemplate(x.id)?.category!=='boss');}
@@ -673,7 +753,7 @@ async function questExplore(){const q=state.quest;if(!q||q.type!=='journal'||q.b
 async function questCamp(){const q=state.quest;if(!q||q.campUsed)return;const hasTent=tentCount()>0,ans=await dialog(`キャンプで休みますか？\nテント：全回復${hasTent?'':'（未所持）'}\n椅子：HP・MP30%回復`,[[hasTent?'テント':'テントなし','tent',hasTent?'primary':''],['椅子','chair'],['戻る','no']],'CAMP');if(ans==='no'||!ans)return;if(ans==='tent'&&!hasTent)return;if(ans==='tent')consumeItem('mob-tent',1);for(const [id,lv] of state.party){const st=baseStats(player(id),lv),v=q.vitals[id];if(!v||v.dead)continue;if(ans==='tent'){v.hp=st.maxHp;v.mp=st.maxMp;}else{v.hp=Math.min(st.maxHp,v.hp+Math.ceil(st.maxHp*.30));v.mp=Math.min(st.maxMp,v.mp+Math.ceil(st.maxMp*.30));}}q.campUsed=true;toast(ans==='tent'?'HP・MPが全回復した！':'HP・MPが少し回復した！');renderQuestScreen();}
 async function startQuestBattle(){const q=state.quest;if(!q||q.finished||q.startingBattle||q.type==='journal'&&!q.battleReady)return;q.startingBattle=true;const btn=$('#questBattleBtn');if(btn)btn.disabled=true;try{const configs=currentQuestConfigs();if(!configs.length){toast('出現可能な敵がいません');return;}const bg=questBackground();await startBattleLoaded({mode:'quest',returnScreen:'quest',enemyConfigs:configs,party:state.party,questVitals:q.vitals,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:q.type==='boss'||configs.some(x=>trainingEnemyTemplate(x.id)?.category==='boss'),questType:q.type,questArea:q.areaIndex,questDifficulty:q.difficulty||'',adventureLabel:questTitleText()});}finally{if(state.quest)state.quest.startingBattle=false;if(state.quest&&screens.quest.classList.contains('active'))renderQuestScreen();}}
 function persistQuestVitals(){const q=state.quest,b=state.battle;if(!q||!b)return;q.vitals={};b.allies.forEach(a=>{q.vitals[a.id]={hp:Math.max(0,a.hp),mp:Math.max(0,a.mpNow),dead:!!a.dead,status:clone(a.status||{})};});}
-function advanceQuestAfterWin(){const q=state.quest;if(!q)return;if(q.type==='journal'){q.battleReady=false;q.explored=false;q.battleIndex++;if(q.battleIndex<3)return;q.battleIndex=0;}q.areaIndex++;q.campUsed=false;if(q.areaIndex>=4)q.finished=true;}
+function advanceQuestAfterWin(){const q=state.quest;if(!q)return;if(q.type==='program'){markBattleProgramWin();return;}if(q.type==='journal'){q.battleReady=false;q.explored=false;q.battleIndex++;if(q.battleIndex<3)return;q.battleIndex=0;}q.areaIndex++;q.campUsed=false;if(q.areaIndex>=4)q.finished=true;}
 function endQuestToTraining(){state.quest=null;setTrainingMode(state.training.mode||'menu');showScreen('training');}
 function ensureTrainingParty(){
   if(!Array.isArray(state.training.party))state.training.party=state.party.map(x=>[...x]);
@@ -693,7 +773,7 @@ function enemyCategoryLabel(t){return t.category==='boss'?'BOSS':t.category==='e
 function renderTraining(){
   if(state.training.mode==='test'&&!state.test?.enabled)state.training.mode='menu';
   renderTrainingModeCarousel();
-  const mode=state.training.mode||'menu',isTest=mode==='test'&&!!state.test?.enabled,isFeature=['journal','exp','gold','boss'].includes(mode);
+  const mode=state.training.mode||'menu',isTest=mode==='test'&&!!state.test?.enabled,isFeature=['program','journal','exp','gold','boss'].includes(mode);
   $('#trainingPageTitle').textContent=mode==='menu'?'トレーニング':isTest?'テスト戦闘':(TRAINING_MODES.find(x=>x.id===mode)?.name||'トレーニング');
   $('#trainingRandomBtn').style.display=isTest?'block':'none';
   $('#trainingTestPanel').hidden=!isTest;
@@ -2263,7 +2343,7 @@ async function startBattleLoaded(config){
   }catch(err){
     console.error('[MOB QUEST] battle start recovery',err);
     if(config?.mode==='adventure'){try{renderAdventure();}catch(_){}showScreen('adventure');}
-    else if(config?.mode==='quest'){try{renderQuestScreen();}catch(_){}showScreen('quest');}
+    else if(config?.mode==='quest'){if(config?.questType==='program'){try{renderTraining();}catch(_){}showScreen('training');}else{try{renderQuestScreen();}catch(_){}showScreen('quest');}}
     else{try{renderTraining();}catch(_){}showScreen('training');}
     toast('戦闘開始時にエラーが発生しました。画面を復帰しました。');
   }
@@ -2522,7 +2602,7 @@ function bindEvents(){
   $('#campCloseBtn').onclick=closeCamp;$$('[data-camp-action]').forEach(b=>b.onclick=()=>{const a=b.dataset.campAction;if(a==='tent')useCampTent();else if(a==='chair')useCampChair();else if(a==='party')renderCampPartyMenu();else renderCampDrinks();});
   $('#attackBtn').onclick=()=>act('attack');$('#skillBtn').onclick=()=>openSkillMenu('magic');$('#specialBtn').onclick=()=>openSkillMenu('special');$('#ultimateBtn').onclick=()=>openSkillMenu('ultimate');$('#defendBtn').onclick=()=>act('defend');$('#itemBtn').onclick=openItemMenu;$('#escapeBtn').onclick=escapeAttempt;$('#switchBtn').onclick=openSwitchMenu;$$('[data-close-sheet]').forEach(b=>b.onclick=()=>{$('#skillMenu').hidden=true;});
   $('#autoBtn').onclick=()=>{const b=state.battle;if(!b||b.finished)return;b.auto=!b.auto;$('#autoBtn').classList.toggle('active',b.auto);$('#autoBtn').textContent=b.auto?'AUTO ON':'AUTO';if(b.auto&&!b.busy&&activeAlly())autoAct();};$('#speedBtn').onclick=()=>{const speeds=state.test?.enabled?[1,1.5,2,5]:[1,1.5,2];let i=speeds.indexOf(state.speed);if(i<0)i=0;state.speed=speeds[(i+1)%speeds.length];$('#speedBtn').textContent=`×${state.speed}`;};
-  $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(b.config?.explorationAmbush){if(b.resultWin)completeExplorationUnlock();else{renderAdventure();showScreen('adventure');}return;}if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');return;}if(b.mode==='quest'){if(!b.resultWin){if(state.quest?.type==='boss'&&(state.test?.enabled||itemCount('38')>=3)){const a=await dialog('ボスレコードを3枚消費してコンテニューしますか？',[['はい','yes','primary'],['いいえ','no']],'CONTINUE');if(a==='yes'&&(state.test?.enabled||consumeItem('38',3))){state.quest.vitals=freshQuestVitals();renderQuestScreen();showScreen('quest');return;}}endQuestToTraining();return;}if(state.quest?.finished){toast('4 AREA CLEAR！');endQuestToTraining();return;}renderQuestScreen();showScreen('quest');return;}renderTraining();showScreen('training');};
+  $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(b.config?.explorationAmbush){if(b.resultWin)completeExplorationUnlock();else{renderAdventure();showScreen('adventure');}return;}if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');return;}if(b.mode==='quest'){if(state.quest?.type==='program'){await finishBattleProgramReturn(!!b.resultWin);return;}if(!b.resultWin){if(state.quest?.type==='boss'&&(state.test?.enabled||itemCount('38')>=3)){const a=await dialog('ボスレコードを3枚消費してコンテニューしますか？',[['はい','yes','primary'],['いいえ','no']],'CONTINUE');if(a==='yes'&&(state.test?.enabled||consumeItem('38',3))){state.quest.vitals=freshQuestVitals();renderQuestScreen();showScreen('quest');return;}}endQuestToTraining();return;}if(state.quest?.finished){toast('4 AREA CLEAR！');endQuestToTraining();return;}renderQuestScreen();showScreen('quest');return;}renderTraining();showScreen('training');};
   $('#settingsCloseBtn').onclick=closeSettings;
   $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;if(state.training.mode==='test')state.training.mode='menu';}saveTestSettings();renderSettings();if(screens.training.classList.contains('active'))renderTraining();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
   $('#testFastToggle').onclick=()=>{if(!state.test.enabled)return;state.test.fast5=!state.test.fast5;saveTestSettings();renderSettings();toast(state.test.fast5?'戦闘速度 ×5 をON':'戦闘速度 ×5 をOFF');};

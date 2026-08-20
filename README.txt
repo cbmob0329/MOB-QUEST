@@ -1,3 +1,6 @@
+MOB QUEST v56
+バトルプログラム追加版
+
 MOB QUEST playable core v46
 
 今回の更新
