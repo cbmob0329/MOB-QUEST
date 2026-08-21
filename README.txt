@@ -1,3 +1,9 @@
+MOB QUEST playable core v63
+- 装備画面をオレンジベースの木目UIへ変更
+- 装備/武器/フィギュア関連の文字コントラストとサイズを改善
+- フィギュア選択を長い下部一覧から専用ポップアップ方式へ変更
+- FIGURE 1〜4の枠をタップして、その場で選択/解除可能
+
 MOB QUEST v60
 バトルプログラム追加版
 
@@ -80,3 +86,6 @@ v60 figure accessory system:
 - Resonance is calculated per character only; 3-figure effects replace rather than stack with 2-figure effects.
 - Added equipment Figure tab, acquisition/rarity/tag sorting, rarity/tag filtering, all-tag display, active resonance display, detailed resistance/effect status, and resonance activation banner.
 - Test-mode MAX now grants all figures for verification. Normal acquisition is intentionally left to future gacha/event implementation.
+
+
+v62: Updated figure definitions through No.74, revised resonance values/tags, decimal figure effects, status-all resistance, and pending No.62 handling.

@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
   <script>
-  /* v61 deployment guard: the distributed file itself contains no conflict markers.
+  /* v62 deployment guard: the distributed file itself contains no conflict markers.
      This only removes accidental visible marker text and prevents an endless 0% loader. */
   window.__mobBootGuard=setTimeout(function(){
     try{
@@ -32,7 +32,7 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=61">
+  <link rel="stylesheet" href="css/style.css?v=62">
 </head>
 <body>
 <main id="app">
@@ -363,10 +363,20 @@
 
   <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
 
+  <!-- FIGURE PICKER -->
+  <div id="figurePickerOverlay" class="figure-picker-overlay" hidden>
+    <div class="figure-picker-card">
+      <div class="settings-head figure-picker-head"><div><small>SELECT FIGURE</small><h2 id="figurePickerTitle">フィギュアを選択</h2></div><button id="figurePickerCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="figurePickerSummary" class="figure-picker-summary"></div>
+      <div id="figurePickerControls" class="figure-picker-controls"></div>
+      <div id="figurePickerList" class="figure-picker-list"></div>
+    </div>
+  </div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=61" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=63" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -374,7 +384,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=61"></script>
-<script src="js/game.js?v=61"></script>
+<script src="js/data.js?v=63"></script>
+<script src="js/game.js?v=63"></script>
 </body>
 </html>

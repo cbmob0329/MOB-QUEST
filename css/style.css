@@ -2385,3 +2385,120 @@
   padding:0 11px;
   pointer-events:auto;
 }
+
+
+/* ===== MOB QUEST v63: ORANGE WOOD EQUIPMENT + FIGURE POPUP ===== */
+/* 装備画面は暗い青を撤廃し、オレンジ系の木目バナーへ統一。 */
+.equipment-screen .interior-overlay{
+  background:linear-gradient(180deg,rgba(39,20,8,.30),rgba(20,10,4,.58))!important;
+}
+.equipment-screen .page-header.glass,
+.equipment-screen .equipment-tabs.glass,
+.equipment-screen .panel{
+  background:
+    repeating-linear-gradient(4deg,rgba(255,231,184,.08) 0 2px,rgba(85,35,9,.08) 2px 4px,transparent 4px 12px),
+    repeating-linear-gradient(96deg,rgba(83,30,8,.13) 0 1px,transparent 1px 19px),
+    linear-gradient(180deg,#bd6a2a 0%,#a9531e 48%,#8d4016 100%)!important;
+  border-color:#6f3212!important;
+  box-shadow:inset 0 0 0 1px rgba(255,224,166,.23),0 7px 18px rgba(0,0,0,.32)!important;
+  color:#fff8e8!important;
+}
+.equipment-screen .page-header span,
+.equipment-screen .page-header small,
+.equipment-screen .section-title small,
+.equipment-screen .figure-title-row small,
+.equipment-screen .figure-section-head>small{
+  color:#ffe1ad!important;
+  text-shadow:0 2px 2px rgba(73,27,7,.82)!important;
+}
+.equipment-screen .page-header h1,
+.equipment-screen .section-title h2,
+.equipment-screen .figure-title-row h2,
+.equipment-screen .figure-section-head>b,
+.equipment-screen .equipment-selected h2{
+  color:#fffdf7!important;
+  text-shadow:0 2px 2px #5c260b,0 0 2px #5c260b!important;
+}
+.equipment-screen .pill{
+  background:#6e2e0d!important;border-color:#efb36b!important;color:#fff8e8!important;
+  text-shadow:0 1px 2px #3f1805!important;
+}
+.equipment-tabs{padding:6px!important;gap:5px!important;top:-10px!important}
+.equipment-tab{
+  min-height:39px!important;background:#71300f!important;border:1px solid #a95a24!important;color:#ffe8c0!important;
+  text-shadow:0 1px 2px #351204!important;font-size:8px!important;
+}
+.equipment-tab.active{
+  background:linear-gradient(180deg,#f3a14f,#d56b25)!important;color:#2c1206!important;border-color:#ffd391!important;
+  text-shadow:none!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 3px 8px rgba(54,20,5,.30)!important;
+}
+.equipment-party-strip button{
+  background:#6c300f!important;border-color:#a95d2e!important;color:#fff8e8!important;
+  box-shadow:inset 0 0 0 1px rgba(255,223,170,.10)!important;
+}
+.equipment-party-strip button.active{background:#e2873b!important;border-color:#ffe0a8!important;color:#2e1408!important}
+.equipment-party-strip b{font-size:7px!important;font-weight:1000!important;text-shadow:0 1px 2px rgba(49,17,4,.72)}
+.equipment-party-strip button.active b{text-shadow:none!important}
+.equipment-selected{background:rgba(79,31,8,.34);border:1px solid rgba(255,216,154,.34);border-radius:15px;padding:9px!important}
+.equipment-selected small,.equipment-selected p{color:#ffe8c5!important;font-size:9px!important;font-weight:900!important;text-shadow:0 1px 2px #502005}
+.equipment-detail-btn{background:#6a2d0f!important;border-color:#efb06b!important;color:#fff8e8!important}
+.equipment-stat-grid{gap:5px!important}
+.equipment-stat-grid span{
+  background:#fff0d4!important;border:1px solid #71340f!important;color:#3c1a09!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)!important;
+}
+.equipment-stat-grid small{font-size:7px!important;color:#7b3e1d!important;font-weight:1000!important}
+.equipment-stat-grid b{font-size:11px!important;color:#321307!important;text-shadow:none!important}
+.equipment-stat-grid span.boosted b{color:#126b31!important;text-shadow:none!important}.equipment-stat-grid span.boosted em{color:#16793a!important}
+.equipment-slots{gap:7px!important}
+.equipment-slot{
+  background:#fff0d7!important;border:2px solid #773713!important;color:#301508!important;
+  box-shadow:0 4px 10px rgba(63,23,5,.25),inset 0 0 0 1px rgba(255,255,255,.55)!important;
+}
+.equipment-slot.main{background:#ffe5bd!important;border-color:#8b3d11!important}.equipment-slot.sub{background:#f7dfc8!important;border-color:#7c451d!important}
+.equipment-slot.medal{background:#f8e2b5!important;border-color:#8e651e!important}
+.equipment-slot>small{color:#8a481f!important;font-size:7px!important;font-weight:1000!important}.equipment-slot>b{color:#2e1307!important;font-size:9px!important}.equipment-slot>em{color:#8c3e17!important;font-size:8px!important;font-weight:1000!important}.equipment-slot>span{color:#5f351f!important;font-size:7px!important;font-weight:800!important}.equipment-slot>i{color:#a26031!important}
+.equipment-screen .panel-note{color:#fff0d8!important;font-size:10px!important;font-weight:900!important;text-shadow:0 1px 2px #4f1d05!important}
+.weapon-season-title{color:#fff4de!important;text-shadow:0 1px 2px #4e1e06!important}
+.weapon-card{background:#fff0d7!important;border-color:#75401c!important;color:#2f1609!important}.weapon-card small,.weapon-card p{color:#65412b!important}.weapon-card em,.weapon-card strong{color:#8a3d16!important}
+.weapon-catalog-card{background:#fff0d7!important;border-color:#75401c!important;color:#2f1609!important}.weapon-catalog-card small,.weapon-catalog-card p{color:#65412b!important}.weapon-catalog-card em{color:#8a3d16!important}
+.smith-host-panel .facility-host-card{background:#fff0d7!important;color:#2f1609!important;border-color:#75401c!important}.smith-host-panel .facility-host-card small,.smith-host-panel .facility-host-card p{color:#704424!important}
+.smith-action-grid button{background:#6d2d0d!important;border-color:#c16d36!important;color:#fff4df!important}.smith-action-grid button small{color:#ffd5a5!important}
+
+/* フィギュア本体も木目上で読める配色へ。 */
+.figure-title-row p{color:#ffe8c8!important;text-shadow:0 1px 2px #4f1c05!important}.figure-title-row>span{background:#6e2e0d!important;border-color:#efb36b!important;color:#fff8e8!important}
+.figure-popup-guide{display:grid;gap:3px;margin:8px 0 10px;padding:9px 11px;border-radius:13px;background:#fff0d7;border:1px solid #793815;color:#321508}
+.figure-popup-guide b{font-size:11px}.figure-popup-guide span{font-size:8px;line-height:1.4;color:#704225;font-weight:900}
+.figure-slot{background:#fff0d7!important;border-color:#7a3915!important;color:#311508!important;box-shadow:0 4px 10px rgba(64,23,5,.24)!important}
+.figure-slot.selected{border-color:#ffe0a5!important;box-shadow:0 0 0 2px rgba(255,218,153,.30),0 4px 10px rgba(64,23,5,.24)!important}.figure-slot small{color:#8a481f!important}.figure-slot b{color:#321508!important}.figure-slot em{color:#744424!important}.figure-slot>i{color:#a6602e!important}
+.figure-resonance-panel,.figure-status-panel{background:#6b2e0f!important;border-color:#b66a37!important;color:#fff6e8!important}.figure-resonance-panel>p{color:#f1d4ad!important}.figure-section-head>b{color:#fff8e8!important}.figure-resistance-grid span{background:#fff0d7!important}.figure-resistance-grid small{color:#7d4828!important;font-weight:1000!important}.figure-resistance-grid b{color:#311508!important}.figure-misc-effects span{background:#f1c88c!important;color:#3a1b0a!important}.figure-resonance-list>div{background:linear-gradient(90deg,#4d5f29,#355026)!important;border-color:#91bb62!important}
+
+/* フィギュア選択は専用モーダル。メイン画面の長い一覧を廃止。 */
+.figure-picker-overlay{position:absolute;z-index:132;inset:0;display:flex;align-items:center;justify-content:center;padding:calc(72px + var(--safe-top)) 10px calc(76px + var(--safe-bottom));background:rgba(26,10,3,.78);backdrop-filter:blur(2px)}
+.figure-picker-overlay[hidden]{display:none!important}
+.figure-picker-card{width:100%;max-width:500px;max-height:100%;display:flex;flex-direction:column;overflow:hidden;padding:12px;border-radius:22px;background:repeating-linear-gradient(4deg,rgba(255,232,188,.08) 0 2px,rgba(74,26,6,.08) 2px 4px,transparent 4px 12px),linear-gradient(180deg,#c36b28,#9b4517);border:2px solid #f0b366;box-shadow:0 16px 38px rgba(0,0,0,.52),inset 0 0 0 1px rgba(255,235,196,.25);color:#fff7e8}
+.figure-picker-head{flex:0 0 auto;padding-bottom:8px;border-bottom:1px solid rgba(255,226,177,.28)}
+.figure-picker-head small{color:#ffe0ad!important}.figure-picker-head h2{color:#fff!important;text-shadow:0 2px 2px #572006!important}.figure-picker-head .sheet-close{background:#6b2a0c!important;border-color:#e5a65e!important;color:#fff!important}
+.figure-picker-summary{flex:0 0 auto;padding-top:8px}
+.figure-picker-current{display:grid;grid-template-columns:52px 1fr auto;gap:8px;align-items:center;padding:8px;border-radius:13px;background:#fff0d7;border:1px solid #763513;color:#321508}
+.figure-picker-current>small{grid-column:1/-1;font-size:7px;color:#8a4a27;font-weight:1000;letter-spacing:.08em}.figure-picker-current img{width:52px;height:52px;object-fit:contain}.figure-picker-current b{display:block;font-size:10px}.figure-picker-current span{display:block;margin-top:2px;font-size:7px;color:#70452c;font-weight:900}.figure-picker-current button{min-height:34px;padding:0 10px;border-radius:9px;background:#75300e;color:#fff4df;border:1px solid #b96a35;font-size:8px;font-weight:1000}.figure-picker-current button:disabled{opacity:.35}.figure-picker-empty{grid-column:1/3}.figure-picker-empty span{font-size:8px}
+.figure-picker-controls{flex:0 0 auto;margin-top:8px;padding:8px;border-radius:13px;background:rgba(86,33,8,.72);border:1px solid rgba(255,221,164,.28)}
+.figure-picker-controls .figure-sort-row,.figure-picker-controls .figure-rarity-filter{margin-bottom:5px}.figure-picker-controls .figure-tag-filter{max-height:76px;overflow-y:auto;margin:0}
+.figure-picker-controls .figure-sort-row button,.figure-picker-controls .figure-rarity-filter button,.figure-picker-controls .figure-tag-filter button{min-height:28px;background:#6e2d0d!important;border-color:#ad6231!important;color:#ffe7c0!important;font-size:7px!important}.figure-picker-controls button.active{background:#f0a04d!important;color:#321408!important;border-color:#ffd696!important}
+.figure-picker-list{min-height:0;flex:1 1 auto;overflow-y:auto;display:grid;gap:7px;padding:8px 2px 2px;touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.figure-picker-list .figure-card{min-height:105px;background:#fff0d7!important;border-color:#78401b!important;color:#2e1508!important;box-shadow:0 4px 10px rgba(53,18,4,.23)!important}.figure-picker-list .figure-card b{font-size:11px!important}.figure-picker-list .figure-card small{color:#237346!important;font-size:9px!important}.figure-picker-list .figure-card p{color:#5b3a25!important;font-size:8px!important}.figure-picker-list .figure-card strong{color:#7b421f!important}.figure-picker-list .figure-tags i{background:#e5c69e!important;color:#3c260f!important}.figure-picker-list .figure-card:disabled{opacity:.46}
+@media(max-width:380px){.figure-picker-overlay{padding-left:7px;padding-right:7px}.figure-picker-card{padding:9px}.figure-picker-controls .figure-tag-filter{max-height:62px}.figure-picker-list .figure-card{grid-template-columns:64px 1fr}.figure-picker-list .figure-card>img{width:64px;height:72px}}
+
+/* v63 final readability pass: equipment copy must be legible on phones. */
+.equipment-screen .weapon-card b{font-size:11px!important;line-height:1.25!important}
+.equipment-screen .weapon-card small{font-size:8px!important;line-height:1.35!important;font-weight:900!important}
+.equipment-screen .weapon-card em{font-size:9px!important;line-height:1.35!important;font-weight:1000!important}
+.equipment-screen .weapon-card p{font-size:8px!important;line-height:1.45!important;font-weight:800!important}
+.equipment-screen .weapon-card strong{font-size:8px!important;line-height:1.35!important}
+.equipment-screen .weapon-catalog-card b{font-size:10px!important;line-height:1.3!important}
+.equipment-screen .weapon-catalog-card small{font-size:7.5px!important;line-height:1.35!important;font-weight:900!important}
+.equipment-screen .weapon-catalog-card em{font-size:8px!important;line-height:1.4!important;font-weight:1000!important}
+.equipment-screen .weapon-catalog-card p{font-size:7.5px!important;line-height:1.45!important;font-weight:800!important}
+.equipment-screen .equipment-slot>b{font-size:9px!important;line-height:1.3!important}
+.equipment-screen .equipment-slot>span{font-size:7.5px!important;line-height:1.4!important}
+.equipment-screen .figure-resonance-list b{font-size:11px!important}.equipment-screen .figure-resonance-list span{font-size:9px!important}
