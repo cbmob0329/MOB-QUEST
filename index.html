@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
   <script>
-  /* v62 deployment guard: the distributed file itself contains no conflict markers.
+  /* v64 deployment guard: the distributed file itself contains no conflict markers.
      This only removes accidental visible marker text and prevents an endless 0% loader. */
   window.__mobBootGuard=setTimeout(function(){
     try{
@@ -32,10 +32,47 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=62">
+  <link rel="stylesheet" href="css/style.css?v=64">
 </head>
 <body>
 <main id="app">
+
+  <!-- TITLE -->
+  <section id="titleScreen" class="screen active title-screen">
+    <img class="screen-bg bg-cover title-bg" src="back/title.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="title-shade"></div>
+    <div class="title-shell safe-top safe-bottom">
+      <div class="title-brand">
+        <img src="icon/01.png" alt="MOB QUEST">
+        <b>MOB QUEST</b>
+      </div>
+      <nav class="title-menu" aria-label="タイトルメニュー">
+        <button id="titleNewBtn" type="button"><b>NEW</b><small>新しく冒険を始める</small></button>
+        <button id="titleContinueBtn" type="button"><b>CONTINEW</b><small>続きから始める</small></button>
+        <button id="titleSettingsBtn" type="button"><b>設定</b><small>SETTINGS</small></button>
+      </nav>
+      <small class="title-version">MOB QUEST v64</small>
+    </div>
+  </section>
+
+  <!-- OPENING -->
+  <section id="openingScreen" class="screen opening-screen">
+    <div id="openingBackdrop" class="opening-backdrop"></div>
+    <div id="openingNarration" class="opening-narration" hidden></div>
+    <div id="openingThrone" class="opening-throne" hidden>
+      <img class="screen-bg bg-cover" src="back/king1.png" data-fallback-src="back2/003.png" alt="">
+      <div class="opening-throne-shade"></div>
+      <div class="opening-actors">
+        <img id="openingKing" class="opening-king" src="play/007.png" alt="モブスライムキング">
+        <img id="openingPink" class="opening-pink" src="play/02.png" alt="モブピンク">
+      </div>
+    </div>
+    <div id="openingLogoStage" class="opening-logo-stage" hidden>
+      <img src="icon/01.png" alt="MOB QUEST">
+      <button id="openingNextBtn" type="button" hidden>NEXT</button>
+    </div>
+  </section>
+
   <!-- HOME -->
   <section id="homeScreen" class="screen home-screen">
     <img class="screen-bg bg-cover bg-home" src="back/rpgmain.png" data-fallback-src="back/01.png" alt="">
@@ -63,7 +100,7 @@
   </section>
 
   <!-- LOADING -->
-  <section id="loadingScreen" class="screen active loading-screen">
+  <section id="loadingScreen" class="screen loading-screen">
     <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay loading-overlay"></div>
     <div class="loading-box">
@@ -333,6 +370,11 @@
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
           <div id="testLevelRoster" class="test-level-roster"></div>
+          <div class="test-chapter-block">
+            <div><b>チャプター開始</b><small>選んだチャプター直前までをクリア済みにして開始します。前のチャプターを選ぶと、それ以降の進行・加入・開放はリセットされます。</small></div>
+            <label><span>開始地点</span><select id="testChapterSelect"></select></label>
+            <button id="testChapterApplyBtn" class="mini-btn" type="button">このチャプターから開始</button>
+          </div>
           <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダル・フィギュアをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
           <div class="test-loadout-block">
             <div><b>装備プリセット</b><small>戦闘バランス確認用。現在のパーティー全員へ適用します。</small></div>
@@ -376,7 +418,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=63" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=64" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -384,7 +426,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=63"></script>
-<script src="js/game.js?v=63"></script>
+<script src="js/data.js?v=64"></script>
+<script src="js/game.js?v=64"></script>
 </body>
 </html>

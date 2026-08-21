@@ -2502,3 +2502,60 @@
 .equipment-screen .equipment-slot>b{font-size:9px!important;line-height:1.3!important}
 .equipment-screen .equipment-slot>span{font-size:7.5px!important;line-height:1.4!important}
 .equipment-screen .figure-resonance-list b{font-size:11px!important}.equipment-screen .figure-resonance-list span{font-size:9px!important}
+
+
+/* ===== MOB QUEST v64 TITLE / OPENING / REPORT FLOW ===== */
+.title-screen{background:#080604;overflow:hidden}
+.title-bg{filter:saturate(.96) brightness(.84)}
+.title-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.22),rgba(0,0,0,.06) 42%,rgba(0,0,0,.62))}
+.title-shell{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-left:24px;padding-right:24px;padding-bottom:max(38px,env(safe-area-inset-bottom))}
+.title-brand{position:absolute;top:max(44px,calc(env(safe-area-inset-top) + 26px));left:50%;transform:translateX(-50%);width:min(72vw,420px);text-align:center;filter:drop-shadow(0 4px 7px rgba(0,0,0,.5))}
+.title-brand img{width:100%;max-height:150px;object-fit:contain}
+.title-brand>b{display:none;color:#fff;font-size:34px;letter-spacing:.08em;text-shadow:0 4px 0 #000}
+.title-brand img.asset-missing{display:none}.title-brand img.asset-missing+b{display:block}
+.title-menu{display:grid;gap:10px;width:min(88vw,390px);margin-bottom:14px}
+.title-menu button{min-height:64px;border:3px solid rgba(255,235,200,.9);border-radius:15px;background:linear-gradient(180deg,rgba(76,38,15,.94),rgba(38,20,10,.96));box-shadow:0 5px 0 rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,147,38,.3);color:#fff;padding:8px 18px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.title-menu button:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.5)}
+.title-menu button b{font-size:22px;letter-spacing:.08em;text-shadow:0 2px 0 #000}
+.title-menu button small{font-size:11px;color:#ffe4bd}
+.title-menu button[disabled]{opacity:.42;filter:grayscale(.7)}
+.title-version{color:rgba(255,255,255,.76);font-weight:800;text-shadow:0 2px 2px #000}
+
+.opening-screen{background:#000;color:#fff;overflow:hidden}
+.opening-backdrop{position:absolute;inset:0;background:#000;z-index:0}
+.opening-narration{position:absolute;z-index:4;left:8%;right:8%;top:50%;transform:translateY(-50%);text-align:center;font-size:clamp(24px,6.2vw,38px);line-height:1.55;font-weight:900;letter-spacing:.08em;color:#fff;text-shadow:0 3px 0 #000,0 0 18px rgba(255,209,132,.3);opacity:0;transition:opacity .48s ease,transform .48s ease}
+.opening-narration.show{opacity:1;transform:translateY(-50%) scale(1)}
+.opening-narration.grand{font-size:clamp(30px,8vw,48px);letter-spacing:.13em;text-shadow:0 4px 0 #000,0 0 28px rgba(255,160,45,.55)}
+.opening-throne{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 1.2s ease}
+.opening-throne.reveal{opacity:1}
+.opening-throne-shade{position:absolute;inset:0;background:rgba(0,0,0,.28)}
+.opening-actors{position:absolute;z-index:2;inset:0;pointer-events:none}
+.opening-king,.opening-pink{position:absolute;object-fit:contain;filter:drop-shadow(0 5px 5px rgba(0,0,0,.5))}
+.opening-king{width:36%;max-width:230px;left:17%;bottom:15%}
+.opening-pink{width:25%;max-width:150px;right:-30%;bottom:14%;transition:right .6s cubic-bezier(.2,.9,.25,1.1)}
+.opening-pink.enter{right:20%}
+.opening-pink.hop{animation:openingPinkHop .34s ease-in-out 4}
+@keyframes openingPinkHop{0%,100%{transform:translateY(0)}50%{transform:translateY(-34px) rotate(-4deg)}}
+.opening-logo-stage{position:absolute;inset:0;z-index:8;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;transition:opacity .8s ease}
+.opening-logo-stage.show{opacity:1}
+.opening-logo-stage img{width:min(78vw,460px);max-height:210px;object-fit:contain;filter:drop-shadow(0 5px 8px #000)}
+.opening-logo-stage button{min-width:180px;border:3px solid #fff1d3;border-radius:14px;background:#a84d16;color:#fff;font-size:20px;font-weight:900;padding:15px 28px;box-shadow:0 5px 0 #54230c}
+
+.home-tutorial-focus{position:relative;z-index:12!important;animation:homeTutorialPulse .72s ease-in-out infinite alternate;box-shadow:0 0 0 4px #fff,0 0 0 10px #ff8a1f,0 0 24px #ff8a1f!important}
+.home-tutorial-focus::after{content:'▼';position:absolute;left:50%;top:-40px;transform:translateX(-50%);font-size:30px;color:#ff981e;text-shadow:0 2px 0 #fff,0 4px 3px #000;animation:homeTutorialArrow .55s ease-in-out infinite alternate}
+@keyframes homeTutorialPulse{to{filter:brightness(1.25)}}@keyframes homeTutorialArrow{to{transform:translate(-50%,8px)}}
+.main-menu-btn.report-lock{filter:saturate(.55) brightness(.72)}
+.main-menu-btn.report-lock::after{content:'王様へ報告';position:absolute;right:4px;top:4px;background:#9b3518;color:#fff;border:2px solid #ffd9a4;border-radius:10px;padding:3px 6px;font-size:9px;font-weight:900}
+
+.test-chapter-block{margin-top:12px;border:2px solid rgba(255,168,62,.38);background:rgba(60,31,13,.48);border-radius:14px;padding:12px;display:grid;gap:9px}
+.test-chapter-block>div{display:grid;gap:3px}.test-chapter-block>div small{opacity:.78;line-height:1.45}
+.test-chapter-block label{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;font-weight:900}
+.test-chapter-block select{min-width:0;width:100%;border:2px solid #e6c59b;border-radius:10px;background:#fff8eb;color:#2f1c10;padding:10px;font-size:14px;font-weight:800}
+.test-chapter-block button{width:100%}
+
+.castle-report-impact{position:fixed;z-index:9999;left:5vw;right:5vw;top:50%;transform:translateY(-50%) scale(.82);background:rgba(28,9,4,.94);border:4px solid #ffbd52;border-radius:20px;color:#fff;text-align:center;padding:24px 18px;box-shadow:0 0 0 4px rgba(0,0,0,.6),0 14px 45px rgba(0,0,0,.72);opacity:0;pointer-events:none;transition:.22s ease}
+.castle-report-impact.show{opacity:1;transform:translateY(-50%) scale(1)}
+.castle-report-impact small{display:block;color:#ffd38c;font-weight:900;font-size:12px;margin-bottom:8px}
+.castle-report-impact b{display:block;font-size:clamp(26px,7vw,40px);line-height:1.25;text-shadow:0 3px 0 #000}
+.castle-actor-arm.report-dash{animation:castleArmReportDash 1.9s ease-in-out}
+@keyframes castleArmReportDash{0%{transform:translateX(0)}25%{transform:translateX(-125vw) rotate(-8deg)}55%{transform:translateX(-125vw)}80%{transform:translateX(14px) rotate(3deg)}100%{transform:translateX(0)}}
