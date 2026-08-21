@@ -1,4 +1,4 @@
-MOB QUEST v57
+MOB QUEST v59
 バトルプログラム追加版
 
 MOB QUEST playable core v46
@@ -68,3 +68,7 @@ v51: レコード消費確認、レコードエリア退出ロック、戦闘開
 v52: 戦闘開始時エラー修正、施設1行会話の不自然な端数改行修正、ドリンクショップ文字コントラスト改善。
 
 v53: お城を正式な4施設メニューへ更新（王の間 / 宿舎 / MOB SHOP / レコードルーム）。王の間にモブスライムキング・モブライトアームを配置してタップ会話、宿舎にモブミータの全回復、MOB SHOPにモブマテリアとitem/01～18の購入、レコードルームLOCKを追加。MOB SHOPはピンク/青木目UI、購入後「毎度あり！」、各サブルームHOMEは城メニューへ戻る。
+
+v59 deployment recovery:
+- index.html / css/style.css / js/data.js / js/game.js are clean full-replacement files.
+- Do not merge index.html with an older branch; replace the file to avoid Git conflict markers.

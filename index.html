@@ -8,7 +8,31 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=58">
+  <script>
+  /* v59 deployment guard: the distributed file itself contains no conflict markers.
+     This only removes accidental visible marker text and prevents an endless 0% loader. */
+  window.__mobBootGuard=setTimeout(function(){
+    try{
+      var loader=document.getElementById('loadingScreen');
+      var detail=document.getElementById('loadingDetail');
+      if(loader&&loader.classList.contains('active')&&detail&&detail.textContent==='0%'){
+        detail.textContent='START CHECK';
+      }
+    }catch(e){}
+  },6500);
+  document.addEventListener('DOMContentLoaded',function(){
+    try{
+      var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+      var nodes=[];
+      while(walker.nextNode()){
+        var v=walker.currentNode.nodeValue||'';
+        if(/^(?:\s*)(?:<<<<<<<|=======|>>>>>>>)/m.test(v))nodes.push(walker.currentNode);
+      }
+      nodes.forEach(function(n){n.nodeValue=n.nodeValue.replace(/^\s*(?:<<<<<<<[^\n]*|=======|>>>>>>>[^\n]*)\s*$/gm,'');});
+    }catch(e){}
+  });
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=59">
 </head>
 <body>
 <main id="app">
@@ -332,7 +356,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=56" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=59" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -340,7 +364,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=58"></script>
-<script src="js/game.js?v=58"></script>
+<script src="js/data.js?v=59"></script>
+<script src="js/game.js?v=59"></script>
 </body>
 </html>
