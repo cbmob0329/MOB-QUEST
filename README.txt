@@ -1,4 +1,4 @@
-MOB QUEST v59
+MOB QUEST v60
 バトルプログラム追加版
 
 MOB QUEST playable core v46
@@ -72,3 +72,11 @@ v53: お城を正式な4施設メニューへ更新（王の間 / 宿舎 / MOB S
 v59 deployment recovery:
 - index.html / css/style.css / js/data.js / js/game.js are clean full-replacement files.
 - Do not merge index.html with an older branch; replace the file to avoid Git conflict markers.
+
+
+v60 figure accessory system:
+- Added 60 figure accessories (fig/01.png - fig/60.png) and 31 resonance tags.
+- Each character can equip up to four figures. Figure stat bonuses and supported traits affect battle/progression/exploration.
+- Resonance is calculated per character only; 3-figure effects replace rather than stack with 2-figure effects.
+- Added equipment Figure tab, acquisition/rarity/tag sorting, rarity/tag filtering, all-tag display, active resonance display, detailed resistance/effect status, and resonance activation banner.
+- Test-mode MAX now grants all figures for verification. Normal acquisition is intentionally left to future gacha/event implementation.

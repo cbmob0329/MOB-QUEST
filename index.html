@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
   <script>
-  /* v59 deployment guard: the distributed file itself contains no conflict markers.
+  /* v61 deployment guard: the distributed file itself contains no conflict markers.
      This only removes accidental visible marker text and prevents an endless 0% loader. */
   window.__mobBootGuard=setTimeout(function(){
     try{
@@ -32,7 +32,7 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=59">
+  <link rel="stylesheet" href="css/style.css?v=61">
 </head>
 <body>
 <main id="app">
@@ -154,6 +154,7 @@
     <div class="page-scroll nav-spacer equipment-scroll">
       <div class="equipment-tabs glass">
         <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
+        <button class="equipment-tab" data-equipment-tab="figures" type="button">フィギュア</button>
         <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
         <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
         <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
@@ -332,7 +333,16 @@
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
           <div id="testLevelRoster" class="test-level-roster"></div>
-          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダルをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
+          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダル・フィギュアをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
+          <div class="test-loadout-block">
+            <div><b>装備プリセット</b><small>戦闘バランス確認用。現在のパーティー全員へ適用します。</small></div>
+            <div class="test-loadout-grid">
+              <button data-test-loadout="naked" type="button">裸</button>
+              <button data-test-loadout="shop" type="button">店売り</button>
+              <button data-test-loadout="expected" type="button">想定装備</button>
+              <button data-test-loadout="optimal" type="button">最適装備</button>
+            </div>
+          </div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -356,7 +366,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=59" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=61" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -364,7 +374,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=59"></script>
-<script src="js/game.js?v=59"></script>
+<script src="js/data.js?v=61"></script>
+<script src="js/game.js?v=61"></script>
 </body>
 </html>
