@@ -2559,3 +2559,11 @@
 .castle-report-impact b{display:block;font-size:clamp(26px,7vw,40px);line-height:1.25;text-shadow:0 3px 0 #000}
 .castle-actor-arm.report-dash{animation:castleArmReportDash 1.9s ease-in-out}
 @keyframes castleArmReportDash{0%{transform:translateX(0)}25%{transform:translateX(-125vw) rotate(-8deg)}55%{transform:translateX(-125vw)}80%{transform:translateX(14px) rotate(3deg)}100%{transform:translateX(0)}}
+
+
+/* ===== v65: extended skill playback ===== */
+.skill-sprite-fx.skill-shake .skill-frame.active{animation:mqSkillShake .10s linear infinite}
+.skill-sprite-fx.skill-fade .skill-frame.active{animation:mqSkillFade 1s ease-out forwards}
+@keyframes mqSkillShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-5px,2px)}50%{transform:translate(5px,-2px)}75%{transform:translate(-3px,-3px)}}
+@keyframes mqSkillFade{0%,55%{opacity:1}100%{opacity:0}}
+.skill-item .skill-balance{display:inline-flex;margin-left:5px;padding:1px 5px;border-radius:999px;background:rgba(255,255,255,.10);font-size:6px;font-style:normal;white-space:nowrap}

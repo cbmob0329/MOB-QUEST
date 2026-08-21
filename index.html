@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
   <script>
-  /* v64 deployment guard: the distributed file itself contains no conflict markers.
+  /* v65 deployment guard: the distributed file itself contains no conflict markers.
      This only removes accidental visible marker text and prevents an endless 0% loader. */
   window.__mobBootGuard=setTimeout(function(){
     try{
@@ -32,7 +32,7 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=64">
+  <link rel="stylesheet" href="css/style.css?v=65">
 </head>
 <body>
 <main id="app">
@@ -51,7 +51,7 @@
         <button id="titleContinueBtn" type="button"><b>CONTINEW</b><small>続きから始める</small></button>
         <button id="titleSettingsBtn" type="button"><b>設定</b><small>SETTINGS</small></button>
       </nav>
-      <small class="title-version">MOB QUEST v64</small>
+      <small class="title-version">MOB QUEST v65</small>
     </div>
   </section>
 
@@ -385,6 +385,7 @@
               <button data-test-loadout="optimal" type="button">最適装備</button>
             </div>
           </div>
+          <div class="settings-row compact"><div><b>全キャラ全技使用可</b><small>テストモード専用。ONにすると、習得者未設定の技を含む全48技を全キャラクターが使用できます。</small></div><button id="testAllSkillsToggle" class="settings-toggle" type="button">OFF</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -418,7 +419,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=64" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=65" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -426,7 +427,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=64"></script>
-<script src="js/game.js?v=64"></script>
+<script src="js/data.js?v=65"></script>
+<script src="js/game.js?v=65"></script>
 </body>
 </html>

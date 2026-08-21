@@ -8,9 +8,9 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=64;
+const GAME_ASSET_VERSION=65;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
-function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5};}catch(_){}return{enabled:false,fast5:false};}
+function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
 function loadAutoBattlePreference(){try{return localStorage.getItem('mobQuestAutoBattleV1')==='1';}catch(_){return false;}}
 function saveAutoBattlePreference(v){try{localStorage.setItem('mobQuestAutoBattleV1',v?'1':'0');}catch(_){}}
@@ -918,7 +918,7 @@ function renderTrainingFeature(mode){
 }
 function questRecordId(type){return type==='exp'?'36':type==='gold'?'37':type==='boss'?'38':'';}
 function consumeQuestRecord(type,cost){const id=questRecordId(type);return id?consumeItem(id,cost):true;}
-function freshQuestVitals(){const out={};for(const [id,lv] of state.party){const q=player(id),st=baseStats(q,lv);out[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0}};}return out;}
+function freshQuestVitals(){const out={};for(const [id,lv] of state.party){const q=player(id),st=baseStats(q,lv);out[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0}};}return out;}
 async function startTrainingQuest(type,opt={}){
   if(type==='journal'){
     const wi=clamp(Number(opt.worldIndex)||0,0,(MOB_DATA.adventureWorlds?.length||1)-1),w=MOB_DATA.adventureWorlds?.[wi];
@@ -1845,7 +1845,7 @@ function areaCampUsed(){return !!state.adventure.campUsed?.[currentAreaKey()];}
 function markAreaCampUsed(){if(!state.adventure.campUsed||typeof state.adventure.campUsed!=='object')state.adventure.campUsed={};state.adventure.campUsed[currentAreaKey()]=true;saveAdventure();}
 function ensureAdventureVitals(){
   if(!state.adventure.vitals||typeof state.adventure.vitals!=='object')state.adventure.vitals={};
-  for(const [id,lv] of state.party){const p=player(id);if(!p)continue;const st=baseStats(p,lv),v=state.adventure.vitals[id];if(!v)state.adventure.vitals[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0}};else{v.hp=clamp(Number(v.hp)||0,0,st.maxHp);v.mp=clamp(Number(v.mp)||0,0,st.maxMp);v.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,...(v.status||{})};v.dead=!!v.dead||v.hp<=0;}}
+  for(const [id,lv] of state.party){const p=player(id);if(!p)continue;const st=baseStats(p,lv),v=state.adventure.vitals[id];if(!v)state.adventure.vitals[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0}};else{v.hp=clamp(Number(v.hp)||0,0,st.maxHp);v.mp=clamp(Number(v.mp)||0,0,st.maxMp);v.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,...(v.status||{})};v.dead=!!v.dead||v.hp<=0;}}
   saveAdventure();return state.adventure.vitals;
 }
 function weightedPickItem(){const bonus=partyExploreFigureBonus(),weighted=GAME_ITEMS.map(x=>({x,w:x.weight+bonus*Math.max(0,18-x.weight)})),total=weighted.reduce((s,o)=>s+o.w,0);let r=Math.random()*total;for(const o of weighted){r-=o.w;if(r<=0)return o.x;}return GAME_ITEMS[0];}
@@ -1917,7 +1917,7 @@ let ENEMY_UID=0;
 function buildEnemyFromTemplate(t,lv,partySize=4,groupSize=1,bg='',fallbackBg=''){
   if(!t)return null;const st=enemyStatPreview(t,lv,groupSize,partySize),b=t.bossId?boss(t.bossId):null;
   const startRate=clamp(Number(t.startingHpRate)||1,.01,1);
-  return{...t,uid:`enemy-${++ENEMY_UID}`,level:clamp(Number(lv)||t.levelMin||1,1,120),...st,hp:Math.max(1,Math.round(st.maxHp*startRate)),isBoss:t.category==='boss',isElite:t.category==='elite',evasion:clamp(Number(t.evasion??t.evade??t.mods?.evade)||0,0,.8),bg:bg||t.bg||b?.bg||'',fallbackBg:fallbackBg||t.fallbackBg||b?.fallbackBg||'',damageReduction:0,shieldTurns:0,atkBuff:0,atkBuffTurns:0,defBuff:0,defBuffTurns:0,defDebuff:0,defDebuffTurns:0,spdDebuff:0,spdDebuffTurns:0,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0}};
+  return{...t,uid:`enemy-${++ENEMY_UID}`,level:clamp(Number(lv)||t.levelMin||1,1,120),...st,hp:Math.max(1,Math.round(st.maxHp*startRate)),isBoss:t.category==='boss',isElite:t.category==='elite',evasion:clamp(Number(t.evasion??t.evade??t.mods?.evade)||0,0,.8),bg:bg||t.bg||b?.bg||'',fallbackBg:fallbackBg||t.fallbackBg||b?.fallbackBg||'',damageReduction:0,shieldTurns:0,atkBuff:0,atkBuffTurns:0,defBuff:0,defBuffTurns:0,defDebuff:0,defDebuffTurns:0,spdDebuff:0,spdDebuffTurns:0,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0}};
 }
 function buildBossEnemy(b,lv,size){return buildEnemyFromTemplate(trainingEnemyCatalog().find(t=>t.bossId===b?.id)||legacyBossTemplate(b),lv,size,1,b?.bg,b?.fallbackBg);}
 function buildNormalEnemy(raw,lv,size,bg){const t={...raw,id:raw.id||`legacy-normal-${raw.name}`,category:'normal',image:raw.image||'',levelMin:lv,levelMax:lv};return buildEnemyFromTemplate(t,lv,size,1,bg,'back/sougen.png');}
@@ -2068,7 +2068,7 @@ function positionEnemyTargetMarks(root=$('#enemyArea')){
   });
 }
 function enemyMarkup(e){
-  const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
+  const tags=[];for(const[k,l]of[['poison','毒'],['burn','やけど'],['sleep','眠り'],['stun','ひるみ'],['paralyze','マヒ'],['confuse','混乱']])if(e.status[k]>0)tags.push(l);if(e.shieldTurns>0)tags.push('SHIELD');if(e.defDebuffTurns>0)tags.push('DEF↓↓');if(e.spdDebuffTurns>0)tags.push('SPD↓↓');
   const selected=state.battle?.targetEnemyId===e.uid&&e.hp>0,dead=e.hp<=0;
   const nameLen=[...String(e.name||'')].length,nameSize=nameLen>=11?4.7:nameLen>=9?5.1:nameLen>=7?5.6:6.2;
   return`<button type="button" class="enemy-unit enemy-size-${enemySizeClass(e)} ${enemyIsWinged(e)?'enemy-winged':''} ${selected?'selected':''} ${dead?'dead':''}" data-enemy-target="${e.uid}" ${dead?'disabled':''}><div class="enemy-sprite-wrap">${e.image?`<img class="enemy-sprite" data-enemy-sprite="${e.uid}" src="${e.image}" alt="${e.name}">`:''}<div class="enemy-symbol ${e.image?'fallback-only':''}" data-enemy-symbol="${e.uid}">${e.symbol||'敵'}</div>${selected?'<span class="enemy-target-mark">▼</span>':''}</div><div class="enemy-nameplate"><div class="enemy-name-row"><b style="font-size:${nameSize}px!important">${e.name}</b><small>Lv${e.level}</small>${tags.length?`<span class="enemy-tags">${tags.map(t=>`<em>${t}</em>`).join('')}</span>`:''}</div><div class="enemy-hp-row"><span>${dead?'DOWN':'HP'}</span><div class="gauge"><i class="hp" style="width:${pct(e.hp,e.maxHp)}%"></i></div><b>${Math.ceil(e.hp).toLocaleString()}/${e.maxHp.toLocaleString()}</b></div></div></button>`;
@@ -2165,33 +2165,22 @@ async function weaponElementAttackFx(a,{quick=false}={}){
   try{await delay(life);}finally{el.remove();}
 }
 
-async function skillSprite(frames,target='enemy'){
-  if(!frames?.length){fx('magic',target);return;}
-  const wrap=$('#skillSpriteFx');
-  if(!wrap)return;
-  positionEffect(wrap,target);
-  wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';
-  wrap.replaceChildren();
-  const nodes=frames.map((src,i)=>{
-    const img=document.createElement('img');
-    img.className='skill-frame';img.alt='';img.draggable=false;img.decoding='async';
-    img.dataset.frame=String(i);img.src=src;bindImage(img);wrap.appendChild(img);return img;
-  });
+async function skillSprite(frames,target='enemy',fxSpec=null){
+  if(!frames?.length){fx('magic',target);await delay(180);return;}
+  const wrap=$('#skillSpriteFx');if(!wrap)return;
+  positionEffect(wrap,target);wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.classList.remove('skill-shake','skill-fade');wrap.replaceChildren();
+  const nodes=frames.map((src,i)=>{const img=document.createElement('img');img.className='skill-frame';img.alt='';img.draggable=false;img.decoding='async';img.dataset.frame=String(i);img.src=src;bindImage(img);wrap.appendChild(img);return img;});
+  const show=async(index,ms=94,cls='')=>{nodes.forEach((img,j)=>img.classList.toggle('active',index===j));wrap.classList.toggle('skill-shake',cls==='shake');wrap.classList.toggle('skill-fade',cls==='fade');await fixedDelay(ms);};
   try{
-    /* Decode every frame before the first frame becomes visible. No src swapping during playback. */
-    await Promise.all(nodes.map((img,i)=>ensureDomImageReady(img,frames[i],1200)));
-    wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';
-    await nextPaint(2);
-    for(let i=0;i<nodes.length;i++){
-      nodes.forEach((img,j)=>img.classList.toggle('active',i===j));
-      await fixedDelay(94);
-    }
+    await Promise.all(nodes.map((img,i)=>ensureDomImageReady(img,frames[i],1200)));wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';await nextPaint(2);
+    const mode=fxSpec?.mode||'';
+    if(mode==='earthLarge'){await show(0,1000,'shake');await show(1,1000,'fade');}
+    else if(mode==='windLarge'){for(let i=0;i<10;i++)await show(i%2,95);await show(2,1000,'fade');}
+    else if(mode==='lightSmall'){for(let i=0;i<10;i++)await show(i%2,95);await show(2,1000,'fade');}
+    else if(mode==='lightLarge'){await show(0,520,'shake');for(let i=1;i<nodes.length-1;i++)await show(i,120);await show(nodes.length-1,1000,'fade');}
+    else for(let i=0;i<nodes.length;i++)await show(i,94);
     await fixedDelay(45);
-  }finally{
-    nodes.forEach(img=>img.classList.remove('active'));
-    wrap.style.opacity='0';wrap.hidden=true;wrap.style.display='none';
-    wrap.replaceChildren();
-  }
+  }finally{nodes.forEach(img=>img.classList.remove('active'));wrap.classList.remove('skill-shake','skill-fade');wrap.style.opacity='0';wrap.hidden=true;wrap.style.display='none';wrap.replaceChildren();}
 }
 async function ultimateImpactFx(){
   const layer=$('#battleFxLayer');
@@ -2358,7 +2347,7 @@ async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',stat
   await delay(55);
   for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,false,false);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(45);}return total;
 }
-function applyEnemyStatusTo(e,kind,chance,turns=3){if(!e||e.hp<=0)return false;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(e.status[kind],e.isBoss?rint(1,2):turns);return true;}
+function applyEnemyStatusTo(e,kind,chance,turns=3){if(!e||e.hp<=0)return false;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(Number(e.status[kind])||0,e.isBoss?rint(1,2):turns);return true;}
 function heal(a,amount){if(a.dead)return 0;const fe=a.figureEffects||figureEffectsFor(a.id);amount*=1+Number(fe?.healBoost||0);const before=a.hp;a.hp=Math.min(a.maxHp,a.hp+amount);const h=Math.round(a.hp-before);if(h>0)floatNumber(h,'heal',a.id);return h;}
 function healField(ratio){let total=0;livingField().forEach(a=>total+=heal(a,a.maxHp*ratio));renderBattle();return total;}
 function restoreMpField(ratio){livingField().forEach(a=>a.mpNow=Math.min(a.maxMp,a.mpNow+a.maxMp*ratio));renderBattle();}
@@ -2412,23 +2401,56 @@ async function performAttack(a,auto=false){
   if(a.id==='tetsu'&&livingEnemies().length&&passiveChance(.30)){await passiveBeat(a,'テツの意志！');await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate,false);await fixedDelay(600);}
   await delay(auto?150:220);
 }
-async function performMagic(a,auto=false){
-  const element=normalizeElement(a.attribute),spell=MOB_DATA.elements[element],cut=clamp(weaponMagicMpCut(a,element)+Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8),cost=Math.max(0,Math.ceil(spell.cost*(1-cut))),freeChance=weaponMagicFreeChance(a,element),free=freeChance>0&&Math.random()<freeChance;
-  if(a.mpNow<(free?0:cost)){notice('MPが足りない！','danger');return false;}
-  if(!free)a.mpNow-=cost;else notice('武器特性 / 消費MP 0！','buff',520);
-  const magicReady=preloadAssets(spell.frames);await actionCutin(`${a.name}の${spell.spell}！`,'system',560);await magicReady;
-  const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element};
+function battleSkillById(id){return (MOB_DATA.battleSkills||[]).find(s=>s.id===id)||null;}
+function allBattleSkills(){return MOB_DATA.battleSkills||[];}
+function skillCategoryLabel(s){return s.category==='physical'?'物理':s.category==='status'?'状態異常':s.category==='aoeMagic'?'全体魔法':'魔法';}
+function skillStatLabel(s){return s.category==='physical'?'ATK→DEF':s.category==='status'?'MAG→MND':'MAG→MND';}
+function testAllSkillsEnabled(){return !!(state.test?.enabled&&state.test?.allSkills);}
+function learnedBattleSkills(a,type){
+  if(testAllSkillsEnabled())return allBattleSkills().filter(s=>type==='special'?s.category==='physical':s.category!=='physical');
+  const ids=type==='special'?(a.techniqueIds||[]):(a.skillIds||[]);const learned=ids.map(battleSkillById).filter(Boolean);
+  if(learned.length)return learned;
+  if(type==='special')return [];
+  const fallback=MOB_DATA.elements[normalizeElement(a.attribute)],s=battleSkillById(fallback?.skillId);return s?[s]:[];
+}
+function battleSkillMpCost(a,s){const fe=a.figureEffects||figureEffectsFor(a.id);let cut=Number(fe?.mpCut||0);if(s.category!=='physical')cut+=weaponMagicMpCut(a,s.element||'無');return Math.max(0,Math.ceil(Number(s.cost||0)*(1-clamp(cut,0,.8))));}
+function playerStatusChance(a,e,s){
+  const mag=Math.max(1,effective('mag',a)),res=Math.max(1,enemyDefense('magic',e));let factor=clamp(1+(mag-res)/Math.max(120,res*4),.75,1.25),chance=Number(s.chance||0)*factor;
+  if(e?.isBoss){if(s.status==='confuse')chance*=.40;else if(s.status!=='paralyze'&&s.status!=='sleep')chance*=.60;}
+  else if(e?.isElite)chance*=.82;
+  return clamp(chance,.03,.95);
+}
+function skillStatusLabel(k){return({confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'})[k]||k;}
+async function performBattleSkill(a,s,auto=false){
+  if(!s)return false;const cost=battleSkillMpCost(a,s),magicLike=s.category!=='physical',freeChance=magicLike?weaponMagicFreeChance(a,s.element||'無'):0,free=freeChance>0&&Math.random()<freeChance;
+  if(a.mpNow<(free?0:cost)){notice('MPが足りない！','danger');return false;}if(!free)a.mpNow-=cost;else notice('武器特性 / 消費MP 0！','buff',520);
+  const ready=preloadAssets(s.frames||[]);await actionCutin(`${a.name}の${s.name}！`,'system',560);await ready;
+  const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:s.element||'無'};
   try{
-    const targetBefore=targetEnemy();
-    await skillSprite(spell.frames,'enemy');applyEnemyDamage(a,spell.power,'magic');
-    const darkHeal=weaponDarkMagicHitHeal(a);if(darkHeal>0&&String(targetBefore?.attribute||'').includes('闇')&&!a.dead){const h=heal(a,darkHeal);if(h)notice(`武器特性 / HP +${h}`,'heal',520);}
-    const rep=weaponFollowupSpec(a,'magicFollowup',element);if(rep.chance>0&&targetEnemy()?.hp>0&&Math.random()<rep.chance){notice('武器特性 / 追撃魔法！','buff',520);await skillSprite(spell.frames,'enemy');applyEnemyDamage(a,spell.power*(rep.power||.5),'magic');}
-    if(a.id==='jessie'&&element==='雷'&&targetEnemy()?.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(spell.frames,'enemy');applyEnemyDamage(a,spell.power*.9,'magic');await fixedDelay(600);}
+    if(s.category==='status'){
+      const e=targetEnemy();await skillSprite(s.frames||[],'enemy',s.fx);if(!e)return true;const chance=playerStatusChance(a,e,s),ok=applyEnemyStatusTo(e,s.status,chance,s.turns||3);renderBattle();notice(ok?`${e.name}は${skillStatusLabel(s.status)}状態！`:`${e.name}には効かなかった！`,ok?'status':'system',720);
+    }else if(s.category==='aoeMagic'){
+      await skillSprite(s.frames||[],'enemy',s.fx);await playerAoeDamage(a,s.power,'magic');
+    }else{
+      const type=s.category==='physical'?'physical':'magic',targetBefore=targetEnemy();await skillSprite(s.frames||[],'enemy',s.fx);applyEnemyDamage(a,s.power,type);
+      if(type==='magic'){
+        const darkHeal=weaponDarkMagicHitHeal(a);if(darkHeal>0&&String(targetBefore?.attribute||'').includes('闇')&&!a.dead){const h=heal(a,darkHeal);if(h)notice(`武器特性 / HP +${h}`,'heal',520);}
+        const rep=weaponFollowupSpec(a,'magicFollowup',s.element);if(rep.chance>0&&targetEnemy()?.hp>0&&Math.random()<rep.chance){notice('武器特性 / 追撃魔法！','buff',520);await skillSprite(s.frames||[],'enemy',s.fx);applyEnemyDamage(a,s.power*(rep.power||.5),'magic');}
+        if(a.id==='jessie'&&s.element==='雷'&&targetEnemy()?.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(s.frames||[],'enemy',s.fx);applyEnemyDamage(a,s.power*.9,'magic');await fixedDelay(600);}
+      }
+    }
   }finally{state.battle.weaponAttackContext=prev;}
   await delay(auto?170:240);return true;
 }
+async function performMagic(a,auto=false,payload=null){
+  const fallback=MOB_DATA.elements[normalizeElement(a.attribute)],s=payload?.id?battleSkillById(payload.id):battleSkillById(fallback?.skillId);
+  if(!s)return false;return performBattleSkill(a,s,auto);
+}
 function temporaryTechnique(a){const w=String(weaponCombatType(a)||a.weapon||'');if(w.includes('大剣'))return{name:'大剣・強斬り',cost:4,power:1.14};if(w.includes('太刀'))return{name:'太刀・疾風斬り',cost:4,power:1.12};if(w.includes('槍'))return{name:'槍・貫通突き',cost:4,power:1.10};if(w.includes('銃'))return{name:'ガンラッシュ',cost:4,power:1.10};if(w.includes('杖'))return{name:'スタッフブロウ',cost:3,power:1.06};return{name:'特殊攻撃',cost:3,power:1.08};}
-async function performSpecial(a){const t=temporaryTechnique(a),cost=Math.max(0,Math.ceil(t.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;await actionCutin(`${a.name}の${t.name}！`,'system',520);await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);await delay(210);return true;}
+async function performSpecial(a,payload=null){
+  if(payload?.id){const s=battleSkillById(payload.id);if(s?.category==='physical')return performBattleSkill(a,s,false);}
+  const t=temporaryTechnique(a),cost=Math.max(0,Math.ceil(t.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;await actionCutin(`${a.name}の${t.name}！`,'system',520);await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);await delay(210);return true;
+}
 async function performUltimate(a,u){const ui=a.ults.indexOf(u);if(ui<0||ultimateRemaining(a,ui)>0){notice('必殺技のCTが溜まっていません！','danger');return false;}const cost=Math.max(0,Math.ceil(u.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;if(!Array.isArray(a.ultCooldowns))initUltimateCooldowns(a);a.ultCooldowns[ui]=ultimateEffectiveCt(a,u,ui);const prevAttackContext=state.battle.weaponAttackContext;state.battle.weaponAttackContext={...(prevAttackContext||{}),normal:false,sure:!!u.sure,element:normalizeElement(a.attribute)};let total=0,r,lastHitEnemy=null;
   try{await ultimateCutin(a,u);
   const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(90);return r;};
@@ -2570,7 +2592,7 @@ async function startRound(){
 async function processQueue(){
   const b=state.battle;if(!b||b.finished||b.busy)return;while(b.queuePos<b.queue.length){const entry=b.queue[b.queuePos];
     if(entry.type==='ally'){const a=allyById(entry.id);if(!a||a.dead||!b.mainIds.includes(a.id)){b.queuePos++;continue;}if(a.status.sleep>0){a.status.sleep--;notice(`${a.name}は眠っている！`,'status');advanceUltimateCooldowns(a);b.queuePos++;await delay(300);continue;}if(a.status.stun>0){a.status.stun--;notice(`${a.name}はひるんで動けない！`,'status');advanceUltimateCooldowns(a);b.queuePos++;await delay(300);continue;}if(a.status.paralyze>0){notice(`${a.name}はマヒして動けない！`,'status');advanceUltimateCooldowns(a);b.queuePos++;await delay(300);continue;}renderBattle();if(b.auto)setTimeout(autoAct,100);return;}
-    if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(!e||e.hp<=0){b.queuePos++;continue;}const prev=b.queue[b.queuePos-1];if(prev&&(prev.type==='ally'||prev.type==='super'))await fixedDelay(1000);else if(prev&&prev.type==='enemy')await fixedDelay(600);b.busy=true;b.actingEnemyId=e.uid;b.enemy=e;renderBattle();await enemyAction(entry.action||1,e.uid);b.actingEnemyId=null;b.enemy=targetEnemy();b.busy=false;b.queuePos++;if(b.finished)return;await resolveRequiredReplacements();if(b.finished)return;continue;}
+    if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(!e||e.hp<=0){b.queuePos++;continue;}const prev=b.queue[b.queuePos-1];if(prev&&(prev.type==='ally'||prev.type==='super'))await fixedDelay(1000);else if(prev&&prev.type==='enemy')await fixedDelay(600);b.busy=true;b.actingEnemyId=e.uid;b.enemy=e;renderBattle();await enemyAction(entry.action||1,e.uid);b.actingEnemyId=null;b.enemy=targetEnemy();b.busy=false;b.queuePos++;if(b.finished)return;if(!livingEnemies().length){if(await handleEnemyWaveClear())return;}await resolveRequiredReplacements();if(b.finished)return;continue;}
     if(entry.type==='super'){const a=allyById(entry.id);if(!a||a.dead||!b.superIds.includes(a.id)){b.queuePos++;continue;}b.busy=true;renderBattle();await superSubAction(a);await checkBattleHpDialogue();a.nextSupportTurn=b.turn+rint(2,5);b.busy=false;b.queuePos++;if(b.forcePhaseChange){if(await handleForcedEnemyPhase())return;}if(!livingEnemies().length){if(await handleEnemyWaveClear())return;}continue;}
   }await endRound();
 }
@@ -2592,7 +2614,7 @@ function enemyMainSkillPower(e,spec){
 }
 function enemySpecialSpec(e){if(e.specialOptions?.length)return pick(e.specialOptions);if(e.special)return e;return temporaryEnemySpecial(e);}
 async function enemyAction(actionIndex=1,enemyId){
-  const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}
+  const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}if(e.status.confuse>0){e.status.confuse--;const targets=livingEnemies();const t=pick(targets.length?targets:[e]);const d=Math.max(1,Math.round((e.atk*.72-(t.def||0)*.22)*(.90+Math.random()*.20)));t.hp=Math.max(0,t.hp-d);if(t.hp<=0)recordEnemyDefeat(t);renderBattle();floatNumber(d,'damage',`enemy:${t.uid}`);pulseEnemy('hit',t.uid);notice(`${e.name}は混乱して${t.uid===e.uid?'自分':'仲間'}を攻撃した！`,'status',760);await delay(350);return;}
   const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
   if(useSpecial)await bossSpecial(enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
 }
@@ -2602,7 +2624,7 @@ async function bossSpecial(spec){
   const e=actingEnemy()||state.battle.enemy;if(!e)return;spec=spec||enemySpecialSpec(e);await actionCutin(`${e.name}の${spec.special}！`,'danger',700);await beginEnemyLunge(e.uid);let t,d,total=0;const attackElement=spec.skillElement||e.attribute||'無',mainPower=enemyMainSkillPower(e,spec);const hit=async(target,m=null,type=spec.skillType||'physical')=>{const x=await damageAlly(target,m==null?mainPower:m,type,false,attackElement);await delay(80);return x;};const aoe=async(m=null,type='physical')=>aoeHit(m==null?mainPower:m,type,attackElement);
   try{switch(spec.kind){
     case'shield':e.damageReduction=.20;e.shieldTurns=3;for(const ally of livingEnemies())if(ally.uid!==e.uid){ally.allyShieldReduction=.10;ally.allyShieldTurns=3;fx('buff',`enemy:${ally.uid}`);}fx('buff',`enemy:${e.uid}`);notice('自身20% / 味方10% DAMAGE CUT','buff');break;
-    case'reviveMummy':{const dead=(state.battle.enemies||[]).find(x=>x.hp<=0&&String(x.name).includes('ミイラ'));if(dead){dead.hp=Math.max(1,Math.round(dead.maxHp*.45));dead.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0};notice(`${dead.name}が復活！`,'heal',800);floatNumber(dead.hp,'heal',`enemy:${dead.uid}`);}else{t=pick(livingMain());if(t)await hit(t,.72,'magic');}break;}
+    case'reviveMummy':{const dead=(state.battle.enemies||[]).find(x=>x.hp<=0&&String(x.name).includes('ミイラ'));if(dead){dead.hp=Math.max(1,Math.round(dead.maxHp*.45));dead.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};notice(`${dead.name}が復活！`,'heal',800);floatNumber(dead.hp,'heal',`enemy:${dead.uid}`);}else{t=pick(livingMain());if(t)await hit(t,.72,'magic');}break;}
     case'enemyHeal':{const target=[...livingEnemies()].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]||e;if(target){const h=Math.round(target.maxHp*(spec.power||.18));target.hp=Math.min(target.maxHp,target.hp+h);floatNumber(h,'heal',`enemy:${target.uid}`);notice(`${target.name} HP回復`,'heal');}break;}
     case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(Math.random()<(spec.chance??.10)&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
     case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,null,'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
@@ -2645,8 +2667,8 @@ async function act(kind,payload){
   let consumed=true;
   try{
     if(kind==='attack')await performAttack(a);
-    else if(kind==='magic')consumed=await performMagic(a);
-    else if(kind==='special')consumed=await performSpecial(a);
+    else if(kind==='magic')consumed=await performMagic(a,false,payload);
+    else if(kind==='special')consumed=await performSpecial(a,payload);
     else if(kind==='ultimate')consumed=await performUltimate(a,payload);
     else if(kind==='defend'){
       a.guard=.45;a.guardTurns=1;
@@ -2682,8 +2704,19 @@ async function act(kind,payload){
 async function performSwitch(payload){if(!payload)return false;const b=state.battle,out=allyById(payload.outId),incoming=allyById(payload.inId);if(!b||!out||!incoming||incoming.dead||incoming.hp<=0||!b.mainIds.includes(out.id))return false;if(!swapGroupMembers(out.id,incoming.id))return false;const entry=currentEntry();if(entry?.type==='ally'&&entry.id===out.id)entry.id=incoming.id;renderBattle();await actionCutin(`CHANGE! ${out.name} → ${incoming.name}`,'system',620);notice('入れ替えでは行動を消費しません','system',520);await delay(120);return false;}
 function openSwitchMenu(){const a=activeAlly();if(!a)return;const candidates=[...superAllies(),...reserveAllies()].filter(x=>!x.dead&&x.hp>0);if(!candidates.length)return notice('入れ替え可能なメンバーがいません','danger');const sheet=$('#skillMenu'),list=$('#skillMenuList');sheet.hidden=false;$('#skillMenuKicker').textContent=`${a.name} / 行動消費なし`;$('#skillMenuTitle').textContent='入れ替える';list.innerHTML=`<div class="switch-zone-title super">援護メンバー</div>${superAllies().map(x=>`<button class="skill-item ${x.dead?'disabled':''}" data-switch-in="${x.id}" type="button" ${x.dead?'disabled':''}><span class="ult-thumb"><img src="${versionedPlay(x.image)}" alt=""><i>${x.symbol}</i></span><div><b>${x.name}</b><small>HP ${Math.ceil(x.hp)} / MP ${Math.floor(x.mpNow)}</small></div><em>援護</em></button>`).join('')}<div class="switch-zone-title reserve">RESERVE</div>${reserveAllies().map(x=>`<button class="skill-item ${x.dead?'disabled':''}" data-switch-in="${x.id}" type="button" ${x.dead?'disabled':''}><span class="ult-thumb"><img src="${versionedPlay(x.image)}" alt=""><i>${x.symbol}</i></span><div><b>${x.name}</b><small>HP ${Math.ceil(x.hp)} / MP ${Math.floor(x.mpNow)}</small></div><em>RESERVE</em></button>`).join('')}`;bindImages(list);$$('[data-switch-in]',list).forEach(btn=>btn.onclick=()=>{sheet.hidden=true;act('switch',{outId:a.id,inId:btn.dataset.switchIn});});}
 
-async function autoAct(){const b=state.battle,a=activeAlly();if(!b||!a||!b.auto||b.busy||b.finished)return;const usable=readyUlts(a).filter(u=>a.mpNow>=u.cost);if(usable.length&&Math.random()<.32)return act('ultimate',pick(usable));const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.30)return act('magic');return act('attack');}
-function openSkillMenu(type){const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;if(type==='magic'){const s=MOB_DATA.elements[normalizeElement(a.attribute)];s.frames?.forEach(src=>preloadAsset(src,'high'));$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='魔法';list.innerHTML=`<button class="skill-item" data-use-magic type="button"><span class="skill-symbol">${normalizeElement(a.attribute)}</span><div><b>${s.spell}<em class="temp-badge">仮</em></b><small>${TEMP_BALANCE.magicNote}</small></div><em>MP ${s.cost} 仮</em></button>`;$('[data-use-magic]',list).onclick=()=>{$('#skillMenu').hidden=true;act('magic');};}else if(type==='special'){const t=temporaryTechnique(a);$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='特技';list.innerHTML=`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-use-special type="button"><span class="skill-symbol">技</span><div><b>${t.name}<em class="temp-badge">仮</em></b><small>斬撃・打撃・特殊攻撃の正式データが未設定のため、武器種に合わせた仮特技です。</small></div><em>MP ${t.cost} 仮</em></button>`;$('[data-use-special]',list).onclick=()=>{if(a.mpNow<t.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special');};}else{const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?ULT_UNLOCK_LEVELS[i]:null,ok=unlocked.includes(u),cd=ok?ultimateRemaining(a,i):0,base=ultimateEffectiveCt(a,u,i),ready=ok&&cd<=0;return`<button class="skill-item ${!ok?'locked':''} ${ok&&(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?` / Lv${req}で習得`:` / CT ${base}ターン`}</small></div><em>${!ok?'LOCK':ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('ultimate',u);});}}
+async function autoAct(){const b=state.battle,a=activeAlly();if(!b||!a||!b.auto||b.busy||b.finished)return;const usable=readyUlts(a).filter(u=>a.mpNow>=u.cost);if(usable.length&&Math.random()<.32)return act('ultimate',pick(usable));if(testAllSkillsEnabled()){const pool=allBattleSkills().filter(s=>a.mpNow>=battleSkillMpCost(a,s));if(pool.length&&Math.random()<.34){const s=pick(pool);return act(s.category==='physical'?'special':'magic',{id:s.id});}}const s=MOB_DATA.elements[normalizeElement(a.attribute)];if(a.mpNow>=s.cost&&Math.random()<.30)return act('magic');return act('attack');}
+function openSkillMenu(type){
+  const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;
+  if(type==='magic'){
+    const skills=learnedBattleSkills(a,'magic');if(!testAllSkillsEnabled())for(const s of skills)(s.frames||[]).forEach(src=>preloadAsset(src,'high'));$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent=testAllSkillsEnabled()?'魔法・状態異常 / 全技テスト':'魔法';
+    list.innerHTML=skills.length?skills.map(s=>{const cost=battleSkillMpCost(a,s),bad=a.mpNow<cost;return`<button class="skill-item ${bad?'disabled':''}" data-battle-skill="${s.id}" type="button"><span class="skill-symbol">${s.element||'無'}</span><div><b>${s.name}${(!testAllSkillsEnabled()&&!(a.skillIds||[]).length)?'<em class="temp-badge">仮割当</em>':''}<em class="skill-balance">${skillCategoryLabel(s)} / ${skillStatLabel(s)}</em></b><small>${s.desc}</small></div><em>MP ${cost}</em></button>`;}).join(''):`<div class="switch-guide">このキャラクターの習得魔法はまだ設定されていません。<br>テストモードの「全キャラ全技使用可」で全技を確認できます。</div>`;
+    $$('[data-battle-skill]',list).forEach(btn=>btn.onclick=()=>{const s=battleSkillById(btn.dataset.battleSkill),cost=s?battleSkillMpCost(a,s):999;if(a.mpNow<cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('magic',{id:s.id});});
+  }else if(type==='special'){
+    const skills=learnedBattleSkills(a,'special');$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent=testAllSkillsEnabled()?'特技 / 全技テスト':'特技';
+    if(skills.length){if(!testAllSkillsEnabled())for(const s of skills)(s.frames||[]).forEach(src=>preloadAsset(src,'high'));list.innerHTML=skills.map(s=>{const cost=battleSkillMpCost(a,s),bad=a.mpNow<cost;return`<button class="skill-item ${bad?'disabled':''}" data-battle-tech="${s.id}" type="button"><span class="skill-symbol">${s.element||'無'}</span><div><b>${s.name}<em class="skill-balance">物理 / ATK→DEF</em></b><small>${s.desc}</small></div><em>MP ${cost}</em></button>`;}).join('');$$('[data-battle-tech]',list).forEach(btn=>btn.onclick=()=>{const s=battleSkillById(btn.dataset.battleTech),cost=s?battleSkillMpCost(a,s):999;if(a.mpNow<cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special',{id:s.id});});}
+    else{const t=temporaryTechnique(a);list.innerHTML=`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-use-special type="button"><span class="skill-symbol">技</span><div><b>${t.name}<em class="temp-badge">仮</em></b><small>正式な習得技は未割当です。現行バトル維持用の武器種別仮特技です。</small></div><em>MP ${t.cost} 仮</em></button>`;$('[data-use-special]',list).onclick=()=>{if(a.mpNow<t.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special');};}
+  }else{const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?ULT_UNLOCK_LEVELS[i]:null,ok=unlocked.includes(u),cd=ok?ultimateRemaining(a,i):0,base=ultimateEffectiveCt(a,u,i),ready=ok&&cd<=0;return`<button class="skill-item ${!ok?'locked':''} ${ok&&(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?` / Lv${req}で習得`:` / CT ${base}ターン`}</small></div><em>${!ok?'LOCK':ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('ultimate',u);});}
+}
 function battleItemCandidates(it){const all=state.battle?.allies||[];if(it.type==='revive')return all.filter(a=>a.dead||a.hp<=0);return all.filter(a=>!a.dead&&a.hp>0);}
 function battleItemCanUseOn(it,t){if(!it||!t)return false;if(it.type==='revive')return !!t.dead||t.hp<=0;if(t.dead||t.hp<=0)return false;if(it.type==='hp')return t.hp<t.maxHp;if(it.type==='mp')return t.mpNow<t.maxMp;if(it.type==='cure')return Number(t.status?.[it.status]||0)>0;if(it.type==='cureAll')return Object.values(t.status||{}).some(v=>Number(v)>0);if(it.type==='hpmp'||it.type==='full')return t.hp<t.maxHp||t.mpNow<t.maxMp;if(it.type==='battleBuff')return true;return false;}
 function openItemMenu(){const list=$('#skillMenuList'),usable=GAME_ITEMS.filter(it=>it.type!=='record'&&itemCount(it.id)>0);$('#skillMenu').hidden=false;$('#skillMenuKicker').textContent='ITEM';$('#skillMenuTitle').textContent='アイテム';list.innerHTML=usable.length?usable.map(it=>`<button class="skill-item battle-item-entry" data-battle-item="${it.id}" type="button"><span class="ult-thumb"><img src="${it.image}" alt="${it.name}"><i>道</i></span><div><b>${it.name}</b><small>${itemEffectText(it)}</small></div><em>×${itemCount(it.id)}</em></button>`).join(''):`<div class="switch-guide">戦闘で使えるアイテムを所持していません。</div>`;bindImages(list);$$('[data-battle-item]',list).forEach(btn=>btn.onclick=()=>openBattleItemTargets(btn.dataset.battleItem));}
@@ -2816,9 +2849,9 @@ function testFigureScore(f){const st=parseFigureStatsText(f.statsText),fx=parseF
 function applyTestLoadoutPreset(kind){if(!state.test?.enabled)return;for(const [pid,lv] of state.party){const p=player(pid);if(!p)continue;const eq=emptyEquipment();state.meta.figureEquipment[pid]=[null,null,null,null];if(kind==='naked'){state.meta.equipment[pid]=eq;continue;}let list=[];if(kind==='shop')list=bestTestWeaponsFor(p,w=>w.shop||w.season===1);else if(kind==='expected'){const season=clamp(Math.ceil((Number(lv)||1)/24),1,5);list=bestTestWeaponsFor(p,w=>w.season<=season);}else list=bestTestWeaponsFor(p);if(list[0]){state.meta.weapons[list[0].id]=Math.max(2,Number(state.meta.weapons[list[0].id])||0);eq.main=list[0].id;}if(kind!=='shop'&&list[1]){state.meta.weapons[list[1].id]=Math.max(2,Number(state.meta.weapons[list[1].id])||0);eq.sub=list[1].id;}if(kind==='optimal'){for(let i=0;i<3;i++){const w=list[i]||list[0];if(w){state.meta.medals[w.id]=Math.max(1,Number(state.meta.medals[w.id])||0);eq.medals[i]=w.id;}}const figs=FIGURES.filter(f=>!f.pending).sort((a,b)=>testFigureScore(b)-testFigureScore(a)).slice(0,4);for(const f of figs){state.meta.figures[f.id]=Math.max(99,Number(state.meta.figures[f.id])||0);}state.meta.figureEquipment[pid]=figs.map(f=>f.id);}state.meta.equipment[pid]=eq;}saveMeta();state.adventure.vitals=null;saveAdventure();toast(kind==='naked'?'裸装備にしました':kind==='shop'?'店売り装備にしました':kind==='expected'?'Lv帯想定装備にしました':'最適装備にしました');renderSettings();}
 function renderSettings(){
   const t=state.test||loadTestSettings();state.test=t;
-  const on=$('#testModeToggle'),fast=$('#testFastToggle'),controls=$('#testModeControls');
+  const on=$('#testModeToggle'),fast=$('#testFastToggle'),allSkills=$('#testAllSkillsToggle'),controls=$('#testModeControls');
   on.textContent=t.enabled?'ON':'OFF';on.classList.toggle('on',!!t.enabled);
-  fast.textContent=t.fast5?'ON':'OFF';fast.classList.toggle('on',!!(t.enabled&&t.fast5));
+  fast.textContent=t.fast5?'ON':'OFF';fast.classList.toggle('on',!!(t.enabled&&t.fast5));if(allSkills){allSkills.textContent=t.allSkills?'ON':'OFF';allSkills.classList.toggle('on',!!(t.enabled&&t.allSkills));allSkills.disabled=!t.enabled;}
   fast.disabled=!t.enabled;controls.classList.toggle('disabled',!t.enabled);
   $('#testLevelInput').disabled=!t.enabled;$('#applyTestLevelBtn').disabled=!t.enabled;$('#testItemsMaxBtn').disabled=!t.enabled;$$('[data-test-loadout]').forEach(b=>b.disabled=!t.enabled);
   const roster=$('#testLevelRoster');if(roster){
@@ -3072,8 +3105,9 @@ function bindEvents(){
   $('#autoBtn').onclick=()=>{const b=state.battle;if(!b||b.finished)return;b.auto=!b.auto;state.autoBattle=b.auto;saveAutoBattlePreference(state.autoBattle);$('#autoBtn').classList.toggle('active',b.auto);$('#autoBtn').textContent=b.auto?'AUTO ON':'AUTO';if(b.auto&&!b.busy&&activeAlly())autoAct();};$('#speedBtn').onclick=()=>{const speeds=state.test?.enabled?[1,1.5,2,5]:[1,1.5,2];let i=speeds.indexOf(state.speed);if(i<0)i=0;state.speed=speeds[(i+1)%speeds.length];$('#speedBtn').textContent=`×${state.speed}`;};
   $('#resultRetryBtn').onclick=resetTrainingBattle;$('#resultSetupBtn').onclick=async()=>{if(!state.battle)return;const b=state.battle;$('#resultOverlay').hidden=true;if(b.mode==='adventure'){renderAdventure();showScreen('adventure');if(b.config?.explorationAmbush){if(b.resultWin)completeExplorationUnlock();else{renderAdventure();showScreen('adventure');}return;}if(state.adventure.pendingPostStory)await runPendingPostStory(!!b.config?.returnHomeAfterAreaClear,!!b.config?.returnHomeAfterAreaClear);if(b.config?.returnHomeAfterAreaClear){await goHome();return;}renderAdventure();showScreen('adventure');return;}if(b.mode==='quest'){if(state.quest?.type==='program'){await finishBattleProgramReturn(!!b.resultWin);return;}if(!b.resultWin){if(state.quest?.type==='boss'&&(state.test?.enabled||itemCount('38')>=3)){const a=await dialog('ボスレコードを3枚消費してコンテニューしますか？',[['はい','yes','primary'],['いいえ','no']],'CONTINUE');if(a==='yes'&&(state.test?.enabled||consumeItem('38',3))){state.quest.vitals=freshQuestVitals();renderQuestScreen();showScreen('quest');return;}}endQuestToTraining();return;}if(state.quest?.finished){toast('4 AREA CLEAR！');endQuestToTraining();return;}renderQuestScreen();showScreen('quest');return;}renderTraining();showScreen('training');};
   $('#settingsCloseBtn').onclick=closeSettings;
-  $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;if(state.speed===5)state.speed=1;if(state.training.mode==='test')state.training.mode='menu';}saveTestSettings();renderSettings();if(screens.training.classList.contains('active'))renderTraining();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
+  $('#testModeToggle').onclick=()=>{state.test.enabled=!state.test.enabled;if(!state.test.enabled){state.test.fast5=false;state.test.allSkills=false;if(state.speed===5)state.speed=1;if(state.training.mode==='test')state.training.mode='menu';}saveTestSettings();renderSettings();if(screens.training.classList.contains('active'))renderTraining();toast(state.test.enabled?'テストモード ON':'テストモード OFF');};
   $('#testFastToggle').onclick=()=>{if(!state.test.enabled)return;state.test.fast5=!state.test.fast5;saveTestSettings();renderSettings();toast(state.test.fast5?'戦闘速度 ×5 をON':'戦闘速度 ×5 をOFF');};
+  $('#testAllSkillsToggle').onclick=()=>{if(!state.test.enabled)return;state.test.allSkills=!state.test.allSkills;saveTestSettings();renderSettings();toast(state.test.allSkills?'全キャラクターの全48技を解放しました':'全技テストをOFFにしました');};
   $('#applyTestLevelBtn').onclick=()=>{if(!state.test.enabled)return;const lv=clamp(Number($('#testLevelInput').value)||5,1,120);state.party=state.party.map(([id])=>[id,lv]);state.adventure.vitals=null;saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);renderSettings();toast(`現在のパーティーをLv${lv}に設定しました / HP・MP全回復`);};
   $('#testItemsMaxBtn').onclick=grantTestItemsMax;$$('[data-test-loadout]').forEach(btn=>btn.onclick=()=>applyTestLoadoutPreset(btn.dataset.testLoadout));
   $('#testChapterApplyBtn').onclick=applyTestChapterStart;
@@ -3082,7 +3116,7 @@ function bindEvents(){
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
 lockMobileGestures();initCommonNav();bindImages();bindEvents();
-/* v64: boot/reboot always starts from the title screen. */
+/* v65: boot/reboot always starts from the title screen. */
 (async()=>{
   try{
     await preloadAssetsSafe(['back/title.png','icon/01.png'],900);
