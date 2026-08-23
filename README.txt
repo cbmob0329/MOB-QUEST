@@ -1,4 +1,27 @@
-MOB QUEST v56
+MOB QUEST playable core v64
+
+今回の追記反映
+- 起動・再起動時は必ずタイトル画面 back/title.png から開始
+- タイトルに NEW / CONTINEW / 設定を追加
+- NEW は正式オープニングから開始。テストモード時のみオープニングスキップ可能
+- オープニング前半のナレーション演出、王の間の王様/モブピンク会話、タイトルロゴ3秒表示、NEXT、HOME案内を追加
+- テストモードにチャプター開始を追加。選択チャプター以前はクリア済み、以降は未開放状態へ巻き戻す
+- エリアクリア後は冒険ボタンをロックし「王様に報告へ行こう」を表示
+- 草原～砂漠IIまで、追記された王様報告イベントを実装
+- 指定台詞は大型迫力表示、モブライトアームの退出/復帰ダッシュ演出を追加
+- フィギュア資料を01～87へ更新し、既存値も最新資料で上書き
+- タグ01～31と共鳴性能を最新資料で上書き
+- 魔法ダメージ軽減をフィギュア特性/戦闘計算/ステータス表示へ追加
+- フィギュア62「モブゴースト」は資料にレア度・性能・特性・タグがないため未設定のまま選択対象外
+- v63のオレンジ木目装備画面・フィギュア選択ポップアップは保持
+
+MOB QUEST playable core v63
+- 装備画面をオレンジベースの木目UIへ変更
+- 装備/武器/フィギュア関連の文字コントラストとサイズを改善
+- フィギュア選択を長い下部一覧から専用ポップアップ方式へ変更
+- FIGURE 1〜4の枠をタップして、その場で選択/解除可能
+
+MOB QUEST v60
 バトルプログラム追加版
 
 MOB QUEST playable core v46
@@ -68,3 +91,18 @@ v51: レコード消費確認、レコードエリア退出ロック、戦闘開
 v52: 戦闘開始時エラー修正、施設1行会話の不自然な端数改行修正、ドリンクショップ文字コントラスト改善。
 
 v53: お城を正式な4施設メニューへ更新（王の間 / 宿舎 / MOB SHOP / レコードルーム）。王の間にモブスライムキング・モブライトアームを配置してタップ会話、宿舎にモブミータの全回復、MOB SHOPにモブマテリアとitem/01～18の購入、レコードルームLOCKを追加。MOB SHOPはピンク/青木目UI、購入後「毎度あり！」、各サブルームHOMEは城メニューへ戻る。
+
+v59 deployment recovery:
+- index.html / css/style.css / js/data.js / js/game.js are clean full-replacement files.
+- Do not merge index.html with an older branch; replace the file to avoid Git conflict markers.
+
+
+v60 figure accessory system:
+- Added 60 figure accessories (fig/01.png - fig/60.png) and 31 resonance tags.
+- Each character can equip up to four figures. Figure stat bonuses and supported traits affect battle/progression/exploration.
+- Resonance is calculated per character only; 3-figure effects replace rather than stack with 2-figure effects.
+- Added equipment Figure tab, acquisition/rarity/tag sorting, rarity/tag filtering, all-tag display, active resonance display, detailed resistance/effect status, and resonance activation banner.
+- Test-mode MAX now grants all figures for verification. Normal acquisition is intentionally left to future gacha/event implementation.
+
+
+v62: Updated figure definitions through No.74, revised resonance values/tags, decimal figure effects, status-all resistance, and pending No.62 handling.

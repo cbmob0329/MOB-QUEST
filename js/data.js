@@ -444,3 +444,66 @@ TEMP_BALANCE.playerTargets={
   setEnemy('boss-dragon2',{actionCount:2,mods:{hp:1.18,atk:1.18,mag:1.22,def:1.10,res:1.12}});
   setEnemy('boss-gidora',{actionCount:2,mods:{hp:1.30,atk:1.22,mag:1.30,def:1.14,res:1.16,spd:1.06}});
 }
+
+// ===== MOB QUEST v58 : latest ボス(8) authoritative update =====
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const worldById=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+  const bossById=id=>(MOB_DATA.bosses||[]).find(b=>b.id===id);
+  const setEnemy=(id,props={})=>{const e=enemyById(id);if(!e)return null;const {mods,...rest}=props;if(mods)e.mods={...(e.mods||{}),...mods};Object.assign(e,rest);return e;};
+  const clearAction=id=>{const e=enemyById(id);if(e)delete e.actionCount;};
+
+  // The latest sheet only fixes action counts where it explicitly says 確定2回行動/攻撃.
+  for(const id of ['t-kukuri','t-hisui','t-ryugo','n2-tiger','n2-palette','boss-neomaster','m2-yogan','m2-salamander','boss-dragon2','boss-gidora'])clearAction(id);
+  for(const id of ['m-frezard','s-jones','r2-violin','m2-buster','d2-mirabuster','d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'])setEnemy(id,{actionCount:2});
+
+  // Latest encounter compositions.
+  const grass=worldById('grassland');if(grass)grass.areas[0].boss=[{id:'g-beaver',level:4,qty:2},{id:'g-savanna',level:6}];
+  const desert=worldById('desert');if(desert)desert.areas[2].boss=[{id:'d-deathhead',level:10,qty:2}];
+  const rural=worldById('rural');if(rural){rural.areas[0].boss=[{id:'r-dancer',level:15,qty:2},{id:'r-scouter',level:18}];rural.areas[1].boss=[{id:'r-knife',level:15,qty:2},{id:'r-captain',level:18}];}
+  const sea=worldById('sea');if(sea)sea.areas[1].boss=[{id:'s-marine',level:42,qty:2},{id:'s-jones',level:43}];
+  const grass2=worldById('grassland2');if(grass2)grass2.areas[3].boss=[{id:'g2-savanna',level:56,qty:2},{id:'boss-hawk2',level:60}];
+  const rural2=worldById('rural2');if(rural2)rural2.areas[0].boss=[{id:'r2-adancer',level:56,qty:2},{id:'r2-violin',level:62}];
+  const neon2=worldById('neon2');if(neon2){neon2.areas[0].boss=[{id:'n2-slime',level:61,qty:2},{id:'n2-tiger',level:67}];neon2.areas[2].boss=[{id:'n2-banken',level:66},{id:'n2-golem',level:66},{id:'n2-palette',level:68}];}
+  const magma2=worldById('magma2');if(magma2){magma2.areas[0].boss=[{id:'m2-heatrock',level:65,qty:2},{id:'m2-yogan',level:68}];magma2.areas[1].boss=[{id:'m2-golem',level:65,qty:2},{id:'m2-salamander',level:68}];magma2.areas[2].boss=[{id:'m2-bomber',level:65,qty:2},{id:'m2-buster',level:68}];magma2.areas[3].boss=[{id:'boss-dragon2',level:70}];magma2.areas[3].nextWave=[{id:'boss-gidora',level:75}];}
+
+  // 砂漠Ⅱ: exact skills / phases from the latest sheet.
+  setEnemy('boss-mira-d2',{name:'ミラモブ',attribute:'闇',levelMin:66,levelMax:66,special:'ミラモブポイズン',kind:'poisonSingle',power:1.25,chance:.50,skillType:'physical'});
+  setEnemy('boss-mira2-d2',{name:'ミラモブⅡ',attribute:'闇',levelMin:72,levelMax:72,special:'ミラモブポイズン',kind:'poisonSingle',power:1.35,chance:.50,skillType:'physical'});
+  setEnemy('d2-mirabuster',{actionCount:2,special:'バニッシュフレイム',kind:'aoeStunChance',power:.64,chance:.10,skillType:'magic',specialOptions:[
+    {special:'バニッシュフレイム',kind:'aoeStunChance',power:.64,chance:.10,skillElement:'闇',skillType:'magic'},
+    {special:'ソウル・オーバー・ミラバスター',kind:'aoe',power:1.18,skillElement:'闇',skillType:'magic'}
+  ]});
+  setEnemy('d2-miraearth',{actionCount:2,special:'グラビディクラッシュ',kind:'singleSpdDown',power:1.08,debuff:.12,skillElement:'地',skillType:'physical',specialOptions:[
+    {special:'グラビディクラッシュ',kind:'singleSpdDown',power:1.08,debuff:.12,skillElement:'地',skillType:'physical'},
+    {special:'ソウル・アース・グラビディクラッシュ',kind:'aoe',power:1.16,skillElement:'地',skillType:'physical'}
+  ]});
+  setEnemy('d2-mirakarami',{actionCount:2,special:'ホワイトミイラフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',specialOptions:[
+    {special:'ホワイトミイラフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic'},
+    {special:'ソウル・ヘル・ミイラフレイム',kind:'single',power:1.72,skillElement:'火',skillType:'magic'}
+  ]});
+  setEnemy('d2-miranight',{actionCount:2,special:'シャドウ・オーラ・スパイラル',kind:'sleepSingle',power:1.08,chance:.30,skillElement:'水',skillType:'magic',specialOptions:[
+    {special:'シャドウ・オーラ・スパイラル',kind:'sleepSingle',power:1.08,chance:.30,skillElement:'水',skillType:'magic'},
+    {special:'ソウル・ダイダル・スパイラル',kind:'aoe',power:1.18,skillElement:'水',skillType:'magic'}
+  ]});
+  setEnemy('d2-miratime',{actionCount:2,special:'デザート・ストーム・タイム',kind:'aoeParalyzeChance',power:.66,chance:.20,skillElement:'光',skillType:'magic',specialOptions:[
+    {special:'デザート・ストーム・タイム',kind:'aoeParalyzeChance',power:.66,chance:.20,skillElement:'光',skillType:'magic'},
+    {special:'ソウル・マジック・ゴーストタイム',kind:'stunSingle',power:1.12,chance:.70,skillElement:'光',skillType:'magic'}
+  ]});
+  const pharaoh=setEnemy('boss-dorafara',{name:'ミラモブファラオ',stage:'砂漠Ⅱ',attribute:'光・闇',image:'boss/20.png',symbol:'鏡',levelMin:78,levelMax:78,bossId:'dorafara',special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82,skillElement:'光・闇',skillType:'magic',specialOptions:[
+    {special:'ミラモブポイズン',kind:'poisonSingle',power:1.28,chance:.50,skillElement:'闇',skillType:'physical'},
+    {special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82,skillElement:'光・闇',skillType:'magic',buff:.15}
+  ]});
+  const pharaohBoss=bossById('dorafara');if(pharaohBoss)Object.assign(pharaohBoss,{name:'ミラモブファラオ',attribute:'光・闇',image:'boss/20.png',symbol:'鏡',special:'ソウル・ダーク・ライト・ミラー',kind:'buffDefAoe',power:1.82});
+
+  const d2=worldById('desert2');if(d2){
+    d2.areas[0].boss=[{id:'boss-mira-d2',level:66}];d2.areas[0].nextWave=[{id:'boss-mira2-d2',level:72}];delete d2.areas[0].nextWaves;
+    d2.areas[1].boss=[{id:'d2-slamummy',level:63,escort:true,actionCount:1},{id:'d2-mirabuster',level:70,actionCount:2},{id:'d2-twinsoul',level:66,escort:true,actionCount:1}];delete d2.areas[1].nextWave;delete d2.areas[1].nextWaves;
+    d2.areas[2].boss=[{id:'d2-miraearth',level:70,actionCount:2},{id:'d2-mirakarami',level:70,actionCount:2}];
+    d2.areas[2].nextWaves=[
+      [{id:'d2-miranight',level:70,actionCount:2},{id:'d2-miratime',level:70,actionCount:2}],
+      [{id:'d2-miraearth',level:70,actionCount:1,startingHpRate:.30},{id:'d2-mirakarami',level:70,actionCount:1,startingHpRate:.30},{id:'d2-miranight',level:70,actionCount:1,startingHpRate:.30},{id:'d2-miratime',level:70,actionCount:1,startingHpRate:.30}]
+    ];delete d2.areas[2].nextWave;
+    d2.areas[3].boss=[{id:'boss-dorafara',level:78}];delete d2.areas[3].nextWave;delete d2.areas[3].nextWaves;
+  }
+}

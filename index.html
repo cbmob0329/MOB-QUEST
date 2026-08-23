@@ -8,10 +8,71 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
-  <link rel="stylesheet" href="css/style.css?v=56">
+  <script>
+  /* v64 deployment guard: the distributed file itself contains no conflict markers.
+     This only removes accidental visible marker text and prevents an endless 0% loader. */
+  window.__mobBootGuard=setTimeout(function(){
+    try{
+      var loader=document.getElementById('loadingScreen');
+      var detail=document.getElementById('loadingDetail');
+      if(loader&&loader.classList.contains('active')&&detail&&detail.textContent==='0%'){
+        detail.textContent='START CHECK';
+      }
+    }catch(e){}
+  },6500);
+  document.addEventListener('DOMContentLoaded',function(){
+    try{
+      var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+      var nodes=[];
+      while(walker.nextNode()){
+        var v=walker.currentNode.nodeValue||'';
+        if(/^(?:\s*)(?:<<<<<<<|=======|>>>>>>>)/m.test(v))nodes.push(walker.currentNode);
+      }
+      nodes.forEach(function(n){n.nodeValue=n.nodeValue.replace(/^\s*(?:<<<<<<<[^\n]*|=======|>>>>>>>[^\n]*)\s*$/gm,'');});
+    }catch(e){}
+  });
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=64">
 </head>
 <body>
 <main id="app">
+
+  <!-- TITLE -->
+  <section id="titleScreen" class="screen active title-screen">
+    <img class="screen-bg bg-cover title-bg" src="back/title.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="title-shade"></div>
+    <div class="title-shell safe-top safe-bottom">
+      <div class="title-brand">
+        <img src="icon/01.png" alt="MOB QUEST">
+        <b>MOB QUEST</b>
+      </div>
+      <nav class="title-menu" aria-label="タイトルメニュー">
+        <button id="titleNewBtn" type="button"><b>NEW</b><small>新しく冒険を始める</small></button>
+        <button id="titleContinueBtn" type="button"><b>CONTINEW</b><small>続きから始める</small></button>
+        <button id="titleSettingsBtn" type="button"><b>設定</b><small>SETTINGS</small></button>
+      </nav>
+      <small class="title-version">MOB QUEST v64</small>
+    </div>
+  </section>
+
+  <!-- OPENING -->
+  <section id="openingScreen" class="screen opening-screen">
+    <div id="openingBackdrop" class="opening-backdrop"></div>
+    <div id="openingNarration" class="opening-narration" hidden></div>
+    <div id="openingThrone" class="opening-throne" hidden>
+      <img class="screen-bg bg-cover" src="back/king1.png" data-fallback-src="back2/003.png" alt="">
+      <div class="opening-throne-shade"></div>
+      <div class="opening-actors">
+        <img id="openingKing" class="opening-king" src="play/007.png" alt="モブスライムキング">
+        <img id="openingPink" class="opening-pink" src="play/02.png" alt="モブピンク">
+      </div>
+    </div>
+    <div id="openingLogoStage" class="opening-logo-stage" hidden>
+      <img src="icon/01.png" alt="MOB QUEST">
+      <button id="openingNextBtn" type="button" hidden>NEXT</button>
+    </div>
+  </section>
+
   <!-- HOME -->
   <section id="homeScreen" class="screen home-screen">
     <img class="screen-bg bg-cover bg-home" src="back/rpgmain.png" data-fallback-src="back/01.png" alt="">
@@ -39,7 +100,7 @@
   </section>
 
   <!-- LOADING -->
-  <section id="loadingScreen" class="screen active loading-screen">
+  <section id="loadingScreen" class="screen loading-screen">
     <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay loading-overlay"></div>
     <div class="loading-box">
@@ -130,6 +191,7 @@
     <div class="page-scroll nav-spacer equipment-scroll">
       <div class="equipment-tabs glass">
         <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
+        <button class="equipment-tab" data-equipment-tab="figures" type="button">フィギュア</button>
         <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
         <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
         <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
@@ -146,7 +208,7 @@
     <header class="page-header safe-top glass"><button id="trainingBackBtn" class="back-btn" type="button">←</button><div><span>TRAINING</span><h1 id="trainingPageTitle">トレーニング</h1></div><button id="trainingRandomBtn" class="mini-btn" type="button" hidden>ランダム</button></header>
     <div class="page-scroll training-scroll nav-spacer">
       <div class="training-host-row">
-        <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせてメニューを選ぼう！</p></div></div>
+        <div class="facility-host-card coach-host"><img src="play/003.png" alt="モブコーチ"><div><small>TRAINING COACH</small><h2>モブコーチ</h2><p>目的に合わせて<br>メニューを選ぼう！</p></div></div>
         <button id="trainingHomeQuick" class="training-home-quick" type="button" aria-label="HOME"><img src="mqicon/06.png" alt="HOME"><b>HOME</b></button>
       </div>
       <div id="trainingModeCarousel" class="training-mode-carousel training-main-grid" aria-label="トレーニングメニュー"></div>
@@ -308,7 +370,21 @@
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
           <div id="testLevelRoster" class="test-level-roster"></div>
-          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダルをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
+          <div class="test-chapter-block">
+            <div><b>チャプター開始</b><small>選んだチャプター直前までをクリア済みにして開始します。前のチャプターを選ぶと、それ以降の進行・加入・開放はリセットされます。</small></div>
+            <label><span>開始地点</span><select id="testChapterSelect"></select></label>
+            <button id="testChapterApplyBtn" class="mini-btn" type="button">このチャプターから開始</button>
+          </div>
+          <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダル・フィギュアをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
+          <div class="test-loadout-block">
+            <div><b>装備プリセット</b><small>戦闘バランス確認用。現在のパーティー全員へ適用します。</small></div>
+            <div class="test-loadout-grid">
+              <button data-test-loadout="naked" type="button">裸</button>
+              <button data-test-loadout="shop" type="button">店売り</button>
+              <button data-test-loadout="expected" type="button">想定装備</button>
+              <button data-test-loadout="optimal" type="button">最適装備</button>
+            </div>
+          </div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -329,10 +405,20 @@
 
   <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
 
+  <!-- FIGURE PICKER -->
+  <div id="figurePickerOverlay" class="figure-picker-overlay" hidden>
+    <div class="figure-picker-card">
+      <div class="settings-head figure-picker-head"><div><small>SELECT FIGURE</small><h2 id="figurePickerTitle">フィギュアを選択</h2></div><button id="figurePickerCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="figurePickerSummary" class="figure-picker-summary"></div>
+      <div id="figurePickerControls" class="figure-picker-controls"></div>
+      <div id="figurePickerList" class="figure-picker-list"></div>
+    </div>
+  </div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=56" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=64" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -340,7 +426,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=56"></script>
-<script src="js/game.js?v=56"></script>
+<script src="js/data.js?v=64"></script>
+<script src="js/game.js?v=64"></script>
 </body>
 </html>
