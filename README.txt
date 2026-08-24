@@ -1,4 +1,4 @@
-MOB QUEST playable core v66
+MOB QUEST playable core v67
 
 824追記・ボス(9)・冒険イベント追記反映
 - オープニング段落・吹き出し・モブピンクの「僕」表記・HOMEチュートリアル文言を更新

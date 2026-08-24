@@ -1,4 +1,4 @@
-// MOB QUEST v66
+// MOB QUEST v67
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -518,3 +518,24 @@ TEMP_BALANCE.playerTargets={
     d2.areas[3].boss=[{id:'boss-dorafara',level:78}];delete d2.areas[3].nextWave;delete d2.areas[3].nextWaves;
   }
 }
+
+// ===== MOB QUEST v67 : ボス(10) authoritative encounter corrections =====
+{
+  const enemyById=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const worldById=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+  const setEnemy=(id,props={})=>{const e=enemyById(id);if(!e)return null;const {mods,...rest}=props;if(mods)e.mods={...(e.mods||{}),...mods};Object.assign(e,rest);return e;};
+
+  // ネオン街 AREA2: 確定先制＋確定2回行動。
+  setEnemy('n-chaser',{actionCount:2,preemptive:true});
+  // ネオン街 AREA3: 確定2回行動＋高HP。資料に倍率指定がないため高HPは1.65倍で実装。
+  setEnemy('n-trainer',{actionCount:2,mods:{hp:1.65}});
+
+  // 草原Ⅱの最新随伴構成。
+  const grass2=worldById('grassland2');
+  if(grass2){
+    grass2.areas[0].boss=[{id:'g2-savanna',level:45,qty:2},{id:'g2-tsuru',level:49}];
+    grass2.areas[1].boss=[{id:'g2-jouro',level:46,qty:2},{id:'g2-merakero',level:52}];
+    grass2.areas[3].boss=[{id:'g2-tsuru',level:49},{id:'boss-hawk2',level:60}];
+  }
+}
+

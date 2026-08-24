@@ -714,7 +714,7 @@ function finishAdventureReportProgress(r){
 }
 function storyJoinsBeforeWorld(targetIndex){
   const worlds=MOB_DATA.adventureWorlds||[],idxById=Object.fromEntries(worlds.map((w,i)=>[w.id,i])),ids=[];
-  for(const ev of Object.values(STORY_EVENTS||{})){if((idxById[ev.worldId]??999)>=targetIndex)continue;for(const st of ev.steps||[])if(st?.[0]==='join'||st?.[0]==='joinKeepGuest')ids.push(st[1]);}
+  for(const ev of Object.values(STORY_EVENTS||{})){if((idxById[ev.worldId]??999)>=targetIndex)continue;for(const st of ev.steps||[])if(['join','joinKeepGuest','joinSilent'].includes(st?.[0]))ids.push(st[1]);}
   return [...new Set(ids.map(canonicalPlayerId))];
 }
 function resetStoryFlagsForChapter(targetIndex){
@@ -1841,6 +1841,144 @@ Object.assign(STORY_EVENTS,{
   ]}
 });
 
+
+// ===== MOB QUEST v67 : 8/25 冒険イベント最新稿 =====
+Object.assign(STORY_EVENTS,{
+  'post:grassland:3':{worldId:'grassland',area:3,steps:[
+    ['guest','boss-hawk'],['say','boss-hawk','こんなことが・・\n魔王様・・\n申し・・わ・・'],['hideGuest'],
+    ['say','pink','やはりボスは強いですね・・\nでもこれでレコード入手です！'],['narrate','1枚目のレコード「」を手に入れた！'],['say','pink','まずは王様に報告に行きましょう！']
+  ]},
+  'post:desert':{worldId:'desert',area:3,forceHome:true,steps:[
+    ['guest','boss-mira'],['say','boss-mira','・・・・'],['say','desert','何か言い残すことはあるか？'],['say','boss-mira','・・・・\nまたいずれ会おう'],['hideGuest'],
+    ['say','pink','はあ、はあ、\n強すぎであります、、'],['say','desert','しかし、討伐成功だ\n見ろ\nこれがミラモブのレコード\nガラガラの旅 だ'],['narrate','7つのレコードの1つ、ガラガラの旅を手に入れた！'],['say','pink','これで2枚目であります！\n次は王様に報告後、田舎町を目指します！'],['say','desert','海底への入り口か\n懐かしいな']
+  ]},
+  'pre:neon:0':{worldId:'neon',area:0,steps:[
+    ['guest','n-golem'],['say','denden','ゴッツイのが来たでやんす！'],['say','pink','キラキラゴツゴツでありますね！'],['say','desert','さっさと終わらせるぞ']
+  ]},
+  'post:neon:0':{worldId:'neon',area:0,steps:[['say','money','あなた達強いのねー'],['say','denden','えっへんでやんす！']]},
+  'pre:neon:1':{worldId:'neon',area:1,steps:[
+    ['guest','n-chaser'],['say','n-chaser','敵確認\n排除する'],['say','money','こんなやつ初めて見るわ'],['say','denden','危険な香りがするでやんす！'],['say','pink','構えるであります！']
+  ]},
+  'post:neon:1':{worldId:'neon',area:1,steps:[['say','desert','やはり簡単にはいかないな'],['say','pink','しっかり休んで、次に備えるであります！']]},
+  'pre:neon:2':{worldId:'neon',area:2,steps:[
+    ['guest','n-trainer'],['say','money','また知らないやつ\nしかもヘンテコね'],['say','denden','ビリビリさせてやるでやんす！']
+  ]},
+  'post:neon:2':{worldId:'neon',area:2,steps:[['say','desert','そんなに変わっているのか？'],['say','money','そうね\nタイムスリップした気分だわ'],['say','denden','羨ましいでやんす！'],['say','money','・・・・バカ']]},
+  'pre:neon:3':{worldId:'neon',area:3,steps:[
+    ['guest','neonBoss'],['say','money','あなたがここのボス？\n前の王よりイカついわね・・'],['say','desert','気を付けろ\n強力な魔力を感じる'],['say','denden','油断大敵でやんす！'],['say','neonBoss','お前たちは間違っている\n魔王様は秩序を保っている\nお前たちは守られているのだ'],['say','pink','どんな理由でも\nあの町の住人は帰ってこない・・！'],['say','neonBoss','平和に犠牲はつきものだ\nあの町は・・'],['say','denden','問答無用でやんす！'],['say','money','レコードはいただくわよ！']
+  ]},
+  'arrival:magma':{worldId:'magma',area:0,steps:[
+    ['say','denden','暑いでやんすー\nオイラ暑いの嫌いでやんすー'],['say','money','うるさいわね\nこっちまで暑くなるじゃない！'],['say','desert','砂漠も暑いが、ここはもっと過酷だな'],['say','pink','ここでも誰か案内してくれると良いのですが'],['say','money','そんな都合よく・・'],['guestDropDodge','nyoro','ドン！ッ'],['say','nyoro','おー・・\n痛いニョロ・・'],['say','pink','あなたさてはここに詳しいですね！'],['say','money','ボスのところに案内しなさい！'],['say','nyoro','ニョロ！？'],['say','denden','まあ待つでやんす\nみんなせっかちでやんす'],['sayDual','money','お前が言うな！！','pink','お前が言うな！！（であります）'],['say','desert','俺が事情を説明しよう'],['narrate','モブニョロに事情を説明した'],['say','nyoro','お～！勇者様！\nお会いできて嬉しいニョロ！'],['say','desert','モブドラゴンとは、どんなやつだ？'],['say','nyoro','本当に恐ろしいモンスターニョロ・・'],['say','denden','モンスター二ョロ・・\n変な名前でやんす'],['say','desert','気にせず続けてくれ'],['say','nyoro','先代の王モブフェニックス様との死闘は\nそりゃ～凄かったニョロ\nでも結局最後はモブドラゴンが勝ったニョロ\nそれからというもの、\n魔王軍が住みついて大変ニョロ・・'],['say','pink','どこも同じでありますね・・'],['say','denden','ドラゴンか\n会ってみたいでやんすね！'],['join','nyoro','モブニョロが仲間に加わった！']
+  ]},
+  'pre:magma:3':{worldId:'magma',area:3,steps:[
+    ['guest','dragon'],['say','dragon','我のエリアを荒らすとは\nそれなりの覚悟はあるのだろうな？'],['say','denden','かっけえでやんす！'],['say','pink','これは手ごわいですよ・・！'],['say','money','あなたどこかで・・'],['say','dragon','目障りなやつらだ\n命惜しくば立ち去れ'],['say','desert','風格もさすがだな\nだが、去るわけにはいかん'],['say','nyoro','やるしかないニョロね！']
+  ]},
+  'post:magma':{worldId:'magma',area:3,steps:[
+    ['guest','dragon'],['say','dragon','終わりではない\nここから全てが始まるのだ'],['hideGuest'],['say','desert','はあ、はあ、'],['say','money','み、みんな無事？'],['say','denden','暑いでやんす・・'],['say','pink','強敵でありましたね'],['say','nyoro','でも、勝ったニョロ！\n信じられないニョロ！'],['narrate','5つ目のレコード「」を手に入れた！']
+  ]},
+  'pre:sea:0':{worldId:'sea',area:0,steps:[
+    ['guest','s-abyssknight'],['say','s-abyssknight','勇者だな？\n悪いが国王は忙しい\nお帰り願おう'],['say','pink','そうはいかないであります！'],['say','s-abyssknight','では、資格があるか私が試してやろう'],['say','desert','力を試す、か\n存分に見せてやる！']
+  ]},
+  'post:sea:0':{worldId:'sea',area:0,steps:[
+    ['guest','s-abyssknight'],['say','s-abyssknight','見事だ\n先へ進むがよい'],['hideGuest'],['say','pink','こんなのが続くのでありますか・・？'],['say','denden','元気出すでやんす！\nみんなで頑張るでやんす！']
+  ]},
+  'post:sea:1':{worldId:'sea',area:1,steps:[
+    ['guest','s-jones'],['say','s-jones','俺もまだまだ修行が足りないな'],['hideGuest'],['say','pink','なんとか勝てましたね'],['say','money','でも、\n次の方が嫌な予感がするわ・・'],['say','desert','魔法使いの感か'],['say','money','しっかり備えて挑みましょう']
+  ]},
+  'post:sea:2':{worldId:'sea',area:2,steps:[
+    ['guest','s-wave'],['say','s-wave','お見事\nお前達は王に会う資格がある\n先へ進むがよい'],['hideGuest'],['say','denden','疲れたでやんす・・'],['say','desert','人数差で勝ったようなものだな'],['say','money','勝ちは勝ち！\n国王のところへ急ぎましょう！']
+  ]},
+  'post:sea':{worldId:'sea',area:3,steps:[
+    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinSilent','nekoku'],['say','nepu','モブマニー\nこれを'],['say','money','ん？'],['rewardDrink','19','モブトマトジュースセットを1つ手に入れた！'],['say','money','なんで私に？'],['say','nepu','道中、皆と飲むがいい'],['say','money','ありがとう・・？'],['say','nekoku','オラもそれ好きだ'],['narrate','6枚目のレコード「ケロの衣装」を手に入れた！']
+  ]},
+
+  'arrival:grassland2':{worldId:'grassland2',area:0,steps:[
+    ['say','pink','この場所ももう懐かしいですね・・\n急ぎましょう\nモブホークと再び決戦です！'],['sayOff','???','待つでござる！'],['guestSlow','tetsu'],['say','tetsu','勇者様でござるな？\n拙者、逃走中の囚人サムライ\nモブテツと申すでござる！'],['say','denden','わ、悪いやつでやんすね！？'],['say','tetsu','誤解しないで欲しいでござる！\n拙者、可愛いという理由で捕まったでござる！'],['say','money','えー・・\nじゃあ私も捕まるじゃない'],['say','denden','(狂暴過ぎて捕まえられないでやんす)'],['sayRed','money','聴こえてるわよ！'],['say','denden','ご、ごめんでやんす！'],['say','nekoku','お前、オトナシの国出身だな？\nオラ、同じ匂いを知ってる'],['say','tetsu','如何にも！オトナシの国のサムライ！\n魔王を討伐すべく、流れるように旅をしているでござる！'],['say','desert','つまり味方だな\nどうする？'],['say','pink','もちろん大歓迎です！\nモブテツさん、よろしくお願いします！'],['say','nyoro','賑やかになるニョロ！'],['join','tetsu','モブテツが仲間に加わった！']
+  ]},
+  'pre:grassland2:0':{worldId:'grassland2',area:0,steps:[
+    ['guest','g2-tsuru'],['say','g2-tsuru','申し訳ないが、お帰りいただこうか\n勇者を通すわけにはいかないんだ'],['say','pink','そうはいかない！'],['say','denden','いざ勝負でやんす！'],['say','tetsu','初陣でござる！']
+  ]},
+  'post:grassland2:0':{worldId:'grassland2',area:0,steps:[
+    ['guest','g2-tsuru'],['say','g2-tsuru','ク・・ここは引かせてもらおう'],['hideGuest'],['say','desert','同じ地だと思って油断しないことだな\nモブホークもきっと、\n強大な力を得ているだろう']
+  ]},
+  'pre:grassland2:1':{worldId:'grassland2',area:1,steps:[
+    ['guest','g2-merakero'],['say','g2-merakero','メラメラメラーーー！'],['say','nyoro','気合い入っているニョロね・・！'],['say','nekoku','オラ、カエルは苦手だ'],['say','money','ちょっと可愛いわね']
+  ]},
+  'post:grassland2:1':{worldId:'grassland2',area:1,steps:[['say','money','アツいカエルだったわね'],['say','denden','漢でやんした！'],['say','tetsu','強い心を持っていたでござる！']]},
+  'pre:grassland2:2':{worldId:'grassland2',area:2,steps:[
+    ['guest','g2-keroking'],['say','g2-keroking','私はケロの王ケロキング！\nモブホーク様の命により\nお前たちをここで仕留める！'],['say','desert','受けて立つ！'],['say','pink','ここを倒せばもうすぐであります！\nみなさん頑張りましょう！']
+  ]},
+  'post:grassland2:2':{worldId:'grassland2',area:2,steps:[
+    ['guest','g2-keroking'],['say','g2-keroking','強い・・これが勇者か\nだが\nモブホーク様は負けない'],['hideGuest'],['say','desert','さあ、先へ進もう'],['say','nyoro','ボスとの対決ニョロ！']
+  ]},
+  'pre:grassland2:3':{worldId:'grassland2',area:3,steps:[
+    ['guest','boss-hawk2'],['say','boss-hawk2','クククク・・・\nようやく来たな'],['say','pink','往生際が悪いであります！'],['say','money','あんた一度負けてるって聞いたよ？'],['say','nekoku','オラ焼き鳥大好きだ'],['say','boss-hawk2','勇者よ、お前を認め\n魔王様から力を得た\n新たな私の強さ\n受け止める勇気があるかな？'],['say','denden','みんな、構えるでやんす！'],['guests',['g2-tsuru','boss-hawk2']],['say','g2-tsuru','私も忘れてもらっては困る'],['say','money','一緒に片付けてあげるわ！'],['say','tetsu','いざ！勝負でござる！']
+  ]},
+  'post:grassland2:3':{worldId:'grassland2',area:3,steps:[
+    ['guest','boss-hawk2'],['say','boss-hawk2','貴様ら如きに・・・'],['hideGuest'],['say','pink','なんとか勝てました・・！'],['say','desert','レコードは手に入らないが、\n必要な戦いだったな'],['say','nekoku','仲間が増えたぞ'],['say','denden','モブテツ強いでやんす！'],['say','tetsu','このまま魔王まで行くでござる！'],['say','pink','まずは、王様に報告に行きましょう！']
+  ]},
+
+  'arrival:tribe':{worldId:'tribe',area:0,layout:'partyLeftGuestRight',steps:[
+    ['say','pink','なんだか不思議な雰囲気でありますね'],['say','nekoku','オラ初めて見る景色だ'],['say','denden','ビリビリしそうな香りがするでやんす'],['say','desert','で、そこのお前が案内でもしてくれるのか？'],['say','tetsu','隠れても無駄でござる'],['sayOff','???','あら、気が付いていたの？\n中々やるわね'],['guestRight','jessie'],['say','jessie','私はネオン街の保安官\n通報を受けてこの村に来たの\nモブジェシーよ\nよろしくね'],['say','money','ネオン街！？私も、私も！'],['say','jessie','知っているわ\nモブマニーでしょ？私を覚えてない？'],['say','money','うーん\n私、魔王に封印されてたから'],['say','jessie','そうね'],['say','money','え？'],['say','jessie','まあ、いいわ'],['say','desert','この村はどういう村なんだ？'],['say','jessie','魔王軍と直接は関係ないわ\nただ、あの町と関係はあるの'],['say','pink','あの町と繋がりが！？'],['say','jessie','ええ、ネオン街、部族村\nこの2つがあの町と大きく関係がある'],['say','pink','詳しく知りたいであります！'],['say','jessie','それはまたいずれね\nとにかく、この村は危険がいっぱいよ\n手を貸してあげるから油断しないことね'],['tempActor','jessie']
+  ]},
+  'pre:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[['guest','t-kukuri'],['say','t-kukuri','タチサレ・・'],['say','pink','幹部の登場であります！'],['say','tetsu','強敵でござる！'],['say','denden','気合い入れるでやんす！']]},
+  'post:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[['say','denden','不気味だったでやんす・・'],['say','jessie','あなたたちも十分不気味よ'],['say','pink','なんてこと言うでありますか！'],['say','nyoro','喧嘩はやめるニョロ～！']]},
+  'pre:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[['guest','t-tough'],['say','t-tough','全く、大変な時に来たね君たち'],['say','pink','まともそうな人であります！'],['say','desert','そんなはずがないだろう'],['say','t-tough','まともかはともかく\n俺は連中とは違うよ'],['say','jessie','でも戦うのよね？'],['say','t-tough','これはこれは保安官\nまさか戦うことになるとは'],['say','nekoku','ん？'],['say','t-tough','まあお喋りはこれくらいにして\nやりますか\n他に道はないだろう？'],['say','desert','そうだな\n立ち止まるわけにはいかない！']]},
+  'post:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[['say','nyoro','強かったニョロ・・'],['say','denden','この村はみんな強いでやんす'],['say','jessie','さあ、しっかり休んで先へ行きましょう'],['say','money','あの人凄く変だった\n何者なんだろう？'],['say','desert','迷いの原因になるようなことは考えるな\n戦いの基本だ']]},
+  'pre:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[['guests',['t-hisui','t-ryugo']],['say','t-hisui','天よ・・こやつらに災いを'],['say','t-ryugo','もてなすぞ、客人'],['say','tetsu','これは激戦の予感でござる'],['say','nekoku','強そうな2人だなー'],['say','money','みんな最初から飛ばしていくわよ！']]},
+  'post:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[['say','money','なによ、これが途中に出て来る敵の強さ？'],['say','tetsu','王の器でござったな'],['say','jessie','おかしい・・'],['say','desert','どうした？'],['say','jessie','この2人はこの村の長だったはず'],['say','money','なんで戦う前に言わないのよ！'],['say','jessie','腰が引けちゃうでしょ？'],['say','nyoro','それはそうだニョロ'],['say','desert','ということは\nさらに上がいるということか'],['say','jessie','そうなるわね'],['say','pink','大丈夫！\n力を合わせて進むであります！\n・・・・\nあります！'],['say','jessie','すっかり怖がっちゃって・・'],['say','denden','でも進むしかないでやんす！']]},
+  'post:tribe:3':{worldId:'tribe',area:3,extras:['jessie'],steps:[
+    ['say','jessie','任務完了'],['say','desert','魔王とは、一体どこまで・・'],['say','pink','とりあえず王様に報告です！\nどうやらここにレコードは無いようです'],['say','jessie','私も行くわ\n魔王を倒さないと\n何も進まなそうだしね'],['say','nyoro','心強いニョロ！\nモブジェシー、強いニョロ！'],['say','tetsu','いつか手合わせ願いたいでござる'],['join','jessie','モブジェシーが仲間に加わった！']
+  ]},
+
+  'arrival:rural2':{worldId:'rural2',area:0,steps:[['say','denden','故郷でやんす～！'],['say','jessie','いい空気・・\n世界中こうだといいのに'],['say','money','でも、嫌な気配は感じるわ'],['say','tetsu','恐らく魔王軍の幹部がいるでござるな'],['say','pink','出発であります！']]},
+  'post:rural2:0':{worldId:'rural2',area:0,steps:[['say','jessie','世界が変われば\n一曲お願いしてみたいわね'],['say','nyoro','魔王を倒せば平和が戻るニョロ！']]},
+  'pre:rural2:1':{worldId:'rural2',area:1,steps:[['guests',['r2-rapty','r2-tira']],['say','r2-rapty','我ら！'],['say','r2-tira','ジュラシック！'],['sayDual','r2-rapty','ヤベージャンズ！！','r2-tira','ヤベージャンズ！！'],['say','denden','この町の悪ガキコンビでやんす！'],['say','jessie','そして魔王軍の幹部でもある'],['say','money','お仕置きが必要ね！'],['say','tetsu','先手必勝でござる！']]},
+  'post:rural2:1':{worldId:'rural2',area:1,steps:[['say','pink','凄い連携でありましたね'],['say','desert','我々も連携力を磨く必要があるな'],['say','nekoku','大丈夫、みんな仲良しだ'],['say','denden','もちろんでやんす！']]},
+  'pre:rural2:2':{worldId:'rural2',area:2,steps:[['guest','r2-kuukai'],['say','r2-kuukai','タマシイとは\n人の心なり\nタマシイとは\n魔物の悪意なり'],['say','money','嫌なオーラね・・'],['say','tetsu','怨念でござるな'],['say','jessie','さっさと片付けましょう'],['say','nyoro','さ、さむいニョロ・・'],['say','nekoku','わたあめ・・'],['say','denden','声出していくでやんす！！！！']]},
+  'post:rural2:2':{worldId:'rural2',area:2,steps:[['say','desert','こいつがボスではないようだな'],['say','pink','では一体・・'],['say','denden','なんだかムズムズするでやんす'],['say','tetsu','先へ進むでござる']]},
+  'pre:rural2:3':{worldId:'rural2',area:3,steps:[['guest','boss-umidenden'],['say','denden','！？'],['say','boss-umidenden','ん？\nよう\n久しぶりだな落ちこぼれ'],['say','desert','何者だ？'],['say','denden','オイラと同じ\nある国の護衛隊長でやんす\n王国最強の戦士でやんす・・！'],['say','money','なんで魔王軍に？'],['say','boss-umidenden','退屈だったからさ\n魔王様は\n俺の退屈を埋めてくれる\n毎日最高の気分だぜ'],['say','nekoku','情けないやつだなー'],['say','desert','その通りだな\nその退屈終わらせてやろう！'],['say','tetsu','王国最強の戦士\nサムライとして負けられぬでござる！']]},
+  'post:rural2:3':{worldId:'rural2',area:3,steps:[['say','money','こいつも強かったわね'],['say','desert','名前に恥じぬ実力だった'],['say','jessie','ねえ、その王国って今もあるの？'],['say','denden','・・・・'],['say','money','まあ、\n言いたくないこともあるわよね'],['say','tetsu','詮索は無用でござる'],['say','pink','王様に報告に行きましょう！']]},
+
+  'pre:neon2:0':{worldId:'neon2',area:0,steps:[['guest','n2-tiger'],['say','n2-tiger','侵入者発見、排除する'],['say','money','しん・・にゅう・・\n侵入・・者・・'],['say','jessie','急いだ方が良さそうね'],['say','tetsu','速攻で終わらせるでござる！']]},
+  'pre:neon2:1':{worldId:'neon2',area:1,steps:[['guests',['n2-tama','n2-kodora']],['say','nyoro','なんだかキュートな子達だニョロ'],['say','jessie','油断しないで\nネオン街にか弱い子なんていない'],['say','desert','お前達を見ていれば分かる'],['say','denden','でも可愛いでやんす～'],['say','money','・・・・・'],['say','tetsu','モブマニー、拙者に掴まるでござる'],['say','money','・・ありがとう']]},
+  'post:neon2:3':{worldId:'neon2',area:3,steps:[
+    ['guest','boss-neomaster'],['say','jessie','私たちの勝ちね・・'],['say','boss-neomaster','素晴らしい力です\n魔王の力は強大\nしかし、あなたたちなら・・'],['say','money','マスター・・\nネオン街の、マスター・・'],['say','nyoro','モブマニー、\nまだ良くならないニョロ・・'],['say','tetsu','しかし何か方法があるはずでござる'],['say','boss-neomaster','モブマニー\n最後に私の力を'],['energyTransfer','boss-neomaster','money'],['say','jessie','マスター・・！'],['softLight'],['hideGuest'],['say','money','・・・・あれ？'],['say','denden','正気に戻ったでやんすか！？'],['say','desert','気分はどうだ？'],['say','money','うん、平気\n意識はあったんだけど\n頭がもやもやしてたの\nでももう大丈夫！\n次へ行きましょう！'],['say','tetsu','良かったでござる！'],['say','money','ありがとう！あんた優しいのね'],['say','tetsu','当然のことをしたまででござる！'],['fadePartyExcept','jessie'],['say','jessie','マスター・・\n必ずやり遂げて見せます']
+  ]},
+
+  'arrival:magma2':{worldId:'magma2',area:0,steps:[['say','nyoro','帰って来たニョロ～！\nやっぱり落ち着くニョロ'],['say','denden','故郷は特別でやんすからね～'],['say','money','相変わらず暑いわね'],['say','tetsu','これは良い修行になるでござる'],['say','jessie','ここも強敵だらけよ\n油断せず進みましょう']]},
+  'pre:magma2:1':{worldId:'magma2',area:1,steps:[['guest','m2-salamander'],['say','denden','オイラやっぱり\n暑いの嫌いでやんす'],['say','nyoro','あいつはこのエリアでも\n特に熱いモンスターニョロ！'],['say','jessie','モブサラマンダーね？\n聞いたことがあるわ'],['say','pink','倒して、\n少しでも涼しくするであります！'],['say','desert','やけどに注意しつつ、一気に倒すぞ！']]},
+  'pre:magma2:2':{worldId:'magma2',area:2,steps:[['guest','m2-buster'],['say','m2-buster','勇者一行よ\nお前達の命運もここまでだ'],['say','desert','なんだこいつは・・\nモブドラゴンと同じ魔力？'],['say','nyoro','あいつは魔界に行ったはずニョロ・・\nモブドラゴンと\n同じくらいの力を持っているニョロ！'],['say','m2-buster','その通り\n我らは魔王様より\n同じ魔力を与えられている'],['say','money','同じ？\nなんでそんなに強気なの？'],['say','denden','オイラたちは\nモブドラゴンを倒しているでやんす！'],['say','m2-buster','無知と言うのは楽なものだな'],['say','tetsu','この者\n力を隠しているでござる'],['say','m2-buster','ほう\nお前は見込みがありそうだ\nでは、始めるぞ']]},
+  'post:magma2:2':{worldId:'magma2',area:2,steps:[['guest','m2-buster'],['say','m2-buster','これで完成するのだ\n全てを滅ぼす\n最強のドラゴンが・・'],['hideGuest'],['say','denden','もっと凄いドラゴン・・\n会ってみたいでやんす'],['say','nekoku','きっと大きいぞ'],['say','jessie','しっかり回復してから行きましょう']]},
+
+  'arrival:desert2':{worldId:'desert2',area:0,steps:[
+    ['say','jessie','砂漠は本当に変わらないわね'],['say','desert','ああ、ここが一番落ち着く'],['say','money','あなたにとっては特別な場所だものね'],['say','nyoro','暑くてちょうどいいニョロ'],['say','denden','オイラちょっと苦手でやんす'],['sayOff','???','ちょっといいかナ？'],['guestSlow','riro'],['say','riro','君たちが勇者一行かナ？'],['say','pink','何者でありますか！？'],['say','riro','私はモブリーロ、魂を司る者'],['say','money','魂を？'],['say','riro','ミラモブはいくつものタブーを犯していまス\n魂を軽く見ていまス\n魔王も同じでス'],['say','desert','それで、勇者と共に魔王を討ちたい\nというわけか'],['say','riro','そうでス\n私、強いでス'],['say','denden','いいでやんすね！\n魔王討伐に向けて\n仲間は多い方がいいでやんす！'],['say','tetsu','強き心の持ち主\n大歓迎でござる！'],['join','riro','モブリーロが仲間に加わった！']
+  ]},
+  'pre:desert2:1':{worldId:'desert2',area:1,steps:[['guest','d2-mirabuster'],['say','d2-mirabuster','おーおー・・\nお前たちか\n魔王様に逆らう愚か者は'],['say','desert','なんという不気味な魔力だ'],['say','jessie','これがソウルフュージョン・・？'],['say','riro','そうでス\nみなさんお気をつけテ'],['say','tetsu','不気味な妖気を感じるでござる'],['say','pink','サポートし合いながら戦いましょう！']]},
+  'post:desert2:1':{worldId:'desert2',area:1,steps:[['say','desert','この魔法を魔王も使えるのか？'],['say','riro','この魔法を使えるのハ\nミラモブと\n魔王城の魔女\nモブリリスだけでス\n世界の禁術として\n封じられていましタ'],['say','jessie','聞いたことがあるわ\nモンスターとモンスターを融合させる術\nあの禁術が\nソウルフュージョン'],['say','money','モブリリスはなぜその術を使わないの？\n魔王軍でしょ？'],['say','riro','分かりませン\nしかし\nいつ使ってもおかしくありませン'],['say','denden','怖いでやんす・・'],['say','nyoro','みんなで戦えば大丈夫ニョロ！']]},
+  'pre:desert2:2':{worldId:'desert2',area:2,steps:[['guests',['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'],{raised:true}],['say','desert','こんなことが・・'],['say','nyoro','ミラモブがいっぱいニョロ！'],['say','d2-miraearth','我ら'],['say','d2-mirakarami','ミラモブ四人衆'],['say','d2-miranight','ミラモブ様の命により'],['say','d2-miratime','お前たちをここで始末する'],['say','money','とんでもない魔力ね・・！'],['say','nekoku','肌がヒリヒリするぞ'],['say','pink','ここで負けるわけには\nいかないであります！！'],['say','jessie','ミラモブ4体分か・・'],['say','denden','やってやるでやんすーー！！'],['say','d2-mirakarami','まずは俺達からだ！'],['say','d2-miraearth','坊やたち、私たちが遊んであげよう']]},
+  'post:desert2:3':{worldId:'desert2',area:3,forceHome:true,steps:[
+    ['guest','boss-mira-d2'],['say','boss-mira-d2','はあ・・はあ・・、、\n私は不滅・・\nだったはず・・'],['say','desert','砂漠の王よお前は敗れたのだ\n勇者によって'],['say','boss-mira-d2','そうか・・\nわが息子モブデザートよ\n素晴らしい仲間に出会ったな'],['say','pink','えーーーーーーー！！！'],['say','money','親子だったの！？'],['say','boss-mira-d2','お前は昔から\n魔王様のやり方が嫌いだったな\nお前がピラミッドを去った時\nいつかこんな日が来ると思っていた'],['say','desert','俺は・・\n俺は砂漠が好きだ\n種族隔てなく\n自由に生活出来る広大なエリア\nそれが魔王によって奪われた\n俺は我慢出来なかった'],['say','boss-mira-d2','そうだな・・だが\n私では砂漠を守り切れなかった\n魔王様は秩序を保たれているのだ\n正しいかは分からないがな'],['say','jessie','正しいわけがないわ\nあなた達はずっと命を軽く見ている\nただの悪党よ'],['say','boss-mira-d2','悪党か、それは否定しない\nしかし魂はだれよりも重んじている\nそこは譲れない\nモブデザートよ、お前に私の力を授ける\nこの先の未来、好きなように生きてみろ\n砂漠を頼んだぞ'],['darkEnergyTransfer','boss-mira-d2','desert'],['hideGuest'],['say','pink','強き者でした・・！'],['say','denden','敵ながら立派だったでやんす！'],['say','money','あれほどの魔物を従えるなんて\n魔王がまた遠く感じるわね'],['say','nekoku','でも、悪いことはだめだ\n人に、いじわるしちゃダメだ'],['say','nyoro','その通りニョロ'],['say','riro','少なくとモ\n魔王は絶対的な悪でス'],['say','desert','・・・・・\nさあ行こう、魔王討伐の時だ'],['say','jessie','魔王城へ向かいましょう\nやることは決まっているわ'],['say','pink','やりましょう！みなさん！'],['fadePartyExcept','desert'],['say','desert','砂漠の王よ\n安らかに・・'],['fadeActor','desert']
+  ]}
+});
+
+
+// v67.1: latest line-break authoritative overrides.
+Object.assign(STORY_EVENTS,{
+  'pre:neon2:3':{worldId:'neon2',area:3,steps:[
+    ['guest','boss-neomaster'],['say','boss-neomaster','よくぞここまで来ました\nこれも運命というやつですね\n勇者よ、あなたには何が見える？\nこの戦いの先に、何を見る？'],['say','pink','洗脳する気であります！！\n聞かなくていいであります！'],['say','jessie','そんなせこいことしないわ\nこの人はネオン街のマスターよ'],['say','boss-neomaster','モブジェシーお久しぶりです\n随分と長いこと旅をしましたね\nお互いに'],['say','jessie','そうね\nまさかあなたと対峙するなんて\n思ってもみなかったわ'],['say','boss-neomaster','これも運命です\nモブマニー\nあなたも元気そうですね'],['say','money','・・・？\nあな・・た・・は？'],['say','boss-neomaster','そうか、そうですね\n封印が解かれて間もない\nしかし、時間もない'],['say','jessie','急いでいるの\n分かるでしょう？\n戦いは避けられない'],['say','desert','話しはまとまったようだな\nお前達とやつに\nどんな関わりがあるかは知らない\nだが、俺は俺の使命を全うする\nお前達が敵でないと分かって良かった\nやつを倒すぞ！'],['say','pink','やつを倒せば、\n魔王城への扉が開かれるであります！\nみなさん、やるであります！']
+  ]},
+  'pre:magma2:3':{worldId:'magma2',area:3,steps:[
+    ['guest','dragon'],['say','dragon','待ちわびたぞ\nこの時を\n勇者よ\nお前ともう一度戦いたかった'],['say','desert','さらに力が上がっている'],['say','jessie','大変な戦いになりそうね'],['say','money','ドラゴンとの決戦、\n燃えるわ！'],['say','dragon','勇者よ\n覚悟するのだ！！'],['guestTransform','boss-dragon2'],['say','nyoro','気を付けるニョロ！\nこれが本来の姿ニョロ！']
+  ]},
+  'pre:desert2:0':{worldId:'desert2',area:0,steps:[
+    ['guest','boss-mira-d2'],['say','boss-mira-d2','待っていたぞ勇者たちよ'],['say','desert','ミラモブ！？'],['say','boss-mira-d2','この世界支配するの\n魔王様だ\nお前たちに\n邪魔はさせない'],['say','money','いきなり出てくるなんて\n手間が省けたわね！'],['say','riro','少しいいですカ？\nミラモブ\nあなたは数日前\nソウルフュージョンを実行しタ'],['say','pink','ソウルフュージョン？'],['say','riro','一体どんなモンスターを作ったのですカ？'],['say','boss-mira-d2','貴様サクラ一族か\nククク・・\nさあ？\nどんなモンスターかな？'],['say','desert','なんでもいい\n俺たちは目の前の敵を倒すだけだ！']
+  ]},
+  'post:desert2:0':{worldId:'desert2',area:0,steps:[
+    ['guest','boss-mira-d2'],['say','boss-mira-d2','ククク・・\n私は不滅だ・・'],['hideGuest'],['say','jessie','これで目的達成？'],['say','money','ううん\n凄い魔力をいくつも感じる\nここからが本番みたいね'],['say','pink','ミラモブ以上のモンスターが\nまだいるってことでありますね']
+  ]}
+});
+
 async function runStorySteps(steps=[]){
   for(const st of steps){const [type,a,b,c,d]=st;
     if(type==='say')await storySay(a,b,c,d);
@@ -1941,15 +2079,15 @@ async function runDemonCastleArrival(){
   await storySay('money','あんたのことは\nうっすらしか覚えてないけど\n悪いやつではなかったはずよ！');
   await storySay('aceCastle','そうか\n少しは覚えているのか');
   await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');
-  await storySay('aceCastle','捨ててなどいない\nお前と同じだ\nモブジェシー・・！');
+  await storySay('aceCastle','捨ててなどいない\nお前と同じだモブジェシー・・！');
   await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');
   await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');
-  await storySay('denden','それでも\n戦うでやんす！！');
+  await storySay('denden','それでも戦うでやんす！！');
   $('#storyScene').hidden=true;await startDemonStoryBattle([{id:'boss-ace-castle',level:73}],state.party.map(x=>x[0]),'モブエース EVENT BATTLE',0);
   await openStoryScene('demonCastle',0);await storyShowGuest('aceCastle',{slow:true});
   await storySay('aceCastle','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('情けない');
   await storyShowGuests(['aceCastle','maou']);
-  await storySay('maou','我の側近が\n無様な姿を晒すとは');await storySay('aceCastle','申し訳、、ありません・・');await storySay('pink','魔王であります！！');
+  await storySay('maou','我の側近が無様な姿を晒すとは');await storySay('aceCastle','申し訳、、ありません・・');await storySay('pink','魔王であります！！');
   await storySay('desert','こんなに早く出会うとはな');await storySay('maou','まあよい\n一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();
   await storySay('aceCastle','グッ・・・！');await storySay('maou','随分と嫌われたようだな\n行くぞ');await storyHideGuests();
   await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ\n先へ進むぞ！');
@@ -2701,7 +2839,7 @@ async function applyRoundDots(){
   if(!livingEnemies().length)state.battle.targetEnemyId=null;renderBattle();await checkSpecialRevives();
 }
 function tickBuffs(){const b=state.battle;for(const e of b.enemies||[])for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns','ultimateLockTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
-function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
+function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(e?.preemptive)return 1000000000+(Number(e.spd)||0);return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
 async function playFrezardFusion(){
   const b=state.battle,field=$('#battleField')||$('#battleScreen'),layer=$('#battleFxLayer');if(!b||!field||!layer)return;const fr=field.getBoundingClientRect(),center={x:fr.width*.5,y:fr.height*.43},sources=(b.enemies||[]).slice(0,2);const ghosts=[];
   for(const e of sources){const vis=enemyVisual(e.uid),r=vis?.getBoundingClientRect();if(!vis||!r)continue;const img=document.createElement('img');img.className='fusion-ghost';img.src=e.image||'';img.style.left=`${r.left-fr.left+r.width/2}px`;img.style.top=`${r.top-fr.top+r.height/2}px`;img.style.width=`${Math.max(42,r.width)}px`;img.style.height=`${Math.max(42,r.height)}px`;img.style.setProperty('--merge-x',`${center.x-(r.left-fr.left+r.width/2)}px`);img.style.setProperty('--merge-y',`${center.y-(r.top-fr.top+r.height/2)}px`);layer.appendChild(img);ghosts.push(img);}
