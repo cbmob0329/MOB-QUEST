@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=65;
+const GAME_ASSET_VERSION=66;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -243,6 +243,7 @@ function weaponCardMarkup(w,{shop=false,smith=false}={}){
 }
 function equipmentSlotMarkup(p,kind,index,id){const w=weaponById(id),scale=kind==='main'?1:(kind==='sub'?0.5:0.1),isMedal=kind==='medal';return `<button class="equipment-slot ${kind}" data-equip-slot="${kind}" data-equip-index="${index}" type="button"><small>${weaponEquipSlotName(kind,index)}</small>${w?`<img src="${w.image}" alt="${isMedal?w.name+'メダル':w.name}" loading="lazy" decoding="async"><b>${isMedal?w.name+'メダル':w.name}</b><em>${weaponStatsText(w,scale)}</em><span>${isMedal?'MEDAL / ':''}${weaponTraitText(w)}</span>`:`<i>＋</i><b>未装備</b><em>${isMedal?'所持メダルを選択':'武器を選択'}</em>`}</button>`;}
 function renderEquipment(){
+  if(!['equip','figures'].includes(equipmentTab))equipmentTab='equip';
   if(!equipmentPlayerId||!player(equipmentPlayerId))equipmentPlayerId=state.party[0]?.[0]||'yusha';
   const p=player(equipmentPlayerId),lv=currentPlayerLevel(p.id),eq=equipmentFor(p.id),root=$('#equipmentContent');
   $('#equipmentCoin').textContent=`${state.coins.toLocaleString()} G`;
@@ -277,15 +278,20 @@ function renderEquipment(){
   bindImages(root);$$('[data-equip-player]',root).forEach(b=>b.onclick=()=>{equipmentPlayerId=b.dataset.equipPlayer;renderEquipment();});$$('[data-status-detail]',root).forEach(b=>b.onclick=()=>openEquipmentDetail(b.dataset.statusDetail));
   $$('[data-equip-slot]',root).forEach(b=>b.onclick=()=>openWeaponPicker(p.id,b.dataset.equipSlot,Number(b.dataset.equipIndex||0),()=>renderEquipment()));
 }
-async function buyWeapon(id){const w=weaponById(id);if(!w?.price)return;if(state.coins<w.price)return toast('ゴールドが足りません');const a=await dialog(`${w.name}を購入しますか？\n${w.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'WEAPON SHOP');if(a!=='yes')return;state.coins-=w.price;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();renderEquipment();await dialog('毎度！大事に使ってくれ！',[['OK','ok','primary']],'WEAPON SHOP');}
+async function buyWeapon(id,onDone=null){
+  const w=weaponById(id);if(!w?.price)return;if(state.coins<w.price)return toast('ゴールドが足りません');
+  const a=await narrationDialog(`${w.name}を購入しますか？\n${w.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']]);if(a!=='yes')return;
+  state.coins-=w.price;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();onDone?.();
+  await facilityTalk('毎度！大事に使ってくれよな！','モブゴンゾー','play/002.png');
+}
 async function runSmithHammerFx(){const fx=$('#smithHammerFx');if(!fx){await fixedDelay(3000);return;}fx.hidden=false;await fixedDelay(3000);fx.hidden=true;}
-async function forgeWeaponMedal(id){
+async function forgeWeaponMedal(id,onDone=null){
   const w=weaponById(id);if(!w)return;
-  if(freeWeaponCount(id)<3){await dialog('と、思ったが\nメダルに出来る武器が無いようだ',[['戻る','back','primary']],'モブゴンゾー','play/002.png');return renderEquipment();}
-  const a=await dialog(`${w.name}\nこの武器でいいのか？`,[['はい','yes','primary'],['いいえ','no']],'モブゴンゾー','play/002.png');if(a!=='yes')return renderEquipment();
+  if(freeWeaponCount(id)<3){await facilityTalk('と、思ったが\nメダルに出来る武器が無いようだ','モブゴンゾー','play/002.png');onDone?.();return;}
+  const a=await dialog(`${w.name}\nこの武器でいいのか？`,[['はい','yes','primary'],['いいえ','no']],'モブゴンゾー','play/002.png');if(a!=='yes'){onDone?.();return;}
   toast('よし来た！');await runSmithHammerFx();
-  state.meta.weapons[id]=Math.max(0,weaponOwned(id)-3);addMedal(id,1);saveMeta();
-  await dialog(`よし！出来たぞ！\n「${w.name}メダルを手に入れた！」`,[['OK','ok','primary']],'モブゴンゾー','play/002.png');renderEquipment();
+  state.meta.weapons[id]=Math.max(0,weaponOwned(id)-3);addMedal(id,1);saveMeta();onDone?.();
+  await narrationDialog(`「${w.name}メダルを手に入れた！」`,[['OK','ok','primary']]);
 }
 function openWeaponPicker(pid,kind,index=0,onDone=null){
   pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid),overlay=$('#weaponPickerOverlay'),list=$('#weaponPickerList');weaponPickerContext={pid,kind,index,onDone};
@@ -470,8 +476,8 @@ async function ensureDomImageReady(img,src,timeout=650){
 function pageAssets(target){
   const party=state.party.map(([id])=>player(id)).filter(Boolean);
   const common=['icon/01.png',versionedPlay('play/02.png'),'mqicon/06.png','mqicon/09.png','mqicon/10.png','mqicon/12.png'];
-  if(target==='tavern')return [...common,'back2/001.png',versionedPlay('play/001.png'),'icon/11.png','icon/13.png',...party.map(p=>versionedPlay(p.image))];
-  if(target==='castle')return [...common,'back2/003.png','back/king1.png','back/king2.png','back/king3.png','back/king4.png','icon/18.png','icon/19.png','icon/20.png','icon/21.png',versionedPlay('play/005.png'),versionedPlay('play/006.png'),versionedPlay('play/007.png'),versionedPlay('play/008.png')];
+  if(target==='tavern')return [...common,'back2/001.png',versionedPlay('play/001.png'),versionedPlay('play/009.png'),'icon/11.png','icon/13.png',...party.map(p=>versionedPlay(p.image))];
+  if(target==='castle')return [...common,'back2/003.png','back/king1.png','back/king2.png','back/king3.png','back/king4.png','icon/18.png','icon/19.png','icon/20.png','icon/21.png','icon/23.png',versionedPlay('play/002.png'),versionedPlay('play/005.png'),versionedPlay('play/006.png'),versionedPlay('play/007.png'),versionedPlay('play/008.png')];
   if(target==='training'){const first=state.training.enemySlots?.find(Boolean);return ['back2/002.png',versionedPlay('play/003.png'),'icon/14.png','icon/15.png','icon/16.png','icon/17.png','icon/22.png','mqicon/06.png',trainingEnemyTemplate(first?.id)?.image];}
   if(target==='adventure'){const w=currentWorld(),area=currentArea();return [...common,area?.bg,w?.fieldFallback,'mqicon/14.png','mqicon/15.png','mqicon/16.png',...party.slice(0,6).map(p=>versionedPlay(p.image))];}
   return common;
@@ -523,7 +529,7 @@ async function loadingWithAssets(text,assets){
 }
 
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
-function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.castle.classList.contains('active'))return castleBackOrHome();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
+function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.castle.classList.contains('active'))return castleBackOrHome();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='items')openInventory();else if(b.dataset.nav==='settings')openSettings();else toast(`${b.textContent.trim()}は仕様待ちです`);}));bindImages();}
 
 async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter');
@@ -532,6 +538,13 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',chara
   $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.hidden=false;
   return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;resolve(btn.dataset.dialogValue);});});
 }
+async function narrationDialog(text,choices=[['OK','ok']],speaker='ナレーション'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter');
+  $('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=text;if(img)img.alt='';
+  $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
+  overlay.classList.add('narration-dialog');overlay.hidden=false;
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('narration-dialog');resolve(btn.dataset.dialogValue);});});
+}
 function facilityFlag(key){try{return localStorage.getItem(`mobQuestFacilitySeen:${key}`)==='1';}catch(_){return false;}}
 function markFacilityFlag(key){try{localStorage.setItem(`mobQuestFacilitySeen:${key}`,'1');}catch(_){}}
 async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
@@ -539,7 +552,7 @@ async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
   if(!lines.length)return;
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
   speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';choices.innerHTML='';
-  overlay.classList.add('facility-line-talk');overlay.hidden=false;
+  overlay.classList.add('facility-line-talk');overlay.classList.toggle('coach-dialogue',speaker==='モブコーチ');overlay.hidden=false;
   for(const line of lines){
     /* One source line = one dialogue step. Short lines stay on one visual line;
        genuinely long lines are split near the centre so 1-2 characters never dangle alone. */
@@ -559,7 +572,7 @@ async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
     });
     await fixedDelay(120);
   }
-  overlay.hidden=true;overlay.classList.remove('facility-line-talk');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk','coach-dialogue');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
 }
 async function facilityIntro(key,{speaker,image,first='',repeat=''}){
   const seen=facilityFlag(key),text=seen?repeat:first;
@@ -570,6 +583,8 @@ async function showFacilityExit(image,text,theme='blue'){
   const wrap=$('#facilityExitBanner'),img=$('#facilityExitImage'),label=$('#facilityExitText');if(!wrap)return;
   setImage(img,versionedPlay(image),'');label.textContent=text;wrap.className=`facility-exit-banner theme-${theme}`;wrap.hidden=false;await fixedDelay(1050);wrap.hidden=true;
 }
+function trainingPlayed(){try{return localStorage.getItem('mobQuestTrainingPlayedV1')==='1';}catch(_){return false;}}
+function markTrainingPlayed(){try{localStorage.setItem('mobQuestTrainingPlayedV1','1');}catch(_){}}
 let tavernView='menu';
 let castleView='menu';
 let castleQtyState={itemId:null,qty:1};
@@ -616,8 +631,8 @@ const CASTLE_REPORT_SPEAKER_IMAGES={
   'モブデンデン':'play/07.png','モブマニー':'play/08.png','モブネコクー':'play/05.png',
   'モブジェシー':'play/06.png','モブリーロ':'play/09.png','ナレーション':'icon/01.png'
 };
-const OPENING_NARRATIVE=["とある世界のお話","様々な種族が","様々なエリアに","平和に暮らしていた","そんなある日","ある町が魔王軍に襲撃され","姿を消した","モブキングダムの王様","モブスライムキングは","この事態を受け","勇者に魔王討伐を依頼することを決意する","これは","勇者と仲間たち","魔王軍","光と闇","冒険と戦いのお話―"];
-const OPENING_DIALOGUE=[["モブスライムキング","勇者よ、世界を救ってくれ！"],["ナレーション","勇者は深く頷いた"],["モブスライムキング","お主1人では不安であろう"],["モブスライムキング","おい！モブピンク！"],["モブスライムキング","・・・・・・・・"],["モブスライムキング","集合ーーーー！！"],["モブピンク","はいーー！","enter"],["モブピンク","はいであります！"],["モブスライムキング","王よりモブピンクに命じる！"],["モブピンク","はい！"],["モブスライムキング","勇者と共に魔王を撃ち滅ぼすのじゃー！！"],["モブピンク","・・・・はい？"],["モブスライムキング","なんじゃ？"],["モブピンク","僕がですか？"],["モブスライムキング","他に誰がおるんじゃ？"],["モブピンク","えーーーー！！！！","hop"],["モブスライムキング","うるさい！さっさと行くのじゃ！"],["モブピンク","わ、わかりましたよ！"],["モブピンク","勇者様、私のこと守ってくださいね！"],["モブスライムキング","ヒロインみたいなことを言うな！"],["モブスライムキング","お主が勇者を守るのじゃ！"],["ナレーション","こうして勇者はモブピンクと共に度に出ることとなった"]];
+const OPENING_NARRATIVE=["とある世界のお話","様々な種族が","様々なエリアに","平和に暮らしていた","そんなある日","ある町が魔王軍に襲撃され","姿を消した","モブキングダムの王様","モブスライムキングは","この事態を受け","勇者に魔王討伐を依頼する","ことを決意した","これは","勇者と仲間たち","魔王軍","光と闇","冒険と戦いのお話―"];
+const OPENING_DIALOGUE=[["モブスライムキング","勇者よ、世界を救ってくれ！"],["ナレーション","勇者は深く頷いた"],["モブスライムキング","お主1人では不安であろう"],["モブスライムキング","おい！モブピンク！"],["モブスライムキング","・・・・・・・・"],["モブスライムキング","集合ーーーー！！"],["モブピンク","はいーー！","enter"],["モブピンク","はいであります！"],["モブスライムキング","王よりモブピンクに命じる！"],["モブピンク","はい！"],["モブスライムキング","勇者と共に魔王を撃ち滅ぼすのじゃー！！"],["モブピンク","・・・・はい？"],["モブスライムキング","なんじゃ？"],["モブピンク","僕がですか？"],["モブスライムキング","他に誰がおるんじゃ？"],["モブピンク","えーーーー！！！！","hop"],["モブスライムキング","うるさい！さっさと行くのじゃ！"],["モブピンク","わ、わかりましたよ！"],["モブピンク","勇者様、僕のこと守ってくださいね！"],["モブスライムキング","ヒロインみたいなことを言うな！"],["モブスライムキング","お主が勇者を守るのじゃ！"],["ナレーション","こうして勇者はモブピンクと旅に出ることになった"]];
 
 function hasContinueData(){
   try{return !!(localStorage.getItem('mobQuestPartyV4')||localStorage.getItem('mobQuestPartyV3')||localStorage.getItem('mobQuestAdventureV5')||localStorage.getItem('mobQuestMetaV1'));}catch(_){return false;}
@@ -641,6 +656,13 @@ async function openingNarrationBeat(text,grand=false){
   const el=$('#openingNarration');if(!el)return;el.hidden=false;el.textContent=text;el.classList.toggle('grand',!!grand);el.classList.remove('show');
   await fixedDelay(80);el.classList.add('show');await fixedDelay(grand?1450:1050);el.classList.remove('show');await fixedDelay(360);
 }
+async function openingSpeech(speaker,text){
+  if(speaker==='ナレーション'){const bubble=$('#openingSpeechBubble');if(bubble)bubble.hidden=true;await openingNarrationBeat(text,false);return;}
+  const bubble=$('#openingSpeechBubble'),sp=$('#openingSpeechSpeaker'),tx=$('#openingSpeechText');if(!bubble||!sp||!tx)return facilityTalk(text,speaker,speaker==='モブスライムキング'?'play/007.png':'play/02.png');
+  sp.textContent=speaker;tx.textContent=text;bubble.className=`opening-speech-bubble ${speaker==='モブスライムキング'?'king':'pink'}`;bubble.hidden=false;
+  await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,120);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);bubble.removeEventListener('pointerup',next,true);resolve();};bubble.addEventListener('pointerup',next,true);});
+  bubble.hidden=true;await fixedDelay(180);
+}
 async function runOpeningSequence(){
   showScreen('opening');const narration=$('#openingNarration'),throne=$('#openingThrone'),logo=$('#openingLogoStage'),next=$('#openingNextBtn'),pink=$('#openingPink');
   if(throne){throne.hidden=true;throne.classList.remove('reveal');}if(logo){logo.hidden=true;logo.classList.remove('show');}if(next)next.hidden=true;if(pink){pink.classList.remove('enter','hop');}
@@ -650,8 +672,7 @@ async function runOpeningSequence(){
     const [speaker,text,action]=row;
     if(action==='enter'&&pink){pink.classList.add('enter');await fixedDelay(650);}
     if(action==='hop'&&pink){pink.classList.add('hop');setTimeout(()=>pink.classList.remove('hop'),1600);}
-    const image=speaker==='モブスライムキング'?'play/007.png':speaker==='モブピンク'?'play/02.png':'icon/01.png';
-    await facilityTalk(text,speaker,image);
+    await openingSpeech(speaker,text);
   }
   if(logo){logo.hidden=false;await fixedDelay(60);logo.classList.add('show');await fixedDelay(3000);}if(next)next.hidden=false;
 }
@@ -659,9 +680,9 @@ async function runHomeTutorial(){
   try{if(localStorage.getItem('mobQuestHomeTutorialV1')==='1')return;}catch(_){}
   await facilityTalk('大変なことになりましたね..\nでも精一杯頑張るであります！\nよろしくお願いします、勇者様！','モブピンク','play/02.png');
   const adv=document.querySelector('[data-home-action="adventure"]');adv?.classList.add('home-tutorial-focus');
-  await facilityTalk('ダンジョンのアイコンを押すと冒険に向かいます','モブピンク','play/02.png');adv?.classList.remove('home-tutorial-focus');
+  await facilityTalk('冒険のアイコンを押すと冒険に向かいます','モブピンク','play/02.png');adv?.classList.remove('home-tutorial-focus');
   const castle=document.querySelector('[data-home-action="castle"]');castle?.classList.add('home-tutorial-focus');
-  await facilityTalk('お城のアイコンを押すとお城へ入れます\nお店の利用や冒険の報告がある時はお城へ向かいましょう','モブピンク','play/02.png');castle?.classList.remove('home-tutorial-focus');
+  await facilityTalk('お城のアイコンを押すとお城へ入れます\nお店の利用や冒険の報告が\nある時はお城へ向かいましょう','モブピンク','play/02.png');castle?.classList.remove('home-tutorial-focus');
   await facilityTalk('その他の機能については冒険しながら慣れていきましょう\n冒険の始まりであります！','モブピンク','play/02.png');
   try{localStorage.setItem('mobQuestHomeTutorialV1','1');}catch(_){}
 }
@@ -708,12 +729,32 @@ async function applyTestChapterStart(){
   const worlds=MOB_DATA.adventureWorlds||[],target=Math.max(0,worlds.findIndex(w=>w.id===v));state.adventure=defaultAdventure();state.adventure.worldIndex=target;
   state.adventure.reportedWorlds=worlds.slice(0,target).map(w=>w.id);state.adventure.storyFlags=resetStoryFlagsForChapter(target);
   const party=defaultParty.map(x=>[...x]);for(const id of storyJoinsBeforeWorld(target))if(player(id)&&!party.some(x=>x[0]===id)&&party.length<10)party.push([id,5]);state.party=party;
-  markOpeningComplete(true);saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);syncDefeatedHistoryFromProgress();closeSettings();await goHome();toast((worlds[target]?.name||'チャプター')+'から開始します');
+  markOpeningComplete(true);markTrainingPlayed();saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);syncDefeatedHistoryFromProgress();closeSettings();await goHome();toast((worlds[target]?.name||'チャプター')+'から開始します');
 }
+
+let inventoryTab='items';
+function inventoryRows(){
+  if(inventoryTab==='items')return GAME_ITEMS.filter(x=>itemCount(x.id)>0).map(x=>({image:x.image,name:x.name,sub:itemEffectText(x),count:itemCount(x.id)}));
+  if(inventoryTab==='equipment')return WEAPONS.filter(x=>weaponOwned(x.id)>0).map(x=>({image:x.image,name:x.name,sub:`${x.type} / ${weaponStatsText(x)} / ${weaponTraitText(x)}`,count:weaponOwned(x.id)}));
+  if(inventoryTab==='figures')return FIGURES.filter(x=>!x.pending&&figureOwned(x.id)>0).map(x=>({image:x.image,name:x.name,sub:`${x.rarity} / ${x.statsText} / ${x.traitText}`,count:figureOwned(x.id)}));
+  if(inventoryTab==='medals')return WEAPONS.filter(x=>medalOwned(x.id)>0).map(x=>({image:x.image,name:`${x.name}メダル`,sub:`元武器ステータス10% / ${weaponTraitText(x)}`,count:medalOwned(x.id)}));
+  return[];
+}
+function renderInventory(){
+  const root=$('#inventoryBody');if(!root)return;
+  $$('[data-inventory-tab]').forEach(b=>b.classList.toggle('active',b.dataset.inventoryTab===inventoryTab));
+  if(inventoryTab==='armor'){root.innerHTML='<div class="inventory-empty"><b>防具データは未設定です</b><br><small>性能・所持データが決まり次第ここに追加します。</small></div>';return;}
+  const rows=inventoryRows();
+  root.innerHTML=rows.length?`<div class="inventory-list">${rows.map(x=>`<article class="inventory-row"><img src="${x.image}" alt="${x.name}"><div><b>${x.name}</b><small>${x.sub||''}</small></div><strong>×${x.count}</strong></article>`).join('')}</div>`:'<div class="inventory-empty">まだ所持していません。</div>';
+  bindImages(root);
+}
+function openInventory(tab='items'){inventoryTab=tab;renderInventory();const ov=$('#inventoryOverlay');if(ov)ov.hidden=false;}
+function closeInventory(){const ov=$('#inventoryOverlay');if(ov)ov.hidden=true;}
 
 function zoneForIndex(i){return i<4?{key:'MAIN',label:'戦闘メンバー',n:i+1,cls:'main-slot'}:i<6?{key:'SUPER SUB',label:'自動支援',n:i-3,cls:'super-slot'}:{key:'RESERVE',label:'控えメンバー',n:i-5,cls:'reserve-slot'};}
 function rosterCard(p,selected,level){return `<button class="roster-card ${selected?'selected':''}" data-roster-id="${p.id}" type="button"><span class="roster-art"><img src="${versionedPlay(p.image)}" alt="${p.name}" loading="lazy" decoding="async"><i>${p.symbol}</i></span><b>${p.name}</b><small>${p.attribute} / ${p.weapon}</small><em>Lv${level}</em></button>`;}
 function worldCleared(id){const worlds=MOB_DATA.adventureWorlds||[],idx=worlds.findIndex(w=>w.id===id);if(idx<0)return false;return !!state.adventure.completed||(state.adventure.reportedWorlds||[]).includes(id)||(Number(state.adventure.worldIndex)||0)>idx;}
+function mapleShopUnlocked(){return worldCleared('desert')||state.adventure?.awaitingReport?.worldId==='desert';}
 function syncDefeatedHistoryFromProgress(){for(const w of MOB_DATA.adventureWorlds||[]){if(!worldCleared(w.id))continue;for(const a of w.areas||[]){const rows=[...(a.boss||[]),...(a.nextWave||[]),...(a.nextWaves||[]).flat()];for(const r of rows){const t=trainingEnemyTemplate(r.id);if(!t)continue;if(t.category==='boss'&&!state.meta.defeatedBosses.includes(t.id))state.meta.defeatedBosses.push(t.id);if(t.category==='elite'&&!state.meta.defeatedElites.includes(t.id))state.meta.defeatedElites.push(t.id);}}}saveMeta();}
 function unlockedDrinkIds(){
   const ids=new Set(['19','20','21','32','33','34','22']);
@@ -734,7 +775,8 @@ function renderTavernDrinkShop(){
   bindImages(root);$$('[data-buy-drink]',root).forEach(b=>b.onclick=async()=>{const d=DRINK_SETS.find(x=>x.id===b.dataset.buyDrink);if(!d)return;if(state.coins<d.price)return toast('ゴールドが足りません');const ans=await dialog(`${d.name}を購入しますか？\n${d.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'モブイルカエル','play/001.png');if(ans!=='yes')return;state.coins-=d.price;state.meta.coins=state.coins;addDrink(d.id,1);saveMeta();renderTavernDrinkShop();await facilityTalk('ありがとうございます🎵','モブイルカエル','play/001.png');});
 }
 function renderTavern(){
-  const landing=$('#tavernLanding'),popup=$('#tavernPartyPopup'),guide=$('#tavernPartyGuide');
+  const landing=$('#tavernLanding'),popup=$('#tavernPartyPopup'),guide=$('#tavernPartyGuide'),maple=$('#tavernFigureShopBtn');
+  if(maple)maple.hidden=!mapleShopUnlocked();
   if(landing)landing.hidden=false;
   if(popup)popup.hidden=tavernView!=='party';
   const m=Math.min(4,state.party.length),ss=Math.max(0,Math.min(2,state.party.length-4)),r=Math.max(0,state.party.length-6);
@@ -754,11 +796,25 @@ function renderTavern(){
     const first=state.tavernSwapIndex;[state.party[first],state.party[idx]]=[state.party[idx],state.party[first]];state.tavernSwapIndex=null;renderTavern();toast('入れ替えました');
   });
 }
-function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#tavernDrinkPopup').hidden=true;$('#tavernPartyPopup').hidden=true;renderTavern();}
+function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#tavernDrinkPopup').hidden=true;$('#tavernPartyPopup').hidden=true;$('#tavernFigurePopup').hidden=true;renderTavern();}
 function showTavernParty(){tavernView='party';state.tavernSwapIndex=null;renderTavern();}
 function showTavernDrinks(){tavernView='menu';renderTavernDrinkShop();$('#tavernDrinkPopup').hidden=false;}
+async function showTavernFigures(){
+  if(!mapleShopUnlocked())return toast('砂漠クリア後に利用できます');
+  if(!facilityFlag('tavern:mapleShop')){
+    await facilityTalk('やっほ～\n私はフィギュアを売ってるよ\n色んなガチャを用意してるから\n好きなガチャを選んでね\nガチャはダイヤでしか引けないから\n頑張って集めて来て！','モブメープル','play/009.png');
+    markFacilityFlag('tavern:mapleShop');
+  }else await facilityTalk('やっほ～どのガチャにする？','モブメープル','play/009.png');
+  $('#tavernFigurePopup').hidden=false;
+}
 async function enterTavern(){
   tavernView='menu';renderTavern();
+  if(mapleShopUnlocked()&&!facilityFlag('tavern:mapleIntro')){
+    await facilityTalk('あら、いい所に来ましたね！\n今日から新しい店員が増えたの！','モブイルカエル','play/001.png');
+    await facilityTalk('やっほ～モブメープルです\nこれからよろしくねー','モブメープル','play/009.png');
+    await facilityTalk('モブメープルちゃんはフィギュアを売ってくれます♪\n詳しくは本人に聞いてみてください！','モブイルカエル','play/001.png');
+    markFacilityFlag('tavern:mapleIntro');renderTavern();return;
+  }
   await facilityIntro('tavern',{speaker:'モブイルカエル',image:'play/001.png',first:'いらっしゃい♪\nここは酒場です\nパーティー編成や\nドリンクの購入が出来ます\nドリンクは\nキャンプで飲むことで\n様々な効果を得ることが出来ます',repeat:'いらっしゃいませ♪\nゆっくりしていってくださいね！'});
 }
 async function leaveTavern(){await showFacilityExit('play/001.png','また来てくださいね♪','pink');await goHome();}
@@ -838,7 +894,7 @@ function renderTrainingModeCarousel(){
   const mode=state.training.mode||'menu';
   const cards=TRAINING_MODES.filter(m=>m.id!=='test');
   if(state.test?.enabled)cards.push(TRAINING_MODES.find(m=>m.id==='test'));
-  root.innerHTML=cards.filter(Boolean).map((m,i)=>`<button class="training-mode-card ${m.id===mode?'active':''} ${m.id==='test'?'test-card':''}" data-training-mode="${m.id}" type="button" style="--float-delay:${(i*.28).toFixed(2)}s"><img src="${m.icon}" alt="${m.name}"><b>${m.name}</b></button>`).join('');
+  root.innerHTML=cards.filter(Boolean).map((m,i)=>`<button class="training-mode-card turntable-${m.id} ${m.id===mode?'active':''} ${m.id==='test'?'test-card':''}" data-training-mode="${m.id}" type="button" style="--float-delay:${(i*.28).toFixed(2)}s"><img src="${m.icon}" alt="${m.name}"><b>${m.name}</b></button>`).join('');
   bindImages(root);
   $$('[data-training-mode]',root).forEach(b=>{b.onclick=e=>{e.preventDefault();e.stopPropagation();setTrainingMode(b.dataset.trainingMode);};});
 }
@@ -849,7 +905,7 @@ async function enterTraining(){
     markFacilityFlag('training');
   }
 }
-async function leaveTraining(){await showFacilityExit('play/003.png','毎日来てね！レッツトレーニング！','blue');await goHome();}
+async function leaveTraining(){await showFacilityExit('play/003.png','また来てくれよな！レッツトレーニング！','blue');await goHome();}
 function clearedJournalWorlds(){const worlds=MOB_DATA.adventureWorlds||[];return worlds.filter((w,i)=>state.adventure.completed||(Number(state.adventure.worldIndex)||0)>i);}
 function recordCountForMode(mode){return itemCount(mode==='exp'?'36':mode==='gold'?'37':'38');}
 function renderBattleProgramSeasonSelect(){
@@ -877,6 +933,7 @@ async function confirmBattleProgram(programId){
   return startBattleProgram(found.season,found.program);
 }
 async function startBattleProgram(season,program){
+  markTrainingPlayed();
   state.quest={type:'program',seasonId:season.id,programId:program.id,programNo:program.no,areaIndex:0,battleIndex:0,battleReady:true,explored:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:season.bg,fallbackBg:season.fallback,pendingSeasonReward:false,newProgramClear:false};
   const pop=$('#trainingFeaturePopup');if(pop)pop.hidden=true;
   await startBattleLoaded({mode:'quest',returnScreen:'training',enemyConfigs:program.enemies.map(x=>({...x})),party:state.party,questVitals:state.quest.vitals,bg:season.bg,fallbackBg:season.fallback,bossBattle:false,questType:'program',adventureLabel:`バトルプログラム / ${season.name} / PROGRAM ${program.no}`});
@@ -920,6 +977,7 @@ function questRecordId(type){return type==='exp'?'36':type==='gold'?'37':type===
 function consumeQuestRecord(type,cost){const id=questRecordId(type);return id?consumeItem(id,cost):true;}
 function freshQuestVitals(){const out={};for(const [id,lv] of state.party){const q=player(id),st=baseStats(q,lv);out[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0}};}return out;}
 async function startTrainingQuest(type,opt={}){
+  markTrainingPlayed();
   if(type==='journal'){
     const wi=clamp(Number(opt.worldIndex)||0,0,(MOB_DATA.adventureWorlds?.length||1)-1),w=MOB_DATA.adventureWorlds?.[wi];
     if(!w||!clearedJournalWorlds().includes(w))return toast('まだ選択できません');
@@ -1099,7 +1157,9 @@ async function applyAdventurePartyScale(){
 /* ===== v26 STORY EVENT ENGINE ===== */
 let storyBusy=false;
 const STORY_GUESTS={
-  mira:'boss-mira',guardian:'boss-guardian',neonBoss:'boss-neon',ace:'boss-ace',dragon:'boss-dragon',nepu:'boss-nepu'
+  mira:'boss-mira',guardian:'boss-guardian',neonBoss:'boss-neon',ace:'boss-ace',aceCastle:'boss-ace-castle',dragon:'boss-dragon',nepu:'boss-nepu',
+  maou:'boss-maou-castle',killwitch:'c-killwitch',lalawitch:'c-succubus',gladi:'boss-gladi',lilith:'boss-lilith-castle',
+  hellLilith:'boss-helllilith',kirinLilith:'boss-kirinlilith',kufuLilith:'boss-kufulilith',rivaLilith:'boss-rivalilith'
 };
 /* v32: モブジェシー is the canonical play/06.png player character. */
 const STORY_ONLY_ACTORS={};
@@ -1305,6 +1365,14 @@ async function checkBattleHpDialogue(){
     if(rate<=.70&&!b.storyHpFlags.neo70){b.storyHpFlags.neo70=true;await enemyStoryCutin(neo,'やりますね\nではギアを上げますよ',920);}
     if(rate<=.40&&!b.storyHpFlags.neo40){b.storyHpFlags.neo40=true;await enemyStoryCutin(neo,'なるほど\nこれは強力だ・・',920);}
   }
+  const gladi=(b.enemies||[]).find(e=>e.id==='boss-gladi'&&e.hp>0);
+  if(gladi){
+    const rate=gladi.hp/Math.max(1,gladi.maxHp);
+    if(rate<=.70&&!b.storyHpFlags.gladi70){b.storyHpFlags.gladi70=true;await enemyStoryCutin(gladi,'いいぞ\n闘いはこうでなくてはな',900);}
+    if(rate<=.50&&!b.storyHpFlags.gladi50){b.storyHpFlags.gladi50=true;await enemyStoryCutin(gladi,'認めよう\nお前たちは強者だ！',900);gladi.forcedSpecialTurn=b.turn+1;}
+  }
+  const lilith=(b.enemies||[]).find(e=>e.id==='boss-lilith-castle'&&e.hp>0);
+  if(lilith&&lilith.hp/Math.max(1,lilith.maxHp)<=.50&&!b.storyHpFlags.lilith50){b.storyHpFlags.lilith50=true;await enemyStoryCutin(lilith,'強いね\nまだまだこれからだよ',900);}
   const karami=(b.enemies||[]).find(e=>e.id==='d2-mirakarami');
   if(karami&&karami.hp>0&&karami.hp/Math.max(1,karami.maxHp)<=.50&&!b.storyHpFlags.d2Karami50){
     b.storyHpFlags.d2Karami50=true;
@@ -1339,10 +1407,10 @@ const STORY_EVENTS={
     ['say','pink','ケホッ、ケホッ、\n凄い砂埃ですね、、\nん？\n誰か来ますよ！'],['guestRight','desert'],['say','desert','旅人か？\n今はやめておけ'],['say','pink','僕たちは国王の命令で\n魔王を倒すべく旅をしているのであります！'],['say','desert','なおさらやめておけ\nやつらの力は強大だ\nたった2人で何が出来る？'],['say','pink','ふぅ、、\nこのお方は勇者様です‼︎'],['say','desert','・・・勇者？\nそんなはずは、、'],['exclaim','desert'],['say','desert','いや、間違いなく勇者だ'],['say','pink','その通り！あなた見る目ありますねー！'],['say','desert','こんな日が来るとはな\nいいだろう\n俺も同行する'],['say','pink','大変ありがたいです！\nここのボスはミラモブと聞いています\n早速案内してください！'],['say','desert','やつは強い\nだが勇者ならあるいわ'],['join','desert','モブデザートが仲間に加わった！']
   ]},
   'pre:desert':{worldId:'desert',area:3,steps:[
-    ['guest','mira'],['say','mira','何者だ？'],['say','desert','久しぶりだな、ミラモブ'],['say','mira','モブデザートか\n今更何をしに来た？\n王位にも就けず、魔物にもなれない半端者が'],['say','desert','用があるのは私ではない\nまあ、私もなくはないのだがな'],['say','pink','やいやいやい！\nやいやーい！'],['say','mira','なんだそのゴミは？'],['say','pink','ゴ、ゴミ、、'],['say','desert','そいつはいいとして\nもう1人を見てみろ'],['say','mira','こいつは・・'],['say','pink','このお方は勇者様だぞ！\n強いのだぞ！'],['say','mira','なるほど\nお前が強気に出られる理由はこれか\nこの私も\n舐められたものだ！'],['say','desert','来るぞ！']
+    ['guest','mira'],['say','mira','何者だ？'],['say','desert','久しぶりだな、ミラモブ'],['say','mira','モブデザートか\n今更何をしに来た？\n砂漠を捨て、無法者になった愚か者が'],['say','desert','用があるのは私ではない\nまあ、私もなくはないのだがな'],['say','pink','やいやいやい！\nやいやーい！'],['say','mira','なんだそのゴミは？'],['say','pink','ゴ、ゴミ、、'],['say','desert','そいつはいいとして\nもう1人を見てみろ'],['say','mira','こいつは・・'],['say','pink','このお方は勇者様だぞ！\n強いのだぞ！'],['say','mira','なるほど\nお前が強気に出られる理由はこれか\nこの私も\n舐められたものだ！'],['say','desert','来るぞ！']
   ]},
   'post:desert':{worldId:'desert',area:3,forceHome:true,steps:[
-    ['say','pink','はあ、はあ、\n強すぎであります、、'],['say','desert','しかし、討伐成功だ\n見ろ\nこれがミラモブのレコード\nガラガラの旅 だ'],['narrate','7つのレコードの1つ、ガラガラの旅を手に入れた！'],['say','pink','これで2枚目であります！\n次は田舎町を目指します！'],['say','desert','海底への入り口か\n懐かしいな']
+    ['say','pink','はあ、はあ、\n強すぎであります、、'],['say','desert','しかし、討伐成功だ\n見ろ\nこれがミラモブのレコード\nガラガラの旅 だ'],['narrate','7つのレコードの1つ、ガラガラの旅を手に入れた！'],['say','pink','これで2枚目であります！\n次は王様に報告後、田舎町を目指します！'],['say','desert','海底への入り口か\n懐かしいな']
   ]},
   'arrival:rural':{worldId:'rural',area:0,steps:[
     ['say','pink','すぅ〜\nはぁ〜\n空気が美味しいですねー'],['say','desert','砂漠とは大違いだな\n奇妙な建物が多いが、悪くない'],['sayOff','???','どけどけどけー！でやんすー！'],['say','pink','な、なんですか⁉︎'],['guestDrop','denden','ドン！ッ'],['say','denden','いててて、、','???'],['say','desert','なんだこいつは？'],['say','pink','大丈夫ですか？'],['say','denden','あいやー\nご心配感謝ですやんす！\nオイラはモブデンデン！\nこんな時に観光とは珍しいでやんすねー'],['say','pink','観光ではありません！\n僕たちは勇者と仲間達！\n魔王を倒すため旅をしてるのであります！'],['say','desert','勇者と仲間達、、'],['say','denden','ほぅー！\nカッコいいでやんすねー\n勇者様にお会い出来るなんて\n感激でやんす！'],['say','pink','やんすさんは、\nこの辺り詳しいのですか？'],['say','denden','もちろん！\nこの辺りは庭でやんす！'],['say','desert','やんすさん..？'],['say','pink','ここのボスは\nモブガーディアンですね？\n討伐に協力していただきたい！'],['say','denden','ほぅー！\nオイラはとある国の\n護衛隊長をやっていたでやんす！'],['say','desert','そうなのか？'],['say','denden','勇者様のためなら\n一肌脱ぐでやんす！'],['join','denden','モブデンデンが仲間に加わった！']
@@ -1819,9 +1887,131 @@ async function runNeonPostStory(){
   await openStoryScene('neon',3);await storyShowGuest('ace',{slow:true});
   await storySay('ace','見事だ\nここまでとは思わなかったぞ');await storySay('pink','なんて強さでありますか・・');await storySay('ace','一先ずは引いてやろう\n次に会う時が楽しみだ');await storyHideGuest();await storySay('desert','もっと強さが必要だな');await storySay('money','強力な武器も必要ね');await storyNarrate('4つ目のレコードを手に入れた！');
 }
+
+let demonSplitResolve=null;
+let demonSplitTeams={};
+let demonSplitA=[];
+let demonSplitB=[];
+function demonPartyLevel(id){return state.party.find(x=>canonicalPlayerId(x[0])===canonicalPlayerId(id))?.[1]||5;}
+function initDemonSplit(){
+  const ids=state.party.map(x=>canonicalPlayerId(x[0])).filter((x,i,a)=>a.indexOf(x)===i);
+  demonSplitTeams={};ids.forEach((id,i)=>demonSplitTeams[id]=i<4?'A':i<8?'B':'');
+}
+function renderDemonSplit(){
+  const root=$('#demonSplitRoster');if(!root)return;
+  const ids=state.party.map(x=>canonicalPlayerId(x[0])).filter((x,i,a)=>a.indexOf(x)===i);
+  root.innerHTML=ids.map(id=>{const p=player(id),team=demonSplitTeams[id]||'';return `<button class="demon-split-member ${team==='A'?'team-a':team==='B'?'team-b':''}" data-demon-member="${id}" type="button"><img src="${versionedPlay(p?.image||'')}" alt="${p?.name||id}"><b>${p?.name||id}<small>Lv${demonPartyLevel(id)}</small></b><em>${team||'－'}</em></button>`;}).join('');
+  const names=t=>ids.filter(id=>demonSplitTeams[id]===t).map(id=>player(id)?.name||id);
+  const a=names('A'),b=names('B');$('#demonSplitA').textContent=a.length?a.join(' / '):'未編成';$('#demonSplitB').textContent=b.length?b.join(' / '):'未編成';
+  bindImages(root);
+  $$('[data-demon-member]',root).forEach(btn=>btn.onclick=()=>{
+    const id=btn.dataset.demonMember,now=demonSplitTeams[id]||'',next=now==='A'?'B':now==='B'?'':'A';
+    if(next&&(Object.values(demonSplitTeams).filter(x=>x===next).length>=4))return toast(`${next}パーティーは4人までです`);
+    demonSplitTeams[id]=next;renderDemonSplit();
+  });
+}
+async function chooseDemonSplitParties(){
+  initDemonSplit();renderDemonSplit();const ov=$('#demonSplitPopup');ov.hidden=false;
+  return new Promise(resolve=>{demonSplitResolve=resolve;});
+}
+function cancelDemonSplit(){const ov=$('#demonSplitPopup');if(ov)ov.hidden=true;const r=demonSplitResolve;demonSplitResolve=null;if(r)r(null);}
+async function confirmDemonSplit(){
+  const ids=state.party.map(x=>canonicalPlayerId(x[0])).filter((x,i,a)=>a.indexOf(x)===i),a=ids.filter(id=>demonSplitTeams[id]==='A'),b=ids.filter(id=>demonSplitTeams[id]==='B');
+  if(!a.length||!b.length)return toast('A・B両方に1人以上編成してください');
+  const ok=await dialog('このパーティーで挑みますか？',[['はい','yes','primary'],['いいえ','no']],'ナレーション','icon/01.png');if(ok!=='yes')return;
+  $('#demonSplitPopup').hidden=true;demonSplitA=a;demonSplitB=b;const r=demonSplitResolve;demonSplitResolve=null;if(r)r({A:a,B:b});
+}
+function storyPartyRows(ids){return ids.map(id=>[id,demonPartyLevel(id)]);}
+async function startDemonStoryBattle(enemyConfigs,partyIds,label,area=0){
+  const bg=storySceneBg('demonCastle',area);
+  return new Promise(async resolve=>{scriptedBattleResolve=resolve;await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs,party:storyPartyRows(partyIds),bg:bg.bg,fallbackBg:bg.fallback,bossBattle:true,scriptedImmortalParty:true,storyLabel:label});});
+}
+async function runDemonCastleArrival(){
+  await openStoryScene('demonCastle',0);
+  await storySay('pink','ここが魔王城でありますね・・！');
+  await storyShowGuest('aceCastle',{slow:true});
+  await storySay('aceCastle','まさか本当にここまで来るとはな');
+  await storySay('money','モブ・・・');await storySay('jessie','モブエース！！');
+  await storySay('aceCastle','久しぶりだな\nこのような形での\n再開は望んでいなかった');
+  await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');
+  await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');
+  await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');
+  await storySay('pink','なぜ魔王軍に・・！');await storySay('denden','退屈だからでやんすか！？');
+  await storySay('aceCastle','退屈か\nそうであれば\nどれほど幸せだろな');
+  await storySay('money','あんたのことは\nうっすらしか覚えてないけど\n悪いやつではなかったはずよ！');
+  await storySay('aceCastle','そうか\n少しは覚えているのか');
+  await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');
+  await storySay('aceCastle','捨ててなどいない\nお前と同じだ\nモブジェシー・・！');
+  await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');
+  await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');
+  await storySay('denden','それでも\n戦うでやんす！！');
+  $('#storyScene').hidden=true;await startDemonStoryBattle([{id:'boss-ace-castle',level:73}],state.party.map(x=>x[0]),'モブエース EVENT BATTLE',0);
+  await openStoryScene('demonCastle',0);await storyShowGuest('aceCastle',{slow:true});
+  await storySay('aceCastle','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('情けない');
+  await storyShowGuests(['aceCastle','maou']);
+  await storySay('maou','我の側近が\n無様な姿を晒すとは');await storySay('aceCastle','申し訳、、ありません・・');await storySay('pink','魔王であります！！');
+  await storySay('desert','こんなに早く出会うとはな');await storySay('maou','まあよい\n一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();
+  await storySay('aceCastle','グッ・・・！');await storySay('maou','随分と嫌われたようだな\n行くぞ');await storyHideGuests();
+  await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ\n先へ進むぞ！');
+}
+async function runDemonCastleSplit(){
+  await openStoryScene('demonCastle',2);
+  await storyShowGuest('lilith',{slow:true});await storySay('lilith','凄いね君たち\nグラディモブ\n強かったでしょ');await storySay('desert','ああ\n強敵だった');
+  await storySay('lilith','まあ\n僕の方が強いんだけどね\nちょっとだけ寂しくなるな');await storySay('money','あんたなんて\n私の魔法でぶっ飛ばしてやるわ！');
+  await storySay('lilith','ネオン街の魔女\n僕も手合わせしてみたかった\n良い機会ね');await storySay('jessie','あなたを倒せば\nあとは魔王だけ！');
+  await storySay('lilith','うーん\nそれはどうだろう\n行ってみないと分からないよね\nまあ\n行けないんだけどね');
+  await storyShowGuests(['hellLilith','kirinLilith','lilith','kufuLilith','rivaLilith']);
+  await storySay('lilith','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん');
+  await storySay('pink','あれを全部相手は大変であります・・');await storySay('desert','2手に分かれよう');await storySay('denden','ナイスアイデアでやんす！');
+  await storySay('jessie','どう分かれるの？');await storySay('riro','勇者様が\n決めればいいでス');await storySay('denden','そうでやんすね！');await storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！');
+  await storyNarrate('パーティーを2つ作ってください\nAパーティー：モブリリス、モブヘルリリス、モブキリンリリス\nBパーティー：モブクフリリス、モブリヴァリリス');
+  $('#storyScene').hidden=true;
+  let split=null;while(!split)split=await chooseDemonSplitParties();
+  await openStoryScene('demonCastle',2);await storySay('nyoro','素晴らしい采配ニョロ！');await storySay('desert','では、まずBパーティーの出陣だ！');
+  $('#storyScene').hidden=true;await startDemonStoryBattle([{id:'boss-kufulilith',level:80},{id:'boss-rivalilith',level:80}],split.B,'B PARTY / リリス四姉妹',2);
+  await openStoryScene('demonCastle',2);await storySay('pink','次はAパーティーであります！\nモブリリス、覚悟であります!!');
+  demonSplitA=split.A;demonSplitB=split.B;
+}
+async function runDemonCastlePostArea3(){
+  await openStoryScene('demonCastle',2);await storyShowGuest('lilith',{slow:true});
+  await storySay('lilith','僕の負けだね\nいいソウルを持ったチーム\nでも僕は特別なんだ');await storySay('money','なによ！まだやる気！？');
+  await storySay('lilith','そんなつもりないよ\n今はね\n代わりに話を教えよう');await storySay('denden','笑える話でやんすか？');await storySay('lilith','かもね');
+  await storySay('desert','あまり時間はないのだが\n薔薇の魔女からの話\n興味はあるな');await storySay('lilith','まあ、聞いてどうするかは\n君たち次第だけどね');
+  await storyNarrate('モブネオンキングがネオン街を治めていた頃\n魔王様からネオン街を支配するよう命令が下った');
+  await storyNarrate('ネオン街に隠されている"ある秘宝"を手に入れるため\nグラディモブ モブドラゴン ミラモブ\n早々たるメンバーでネオン街へ向かった');
+  await storyNarrate('ネオン街の王はモブドラゴンと互角\n気高い戦士だったけど兵力が違う\n魔王軍からしてみれば簡単な任務だった');
+  await storyNarrate('でも\nそんな時1人の魔女が現れた\nその魔女は数々のボスを一瞬で倒し\nグラディモブすら寄せ付けなかった');
+  await storyNarrate('しかし\n魔女は暴走しネオン街の王を攻撃した\n魔王軍は撤退し\nネオン街と魔女の戦いになる');
+  await storyNarrate('長い長い戦いの果て\nネオン街の戦士達によって\nついに魔女は封印された');
+  await storyNarrate('それがなぜか\nある町の消滅と共に封印が解かれてしまった\nそして今\n本来の力を失い勇者と旅をし\n僕の目の前にいる');
+  await storySay('lilith','そう君だよ\nネオン街の魔女\nモブマニー');await storySay('money','私が、王を・・？');
+  await storySay('jessie','そんなはずは無い！\nモブマニーは魔王に封印された！\n私はこの目で見た！');await storySay('desert','どういうことだ？');
+  await storySay('lilith','僕の話はここまで\nあとは魔王様にでも聞くんだね\n君たちとはまた会う気がするよ\nまたね');await storyHideGuest();
+  await storySay('money','・・・・');await storySay('denden','気にすることないでやんす！\nもし魔女だとしても\n今は優しくて強い\n勇者パーティーのモブマニーでやんす！');await storySay('nyoro','そうだニョロ！');
+  await storySay('nekoku','オラ、モブマニー好き\n大事な仲間');await storySay('pink','言いたいこと\n全部言われたであります');await storySay('jessie','モブマニー\n今のあなたが本当のあなたよ');await storySay('money','・・・ありがとう');await storySay('desert','さあ最終決戦だ\n全てを終わらせよう');
+}
+Object.assign(STORY_EVENTS,{
+  'arrival:demonCastle':{worldId:'demonCastle',area:0,custom:'demonCastleArrival'},
+  'pre:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['killwitch','lalawitch']],['say','killwitch','我ら！'],['say','lalawitch','リリス親衛隊！'],['say','killwitch','モブキラウィッチ！'],['say','lalawitch','モブララウィッチ！'],['sayDual','killwitch','お命頂戴！','lalawitch','お命頂戴！'],
+    ['say','denden','か、かっけえでやんす・・'],['say','nekoku','オラ、好きだ'],['say','money','何馬鹿な事言ってるの！\nこの2人相当強いわよ！'],['say','jessie','簡単には通してくれなさそうね'],['say','nyoro','早く倒してモブエースを追うニョロ！']
+  ]},
+  'post:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['killwitch','lalawitch']],['say','lalawitch','リリス様・・'],['say','killwitch','申し訳、、ありません、、'],['guests',['killwitch','lilith','lalawitch']],['say','lilith','2人ともよく頑張ったね'],['say','lilith','もういいから\nゆっくり休んでね\nあとは僕に任せて'],['energyTransfer','killwitch','lilith'],['energyTransfer','lalawitch','lilith'],['hideGuests'],['guest','lilith'],
+    ['say','lilith','どうも勇者様\n引き返すならここが最後だよ'],['say','money','出たわね魔王軍 No.2！'],['say','jessie','薔薇の魔女、モブリリス・・！'],['say','lilith','ネオン街の魔女に保安官ね\n大人しくお家に帰る気はない？'],['say','pink','魔王を倒すまで\n僕たちは止まらないであります！'],['say','desert','薔薇の魔女がもう相手をしてくれるのか？'],['say','lilith','そんなわけないでしょ\nそこのピンクちゃん\n死相が出てるわ\n警告に来てあげただけ'],['say','pink','そんな脅し怖くないであります！'],['say','lilith','脅し？\n僕割と優しいんだけどね\nまあ\nせいぜい死なないことね'],['hideGuest'],['say','desert','死相など全員に出ている\n覚悟を決めて\n先へ進むぞ！']
+  ]},
+  'pre:demonCastle:1':{worldId:'demonCastle',area:1,steps:[
+    ['guest','gladi'],['say','gladi','我・・見参！'],['say','desert','魔王軍 No.3の登場か'],['say','jessie','ゴールデンバレットの\nグラディモブ・・！'],['say','denden','カッコいい銃を持ってるでやんすね\nオイラがいただくでやんす！'],['say','gladi','エース\nララ\nキラ\nやつらを倒すとは\n賞賛に値するぞ'],['say','money','あなたもリストに加えてあげるわ！'],['say','gladi','ネオン街の魔女\nお前に弾丸を撃ち込むこの時\n心待ちにしていたぞ'],['say','money','？\n私はあんたに恨みなんてないけど\nモブエースを助けるため\nそこを通してもらうわ！'],['say','gladi','いいだろう\nどこからでもかかってくるがよい！'],['say','jessie','みんな気を付けて！\nやつの攻撃は通常攻撃で状態異常弾丸を使ってくる！\nかかったらすぐアイテムで回復するのよ！']
+  ]},
+  'post:demonCastle:1':{worldId:'demonCastle',area:1,steps:[
+    ['guest','gladi'],['say','gladi','グフッ・・'],['say','pink','我々の勝ちであります！'],['say','gladi','我の負けだ・・\nだが\n魔王様には遠く及ばない\nネオン街の魔女よ\n二度もお前に敗れるとはな'],['say','money','さっきから何を言っているの？\n誰かと間違えてない？'],['say','gladi','先へ進むがいい\nそして\n運命とどう戦うのか\nその答えを見せてくれ'],['say','jessie','・・・・'],['say','denden','お前の想いはオイラが引き継ぐでやんす！'],['say','gladi','そうだったな\n名乗れ'],['say','denden','お、オイラはモブデンデン！\n（・・もらえるでやんすか？）'],['say','gladi','良い腕だったぞ\n銃はやれぬがこのメダルを授けよう'],['narrate','「グラビディゴールデンバレット」のメダルを手に入れた！'],['hideGuest'],['say','desert','残りはモブリリス、そして魔王だけだ'],['say','jessie','奥の手でもない限りはね'],['say','nekoku','オラ\n誰が相手でも戦う！'],['say','nyoro','魔王まであと少しニョロ！'],['say','pink','先へ進むであります！']
+  ]},
+  'pre:demonCastle:2':{worldId:'demonCastle',area:2,custom:'demonCastleSplit'},
+  'post:demonCastle:2':{worldId:'demonCastle',area:2,custom:'demonCastlePost3'}
+});
 async function runStoryEvent(key,forceHomeOverride=false){
   const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;
-  try{if(ev.custom==='neonPost')await runNeonPostStory();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default',ev.extras||[]);await runStorySteps(ev.steps||[]);}markStoryDone(key);ok=true;}finally{storyBusy=false;}
+  try{if(ev.custom==='neonPost')await runNeonPostStory();else if(ev.custom==='demonCastleArrival')await runDemonCastleArrival();else if(ev.custom==='demonCastleSplit')await runDemonCastleSplit();else if(ev.custom==='demonCastlePost3')await runDemonCastlePostArea3();else{await openStoryScene(ev.worldId,ev.area||0,ev.layout||'default',ev.extras||[]);await runStorySteps(ev.steps||[]);}markStoryDone(key);if(key==='post:demonCastle:1'){state.meta.pendingMedals=state.meta.pendingMedals||{};state.meta.pendingMedals.gladi={name:'グラビディゴールデンバレット',stats:'HP+20 SPD+10',trait:'通常攻撃でダメージを与えた時、10%の確率で相手を状態異常にする'};saveMeta();}ok=true;}finally{storyBusy=false;}
   const goHome=!!(ev.forceHome||forceHomeOverride);if(ok){await closeStoryScene(goHome);if(!goHome&&screens.adventure.classList.contains('active'))renderAdventure();}return ok;
 }
 async function maybeRunArrivalStory(){const w=currentWorld();if(!w)return false;const key=`arrival:${w.id}`;if(STORY_EVENTS[key]&&!storyDone(key))return await runStoryEvent(key);return false;}
@@ -2510,7 +2700,7 @@ async function applyRoundDots(){
   for(const a of fieldAllies()){if(a.dead)continue;for(const k of ['poison','burn'])if(a.status[k]>0){const d=Math.max(1,Math.round(a.maxHp*.025));a.hp=Math.max(state.battle?.mode==='story'&&state.battle?.config?.scriptedImmortalParty?1:0,a.hp-d);a.status[k]--;if(a.hp<=0){a.dead=true;notice(`${a.name} DOWN`,'danger');}else notice(`${a.name}に${k==='poison'?'毒':'やけど'}ダメージ！`,'status');}}
   if(!livingEnemies().length)state.battle.targetEnemyId=null;renderBattle();await checkSpecialRevives();
 }
-function tickBuffs(){const b=state.battle;for(const e of b.enemies||[])for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
+function tickBuffs(){const b=state.battle;for(const e of b.enemies||[])for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns','ultimateLockTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
 function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
 async function playFrezardFusion(){
   const b=state.battle,field=$('#battleField')||$('#battleScreen'),layer=$('#battleFxLayer');if(!b||!field||!layer)return;const fr=field.getBoundingClientRect(),center={x:fr.width*.5,y:fr.height*.43},sources=(b.enemies||[]).slice(0,2);const ghosts=[];
@@ -2576,7 +2766,7 @@ async function handleForcedEnemyPhase(){
 }
 async function handleEnemyWaveClear(){if(livingEnemies().length)return false;if(state.battle.pendingWaveConfigs?.length)return await spawnNextEnemyWave();finishBattle(true);return true;}
 async function startRound(){
-  const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();await checkBattleHpDialogue();if(b.forcePhaseChange){b.busy=false;return handleForcedEnemyPhase();}if(!livingEnemies().length){b.busy=false;return handleEnemyWaveClear();}if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
+  const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();await checkBattleHpDialogue();if(b.turn===1&&!b.storyHpFlags?.lilithTurn1){const l=(b.enemies||[]).find(e=>e.id==='boss-lilith-castle'&&e.hp>0);if(l){b.storyHpFlags=b.storyHpFlags||{};b.storyHpFlags.lilithTurn1=true;await enemyStoryCutin(l,'あれ？もしかして僕なめられてる？',900);}}if(b.forcePhaseChange){b.busy=false;return handleForcedEnemyPhase();}if(!livingEnemies().length){b.busy=false;return handleEnemyWaveClear();}if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
   for(const a of fieldAllies().filter(x=>!x.dead)){
     if(a.id==='nekoku'&&passiveChance(.30)){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){await passiveBeat(a,'癒しのプニプニ！');const h=heal(target,target.maxHp*.14);if(h)notice(`${target.name} HP +${h}`,'heal');await fixedDelay(600);}}
     if(a.id==='money'&&passiveChance(.30)){await passiveBeat(a,'マニーは海を渡る！');const m=Math.round(a.maxMp*.12);a.mpNow=Math.min(a.maxMp,a.mpNow+m);notice(`MP +${m}`,'heal');await fixedDelay(600);}
@@ -2584,7 +2774,7 @@ async function startRound(){
   }
   const enemyEntries=livingEnemies().flatMap(e=>{
     const role=e.encounterRole||'';
-    const fallback=role==='escort'?1:role==='midboss'?rint(1,2):role==='boss'?rint(2,3):(e.isBoss?rint(2,3):e.isElite?rint(1,2):1);
+    const fallback=role==='escort'?1:role==='midboss'?rint(1,2):role==='boss'?2:(e.isBoss?2:e.isElite?rint(1,2):1);
     const count=clamp(Number(e.actionCount)||fallback,1,3);return Array.from({length:count},(_,i)=>({type:'enemy',enemyId:e.uid,action:i+1}));
   });
   b.queue=[...livingMain().map(a=>({type:'ally',id:a.id})),...enemyEntries,...livingSuper().filter(a=>b.turn>=a.nextSupportTurn).map(a=>({type:'super',id:a.id}))].sort((x,y)=>initiativeSpeed(y)-initiativeSpeed(x)+((Math.random()-.5)*.01));b.busy=false;renderBattle();await processQueue();
@@ -2615,13 +2805,33 @@ function enemyMainSkillPower(e,spec){
 function enemySpecialSpec(e){if(e.specialOptions?.length)return pick(e.specialOptions);if(e.special)return e;return temporaryEnemySpecial(e);}
 async function enemyAction(actionIndex=1,enemyId){
   const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}if(e.status.confuse>0){e.status.confuse--;const targets=livingEnemies();const t=pick(targets.length?targets:[e]);const d=Math.max(1,Math.round((e.atk*.72-(t.def||0)*.22)*(.90+Math.random()*.20)));t.hp=Math.max(0,t.hp-d);if(t.hp<=0)recordEnemyDefeat(t);renderBattle();floatNumber(d,'damage',`enemy:${t.uid}`);pulseEnemy('hit',t.uid);notice(`${e.name}は混乱して${t.uid===e.uid?'自分':'仲間'}を攻撃した！`,'status',760);await delay(350);return;}
-  const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
-  if(useSpecial)await bossSpecial(enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
+  let forced=null;
+  if(e.forcedSpecialTurn&&b.turn>=e.forcedSpecialTurn&&actionIndex===1){forced=e.forcedSpecial||{special:'グラビディ・グラディエーター',kind:'aoeStun',power:1.55,chance:.70,skillElement:'無',skillType:'physical'};e.forcedSpecialTurn=0;}
+  if(e.id==='boss-lilith-castle'&&b.turn===2){forced=actionIndex===1?{special:'ブラックホール',kind:'lilithBlackHole',power:1.25,heal:.06,skillElement:'闇',skillType:'magic'}:{special:'薔薇の鼓動',kind:'poisonSingle',power:1.62,chance:.70,skillElement:'闇',skillType:'physical'};}
+  const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=!!forced||(e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18);
+  if(useSpecial)await bossSpecial(forced||enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
 }
-async function bossNormal(){const e=actingEnemy()||state.battle.enemy,t=pick(livingMain());if(!e||!t)return;const type=e.normalAttackType||'physical';await actionCutin(`${e.name}の攻撃！`,'danger',520);await beginEnemyLunge(e.uid);try{await damageAlly(t,1,type,false,e.attribute);await delay(320);}finally{endEnemyLunge();}}
+async function enemyGunAttackFx(e,target){
+  const layer=$('#battleFxLayer');if(!layer||!e||!target)return;
+  const start=battlePointPx(`enemy:${e.uid}`),end=battlePointPx(target.id);
+  const el=document.createElement('div');el.className='enemy-gun-shot';el.style.left=`${start.x}px`;el.style.top=`${start.y}px`;el.style.setProperty('--enemy-shot-x',`${end.x-start.x}px`);el.style.setProperty('--enemy-shot-y',`${end.y-start.y}px`);el.style.setProperty('--enemy-shot-rate',String(1/state.speed));el.innerHTML='<i></i><span></span>';layer.appendChild(el);
+  try{await delay(300);}finally{el.remove();}
+}
+async function bossNormal(){
+  const e=actingEnemy()||state.battle.enemy,t=pick(livingMain());if(!e||!t)return;const type=e.normalAttackType||'physical';
+  await actionCutin(`${e.name}の攻撃！`,'danger',520);if(!e.noLunge)await beginEnemyLunge(e.uid);else{pulseEnemy('attack',e.uid);if(e.id==='boss-gladi')await enemyGunAttackFx(e,t);else await fixedDelay(180);}
+  try{
+    await damageAlly(t,1,type,false,e.attribute);
+    if(e.normalStatusChance&&Math.random()<e.normalStatusChance&&!t.dead){
+      const status=pick(e.statusPool||['poison','burn','paralyze','sleep','stun']),turns=status==='stun'?1:status==='paralyze'?99:3;
+      if(await inflictAllyStatus(t,status,turns)){const labels={poison:'毒',burn:'やけど',paralyze:'マヒ',sleep:'眠り',stun:'ひるみ'};notice(`${t.name}は${labels[status]||status}になった！`,'status',720);}
+    }
+    await delay(320);
+  }finally{endEnemyLunge();}
+}
 async function aoeHit(power,type='physical',element=''){let total=0;const el=element||actingEnemy()?.attribute||'無';for(const a of [...livingMain()]){total+=await damageAlly(a,power,type,false,el);await delay(70);}for(const a of [...livingSuper()]){total+=await damageAlly(a,power,type,true,el);await delay(70);}return total;}
 async function bossSpecial(spec){
-  const e=actingEnemy()||state.battle.enemy;if(!e)return;spec=spec||enemySpecialSpec(e);await actionCutin(`${e.name}の${spec.special}！`,'danger',700);await beginEnemyLunge(e.uid);let t,d,total=0;const attackElement=spec.skillElement||e.attribute||'無',mainPower=enemyMainSkillPower(e,spec);const hit=async(target,m=null,type=spec.skillType||'physical')=>{const x=await damageAlly(target,m==null?mainPower:m,type,false,attackElement);await delay(80);return x;};const aoe=async(m=null,type='physical')=>aoeHit(m==null?mainPower:m,type,attackElement);
+  const e=actingEnemy()||state.battle.enemy;if(!e)return;spec=spec||enemySpecialSpec(e);await actionCutin(`${e.name}の${spec.special}！`,'danger',700);if(!e.noLunge)await beginEnemyLunge(e.uid);else if(e.id==='boss-gladi'){const shotTarget=pick(livingMain());if(shotTarget)await enemyGunAttackFx(e,shotTarget);else await fixedDelay(180);}else await fixedDelay(180);let t,d,total=0;const attackElement=spec.skillElement||e.attribute||'無',mainPower=enemyMainSkillPower(e,spec);const hit=async(target,m=null,type=spec.skillType||'physical')=>{const x=await damageAlly(target,m==null?mainPower:m,type,false,attackElement);await delay(80);return x;};const aoe=async(m=null,type='physical')=>aoeHit(m==null?mainPower:m,type,attackElement);
   try{switch(spec.kind){
     case'shield':e.damageReduction=.20;e.shieldTurns=3;for(const ally of livingEnemies())if(ally.uid!==e.uid){ally.allyShieldReduction=.10;ally.allyShieldTurns=3;fx('buff',`enemy:${ally.uid}`);}fx('buff',`enemy:${e.uid}`);notice('自身20% / 味方10% DAMAGE CUT','buff');break;
     case'reviveMummy':{const dead=(state.battle.enemies||[]).find(x=>x.hp<=0&&String(x.name).includes('ミイラ'));if(dead){dead.hp=Math.max(1,Math.round(dead.maxHp*.45));dead.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};notice(`${dead.name}が復活！`,'heal',800);floatNumber(dead.hp,'heal',`enemy:${dead.uid}`);}else{t=pick(livingMain());if(t)await hit(t,.72,'magic');}break;}
@@ -2634,6 +2844,9 @@ async function bossSpecial(spec){
     case'singlePlusAoe':t=pick(livingMain());if(t)total+=await hit(t,null,'magic');total+=await aoe(.52,'magic');break;
     case'singleSpdDown':t=pick(livingMain());if(t){total+=await hit(t,null,spec.skillType||'physical');t.spdDebuff=Math.max(t.spdDebuff||0,spec.debuff||.12);t.spdDebuffTurns=Math.max(t.spdDebuffTurns||0,3);notice(`${t.name} SPD ↓`,'status');}break;
     case'aoeParalyzeChance':total=await aoe(null,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.20))await inflictAllyStatus(a,'paralyze',2);break;
+    case'lilithBlackHole':total=await aoe(null,'magic');{const h=Math.round(e.maxHp*(spec.heal||.06));e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);for(const a of [...livingMain(),...livingSuper()])a.ultimateLockTurns=Math.max(a.ultimateLockTurns||0,3);notice('PARTY 必殺技使用不可 2ターン','status',900);}break;
+    case'aoeSleepChance':total=await aoe(null,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.20))await inflictAllyStatus(a,'sleep',2);break;
+    case'ultimateCtSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(!Array.isArray(t.ultCooldowns))initUltimateCooldowns(t);t.ultCooldowns=t.ultCooldowns.map(v=>(Number(v)||0)+(spec.ctAdd||2));notice(`${t.name}の必殺技CTが${spec.ctAdd||2}ターン増えてしまった！`,'status',900);}break;
     case'healAoeBoss':total=await aoe(null,spec.skillType||'magic');{const h=Math.round(e.maxHp*(spec.heal||.06));e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);fx('buff',`enemy:${e.uid}`);notice(`${e.name} HP +${h}`,'heal');}break;
     case'aoeAtkDown':total=await aoe(null,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()]){a.atkDebuff=Math.max(a.atkDebuff||0,spec.debuff||.05);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,3);}notice(`PARTY ATK ↓${Math.round((spec.debuff||.05)*100)}%`,'status');break;
     case'aoeStunChance':total=await aoe(null,spec.skillType||'physical');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.03))await inflictAllyStatus(a,'stun',1);break;
@@ -2642,7 +2855,7 @@ async function bossSpecial(spec){
     case'buffAoe':e.atkBuff=.18;e.atkBuffTurns=3;total=await aoe(null,'magic');notice('ATK ↑','buff');break;
     case'buffDefAoe':e.defBuff=Math.max(e.defBuff||0,spec.buff||.15);e.defBuffTurns=3;fx('buff',`enemy:${e.uid}`);total=await aoe(null,spec.skillType||'magic');notice('DEF ↑ / ENEMY ALL DAMAGE','buff');break;
     case'doubleAoe':for(let n=0;n<2;n++)total+=await aoe(spec.power,'physical');notice('2 HIT','system',420);break;
-    case'aoeStun':total=await aoe(null,'magic');for(const a of livingMain())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);for(const a of livingSuper())if(Math.random()<.7)await inflictAllyStatus(a,'stun',1);notice('ひるみ判定','status');break;
+    case'aoeStun':{const rate=Number.isFinite(Number(spec.chance))?Number(spec.chance):.70;total=await aoe(null,spec.skillType||'physical');for(const a of livingMain())if(Math.random()<rate)await inflictAllyStatus(a,'stun',1);for(const a of livingSuper())if(Math.random()<rate)await inflictAllyStatus(a,'stun',1);notice('ひるみ判定','status');}break;
     case'aoe':total=await aoe(null,spec.skillType||((spec.skillElement||e.attribute).includes('火')||(spec.skillElement||e.attribute).includes('闇')?'magic':'physical'));break;
     case'single':default:t=pick(livingMain());if(t)d=await hit(t,null,spec.skillType||'physical');break;
   }}finally{endEnemyLunge();}await checkSpecialRevives();renderBattle();await delay(280);
@@ -2715,7 +2928,7 @@ function openSkillMenu(type){
     const skills=learnedBattleSkills(a,'special');$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent=testAllSkillsEnabled()?'特技 / 全技テスト':'特技';
     if(skills.length){if(!testAllSkillsEnabled())for(const s of skills)(s.frames||[]).forEach(src=>preloadAsset(src,'high'));list.innerHTML=skills.map(s=>{const cost=battleSkillMpCost(a,s),bad=a.mpNow<cost;return`<button class="skill-item ${bad?'disabled':''}" data-battle-tech="${s.id}" type="button"><span class="skill-symbol">${s.element||'無'}</span><div><b>${s.name}<em class="skill-balance">物理 / ATK→DEF</em></b><small>${s.desc}</small></div><em>MP ${cost}</em></button>`;}).join('');$$('[data-battle-tech]',list).forEach(btn=>btn.onclick=()=>{const s=battleSkillById(btn.dataset.battleTech),cost=s?battleSkillMpCost(a,s):999;if(a.mpNow<cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special',{id:s.id});});}
     else{const t=temporaryTechnique(a);list.innerHTML=`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-use-special type="button"><span class="skill-symbol">技</span><div><b>${t.name}<em class="temp-badge">仮</em></b><small>正式な習得技は未割当です。現行バトル維持用の武器種別仮特技です。</small></div><em>MP ${t.cost} 仮</em></button>`;$('[data-use-special]',list).onclick=()=>{if(a.mpNow<t.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('special');};}
-  }else{const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?ULT_UNLOCK_LEVELS[i]:null,ok=unlocked.includes(u),cd=ok?ultimateRemaining(a,i):0,base=ultimateEffectiveCt(a,u,i),ready=ok&&cd<=0;return`<button class="skill-item ${!ok?'locked':''} ${ok&&(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?` / Lv${req}で習得`:` / CT ${base}ターン`}</small></div><em>${!ok?'LOCK':ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('ultimate',u);});}
+  }else{if((a.ultimateLockTurns||0)>0){notice(`必殺技はあと${a.ultimateLockTurns}ターン使用できない！`,'status',850);return;}const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?ULT_UNLOCK_LEVELS[i]:null,ok=unlocked.includes(u),cd=ok?ultimateRemaining(a,i):0,base=ultimateEffectiveCt(a,u,i),ready=ok&&cd<=0;return`<button class="skill-item ${!ok?'locked':''} ${ok&&(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?` / Lv${req}で習得`:` / CT ${base}ターン`}</small></div><em>${!ok?'LOCK':ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');$('#skillMenu').hidden=true;act('ultimate',u);});}
 }
 function battleItemCandidates(it){const all=state.battle?.allies||[];if(it.type==='revive')return all.filter(a=>a.dead||a.hp<=0);return all.filter(a=>!a.dead&&a.hp>0);}
 function battleItemCanUseOn(it,t){if(!it||!t)return false;if(it.type==='revive')return !!t.dead||t.hp<=0;if(t.dead||t.hp<=0)return false;if(it.type==='hp')return t.hp<t.maxHp;if(it.type==='mp')return t.mpNow<t.maxMp;if(it.type==='cure')return Number(t.status?.[it.status]||0)>0;if(it.type==='cureAll')return Object.values(t.status||{}).some(v=>Number(v)>0);if(it.type==='hpmp'||it.type==='full')return t.hp<t.maxHp||t.mpNow<t.maxMp;if(it.type==='battleBuff')return true;return false;}
@@ -2775,7 +2988,7 @@ function registerDefeatedBosses(b){if(!b?.defeatedEnemies)return;for(const e of 
 function renderResultDrops(drops=[]){const root=$('#resultDrops');root.hidden=!drops.length;root.innerHTML=drops.map(d=>`<div class="result-drop"><img src="${d.image||''}" alt=""><div><b>${d.name}</b><small>${d.sub||''}</small></div></div>`).join('');bindImages(root);}
 function renderResultProgression(changes=[]){const root=$('#resultProgression');root.innerHTML='';root.hidden=!changes.length;if(!changes.length)return;for(const c of changes){const statHtml=Object.entries(c.stats).filter(([,v])=>v>0).map(([k,v])=>`<span><b>${k}</b> +${v}</span>`).join('');const learned=c.learned?.length?`<div class="result-learn"><small>習得</small>${c.learned.map(x=>`<b>${x}</b>`).join('')}</div>`:'';root.insertAdjacentHTML('beforeend',`<article class="levelup-card"><div class="levelup-head"><img src="${versionedPlay(c.image)}" alt="${c.name}"><div><small>LEVEL UP</small><b>${c.name}</b><em>Lv${c.oldLevel} → Lv${c.newLevel}</em></div></div><div class="levelup-stats">${statHtml}</div>${learned}</article>`);}bindImages(root);requestAnimationFrame(()=>{[...root.children].forEach((el,i)=>setTimeout(()=>el.classList.add('show'),180+i*170));});}
 
-function finishScriptedBattle(){const b=state.battle;if(!b||b.finished)return;b.finished=true;b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';$('#battleBackBtn').disabled=false;setCommandDisabled(true);notice('3 TURN EVENT END','system',650);setTimeout(()=>{renderAdventure();showScreen('adventure');const r=scriptedBattleResolve;scriptedBattleResolve=null;if(r)r(true);},320);}
+function finishScriptedBattle(){const b=state.battle;if(!b||b.finished)return;b.finished=true;b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';$('#battleBackBtn').disabled=false;setCommandDisabled(true);const limit=Number(b.config?.scriptedTurnLimit)||0;notice(limit?`${limit} TURN EVENT END`:'EVENT BATTLE CLEAR','system',650);setTimeout(()=>{renderAdventure();showScreen('adventure');const r=scriptedBattleResolve;scriptedBattleResolve=null;if(r)r(true);},320);}
 function finishBattle(win){
   const b=state.battle;if(!b||b.finished)return;if(b.mode==='story')return finishScriptedBattle();
   b.finished=true;b.resultWin=!!win;b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);
@@ -2835,9 +3048,11 @@ async function startAdventureBattle(){
   const postKey=STORY_EVENTS[specificPost]?specificPost:(STORY_EVENTS[legacyPost]?legacyPost:'');
   /* v36: only AREA 4's boss sends the player HOME. AREA 1-3 mid-bosses continue in Adventure. */
   const returnHomeAfterAreaClear=!!(bossEncounter&&areaIndex===3);
-  await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterAreaClear});
+  const battleParty=(w.id==='demonCastle'&&areaIndex===2&&demonSplitA.length)?storyPartyRows(demonSplitA):state.party;
+  await startBattleLoaded({mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:battleParty,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,storyWorldId:w.id,storyAreaIndex:state.adventure.areaIndex,returnHomeAfterAreaClear});
 }
 async function resetTrainingBattle(){
+  markTrainingPlayed();
   const list=trainingEnemyList().map(x=>({id:x.id,level:x.level}));if(!list.length)return toast('敵を1体以上設定してください');const party=trainingParty();if(!party.length)return toast('味方を1人以上設定してください');
   const bg=trainingBattleBackground(list);
   await startBattleLoaded({mode:'training',returnScreen:'training',enemyConfigs:list,party,...bg});
@@ -2903,7 +3118,7 @@ function renderCastle(){
   setCastleHeader('CASTLE','お城','FACILITIES');
   const root=$('#castleContent');
   root.className='page-scroll nav-spacer castle-content castle-menu-view';
-  root.innerHTML=`<section class="castle-menu-stage"><div class="castle-title-card"><small>CASTLE FACILITIES</small><h2>お城</h2><p>利用する施設を選んでください。</p></div><div class="castle-main-icons"><button data-castle-menu="throne" type="button"><img src="icon/18.png" alt="王の間"><b>王の間</b></button><button data-castle-menu="inn" type="button"><img src="icon/19.png" alt="宿舎"><b>宿舎</b></button><button data-castle-menu="shop" type="button"><img src="icon/20.png" alt="MOB SHOP"><b>MOB SHOP</b></button><button data-castle-menu="records" type="button"><img src="icon/21.png" alt="レコードルーム"><b>レコードルーム</b><small>LOCKED</small></button></div></section>`;
+  root.innerHTML=`<section class="castle-menu-stage"><div class="castle-title-card"><small>CASTLE FACILITIES</small><h2>お城</h2><p>利用する施設を選んでください。</p></div><div class="castle-main-icons"><button data-castle-menu="throne" type="button"><img src="icon/18.png" alt="王の間"><b>王の間</b></button><button data-castle-menu="inn" type="button"><img src="icon/19.png" alt="宿舎"><b>宿舎</b></button><button data-castle-menu="shop" type="button"><img src="icon/20.png" alt="MOB SHOP"><b>MOB SHOP</b></button><button data-castle-menu="records" type="button"><img src="icon/21.png" alt="レコードルーム"><b>レコードルーム</b><small>LOCKED</small></button><button data-castle-menu="smith" type="button"><img src="icon/23.png" alt="鍛冶屋"><b>鍛冶屋</b></button></div></section>`;
   bindImages(root);bindCastleContentEvents();
 }
 async function enterCastle(){renderCastle();}
@@ -3029,16 +3244,37 @@ function renderRecordRoom(){
   const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
   root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock"><img src="icon/21.png" alt="レコードルーム"><b>LOCKED</b><p>レコードルームはまだ利用できません。</p></div>${castleHomeButton()}</section>`;bindImages(root);bindCastleContentEvents();
 }
+let blacksmithView='menu';
+function blacksmithWeaponList(mode){
+  if(mode==='shop'){
+    const visible=WEAPONS.filter(w=>w.price&&(w.season===1||state.test?.enabled));
+    return visible.length?visible.map(w=>`<button class="weapon-card" data-buy-blacksmith-weapon="${w.id}" type="button"><span class="weapon-art"><img src="${w.image}" alt="${w.name}"><i>${w.type}</i></span><div><b>${w.name}</b><small>${w.type} / ${w.attribute}</small><em>${weaponStatsText(w)}</em><p>${weaponTraitText(w)}</p><strong>${w.price.toLocaleString()}G / 所持 ${weaponOwned(w.id)}</strong></div></button>`).join(''):'<div class="inventory-empty">販売武器がありません。</div>';
+  }
+  const visible=WEAPONS.filter(w=>freeWeaponCount(w.id)>=3);
+  return visible.length?visible.map(w=>`<button class="weapon-card" data-forge-blacksmith="${w.id}" type="button"><span class="weapon-art"><img src="${w.image}" alt="${w.name}"><i>${w.type}</i></span><div><b>${w.name}</b><small>${weaponStatsText(w)}</small><p>${weaponTraitText(w)}</p><strong>未装備 ${freeWeaponCount(w.id)} / メダル ${medalOwned(w.id)}</strong></div></button>`).join(''):'<div class="inventory-empty">メダルに出来る武器がありません。<br>同じ武器が未装備で3個必要です。</div>';
+}
+function renderBlacksmithRoom(mode='menu'){
+  castleView='smith';blacksmithView=mode;setCastleBackground('back/king2.png','back2/003.png');setCastleHeader('BLACKSMITH','鍛冶屋',`${state.coins.toLocaleString()} G`);
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view blacksmith-room-view';
+  root.innerHTML=`<section class="castle-room-stage blacksmith-stage"><div class="blacksmith-host"><img src="play/002.png" alt="モブゴンゾー"><div><small>BLACKSMITH</small><b>モブゴンゾー</b><p>${mode==='shop'?'武器を選んでくれ！':mode==='forge'?'同じ武器3個でメダル錬成だ！':'今日はどうする？'}</p></div></div><div class="blacksmith-actions"><button data-blacksmith-action="shop" type="button">武器購入</button><button data-blacksmith-action="forge" type="button">メダル錬成</button></div>${mode==='menu'?'':`<div class="blacksmith-list">${blacksmithWeaponList(mode)}</div>`}${castleHomeButton()}</section>`;
+  bindImages(root);bindCastleContentEvents();
+}
+async function enterBlacksmithRoom(){
+  renderBlacksmithRoom('menu');
+  await facilityIntro('smith:v66',{speaker:'モブゴンゾー',image:'play/002.png',first:'よう！よく来たな！\\nここでは装備の購入と\\nメダルの錬成が出来るぞ！\\n装備は武器と防具に分かれていて\\n武器は2つまで、防具は1つ装備出来るぞ！\\n武器の2つ目はサブ武器でステータスが半減する\\n注意して装備してくれ！\\n同じ武器を3つ持ってきたらメダル錬成が出来るぞ！\\nメダルはその武器のステータス10％と、\\nなんと特性を引き継ぐことが出来るぞ！\\nメダルにした武器は消えてしまうから注意してくれ！',repeat:'よう！今日はどうする？'});
+}
 async function openCastleRoom(room){
   if(room==='throne')return renderThroneRoom();
   if(room==='inn')return renderInnRoom();
   if(room==='shop')return enterMobShop();
   if(room==='records')return renderRecordRoom();
+  if(room==='smith')return enterBlacksmithRoom();
 }
 async function returnCastleMenu(){
   closeCastleShopPopup();
   if(castleView==='shop')await facilityTalk('またいつでもどうぞ！','モブマテリア','play/005.png');
   else if(castleView==='inn')await facilityTalk('応援しています！','モブミータ','play/006.png');
+  else if(castleView==='smith')await showFacilityExit('play/002.png','また来てくれよな！','redblack');
   renderCastle();
 }
 async function castleBackOrHome(){
@@ -3054,25 +3290,26 @@ function bindCastleContentEvents(){
     const actor=e.target.closest('[data-castle-actor]');if(actor)return castleActorSpeak(actor.dataset.castleActor,actor);
     if(e.target.closest('[data-innkeeper]'))return askInnRest();
     if(e.target.closest('[data-open-castle-shop]'))return openCastleShopPopup();
+    const ba=e.target.closest('[data-blacksmith-action]');if(ba)return renderBlacksmithRoom(ba.dataset.blacksmithAction);
+    const bw=e.target.closest('[data-buy-blacksmith-weapon]');if(bw)return buyWeapon(bw.dataset.buyBlacksmithWeapon,()=>renderBlacksmithRoom('shop'));
+    const fm=e.target.closest('[data-forge-blacksmith]');if(fm)return forgeWeaponMedal(fm.dataset.forgeBlacksmith,()=>renderBlacksmithRoom('forge'));
   };
 }
 // Legacy castle facilities are kept internally for later re-introduction, but the current castle menu follows the four-room specification.
-async function openBlacksmithFacility(){
-  await facilityIntro('smith',{speaker:'モブゴンゾー',image:'play/002.png',first:'ん？なんだ？\n冷やかしなら帰ってくれ！\nえ？違う？\nなんだ最初からそう言えよ！\nここでは武器を3つ持ってくることで\nメダルを作ってやるぞ！\nメダルは武器に装着できて\n武器能力の10％と\n武器特性を引き継げるぞ！\nメダルは3つまでしか\n装備出来ないから\nじっくり選ぶんだ！\n心配しなくても\n取り替えは無料だ！',repeat:'よく来たな！\nいい武器手に入れたか？'});
-  equipmentFacilityOrigin='smith';equipmentTab='smith';equipmentPlayerId=state.party[0]?.[0]||'yusha';renderEquipment();showScreen('equipment');
-}
+async function openBlacksmithFacility(){return enterBlacksmithRoom();}
 async function leaveBlacksmith(){await showFacilityExit('play/002.png','また来てくれよな！','redblack');equipmentFacilityOrigin='';renderCastle();showScreen('castle');}
 async function openMagicFacility(){await dialog('魔法錬成は現在準備中です。',[['戻る','back','primary']],'モブローブ','play/004.png');await showFacilityExit('play/004.png','いつでもお待ちしています！','purple');renderCastle();showScreen('castle');}
 async function openMobShopFacility(){return enterMobShop();}
 function openHomeAction(action){
   if(action==='home')return toast('ここがHOMEです');
   if(action==='equipment')return openEquipmentScreen();
-  if(action==='items')return toast('持ち物は仕様待ちです');
+  if(action==='items')return openInventory();
   if(action==='settings')return openSettings();
   if(action==='castle')return dialog('お城に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('castle','お城へ向かっています…',renderCastle);await enterCastle();}});
   if(action==='tavern')return dialog('酒場に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('tavern','酒場へ向かっています…',renderTavern);await enterTavern();}});
   if(action==='training')return dialog('トレーニングに向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('training','トレーニングルームへ向かっています…',renderTraining);await enterTraining();}});
   if(action==='adventure'){
+    if(!trainingPlayed())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok','primary']],'モブピンク','play/02.png');
     if(state.adventure.awaitingReport)return dialog('王様に報告へ行こう',[['OK','ok','primary']],'モブピンク','play/02.png');
     const w=currentWorld();return dialog(`冒険に向かいますか？\n現在の目的地は「${w?.name||'草原'}」です！`,[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}});
   }
@@ -3095,7 +3332,9 @@ function bindEvents(){
   $('#castleBackBtn').onclick=castleBackOrHome;$('#castleShopCloseBtn').onclick=closeCastleShopPopup;$('#castleShopPopup').addEventListener('click',e=>{if(e.target===$('#castleShopPopup'))closeCastleShopPopup();});
   $('#castleQtyCloseBtn').onclick=closeCastleQtyPopup;$('#castleQtyMinusBtn').onclick=()=>changeCastleQty(-1);$('#castleQtyPlusBtn').onclick=()=>changeCastleQty(1);$('#castleQtyBuyBtn').onclick=buyCastleItemQty;$('#castleQtyPopup').addEventListener('click',e=>{if(e.target===$('#castleQtyPopup'))closeCastleQtyPopup();});
   $('#equipmentBackBtn').onclick=()=>{if(equipmentFacilityOrigin==='smith')leaveBlacksmith();else goHome();};$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;closeFigurePicker();renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});$('#figurePickerCloseBtn').onclick=closeFigurePicker;$('#figurePickerOverlay').addEventListener('click',e=>{if(e.target===$('#figurePickerOverlay'))closeFigurePicker();});
-  $('#tavernBackBtn').onclick=()=>{if(!$('#tavernPartyPopup').hidden||!$('#tavernDrinkPopup').hidden)return showTavernMenu();leaveTavern();};$('#tavernResetBtn').onclick=()=>{};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernPartyCloseBtn').onclick=showTavernMenu;$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else leaveTavern();});
+  $('#tavernBackBtn').onclick=()=>{if(!$('#tavernPartyPopup').hidden||!$('#tavernDrinkPopup').hidden||!$('#tavernFigurePopup').hidden)return showTavernMenu();leaveTavern();};$('#tavernResetBtn').onclick=()=>{};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernPartyCloseBtn').onclick=showTavernMenu;$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$('#tavernFigureCloseBtn').onclick=()=>{$('#tavernFigurePopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else if(a==='figure')showTavernFigures();else leaveTavern();});
+  $('#inventoryCloseBtn').onclick=closeInventory;$('#inventoryOverlay').addEventListener('click',e=>{if(e.target===$('#inventoryOverlay'))closeInventory();});$$('[data-inventory-tab]').forEach(b=>b.onclick=()=>{inventoryTab=b.dataset.inventoryTab;renderInventory();});
+  $('#demonSplitCloseBtn').onclick=cancelDemonSplit;$('#demonSplitConfirmBtn').onclick=confirmDemonSplit;
   $('#trainingBackBtn').onclick=()=>{if(!$('#trainingFeaturePopup').hidden){state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();return;}if((state.training.mode||'menu')!=='menu'){state.training.mode='menu';renderTraining();return;}leaveTraining();};$('#trainingHomeQuick').onclick=leaveTraining;$('#trainingFeatureCloseBtn').onclick=()=>{state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
   $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=startAdventureBattle;
   $('#questBackBtn').onclick=async()=>{if(!state.quest)return setTrainingMode(state.training.mode||'menu');if(state.quest.type!=='journal')return facilityTalk('このエリアはクリアかゲームオーバーまで出られないよ','モブコーチ','play/003.png');const a=await dialog('冒険日記を中断してトレーニングへ戻りますか？',[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(a==='yes')endQuestToTraining();};$('#questExploreBtn').onclick=questExplore;$('#questCampBtn').onclick=questCamp;$('#questBattleBtn').onclick=startQuestBattle;
@@ -3116,7 +3355,7 @@ function bindEvents(){
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
 lockMobileGestures();initCommonNav();bindImages();bindEvents();
-/* v65: boot/reboot always starts from the title screen. */
+/* v66: boot/reboot always starts from the title screen. */
 (async()=>{
   try{
     await preloadAssetsSafe(['back/title.png','icon/01.png'],900);
