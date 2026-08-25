@@ -51,7 +51,7 @@
         <button id="titleContinueBtn" type="button"><b>CONTINEW</b><small>続きから始める</small></button>
         <button id="titleSettingsBtn" type="button"><b>設定</b><small>SETTINGS</small></button>
       </nav>
-      <small class="title-version">MOB QUEST v67</small>
+      <small class="title-version">MOB QUEST v68</small>
     </div>
   </section>
 
@@ -166,6 +166,13 @@
         <div class="settings-head"><div><small>MOB SHOP</small><h2>アイテム購入</h2></div><button id="castleShopCloseBtn" class="sheet-close" type="button">×</button></div>
         <div class="castle-shop-headline"><span>ITEM SHOP</span><b id="castleShopCoins">0 G</b></div>
         <div id="castleShopGrid" class="castle-shop-grid"></div>
+      </div>
+    </div>
+
+    <div id="blacksmithPopup" class="blacksmith-popup" hidden>
+      <div class="blacksmith-popup-card">
+        <div class="settings-head blacksmith-popup-head"><div><small>BLACKSMITH</small><h2 id="blacksmithPopupTitle">鍛冶屋</h2></div><button class="sheet-close" data-blacksmith-popup-close type="button">×</button></div>
+        <div id="blacksmithPopupBody" class="blacksmith-popup-body"></div>
       </div>
     </div>
 
@@ -445,6 +452,13 @@
       <div id="demonSplitRoster" class="demon-split-roster"></div>
       <div class="demon-split-summary"><div><b>A PARTY</b><span id="demonSplitA"></span></div><div><b>B PARTY</b><span id="demonSplitB"></span></div></div>
       <button id="demonSplitConfirmBtn" class="primary-btn" type="button">決定</button>
+    </div>
+  </div>
+
+  <div id="playerDetailOverlay" class="player-detail-overlay" hidden>
+    <div class="player-detail-card">
+      <div class="settings-head player-detail-head"><div><small>CHARACTER</small><h2>ステータス</h2></div><button id="playerDetailCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="playerDetailBody" class="player-detail-body"></div>
     </div>
   </div>
 

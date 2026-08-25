@@ -2661,3 +2661,64 @@
 .enemy-gun-shot i{position:absolute;left:50%;top:50%;width:24px;height:10px;border:3px solid #171717;border-radius:999px;background:#ffd058;box-shadow:0 0 0 3px #f1a71c;transform:translate(-50%,-50%) rotate(18deg)}
 .enemy-gun-shot span{position:absolute;right:14px;top:50%;width:62px;height:6px;border-radius:999px;background:linear-gradient(90deg,transparent,#ffd058);transform:translateY(-50%) rotate(18deg);transform-origin:right center}
 @keyframes enemyGunTravel{0%{opacity:0;transform:translate(-50%,-50%) translate(0,0) scale(.7)}12%{opacity:1}82%{opacity:1;transform:translate(-50%,-50%) translate(var(--enemy-shot-x),var(--enemy-shot-y)) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--enemy-shot-x),var(--enemy-shot-y)) scale(1.35)}}
+
+
+/* ===== MOB QUEST v68: 825 fixes ===== */
+.dialog-overlay.narration-dialog .dialog-card{background:#fff!important;border:3px solid #d8d8d8!important;color:#1f1f1f!important;box-shadow:0 12px 36px rgba(0,0,0,.30)!important}
+.dialog-overlay.narration-dialog .dialog-body>small{color:#555!important;font-size:12px!important;text-shadow:none!important}
+.dialog-overlay.narration-dialog .dialog-body>p{color:#181818!important;font-size:17px!important;font-weight:1000!important;text-shadow:none!important;white-space:pre-line!important;overflow-wrap:anywhere!important;text-wrap:balance!important}
+.dialog-overlay.facility-line-talk .dialog-body>p{font-size:var(--facility-line-font,17px)!important;white-space:pre-line!important;overflow-wrap:anywhere!important;word-break:normal!important;text-wrap:balance!important;max-width:100%!important}
+.dialog-overlay.facility-line-talk .dialog-body>p.musical-line{font-family:"Hiragino Sans","Yu Gothic UI","Yu Gothic",sans-serif!important;letter-spacing:.01em!important}
+
+/* Area-colored wood banners for CAMP / EXPLORE */
+.camp-main-menu>button,.explore-card{color:#fff!important;text-shadow:0 2px 2px rgba(0,0,0,.45)!important;border:3px solid rgba(58,32,16,.7)!important;box-shadow:inset 0 0 0 2px rgba(255,255,255,.13),0 6px 14px rgba(0,0,0,.24)!important}
+.area-theme-green .camp-main-menu>button,.area-theme-green .explore-card{background:repeating-linear-gradient(8deg,#487d31 0 15px,#5b9340 15px 30px,#3e702a 30px 45px)!important}
+.area-theme-beige .camp-main-menu>button,.area-theme-beige .explore-card{background:repeating-linear-gradient(8deg,#b69057 0 15px,#cba66a 15px 30px,#a67e47 30px 45px)!important;color:#291c10!important;text-shadow:0 1px #f9e7c5!important}
+.area-theme-sky .camp-main-menu>button,.area-theme-sky .explore-card{background:repeating-linear-gradient(8deg,#5aa4bf 0 15px,#70b9d0 15px 30px,#4b91ad 30px 45px)!important}
+.area-theme-red .camp-main-menu>button,.area-theme-red .explore-card{background:repeating-linear-gradient(8deg,#a64131 0 15px,#c2543e 15px 30px,#8e3429 30px 45px)!important}
+.area-theme-neon .camp-main-menu>button,.area-theme-neon .explore-card{background:repeating-linear-gradient(8deg,#35529f 0 15px,#68449a 15px 30px,#29478a 30px 45px,#7950aa 45px 60px)!important}
+.area-theme-blue .camp-main-menu>button,.area-theme-blue .explore-card{background:repeating-linear-gradient(8deg,#34749d 0 15px,#438db8 15px 30px,#2b6389 30px 45px)!important}
+.area-theme-brown .camp-main-menu>button,.area-theme-brown .explore-card{background:repeating-linear-gradient(8deg,#71482c 0 15px,#8b5a36 15px 30px,#623b25 30px 45px)!important}
+.area-theme-redblack .camp-main-menu>button,.area-theme-redblack .explore-card{background:repeating-linear-gradient(8deg,#5d1717 0 15px,#812323 15px 30px,#1c1617 30px 45px,#471313 45px 60px)!important}
+.area-theme-white .camp-main-menu>button,.area-theme-white .explore-card{background:repeating-linear-gradient(8deg,#f5f3ed 0 15px,#fff 15px 30px,#e5e1d8 30px 45px)!important;color:#28231e!important;text-shadow:none!important}
+.area-theme-burgundy .camp-main-menu>button,.area-theme-burgundy .explore-card{background:repeating-linear-gradient(8deg,#6c263a 0 15px,#85344d 15px 30px,#5b1e31 30px 45px)!important}
+.camp-main-menu>button.camp-used{opacity:.46!important;filter:grayscale(.4)}
+.camp-main-menu>button[data-camp-action="party"]{opacity:1!important;filter:none!important}
+
+/* Field item target readability */
+.camp-status-card.item-target{border-width:3px!important;min-height:92px!important}
+.camp-status-card.item-target.target-healthy{background:#dff2d5!important;color:#173216!important;border-color:#4c8a40!important}
+.camp-status-card.item-target.target-damaged{background:#ffe0b8!important;color:#41240e!important;border-color:#c97b25!important}
+.camp-status-card.item-target.target-down{background:#efb4b4!important;color:#4d1010!important;border-color:#b53434!important}
+.camp-status-card.item-target .target-vitals{font-size:10px!important;font-weight:900!important;color:inherit!important;line-height:1.45!important}
+.camp-status-card.item-target strong{font-size:10px!important;font-weight:1000!important}.camp-status-card.item-target.has-abnormal strong{font-size:12px!important;outline:2px solid currentColor!important}
+
+/* Battle condition colors + DOT damage feedback */
+.ally-hud-card.status-poison,.super-chip.status-poison{background:#6b3b85!important}.ally-hud-card.status-burn,.super-chip.status-burn{background:#8d302c!important}.ally-hud-card.status-sleep,.super-chip.status-sleep{background:#5990b3!important}.ally-hud-card.status-paralyze,.super-chip.status-paralyze{background:#ad692b!important}.ally-hud-card.status-confuse,.super-chip.status-confuse{background:#a48c28!important}.ally-hud-card.status-down,.super-chip.status-down{background:#555!important;filter:grayscale(.55)}
+.status-damage-shake{animation:statusDamageShake .28s linear!important}@keyframes statusDamageShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* Always reachable close controls in long sheets/popup lists */
+.sheet-card .sheet-head,.inventory-card>.settings-head,.facility-popup-card>.settings-head,.player-detail-card>.settings-head,.blacksmith-popup-card>.settings-head{position:sticky!important;top:-1px!important;z-index:30!important;background:inherit!important;padding:7px 4px!important;border-radius:14px!important;backdrop-filter:blur(8px)}
+.sheet-card,.inventory-card,.facility-popup-card{scroll-padding-top:70px!important;padding-bottom:calc(82px + var(--safe-bottom))!important}
+.sheet-close{min-width:42px!important;min-height:42px!important;font-size:24px!important;box-shadow:0 5px 14px rgba(0,0,0,.25)!important}
+
+/* Adventure character detail */
+.adventure-party>button{background:transparent!important;border:0!important;padding:0!important;position:relative!important;display:flex!important;align-items:flex-end!important;justify-content:center!important}
+.player-detail-overlay{position:fixed;z-index:9800;inset:0;background:rgba(0,0,0,.76);display:flex;align-items:center;justify-content:center;padding:14px}.player-detail-overlay[hidden]{display:none!important}.player-detail-card{width:min(96vw,620px);max-height:92vh;overflow:auto;border-radius:24px;padding:13px;background:#f7ead4;border:4px solid #8e4c22;color:#2c1e13}.player-detail-body{display:grid;gap:10px}.player-detail-hero{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;background:#fff7e8;border-radius:16px;padding:9px}.player-detail-hero img{width:112px;height:126px;object-fit:contain}.player-detail-hero h2{margin:2px 0;font-size:22px}.player-detail-hero small,.player-detail-hero em{display:block;font-size:11px;font-style:normal}.player-detail-body section{background:#fffaf0;border:2px solid #dfbb83;border-radius:14px;padding:10px}.player-detail-body h3{margin:0 0 7px;font-size:15px}.player-detail-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}.player-detail-stats span,.player-detail-list>span{padding:7px;border-radius:9px;background:#f0dfc2;font-size:11px}.player-detail-list{display:grid;gap:5px}.player-detail-list b,.player-detail-list small{display:block}.player-detail-list small{font-size:9px;line-height:1.45;margin-top:2px}
+
+/* Castle: icons + labels only, row 2 + row 3 */
+.castle-main-icons{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:5px 3px!important;padding:3px!important}.castle-main-icons>button{min-height:108px!important;padding:3px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;gap:1px!important}.castle-main-icons>button.top{grid-column:span 3}.castle-main-icons>button.bottom{grid-column:span 2}.castle-main-icons>button img{width:82px!important;height:76px!important;object-fit:contain!important}.castle-main-icons>button b{font-size:12px!important;text-shadow:0 2px 3px #000!important}.castle-main-icons>button small{font-size:7px!important}.castle-title-card{margin-bottom:4px!important}
+
+/* Blacksmith room + popup */
+.blacksmith-stage-v68{position:relative;min-height:70vh}.blacksmith-gonzo{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);width:min(48vw,190px);height:min(48vh,330px);border:0;background:transparent;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;color:#fff;text-shadow:0 2px 4px #000}.blacksmith-gonzo img{width:100%;height:82%;object-fit:contain;object-position:center bottom}.blacksmith-gonzo b{font-size:18px}.blacksmith-gonzo small{font-size:10px}.blacksmith-home-v68{position:absolute!important;left:5%!important;bottom:18%!important;width:78px!important;min-height:82px!important;transform:none!important}.blacksmith-home-v68 img{width:52px!important;height:52px!important}.blacksmith-popup{position:fixed;z-index:9700;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:14px}.blacksmith-popup[hidden]{display:none!important}.blacksmith-popup-card{width:min(96vw,650px);max-height:91vh;overflow:auto;background:#fff1d4;color:#392312;border:4px solid #8b451d;border-radius:22px;padding:12px}.blacksmith-popup-menu{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 4px}.blacksmith-popup-menu button{min-height:100px;border-radius:17px;background:repeating-linear-gradient(7deg,#b6511d 0 14px,#d36e27 14px 28px,#a94718 28px 42px);border:3px solid #73300f;color:#fff;font-size:18px;font-weight:1000}.blacksmith-popup-back{position:sticky;top:62px;z-index:20;margin-bottom:7px;min-height:42px;border-radius:12px;background:#5c3018;color:#fff;font-weight:1000;padding:0 12px}.blacksmith-popup-scroll{max-height:68vh;overflow:auto!important;padding-bottom:80px!important}
+
+/* Tribe event regression guard */
+.story-scene.story-world-tribe.story-layout-party-left .story-party-line{right:37%!important;bottom:18%!important;height:36%!important}.story-scene.story-world-tribe .story-guest.side-right{bottom:27%!important;width:min(38vw,160px)!important;height:min(34vh,230px)!important}
+
+/* v68 final status parity for reserve members */
+.bench-chip.status-poison{background:#6b3b85!important}.bench-chip.status-burn{background:#8d302c!important}.bench-chip.status-sleep{background:#5990b3!important}.bench-chip.status-paralyze{background:#ad692b!important}.bench-chip.status-confuse{background:#a48c28!important}.bench-chip.status-down{background:#555!important;filter:grayscale(.55)}
+.blacksmith-home-v68{right:auto!important;top:auto!important}
+
+/* v68 item-use readability */
+.camp-status-card.item-target .target-vitals{font-size:14px!important;line-height:1.55!important;letter-spacing:.01em!important}
+.camp-status-card.item-target b{font-size:14px!important}.camp-status-card.item-target strong{font-size:13px!important}.camp-status-card.item-target.has-abnormal strong{font-size:15px!important;font-weight:1000!important}
