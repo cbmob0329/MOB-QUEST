@@ -9,7 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
   <script>
-  /* v66 deployment guard: the distributed file itself contains no conflict markers.
+  /* v62 deployment guard: the distributed file itself contains no conflict markers.
      This only removes accidental visible marker text and prevents an endless 0% loader. */
   window.__mobBootGuard=setTimeout(function(){
     try{
@@ -32,48 +32,10 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=66">
+  <link rel="stylesheet" href="css/style.css?v=62">
 </head>
 <body>
 <main id="app">
-
-  <!-- TITLE -->
-  <section id="titleScreen" class="screen active title-screen">
-    <img class="screen-bg bg-cover title-bg" src="back/title.png" data-fallback-src="back/rpgmain.png" alt="">
-    <div class="title-shade"></div>
-    <div class="title-shell safe-top safe-bottom">
-      <div class="title-brand">
-        <img src="icon/01.png" alt="MOB QUEST">
-        <b>MOB QUEST</b>
-      </div>
-      <nav class="title-menu" aria-label="タイトルメニュー">
-        <button id="titleNewBtn" type="button"><b>NEW</b><small>新しく冒険を始める</small></button>
-        <button id="titleContinueBtn" type="button"><b>CONTINEW</b><small>続きから始める</small></button>
-        <button id="titleSettingsBtn" type="button"><b>設定</b><small>SETTINGS</small></button>
-      </nav>
-      <small class="title-version">MOB QUEST v68</small>
-    </div>
-  </section>
-
-  <!-- OPENING -->
-  <section id="openingScreen" class="screen opening-screen">
-    <div id="openingBackdrop" class="opening-backdrop"></div>
-    <div id="openingNarration" class="opening-narration" hidden></div>
-    <div id="openingThrone" class="opening-throne" hidden>
-      <img class="screen-bg bg-cover" src="back/king1.png" data-fallback-src="back2/003.png" alt="">
-      <div class="opening-throne-shade"></div>
-      <div class="opening-actors">
-        <img id="openingKing" class="opening-king" src="play/007.png" alt="モブスライムキング">
-        <img id="openingPink" class="opening-pink" src="play/02.png" alt="モブピンク">
-      </div>
-      <div id="openingSpeechBubble" class="opening-speech-bubble" hidden><b id="openingSpeechSpeaker"></b><p id="openingSpeechText"></p></div>
-    </div>
-    <div id="openingLogoStage" class="opening-logo-stage" hidden>
-      <img src="icon/01.png" alt="MOB QUEST">
-      <button id="openingNextBtn" type="button" hidden>NEXT</button>
-    </div>
-  </section>
-
   <!-- HOME -->
   <section id="homeScreen" class="screen home-screen">
     <img class="screen-bg bg-cover bg-home" src="back/rpgmain.png" data-fallback-src="back/01.png" alt="">
@@ -101,7 +63,7 @@
   </section>
 
   <!-- LOADING -->
-  <section id="loadingScreen" class="screen loading-screen">
+  <section id="loadingScreen" class="screen active loading-screen">
     <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay loading-overlay"></div>
     <div class="loading-box">
@@ -119,11 +81,10 @@
     <header class="page-header safe-top glass"><button id="tavernBackBtn" class="back-btn" type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button" hidden>初期編成</button></header>
     <div class="page-scroll nav-spacer">
       <section id="tavernLanding" class="facility-landing">
-        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>パーティー編成とドリンク販売</p></div></div>
+        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>パーティー編成とキャンプ用ドリンクの酒場です。</p></div></div>
         <div class="facility-menu-grid tavern-menu-grid">
           <button data-tavern-menu="party" type="button"><img src="icon/11.png" alt=""><b>パーティー編成</b><small>仲間と隊列を編成</small></button>
           <button data-tavern-menu="drink" type="button"><img src="icon/13.png" alt=""><b>ドリンク購入</b><small>キャンプ用ドリンク</small></button>
-          <button id="tavernFigureShopBtn" class="tavern-maple-menu" data-tavern-menu="figure" type="button" hidden><img src="play/009.png" alt="モブメープル"><b>フィギュア購入</b><small>FIGURE GACHA</small></button>
           <button data-tavern-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>酒場を出る</small></button>
         </div>
       </section>
@@ -144,13 +105,6 @@
         <div id="tavernDrinkShop" class="drink-shop-grid"></div>
       </div>
     </div>
-    <div id="tavernFigurePopup" class="facility-popup" hidden>
-      <div class="facility-popup-card tavern-figure-shop-card">
-        <div class="settings-head"><div><small>FIGURE SHOP</small><h2>モブメープル</h2></div><button id="tavernFigureCloseBtn" class="sheet-close" type="button">×</button></div>
-        <div class="maple-shop-host"><img src="play/009.png" alt="モブメープル"><div><b>フィギュアガチャ</b><small>ダイヤ専用</small></div></div>
-        <div class="figure-gacha-pending"><b>ガチャ内容は未設定です</b><p>ガチャの種類・必要ダイヤ・排出率が決まり次第、この画面に追加します。現在はダイヤを消費しません。</p></div>
-      </div>
-    </div>
     <nav class="bottom-nav safe-bottom compact-nav" data-common-nav></nav>
   </section>
 
@@ -166,13 +120,6 @@
         <div class="settings-head"><div><small>MOB SHOP</small><h2>アイテム購入</h2></div><button id="castleShopCloseBtn" class="sheet-close" type="button">×</button></div>
         <div class="castle-shop-headline"><span>ITEM SHOP</span><b id="castleShopCoins">0 G</b></div>
         <div id="castleShopGrid" class="castle-shop-grid"></div>
-      </div>
-    </div>
-
-    <div id="blacksmithPopup" class="blacksmith-popup" hidden>
-      <div class="blacksmith-popup-card">
-        <div class="settings-head blacksmith-popup-head"><div><small>BLACKSMITH</small><h2 id="blacksmithPopupTitle">鍛冶屋</h2></div><button class="sheet-close" data-blacksmith-popup-close type="button">×</button></div>
-        <div id="blacksmithPopupBody" class="blacksmith-popup-body"></div>
       </div>
     </div>
 
@@ -208,6 +155,9 @@
       <div class="equipment-tabs glass">
         <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
         <button class="equipment-tab" data-equipment-tab="figures" type="button">フィギュア</button>
+        <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
+        <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
+        <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
       </div>
       <div id="equipmentContent"></div>
     </div>
@@ -383,11 +333,6 @@
         <div id="testModeControls" class="test-mode-controls">
           <label class="test-level-line"><span>現在のパーティー Lv</span><input id="testLevelInput" type="number" min="1" max="120" value="50" inputmode="numeric"><button id="applyTestLevelBtn" type="button">全員に反映</button></label>
           <div id="testLevelRoster" class="test-level-roster"></div>
-          <div class="test-chapter-block">
-            <div><b>チャプター開始</b><small>選んだチャプター直前までをクリア済みにして開始します。前のチャプターを選ぶと、それ以降の進行・加入・開放はリセットされます。</small></div>
-            <label><span>開始地点</span><select id="testChapterSelect"></select></label>
-            <button id="testChapterApplyBtn" class="mini-btn" type="button">このチャプターから開始</button>
-          </div>
           <div class="settings-row compact"><div><b>アイテムMAX</b><small>消耗品・テント・ドリンク・レコード・武器・メダル・フィギュアをテスト用MAX所持にします。</small></div><button id="testItemsMaxBtn" class="mini-btn" type="button">MAX</button></div>
           <div class="test-loadout-block">
             <div><b>装備プリセット</b><small>戦闘バランス確認用。現在のパーティー全員へ適用します。</small></div>
@@ -398,7 +343,6 @@
               <button data-test-loadout="optimal" type="button">最適装備</button>
             </div>
           </div>
-          <div class="settings-row compact"><div><b>全キャラ全技使用可</b><small>テストモード専用。ONにすると、習得者未設定の技を含む全48技を全キャラクターが使用できます。</small></div><button id="testAllSkillsToggle" class="settings-toggle" type="button">OFF</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -419,52 +363,10 @@
 
   <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
 
-  <!-- FIGURE PICKER -->
-  <div id="figurePickerOverlay" class="figure-picker-overlay" hidden>
-    <div class="figure-picker-card">
-      <div class="settings-head figure-picker-head"><div><small>SELECT FIGURE</small><h2 id="figurePickerTitle">フィギュアを選択</h2></div><button id="figurePickerCloseBtn" class="sheet-close" type="button">×</button></div>
-      <div id="figurePickerSummary" class="figure-picker-summary"></div>
-      <div id="figurePickerControls" class="figure-picker-controls"></div>
-      <div id="figurePickerList" class="figure-picker-list"></div>
-    </div>
-  </div>
-
   <!-- DIALOG -->
-    <div id="inventoryOverlay" class="inventory-overlay" hidden>
-    <div class="inventory-card">
-      <div class="settings-head"><div><small>INVENTORY</small><h2>持ち物</h2></div><button id="inventoryCloseBtn" class="sheet-close" type="button">×</button></div>
-      <div class="inventory-tabs">
-        <button data-inventory-tab="items" class="active" type="button">アイテム</button>
-        <button data-inventory-tab="equipment" type="button">装備</button>
-        <button data-inventory-tab="armor" type="button">防具</button>
-        <button data-inventory-tab="figures" type="button">フィギュア</button>
-        <button data-inventory-tab="medals" type="button">メダル</button>
-      </div>
-      <div id="inventoryBody" class="inventory-body"></div>
-    </div>
-  </div>
-
-  <div id="demonSplitPopup" class="demon-split-overlay" hidden>
-    <div class="demon-split-card">
-      <div class="settings-head"><div><small>DEMON CASTLE / PARTY SPLIT</small><h2>A・Bパーティー編成</h2></div><button id="demonSplitCloseBtn" class="sheet-close" type="button">×</button></div>
-      <p class="panel-note">メンバーをタップすると A → B → 未選択 の順に移動します。A・Bとも最大4人です。</p>
-      <div class="demon-split-enemies"><span><b>A</b> モブリリス / モブヘルリリス / モブキリンリリス</span><span><b>B</b> モブクフリリス / モブリヴァリリス</span></div>
-      <div id="demonSplitRoster" class="demon-split-roster"></div>
-      <div class="demon-split-summary"><div><b>A PARTY</b><span id="demonSplitA"></span></div><div><b>B PARTY</b><span id="demonSplitB"></span></div></div>
-      <button id="demonSplitConfirmBtn" class="primary-btn" type="button">決定</button>
-    </div>
-  </div>
-
-  <div id="playerDetailOverlay" class="player-detail-overlay" hidden>
-    <div class="player-detail-card">
-      <div class="settings-head player-detail-head"><div><small>CHARACTER</small><h2>ステータス</h2></div><button id="playerDetailCloseBtn" class="sheet-close" type="button">×</button></div>
-      <div id="playerDetailBody" class="player-detail-body"></div>
-    </div>
-  </div>
-
-<div id="dialogOverlay" class="dialog-overlay" hidden>
+  <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=65" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=62" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -472,7 +374,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=66"></script>
-<script src="js/game.js?v=66"></script>
+<script src="js/data.js?v=62"></script>
+<script src="js/game.js?v=62"></script>
 </body>
 </html>
