@@ -1,3 +1,5 @@
+- タイトル画面に v74 を表示
+- GAME_ASSET_VERSION を74へ統一
 MOB QUEST playable core v74 - CANONICAL REGRESSION FIX
 
 - v73の統合作業を継続して完成。過去仕様を落とさない回帰チェックを実施

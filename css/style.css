@@ -2554,3 +2554,6 @@
 /* Tribe arrival regression guard: 7+ party members must remain visible and Jessie stays higher. */
 .story-scene.story-world-tribe.story-layout-party-left .story-party-line,.story-scene.story-world-tribe .story-party-line{bottom:12%!important;height:34%!important}
 .story-scene.story-world-tribe .story-guest.story-guest-player,.story-scene.story-world-tribe .story-guest.story-guest-player.side-right{bottom:28%!important;max-height:34%!important}
+
+/* v74 visible version label */
+.title-version{position:absolute;right:14px;bottom:calc(12px + var(--safe-bottom));z-index:6;padding:4px 8px;border-radius:999px;background:rgba(8,13,21,.68);border:1px solid rgba(255,255,255,.18);color:#dce5ef;font-size:9px;font-weight:900;letter-spacing:.12em;text-shadow:0 1px 2px #000;pointer-events:none}
