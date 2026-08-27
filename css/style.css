@@ -2408,3 +2408,76 @@
 .figure-popup-guide{margin:9px 0;padding:10px 12px;border-radius:14px;background:#fff0d7;color:#351d0d;border:2px solid #7a431d}.figure-popup-guide b,.figure-popup-guide span{display:block}.figure-popup-guide b{font-size:11px}.figure-popup-guide span{font-size:9px;margin-top:2px}.figure-picker-overlay{position:absolute;z-index:132;inset:0;background:rgba(2,5,8,.72);display:flex;align-items:stretch;justify-content:center;padding:calc(10px + var(--safe-top)) 8px calc(10px + var(--safe-bottom))}.figure-picker-overlay[hidden]{display:none}.figure-picker-card{width:100%;max-width:500px;max-height:100%;display:flex;flex-direction:column;min-height:0;border:2px solid #6d3514;border-radius:23px;overflow:hidden;background:repeating-linear-gradient(0deg,#b45e24 0 18px,#c86f2d 18px 36px,#9e4c1d 36px 54px);box-shadow:0 20px 50px rgba(0,0,0,.55)}.figure-picker-head{padding:12px 13px 7px}.figure-picker-summary,.figure-picker-controls{flex:none;padding:0 10px 8px}.figure-picker-list{flex:1;min-height:0;overflow-y:auto;padding:0 10px 18px;touch-action:pan-y;-webkit-overflow-scrolling:touch}.figure-picker-current{display:grid;grid-template-columns:62px 1fr auto;gap:8px;align-items:center;padding:8px;border-radius:14px;background:#fff0d7;color:#321b0d;border:2px solid #70401d}.figure-picker-current>small{grid-column:1/-1;font-size:8px}.figure-picker-current img{width:62px;height:62px;object-fit:contain}.figure-picker-current b,.figure-picker-current span{display:block}.figure-picker-current b{font-size:11px}.figure-picker-current span{font-size:8px}.figure-picker-current button{height:34px;padding:0 9px;border-radius:10px;background:#693c20;color:#fff;font-size:9px;font-weight:1000}.figure-picker-empty{grid-column:1/3}.figure-picker-controls .figure-tag-filter{max-height:82px;overflow-y:auto}
 
 @media(max-width:380px){.dialog-overlay.facility-line-talk .dialog-card{grid-template-columns:86px minmax(0,1fr)!important;gap:8px!important}.dialog-overlay.facility-line-talk .dialog-card>img{width:86px!important;height:132px!important}.dialog-overlay.facility-line-talk .dialog-body{padding:10px 11px!important}.dialog-overlay.facility-line-talk .dialog-body>p{font-size:min(var(--facility-line-font,15px),15px)!important}.castle-main-icons>button{min-height:132px!important}.castle-main-icons>button img{width:92px!important;height:88px!important}.inventory-tabs button{font-size:8px}.inventory-target-grid{grid-template-columns:1fr 1fr}}
+
+
+/* ===== MOB QUEST v71: facility / training / blacksmith regression guard ===== */
+/* Facility speech bubble: no arbitrary huge right whitespace, and short Japanese phrases must stay intact. */
+.dialog-overlay.facility-line-talk{justify-content:center!important}
+.dialog-overlay.facility-line-talk .dialog-card{width:min(88vw,520px)!important;grid-template-columns:88px minmax(0,1fr)!important;gap:8px!important;margin:0 auto!important}
+.dialog-overlay.facility-line-talk .dialog-card>img{width:88px!important;height:136px!important}
+.dialog-overlay.facility-line-talk .dialog-body{min-height:102px!important;padding:11px 13px!important}
+.dialog-overlay.facility-line-talk .dialog-body>p{font-size:min(var(--facility-line-font,17px),17px)!important;line-height:1.42!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:pretty!important}
+.dialog-overlay.facility-choice-talk .dialog-body{padding-bottom:10px!important}
+.dialog-overlay.facility-choice-talk .dialog-choices{display:flex!important;position:relative!important;z-index:3!important;gap:6px!important;flex-wrap:wrap!important;justify-content:flex-end!important;margin-top:10px!important}
+.dialog-overlay.facility-choice-talk .dialog-choices button{display:block!important;min-width:84px!important;height:38px!important;color:#fff!important;background:#273d54!important;border:1px solid #7893ad!important;font-size:11px!important}
+.dialog-overlay.facility-choice-talk .dialog-choices button.primary{background:#3b78ad!important;border-color:#9bc9ef!important}
+
+/* Throne-room speech: actor-adjacent, wider, lower, never a one-character orphan line. */
+.castle-speech{max-width:calc(100% - 20px)!important;padding:11px 13px 13px!important}
+.castle-speech p{font-size:var(--castle-speech-font,17px)!important;line-height:1.38!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:pretty!important}
+
+/* Training: contrast is locked by mode so later generic button rules cannot make text dark-on-dark again. */
+#trainingFeaturePopup[data-mode="gold"] .settings-head h2,#trainingFeaturePopup[data-mode="gold"] .training-feature-card h3,#trainingFeaturePopup[data-mode="gold"] .training-feature-card b,#trainingFeaturePopup[data-mode="gold"] .panel b{color:#321b0c!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="gold"] .settings-head small{color:#fff3d4!important;text-shadow:0 1px 2px rgba(0,0,0,.55)!important}
+#trainingFeaturePopup[data-mode="gold"] .pill,#trainingFeaturePopup[data-mode="gold"] .feature-meta span,#trainingFeaturePopup[data-mode="gold"] .record-count-line span,#trainingFeaturePopup[data-mode="gold"] .training-feature-card button{color:#fff7e7!important;background:#19324a!important;border-color:#5d7a95!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="gold"] .sheet-close{color:#fff!important;background:#29435c!important}
+
+#trainingFeaturePopup[data-mode="exp"] .settings-head h2{color:#fff!important;text-shadow:0 2px 3px rgba(0,0,0,.35)!important}
+#trainingFeaturePopup[data-mode="exp"] .settings-head small{color:#d9f2ff!important}
+#trainingFeaturePopup[data-mode="exp"] .training-feature-card h3,#trainingFeaturePopup[data-mode="exp"] .training-feature-card b,#trainingFeaturePopup[data-mode="exp"] .panel b{color:#17354c!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="exp"] .pill,#trainingFeaturePopup[data-mode="exp"] .feature-meta span,#trainingFeaturePopup[data-mode="exp"] .record-count-line span,#trainingFeaturePopup[data-mode="exp"] .training-feature-card button{color:#f3fbff!important;background:#23445e!important;border-color:#6f9fbd!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="exp"] .sheet-close{color:#fff!important;background:#1c3c55!important}
+
+#trainingFeaturePopup[data-mode="boss"] .settings-head h2{color:#fff!important;text-shadow:0 2px 3px rgba(0,0,0,.35)!important}
+#trainingFeaturePopup[data-mode="boss"] .settings-head small{color:#f1dcff!important}
+#trainingFeaturePopup[data-mode="boss"] .training-feature-card h3,#trainingFeaturePopup[data-mode="boss"] .training-feature-card b,#trainingFeaturePopup[data-mode="boss"] .panel b{color:#3b2050!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="boss"] .pill,#trainingFeaturePopup[data-mode="boss"] .feature-meta span,#trainingFeaturePopup[data-mode="boss"] .record-count-line span,#trainingFeaturePopup[data-mode="boss"] .training-feature-card button{color:#fff7ff!important;background:#422a56!important;border-color:#8965a5!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="boss"] .sheet-close{color:#fff!important;background:#3b2650!important}
+
+/* All training mode participation buttons must remain readable. */
+#trainingFeaturePopup .training-feature-card button:disabled{color:rgba(255,255,255,.72)!important;opacity:.52!important}
+
+/* Dedicated blacksmith: no equipment/figure tabs in this route. */
+.blacksmith-room-view{overflow:hidden!important;padding:0 0 calc(60px + var(--safe-bottom))!important}
+.blacksmith-stage{position:relative;width:100%;height:100%;min-height:100%;overflow:hidden}
+.blacksmith-gonzo{position:absolute;z-index:10;left:50%;bottom:12%;transform:translateX(-50%);width:min(50%,210px);height:58%;background:transparent!important;border:0!important;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;color:#fff;text-shadow:0 2px 4px #000;filter:drop-shadow(0 8px 8px rgba(0,0,0,.38))}
+.blacksmith-gonzo img{width:100%;height:86%;object-fit:contain;object-position:center bottom}.blacksmith-gonzo b{font-size:17px}.blacksmith-gonzo small{font-size:9px}
+.blacksmith-home{left:12px!important;bottom:calc(10px + var(--safe-bottom))!important;width:84px!important;min-height:88px!important}
+.blacksmith-popup{z-index:96!important}.blacksmith-popup-card{max-height:88%!important;background:repeating-linear-gradient(0deg,#b96b2e 0 18px,#cb7a37 18px 36px,#a75925 36px 54px)!important;color:#2f180b!important;border-top:3px solid #6b3515!important;padding-bottom:16px!important}
+.blacksmith-popup-card .settings-head{background:rgba(255,239,213,.94)!important;padding:9px 10px!important;border-radius:15px!important}.blacksmith-popup-card .settings-head small,.blacksmith-popup-card .settings-head h2{color:#32190c!important;text-shadow:none!important}
+.blacksmith-popup-body{min-height:0}.blacksmith-popup-menu{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 2px}.blacksmith-popup-menu>button{min-height:112px;border-radius:17px;background:#fff0d7!important;color:#32190c!important;border:3px solid #6f3a18!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.blacksmith-popup-menu b{font-size:17px}.blacksmith-popup-menu small{font-size:10px;color:#65452e!important}
+.blacksmith-popup-back{position:sticky;top:0;z-index:5;width:100%;height:42px;margin:0 0 8px;border-radius:12px;background:#3a2518!important;color:#fff!important;font-size:11px;font-weight:1000}
+.blacksmith-weapon-list{display:grid;gap:7px;max-height:66vh;overflow-y:auto;padding:0 2px 70px;touch-action:pan-y;-webkit-overflow-scrolling:touch}.blacksmith-weapon-list .weapon-card{background:#fff0d7!important;color:#2f180b!important;border-color:#70401d!important}.blacksmith-weapon-list .weapon-card b,.blacksmith-weapon-list .weapon-card small,.blacksmith-weapon-list .weapon-card em,.blacksmith-weapon-list .weapon-card p,.blacksmith-weapon-list .weapon-card strong{color:#2f180b!important;text-shadow:none!important}
+
+/* Castle menu remains black on its bright background. */
+.castle-main-icons>button b{color:#111!important;text-shadow:0 1px 0 rgba(255,255,255,.95),0 2px 3px rgba(255,255,255,.8)!important}
+
+@media(max-width:380px){
+  .dialog-overlay.facility-line-talk .dialog-card{width:92vw!important;grid-template-columns:78px minmax(0,1fr)!important;gap:7px!important}.dialog-overlay.facility-line-talk .dialog-card>img{width:78px!important;height:122px!important}.dialog-overlay.facility-line-talk .dialog-body>p{font-size:min(var(--facility-line-font,15px),15px)!important}
+  .blacksmith-gonzo{width:54%;height:56%}.blacksmith-popup-menu{grid-template-columns:1fr}.blacksmith-popup-menu>button{min-height:88px}
+}
+
+
+/* ===== MOB QUEST v71.1: no-orphan dialogue + locked training contrast ===== */
+.dialog-overlay.facility-line-talk .dialog-card{width:min(92vw,var(--facility-card-width,438px))!important;max-width:520px!important}
+.dialog-overlay.facility-line-talk .dialog-body>p{word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-wrap:pretty!important}
+.castle-speech p{word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-wrap:pretty!important}
+#trainingFeaturePopup[data-mode="gold"] .training-feature-card,
+#trainingFeaturePopup[data-mode="exp"] .training-feature-card,
+#trainingFeaturePopup[data-mode="boss"] .training-feature-card{opacity:1!important}
+#trainingFeaturePopup[data-mode="gold"] .training-feature-card button:disabled,
+#trainingFeaturePopup[data-mode="exp"] .training-feature-card button:disabled,
+#trainingFeaturePopup[data-mode="boss"] .training-feature-card button:disabled{opacity:.82!important;filter:none!important}
+#trainingFeaturePopup[data-mode="gold"] .pill,#trainingFeaturePopup[data-mode="gold"] .feature-meta span,#trainingFeaturePopup[data-mode="gold"] .record-count-line span,#trainingFeaturePopup[data-mode="gold"] .training-feature-card button{-webkit-text-fill-color:#fff7e7!important}
+#trainingFeaturePopup[data-mode="exp"] .pill,#trainingFeaturePopup[data-mode="exp"] .feature-meta span,#trainingFeaturePopup[data-mode="exp"] .record-count-line span,#trainingFeaturePopup[data-mode="exp"] .training-feature-card button{-webkit-text-fill-color:#f3fbff!important}
+#trainingFeaturePopup[data-mode="boss"] .pill,#trainingFeaturePopup[data-mode="boss"] .feature-meta span,#trainingFeaturePopup[data-mode="boss"] .record-count-line span,#trainingFeaturePopup[data-mode="boss"] .training-feature-card button{-webkit-text-fill-color:#fff7ff!important}
