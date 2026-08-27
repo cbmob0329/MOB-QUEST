@@ -32,10 +32,24 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=62">
+  <link rel="stylesheet" href="css/style.css?v=70">
 </head>
 <body>
 <main id="app">
+  <!-- TITLE -->
+  <section id="titleScreen" class="screen title-screen">
+    <img class="screen-bg bg-cover title-bg" src="back/title.png" data-fallback-src="back/rpgmain.png" alt="">
+    <div class="title-shade"></div>
+    <div class="title-content safe-top safe-bottom">
+      <img class="title-logo" src="icon/01.png" alt="MOB STORY">
+      <div class="title-actions">
+        <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
+        <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
+        <button id="titleSettingsBtn" class="sub" type="button"><b>設定</b></button>
+      </div>
+    </div>
+  </section>
+
   <!-- HOME -->
   <section id="homeScreen" class="screen home-screen">
     <img class="screen-bg bg-cover bg-home" src="back/rpgmain.png" data-fallback-src="back/01.png" alt="">
@@ -155,9 +169,6 @@
       <div class="equipment-tabs glass">
         <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
         <button class="equipment-tab" data-equipment-tab="figures" type="button">フィギュア</button>
-        <button class="equipment-tab" data-equipment-tab="shop" type="button">ショップ</button>
-        <button class="equipment-tab" data-equipment-tab="smith" type="button">鍛冶屋</button>
-        <button class="equipment-tab" data-equipment-tab="catalog" type="button">武器一覧</button>
       </div>
       <div id="equipmentContent"></div>
     </div>
@@ -324,6 +335,22 @@
     </div></div>
   </section>
 
+
+  <!-- INVENTORY -->
+  <div id="inventoryOverlay" class="inventory-overlay" hidden>
+    <div class="inventory-card">
+      <div class="inventory-head"><div><small>INVENTORY</small><h2>持ち物</h2></div><button id="inventoryCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div class="inventory-tabs">
+        <button data-inventory-tab="item" class="active" type="button">アイテム</button>
+        <button data-inventory-tab="equipment" type="button">装備</button>
+        <button data-inventory-tab="armor" type="button">防具</button>
+        <button data-inventory-tab="figures" type="button">フィギュア</button>
+        <button data-inventory-tab="medals" type="button">メダル</button>
+      </div>
+      <div id="inventoryBody" class="inventory-body"></div>
+    </div>
+  </div>
+
   <!-- SETTINGS / TEST MODE -->
   <div id="settingsOverlay" class="settings-overlay" hidden>
     <div class="settings-card">
@@ -343,6 +370,11 @@
               <button data-test-loadout="optimal" type="button">最適装備</button>
             </div>
           </div>
+          <div class="test-stage-block">
+            <div><b>テスト開始ステージ</b><small>チャプターとAREAを指定して、その地点からテストを開始します。選択地点より前はクリア済みとして扱います。</small></div>
+            <div class="test-stage-grid"><select id="testChapterSelect"></select><select id="testAreaSelect"><option value="0">AREA 1</option><option value="1">AREA 2</option><option value="2">AREA 3</option><option value="3">AREA 4</option></select><button id="testChapterApplyBtn" type="button">この地点から開始</button></div>
+          </div>
+          <div class="settings-row compact"><div><b>全必殺技テスト</b><small>テスト中はレベル条件を無視して、そのキャラクターの必殺技を全て使用できます。</small></div><button id="testAllSkillsToggle" class="settings-toggle" type="button">OFF</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -363,10 +395,21 @@
 
   <div id="facilityExitBanner" class="facility-exit-banner" hidden><div><img id="facilityExitImage" src="play/001.png" alt=""><b id="facilityExitText"></b></div></div>
 
+
+  <!-- FIGURE PICKER -->
+  <div id="figurePickerOverlay" class="figure-picker-overlay" hidden>
+    <div class="figure-picker-card">
+      <div class="settings-head figure-picker-head"><div><small>SELECT FIGURE</small><h2 id="figurePickerTitle">フィギュアを選択</h2></div><button id="figurePickerCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="figurePickerSummary" class="figure-picker-summary"></div>
+      <div id="figurePickerControls" class="figure-picker-controls"></div>
+      <div id="figurePickerList" class="figure-picker-list"></div>
+    </div>
+  </div>
+
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=62" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=70" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -374,7 +417,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=62"></script>
-<script src="js/game.js?v=62"></script>
+<script src="js/data.js?v=70"></script>
+<script src="js/game.js?v=70"></script>
 </body>
 </html>
