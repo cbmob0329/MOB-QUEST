@@ -32,7 +32,7 @@
     }catch(e){}
   });
   </script>
-  <link rel="stylesheet" href="css/style.css?v=70">
+  <link rel="stylesheet" href="css/style.css?v=74">
 </head>
 <body>
 <main id="app">
@@ -99,6 +99,7 @@
         <div class="facility-menu-grid tavern-menu-grid">
           <button data-tavern-menu="party" type="button"><img src="icon/11.png" alt=""><b>パーティー編成</b><small>仲間と隊列を編成</small></button>
           <button data-tavern-menu="drink" type="button"><img src="icon/13.png" alt=""><b>ドリンク購入</b><small>キャンプ用ドリンク</small></button>
+          <button id="tavernFigureMenuBtn" class="tavern-maple-menu" data-tavern-menu="figure" type="button" hidden><img src="play/009.png" alt="モブメープル"><b>フィギュア購入</b><small>モブメープルのガチャ</small></button>
           <button data-tavern-menu="home" type="button"><img src="mqicon/06.png" alt=""><b>HOME</b><small>酒場を出る</small></button>
         </div>
       </section>
@@ -109,6 +110,13 @@
         <div class="party-popup-summary"><span id="tavernPartyCount" class="pill">MAIN 4/4・SUPER 2/2・SUB 4/4</span><p id="tavernPartyGuide">入れ替えたいメンバーを1人タップしてください</p></div>
         <div id="tavernSlots" class="tavern-slots tavern-simple-slots"></div>
         <button id="savePartyBtn" class="primary-btn tavern-party-confirm" type="button">この編成に決定</button>
+      </div>
+    </div>
+    <div id="tavernFigurePopup" class="facility-popup tavern-figure-popup" hidden>
+      <div class="facility-popup-card maple-shop-card">
+        <div class="settings-head"><div><small>FIGURE SHOP</small><h2>フィギュア購入</h2></div><button id="tavernFigureCloseBtn" class="sheet-close" type="button">×</button></div>
+        <div class="maple-shop-host"><img src="play/009.png" alt="モブメープル"><div><b>モブメープル</b><p>やっほ～！どのガチャにする？</p></div></div>
+        <div class="panel-note maple-gacha-note">ガチャのラインナップ・必要ダイヤ・排出率は仕様確定後に追加します。</div>
       </div>
     </div>
     <div id="tavernDrinkPopup" class="facility-popup" hidden>
@@ -359,6 +367,15 @@
     </div>
   </div>
 
+
+  <!-- CHARACTER DETAIL -->
+  <div id="playerDetailOverlay" class="player-detail-overlay" hidden>
+    <div class="player-detail-card">
+      <div class="player-detail-head"><div><small>CHARACTER</small><h2>ステータス</h2></div><button id="playerDetailCloseBtn" class="sheet-close" type="button">×</button></div>
+      <div id="playerDetailBody" class="player-detail-body"></div>
+    </div>
+  </div>
+
   <!-- SETTINGS / TEST MODE -->
   <div id="settingsOverlay" class="settings-overlay" hidden>
     <div class="settings-card">
@@ -382,7 +399,7 @@
             <div><b>テスト開始ステージ</b><small>チャプターとAREAを指定して、その地点からテストを開始します。選択地点より前はクリア済みとして扱います。</small></div>
             <div class="test-stage-grid"><select id="testChapterSelect"></select><select id="testAreaSelect"><option value="0">AREA 1</option><option value="1">AREA 2</option><option value="2">AREA 3</option><option value="3">AREA 4</option></select><button id="testChapterApplyBtn" type="button">この地点から開始</button></div>
           </div>
-          <div class="settings-row compact"><div><b>全必殺技テスト</b><small>テスト中はレベル条件を無視して、そのキャラクターの必殺技を全て使用できます。</small></div><button id="testAllSkillsToggle" class="settings-toggle" type="button">OFF</button></div>
+          <div class="settings-row compact"><div><b>全魔法・特技・必殺技テスト</b><small>テスト中は習得条件を無視して、現在実装済みの魔法・特技・必殺技を全て使用できます。</small></div><button id="testAllSkillsToggle" class="settings-toggle" type="button">OFF</button></div>
           <div class="settings-row compact"><div><b>高速5倍戦闘</b><small>ON時は戦闘開始時から×5。戦闘中の速度ボタンでも切替できます。</small></div><button id="testFastToggle" class="settings-toggle" type="button">OFF</button></div>
           <p class="settings-note">テストモード中は Lv1～120 の任意値を入力可能。酒場・トレーニングの各メンバー／敵Lvも自由に変更できます。</p>
         </div>
@@ -417,7 +434,7 @@
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=72" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=74" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -425,7 +442,7 @@
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script src="js/data.js?v=72"></script>
-<script src="js/game.js?v=72"></script>
+<script src="js/data.js?v=74"></script>
+<script src="js/game.js?v=74"></script>
 </body>
 </html>
