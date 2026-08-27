@@ -1,3 +1,10 @@
+MOB QUEST playable core v75
+- 敵攻撃を味方側へ大きく突進するダッシュモーションへ修正
+- 敵被弾を赤フラッシュ＋敵ユニット全体シェイクへ修正
+- 冒険パーティー画像の端につながった白背景を実行時に透過除去（既存の透過PNGはそのまま保持）
+- 冒険パーティーのbutton/img背景・枠・影由来の白矩形も強制解除
+- v74までのcanonical仕様・回帰修正を維持
+
 - タイトル画面に v74 を表示
 - GAME_ASSET_VERSION を74へ統一
 MOB QUEST playable core v74 - CANONICAL REGRESSION FIX

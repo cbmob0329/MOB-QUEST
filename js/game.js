@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=74;
+const GAME_ASSET_VERSION=75;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -1038,6 +1038,29 @@ function encounterNames(enc){return(enc?.waves?.[0]||[]).map(x=>{const t=trainin
 
 const ADVENTURE_COMMON_SCALE_MAX=.14;
 function setAdventureVisualLoading(on){const gate=$('#adventureVisualLoader'),root=$('#adventureParty');if(gate)gate.hidden=!on;if(root)root.classList.toggle('visual-loading',!!on);}
+const ADVENTURE_TRANSPARENCY_CACHE=new Map();
+async function cleanAdventurePartyImageBackground(img){
+  if(!img||img.dataset.bgCleaned==='1'||!img.naturalWidth||!img.naturalHeight)return;
+  img.dataset.bgCleaned='1';
+  const original=img.currentSrc||img.src||'';
+  if(ADVENTURE_TRANSPARENCY_CACHE.has(original)){
+    const cleaned=ADVENTURE_TRANSPARENCY_CACHE.get(original);if(cleaned&&cleaned!==original){await new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.src=cleaned;});}return;
+  }
+  try{
+    const w=img.naturalWidth,h=img.naturalHeight,canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d',{willReadFrequently:true});if(!ctx)return;
+    ctx.drawImage(img,0,0,w,h);const im=ctx.getImageData(0,0,w,h),px=im.data;
+    const idx=(x,y)=>(y*w+x)*4,isBg=(x,y)=>{const i=idx(x,y),a=px[i+3];if(a<10)return true;const rr=px[i],gg=px[i+1],bb=px[i+2],mx=Math.max(rr,gg,bb),mn=Math.min(rr,gg,bb);return rr>=218&&gg>=218&&bb>=218&&(mx-mn)<=30;};
+    let cornerTransparent=0;for(const [x,y] of [[0,0],[w-1,0],[0,h-1],[w-1,h-1]])if(px[idx(x,y)+3]<20)cornerTransparent++;
+    if(cornerTransparent>=2){ADVENTURE_TRANSPARENCY_CACHE.set(original,original);return;}
+    const seen=new Uint8Array(w*h),queue=[];const push=(x,y)=>{if(x<0||y<0||x>=w||y>=h)return;const p=y*w+x;if(seen[p]||!isBg(x,y))return;seen[p]=1;queue.push(p);};
+    for(let x=0;x<w;x++){push(x,0);push(x,h-1);}for(let y=0;y<h;y++){push(0,y);push(w-1,y);}
+    for(let q=0;q<queue.length;q++){const p=queue[q],x=p%w,y=(p/w)|0;push(x-1,y);push(x+1,y);push(x,y-1);push(x,y+1);}
+    if(queue.length<Math.max(16,w*h*.015)){ADVENTURE_TRANSPARENCY_CACHE.set(original,original);return;}
+    for(const p of queue){const i=p*4;px[i+3]=0;}
+    ctx.putImageData(im,0,0);const cleaned=canvas.toDataURL('image/png');ADVENTURE_TRANSPARENCY_CACHE.set(original,cleaned);
+    await new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.src=cleaned;});
+  }catch(err){img.classList.add('white-bg-fallback');ADVENTURE_TRANSPARENCY_CACHE.set(original,original);}
+}
 async function applyAdventurePartyScale(){
   const root=$('#adventureParty');if(!root)return;
   const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length){setAdventureVisualLoading(false);return;}
@@ -1046,6 +1069,7 @@ async function applyAdventurePartyScale(){
     try{if(img.decode&&img.naturalWidth)await img.decode();}catch(_){}
   }));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(valid.map(img=>cleanAdventurePartyImageBackground(img)));
   const sumW=valid.reduce((a,img)=>a+img.naturalWidth,0),maxH=Math.max(...valid.map(img=>img.naturalHeight));
   const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
   valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*scale))}px`,'important');img.classList.add('size-ready');});
@@ -2233,10 +2257,10 @@ async function passiveCutin(a,text,duration=620){
 async function passiveBeat(a,text,duration=620,preDelay=600){await fixedDelay(preDelay);await passiveCutin(a,text,duration);}
 async function reactivePassiveBeat(a,text,duration=600){return passiveBeat(a,text,duration,140);}
 function floatNumber(value,kind='damage',target='enemy'){const el=document.createElement('div');el.className=`float-number ${kind}`;el.textContent=(kind==='heal'?'+':'')+Math.round(value);positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),850/state.speed);}
-function clearEnemyImpact(){for(const el of $$('[data-enemy-sprite],[data-enemy-symbol]')){el.classList.remove('enemy-hit','enemy-cast','enemy-damage-impact','enemy-advance');el.style.filter='';}}
-function pulseEnemy(cls='hit',uid){const el=enemyVisual(uid);if(!el)return;el.classList.remove('enemy-hit','enemy-cast','enemy-advance','enemy-damage-impact');el.style.filter='';void el.offsetWidth;const className=cls==='cast'?'enemy-cast':cls==='advance'?'enemy-advance':'enemy-damage-impact';el.classList.add(className);if(cls!=='advance'){const cleanup=()=>{if(el.isConnected){el.classList.remove(className);el.style.filter='';}};el.addEventListener('animationend',cleanup,{once:true});setTimeout(cleanup,520);}}
-async function beginEnemyLunge(uid){const screen=$('#battleScreen'),el=enemyVisual(uid),unit=el?.closest('.enemy-unit');if(screen)screen.classList.add('enemy-attacking');if(unit)unit.classList.add('enemy-lunge-unit');pulseEnemy('advance',uid);await fixedDelay(230);}
-function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classList.remove('enemy-attacking');$$('.enemy-lunge-unit').forEach(x=>x.classList.remove('enemy-lunge-unit'));clearEnemyImpact();}
+function clearEnemyImpact(){for(const el of $$('[data-enemy-sprite],[data-enemy-symbol]')){el.classList.remove('enemy-hit','enemy-cast','enemy-damage-impact','enemy-advance');el.style.filter='';}$$('.enemy-unit-hit,.enemy-lunge-unit').forEach(x=>x.classList.remove('enemy-unit-hit','enemy-lunge-unit'));}
+function pulseEnemy(cls='hit',uid){const el=enemyVisual(uid);if(!el)return;const unit=el.closest('.enemy-unit');el.classList.remove('enemy-hit','enemy-cast','enemy-advance','enemy-damage-impact');el.style.filter='';if(unit)unit.classList.remove('enemy-unit-hit');void el.offsetWidth;if(cls==='advance'){if(unit){unit.classList.remove('enemy-lunge-unit');void unit.offsetWidth;unit.classList.add('enemy-lunge-unit');}return;}if(cls==='cast'){el.classList.add('enemy-cast');const cleanup=()=>{if(el.isConnected)el.classList.remove('enemy-cast');};el.addEventListener('animationend',cleanup,{once:true});setTimeout(cleanup,620);return;}el.classList.add('enemy-damage-impact');if(unit){void unit.offsetWidth;unit.classList.add('enemy-unit-hit');}const cleanup=()=>{if(el.isConnected){el.classList.remove('enemy-damage-impact');el.style.filter='';}if(unit?.isConnected)unit.classList.remove('enemy-unit-hit');};setTimeout(cleanup,340);}
+async function beginEnemyLunge(uid){const screen=$('#battleScreen'),el=enemyVisual(uid),unit=el?.closest('.enemy-unit');if(screen)screen.classList.add('enemy-attacking');if(unit){unit.classList.remove('enemy-lunge-unit');void unit.offsetWidth;unit.classList.add('enemy-lunge-unit');}await fixedDelay(360);}
+function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classList.remove('enemy-attacking');$$('.enemy-lunge-unit').forEach(x=>x.classList.remove('enemy-lunge-unit'));}
 function fx(type='slash',target){if(target==null)target=(type==='buff'||type==='heal')?(activeAlly()?.id||'enemy'):'enemy';const el=document.createElement('div');el.className=`simple-fx ${type}`;positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),650/state.speed);}
 
 /* ===== v22 procedural weapon + attribute attack FX =====
@@ -2470,7 +2494,7 @@ async function playerAoeDamage(a,power,type='physical',crit=0,statusKind='',stat
   const fxKind=type==='magic'?'magic':'slash';
   for(const e of targets){fx(fxKind,`enemy:${e.uid}`);pulseEnemy('hit',e.uid);}
   await delay(55);
-  for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,false,false);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(45);}return total;
+  for(const e of targets){const r=applyEnemyDamageTo(a,e,power,type,crit,false,true);total+=r.value;if(statusKind&&e.hp>0)applyEnemyStatusTo(e,statusKind,statusChance,statusTurns);await delay(170);}return total;
 }
 function applyEnemyStatusTo(e,kind,chance,turns=3){if(!e||e.hp<=0)return false;let c=chance;if(e.isBoss&&(kind==='paralyze'||kind==='sleep'))c*=.25;if(Math.random()>=c)return false;e.status[kind]=Math.max(e.status[kind],e.isBoss?rint(1,2):turns);return true;}
 function heal(a,amount){if(a.dead)return 0;const fe=a.figureEffects||figureEffectsFor(a.id);amount*=1+Number(fe?.healBoost||0);const before=a.hp;a.hp=Math.min(a.maxHp,a.hp+amount);const h=Math.round(a.hp-before);if(h>0)floatNumber(h,'heal',a.id);return h;}
@@ -2524,7 +2548,7 @@ async function performAttack(a,auto=false){
   }finally{state.battle.weaponAttackContext=prev;}
   if(denPassive)await fixedDelay(600);
   if(a.id==='tetsu'&&livingEnemies().length&&passiveChance(.30)){await passiveBeat(a,'テツの意志！');await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate,false);await fixedDelay(600);}
-  await delay(auto?150:220);
+  await delay(auto?250:340);
 }
 function defaultMagicFor(a){const element=normalizeElement(a.attribute),all=MOB_DATA.magicCatalog||[];return all.find(x=>x.element===element&&x.tier==='medium')||all.find(x=>x.element===element)||null;}
 async function performMagic(a,skill=null,auto=false){
@@ -2534,19 +2558,19 @@ async function performMagic(a,skill=null,auto=false){
   try{
     if(chosen.target==='all'){await skillSprite(chosen.frames,'enemy',chosen.mode);await playerAoeDamage(a,chosen.power,'magic',0);}
     else{const targetBefore=targetEnemy();await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power,'magic');const darkHeal=weaponDarkMagicHitHeal(a);if(darkHeal>0&&String(targetBefore?.attribute||'').includes('闇')&&!a.dead){const h=heal(a,darkHeal);if(h)notice(`武器特性 / HP +${h}`,'heal',520);}const rep=weaponFollowupSpec(a,'magicFollowup',element);if(rep.chance>0&&targetEnemy()?.hp>0&&Math.random()<rep.chance){notice('武器特性 / 追撃魔法！','buff',520);await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power*(rep.power||.5),'magic');}if(a.id==='jessie'&&element==='雷'&&targetEnemy()?.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power*.9,'magic');await fixedDelay(600);}}
-  }finally{state.battle.weaponAttackContext=prev;}await delay(auto?170:240);return true;
+  }finally{state.battle.weaponAttackContext=prev;}await delay(auto?260:360);return true;
 }
 function temporaryTechnique(a){const w=String(weaponCombatType(a)||a.weapon||'');if(w.includes('大剣'))return{name:'大剣・強斬り',cost:4,power:1.14};if(w.includes('太刀'))return{name:'太刀・疾風斬り',cost:4,power:1.12};if(w.includes('槍'))return{name:'槍・貫通突き',cost:4,power:1.10};if(w.includes('銃'))return{name:'ガンラッシュ',cost:4,power:1.10};if(w.includes('杖'))return{name:'スタッフブロウ',cost:3,power:1.06};return{name:'特殊攻撃',cost:3,power:1.08};}
 async function performSpecial(a,tech=null){
   const t=tech?.id?tech:temporaryTechnique(a),cost=Math.max(0,Math.ceil((t.cost||0)*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;await actionCutin(`${a.name}の${t.name}！`,'system',600);
   if(t.kind==='status'){await skillSprite(t.frames||[],'enemy',t.mode);const e=targetEnemy();if(e&&applyEnemyStatusTo(e,t.status,t.chance||.60,t.status==='stun'?1:3))notice(`${e.name}は${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]||'状態異常'}になった！`,'status',720);else notice('状態異常は効かなかった！','system',520);}
   else if(t.id){await skillSprite(t.frames||[],'enemy',t.mode);const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:normalizeElement(t.element||'無')};try{applyEnemyDamage(a,t.power||1,'physical',TEMP_BALANCE.critRate,false);}finally{state.battle.weaponAttackContext=prev;}}
-  else{await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);}await delay(210);return true;
+  else{await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);}await delay(340);return true;
 }
 async function performUltimate(a,u){const ui=a.ults.indexOf(u);if(ui<0||ultimateRemaining(a,ui)>0){notice('必殺技のCTが溜まっていません！','danger');return false;}const cost=Math.max(0,Math.ceil(u.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;if(!Array.isArray(a.ultCooldowns))initUltimateCooldowns(a);a.ultCooldowns[ui]=ultimateEffectiveCt(a,u,ui);persistUltimateCooldownsFromBattle();const prevAttackContext=state.battle.weaponAttackContext;state.battle.weaponAttackContext={...(prevAttackContext||{}),normal:false,sure:!!u.sure,element:normalizeElement(a.attribute)};let total=0,r,lastHitEnemy=null;
   try{await ultimateCutin(a,u);
-  const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(90);return r;};
-  const hitEnemy=async(e,power=u.power,type=u.type||'physical',crit=u.crit||0)=>{lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(80);return r;};
+  const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(240);return r;};
+  const hitEnemy=async(e,power=u.power,type=u.type||'physical',crit=u.crit||0)=>{lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(220);return r;};
   const aoe=async(power=u.power,type=u.type||'physical',crit=u.crit||0,status='',chance=0,turns=3)=>{const x=await playerAoeDamage(a,power,type,crit,status,chance,turns);total+=x;return x;};
   const allEnemyDebuff=(key,value,turns=3)=>{for(const e of livingEnemies()){e[key]=value;e[`${key}Turns`]=turns;}};
   switch(u.kind){

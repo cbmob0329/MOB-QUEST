@@ -2555,5 +2555,19 @@
 .story-scene.story-world-tribe.story-layout-party-left .story-party-line,.story-scene.story-world-tribe .story-party-line{bottom:12%!important;height:34%!important}
 .story-scene.story-world-tribe .story-guest.story-guest-player,.story-scene.story-world-tribe .story-guest.story-guest-player.side-right{bottom:28%!important;max-height:34%!important}
 
-/* v74 visible version label */
+/* v75 visible version label */
 .title-version{position:absolute;right:14px;bottom:calc(12px + var(--safe-bottom));z-index:6;padding:4px 8px;border-radius:999px;background:rgba(8,13,21,.68);border:1px solid rgba(255,255,255,.18);color:#dce5ef;font-size:9px;font-weight:900;letter-spacing:.12em;text-shadow:0 1px 2px #000;pointer-events:none}
+
+
+/* ===== MOB QUEST v75: ENEMY DASH / IMPACT / ADVENTURE TRANSPARENCY ===== */
+.adventure-party>button,.adventure-party>button img{background:transparent!important;background-color:transparent!important;box-shadow:none!important;border:0!important;outline:0!important}
+.adventure-party>button img{mix-blend-mode:normal!important}
+/* Canvas cleanup is the primary white-background fix. This is only a fallback if the browser blocks canvas reads. */
+.adventure-party>button img.white-bg-fallback{mix-blend-mode:multiply!important}
+.enemy-unit.enemy-lunge-unit{z-index:60!important;animation:enemyDashTowardPartyV75 .36s cubic-bezier(.12,.68,.18,1) forwards!important;transform-origin:center bottom!important;will-change:transform!important}
+@keyframes enemyDashTowardPartyV75{0%{transform:translate3d(0,0,0) scale(1)}30%{transform:translate3d(0,34px,0) scale(1.025)}100%{transform:translate3d(0,165px,0) scale(1.09)}}
+.enemy-unit.enemy-unit-hit{animation:enemyUnitHitV75 .28s ease!important;transform-origin:center bottom!important}
+@keyframes enemyUnitHitV75{0%,100%{transform:translateX(0)}18%{transform:translateX(-8px)}36%{transform:translateX(7px)}55%{transform:translateX(-5px)}74%{transform:translateX(4px)}88%{transform:translateX(-2px)}}
+.enemy-sprite.enemy-damage-impact,.enemy-symbol.enemy-damage-impact{animation:enemyDamageFlashV75 .28s ease!important;transform-origin:center bottom!important}
+@keyframes enemyDamageFlashV75{0%,100%{filter:drop-shadow(0 7px 6px rgba(0,0,0,.38))}12%,55%{filter:brightness(1.72) saturate(2.35) sepia(.78) hue-rotate(-31deg) drop-shadow(0 0 12px rgba(255,40,40,.98))}78%{filter:brightness(1.25) saturate(1.45) drop-shadow(0 0 5px rgba(255,65,65,.55))}}
+.battle-screen.enemy-attacking .battle-field{z-index:35!important;overflow:visible!important}.battle-screen.enemy-attacking .enemy-area{overflow:visible!important}.battle-screen.enemy-attacking .party-hud{z-index:8!important}
