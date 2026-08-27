@@ -8,11 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-<<<<<<< HEAD
 const GAME_ASSET_VERSION=76;
-=======
-const GAME_ASSET_VERSION=75;
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -558,7 +554,6 @@ function commonNavMarkup(){return `<button data-nav="home" type="button"><span><
 function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.castle.classList.contains('active'))return castleBackOrHome();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='items')openInventory();else if(b.dataset.nav==='settings')openSettings();}));bindImages();}
 
 async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
-<<<<<<< HEAD
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),formatted=facility?balancedJapaneseText(text,15):String(text||'');
   $('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=formatted;
   if(img){setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
@@ -569,24 +564,11 @@ async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',chara
 async function narrationDialog(text,choices=[['OK','ok']]){
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speaker=$('#dialogSpeaker'),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');
   speaker.textContent='';textEl.textContent=String(text||'');if(img)img.hidden=true;choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-narration-value="${val}" class="${cls}">${label}</button>`).join('');
-=======
-  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker);
-  $('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=facility?String(text||'').replace(/\s*\r?\n\s*/g,''):text;
-  if(img){setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
-  $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
-  overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility);if(facility)overlay.style.setProperty('--facility-card-width',`${facilityBubbleWidth(text,true)}px`);overlay.hidden=false;
-  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk');overlay.style.removeProperty('--facility-card-width');resolve(btn.dataset.dialogValue);});});
-}
-async function narrationDialog(text,choices=[['OK','ok']]){
-  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speaker=$('#dialogSpeaker'),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');
-  speaker.textContent='NARRATION';textEl.textContent=String(text||'');if(img)img.hidden=true;choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-narration-value="${val}" class="${cls}">${label}</button>`).join('');
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
   overlay.classList.remove('facility-line-talk','facility-choice-talk');overlay.classList.add('narration-dialog');overlay.hidden=false;
   return new Promise(resolve=>{$$('[data-narration-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('narration-dialog');if(img)img.hidden=false;choiceRoot.innerHTML='';resolve(btn.dataset.narrationValue);});});
 }
 function facilityFlag(key){try{return localStorage.getItem(`mobQuestFacilitySeen:${key}`)==='1';}catch(_){return false;}}
 function markFacilityFlag(key){try{localStorage.setItem(`mobQuestFacilitySeen:${key}`,'1');}catch(_){}}
-<<<<<<< HEAD
 function compactDialogueText(text){return String(text||'').replace(/\s+/g,'').trim();}
 function balancedJapaneseText(text,maxChars=15){
   const compact=compactDialogueText(text);if(!compact)return'';const chars=[...compact];if(chars.length<=maxChars)return compact;
@@ -605,33 +587,20 @@ function balancedJapaneseText(text,maxChars=15){
 function dialogueLongestLine(text){return Math.max(0,...String(text||'').split('\n').map(x=>[...x].length));}
 function facilitySpeechPages(text,maxChars=34){
   const compact=compactDialogueText(text);if(!compact)return[];
-=======
-function facilitySpeechPages(text,maxChars=34){
-  const compact=String(text||'').replace(/\s*\r?\n\s*/g,'').trim();
-  if(!compact)return[];
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
   const sentences=compact.match(/[^。！？!?♪]+[。！？!?♪]+|[^。！？!?♪]+$/g)||[compact],pages=[];let buf='';
   for(const part of sentences){if(!buf){buf=part;continue;}if([...buf,...part].length<=maxChars)buf+=part;else{pages.push(buf);buf=part;}}
   if(buf)pages.push(buf);return pages;
 }
 function facilitySpeakerCharacter(speaker){return ['モブゴンゾー','モブミータ','モブマテリア','モブイルカエル','モブコーチ','モブメープル','モブスライムキング','モブライトアーム','モブピンク'].includes(speaker);}
-<<<<<<< HEAD
 function facilityBubbleWidth(text,hasChoices=false){
   const formatted=balancedJapaneseText(text,15),longest=dialogueLongestLine(formatted),body=Math.max(145,Math.min(255,longest*16+30));
   const px=82+8+body;return Math.max(hasChoices?350:0,Math.min(470,px));
 }
-=======
-function facilityBubbleWidth(text,hasChoices=false){const n=[...String(text||'').replace(/\s*\r?\n\s*/g,'')].length;const px=n<=10?224:n<=16?268:n<=24?318:n<=32?366:n<=42?420:470;return Math.max(hasChoices?360:0,px);}
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
   const pages=facilitySpeechPages(text);if(!pages.length)return;
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
   speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';choices.innerHTML='';overlay.classList.add('facility-line-talk');overlay.hidden=false;
-<<<<<<< HEAD
   for(const page of pages){const formatted=balancedJapaneseText(page,15),longest=dialogueLongestLine(formatted),n=[...compactDialogueText(page)].length;textEl.textContent=formatted;textEl.dataset.lineLength=String(n);overlay.style.setProperty('--facility-card-width',`${facilityBubbleWidth(formatted)}px`);textEl.style.setProperty('--facility-line-font',longest>=15?'15px':longest>=13?'16px':'17px');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,true);});await fixedDelay(100);}
-=======
-  for(const page of pages){const n=[...page].length;textEl.textContent=page;textEl.dataset.lineLength=String(n);overlay.style.setProperty('--facility-card-width',`${facilityBubbleWidth(page)}px`);textEl.style.setProperty('--facility-line-font',n>=54?'12px':n>=42?'13px':n>=32?'14px':n>=24?'15px':'17px');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,true);});await fixedDelay(100);}
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
   overlay.hidden=true;overlay.classList.remove('facility-line-talk');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
 }
 async function facilityIntro(key,{speaker,image,first='',repeat=''}){
@@ -643,10 +612,7 @@ async function showFacilityExit(image,text,theme='blue'){
   const wrap=$('#facilityExitBanner'),img=$('#facilityExitImage'),label=$('#facilityExitText');if(!wrap)return;
   setImage(img,versionedPlay(image),'');label.textContent=text;wrap.className=`facility-exit-banner theme-${theme}`;wrap.hidden=false;await fixedDelay(1050);wrap.hidden=true;
 }
-<<<<<<< HEAD
 let openingSequenceBusy=false;
-=======
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 let tavernView='menu';
 let castleView='menu';
 let castleQtyState={itemId:null,qty:1};
@@ -739,7 +705,6 @@ function renderTavern(){
 function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#tavernDrinkPopup').hidden=true;$('#tavernPartyPopup').hidden=true;$('#tavernFigurePopup').hidden=true;renderTavern();}
 function showTavernParty(){tavernView='party';state.tavernSwapIndex=null;renderTavern();}
 function showTavernDrinks(){tavernView='menu';renderTavernDrinkShop();$('#tavernDrinkPopup').hidden=false;}
-<<<<<<< HEAD
 async function openingNarrateV74(text,{grand=false}={}){
   const el=document.createElement('div');el.className=`opening-narration-v76${grand?' grand':''}`;el.innerHTML=`<div><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><b>タップで進む</b></div>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v76');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,180);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();clearTimeout(timer);resolve();},{once:true});});el.classList.remove('show');await fixedDelay(200);el.remove();
 }
@@ -784,26 +749,6 @@ async function runOpeningV74(){
   state.meta.openingCompleted=true;saveMeta();await goHome();
   await facilityTalk('大変なことになりましたね..','モブピンク','play/02.png');await facilityTalk('でも精一杯頑張るであります！','モブピンク','play/02.png');await facilityTalk('よろしくお願いします、勇者様！','モブピンク','play/02.png');
   await homeTutorialSay('ダンジョンのアイコンを押すと冒険に向かいます','adventure');await homeTutorialSay('お城のアイコンを押すとお城へ入れます','castle');await homeTutorialSay('お店の利用や冒険の報告がある時はお城へ向かいましょう','castle');await facilityTalk('その他の機能については冒険しながら慣れていきましょう','モブピンク','play/02.png');await facilityTalk('冒険の始まりであります！','モブピンク','play/02.png');
-=======
-async function openingNarrateV74(text,{grand=false}={}){const el=document.createElement('div');el.className=`opening-narration-v73${grand?' grand':''}`;el.innerHTML=`<div><small>NARRATION</small><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><b>タップで進む</b></div>`;document.body.appendChild(el);await nextPaint();el.classList.add('show');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,100);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();clearTimeout(timer);resolve();},{once:true});});el.classList.remove('show');await fixedDelay(160);el.remove();}
-async function homeTutorialSay(text,action=''){const wrap=document.createElement('div');wrap.className='home-tutorial-v74';wrap.innerHTML=`<div class="home-tutorial-bubble-v74"><img src="play/02.png" alt="モブピンク"><div><b>モブピンク</b><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p><small>タップで進む</small></div></div>${action?'<i class="home-tutorial-arrow-v74">▼</i>':''}`;document.body.appendChild(wrap);bindImages(wrap);await nextPaint();const target=action?document.querySelector(`[data-home-action="${action}"]`):null,arrow=wrap.querySelector('.home-tutorial-arrow-v74');if(target&&arrow){const r=target.getBoundingClientRect();arrow.style.left=`${r.left+r.width/2}px`;arrow.style.top=`${Math.max(4,r.top-28)}px`;}wrap.classList.add('show');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,120);wrap.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});wrap.remove();}
-async function runOpeningV74(){
-  const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
-  for(let i=0;i<prologue.length;i++)await openingNarrateV74(prologue[i],{grand:i===0});
-  const curtain=document.createElement('div');curtain.className='opening-black-curtain-v73';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await fixedDelay(700);curtain.classList.add('fade');await fixedDelay(620);curtain.remove();
-  await facilityTalk('勇者よ、世界を救ってくれ！','モブスライムキング','play/007.png');
-  await openingNarrateV74('勇者は深く頷いた');
-  await facilityTalk('お主1人では不安であろう','モブスライムキング','play/007.png');await facilityTalk('おい！モブピンク！','モブスライムキング','play/007.png');
-  await openingNarrateV74('・・・・・・・・');await openingNarrateV74('集合ーーーー！！');
-  await facilityTalk('はいーー！','モブピンク','play/02.png');await facilityTalk('はいであります！','モブピンク','play/02.png');
-  await facilityTalk('王よりモブピンクに命じる！','モブスライムキング','play/007.png');await facilityTalk('はい！','モブピンク','play/02.png');
-  await facilityTalk('勇者と共に魔王を撃ち滅ぼすのじゃー！！','モブスライムキング','play/007.png');await facilityTalk('・・・・はい？','モブピンク','play/02.png');await facilityTalk('なんじゃ？','モブスライムキング','play/007.png');await facilityTalk('僕がですか？','モブピンク','play/02.png');await facilityTalk('他に誰がおるんじゃ？','モブスライムキング','play/007.png');await facilityTalk('えーーーー！！！！','モブピンク','play/02.png');await facilityTalk('うるさい！さっさと行くのじゃ！','モブスライムキング','play/007.png');await facilityTalk('わ、わかりましたよ！','モブピンク','play/02.png');await facilityTalk('勇者様、僕のこと守ってくださいね！','モブピンク','play/02.png');await facilityTalk('ヒロインみたいなことを言うな！','モブスライムキング','play/007.png');await facilityTalk('お主が勇者を守るのじゃ！','モブスライムキング','play/007.png');
-  await openingNarrateV74('こうして勇者はモブピンクと旅に出ることになった');
-  const splash=document.createElement('div');splash.className='opening-title-splash';splash.innerHTML='<img src="icon/01.png" alt="MOB STORY"><button type="button">NEXT</button>';document.body.appendChild(splash);bindImages(splash);await fixedDelay(3000);splash.classList.add('ready');await new Promise(resolve=>splash.querySelector('button').onclick=resolve);splash.remove();
-  state.meta.openingCompleted=true;saveMeta();await goHome();
-  await facilityTalk('大変なことになりましたね..','モブピンク','play/02.png');await facilityTalk('でも精一杯頑張るであります！','モブピンク','play/02.png');await facilityTalk('よろしくお願いします、勇者様！','モブピンク','play/02.png');
-  await homeTutorialSay('冒険のアイコンを押すと冒険に向かいます','adventure');await homeTutorialSay('お城のアイコンを押すとお城へ入れます','castle');await homeTutorialSay('お店の利用や冒険の報告がある時はお城へ向かいましょう','castle');await facilityTalk('その他の機能については冒険しながら慣れていきましょう','モブピンク','play/02.png');await facilityTalk('冒険の始まりであります！','モブピンク','play/02.png');
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 }
 async function enterTavern(){
   tavernView='menu';renderTavern();
@@ -3157,29 +3102,11 @@ function renderThroneRoom(){
 }
 function showCastleSpeech(speaker,text,actorEl=null,side='center'){
   const box=$('#castleSpeech');if(!box)return;
-<<<<<<< HEAD
   const clean=compactDialogueText(text),formatted=balancedJapaneseText(clean,15),longest=dialogueLongestLine(formatted);box.className=`castle-speech side-${side}`;$('small',box).textContent=speaker;$('p',box).textContent=formatted;box.hidden=false;
   box.style.left='';box.style.top='';box.style.width='';box.style.transform='';box.style.removeProperty('--tail-x');box.style.removeProperty('--castle-speech-font');
   const stage=box.parentElement;
   if(actorEl&&stage){const sr=stage.getBoundingClientRect(),ar=actorEl.getBoundingClientRect(),sw=sr.width||320;const natural=Math.max(190,Math.min(350,longest*17+52)),bw=Math.min(sw-20,natural),ax=ar.left+ar.width*.5-sr.left;const left=Math.max(10,Math.min(ax-bw*.55,sw-bw-10));let top=ar.top-sr.top-72;top=Math.max(20,Math.min(top,sr.height-145));const tx=Math.max(30,Math.min(ax-left,bw-30));box.style.left=`${left}px`;box.style.top=`${top}px`;box.style.width=`${bw}px`;box.style.transform='none';box.style.setProperty('--tail-x',`${tx}px`);}
   box.style.setProperty('--castle-speech-font',longest>=15?'15px':longest>=13?'16px':'17px');clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},3000);
-=======
-  const clean=String(text||'').replace(/\s*\r?\n\s*/g,'');
-  box.className=`castle-speech side-${side}`;$('small',box).textContent=speaker;$('p',box).textContent=clean;box.hidden=false;
-  box.style.left='';box.style.top='';box.style.width='';box.style.transform='';box.style.removeProperty('--tail-x');box.style.removeProperty('--castle-speech-font');
-  const stage=box.parentElement;
-  if(actorEl&&stage){
-    const sr=stage.getBoundingClientRect(),ar=actorEl.getBoundingClientRect(),sw=sr.width||320;
-    const bw=Math.min(Math.max(sw*(side==='left'?.66:.64),248),Math.min(sw-20,380));
-    const ax=ar.left+ar.width*.5-sr.left;
-    const left=side==='left'?10:Math.max(10,Math.min(ax-bw*.55,sw-bw-10));
-    let top=ar.top-sr.top-(side==='left'?72:82);top=Math.max(22,Math.min(top,sr.height-150));
-    const tx=Math.max(34,Math.min(ax-left,bw-34));
-    box.style.left=`${left}px`;box.style.top=`${top}px`;box.style.width=`${bw}px`;box.style.transform='none';box.style.setProperty('--tail-x',`${tx}px`);
-  }
-  const n=[...clean].length;box.style.setProperty('--castle-speech-font',n>24?'14px':n>18?'15px':'17px');
-  clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},3000);
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 }
 let castleReportBusy=false;
 async function submitAdventureReport(){
@@ -3201,11 +3128,7 @@ async function submitAdventureReport(){
   }finally{castleReportBusy=false;}
 }
 function castleActorSpeak(kind,actorEl){
-<<<<<<< HEAD
   if(openingSequenceBusy||castleReportBusy||storyBusy||!$('#dialogOverlay').hidden)return;
-=======
-  if(castleReportBusy||storyBusy||!$('#dialogOverlay').hidden)return;
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
   if(kind==='king'&&state.adventure.awaitingReport)return submitAdventureReport();
   if(kind==='king')showCastleSpeech('モブスライムキング',pick(['頼むぞ、運命はお主たちにかかっている！','時には休息も大事じゃぞ！','装備は整っておるか？','城の設備はどんどん使ってくれ！']),actorEl,'center');
   else showCastleSpeech('モブライトアーム',pick(['みなさん、お気をつけて','ここはお任せを！','城は私が守ります！']),actorEl,'left');
@@ -3399,13 +3322,8 @@ window.addEventListener('resize',()=>{if(screens.home.classList.contains('active
 lockMobileGestures();initCommonNav();bindImages();bindEvents();
 /* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
 (async()=>{
-<<<<<<< HEAD
   try{let startOpening=false;try{startOpening=sessionStorage.getItem('mobQuestStartOpeningV74')==='1';if(startOpening)sessionStorage.removeItem('mobQuestStartOpeningV74');}catch(_){}if(startOpening){if(state.test?.enabled){document.documentElement.classList.remove('opening-boot-v76');showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){state.meta.openingCompleted=true;saveMeta();await goHome();}else await runOpeningV74();}else await runOpeningV74();}else showTitle();}
   catch(err){document.documentElement.classList.remove('opening-boot-v76');openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v76');console.error('[MOB QUEST] TITLE boot recovery',err);try{await renderHome();}catch(_){}showScreen('home');}
-=======
-  try{let startOpening=false;try{startOpening=sessionStorage.getItem('mobQuestStartOpeningV74')==='1';if(startOpening)sessionStorage.removeItem('mobQuestStartOpeningV74');}catch(_){}if(startOpening){if(state.test?.enabled){showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){state.meta.openingCompleted=true;saveMeta();await goHome();}else await runOpeningV74();}else await runOpeningV74();}else showTitle();}
-  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);try{await renderHome();}catch(_){}showScreen('home');}
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
 })();
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);

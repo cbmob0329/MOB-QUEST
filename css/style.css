@@ -2571,7 +2571,6 @@
 .enemy-sprite.enemy-damage-impact,.enemy-symbol.enemy-damage-impact{animation:enemyDamageFlashV75 .28s ease!important;transform-origin:center bottom!important}
 @keyframes enemyDamageFlashV75{0%,100%{filter:drop-shadow(0 7px 6px rgba(0,0,0,.38))}12%,55%{filter:brightness(1.72) saturate(2.35) sepia(.78) hue-rotate(-31deg) drop-shadow(0 0 12px rgba(255,40,40,.98))}78%{filter:brightness(1.25) saturate(1.45) drop-shadow(0 0 5px rgba(255,65,65,.55))}}
 .battle-screen.enemy-attacking .battle-field{z-index:35!important;overflow:visible!important}.battle-screen.enemy-attacking .enemy-area{overflow:visible!important}.battle-screen.enemy-attacking .party-hud{z-index:8!important}
-<<<<<<< HEAD
 
 
 /* ===== MOB QUEST v76: CANONICAL DIALOGUE / OPENING / CONTRAST GUARD ===== */
@@ -2605,5 +2604,3 @@
 /* v76 pre-paint opening guard: NEW must never flash the loading screen. */
 html.opening-boot-v76::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
 body.opening-sequence-v76 .throne-home,body.opening-sequence-v76 [data-castle-actor]{pointer-events:none!important}
-=======
->>>>>>> afd4411baa18804d7c1e9a0a5ae2a1438f3aad99
