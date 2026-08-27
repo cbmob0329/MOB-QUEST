@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=76;
+const GAME_ASSET_VERSION=77;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -638,7 +638,16 @@ async function applyHomeCommonScale(){
 function hasGameSave(){try{return !!(localStorage.getItem('mobQuestAdventureV5')||localStorage.getItem('mobQuestPartyV4')||localStorage.getItem('mobQuestMetaV1'));}catch(_){return false;}}
 function showTitle(){const c=$('#titleContinueBtn');if(c){c.disabled=!hasGameSave();c.classList.toggle('disabled',!hasGameSave());}showScreen('title');if(window.__mobBootGuard){clearTimeout(window.__mobBootGuard);window.__mobBootGuard=null;}}
 function clearGameProgressForNew(){try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('mobQuest')&&!['mobQuestTestSettingsV1'].includes(key))localStorage.removeItem(key);}}catch(_){}}
-async function startNewGame(){clearGameProgressForNew();try{sessionStorage.setItem('mobQuestStartOpeningV74','1');}catch(_){}location.reload();}
+async function startNewGame(){
+  clearGameProgressForNew();
+  state.party=defaultParty.map(x=>[...x]);state.coins=12500;state.meta=defaultMeta();
+  state.training={party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null};
+  state.quest=null;state.adventure=defaultAdventure();state.battle=null;state.speed=1;state.autoBattle=false;state.tavernSwapIndex=null;state.noticeQueue=[];state.noticeBusy=false;
+  saveParty();saveMeta();saveAdventure();
+  closeSettings?.();
+  if(state.test?.enabled){showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){state.meta.openingCompleted=true;saveMeta();await goHome();return;}}
+  await runOpeningV74();
+}
 async function continueGame(){await goHome();}
 
 async function renderHome(){
@@ -706,17 +715,17 @@ function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#taver
 function showTavernParty(){tavernView='party';state.tavernSwapIndex=null;renderTavern();}
 function showTavernDrinks(){tavernView='menu';renderTavernDrinkShop();$('#tavernDrinkPopup').hidden=false;}
 async function openingNarrateV74(text,{grand=false}={}){
-  const el=document.createElement('div');el.className=`opening-narration-v76${grand?' grand':''}`;el.innerHTML=`<div><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><b>タップで進む</b></div>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v76');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,180);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();clearTimeout(timer);resolve();},{once:true});});el.classList.remove('show');await fixedDelay(200);el.remove();
+  const el=document.createElement('div');el.className=`opening-narration-v76${grand?' grand':''}`;el.innerHTML=`<div><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><b>タップで進む</b></div>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,180);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();clearTimeout(timer);resolve();},{once:true});});el.classList.remove('show');await fixedDelay(200);el.remove();
 }
 
-async function openingSceneCaption(text){const el=document.createElement('div');el.className='opening-scene-caption-v76';el.innerHTML=`<p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p><small>タップで進む</small>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v76');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,140);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});el.remove();}
+async function openingSceneCaption(text){const el=document.createElement('div');el.className='opening-scene-caption-v76';el.innerHTML=`<p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p><small>タップで進む</small>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,140);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});el.remove();}
 async function openingCastleSay(speaker,text,actor,side='center'){const stage=$('.throne-stage'),box=$('#castleSpeech');if(!stage||!box)return facilityTalk(text,speaker,speaker==='モブピンク'?'play/02.png':'play/007.png');showCastleSpeech(speaker,text,actor,side);clearTimeout(showCastleSpeech.timer);await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,140);const next=e=>{if(!ready)return;e.preventDefault();stage.removeEventListener('pointerup',next,true);resolve();};stage.addEventListener('pointerup',next,true);});box.hidden=true;}
 function ensureOpeningPinkActor(){const stage=$('.throne-stage');if(!stage)return null;let actor=stage.querySelector('[data-opening-pink]');if(actor)return actor;actor=document.createElement('div');actor.className='opening-pink-actor-v76';actor.dataset.openingPink='1';actor.innerHTML='<img src="play/02.png" alt="モブピンク"><b>モブピンク</b>';stage.appendChild(actor);bindImages(actor);requestAnimationFrame(()=>actor.classList.add('arrived'));return actor;}
 async function homeTutorialSay(text,action=''){
   const wrap=document.createElement('div');wrap.className='home-tutorial-v76';wrap.innerHTML=`<div class="home-tutorial-bubble-v76"><img src="play/02.png" alt="モブピンク"><div><b>モブピンク</b><p>${balancedJapaneseText(String(text||''),18).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><small>タップで進む</small></div></div>${action?'<i class="home-tutorial-arrow-v76">▼</i>':''}`;document.body.appendChild(wrap);bindImages(wrap);await nextPaint();const target=action?document.querySelector(`[data-home-action="${action}"]`):null,arrow=wrap.querySelector('.home-tutorial-arrow-v76');if(target&&arrow){const r=target.getBoundingClientRect();arrow.style.left=`${r.left+r.width/2}px`;arrow.style.top=`${Math.max(8,r.top-22)}px`;}wrap.classList.add('show');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,120);wrap.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});wrap.remove();
 }
 async function runOpeningV74(){
-  openingSequenceBusy=true;document.body.classList.add('opening-sequence-v76');
+  openingSequenceBusy=true;document.body.classList.add('opening-sequence-v77');
   const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
   for(let i=0;i<prologue.length;i++)await openingNarrateV74(prologue[i],{grand:i===0});
   const curtain=document.createElement('div');curtain.className='opening-black-curtain-v76';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await fixedDelay(520);curtain.classList.add('fade');await fixedDelay(900);curtain.remove();
@@ -744,7 +753,7 @@ async function runOpeningV74(){
   await openingCastleSay('モブスライムキング','ヒロインみたいなことを言うな！',king(),'center');
   await openingCastleSay('モブスライムキング','お主が勇者を守るのじゃ！',king(),'center');
   await openingSceneCaption('こうして勇者はモブピンクと共に旅に出ることとなった');
-  openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v76');
+  openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v77');
   const splash=document.createElement('div');splash.className='opening-title-splash';splash.innerHTML='<img src="icon/01.png" alt="MOB STORY"><button type="button">NEXT</button>';document.body.appendChild(splash);bindImages(splash);await fixedDelay(3000);splash.classList.add('ready');await new Promise(resolve=>splash.querySelector('button').onclick=resolve);splash.remove();
   state.meta.openingCompleted=true;saveMeta();await goHome();
   await facilityTalk('大変なことになりましたね..','モブピンク','play/02.png');await facilityTalk('でも精一杯頑張るであります！','モブピンク','play/02.png');await facilityTalk('よろしくお願いします、勇者様！','モブピンク','play/02.png');
@@ -3319,11 +3328,19 @@ function bindEvents(){
 }
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-lockMobileGestures();initCommonNav();bindImages();bindEvents();
+let bootSetupError=null;
+try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
+catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
+function bindEssentialBootEvents(){
+  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
+  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
+}
+bindEssentialBootEvents();
+window.__mobBootReady=true;
 /* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
 (async()=>{
-  try{let startOpening=false;try{startOpening=sessionStorage.getItem('mobQuestStartOpeningV74')==='1';if(startOpening)sessionStorage.removeItem('mobQuestStartOpeningV74');}catch(_){}if(startOpening){if(state.test?.enabled){document.documentElement.classList.remove('opening-boot-v76');showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){state.meta.openingCompleted=true;saveMeta();await goHome();}else await runOpeningV74();}else await runOpeningV74();}else showTitle();}
-  catch(err){document.documentElement.classList.remove('opening-boot-v76');openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v76');console.error('[MOB QUEST] TITLE boot recovery',err);try{await renderHome();}catch(_){}showScreen('home');}
+  try{showTitle();}
+  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
 })();
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);

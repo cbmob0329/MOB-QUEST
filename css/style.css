@@ -2604,3 +2604,8 @@
 /* v76 pre-paint opening guard: NEW must never flash the loading screen. */
 html.opening-boot-v76::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
 body.opening-sequence-v76 .throne-home,body.opening-sequence-v76 [data-castle-actor]{pointer-events:none!important}
+
+/* v77 boot fail-safe */
+html.opening-boot-v77::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
+
+body.opening-sequence-v77 .throne-home,body.opening-sequence-v77 [data-castle-actor]{pointer-events:none!important}

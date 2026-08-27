@@ -1,3 +1,11 @@
+MOB QUEST playable core v77
+- NOW LOADING / START CHECK 停止を根本修正
+- index.htmlにCSS・data.js・game.jsを直接内包し、外部JS読み込み失敗を回避
+- 初期画面をタイトルに変更し、起動失敗時もローダー永久停止しない
+- 初期セットアップをtry/catch化し、タイトルのNEW/CONTINUE/設定だけは必ず再バインド
+- NEW GAME時の黒背景オープニングガードをv77へ更新
+- v76までの会話、トレーニング配色、酒場ロック、v75戦闘モーションを維持
+
 MOB QUEST playable core v76
 
 v76 dialogue/opening/contrast hotfix
