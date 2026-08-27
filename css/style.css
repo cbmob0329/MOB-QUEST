@@ -2609,3 +2609,33 @@ body.opening-sequence-v76 .throne-home,body.opening-sequence-v76 [data-castle-ac
 html.opening-boot-v77::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
 
 body.opening-sequence-v77 .throne-home,body.opening-sequence-v77 [data-castle-actor]{pointer-events:none!important}
+
+
+/* ===== MOB QUEST v78: GLOBAL TEXT / OPENING / TRAINING / SINGLE DASH GUARD ===== */
+.opening-narration-sequence-v78{background:#000!important;opacity:1!important;transition:none!important;touch-action:manipulation!important;user-select:none!important}
+.opening-narration-sequence-v78>div{width:94vw!important;max-width:520px!important;padding:0 10px!important}
+.opening-narration-sequence-v78 p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:clamp(20px,5.4vw,27px)!important;line-height:1.65!important;letter-spacing:.035em!important}
+.opening-narration-sequence-v78.grand p{font-size:clamp(24px,6.2vw,31px)!important}
+.opening-narration-sequence-v78 b,.opening-scene-caption-v76 small{display:none!important}
+.opening-scene-caption-v76 p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;text-wrap:wrap!important}
+html.opening-boot-v78::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
+body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-actor]{pointer-events:none!important}
+.dialog-overlay.facility-line-talk .dialog-card{width:min(94vw,var(--facility-card-width,350px))!important;max-width:440px!important;grid-template-columns:78px minmax(0,1fr)!important;gap:7px!important}
+.dialog-overlay.facility-line-talk .dialog-card>img{width:78px!important;height:120px!important}
+.dialog-overlay.facility-line-talk .dialog-body{min-height:88px!important;padding:9px 11px!important}
+.dialog-overlay.facility-line-talk .dialog-body>p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--facility-line-font,16px)!important;line-height:1.46!important;margin:4px 0!important}
+.dialog-overlay.facility-line-talk .dialog-body>small{font-size:10px!important}
+.castle-speech{max-width:calc(100% - 20px)!important;padding:9px 11px 11px!important}
+.castle-speech p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--castle-speech-font,16px)!important;line-height:1.42!important;margin-top:3px!important}
+.castle-speech small{font-size:10px!important}
+.home-tutorial-bubble-v76{left:10px!important;right:10px!important;top:auto!important;bottom:calc(188px + var(--safe-bottom))!important;min-height:66px!important;grid-template-columns:48px minmax(0,1fr)!important;gap:7px!important;padding:6px 9px!important;border-radius:16px!important}
+.home-tutorial-bubble-v76 img{width:48px!important;height:58px!important}.home-tutorial-bubble-v76 b{font-size:9px!important}.home-tutorial-bubble-v76 p{font-size:clamp(9px,2.55vw,11px)!important;line-height:1.25!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;margin:2px 0!important}.home-tutorial-bubble-v76 small{display:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-panel{background:#fff8e9!important;color:#2a2016!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title h2,#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title small,#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.panel-note{color:#382a1b!important;-webkit-text-fill-color:#382a1b!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season{background:linear-gradient(145deg,#785933,#3d6544)!important;border-color:#cdb27d!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season span{color:#ffe3a3!important;-webkit-text-fill-color:#ffe3a3!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season b,#trainingFeaturePopup[data-mode="program"] .battle-program-season small{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-reward{background:#ead9ad!important;color:#2d2414!important}#trainingFeaturePopup[data-mode="program"] .battle-program-reward b,#trainingFeaturePopup[data-mode="program"] .battle-program-reward small{color:#2d2414!important;-webkit-text-fill-color:#2d2414!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card{background:#183b57!important;color:#fff!important;-webkit-text-fill-color:#fff!important}#trainingFeaturePopup[data-mode="program"] .battle-program-card b,#trainingFeaturePopup[data-mode="program"] .battle-program-card small,#trainingFeaturePopup[data-mode="program"] .battle-program-card .program-number{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+.enemy-unit.enemy-lunge-unit{animation:enemyDashTowardPartyV78 .30s cubic-bezier(.18,.72,.22,1) forwards!important;transform-origin:center bottom!important}
+@keyframes enemyDashTowardPartyV78{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(0,150px,0) scale(1.075)}}

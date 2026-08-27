@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=77;
+const GAME_ASSET_VERSION=78;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -570,37 +570,54 @@ async function narrationDialog(text,choices=[['OK','ok']]){
 function facilityFlag(key){try{return localStorage.getItem(`mobQuestFacilitySeen:${key}`)==='1';}catch(_){return false;}}
 function markFacilityFlag(key){try{localStorage.setItem(`mobQuestFacilitySeen:${key}`,'1');}catch(_){}}
 function compactDialogueText(text){return String(text||'').replace(/\s+/g,'').trim();}
-function balancedJapaneseText(text,maxChars=15){
+const DIALOGUE_PROTECTED_PHRASES=['決意する','こととなった','ゆっくり','してくださいね','くださいね','また来てください','たくさん','レッツトレーニング','であります','勇者様','モブピンク','魔王討伐'];
+function balancedJapaneseText(text,maxChars=16,minTail=7){
   const compact=compactDialogueText(text);if(!compact)return'';const chars=[...compact];if(chars.length<=maxChars)return compact;
   const lines=[];let rest=chars;
+  const badStart='、。，．！？!?♪」』】）》〉〕］）ぁぃぅぇぉゃゅょっァィゥェォャュョッー';
+  const badEnd='「『【《〈〔［（';
+  const insideProtected=(str,pos)=>DIALOGUE_PROTECTED_PHRASES.some(ph=>{let i=str.indexOf(ph);while(i>=0){if(pos>i&&pos<i+[...ph].length)return true;i=str.indexOf(ph,i+1);}return false;});
   while(rest.length>maxChars){
-    const remainingLines=Math.ceil(rest.length/maxChars),target=Math.ceil(rest.length/remainingLines);let cut=target;
-    const punct='。！？!?♪、，';
-    for(let d=0;d<=4;d++)for(const pos of [target+d,target-d]){if(pos>=4&&pos<rest.length-3&&pos<=maxChars&&punct.includes(rest[pos-1])){cut=pos;d=99;break;}}
-    if(rest.length-cut<4)cut=Math.max(4,rest.length-4);
-    lines.push(rest.slice(0,cut).join(''));rest=rest.slice(cut);
+    const str=rest.join(''),lineCount=Math.ceil(rest.length/maxChars),target=Math.min(maxChars,Math.ceil(rest.length/lineCount));let best=Math.max(5,target),bestScore=1e9;
+    const lo=Math.max(5,target-5),hi=Math.min(maxChars,target+4,rest.length-minTail);
+    for(let pos=lo;pos<=hi;pos++){
+      const prev=rest[pos-1]||'',next=rest[pos]||'';let score=Math.abs(pos-target)*4;
+      if('。！？!?♪'.includes(prev))score-=24;else if('、，'.includes(prev))score-=14;
+      if(badStart.includes(next))score+=80;if(badEnd.includes(prev))score+=80;
+      if(/[\u3400-\u9fff]/.test(prev)&&/[\u3400-\u9fff]/.test(next))score+=95;
+      if(/[\u3400-\u9fff]/.test(prev)&&/[\u3040-\u309f]/.test(next))score+=90;
+      if(/[\u3040-\u309f]/.test(prev)&&/[\u3040-\u309f]/.test(next))score+=55;
+      if(insideProtected(str,pos))score+=120;
+      const tail=rest.length-pos;if(tail<minTail)score+=(minTail-tail)*40;
+      if(score<bestScore){bestScore=score;best=pos;}
+    }
+    if(rest.length-best<minTail)best=Math.max(5,rest.length-minTail);
+    lines.push(rest.slice(0,best).join(''));rest=rest.slice(best);
   }
   if(rest.length)lines.push(rest.join(''));
-  if(lines.length>=2&&[...lines.at(-1)].length<4){const need=4-[...lines.at(-1)].length,prev=[...lines.at(-2)],last=[...lines.at(-1)];lines[lines.length-2]=prev.slice(0,-need).join('');lines[lines.length-1]=prev.slice(-need).concat(last).join('');}
+  if(lines.length>=2&&[...lines.at(-1)].length<minTail){
+    const last=[...lines.at(-1)],prev=[...lines.at(-2)],need=Math.min(Math.max(0,prev.length-5),minTail-last.length);
+    if(need>0){lines[lines.length-2]=prev.slice(0,-need).join('');lines[lines.length-1]=prev.slice(-need).concat(last).join('');}
+  }
   return lines.join('\n');
 }
 function dialogueLongestLine(text){return Math.max(0,...String(text||'').split('\n').map(x=>[...x].length));}
-function facilitySpeechPages(text,maxChars=34){
+function facilitySpeechPages(text,maxChars=48){
   const compact=compactDialogueText(text);if(!compact)return[];
   const sentences=compact.match(/[^。！？!?♪]+[。！？!?♪]+|[^。！？!?♪]+$/g)||[compact],pages=[];let buf='';
-  for(const part of sentences){if(!buf){buf=part;continue;}if([...buf,...part].length<=maxChars)buf+=part;else{pages.push(buf);buf=part;}}
+  for(const part of sentences){const combined=buf+part;if(!buf||[...combined].length<=maxChars){buf=combined;continue;}pages.push(buf);buf=part;}
   if(buf)pages.push(buf);return pages;
 }
 function facilitySpeakerCharacter(speaker){return ['モブゴンゾー','モブミータ','モブマテリア','モブイルカエル','モブコーチ','モブメープル','モブスライムキング','モブライトアーム','モブピンク'].includes(speaker);}
 function facilityBubbleWidth(text,hasChoices=false){
-  const formatted=balancedJapaneseText(text,15),longest=dialogueLongestLine(formatted),body=Math.max(145,Math.min(255,longest*16+30));
-  const px=82+8+body;return Math.max(hasChoices?350:0,Math.min(470,px));
+  const formatted=balancedJapaneseText(text,17,7),longest=dialogueLongestLine(formatted),body=Math.max(136,Math.min(278,longest*15+24));
+  const px=78+7+body;return Math.max(hasChoices?340:0,Math.min(440,px));
 }
 async function facilityTalk(text,speaker='モブピンク',image='play/02.png'){
   const pages=facilitySpeechPages(text);if(!pages.length)return;
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
   speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';choices.innerHTML='';overlay.classList.add('facility-line-talk');overlay.hidden=false;
-  for(const page of pages){const formatted=balancedJapaneseText(page,15),longest=dialogueLongestLine(formatted),n=[...compactDialogueText(page)].length;textEl.textContent=formatted;textEl.dataset.lineLength=String(n);overlay.style.setProperty('--facility-card-width',`${facilityBubbleWidth(formatted)}px`);textEl.style.setProperty('--facility-line-font',longest>=15?'15px':longest>=13?'16px':'17px');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,true);});await fixedDelay(100);}
+  for(const page of pages){const formatted=balancedJapaneseText(page,17,7),longest=dialogueLongestLine(formatted),n=[...compactDialogueText(page)].length;textEl.textContent=formatted;textEl.dataset.lineLength=String(n);overlay.style.setProperty('--facility-card-width',`${facilityBubbleWidth(formatted)}px`);textEl.style.setProperty('--facility-line-font',longest>=17?'14px':longest>=15?'15px':'16px');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,true);});await fixedDelay(100);}
   overlay.hidden=true;overlay.classList.remove('facility-line-talk');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
 }
 async function facilityIntro(key,{speaker,image,first='',repeat=''}){
@@ -714,20 +731,34 @@ function renderTavern(){
 function showTavernMenu(){tavernView='menu';state.tavernSwapIndex=null;$('#tavernDrinkPopup').hidden=true;$('#tavernPartyPopup').hidden=true;$('#tavernFigurePopup').hidden=true;renderTavern();}
 function showTavernParty(){tavernView='party';state.tavernSwapIndex=null;renderTavern();}
 function showTavernDrinks(){tavernView='menu';renderTavernDrinkShop();$('#tavernDrinkPopup').hidden=false;}
-async function openingNarrateV74(text,{grand=false}={}){
-  const el=document.createElement('div');el.className=`opening-narration-v76${grand?' grand':''}`;el.innerHTML=`<div><p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><b>タップで進む</b></div>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77');await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,180);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();clearTimeout(timer);resolve();},{once:true});});el.classList.remove('show');await fixedDelay(200);el.remove();
+let openingLastAdvanceAt=0;
+function openingTapAllowed(minGap=220){const now=performance.now();if(now-openingLastAdvanceAt<minGap)return false;openingLastAdvanceAt=now;return true;}
+async function openingNarrationSequenceV78(messages){
+  const rows=(messages||[]).filter(Boolean);if(!rows.length)return;
+  const el=document.createElement('div');el.className='opening-narration-v76 opening-narration-sequence-v78';el.innerHTML='<div><p></p></div>';document.body.appendChild(el);
+  const p=el.querySelector('p');let index=0,readyAt=performance.now()+220,done=false;
+  const render=()=>{const max=window.innerWidth<=380?13:14;p.textContent=balancedJapaneseText(rows[index],max,7);el.classList.toggle('grand',index===0);};
+  render();el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77','opening-boot-v78');
+  await new Promise(resolve=>{const next=e=>{e.preventDefault();e.stopPropagation();if(done||performance.now()<readyAt||!openingTapAllowed())return;index++;if(index>=rows.length){done=true;el.removeEventListener('pointerup',next,true);resolve();return;}render();readyAt=performance.now()+110;};el.addEventListener('pointerup',next,{capture:true,passive:false});});
+  el.remove();
 }
-
-async function openingSceneCaption(text){const el=document.createElement('div');el.className='opening-scene-caption-v76';el.innerHTML=`<p>${String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p><small>タップで進む</small>`;document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,140);el.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});el.remove();}
-async function openingCastleSay(speaker,text,actor,side='center'){const stage=$('.throne-stage'),box=$('#castleSpeech');if(!stage||!box)return facilityTalk(text,speaker,speaker==='モブピンク'?'play/02.png':'play/007.png');showCastleSpeech(speaker,text,actor,side);clearTimeout(showCastleSpeech.timer);await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,140);const next=e=>{if(!ready)return;e.preventDefault();stage.removeEventListener('pointerup',next,true);resolve();};stage.addEventListener('pointerup',next,true);});box.hidden=true;}
+async function openingNarrateV74(text,{grand=false}={}){await openingNarrationSequenceV78([text]);}
+async function openingSceneCaption(text){
+  const el=document.createElement('div');el.className='opening-scene-caption-v76';el.innerHTML='<p></p>';el.querySelector('p').textContent=balancedJapaneseText(text,17,7);document.body.appendChild(el);el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77','opening-boot-v78');
+  await new Promise(resolve=>{const readyAt=performance.now()+180;const next=e=>{e.preventDefault();e.stopPropagation();if(performance.now()<readyAt||!openingTapAllowed())return;el.removeEventListener('pointerup',next,true);resolve();};el.addEventListener('pointerup',next,{capture:true,passive:false});});el.remove();
+}
+async function openingCastleSay(speaker,text,actor,side='center'){
+  const stage=$('.throne-stage'),box=$('#castleSpeech');if(!stage||!box)return facilityTalk(text,speaker,speaker==='モブピンク'?'play/02.png':'play/007.png');showCastleSpeech(speaker,text,actor,side);clearTimeout(showCastleSpeech.timer);
+  await new Promise(resolve=>{const readyAt=performance.now()+180;const next=e=>{e.preventDefault();e.stopPropagation();if(performance.now()<readyAt||!openingTapAllowed())return;stage.removeEventListener('pointerup',next,true);resolve();};stage.addEventListener('pointerup',next,{capture:true,passive:false});});box.hidden=true;
+}
 function ensureOpeningPinkActor(){const stage=$('.throne-stage');if(!stage)return null;let actor=stage.querySelector('[data-opening-pink]');if(actor)return actor;actor=document.createElement('div');actor.className='opening-pink-actor-v76';actor.dataset.openingPink='1';actor.innerHTML='<img src="play/02.png" alt="モブピンク"><b>モブピンク</b>';stage.appendChild(actor);bindImages(actor);requestAnimationFrame(()=>actor.classList.add('arrived'));return actor;}
 async function homeTutorialSay(text,action=''){
-  const wrap=document.createElement('div');wrap.className='home-tutorial-v76';wrap.innerHTML=`<div class="home-tutorial-bubble-v76"><img src="play/02.png" alt="モブピンク"><div><b>モブピンク</b><p>${balancedJapaneseText(String(text||''),18).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p><small>タップで進む</small></div></div>${action?'<i class="home-tutorial-arrow-v76">▼</i>':''}`;document.body.appendChild(wrap);bindImages(wrap);await nextPaint();const target=action?document.querySelector(`[data-home-action="${action}"]`):null,arrow=wrap.querySelector('.home-tutorial-arrow-v76');if(target&&arrow){const r=target.getBoundingClientRect();arrow.style.left=`${r.left+r.width/2}px`;arrow.style.top=`${Math.max(8,r.top-22)}px`;}wrap.classList.add('show');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,120);wrap.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});wrap.remove();
+  const wrap=document.createElement('div');wrap.className='home-tutorial-v76';wrap.innerHTML=`<div class="home-tutorial-bubble-v76"><img src="play/02.png" alt="モブピンク"><div><b>モブピンク</b><p>${balancedJapaneseText(String(text||''),24,7).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p></div></div>${action?'<i class="home-tutorial-arrow-v76">▼</i>':''}`;document.body.appendChild(wrap);bindImages(wrap);await nextPaint();const target=action?document.querySelector(`[data-home-action="${action}"]`):null,arrow=wrap.querySelector('.home-tutorial-arrow-v76');if(target&&arrow){const r=target.getBoundingClientRect();arrow.style.left=`${r.left+r.width/2}px`;arrow.style.top=`${Math.max(8,r.top-22)}px`;}wrap.classList.add('show');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,120);wrap.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});wrap.remove();
 }
 async function runOpeningV74(){
-  openingSequenceBusy=true;document.body.classList.add('opening-sequence-v77');
+  openingSequenceBusy=true;document.body.classList.add('opening-sequence-v78');
   const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
-  for(let i=0;i<prologue.length;i++)await openingNarrateV74(prologue[i],{grand:i===0});
+  await openingNarrationSequenceV78(prologue);
   const curtain=document.createElement('div');curtain.className='opening-black-curtain-v76';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await fixedDelay(520);curtain.classList.add('fade');await fixedDelay(900);curtain.remove();
   const king=()=>document.querySelector('[data-castle-actor="king"]');
   await openingCastleSay('モブスライムキング','勇者よ、世界を救ってくれ！',king(),'center');
@@ -753,7 +784,7 @@ async function runOpeningV74(){
   await openingCastleSay('モブスライムキング','ヒロインみたいなことを言うな！',king(),'center');
   await openingCastleSay('モブスライムキング','お主が勇者を守るのじゃ！',king(),'center');
   await openingSceneCaption('こうして勇者はモブピンクと共に旅に出ることとなった');
-  openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v77');
+  openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v78');
   const splash=document.createElement('div');splash.className='opening-title-splash';splash.innerHTML='<img src="icon/01.png" alt="MOB STORY"><button type="button">NEXT</button>';document.body.appendChild(splash);bindImages(splash);await fixedDelay(3000);splash.classList.add('ready');await new Promise(resolve=>splash.querySelector('button').onclick=resolve);splash.remove();
   state.meta.openingCompleted=true;saveMeta();await goHome();
   await facilityTalk('大変なことになりましたね..','モブピンク','play/02.png');await facilityTalk('でも精一杯頑張るであります！','モブピンク','play/02.png');await facilityTalk('よろしくお願いします、勇者様！','モブピンク','play/02.png');
@@ -853,7 +884,8 @@ function renderTrainingModeCarousel(){
 async function enterTraining(){
   state.training.mode='menu';renderTraining();
   if(!facilityFlag('training')){
-    await facilityTalk('よく来たね！\nここでは一度クリアしたエリアを\n再探索したり\nレコードを使って\n経験値やコインを\n稼ぐことが出来るよ！\n難しいことは何も無いから\nとにかくレッツトレーニングだ！','モブコーチ','play/003.png');
+    await facilityTalk('よく来たね！ここでは一度クリアしたエリアを再探索したり、レコードを使って経験値やコインを稼ぐことが出来るよ！','モブコーチ','play/003.png');
+    await facilityTalk('難しいことは何も無いから、とにかくレッツトレーニングだ！','モブコーチ','play/003.png');
     markFacilityFlag('training');
   }
 }
@@ -2313,7 +2345,7 @@ async function reactivePassiveBeat(a,text,duration=600){return passiveBeat(a,tex
 function floatNumber(value,kind='damage',target='enemy'){const el=document.createElement('div');el.className=`float-number ${kind}`;el.textContent=(kind==='heal'?'+':'')+Math.round(value);positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),850/state.speed);}
 function clearEnemyImpact(){for(const el of $$('[data-enemy-sprite],[data-enemy-symbol]')){el.classList.remove('enemy-hit','enemy-cast','enemy-damage-impact','enemy-advance');el.style.filter='';}$$('.enemy-unit-hit,.enemy-lunge-unit').forEach(x=>x.classList.remove('enemy-unit-hit','enemy-lunge-unit'));}
 function pulseEnemy(cls='hit',uid){const el=enemyVisual(uid);if(!el)return;const unit=el.closest('.enemy-unit');el.classList.remove('enemy-hit','enemy-cast','enemy-advance','enemy-damage-impact');el.style.filter='';if(unit)unit.classList.remove('enemy-unit-hit');void el.offsetWidth;if(cls==='advance'){if(unit){unit.classList.remove('enemy-lunge-unit');void unit.offsetWidth;unit.classList.add('enemy-lunge-unit');}return;}if(cls==='cast'){el.classList.add('enemy-cast');const cleanup=()=>{if(el.isConnected)el.classList.remove('enemy-cast');};el.addEventListener('animationend',cleanup,{once:true});setTimeout(cleanup,620);return;}el.classList.add('enemy-damage-impact');if(unit){void unit.offsetWidth;unit.classList.add('enemy-unit-hit');}const cleanup=()=>{if(el.isConnected){el.classList.remove('enemy-damage-impact');el.style.filter='';}if(unit?.isConnected)unit.classList.remove('enemy-unit-hit');};setTimeout(cleanup,340);}
-async function beginEnemyLunge(uid){const screen=$('#battleScreen'),el=enemyVisual(uid),unit=el?.closest('.enemy-unit');if(screen)screen.classList.add('enemy-attacking');if(unit){unit.classList.remove('enemy-lunge-unit');void unit.offsetWidth;unit.classList.add('enemy-lunge-unit');}await fixedDelay(360);}
+async function beginEnemyLunge(uid){const screen=$('#battleScreen'),el=enemyVisual(uid),unit=el?.closest('.enemy-unit');if(screen)screen.classList.add('enemy-attacking');if(unit){unit.classList.remove('enemy-lunge-unit');void unit.offsetWidth;unit.classList.add('enemy-lunge-unit');}await fixedDelay(300);}
 function endEnemyLunge(){const screen=$('#battleScreen');if(screen)screen.classList.remove('enemy-attacking');$$('.enemy-lunge-unit').forEach(x=>x.classList.remove('enemy-lunge-unit'));}
 function fx(type='slash',target){if(target==null)target=(type==='buff'||type==='heal')?(activeAlly()?.id||'enemy'):'enemy';const el=document.createElement('div');el.className=`simple-fx ${type}`;positionEffect(el,target);$('#battleFxLayer').appendChild(el);setTimeout(()=>el.remove(),650/state.speed);}
 
@@ -3111,11 +3143,11 @@ function renderThroneRoom(){
 }
 function showCastleSpeech(speaker,text,actorEl=null,side='center'){
   const box=$('#castleSpeech');if(!box)return;
-  const clean=compactDialogueText(text),formatted=balancedJapaneseText(clean,15),longest=dialogueLongestLine(formatted);box.className=`castle-speech side-${side}`;$('small',box).textContent=speaker;$('p',box).textContent=formatted;box.hidden=false;
+  const clean=compactDialogueText(text),formatted=balancedJapaneseText(clean,16,7),longest=dialogueLongestLine(formatted);box.className=`castle-speech side-${side}`;$('small',box).textContent=speaker;$('p',box).textContent=formatted;box.hidden=false;
   box.style.left='';box.style.top='';box.style.width='';box.style.transform='';box.style.removeProperty('--tail-x');box.style.removeProperty('--castle-speech-font');
   const stage=box.parentElement;
-  if(actorEl&&stage){const sr=stage.getBoundingClientRect(),ar=actorEl.getBoundingClientRect(),sw=sr.width||320;const natural=Math.max(190,Math.min(350,longest*17+52)),bw=Math.min(sw-20,natural),ax=ar.left+ar.width*.5-sr.left;const left=Math.max(10,Math.min(ax-bw*.55,sw-bw-10));let top=ar.top-sr.top-72;top=Math.max(20,Math.min(top,sr.height-145));const tx=Math.max(30,Math.min(ax-left,bw-30));box.style.left=`${left}px`;box.style.top=`${top}px`;box.style.width=`${bw}px`;box.style.transform='none';box.style.setProperty('--tail-x',`${tx}px`);}
-  box.style.setProperty('--castle-speech-font',longest>=15?'15px':longest>=13?'16px':'17px');clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},3000);
+  if(actorEl&&stage){const sr=stage.getBoundingClientRect(),ar=actorEl.getBoundingClientRect(),sw=sr.width||320,natural=Math.max(184,Math.min(332,longest*15+44)),bw=Math.min(sw-20,natural),ax=ar.left+ar.width*.5-sr.left;box.style.width=`${bw}px`;box.style.transform='none';const bh=box.offsetHeight||96,left=Math.max(10,Math.min(ax-bw*.52,sw-bw-10));let top=ar.top-sr.top-bh-14;top=Math.max(14,Math.min(top,sr.height-bh-22));const tx=Math.max(28,Math.min(ax-left,bw-28));box.style.left=`${left}px`;box.style.top=`${top}px`;box.style.setProperty('--tail-x',`${tx}px`);}
+  box.style.setProperty('--castle-speech-font',longest>=16?'14px':longest>=14?'15px':'16px');clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},3000);
 }
 let castleReportBusy=false;
 async function submitAdventureReport(){
