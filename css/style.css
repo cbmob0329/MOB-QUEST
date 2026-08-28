@@ -2639,3 +2639,38 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 #trainingFeaturePopup[data-mode="program"] .battle-program-card{background:#183b57!important;color:#fff!important;-webkit-text-fill-color:#fff!important}#trainingFeaturePopup[data-mode="program"] .battle-program-card b,#trainingFeaturePopup[data-mode="program"] .battle-program-card small,#trainingFeaturePopup[data-mode="program"] .battle-program-card .program-number{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
 .enemy-unit.enemy-lunge-unit{animation:enemyDashTowardPartyV78 .30s cubic-bezier(.18,.72,.22,1) forwards!important;transform-origin:center bottom!important}
 @keyframes enemyDashTowardPartyV78{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(0,150px,0) scale(1.075)}}
+
+
+/* ===== MOB QUEST v79: SKILL CONFIRM / VICTORY / TECH SIZE / FX MOTION ===== */
+.command-btn.special .battle-command-icon{transform:none!important;width:100%!important;height:100%!important;object-fit:contain!important}
+.skill-sprite-fx{width:min(46vw,184px)!important;height:min(46vw,184px)!important;transform:translate(-50%,-50%)!important}
+.skill-sprite-fx.earth-shake .skill-frame,.skill-sprite-fx.light-shake .skill-frame{animation:skillHorizontalShakeV79 .075s linear infinite!important}
+.skill-sprite-fx.status-noise .skill-frame{animation:skillHorizontalShakeV79 .07s linear infinite!important}
+.skill-sprite-fx.status-chill .skill-frame{animation:skillVerticalFloatV79 1s ease-in-out!important}
+.skill-sprite-fx.status-fast .skill-frame{animation:skillFastPassV79 .85s cubic-bezier(.12,.72,.22,1) both!important}
+.skill-sprite-fx.status-repeat .skill-frame{animation:skillRepeatLeftV79 1s ease-out both!important}
+.skill-sprite-fx.status-repeat .skill-frame-ghost{animation:skillRepeatRightV79 1s ease-out both!important}
+@keyframes skillHorizontalShakeV79{0%,100%{transform:translateX(-7px)}50%{transform:translateX(7px)}}
+@keyframes skillVerticalFloatV79{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+@keyframes skillFastPassV79{0%{transform:translateX(-230px);opacity:0}12%{opacity:1}80%{opacity:1}100%{transform:translateX(230px);opacity:0}}
+@keyframes skillRepeatLeftV79{0%{transform:translateX(-180px);opacity:0}45%,100%{transform:translateX(-18px);opacity:1}}
+@keyframes skillRepeatRightV79{0%{transform:translateX(180px);opacity:0}45%,100%{transform:translateX(18px);opacity:1}}
+.enemy-unit.enemy-lunge-unit{animation:enemyDashTowardPartyV79 .25s cubic-bezier(.12,.76,.18,1) forwards!important;transform-origin:center bottom!important}
+@keyframes enemyDashTowardPartyV79{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(0,150px,0) scale(1.075)}}
+.victory-banner-v79{position:fixed;z-index:310;left:50%;top:40%;transform:translate(-50%,-50%) scale(.82);width:min(86vw,390px);padding:16px 18px;border-radius:18px;background:#f1dfbd;border:4px solid #8e673b;box-shadow:0 14px 36px rgba(0,0,0,.48),inset 0 0 0 2px #fff2d5;text-align:center;color:#1f1710;opacity:0;pointer-events:none}
+.victory-banner-v79.show{animation:victoryBannerInV79 1.05s cubic-bezier(.16,.8,.22,1) both}
+.victory-banner-v79 small{display:block;font-size:9px;letter-spacing:.2em;color:#6b4c2d;font-weight:1000}.victory-banner-v79 b{display:block;font-size:34px;line-height:1.05;color:#15100b;text-shadow:0 2px 0 #fff3d8}.victory-banner-v79 span{display:block;margin-top:5px;font-size:14px;font-weight:1000;color:#1f1710}
+@keyframes victoryBannerInV79{0%{opacity:0;transform:translate(-50%,-50%) scale(.76)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}35%,82%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-54%) scale(.98)}}
+.result-overlay.victory .result-card{background:#f1dfbd!important;border:4px solid #8e673b!important;box-shadow:0 18px 45px rgba(0,0,0,.48),inset 0 0 0 2px #fff2d5!important;color:#1c150e!important}
+.result-overlay.victory .result-card h2,.result-overlay.victory .result-card p,.result-overlay.victory .result-card b,.result-overlay.victory .result-card em{color:#1c150e!important;text-shadow:none!important}
+.result-overlay.victory .result-card>small,.result-overlay.victory .result-rewards small{color:#6f5437!important}
+.result-overlay.victory .result-rewards>div,.result-overlay.victory .levelup-card{background:#ead4ad!important;border-color:#b18a59!important;color:#1c150e!important}
+
+
+/* ===== MOB QUEST v79 final: exact skill fade / unified technique size ===== */
+.skill-sprite-fx .skill-frame.skill-fade-v79.active{animation:skillFrameFadeV79 1s linear both!important}
+@keyframes skillFrameFadeV79{0%{opacity:1}72%{opacity:1}100%{opacity:0}}
+.command-btn.special{transform:none!important}
+.command-btn.special .battle-command-icon,.command-btn.magic .battle-command-icon,.command-btn.ultimate .battle-command-icon{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;transform:none!important;object-fit:contain!important}
+.victory-banner-v79{background:#f4e3c3!important;border-color:#7d5933!important;color:#15100b!important}
+.victory-banner-v79 b,.victory-banner-v79 span{color:#15100b!important;-webkit-text-fill-color:#15100b!important}
