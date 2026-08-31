@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=79;
+const GAME_ASSET_VERSION=80;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -327,7 +327,7 @@ function playerDetailMagic(p){const element=normalizeElement(p.attribute),all=MO
 function playerDetailTechnique(p){return temporaryTechnique({...p,equipment:equipmentFor(p.id)});}
 function openPlayerDetail(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),magic=playerDetailMagic(p),tech=playerDetailTechnique(p),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true));body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>${p.attribute} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>魔法</h3>${magic?`<div class="player-detail-list"><span><b>${magic.name}</b><small>MP ${magic.cost} / ${magic.element}属性 / ${magic.target==='all'?'敵全体':'敵単体'}</small></span></div>`:'<p>現在使用できる魔法はありません。</p>'}</section><section><h3>特技</h3>${tech?`<div class="player-detail-list"><span><b>${tech.name}</b><small>MP ${tech.cost} / 現在使用可能な基本特技</small></span></div>`:'<p>現在使用できる特技はありません。</p>'}</section><section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;}
 function closePlayerDetail(){const ov=$('#playerDetailOverlay');if(ov)ov.hidden=true;}
-function defaultMeta(){return{coins:12500,exp:{},inventory:{},drinkSets:{},weapons:{},medals:{},equipment:{},figures:{},figureEquipment:{},figureOrder:[],ultimateCooldowns:{},openingCompleted:false,defeatedBosses:[],defeatedElites:[]};}
+function defaultMeta(){return{coins:0,diamonds:0,exp:{},inventory:{},drinkSets:{},weapons:{},medals:{},equipment:{},figures:{},figureEquipment:{},figureOrder:[],ultimateCooldowns:{},openingCompleted:false,starterGrantReceived:false,firstGrassReviveUsed:false,defeatedBosses:[],defeatedElites:[]};}
 function loadMeta(){try{const v=JSON.parse(localStorage.getItem('mobQuestMetaV1'));if(v&&typeof v==='object'){const equipment={...(v.equipment||{})};if(equipment.jerry&&!equipment.jessie){equipment.jessie=equipment.jerry;delete equipment.jerry;}return{...defaultMeta(),...v,exp:{...(v.exp||{})},inventory:{...(v.inventory||{})},drinkSets:{...(v.drinkSets||{})},weapons:{...(v.weapons||{})},medals:{...(v.medals||{})},equipment,figures:{...(v.figures||{})},figureEquipment:{...(v.figureEquipment||{})},figureOrder:[...(v.figureOrder||[])],ultimateCooldowns:{...(v.ultimateCooldowns||{})},defeatedBosses:[...(v.defeatedBosses||[])],defeatedElites:[...(v.defeatedElites||[])]};}}catch(_){}return defaultMeta();}
 function saveMeta(){if(!state?.meta)return;state.meta.coins=state.coins;try{localStorage.setItem('mobQuestMetaV1',JSON.stringify(state.meta));}catch(_){}}
 function itemData(id){return GAME_ITEMS.find(x=>x.id===String(id).padStart(2,'0'));}
@@ -341,7 +341,7 @@ const defaultParty=[['yusha',5],['pink',5]];
 const initialMeta=loadMeta();
 const initialCoins=Number(initialMeta.coins);
 const state={
-  party:loadParty(), coins:Number.isFinite(initialCoins)?initialCoins:12500, meta:initialMeta,
+  party:loadParty(), coins:Number.isFinite(initialCoins)?initialCoins:0, meta:initialMeta,
   training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null},
   quest:null,
   adventure:loadAdventure(),
@@ -657,18 +657,19 @@ function showTitle(){const c=$('#titleContinueBtn');if(c){c.disabled=!hasGameSav
 function clearGameProgressForNew(){try{for(let i=localStorage.length-1;i>=0;i--){const key=localStorage.key(i);if(key&&key.startsWith('mobQuest')&&!['mobQuestTestSettingsV1'].includes(key))localStorage.removeItem(key);}}catch(_){}}
 async function startNewGame(){
   clearGameProgressForNew();
-  state.party=defaultParty.map(x=>[...x]);state.coins=12500;state.meta=defaultMeta();
+  state.party=defaultParty.map(x=>[...x]);state.coins=0;state.meta=defaultMeta();
   state.training={party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null};
   state.quest=null;state.adventure=defaultAdventure();state.battle=null;state.speed=1;state.autoBattle=false;state.tavernSwapIndex=null;state.noticeQueue=[];state.noticeBusy=false;
   saveParty();saveMeta();saveAdventure();
   closeSettings?.();
-  if(state.test?.enabled){showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){state.meta.openingCompleted=true;saveMeta();await goHome();return;}}
+  if(state.test?.enabled){showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){await grantOpeningStarterSupplies({silent:true});state.meta.openingCompleted=true;saveMeta();await goHome();return;}}
   await runOpeningV74();
 }
 async function continueGame(){await goHome();}
 
 async function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
+  const d=$('#diamondValue');if(d)d.textContent=Math.max(0,Number(state.meta?.diamonds)||0).toLocaleString();
 }
 async function goHome(){
   /* HOME deliberately avoids player PNGs: this removes the native-size flash and unnecessary decode work. */
@@ -755,6 +756,17 @@ function ensureOpeningPinkActor(){const stage=$('.throne-stage');if(!stage)retur
 async function homeTutorialSay(text,action=''){
   const wrap=document.createElement('div');wrap.className='home-tutorial-v76';wrap.innerHTML=`<div class="home-tutorial-bubble-v76"><img src="play/02.png" alt="モブピンク"><div><b>モブピンク</b><p>${balancedJapaneseText(String(text||''),24,7).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</p></div></div>${action?'<i class="home-tutorial-arrow-v76">▼</i>':''}`;document.body.appendChild(wrap);bindImages(wrap);await nextPaint();const target=action?document.querySelector(`[data-home-action="${action}"]`):null,arrow=wrap.querySelector('.home-tutorial-arrow-v76');if(target&&arrow){const r=target.getBoundingClientRect();arrow.style.left=`${r.left+r.width/2}px`;arrow.style.top=`${Math.max(8,r.top-22)}px`;}wrap.classList.add('show');await new Promise(resolve=>{let ready=false;setTimeout(()=>ready=true,120);wrap.addEventListener('pointerup',e=>{if(!ready)return;e.preventDefault();resolve();},{once:true});});wrap.remove();
 }
+async function grantOpeningStarterSupplies({silent=false}={}){
+  if(state.meta?.starterGrantReceived)return;
+  state.coins=Math.max(0,Number(state.coins)||0)+15000;
+  state.meta.coins=state.coins;
+  if(!state.meta.inventory)state.meta.inventory={};
+  state.meta.inventory['mob-tent']=tentCount()+2;
+  state.meta.starterGrantReceived=true;
+  saveMeta();
+  if(silent)return;
+  const el=document.createElement('div');el.className='opening-supply-v80';el.innerHTML='<div class="opening-supply-card-v80"><small>KINGDOM SUPPLY</small><h2>旅の支度が支給された！</h2><div><span><b>15,000G</b><em>ゴールド</em></span><span><b>×2</b><em>モブテント</em></span></div></div>';document.body.appendChild(el);await nextPaint();el.classList.add('show');await fixedDelay(1900);el.classList.remove('show');await fixedDelay(260);el.remove();
+}
 async function runOpeningV74(){
   openingSequenceBusy=true;document.body.classList.add('opening-sequence-v78');
   const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
@@ -784,6 +796,7 @@ async function runOpeningV74(){
   await openingCastleSay('モブスライムキング','ヒロインみたいなことを言うな！',king(),'center');
   await openingCastleSay('モブスライムキング','お主が勇者を守るのじゃ！',king(),'center');
   await openingSceneCaption('こうして勇者はモブピンクと共に旅に出ることとなった');
+  await grantOpeningStarterSupplies();
   openingSequenceBusy=false;document.body.classList.remove('opening-sequence-v78');
   const splash=document.createElement('div');splash.className='opening-title-splash';splash.innerHTML='<img src="icon/01.png" alt="MOB STORY"><button type="button">NEXT</button>';document.body.appendChild(splash);bindImages(splash);await fixedDelay(3000);splash.classList.add('ready');await new Promise(resolve=>splash.querySelector('button').onclick=resolve);splash.remove();
   state.meta.openingCompleted=true;saveMeta();await goHome();
@@ -1118,7 +1131,7 @@ function createAdventureEncounter(){
     else if(area.nextWave?.length)waves.push(tagWave(area.nextWave));
     return{waves,bossBattle:true,label:`${w.name} ${area.name} 中ボス/ボス`};
   }
-  const count=weightedEnemyCount(areaIndex),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1),encounterRole:'normal'});}return{waves:[list],bossBattle:false,label:`${w.name} ${area.name} 通常戦`};
+  const count=w?.id==='grassland'?rint(1,2):weightedEnemyCount(areaIndex),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1),encounterRole:'normal'});}return{waves:[list],bossBattle:false,label:`${w.name} ${area.name} 通常戦`};
 }
 function encounterNames(enc){return(enc?.waves?.[0]||[]).map(x=>{const t=trainingEnemyTemplate(x.id);return`${t?.name||x.id} Lv${x.level}`;}).join(' / ');}
 
@@ -2077,7 +2090,7 @@ async function showExplorePhase(title,sub='',img='',duration=1050){
   applyAdventureAreaTheme();const ov=$('#exploreOverlay'),load=$('#exploreLoading'),reward=$('#exploreReward');ov.hidden=false;$('#exploreTitle').textContent='探索結果';load.hidden=true;reward.hidden=false;$('#exploreRewardText').textContent=title;$('#exploreRewardSub').textContent=sub||'';const im=$('#exploreRewardImg');if(img){im.hidden=false;im.src=img;bindImage(im);}else im.hidden=true;await fixedDelay(duration);ov.hidden=true;
 }
 async function runExploreDots(){applyAdventureAreaTheme();const ov=$('#exploreOverlay'),load=$('#exploreLoading'),reward=$('#exploreReward');ov.hidden=false;$('#exploreTitle').textContent='勇者一行は周囲を探索した';reward.hidden=true;load.hidden=false;for(let i=0;i<6;i++){const n=i%3+1;$('#exploreDots').textContent='.'.repeat(n);await fixedDelay(220);}load.hidden=true;}
-function makeAmbushConfigs(){const w=currentWorld(),count=rint(2,4),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return list;}
+function makeAmbushConfigs(){const w=currentWorld(),count=w?.id==='grassland'?rint(1,2):rint(2,4),used=[],list=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(w,used);if(!t)t=weightedNormalTemplate(w,[]);if(!t)break;used.push(t.id);list.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return list;}
 function completeExplorationUnlock(){const enc=createAdventureEncounter();state.adventure.pendingEncounter=enc;state.adventure.battleReady=true;saveAdventure();renderAdventure();}
 async function startExploreAmbush(){const configs=makeAmbushConfigs(),w=currentWorld(),area=currentArea();if(!configs.length){completeExplorationUnlock();return;}$('#exploreOverlay').hidden=true;await startBattleLoaded({mode:'adventure',returnScreen:'adventure',enemyConfigs:configs,party:state.party,useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,bossBattle:false,explorationAmbush:true,adventureLabel:`${w.name} 探索遭遇`});}
 function rollExploreRecord(){const bonus=partyExploreFigureBonus(),mul=1+bonus,r=Math.random();if(r<.05*mul)return'36';if(r<.11*mul)return'37';if(r<.15*mul)return'38';return'';}
@@ -2129,7 +2142,7 @@ async function useCampDrink(id){if(areaCampActionUsed('drink'))return narrationD
 function renderCampDrinks(){const p=$('#campSubPanel');$('#campMainMenu').hidden=true;p.hidden=false;const owned=DRINK_SETS.filter(d=>drinkCount(d.id)>0);p.innerHTML=`${campBackButton()}<div class="camp-sub-title"><small>DRINK</small><h3>ドリンクセット</h3></div><div class="camp-inventory">${owned.length?owned.map(d=>`<button data-camp-drink="${d.id}" type="button"><img src="${d.image}" alt="${d.name}"><div><b>${d.name}</b><small>${d.desc}</small></div><em>×${drinkCount(d.id)}</em></button>`).join(''):'<div class="camp-empty-note">所持しているドリンクセットはありません。<br>酒場で購入できます。</div>'}</div>`;bindImages(p);$('[data-camp-back]',p).onclick=renderCampMain;$$('[data-camp-drink]',p).forEach(b=>b.onclick=()=>useCampDrink(b.dataset.campDrink));}
 
 function saveCampCheckpoint(){const cp={worldIndex:state.adventure.worldIndex,areaIndex:state.adventure.areaIndex,battleIndex:state.adventure.battleIndex,battleReady:state.adventure.battleReady,completed:state.adventure.completed,pendingEncounter:clone(state.adventure.pendingEncounter),vitals:clone(state.adventure.vitals),storyFlags:clone(state.adventure.storyFlags||{}),campUsed:clone(state.adventure.campUsed||{}),areaBuff:clone(state.adventure.areaBuff),coins:state.coins,party:clone(state.party),meta:clone(state.meta)};state.adventure.checkpoint=cp;saveAdventure();saveParty();saveMeta();}
-function restoreCampCheckpoint(){const cp=state.adventure.checkpoint;if(cp){state.adventure={...state.adventure,...clone(cp),checkpoint:clone(cp)};state.coins=Number(cp.coins)||0;if(cp.meta){state.meta={...defaultMeta(),...clone(cp.meta)};state.meta.coins=state.coins;saveMeta();}if(Array.isArray(cp.party)){state.party=clone(cp.party).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);saveParty();}}else state.adventure=defaultAdventure();saveAdventure();}
+function restoreCampCheckpoint(){const cp=state.adventure.checkpoint,reviveUsed=!!state.meta?.firstGrassReviveUsed,starterGrant=!!state.meta?.starterGrantReceived,diamonds=Math.max(0,Number(state.meta?.diamonds)||0);if(cp){state.adventure={...state.adventure,...clone(cp),checkpoint:clone(cp)};state.coins=Number(cp.coins)||0;if(cp.meta){state.meta={...defaultMeta(),...clone(cp.meta)};if(reviveUsed)state.meta.firstGrassReviveUsed=true;if(starterGrant)state.meta.starterGrantReceived=true;state.meta.diamonds=Math.max(diamonds,Number(state.meta.diamonds)||0);state.meta.coins=state.coins;saveMeta();}if(Array.isArray(cp.party)){state.party=clone(cp.party).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);saveParty();}}else state.adventure=defaultAdventure();saveAdventure();}
 
 function growthValue(lv,curve){lv=clamp(Number(lv)||1,1,120);const [v1,v99,v120=v99]=curve;if(lv<=99){const t=(lv-1)/98;return Math.round(v1+(v99-v1)*t);}const t=(lv-99)/21;return Math.round(v99+(v120-v99)*t);}
 function rawBaseStats(p,lv){const t=TEMP_BALANCE.playerTargets?.[p.id];if(!t){const old=TEMP_BALANCE.playerGrowth[p.id],b=TEMP_BALANCE.base;return{maxHp:Math.round(b.hp+old.hp*lv),maxMp:Math.round(b.mp+old.mp*lv),atk:Math.round(b.atk+old.atk*lv),mag:Math.round(b.mag+old.mag*lv),def:Math.round(b.def+old.def*lv),res:Math.round(b.res+old.res*lv),spd:Math.round(b.spd+old.spd*lv)};}return{maxHp:growthValue(lv,t.hp),maxMp:growthValue(lv,t.mp),atk:growthValue(lv,t.atk),mag:growthValue(lv,t.mag),def:growthValue(lv,t.def),res:growthValue(lv,t.res),spd:growthValue(lv,t.spd)};}
@@ -3044,8 +3057,21 @@ function renderResultProgression(changes=[]){const root=$('#resultProgression');
 
 function finishScriptedBattle(){const b=state.battle;if(!b||b.finished)return;b.finished=true;persistUltimateCooldownsFromBattle();persistBattlePartyOrder();b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';$('#battleBackBtn').disabled=false;setCommandDisabled(true);const limit=Number(b.config?.scriptedTurnLimit)||0;notice(limit?`${limit} TURN EVENT END`:'EVENT BATTLE CLEAR','system',650);setTimeout(()=>{renderAdventure();showScreen('adventure');const r=scriptedBattleResolve;scriptedBattleResolve=null;if(r)r(true);},320);}
 function playVictoryBanner(){let el=$('#victoryBannerV79');if(el)el.remove();el=document.createElement('div');el.id='victoryBannerV79';el.className='victory-banner-v79';el.innerHTML='<small>BATTLE CLEAR</small><b>VICTORY!</b><span>勝利！</span>';document.body.appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),260);},1050);}
+function canTriggerFirstGrassRescue(b){return !!(b&&b.mode==='adventure'&&currentWorld()?.id==='grassland'&&!state.meta?.firstGrassReviveUsed&&!b.firstGrassRescueInProgress);}
+async function triggerFirstGrassRescue(b){
+  if(!b)return;
+  b.firstGrassRescueInProgress=true;b.finished=true;b.busy=true;setCommandDisabled(true);
+  state.meta.firstGrassReviveUsed=true;saveMeta();
+  await actionCutin('これは物語の始まり','system',1150);
+  await actionCutin('まだ全滅するわけにはいかない！','system',1350);
+  for(const a of b.allies||[]){a.dead=false;a.hp=a.maxHp;a.mpNow=a.maxMp;a.guard=0;a.guardTurns=0;a.barrier=0;a.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};}
+  persistAdventureVitals();renderBattle();
+  await actionCutin('1度だけ全回復する！','heal',1350);
+  b.queue=[];b.queuePos=0;b.finished=false;b.busy=false;b.firstGrassRescueInProgress=false;renderBattle();startRound();
+}
 function finishBattle(win){
   const b=state.battle;if(!b||b.finished)return;if(b.mode==='story')return finishScriptedBattle();
+  if(!win&&canTriggerFirstGrassRescue(b)){void triggerFirstGrassRescue(b);return;}
   b.finished=true;b.resultWin=!!win;b.auto=false;persistUltimateCooldownsFromBattle();persistBattlePartyOrder();$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);
   if(win)playVictoryBanner();else notice('DEFEAT...','system',900);
   let reward={exp:0,coin:0,changes:[]},drops=[];

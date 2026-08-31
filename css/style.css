@@ -2674,3 +2674,58 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .command-btn.special .battle-command-icon,.command-btn.magic .battle-command-icon,.command-btn.ultimate .battle-command-icon{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;transform:none!important;object-fit:contain!important}
 .victory-banner-v79{background:#f4e3c3!important;border-color:#7d5933!important;color:#15100b!important}
 .victory-banner-v79 b,.victory-banner-v79 span{color:#15100b!important;-webkit-text-fill-color:#15100b!important}
+
+
+/* ===== MOB QUEST v80: STARTER BALANCE / READABILITY / EXPLORE ===== */
+/* Exploration result is always beige with dark, high-contrast copy. */
+.explore-overlay .explore-card{
+  background:#f1dfbd!important;
+  border:3px solid #9a7144!important;
+  box-shadow:inset 0 0 0 2px #fff4d9,0 14px 34px rgba(0,0,0,.38)!important;
+  color:#21170f!important;
+  text-shadow:none!important;
+}
+.explore-overlay .explore-card>small,
+.explore-overlay .explore-card h2,
+.explore-overlay .explore-loading,
+.explore-overlay .explore-reward b,
+.explore-overlay .explore-reward p,
+.explore-overlay .explore-reward small{
+  color:#21170f!important;
+  -webkit-text-fill-color:#21170f!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+.explore-overlay .explore-loading{font-size:14px!important;font-weight:1000!important}
+.explore-overlay .explore-reward b{font-size:14px!important;font-weight:1000!important}
+.explore-overlay .explore-reward p{font-size:10px!important;font-weight:900!important}
+
+/* Level-up cards: never place dark copy on dark pills. */
+.result-overlay.victory .levelup-card{background:#ead4ad!important;color:#20160e!important}
+.result-overlay.victory .levelup-head b,
+.result-overlay.victory .levelup-head em,
+.result-overlay.victory .levelup-head small{color:#20160e!important;-webkit-text-fill-color:#20160e!important;text-shadow:none!important}
+.result-overlay.victory .levelup-head small{color:#365f80!important;-webkit-text-fill-color:#365f80!important}
+.result-overlay.victory .levelup-stats span{
+  background:#fff2d2!important;
+  border:1px solid #a87c47!important;
+  color:#21170f!important;
+  -webkit-text-fill-color:#21170f!important;
+  font-size:8px!important;
+  font-weight:1000!important;
+  line-height:1.2!important;
+  padding:6px 3px!important;
+}
+.result-overlay.victory .levelup-stats span b{color:#21170f!important;-webkit-text-fill-color:#21170f!important;font-size:8px!important}
+.result-overlay.victory .result-learn{background:#fff2d2!important;border-left-color:#8e673b!important}
+.result-overlay.victory .result-learn small,.result-overlay.victory .result-learn b{color:#21170f!important;-webkit-text-fill-color:#21170f!important}
+
+/* Opening end: visible starter-supply grant. */
+.opening-supply-v80{position:fixed;z-index:460;inset:0;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);opacity:0;transition:opacity .22s ease;pointer-events:none}
+.opening-supply-v80.show{opacity:1}
+.opening-supply-card-v80{width:min(88vw,390px);padding:22px 18px;border-radius:22px;background:#f1dfbd;border:4px solid #8e673b;box-shadow:inset 0 0 0 2px #fff3d5,0 18px 45px rgba(0,0,0,.45);text-align:center;color:#21170f}
+.opening-supply-card-v80>small{display:block;font-size:9px;letter-spacing:.18em;font-weight:1000;color:#72502f}
+.opening-supply-card-v80 h2{margin:8px 0 16px;font-size:18px;line-height:1.35;color:#21170f}
+.opening-supply-card-v80>div{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opening-supply-card-v80 span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:72px;border-radius:14px;background:#fff2d2;border:1px solid #a87c47}
+.opening-supply-card-v80 b{font-size:20px;color:#21170f}.opening-supply-card-v80 em{margin-top:3px;font-style:normal;font-size:10px;font-weight:900;color:#6d4c2d}
