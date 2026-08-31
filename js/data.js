@@ -1,4 +1,4 @@
-// MOB QUEST v79
+// MOB QUEST v81
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -725,3 +725,38 @@ for(const [element,id] of Object.entries(_v73Middle)){
   const middle={火:'honoma',水:'nepuma',雷:'toruma',地:'gorema',風:'hokuma',光:'neoma',闇:'mirama',無:'anoma'};
   for(const [element,id] of Object.entries(middle)){const m=MOB_DATA.magicCatalog.find(x=>x.id===id);if(m)Object.assign(MOB_DATA.elements[element],{temporary:false,spell:m.name,cost:m.cost,power:m.power,frames:[...m.frames],mode:m.mode||''});}
 })();
+
+// ===== MOB QUEST v81 : grassland level rebalance =====
+{
+  const enemy=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
+  const world=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
+  const boss=id=>(MOB_DATA.bosses||[]).find(b=>b.id===id);
+  const set=(id,props)=>{const e=enemy(id);if(e)Object.assign(e,props);};
+
+  // Normal monsters: exact opening-grassland level bands.
+  set('g-slime',{levelMin:1,levelMax:3});
+  set('g-rock',{levelMin:2,levelMax:3});
+  set('g-jouro',{levelMin:3,levelMax:3});
+  set('g-tendevi',{levelMin:2,levelMax:3});
+  set('g-bird',{levelMin:1,levelMax:3});
+  set('g-piyo-green',{levelMin:2,levelMax:3});
+  set('g-piyo-red',{levelMin:2,levelMax:3});
+  set('g-beaver',{levelMin:2,levelMax:2});
+
+  // Mid-bosses / boss. Small-damage skills stay deliberately modest for the opening area.
+  set('g-savanna',{levelMin:5,levelMax:5,special:'サバンナダンス',kind:'single',power:.80,skillElement:'地',skillType:'physical'});
+  set('g-iwakiri',{levelMin:6,levelMax:6,special:'イワキリサンダー',kind:'aoe',power:.66,skillElement:'雷',skillType:'magic'});
+  set('g-axe',{levelMin:6,levelMax:6,special:'アックススクラッチ',kind:'single',power:.80,skillElement:'風',skillType:'physical'});
+  set('boss-hawk',{levelMin:8,levelMax:8,special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
+  const hawk=boss('hawk');if(hawk)Object.assign(hawk,{special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
+
+  // Exact AREA formations. arrangeBossFormation() keeps the unique elite in the centre.
+  const grass=world('grassland');
+  if(grass){
+    grass.areas[0].boss=[{id:'g-beaver',level:3,qty:2},{id:'g-savanna',level:5}];
+    grass.areas[1].boss=[{id:'g-iwakiri',level:6}];
+    grass.areas[2].boss=[{id:'g-axe',level:6}];
+    grass.areas[3].boss=[{id:'boss-hawk',level:8}];
+  }
+}
+

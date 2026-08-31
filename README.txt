@@ -1,4 +1,12 @@
-MOB QUEST playable core v80
+MOB QUEST playable core v81
+- 最初の草原の通常敵Lvを再調整
+- モブスライム Lv1-3 / モブロック Lv2-3 / モブジョーロ Lv3 / モブテンデビ Lv2-3
+- モブバード Lv1-3 / ピヨミドリ・レッド Lv2-3 / モブビーバー Lv2
+- AREA1: モブビーバーLv3×2 + モブサバンナLv5（サバンナ中央）
+- AREA2: モブイワキリLv6
+- AREA3: モブアックスLv6
+- AREA4: モブホークLv8
+- 専用技: サバンナダンス / イワキリサンダー / アックススクラッチ / ホークダイブを指定属性・小ダメージ帯へ統一
 
 8/31 starter balance + readability update
 - 初期所持金を0G、ダイヤを0へ変更

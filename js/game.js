@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=80;
+const GAME_ASSET_VERSION=81;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -342,7 +342,7 @@ const initialMeta=loadMeta();
 const initialCoins=Number(initialMeta.coins);
 const state={
   party:loadParty(), coins:Number.isFinite(initialCoins)?initialCoins:0, meta:initialMeta,
-  training:{party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null},
+  training:{party:null,enemySlots:[{id:'boss-hawk',level:8},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null},
   quest:null,
   adventure:loadAdventure(),
   battle:null, speed:1, autoBattle:loadAutoBattlePreference(), tavernSwapIndex:null,
@@ -658,7 +658,7 @@ function clearGameProgressForNew(){try{for(let i=localStorage.length-1;i>=0;i--)
 async function startNewGame(){
   clearGameProgressForNew();
   state.party=defaultParty.map(x=>[...x]);state.coins=0;state.meta=defaultMeta();
-  state.training={party:null,enemySlots:[{id:'boss-hawk',level:10},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null};
+  state.training={party:null,enemySlots:[{id:'boss-hawk',level:8},null,null,null],activeEnemySlot:0,filter:'草原',mode:'menu',programSeason:null};
   state.quest=null;state.adventure=defaultAdventure();state.battle=null;state.speed=1;state.autoBattle=false;state.tavernSwapIndex=null;state.noticeQueue=[];state.noticeBusy=false;
   saveParty();saveMeta();saveAdventure();
   closeSettings?.();
@@ -1027,7 +1027,7 @@ function ensureTrainingParty(){
 }
 function trainingParty(){return ensureTrainingParty().filter(Boolean).map(x=>[...x]);}
 function ensureTrainingEnemies(){
-  if(!Array.isArray(state.training.enemySlots))state.training.enemySlots=[{id:'boss-hawk',level:10},null,null,null];
+  if(!Array.isArray(state.training.enemySlots))state.training.enemySlots=[{id:'boss-hawk',level:8},null,null,null];
   state.training.enemySlots=Array.from({length:4},(_,i)=>{const x=state.training.enemySlots[i];if(!x||!trainingEnemyTemplate(x.id))return null;const t=trainingEnemyTemplate(x.id);return{id:x.id,level:clamp(Number(x.level)||t.levelMin||1,1,120)};});
   state.training.activeEnemySlot=clamp(Number(state.training.activeEnemySlot)||0,0,3);
   return state.training.enemySlots;
