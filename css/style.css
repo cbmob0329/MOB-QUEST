@@ -2756,3 +2756,19 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .enemy-count-5 .enemy-unit .enemy-nameplate .gauge{height:3px!important;margin-top:1px!important}
 .enemy-count-5 .enemy-target-mark{font-size:3px!important;right:1px!important;bottom:1px!important;padding:1px 2px!important}
 @media(max-width:380px){.enemy-count-5 .enemy-unit .enemy-nameplate b{font-size:4px!important}.enemy-count-5 .enemy-target-mark{display:none!important}}
+
+
+/* ===== MOB QUEST v84: SUBQUEST READABILITY + ADVENTURE ABANDON ===== */
+.subquest-panel,.subquest-panel .section-title,.subquest-panel .section-title *,
+.subquest-panel .panel-note,.subquest-area-block,.subquest-area-block *,
+.subquest-card,.subquest-card span,.subquest-card small,.subquest-card b,.subquest-card em{
+  color:#160d07!important;
+  -webkit-text-fill-color:#160d07!important;
+  text-shadow:none!important;
+}
+.subquest-panel .pill{background:#fff7e6!important;border:1px solid #8b5b2f!important;color:#160d07!important;-webkit-text-fill-color:#160d07!important}
+.subquest-card:disabled{color:#160d07!important;-webkit-text-fill-color:#160d07!important;opacity:.72}
+.subquest-card.cleared{opacity:.68!important}.subquest-card.pending{background:#eadfc9!important;opacity:.76!important}
+.adventure-abandon-btn{position:absolute;z-index:18;right:12px;bottom:calc(124px + var(--safe-bottom));min-width:116px;padding:9px 13px;border-radius:14px;border:1px solid #c29a74;background:rgba(53,25,18,.94);color:#fff4df;font-size:10px;font-weight:1000;letter-spacing:.04em;box-shadow:0 7px 18px rgba(0,0,0,.34)}
+.adventure-abandon-btn:disabled{opacity:.45}.adventure-abandon-btn[hidden]{display:none!important}
+@media(max-height:720px){.adventure-abandon-btn{bottom:calc(108px + var(--safe-bottom))}}

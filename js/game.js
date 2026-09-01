@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=83;
+const GAME_ASSET_VERSION=84;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -387,8 +387,16 @@ const SPECIAL_ENEMIES=[
   {id:'sq-savanna-variant',name:'モブサバンナ亜種',stage:'草原',category:'elite',attribute:'地',image:'spenemy/007.png',symbol:'亜',levelMin:10,levelMax:10,mods:{spd:1.45,atk:1.08}},
   {id:'sq-gold-mummy',name:'モブゴールデンミイラ',stage:'砂漠',category:'elite',attribute:'光',image:'spenemy/008.png',symbol:'金',levelMin:12,levelMax:12,mods:{def:1.55,res:1.25},rewardCoinScale:2.5},
   {id:'sq-gold-nekomummy',name:'モブゴールデンネコミイラ',stage:'砂漠',category:'normal',attribute:'光',image:'spenemy/009.png',symbol:'金',levelMin:10,levelMax:10,mods:{def:1.45,res:1.2},rewardCoinScale:2},
-  {id:'sq-mini-guardian',name:'モブミニガーディアン',stage:'田舎町',category:'elite',attribute:'地',image:'boss/48.png',symbol:'守',levelMin:15,levelMax:15,mods:{def:1.45,hp:1.1}},
-  {id:'sq-mini-guardian2',name:'モブミニガーディアンⅡ',stage:'田舎町',category:'elite',attribute:'地',image:'boss/49.png',symbol:'守',levelMin:20,levelMax:20,mods:{def:1.55,hp:1.18}}
+  {id:'sq-mini-guardian',name:'モブミニガーディアン',stage:'田舎町',category:'elite',attribute:'地',image:'spenemy/010.png',symbol:'守',levelMin:15,levelMax:15,mods:{def:1.45,hp:1.1}},
+  {id:'sq-mini-guardian2',name:'モブミニガーディアンⅡ',stage:'田舎町',category:'elite',attribute:'地',image:'spenemy/011.png',symbol:'守',levelMin:20,levelMax:20,mods:{def:1.55,hp:1.18}},
+  {id:'sq-neon-chaser-neo',name:'モブエネチェイサーネオ',stage:'ネオン街',category:'elite',attribute:'地',image:'spenemy/011.png',symbol:'追',levelMin:25,levelMax:25,special:'ネオチェイス',kind:'aoe',power:.82,skillType:'physical',preemptive:true,actionCount:2,forceActionCount:true,mods:{spd:1.42,atk:1.08}},
+  {id:'sq-high-abyss',name:'モブハイアビスソルジャー',stage:'海底',category:'elite',attribute:'水',image:'enemy/105.png',symbol:'騎',levelMin:48,levelMax:48,special:'アビスブレード',kind:'single',power:1.18,skillElement:'水',skillType:'physical',mods:{hp:1.16,atk:1.12,def:1.12}},
+  {id:'sq-wave-serious',name:'モブウェイブ',stage:'海底',category:'elite',attribute:'水',image:'enemy/120.png',symbol:'波',levelMin:50,levelMax:50,special:'ウォーターグラビディ',kind:'single',power:1.22,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,firstActionSpec:{special:'コンフューズウェイブ',kind:'confuseSingle',power:.84,chance:1,skillElement:'水',skillType:'magic'},halfDefBuff:.20},
+  {id:'sq-power-jones',name:'モブパワージョーンズ',stage:'海底',category:'elite',attribute:'水',image:'enemy/118.png',symbol:'波',levelMin:55,levelMax:55,special:'パワーウェーブショック',kind:'aoe',power:.88,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.22,atk:1.18,mag:1.16}},
+  {id:'sq-wing-slime',name:'モブハネスライム',stage:'草原Ⅱ',category:'elite',attribute:'風',image:'enemy/01.png',symbol:'翼',levelMin:50,levelMax:50,alwaysSpecial:true,specialOptions:[{special:'ハネパニック',kind:'confuseSingle',power:.78,chance:.45,skillElement:'風',skillType:'magic'},{special:'ハネアタック',kind:'stunSingle',power:.82,chance:.35,skillElement:'風',skillType:'physical'}],mods:{spd:1.3}},
+  {id:'sq-red-hawk',name:'モブレッドホーク',stage:'草原Ⅱ',category:'elite',attribute:'火',image:'boss/02.png',symbol:'炎',levelMin:60,levelMax:60,special:'レッドホークフレイム',kind:'aoe',power:.90,skillElement:'火',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
+  {id:'sq-blue-hawk',name:'モブブルーホーク',stage:'草原Ⅱ',category:'elite',attribute:'水',image:'boss/02.png',symbol:'水',levelMin:60,levelMax:60,special:'ブルーホークウェイブ',kind:'aoe',power:.90,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
+  {id:'sq-young-dragon',name:'若きモブドラゴン',stage:'マグマ',category:'elite',attribute:'火',image:'boss/09.png',symbol:'竜',levelMin:40,levelMax:40,special:'ヤングドラゴンフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',mods:{hp:.72,spd:1.35,atk:.92,mag:.95}}
 ];
 function specialEnemyTemplate(id){return SPECIAL_ENEMIES.find(x=>x.id===id)||null;}
 function trainingEnemyTemplate(id){return enemyTemplate(id)||specialEnemyTemplate(id)||trainingEnemyCatalog().find(x=>x.id===id)||null;}
@@ -409,13 +417,26 @@ function loadParty(){
   }catch(_){}
   return defaultParty.map(x=>[...x]);
 }
-function defaultAdventure(){return {worldIndex:0,areaIndex:0,battleIndex:0,battleReady:false,completed:false,pendingEncounter:null,vitals:null,checkpoint:null,storyFlags:{},pendingPostStory:null,campUsed:{},areaBuff:null,awaitingReport:null,reportedWorlds:[]};}
+function defaultAdventure(){return {worldIndex:0,areaIndex:0,battleIndex:0,battleReady:false,completed:false,pendingEncounter:null,vitals:null,checkpoint:null,runSnapshot:null,storyFlags:{},pendingPostStory:null,campUsed:{},areaBuff:null,awaitingReport:null,reportedWorlds:[]};}
 function loadAdventure(){
   try{const v=JSON.parse(localStorage.getItem('mobQuestAdventureV5'));if(v&&typeof v==='object'){const out={...defaultAdventure(),...v};out.storyFlags=(v.storyFlags&&typeof v.storyFlags==='object')?v.storyFlags:{};out.reportedWorlds=Array.isArray(v.reportedWorlds)?[...v.reportedWorlds]:[];const worlds=MOB_DATA.adventureWorlds||[],last=Math.max(0,worlds.length-1);if(out.completed&&Number(out.worldIndex)<last){out.completed=false;out.worldIndex=Math.min(last,(Number(out.worldIndex)||0)+1);out.areaIndex=0;out.battleIndex=0;out.battleReady=false;out.pendingEncounter=null;out.vitals=null;}out.worldIndex=clamp(Number(out.worldIndex)||0,0,last);/* existing saves are treated as already reported up to their current world */for(let i=0;i<out.worldIndex;i++){const id=worlds[i]?.id;if(id&&!out.reportedWorlds.includes(id))out.reportedWorlds.push(id);}return out;}}catch(_){}
   try{const old=JSON.parse(localStorage.getItem('mobQuestAdventureV4'));if(old&&typeof old==='object')return{...defaultAdventure(),areaIndex:clamp(Number(old.progress)||0,0,3),battleReady:!!old.battleReady,completed:false,vitals:old.vitals||null,checkpoint:null};}catch(_){}
   return defaultAdventure();
 }
 function saveAdventure(){try{localStorage.setItem('mobQuestAdventureV5',JSON.stringify(state.adventure));}catch(_){} }
+function makeAdventureRunSnapshot(){const adv=clone(state.adventure||defaultAdventure());adv.runSnapshot=null;return{coins:Number(state.coins)||0,meta:clone(state.meta),party:clone(state.party),adventure:adv};}
+function ensureAdventureRunSnapshot(){if(state.adventure?.runSnapshot||state.adventure?.awaitingReport||state.adventure?.completed)return;state.adventure.runSnapshot=makeAdventureRunSnapshot();saveAdventure();saveParty();saveMeta();}
+function commitAdventureRun(){if(state.adventure?.runSnapshot){state.adventure.runSnapshot=null;saveAdventure();}}
+function adventureRunActive(){return!!state.adventure?.runSnapshot&&!state.adventure?.awaitingReport&&!state.adventure?.completed;}
+async function abandonAdventure(){
+  if(!adventureRunActive())return;
+  const ans=await dialog('冒険を諦めますか？\nこの冒険中に獲得した経験値・G・ダイヤ・アイテム・装備・イベント進行はすべて無効になります。',[['冒険を諦める','yes','danger'],['続ける','no','primary']],'ADVENTURE');
+  if(ans!=='yes')return;
+  const snap=clone(state.adventure.runSnapshot);if(!snap)return;
+  state.coins=Math.max(0,Number(snap.coins)||0);state.meta={...defaultMeta(),...clone(snap.meta||{})};state.meta.coins=state.coins;state.party=(clone(snap.party)||defaultParty.map(x=>[...x])).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);state.adventure={...defaultAdventure(),...clone(snap.adventure||{}),runSnapshot:null,checkpoint:null};state.battle=null;state.quest=null;storyBusy=false;storySceneExtras=[];
+  $('#campOverlay').hidden=true;$('#exploreOverlay').hidden=true;$('#storyScene').hidden=true;$('#resultOverlay').hidden=true;saveMeta();saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);await goHome();await narrationDialog('冒険を諦めました。\n今回の冒険で得たものとイベント進行は元に戻りました。');
+}
+
 
 function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
@@ -572,7 +593,7 @@ async function loadingWithAssets(text,assets){
 }
 
 function commonNavMarkup(){return `<button data-nav="home" type="button"><span><img src="mqicon/06.png" alt=""><i>⌂</i></span><b>HOME</b></button><button data-nav="equipment" type="button"><span><img src="mqicon/10.png" alt=""><i>◇</i></span><b>装備</b></button><button data-nav="items" type="button"><span><img src="mqicon/12.png" alt=""><i>□</i></span><b>持ち物</b></button><button data-nav="settings" type="button"><span><img src="mqicon/09.png" alt=""><i>⚙</i></span><b>設定</b></button>`;}
-function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.castle.classList.contains('active'))return castleBackOrHome();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='items')openInventory();else if(b.dataset.nav==='settings')openSettings();}));bindImages();}
+function initCommonNav(){$$('[data-common-nav]').forEach(n=>n.innerHTML=commonNavMarkup());$$('[data-nav]').forEach(b=>b.addEventListener('click',async()=>{if(b.dataset.nav==='home'){if(screens.adventure.classList.contains('active')&&adventureRunActive())return narrationDialog('冒険中はHOMEへ戻れません。\n戻る場合は「冒険を諦める」を選んでください。');if(screens.tavern.classList.contains('active'))return leaveTavern();if(screens.training.classList.contains('active'))return leaveTraining();if(screens.castle.classList.contains('active'))return castleBackOrHome();if(screens.equipment.classList.contains('active')&&equipmentFacilityOrigin==='smith')return leaveBlacksmith();return goHome();}else if(b.dataset.nav==='equipment')openEquipmentScreen();else if(b.dataset.nav==='items')openInventory();else if(b.dataset.nav==='settings')openSettings();}));bindImages();}
 
 async function dialog(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
   const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),formatted=facility?balancedJapaneseText(text,15):String(text||'');
@@ -686,7 +707,7 @@ async function startNewGame(){
   if(state.test?.enabled){showTitle();const skip=await narrationDialog('テストモードです。オープニングをスキップしますか？',[['スキップ','yes','primary'],['見る','no']]);if(skip==='yes'){await grantOpeningStarterSupplies({silent:true});state.meta.openingCompleted=true;saveMeta();await goHome();return;}}
   await runOpeningV74();
 }
-async function continueGame(){await goHome();}
+async function continueGame(){if(adventureRunActive()){await travelTo('adventure','冒険を再開しています…',renderAdventure);await handleAdventureEntry();return;}await goHome();}
 
 async function renderHome(){
   $('#coinValue').textContent=state.coins.toLocaleString();
@@ -877,6 +898,41 @@ const SUBQUEST_AREAS=[
   ['desert2','砂漠Ⅱ',['不滅の王','ソウルフュージョン実験体','大地と業火','夜と時間','四人衆・完全復活']]
  ].map(([worldId,name,names])=>({worldId,name,required:[],quests:names.map((name,i)=>({id:`${worldId}-${i+1}`,no:i+1,name,pending:true,note:'報酬番号・会話が資料未設定'}))}))
 ];
+
+/* ===== MOB QUEST v84: latest confirmed subquests ===== */
+{
+  const area=id=>SUBQUEST_AREAS.find(a=>a.worldId===id);
+  const grass=area('grassland'),desert=area('desert'),rural=area('rural');
+  if(grass?.quests?.[4]?.reward)grass.quests[4].reward.diamonds=50;
+  if(desert?.quests?.[4]?.reward)desert.quests[4].reward.diamonds=50;
+  if(rural?.quests?.[4]?.reward)rural.quests[4].reward.diamonds=50;
+  const neon=area('neon');if(neon)neon.quests=[...neon.quests.slice(0,2),
+    {id:'neon-3',no:3,name:'ネオン・サバイバル',reward:{diamonds:10,coins:10000,weapons:['17'],armor:'17'},intro:[['desert','モブエースのような戦士はネオン街にもっといるのか？'],['money','あいつは特別。強いし責任感もあって、次の王として適任だった'],['pink','悲しいでありますね'],['money','まあね。でもきっと何か事情があるのよ'],['desert','そうだといいがな'],['show',['n-golem','n-chaser','n-trainer']],['money','魔王を倒せばきっと全部分かる！戦うわよ！']],waves:[[{id:'n-golem',level:25,preemptive:true,actionCount:2,forceActionCount:true}],[{id:'n-chaser',level:25,preemptive:true,actionCount:2,forceActionCount:true}],[{id:'n-trainer',level:25,preemptive:true,actionCount:2,forceActionCount:true}]],post:[['pink','お見事であります！'],['desert','ネオン街、悪くないエリアだ']]},
+    {id:'neon-4',no:4,name:'追跡者',reward:{diamonds:10,coins:10000,weapons:['12','18'],armor:'18'},intro:[['pink','モブマニーは魔女ですよね？'],['money','ええ、魔女っ娘よ！'],['pink','魔法は独学でありますか？'],['money','違うよ。・・・・誰からだっけ？でも凄く強い人！'],['desert','ネオン街の住人か？'],['money','たぶんそうだと思う！'],['show',['sq-neon-chaser-neo','sq-neon-chaser-neo']],['pink','凄い速さであります！！'],['desert','先制攻撃をしてくる可能性が高い。注意しろ！']],waves:[[{id:'sq-neon-chaser-neo',level:25},{id:'sq-neon-chaser-neo',level:25}]],post:[['money','2人ともさすがね！'],['pink','まだまだであります！']]},
+    {id:'neon-5',no:5,name:'ネオン街の夢',reward:{diamonds:50,coins:10000,weapons:['19'],armor:'19'},intro:[['money','少しずつ記憶が戻ってる気がする。でも肝心なことは何も分からないの'],['pink','辛いでありますね'],['money','そうでもないわよ。私は私。生きてるし楽しんでる'],['desert','前向きだな'],['money','それが私の取り柄だからね'],['show',['boss-neon','boss-neon']],['pink','ボ、ボスであります！！'],['desert','こいつ、、量産型か？'],['money','たぶん魔王軍の仕業ね。見てられないわ']],waves:[[{id:'boss-neon',level:25},{id:'boss-neon',level:25}]],post:[['money','許せないわね。早く次のエリアに行きましょう！']]}
+  ];
+  const magma=area('magma');if(magma){magma.required=['nyoro','money','denden'];magma.quests=[
+    {id:'magma-1',no:1,name:'マグマスライム異常増殖',reward:{diamonds:10,coins:15000,weapons:['06','16'],armor:'20'},intro:[['nyoro','マグマのスライムは集団が多いニョロ'],['denden','なにか理由があるでやんすか？'],['nyoro','マグマは強いモンスターが多いから、集団で固まって身を守るニョロ'],['money','ふ～ん。でも弱くはないのよね？'],['nyoro','むしろ強いニョロ！'],['show',['m-honoslime','m-magslime']],['nyoro','こうして集まると厄介ニョロ'],['money','魔法で一気に片付けるわ！']],waves:[[{id:'m-honoslime',level:33},{id:'m-honoslime',level:33},{id:'m-honoslime',level:33},{id:'m-magslime',level:33},{id:'m-magslime',level:33}]],post:[['denden','本当に強いモンスターが多いでやんす'],['nyoro','先代がいなくなって無法地帯ニョロ']]},
+    {id:'magma-2',no:2,name:'爆発注意',reward:{diamonds:10,coins:15000,weapons:['20'],armor:'21'},intro:[['money','先代はどんなモンスターだったの？'],['nyoro','モブフェニックス様は気高く優しいモンスターだったニョロ'],['denden','モブドラゴンにやられたでやんすね'],['nyoro','でも、あれはみんなを守ろうとして、まともに戦えなかったからニョロ'],['money','魔王軍らしいわね'],['show',['m-bombthrow','m-bomber']],['nyoro','こいつらも遠くから爆弾を投げていたニョロ！'],['denden','卑怯者は成敗でやんす！']],waves:[[{id:'m-bombthrow',level:34},{id:'m-bombthrow',level:34},{id:'m-bomber',level:34},{id:'m-bomber',level:34}]],post:[['money','不死鳥なのよね？復活とかしないの？'],['nyoro','・・分からないニョロ']]},
+    {id:'magma-3',no:3,name:'ゴーレム耐久試験',reward:{diamonds:10,coins:15000,weapons:['21'],armor:'22'},intro:[['nyoro','実は僕はマグマ出身じゃないニョロ'],['money','え、そうなの？'],['nyoro','故郷に変わりはないニョロ'],['denden','事情がありそうでやんすね'],['nyoro','ハチュー洞窟という海底近くの洞窟ニョロ'],['money','なんかヌメヌメしてそうな名前ね'],['show',['m-golem','m-golem']],['nyoro','ちょっとここと似てるから住みやすいんだニョロ'],['denden','じゃあモブニョロはやっぱり強いでやんす！']],waves:[[{id:'m-golem',level:35,mods:{hp:1.45,def:1.55,spd:.75}},{id:'m-golem',level:35,mods:{hp:1.45,def:1.55,spd:.75}}]],post:[['money','帰りたいとか思わないの？'],['nyoro','・・・・そのうち寄ってみるニョロ！']]},
+    {id:'magma-4',no:4,name:'炎と氷',reward:{diamonds:10,coins:15000,weapons:['22'],armor:'23'},intro:[['show',['m-flame','m-blizzard']]],waves:[[{id:'m-flame',level:35},{id:'m-blizzard',level:35}],[{id:'m-frezard',level:37}]],post:[]},
+    {id:'magma-5',no:5,name:'ドラゴンの試練',reward:{diamonds:50,coins:30000,weapons:['23'],armor:'24'},intro:[['show',['sq-young-dragon']]],waves:[[{id:'sq-young-dragon',level:40}]],post:[]}
+  ];}
+  const sea=area('sea');if(sea){sea.required=['nekoku','pink','desert'];sea.quests=[
+    {id:'sea-1',no:1,name:'深海調査',reward:{diamonds:10,coins:30000,weapons:['24'],armor:'25'},intro:[['nekoku','海底は平和だ。だから守らないと'],['pink','それでみんな強いのでありますね'],['nekoku','オラも修行中だ'],['show',['s-mist','s-nessie']],['nekoku','国王様の役に立つなら、もっと強くなるぞ'],['desert','良い忠誠心だ']],waves:[[{id:'s-mist',level:40},{id:'s-mist',level:40},{id:'s-nessie',level:40},{id:'s-nessie',level:40}]],post:[['pink','モブネコクー、十分強いであります！頼もしいですね♪']]},
+    {id:'sea-2',no:2,name:'海に潜むニンジャ',reward:{diamonds:10,coins:30000,weapons:['25'],armor:'26'},intro:[['desert','ここの住人は海底から外には出ないのか？'],['nekoku','むしろここにいることの方が少ないぞ。色んなエリアでみんな戦っているぞ'],['pink','凄いですね～。尊敬であります！'],['show',['s-ninja','s-ninja','s-ninja','s-ninja']],['nekoku','色んなエリアの文化で海底は毎日進化してるぞ']],waves:[[{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40}]],post:[['desert','通りで技が多様なわけだ']]},
+    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底にはカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間がいっぱいいるぞ'],['pink','いずれ共闘する日が来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
+    {id:'sea-4',no:4,name:'モブウェイブの本気',reward:{diamonds:10,coins:50000,weapons:['27'],armor:'28'},intro:[['nekoku','モブウェイブは長年国王様の側近なんだぞ'],['pink','風格ありましたからね～。納得であります！'],['show',['sq-wave-serious']],['desert','腕試しにはもってこいだな']],waves:[[{id:'sq-wave-serious',level:50}]],post:[['desert','学びの多い戦いだったな'],['nekoku','オラ、モブウェイブ好きだ。いいやつで強い'],['pink','仲間になって欲しいでありますね～']]},
+    {id:'sea-5',no:5,name:'ライバル再び',reward:{diamonds:50,coins:50000,weapons:['28'],armor:'29'},intro:[['nekoku','モブジョーンズは海底の英雄なんだぞ'],['pink','英雄でありますか！'],['nekoku','有名な戦いには必ずモブジョーンズの功績があるぞ'],['desert','まだまだ力を秘めていそうだったな'],['show',['sq-power-jones']],['nekoku','ある戦いで敗れて以来、強さをさらに求めているぞ'],['desert','良い志だ']],waves:[[{id:'sq-power-jones',level:55}]],post:[['pink','これほどの力でも勝てなかったでありますか？'],['nekoku','一対一ではなかったと聞いてるぞ'],['pink','きっと卑怯な手を使われたであります！']]}
+  ];}
+  const grass2=area('grassland2');if(grass2){grass2.required=['tetsu','denden','nyoro'];grass2.quests=[
+    {id:'grassland2-1',no:1,name:'モブハネスライム',reward:{diamonds:10,coins:50000,weapons:['29'],armor:'30'},intro:[['tetsu','皆はどれくらい旅をしているでござる？'],['denden','短いような、長いようなでやんす！'],['nyoro','友情には時間なんて関係ないニョロ！'],['tetsu','それはそうでござるな。野暮でござった'],['show',['sq-wing-slime','sq-wing-slime']],['tetsu','拙者、共闘とは無縁でござった。勇者様たちと会えて気楽に戦えるでござる！']],waves:[[{id:'sq-wing-slime',level:50},{id:'sq-wing-slime',level:50}]],post:[['denden','モブテツ、強いでやんす！'],['nyoro','1人で戦えるわけだニョロ'],['tetsu','いやいや、みんなの力があってこそでござる！']]},
+    {id:'grassland2-2',no:2,name:'スライムの逆襲',reward:{diamonds:10,coins:50000,weapons:['30'],armor:'31'},intro:[['denden','サムライは他にもいるでやんすか？'],['tetsu','どうでござろう？旅に出てまだ会ったことないでござる'],['nyoro','敵にいたら嫌だニョロ'],['show',['g2-slime','g2-slime','g2-slime','g2-slime']],['tetsu','その時は拙者がお相手するでござる！']],waves:[[...Array(5)].map(()=>({id:'g2-slime',level:50})),[...Array(5)].map(()=>({id:'g2-slime',level:50}))],post:[['tetsu','魔王軍の猛者たち、戦うのが楽しみでござる！'],['denden','・・なんかオイラも強くなった気がするでござる！あ！やんすでやんす！']]},
+    {id:'grassland2-3',no:3,name:'カエル王国',reward:{diamonds:10,coins:50000,weapons:['31'],armor:'32'},intro:[['nyoro','監獄はどんなところだったニョロ？'],['tetsu','名前ほど嫌なところじゃないでござる。いいやつもいっぱいいたでござるよ'],['denden','もしかしたら他にも脱獄しているかもしれないでやんすね！'],['tetsu','再会出来たら拙者嬉しいでござる'],['show',['g2-merakero','g2-keroking']],['nyoro','旅を続けていればきっと会えるニョロ！'],['denden','そうでやんす！']],waves:[[{id:'g2-merakero',level:53},{id:'g2-merakero',level:53},{id:'g2-keroking',level:57}]],post:[['tetsu','拙者、まだまだ腕を磨くでござる！']]},
+    {id:'grassland2-4',no:4,name:'狙撃部隊',reward:{diamonds:10,coins:50000,weapons:['32'],armor:'33'},intro:[['denden','オイラの仲間も監獄に行ったやつがいるでやんす'],['nyoro','なんでニョロ？'],['denden','理由は分からないでやんすが、風の噂で教育係をやっていると聞いたでやんす'],['tetsu','教育係・・拙者は見たことないでござる'],['show',['g2-tsuru','g2-tsuru','g2-tsuru']],['denden','オイラ、いつか会いたいと思ってずっと忘れてないでやんす！']],waves:[[{id:'g2-tsuru',level:55},{id:'g2-tsuru',level:55},{id:'g2-tsuru',level:55}]],post:[['tetsu','その者の名を聞いてもよいでござるか？'],['denden','モブエーデンというでやんす。護衛隊の中でも人望のあるやつでやんした'],['tetsu','知らない名でござる。でも、会えるといいでござるな！']]},
+    {id:'grassland2-5',no:5,name:'空の支配者',reward:{diamonds:50,coins:50000,weapons:['33','34'],armor:'34'},intro:[['denden','空はいいでやんすね～。オイラも飛びたいでやんす！'],['nyoro','あ、僕は空飛べるニョロ'],['tetsu','そうなのでござるか！？'],['nyoro','この傘でぴゅーんと飛べるニョロ！'],['denden','羨ましいでやんす～！'],['show',['sq-red-hawk','sq-blue-hawk']],['tetsu','皆構えよ！強力なモンスターでござる！！'],['denden','オイラの雷で叩き落としてやるでやんす！']],waves:[[{id:'sq-red-hawk',level:60},{id:'sq-blue-hawk',level:60}]],post:[['nyoro','僕たち強くなってるニョロ！'],['tetsu','さあ！魔王の元へいざ！']]}
+  ];}
+}
 function ensureSubquestMeta(){if(!state.meta.subquests||typeof state.meta.subquests!=='object')state.meta.subquests={cleared:{}};state.meta.subquests.cleared=state.meta.subquests.cleared||{};return state.meta.subquests;}
 function subquestArea(worldId){return SUBQUEST_AREAS.find(a=>a.worldId===worldId)||null;}
 function subquestById(id){for(const a of SUBQUEST_AREAS){const q=a.quests.find(x=>x.id===id);if(q)return{area:a,quest:q};}return null;}
@@ -2147,7 +2203,7 @@ function renderAdventure(){
   setImage($('#adventureBg'),area.bg,w.fieldFallback);setAdventureVisualLoading(true);
   const partyRoot=$('#adventureParty');partyRoot.innerHTML=state.party.slice(0,4).map(([id,lv])=>{const p=player(id);return p?`<button type="button" data-player-detail="${p.id}" aria-label="${p.name}のステータス"><img data-adventure-party-img src="${versionedPlay(p.image)}" alt="${p.name}" decoding="async"><small>Lv${lv}</small></button>`:'';}).join('');$$(`[data-player-detail]`,partyRoot).forEach(b=>b.onclick=e=>{e.stopPropagation();openPlayerDetail(b.dataset.playerDetail);});
   const blocked=!!report||state.adventure.completed||storyBusy;
-  const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||blocked;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':report?'王へ報告':state.adventure.battleReady?(pending?.bossBattle?'強敵の気配':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||blocked;$('#campBtn').disabled=blocked;const campSmall=$('#campBtn small');if(campSmall){const cr=areaCampRecord(),used=[cr.tent,cr.chair,cr.drink].filter(Boolean).length;campSmall.textContent=report?'王へ報告してください':`休憩 ${used}/3・パーティー常時`;}bindImages($('#adventureScreen'));applyAdventurePartyScale();applyAdventureAreaTheme();
+  const btn=$('#fieldBattleBtn');btn.disabled=!state.adventure.battleReady||blocked;btn.classList.toggle('locked',btn.disabled);$('#fieldBattleHint').textContent=state.adventure.completed?'CLEAR':report?'王へ報告':state.adventure.battleReady?(pending?.bossBattle?'強敵の気配':'戦闘可能'):'探索が必要';$('#exploreBtn').disabled=state.adventure.battleReady||blocked;$('#campBtn').disabled=blocked;const campSmall=$('#campBtn small');if(campSmall){const cr=areaCampRecord(),used=[cr.tent,cr.chair,cr.drink].filter(Boolean).length;campSmall.textContent=report?'王へ報告してください':`休憩 ${used}/3・パーティー常時`;}const abandon=$('#abandonAdventureBtn');if(abandon){abandon.hidden=!adventureRunActive();abandon.disabled=!!report||storyBusy;}bindImages($('#adventureScreen'));applyAdventurePartyScale();applyAdventureAreaTheme();
 }
 function currentAreaKey(){return `${state.adventure.worldIndex||0}:${state.adventure.areaIndex||0}`;}
 function areaCampRecord(){
@@ -2262,7 +2318,7 @@ function buildEnemyWave(records,partySize,bg,fallbackBg){
     const t={...x.t};
     // Side attendants always act once. Genuine multi-mid-boss encounters (2 or 3 distinct first-appearance elites) are the exception.
     if(t.category==='normal'||t.escort)t.actionCount=1;
-    else if(t.category==='elite'&&allTrueMidbosses)delete t.actionCount;
+    else if(t.category==='elite'&&allTrueMidbosses&&!t.forceActionCount)delete t.actionCount;
     return buildEnemyFromTemplate(t,x.level,partySize,count,bg,fallbackBg);
   }).filter(Boolean);
 }
@@ -2848,7 +2904,7 @@ async function applyRoundDots(){
   if(!livingEnemies().length)state.battle.targetEnemyId=null;renderBattle();await checkSpecialRevives();
 }
 function tickBuffs(){const b=state.battle;for(const e of b.enemies||[])for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
-function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
+function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(e?.preemptive&&(state.battle?.turn||1)===1)return 10000+e.spd;return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
 async function playFrezardFusion(){
   const b=state.battle,field=$('#battleField')||$('#battleScreen'),layer=$('#battleFxLayer');if(!b||!field||!layer)return;const fr=field.getBoundingClientRect(),center={x:fr.width*.5,y:fr.height*.43},sources=(b.enemies||[]).slice(0,2);const ghosts=[];
   for(const e of sources){const vis=enemyVisual(e.uid),r=vis?.getBoundingClientRect();if(!vis||!r)continue;const img=document.createElement('img');img.className='fusion-ghost';img.src=e.image||'';img.style.left=`${r.left-fr.left+r.width/2}px`;img.style.top=`${r.top-fr.top+r.height/2}px`;img.style.width=`${Math.max(42,r.width)}px`;img.style.height=`${Math.max(42,r.height)}px`;img.style.setProperty('--merge-x',`${center.x-(r.left-fr.left+r.width/2)}px`);img.style.setProperty('--merge-y',`${center.y-(r.top-fr.top+r.height/2)}px`);layer.appendChild(img);ghosts.push(img);}
@@ -2961,7 +3017,9 @@ function enemyMainSkillPower(e,spec){
 function enemySpecialSpec(e){if(e.specialOptions?.length)return pick(e.specialOptions);if(e.special)return e;return temporaryEnemySpecial(e);}
 async function enemyAction(actionIndex=1,enemyId){
   const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.id==='boss-gladi'&&b.gladiSpecialReady){b.gladiSpecialReady=false;await bossSpecial({special:'グラビディ・グラディエーター',kind:'aoeStun',power:1.55,chance:.70,skillElement:'無',skillType:'physical'});if(!livingRoster().length)finishBattle(false);return;}if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}
-  const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
+  if(e.halfDefBuff&&!e.halfDefTriggered&&e.hp/e.maxHp<=.5){e.halfDefTriggered=true;e.defBuff=Math.max(e.defBuff||0,Number(e.halfDefBuff)||0);e.defBuffTurns=99;notice(`${e.name} DEF ↑${Math.round((Number(e.halfDefBuff)||0)*100)}%`,'buff',650);}
+  if(e.firstActionSpec&&!e.firstActionUsed&&b.turn===1&&actionIndex===1){e.firstActionUsed=true;await bossSpecial(e.firstActionSpec);if(!livingRoster().length)finishBattle(false);return;}
+  const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=e.alwaysSpecial?true:e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
   if(useSpecial)await bossSpecial(enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
 }
 async function bossNormal(){const e=actingEnemy()||state.battle.enemy,t=pick(livingMain());if(!e||!t)return;const type=e.normalAttackType||'physical',ranged=e.id==='boss-gladi';await actionCutin(`${e.name}の攻撃！`,'danger',520);if(ranged)await playEnemyProjectile(e,t);else await beginEnemyLunge(e.uid);try{await damageAlly(t,1,type,false,e.attribute);await delay(320);}finally{if(!ranged)endEnemyLunge();}}
@@ -2975,6 +3033,7 @@ async function bossSpecial(spec){
     case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(Math.random()<(spec.chance??.10)&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
     case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,null,'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
     case'stunSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??1)){await inflictAllyStatus(t,'stun',1);notice(`${t.name}はひるんだ！`,'status');}}break;
+    case'confuseSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??.30)){await inflictAllyStatus(t,'confuse',2);notice(`${t.name}は混乱した！`,'status');}}break;
     case'sleepSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??.30)){await inflictAllyStatus(t,'sleep',2);notice(`${t.name}は眠った！`,'status');}}break;
     case'aoeSleepChance':total=await aoe(null,spec.skillType||'magic');for(const a of [...livingMain(),...livingSuper()])if(Math.random()<(spec.chance||.20))await inflictAllyStatus(a,'sleep',2);break;
     case'ctSingle':t=pick(livingMain());if(t){if(ranged)await playEnemyProjectile(e,t);d=await hit(t,null,spec.skillType||'physical');for(let i=0;i<(t.ultCooldowns||[]).length;i++)t.ultCooldowns[i]=Math.max(0,Number(t.ultCooldowns[i])||0)+Math.max(1,Number(spec.ctAdd)||2);persistUltimateCooldownsFromBattle();await actionCutin(`${t.name}の必殺技CTが${Math.max(1,Number(spec.ctAdd)||2)}ターン増えてしまった！`,'danger',900);}break;
@@ -3101,7 +3160,7 @@ function advanceAdventureAfterWin(){
   if((adv.areaIndex||0)<3){adv.areaIndex=(adv.areaIndex||0)+1;return;}
   const wi=Number(adv.worldIndex)||0,w=worlds[wi];
   adv.areaIndex=3;
-  adv.awaitingReport={worldIndex:wi,worldId:w?.id||'',worldName:w?.name||'現在地',nextWorldIndex:wi<worlds.length-1?wi+1:null};
+  adv.awaitingReport={worldIndex:wi,worldId:w?.id||'',worldName:w?.name||'現在地',nextWorldIndex:wi<worlds.length-1?wi+1:null};adv.runSnapshot=null;
 }
 const DQ10_EXP_TO_NEXT=[7,15,26,40,59,87,128,184,264,370,512,691,920,1200,1540,1946,2423,2975,3609,4324,5127,6012,6985,8036,9165,10364,11629,12961,14359,15826,17362,18969,20650,22404,24232,26136,28118,30180,32319,34541,36844,39231,41704,44262,46907,49641,52464,55381,58387,61488,67917,71537,75271,79117,83073,87137,91308,95585,99971,104464,109062,113764,118569,123479,128492,133606,138820,144133,149547,155060,160688,166466,172442,178667,185192,192068,199346,199346,199346,199346,199346,199346,199346,199346,249346,299346,349346,399346,449346,599346,749346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,959346,997720,1036094,1074468,1112842,1151216,1189590,1227964,1266338,1304712,1343086];
 function expToNext(level){level=clamp(Number(level)||1,1,120);return level>=120?Infinity:DQ10_EXP_TO_NEXT[level-1];}
@@ -3342,8 +3401,8 @@ async function renderInnRoom(){
   const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view inn-room-view';
   root.innerHTML=`<section class="castle-room-stage inn-stage"><button class="castle-actor castle-actor-inn" data-innkeeper type="button"><img src="play/006.png" alt="モブミータ"><b>モブミータ</b><small>タップして話す</small></button>${castleHomeButton()}</section>`;
   bindImages(root);bindCastleContentEvents();
-  await facilityTalk('ようこそ！自由に休んでいってね！','モブミータ','play/006.png');
 }
+
 function fullHealAtCastleInn(){
   const v=ensureAdventureVitals();
   for(const [id,lv] of state.party){const q=player(id);if(!q)continue;const st=baseStats(q,lv);const x=v[id]||(v[id]={});x.hp=st.maxHp;x.mp=st.maxMp;x.dead=false;x.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};}
@@ -3408,11 +3467,12 @@ function renderRecordRoom(){
   root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock"><img src="icon/21.png" alt="レコードルーム"><b>LOCKED</b><p>レコードルームはまだ利用できません。</p></div>${castleHomeButton()}</section>`;bindImages(root);bindCastleContentEvents();
 }
 async function openCastleRoom(room){
-  if(room==='throne')return renderThroneRoom();
-  if(room==='inn')return renderInnRoom();
-  if(room==='shop')return enterMobShop();
-  if(room==='records')return renderRecordRoom();
-  if(room==='smith')return openBlacksmithFacility();
+  const assets={throne:['back/king1.png','play/007.png','play/008.png'],inn:['back/king3.png','play/006.png'],shop:['back/king2.png','play/005.png','icon/20.png'],records:['back/king4.png','icon/21.png'],smith:['back/gonzo.png','play/002.png','icon/23.png']}[room]||['back2/003.png'];
+  showScreen('loading');$('#loadingText').textContent='施設へ移動しています…';$('#loadingBar').style.width='35%';const detail=$('#loadingDetail');if(detail)detail.textContent='CASTLE ROOM';await preloadAssetsSafe(assets,1000);$('#loadingBar').style.width='100%';if(detail)detail.textContent='READY';
+  if(room==='throne')renderThroneRoom();else if(room==='inn')renderInnRoom();else if(room==='shop')renderMobShopRoom();else if(room==='smith'){await openBlacksmithFacility();return;}else if(room==='records')renderRecordRoom();else{renderCastle();}
+  showScreen('castle');await nextPaint();await nextPaint();
+  if(room==='inn')await facilityTalk('ようこそ！自由に休んでいってね！','モブミータ','play/006.png');
+  if(room==='shop'){await facilityTalk('いらっしゃい！たくさん買って行ってくれ♪','モブマテリア','play/005.png');openCastleShopPopup();}
 }
 async function returnCastleMenu(){
   closeCastleShopPopup();closeBlacksmithPopup();
@@ -3470,7 +3530,7 @@ function bindBlacksmithPopupEvents(){
   const pop=$('#blacksmithPopup');if(!pop)return;pop.onclick=e=>{if(e.target===pop||e.target.closest('[data-blacksmith-popup-close]'))return closeBlacksmithPopup();const back=e.target.closest('[data-blacksmith-popup-back]');if(back)return renderBlacksmithPopup('menu');const act=e.target.closest('[data-blacksmith-popup-action]');if(act)return renderBlacksmithPopup(act.dataset.blacksmithPopupAction);const buy=e.target.closest('[data-buy-weapon]');if(buy)return buyBlacksmithWeapon(buy.dataset.buyWeapon);const forge=e.target.closest('[data-forge-medal]');if(forge)return forgeBlacksmithMedal(forge.dataset.forgeMedal);const sw=e.target.closest('[data-sell-weapon]');if(sw)return sellBlacksmithItem('weapon',sw.dataset.sellWeapon);const sa=e.target.closest('[data-sell-armor]');if(sa)return sellBlacksmithItem('armor',sa.dataset.sellArmor);};
 }
 async function openBlacksmithFacility(){
-  renderBlacksmithRoom();showScreen('castle');
+  renderBlacksmithRoom();showScreen('castle');await nextPaint();await nextPaint();
   if(!facilityFlag('smith:v74')){await facilityTalk('よう！よく来たな！ここでは装備の購入とメダルの錬成が出来るぞ！装備は武器と防具に分かれていて武器は2つまで、防具は1つ装備出来るぞ！武器の2つ目はサブ武器でステータスが半減する。注意して装備してくれ！同じ武器を3つ持ってきたらメダル錬成が出来るぞ！メダルはその武器のステータス10％と、なんと特性を引き継ぐことが出来るぞ！メダルにした武器は消えてしまうから注意してくれ！','モブゴンゾー','play/002.png');markFacilityFlag('smith:v74');}
 }
 async function leaveBlacksmith(){closeBlacksmithPopup();await facilityTalk('また来てくれよな！','モブゴンゾー','play/002.png');renderCastle();showScreen('castle');}
@@ -3487,8 +3547,7 @@ function openHomeAction(action){
   if(action==='castle')return dialog('お城に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('castle','お城へ向かっています…',renderCastle);await enterCastle();}});
   if(action==='tavern')return dialog('酒場に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('tavern','酒場へ向かっています…',renderTavern);await enterTavern();}});
   if(action==='training')return dialog('トレーニングに向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('training','トレーニングルームへ向かっています…',renderTraining);await enterTraining();}});
-  if(action==='adventure'){if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');const w=currentWorld();return dialog(`冒険に向かいますか？
-現在の目的地は「${w?.name||'草原'}」です！`,[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}});}
+  if(action==='adventure'){if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');const w=currentWorld();return dialog(`冒険に向かいますか？\n現在の目的地は「${w?.name||'草原'}」です！`,[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}});}
 }
 function randomTraining(){
   const arr=[...MOB_DATA.players].sort(()=>Math.random()-.5).slice(0,10);state.training.party=Array.from({length:10},(_,i)=>arr[i]?[arr[i].id,rint(5,95)]:null);
@@ -3501,13 +3560,13 @@ function lockMobileGestures(){const editable=el=>['INPUT','SELECT','TEXTAREA'].i
 function bindEvents(){
   const storyScene=$('#storyScene');if(storyScene){storyScene.addEventListener('pointerup',handleStoryTapAdvance,{passive:false});storyScene.addEventListener('contextmenu',e=>e.preventDefault());}
   $('#titleNewBtn').onclick=startNewGame;$('#titleContinueBtn').onclick=continueGame;$('#titleSettingsBtn').onclick=openSettings;
-  $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{goHome();});
+  $$('[data-home-action]').forEach(b=>b.onclick=()=>openHomeAction(b.dataset.homeAction));$$('[data-back-home]').forEach(b=>b.onclick=()=>{if(screens.adventure.classList.contains('active')&&adventureRunActive())return narrationDialog('冒険中はHOMEへ戻れません。\n戻る場合は「冒険を諦める」を選んでください。');goHome();});
   $('#castleBackBtn').onclick=castleBackOrHome;bindBlacksmithPopupEvents();$('#castleShopCloseBtn').onclick=closeCastleShopPopup;$('#castleShopPopup').addEventListener('click',e=>{if(e.target===$('#castleShopPopup'))closeCastleShopPopup();});
   $('#castleQtyCloseBtn').onclick=closeCastleQtyPopup;$('#castleQtyMinusBtn').onclick=()=>changeCastleQty(-1);$('#castleQtyPlusBtn').onclick=()=>changeCastleQty(1);$('#castleQtyBuyBtn').onclick=buyCastleItemQty;$('#castleQtyPopup').addEventListener('click',e=>{if(e.target===$('#castleQtyPopup'))closeCastleQtyPopup();});
   $('#equipmentBackBtn').onclick=()=>{closeFigurePicker();if(equipmentFacilityOrigin==='smith')leaveBlacksmith();else goHome();};$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});$('#figurePickerCloseBtn').onclick=closeFigurePicker;$('#figurePickerOverlay').addEventListener('click',e=>{if(e.target===$('#figurePickerOverlay'))closeFigurePicker();});
   $('#tavernBackBtn').onclick=()=>{if(!$('#tavernPartyPopup').hidden||!$('#tavernDrinkPopup').hidden||!$('#tavernFigurePopup').hidden)return showTavernMenu();leaveTavern();};$('#tavernResetBtn').onclick=()=>{};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernPartyCloseBtn').onclick=showTavernMenu;$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$('#tavernFigureCloseBtn').onclick=()=>{$('#tavernFigurePopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else if(a==='figure')showTavernFigureShop();else leaveTavern();});
   $('#trainingBackBtn').onclick=()=>{if(!$('#trainingFeaturePopup').hidden){state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();return;}if((state.training.mode||'menu')!=='menu'){state.training.mode='menu';renderTraining();return;}leaveTraining();};$('#trainingHomeQuick').onclick=leaveTraining;$('#trainingFeatureCloseBtn').onclick=()=>{state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
-  $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=startAdventureBattle;
+  $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=startAdventureBattle;const abandonBtn=$('#abandonAdventureBtn');if(abandonBtn)abandonBtn.onclick=abandonAdventure;
   $('#questBackBtn').onclick=async()=>{if(!state.quest)return setTrainingMode(state.training.mode||'menu');if(state.quest.type!=='journal')return facilityTalk('このエリアはクリアかゲームオーバーまで出られないよ','モブコーチ','play/003.png');const a=await dialog('冒険日記を中断してトレーニングへ戻りますか？',[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(a==='yes')endQuestToTraining();};$('#questExploreBtn').onclick=questExplore;$('#questCampBtn').onclick=questCamp;$('#questBattleBtn').onclick=startQuestBattle;
   $('#battleBackBtn').onclick=()=>{if(!state.battle||state.battle.mode!=='training')return;state.battle.auto=false;renderTraining();showScreen('training');};
   $('#campCloseBtn').onclick=closeCamp;$$('[data-camp-action]').forEach(b=>b.onclick=()=>{const a=b.dataset.campAction;if(a==='tent')useCampTent();else if(a==='chair')useCampChair();else if(a==='party')renderCampPartyMenu();else renderCampDrinks();});
