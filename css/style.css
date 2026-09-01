@@ -2729,3 +2729,30 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .opening-supply-card-v80>div{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .opening-supply-card-v80 span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:72px;border-radius:14px;background:#fff2d2;border:1px solid #a87c47}
 .opening-supply-card-v80 b{font-size:20px;color:#21170f}.opening-supply-card-v80 em{margin-top:3px;font-style:normal;font-size:10px;font-weight:900;color:#6d4c2d}
+
+
+/* ===== MOB QUEST v83: SUB QUEST + ARMOR ===== */
+.subquest-panel{background:#fff4dc!important;color:#29180d!important}
+.subquest-area-list{display:grid;gap:14px}.subquest-area-block{border:2px solid #b78245;border-radius:22px;padding:12px;background:#f7dfb3;color:#29180d}.subquest-area-block>header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.subquest-area-block>header b{font-size:18px}.subquest-area-block>header small{font-weight:1000;color:#70431f}.subquest-area-block>div{display:grid;gap:8px}.subquest-card{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:2px solid #9d6b35;border-radius:16px;background:#fff9ea;color:#25150b;padding:9px 11px;min-height:72px}.subquest-card img{width:54px;height:54px;object-fit:contain;flex:none}.subquest-card span{display:grid;gap:2px;min-width:0}.subquest-card small{font-size:10px;letter-spacing:.12em;color:#8b5b2f;font-weight:1000}.subquest-card b{font-size:15px;line-height:1.3;color:#22140b}.subquest-card em{font-style:normal;font-size:10px;line-height:1.35;color:#5b3c22}.subquest-card.cleared{opacity:.6}.subquest-card.pending{background:#eee6d6;opacity:.75}.subquest-card:disabled{cursor:default}
+.equipment-slot.armor{grid-column:1/-1;background:#fff1d4!important;color:#2b1709!important}.equipment-slot.armor img{width:74px!important;height:74px!important;object-fit:contain!important}.equipment-slot.armor b,.equipment-slot.armor em,.equipment-slot.armor span,.equipment-slot.armor small{color:#2b1709!important;-webkit-text-fill-color:#2b1709!important;text-shadow:none!important}
+.armor-inventory-list .armor-row{align-items:center}.armor-inventory-list .armor-row img{width:64px;height:64px;object-fit:contain}.armor-inventory-list .armor-row small{white-space:normal;line-height:1.45}
+.blacksmith-popup-menu{grid-template-columns:repeat(3,1fr)!important}.blacksmith-popup-menu button{min-width:0!important}
+@media(max-width:390px){.blacksmith-popup-menu{grid-template-columns:1fr!important}.subquest-card b{font-size:14px}.subquest-card img{width:48px;height:48px}}
+
+
+/* ===== MOB QUEST v83: five-enemy subquest battle support ===== */
+.enemy-area.enemy-count-5{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-rows:1fr!important;
+  padding:0!important;
+  gap:1px!important;
+}
+.enemy-count-5 .enemy-unit{padding:0!important;min-width:0!important}
+.enemy-count-5 .enemy-unit .enemy-sprite-wrap{width:100%!important;min-width:0!important;overflow:visible!important}
+.enemy-count-5 .enemy-unit .enemy-sprite-wrap>img{max-width:100%!important;object-fit:contain!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate{left:1%!important;right:1%!important;padding:2px 2px!important;border-radius:5px!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate b{font-size:4.5px!important;line-height:1.05!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate small,.enemy-count-5 .enemy-unit .enemy-nameplate p,.enemy-count-5 .enemy-unit .enemy-tags{display:none!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate .gauge{height:3px!important;margin-top:1px!important}
+.enemy-count-5 .enemy-target-mark{font-size:3px!important;right:1px!important;bottom:1px!important;padding:1px 2px!important}
+@media(max-width:380px){.enemy-count-5 .enemy-unit .enemy-nameplate b{font-size:4px!important}.enemy-count-5 .enemy-target-mark{display:none!important}}
