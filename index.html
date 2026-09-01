@@ -2785,6 +2785,39 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .adventure-abandon-btn:disabled{opacity:.45}.adventure-abandon-btn[hidden]{display:none!important}
 @media(max-height:720px){.adventure-abandon-btn{bottom:calc(108px + var(--safe-bottom))}}
 
+/* ===== MOB QUEST v85: SUBQUEST CLEAR PRESENTATION + HEADER STABILITY ===== */
+.quest-screen.quest-no-back .page-header{grid-template-columns:minmax(0,1fr) auto!important;padding-left:14px!important;gap:10px!important}
+.quest-screen.quest-no-back .page-header>div{grid-column:1!important;min-width:0!important;width:auto!important;max-width:100%!important}
+.quest-screen.quest-no-back .page-header>.pill{grid-column:2!important;white-space:nowrap!important}
+.quest-screen.subquest-mode #questKicker{font-size:9px!important;white-space:nowrap!important;letter-spacing:.16em!important}
+.quest-screen.subquest-mode #questTitle{font-size:18px!important;line-height:1.15!important;white-space:nowrap!important;word-break:keep-all!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important}
+.quest-screen.subquest-mode #questAreaPill{font-size:10px!important;min-width:112px!important}
+.quest-screen.subquest-mode .quest-card small{color:#d5deea!important;-webkit-text-fill-color:#d5deea!important}
+.quest-screen.subquest-mode .quest-card b{font-size:20px!important;line-height:1.25!important;word-break:keep-all!important;overflow-wrap:normal!important}
+.quest-screen.subquest-mode .quest-card p{font-size:11px!important;line-height:1.55!important;word-break:keep-all!important;overflow-wrap:normal!important}
+
+.subquest-clear-overlay-v85{position:fixed;z-index:1000;inset:0;background:rgba(5,8,12,.82);display:flex;align-items:center;justify-content:center;padding:22px 16px calc(22px + var(--safe-bottom));opacity:0;transition:opacity .18s ease;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.subquest-clear-overlay-v85.show{opacity:1}.subquest-clear-overlay-v85.hide{opacity:0}
+.subquest-clear-card-v85{position:relative;width:min(94vw,430px);max-height:86vh;overflow-y:auto;background:#f4dfb8;color:#1f1308;border:5px solid #b6803f;border-radius:28px;padding:26px 18px 18px;text-align:center;box-shadow:0 0 0 4px #fff0cf,0 24px 58px rgba(0,0,0,.58),inset 0 0 0 2px rgba(112,68,25,.18);transform:scale(.82) translateY(20px);transition:transform .28s cubic-bezier(.2,.9,.2,1);-webkit-text-fill-color:#1f1308}
+.subquest-clear-overlay-v85.show .subquest-clear-card-v85{transform:scale(1) translateY(0)}
+.subquest-clear-card-v85 *{box-sizing:border-box}
+.subquest-clear-shine-v85{position:absolute;inset:7px;border:2px solid rgba(255,255,255,.72);border-radius:20px;pointer-events:none}
+.subquest-clear-kicker-v85{display:block;font-size:10px;font-weight:1000;letter-spacing:.22em;color:#765025!important;-webkit-text-fill-color:#765025!important;margin-bottom:8px;white-space:nowrap}
+.subquest-clear-title-v85{margin:0;font-size:clamp(27px,7.4vw,38px);line-height:1;letter-spacing:.02em;color:#171008!important;-webkit-text-fill-color:#171008!important;white-space:nowrap;word-break:keep-all}
+.subquest-clear-name-v85{display:block;margin:15px auto 8px;font-size:21px;line-height:1.25;color:#2a190c!important;-webkit-text-fill-color:#2a190c!important;word-break:keep-all;overflow-wrap:normal}
+.subquest-clear-complete-v85{display:inline-flex;min-height:30px;align-items:center;justify-content:center;padding:0 14px;border-radius:999px;background:#273a50;color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:10px;font-weight:1000;letter-spacing:.13em;white-space:nowrap;animation:subquestStampV85 .42s .18s both}
+@keyframes subquestStampV85{0%{opacity:0;transform:scale(1.7) rotate(-6deg)}70%{opacity:1;transform:scale(.94) rotate(1deg)}100%{transform:scale(1) rotate(0)}}
+.subquest-clear-rewards-v85{margin:18px 0 3px;padding-top:15px;border-top:2px solid rgba(115,75,33,.28)}
+.subquest-clear-rewards-v85>small{display:block;font-size:9px;font-weight:1000;letter-spacing:.2em;color:#765025!important;-webkit-text-fill-color:#765025!important}
+.subquest-clear-rewards-v85>h3{font-size:22px;line-height:1.25;margin:5px 0 13px;color:#171008!important;-webkit-text-fill-color:#171008!important;word-break:keep-all}
+.subquest-reward-list-v85{display:grid;gap:7px;text-align:left}
+.subquest-reward-row-v85{display:grid;grid-template-columns:82px minmax(0,1fr);align-items:center;gap:8px;min-height:43px;padding:7px 11px;border:2px solid #bd8d51;border-radius:13px;background:#fff4db;color:#211409!important;-webkit-text-fill-color:#211409!important}
+.subquest-reward-row-v85 span{font-size:9px;font-weight:1000;letter-spacing:.1em;color:#795226!important;-webkit-text-fill-color:#795226!important;white-space:nowrap}
+.subquest-reward-row-v85 b{min-width:0;font-size:14px;line-height:1.3;color:#211409!important;-webkit-text-fill-color:#211409!important;word-break:keep-all;overflow-wrap:normal;text-align:right}
+.subquest-clear-next-v85{position:relative;z-index:2;width:100%;min-height:54px;margin-top:18px;border-radius:16px;background:#397cb8;border:2px solid #8ec5ef;color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:16px;font-weight:1000;letter-spacing:.06em;box-shadow:0 7px 15px rgba(42,83,119,.24)}
+.subquest-clear-card-v85.reward-stage .subquest-clear-title-v85{font-size:24px}.subquest-clear-card-v85.reward-stage .subquest-clear-name-v85,.subquest-clear-card-v85.reward-stage .subquest-clear-complete-v85{display:none}
+@media(max-width:360px){.quest-screen.subquest-mode #questTitle{font-size:16px!important}.quest-screen.subquest-mode #questAreaPill{min-width:96px!important;font-size:9px!important}.subquest-clear-card-v85{padding-left:13px;padding-right:13px}.subquest-reward-row-v85{grid-template-columns:70px minmax(0,1fr)}.subquest-reward-row-v85 b{font-size:12px}}
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -2804,7 +2837,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v84</div>
+      <div class="title-version">v85</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3198,7 +3231,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=83" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=85" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -3969,8 +4002,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   }
 }
 
-
-
 (() => {
 'use strict';
 
@@ -3981,7 +4012,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=84;
+const GAME_ASSET_VERSION=85;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5064,9 +5095,10 @@ async function confirmSubquest(id){const found=subquestById(id);if(!found||found
 function subquestBg(area){const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===area.worldId),a=w?.areas?.[0];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/02.png'};}
 async function startSubquest(area,quest){markTrainingPlayed();state.quest={type:'subquest',subquestId:quest.id,areaIndex:0,battleIndex:0,battleReady:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:subquestBg(area).bg,fallbackBg:subquestBg(area).fallback};$('#trainingFeaturePopup').hidden=true;renderQuestScreen();showScreen('quest');await runSubquestLines(area,quest.intro||[]);await startQuestBattle();}
 async function runSubquestLines(area,lines=[]){if(!lines.length)return;const bg=subquestBg(area);showScreen('adventure');setImage($('#adventureBg'),bg.bg,bg.fallback);const sc=$('#storyScene');[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.add(`story-world-${area.worldId}`);storySceneExtras=(area.required||[]).filter(id=>!['yusha','pink'].includes(id));$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';for(const row of lines){if(row[0]==='show'){await storyShowGuests(row[1]||[]);continue;}await storySay(row[0],row[1]||'');}await storyHideGuests().catch(()=>{});sc.hidden=true;sc.style.visibility='';$('#storyBubble').hidden=true;$('#storyGuest').hidden=true;storySceneExtras=[];renderQuestScreen();showScreen('quest');}
-function subquestRewardLines(reward){const out=[];if(reward.diamonds)out.push(`ダイヤ ×${reward.diamonds}`);if(reward.coins)out.push(`${Number(reward.coins).toLocaleString()}G`);for(const id of reward.weapons||[]){const w=weaponById(id);out.push(`武器：${w?.name||id}`);}if(reward.armor){const a=armorById(reward.armor);out.push(`防具：${a?.name||reward.armor}`);}for(const id of reward.medals||[]){const w=weaponById(id);out.push(`メダル：${w?.name||id}メダル`);}return out;}
-function grantSubquestReward(quest){const r=quest.reward||{};state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+Number(r.diamonds||0);state.coins+=Number(r.coins||0);for(const id of r.weapons||[])addWeapon(id,1);if(r.armor)addArmor(r.armor,1);for(const id of r.medals||[])addMedal(id,1);ensureSubquestMeta().cleared[quest.id]=true;saveMeta();renderHome();}
-async function showSubquestReward(quest){grantSubquestReward(quest);await narrationDialog('サブクエストクリア！');const lines=subquestRewardLines(quest.reward);await narrationDialog(`報酬をゲットした！\\n\\n${lines.join('\\n')}`);}
+function subquestRewardRows(reward){const out=[];if(reward.diamonds)out.push({label:'DIAMOND',value:`×${reward.diamonds}`});if(reward.coins)out.push({label:'COIN',value:`${Number(reward.coins).toLocaleString()}G`});for(const id of reward.weapons||[]){const w=weaponById(id);out.push({label:'WEAPON',value:w?.name||id});}if(reward.armor){const a=armorById(reward.armor);out.push({label:'ARMOR',value:a?.name||reward.armor});}for(const id of reward.medals||[]){const w=weaponById(id);out.push({label:'MEDAL',value:`${w?.name||id}メダル`});}return out;}
+function createSubquestClearOverlay(quest){const ov=document.createElement('div');ov.className='subquest-clear-overlay-v85';ov.innerHTML='<div class="subquest-clear-card-v85"><div class="subquest-clear-shine-v85"></div><small class="subquest-clear-kicker-v85">TRAINING SUB QUEST</small><h2 class="subquest-clear-title-v85">SUB QUEST CLEAR!</h2><strong class="subquest-clear-name-v85"></strong><span class="subquest-clear-complete-v85"></span><div class="subquest-clear-rewards-v85" hidden><small>QUEST REWARD</small><h3>報酬をゲットした！</h3><div class="subquest-reward-list-v85"></div></div><button class="subquest-clear-next-v85" type="button">報酬を見る</button></div>';ov.querySelector('.subquest-clear-name-v85').textContent=quest.name||'サブクエスト';ov.querySelector('.subquest-clear-complete-v85').textContent=`QUEST ${quest.no||''} COMPLETE`;document.body.appendChild(ov);requestAnimationFrame(()=>ov.classList.add('show'));return ov;}
+function waitSubquestClearButton(ov){return new Promise(resolve=>{const btn=ov.querySelector('.subquest-clear-next-v85');btn.onclick=()=>resolve(btn);});}
+async function showSubquestReward(quest){grantSubquestReward(quest);const ov=createSubquestClearOverlay(quest);await fixedDelay(500);let btn=await waitSubquestClearButton(ov);const card=ov.querySelector('.subquest-clear-card-v85'),rewards=ov.querySelector('.subquest-clear-rewards-v85'),list=ov.querySelector('.subquest-reward-list-v85');card.classList.add('reward-stage');rewards.hidden=false;list.textContent='';for(const row of subquestRewardRows(quest.reward||{})){const el=document.createElement('div');el.className='subquest-reward-row-v85';const label=document.createElement('span'),value=document.createElement('b');label.textContent=row.label;value.textContent=row.value;el.append(label,value);list.appendChild(el);}btn.textContent='OK';await fixedDelay(220);btn=await waitSubquestClearButton(ov);ov.classList.remove('show');ov.classList.add('hide');await fixedDelay(180);ov.remove();}
 async function finishSubquestReturn(){const found=subquestById(state.quest?.subquestId);if(!found){endQuestToTraining();return;}await runSubquestLines(found.area,found.quest.post||[]);await showSubquestReward(found.quest);state.quest=null;state.training.mode='subquest';renderTraining();showScreen('training');const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='subquest';}renderSubquestList();}
 function renderTrainingFeature(mode){
   const root=$('#trainingFeaturePanel');root.hidden=false;if(mode==='subquest'){renderSubquestList();return;}const testFree=!!state.test?.enabled;if(mode==='boss')syncDefeatedHistoryFromProgress();
@@ -5102,25 +5134,8 @@ async function startTrainingQuest(type,opt={}){
 }
 function questWorld(){return state.quest?.type==='journal'?MOB_DATA.adventureWorlds?.[state.quest.worldIndex]:null;}
 function questBackground(){const q=state.quest;if(!q)return{bg:'back/metal.png',fallback:'back2/002.png'};if(q.type==='subquest'){const f=subquestById(q.subquestId);return f?subquestBg(f.area):{bg:q.bg||'back/sougen.png',fallback:q.fallback||'back2/02.png'};}if(q.type==='journal'){const w=questWorld(),a=w?.areas?.[q.areaIndex];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/002.png'};}if(q.type==='exp')return{bg:q.areaIndex===3?'back/metal2.png':'back/metal.png',fallback:'back2/002.png'};if(q.type==='gold')return{bg:q.areaIndex===3?'back/gold2.png':'back/gold.png',fallback:'back2/002.png'};return{bg:q.areaIndex===3?'back/boss2.png':'back/boss.png',fallback:'back2/002.png'};}
-function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;if(q.type==='program'){const f=battleProgramById(q.programId);return `バトルプログラム / ${f?.season?.name||''} / PROGRAM ${q.programNo||''}`;}if(q.type==='subquest'){const f=subquestById(q.subquestId);return `サブクエスト / ${f?.area?.name||''} / QUEST ${f?.quest?.no||''}`;}return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
-function renderQuestScreen(){const q=state.quest;if(!q)return renderTraining();const bg=questBackground();setImage($('#questBg'),bg.bg,bg.fallback);$('#questTitle').textContent=questTitleText();$('#questKicker').textContent=q.type==='journal'?'ADVENTURE JOURNAL':'TRAINING QUEST';$('#questAreaPill').textContent=q.type==='subquest'?'AREA 1 / 1':`AREA ${q.areaIndex+1} / 4`;$('#questAreaName').textContent=q.type==='subquest'?'AREA 1':`AREA ${q.areaIndex+1}`;$('#questModeLabel').textContent=q.type==='journal'?(questWorld()?.name||'JOURNAL'):(q.difficulty||'').toUpperCase();$('#questDescription').textContent=q.type==='subquest'?'このサブクエストはAREA 1で完結します。クリア後は再挑戦できません。':q.type==='journal'?`戦闘 ${q.battleIndex+1}/3。イベント・セリフは発生しません。`:'探索なし。キャンプとバトルのみ。クリアかゲームオーバーまで退出できません。';const back=$('#questBackBtn');if(back){back.hidden=q.type!=='journal';back.style.display=q.type==='journal'?'':'none';}const explore=$('#questExploreBtn');explore.style.display=q.type==='journal'?'flex':'none';explore.disabled=q.type==='journal'&&(q.battleReady||q.finished);const battleBtn=$('#questBattleBtn');battleBtn.disabled=q.finished||(q.type==='journal'&&!q.battleReady);battleBtn.onclick=startQuestBattle;$('#questBattleHint').textContent=q.finished?'CLEAR':q.type==='journal'?(q.battleReady?'戦闘可能':'探索が必要'):'戦闘開始';$('#questCampBtn').disabled=q.campUsed||q.finished;$('#questCampBtn small').textContent=q.campUsed?'このAREAは休憩済み':'1 AREA 1回';$('#questExploreResult').hidden=true;bindImages($('#questScreen'));}
-function questNormalConfigs(world,count){const used=[],out=[];for(let i=0;i<count;i++){let t=weightedNormalTemplate(world,used);if(!t)t=weightedNormalTemplate(world,[]);if(!t)break;used.push(t.id);out.push({id:t.id,level:rint(t.levelMin||1,t.levelMax||t.levelMin||1)});}return out;}
-function journalEncounter(){const q=state.quest,w=questWorld(),a=w?.areas?.[q.areaIndex];if(!w||!a)return[];if(q.battleIndex<2)return questNormalConfigs(w,weightedEnemyCount(q.areaIndex));if(q.areaIndex===3)return questNormalConfigs(w,4);return expandEncounterEntries(a.boss||[]).filter(x=>trainingEnemyTemplate(x.id)?.category!=='boss');}
-function turntableRange(diff){return diff==='normal'?[2,6]:diff==='hard'?[12,16]:diff==='veryhard'?[23,32]:[43,52];}
-function makeTurntableConfigs(type,diff,area){
-  const [lo,hi]=turntableRange(diff),is4=area===3,randLv=()=>rint(lo,hi);
-  if(type==='exp'){
-    if(is4){if(diff==='normal')return Array.from({length:3},()=>({id:'sp-metal',level:randLv(),noEscape:true}));if(diff==='hard')return[{id:'sp-metal',level:randLv(),noEscape:true},{id:'sp-metal-coin',level:randLv(),noEscape:true},{id:'sp-metal',level:randLv(),noEscape:true}];if(diff==='veryhard')return[{id:'sp-metal-coin',level:rint(22,32),noEscape:true},{id:'sp-metal',level:rint(30,32),noEscape:true},{id:'sp-metal-coin',level:rint(22,32),noEscape:true}];return[{id:'sp-metal-coin',level:rint(42,52),noEscape:true},{id:'sp-metal-king',level:rint(50,52),noEscape:true},{id:'sp-metal-coin',level:rint(42,52),noEscape:true}];}
-    const count=rint(1,diff==='inferno'?4:3),arr=Array.from({length:count},()=>({id:'sp-metal',level:randLv()}));if(diff==='hard'&&Math.random()<.15)arr[rint(0,count-1)]={id:'sp-metal-coin',level:rint(12,16)};if(diff==='veryhard'){if(Math.random()<.18)arr[rint(0,count-1)]={id:'sp-metal-coin',level:rint(22,32)};if(Math.random()<.07)arr[rint(0,count-1)]={id:'sp-metal-king',level:rint(26,32)};}if(diff==='inferno'){if(Math.random()<.50)arr[rint(0,count-1)]={id:'sp-metal-coin',level:rint(42,52)};if(Math.random()<.20)arr[rint(0,count-1)]={id:'sp-metal-king',level:rint(46,52)};}return arr;
-  }
-  if(type==='gold'){
-    const rateFor=id=>diff==='veryhard'||diff==='inferno'?(id==='sp-gold'?.30:id==='sp-gold-coin'?.40:id==='sp-gold-king'?.20:0):0;const withRate=x=>({...x,escapeRate:rateFor(x.id)});
-    if(is4){if(diff==='normal')return Array.from({length:3},()=>withRate({id:'sp-gold',level:randLv()}));if(diff==='hard')return[{id:'sp-gold',level:randLv()},{id:'sp-gold-coin',level:randLv()},{id:'sp-gold',level:randLv()}].map(withRate);if(diff==='veryhard')return[{id:'sp-gold-coin',level:rint(22,32)},{id:'sp-gold',level:rint(30,32)},{id:'sp-gold-coin',level:rint(22,32)}].map(withRate);return[{id:'sp-gold-coin',level:rint(42,52)},{id:'sp-gold-king',level:rint(50,52)},{id:'sp-gold-coin',level:rint(42,52)}].map(withRate);}
-    const count=rint(1,diff==='inferno'?4:3),arr=Array.from({length:count},()=>({id:'sp-gold',level:randLv()}));if(diff==='hard'&&Math.random()<.15)arr[rint(0,count-1)]={id:'sp-gold-coin',level:rint(12,16)};if(diff==='veryhard'){if(Math.random()<.18)arr[rint(0,count-1)]={id:'sp-gold-coin',level:rint(22,32)};if(Math.random()<.07)arr[rint(0,count-1)]={id:'sp-gold-king',level:rint(26,32)};}if(diff==='inferno'){if(Math.random()<.50)arr[rint(0,count-1)]={id:'sp-gold-coin',level:rint(42,52)};if(Math.random()<.20)arr[rint(0,count-1)]={id:'sp-gold-king',level:rint(46,52)};}return arr.map(withRate);
-  }
-  return[];
-}
-function bossQuestConfigs(){const q=state.quest,d=BOSS_DIFFICULTIES[q.difficulty]||BOSS_DIFFICULTIES.normal,bossIds=(state.meta.defeatedBosses||[]).map(trainingEnemyTemplate).filter(Boolean),eliteIds=(state.meta.defeatedElites||[]).map(trainingEnemyTemplate).filter(Boolean);if(!bossIds.length&&!eliteIds.length)return[];const main=pick(bossIds.length?bossIds:eliteIds),sides=[];const pool=eliteIds.filter(x=>x.id!==main.id);while(pool.length&&sides.length<2){const x=pool.splice(rint(0,pool.length-1),1)[0];sides.push(x);}const lvl=t=>Math.max(t.levelMin||1,d.recommended-5),side=t=>({id:t.id,level:lvl(t),escort:true,actionCount:1});return sides.length===2?[side(sides[0]),{id:main.id,level:lvl(main)},side(sides[1])]:[{id:main.id,level:lvl(main)},...sides.map(side)];}
+function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;if(q.type==='program'){const f=battleProgramById(q.programId);return `バトルプログラム / ${f?.season?.name||''} / PROGRAM ${q.programNo||''}`;}if(q.type==='subquest'){const f=subquestById(q.subquestId);return `${f?.area?.name||''}・QUEST ${f?.quest?.no||''}`;}return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
+function renderQuestScreen(){const q=state.quest;if(!q)return renderTraining();const screen=$('#questScreen'),bg=questBackground(),sub=q.type==='subquest'?subquestById(q.subquestId):null;setImage($('#questBg'),bg.bg,bg.fallback);screen?.classList.toggle('quest-no-back',q.type!=='journal');screen?.classList.toggle('subquest-mode',q.type==='subquest');$('#questTitle').textContent=questTitleText();$('#questKicker').textContent=q.type==='journal'?'ADVENTURE JOURNAL':q.type==='subquest'?'SUB QUEST':'TRAINING QUEST';$('#questAreaPill').textContent=q.type==='subquest'?'AREA 1 / 1':`AREA ${q.areaIndex+1} / 4`;$('#questAreaName').textContent=q.type==='subquest'?(sub?.quest?.name||'サブクエスト'):`AREA ${q.areaIndex+1}`;$('#questModeLabel').textContent=q.type==='subquest'?`QUEST ${sub?.quest?.no||''}`:q.type==='journal'?(questWorld()?.name||'JOURNAL'):(q.difficulty||'').toUpperCase();$('#questDescription').textContent=q.type==='subquest'?'このサブクエストはAREA 1で完結します。クリア後は再挑戦できません。':q.type==='journal'?`戦闘 ${q.battleIndex+1}/3。イベント・セリフは発生しません。`:'探索なし。キャンプとバトルのみ。クリアかゲームオーバーまで退出できません。';const back=$('#questBackBtn');if(back){back.hidden=q.type!=='journal';back.style.display=q.type==='journal'?'':'none';}const explore=$('#questExploreBtn');explore.style.display=q.type==='journal'?'flex':'none';explore.disabled=q.type==='journal'&&(q.battleReady||q.finished);const battleBtn=$('#questBattleBtn');battleBtn.disabled=q.finished||(q.type==='journal'&&!q.battleReady);battleBtn.onclick=startQuestBattle;$('#questBattleHint').textContent=q.finished?'CLEAR':q.type==='journal'?(q.battleReady?'戦闘可能':'探索が必要'):'戦闘開始';$('#questCampBtn').disabled=q.campUsed||q.finished;$('#questCampBtn small').textContent=q.campUsed?'このAREAは休憩済み':'1 AREA 1回';$('#questExploreResult').hidden=true;bindImages($('#questScreen'));}
 function currentQuestConfigs(){const q=state.quest;if(!q)return[];if(q.type==='subquest'){const f=subquestById(q.subquestId);return f?.quest?.waves?.[0]||[];}if(q.type==='journal')return journalEncounter();if(q.type==='boss')return bossQuestConfigs();return makeTurntableConfigs(q.type,q.difficulty,q.areaIndex);}
 async function questExplore(){const q=state.quest;if(!q||q.type!=='journal'||q.battleReady)return;const box=$('#questExploreResult');box.hidden=false;box.textContent='勇者一行は周囲を探索した';await fixedDelay(420);for(let i=0;i<6;i++){box.textContent=`探索中${'.'.repeat(i%3+1)}`;await fixedDelay(180);}const r=Math.random();let resultWait=900;if(r<.70){const it=weightedPickItem();addItem(it.id,1);box.innerHTML=`<img src="${it.image}" alt=""><b>${it.name}を見つけた！</b><br><small>1つ入手</small>`;bindImages(box);resultWait=1500;}else if(r<.90){const arr=AREA_FLAVOR[questWorld()?.id]||['周囲を見渡した'];box.textContent=pick(arr);}else box.textContent='敵の気配を感じる…';q.battleReady=true;await fixedDelay(resultWait);box.hidden=true;renderQuestScreen();}
 async function questCamp(){const q=state.quest;if(!q||q.campUsed)return;const hasTent=tentCount()>0,ans=await dialog(`キャンプで休みますか？\nテント：全回復${hasTent?'':'（未所持）'}\n椅子：HP・MP30%回復`,[[hasTent?'テント':'テントなし','tent',hasTent?'primary':''],['椅子','chair'],['戻る','no']],'CAMP');if(ans==='no'||!ans)return;if(ans==='tent'&&!hasTent)return;if(ans==='tent')consumeItem('mob-tent',1);for(const [id,lv] of state.party){const st=baseStats(player(id),lv),v=q.vitals[id];if(!v||v.dead)continue;if(ans==='tent'){v.hp=st.maxHp;v.mp=st.maxMp;}else{v.hp=Math.min(st.maxHp,v.hp+Math.ceil(st.maxHp*.30));v.mp=Math.min(st.maxMp,v.mp+Math.ceil(st.maxMp*.30));}}q.campUsed=true;toast(ans==='tent'?'HP・MPが全回復した！':'HP・MPが少し回復した！');renderQuestScreen();}
@@ -7573,8 +7588,6 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
-
-
 </script>
 </body>
 </html>
