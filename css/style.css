@@ -2571,3 +2571,204 @@
 .enemy-sprite.enemy-damage-impact,.enemy-symbol.enemy-damage-impact{animation:enemyDamageFlashV75 .28s ease!important;transform-origin:center bottom!important}
 @keyframes enemyDamageFlashV75{0%,100%{filter:drop-shadow(0 7px 6px rgba(0,0,0,.38))}12%,55%{filter:brightness(1.72) saturate(2.35) sepia(.78) hue-rotate(-31deg) drop-shadow(0 0 12px rgba(255,40,40,.98))}78%{filter:brightness(1.25) saturate(1.45) drop-shadow(0 0 5px rgba(255,65,65,.55))}}
 .battle-screen.enemy-attacking .battle-field{z-index:35!important;overflow:visible!important}.battle-screen.enemy-attacking .enemy-area{overflow:visible!important}.battle-screen.enemy-attacking .party-hud{z-index:8!important}
+
+
+/* ===== MOB QUEST v76: CANONICAL DIALOGUE / OPENING / CONTRAST GUARD ===== */
+/* Opening starts as pure black with plain white typography. No loading art, white card, or NARRATION label. */
+.opening-narration-v76{position:fixed;z-index:260;inset:0;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .28s ease;color:#fff}.opening-narration-v76.show{opacity:1}.opening-narration-v76>div{width:min(88vw,520px);background:transparent;border:0;box-shadow:none;text-align:center;padding:0}.opening-narration-v76 p{margin:0;color:#fff;-webkit-text-fill-color:#fff;font-size:21px;line-height:1.75;font-weight:900;letter-spacing:.055em;text-shadow:0 2px 12px rgba(255,255,255,.08)}.opening-narration-v76.grand p{font-size:27px;letter-spacing:.11em}.opening-narration-v76 b{display:block;margin-top:28px;color:#8f949d;-webkit-text-fill-color:#8f949d;font-size:9px;font-weight:800;letter-spacing:.08em}.opening-black-curtain-v76{position:fixed;z-index:259;inset:0;background:#000;opacity:1;transition:opacity .85s ease}.opening-black-curtain-v76.fade{opacity:0}.opening-scene-caption-v76{position:fixed;z-index:258;left:7%;right:7%;bottom:calc(76px + var(--safe-bottom));padding:11px 15px;border-radius:14px;background:rgba(4,7,11,.82);border:1px solid rgba(255,255,255,.24);color:#fff;text-align:center;opacity:0;transition:.18s;box-shadow:0 9px 24px rgba(0,0,0,.35)}.opening-scene-caption-v76.show{opacity:1}.opening-scene-caption-v76 p{margin:0;color:#fff;font-size:15px;line-height:1.5;font-weight:1000}.opening-scene-caption-v76 small{display:block;margin-top:5px;color:#b8bec8;font-size:8px}.opening-pink-actor-v76{position:absolute;z-index:11;left:-25%;bottom:24%;width:22%;height:31%;display:flex;align-items:flex-end;justify-content:center;transition:left .48s cubic-bezier(.17,.84,.29,1.14);filter:drop-shadow(0 7px 6px rgba(0,0,0,.38))}.opening-pink-actor-v76.arrived{left:27%}.opening-pink-actor-v76 img{width:100%;height:100%;object-fit:contain;object-position:center bottom}.opening-pink-actor-v76 b{display:none}.opening-pink-actor-v76.panic{animation:openingPinkPanicV76 .24s linear infinite alternate}@keyframes openingPinkPanicV76{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-14px) rotate(4deg)}}
+/* General narration cards carry no literal "NARRATION" label. */
+.dialog-overlay.narration-dialog .dialog-body>small{display:none!important}
+/* Facility bubbles: exact compact width, manual balanced Japanese lines, and zero orphan lines. */
+.dialog-overlay.facility-line-talk .dialog-card{width:min(94vw,var(--facility-card-width,350px))!important;max-width:470px!important;grid-template-columns:82px minmax(0,1fr)!important;gap:8px!important}.dialog-overlay.facility-line-talk .dialog-card>img{width:82px!important;height:124px!important}.dialog-overlay.facility-line-talk .dialog-body{min-height:96px!important;padding:10px 12px!important}.dialog-overlay.facility-line-talk .dialog-body>p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--facility-line-font,16px)!important;line-height:1.48!important;margin:5px 0!important}.facility-exit-banner b{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important}
+/* Castle speech uses content width instead of a fixed giant bubble. */
+.castle-speech{max-width:calc(100% - 20px)!important;padding:10px 13px 12px!important}.castle-speech p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--castle-speech-font,16px)!important;line-height:1.46!important}
+/* HOME opening tutorial stays above the 4 main icons. */
+.home-tutorial-v76{position:fixed;z-index:265;inset:0;background:rgba(0,0,0,.14);opacity:0;transition:opacity .16s}.home-tutorial-v76.show{opacity:1}.home-tutorial-bubble-v76{position:absolute;z-index:2;left:14px;right:14px;top:calc(78px + var(--safe-top));min-height:78px;display:grid;grid-template-columns:56px 1fr;gap:8px;align-items:center;background:#fff;color:#171717;border:3px solid #272727;border-radius:17px;padding:7px 10px;box-shadow:0 10px 26px rgba(0,0,0,.34)}.home-tutorial-bubble-v76 img{width:56px;height:72px;object-fit:contain}.home-tutorial-bubble-v76 b{font-size:10px;color:#df448d}.home-tutorial-bubble-v76 p{margin:2px 0;color:#171717;font-size:11px;line-height:1.42;font-weight:1000}.home-tutorial-bubble-v76 small{font-size:7px;color:#777}.home-tutorial-arrow-v76{position:fixed;z-index:3;transform:translate(-50%,-50%);font-style:normal;font-size:28px;color:#ffcc38;text-shadow:0 2px 0 #493100;animation:homeTutorialArrowV76 .7s ease-in-out infinite alternate}@keyframes homeTutorialArrowV76{from{transform:translate(-50%,-50%) translateY(0)}to{transform:translate(-50%,-50%) translateY(-9px)}}
+/* Figure shop must be physically absent before desert clear. Author button display rules must never override hidden. */
+#tavernFigureMenuBtn[hidden],.facility-menu-grid>button[hidden]{display:none!important}
+/* TRAINING final contrast lock. No dark-on-dark text is allowed. */
+#trainingFeaturePopup .training-feature-card.locked{opacity:1!important;filter:none!important}
+#trainingFeaturePopup .training-feature-card button:disabled{opacity:.64!important;filter:none!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+#trainingFeaturePopup[data-mode="gold"] .training-feature-popup-card{color:#2b190b!important;-webkit-text-fill-color:#2b190b!important}#trainingFeaturePopup[data-mode="gold"]>.training-feature-popup-card>.settings-head h2,#trainingFeaturePopup[data-mode="gold"]>.training-feature-popup-card>.settings-head small{color:#2b190b!important;-webkit-text-fill-color:#2b190b!important}
+#trainingFeaturePopup[data-mode="exp"]>.training-feature-popup-card>.settings-head h2,#trainingFeaturePopup[data-mode="exp"]>.training-feature-popup-card>.settings-head small,#trainingFeaturePopup[data-mode="boss"]>.training-feature-popup-card>.settings-head h2,#trainingFeaturePopup[data-mode="boss"]>.training-feature-popup-card>.settings-head small,#trainingFeaturePopup[data-mode="program"]>.training-feature-popup-card>.settings-head h2,#trainingFeaturePopup[data-mode="program"]>.training-feature-popup-card>.settings-head small{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 2px 3px rgba(0,0,0,.35)!important}
+#trainingFeaturePopup[data-mode="gold"] .training-feature-card{background:#fff1d2!important;color:#301d0d!important}#trainingFeaturePopup[data-mode="gold"] .training-feature-card h3,#trainingFeaturePopup[data-mode="gold"] .training-feature-card p{color:#301d0d!important;-webkit-text-fill-color:#301d0d!important}
+#trainingFeaturePopup[data-mode="exp"] .training-feature-card{background:#e6f5ff!important;color:#173c56!important}#trainingFeaturePopup[data-mode="exp"] .training-feature-card h3,#trainingFeaturePopup[data-mode="exp"] .training-feature-card p{color:#173c56!important;-webkit-text-fill-color:#173c56!important}
+#trainingFeaturePopup[data-mode="boss"] .training-feature-card{background:#f4e8fb!important;color:#43255a!important}#trainingFeaturePopup[data-mode="boss"] .training-feature-card h3,#trainingFeaturePopup[data-mode="boss"] .training-feature-card p{color:#43255a!important;-webkit-text-fill-color:#43255a!important}
+#trainingFeaturePopup .record-count-line span,#trainingFeaturePopup .feature-meta span{background:#18334c!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:1px solid #7292aa!important}
+#trainingFeaturePopup .training-feature-card button{background:#2f75ae!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#8bc7ef!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-panel{background:#fff8e9!important;color:#2a2016!important}#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title h2,#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title small{color:#2a2016!important;-webkit-text-fill-color:#2a2016!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-reward{background:#e9d9ad!important;color:#2d2414!important}#trainingFeaturePopup[data-mode="program"] .battle-program-reward b,#trainingFeaturePopup[data-mode="program"] .battle-program-reward small{color:#2d2414!important;-webkit-text-fill-color:#2d2414!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card{background:#183b57!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#7897ad!important}#trainingFeaturePopup[data-mode="program"] .battle-program-card b,#trainingFeaturePopup[data-mode="program"] .battle-program-card small,#trainingFeaturePopup[data-mode="program"] .battle-program-card .program-number{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}#trainingFeaturePopup[data-mode="program"] .battle-program-card em{background:#2f7a45!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-back{background:#183b57!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+
+/* v76 pre-paint opening guard: NEW must never flash the loading screen. */
+html.opening-boot-v76::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
+body.opening-sequence-v76 .throne-home,body.opening-sequence-v76 [data-castle-actor]{pointer-events:none!important}
+
+/* v77 boot fail-safe */
+html.opening-boot-v77::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
+
+body.opening-sequence-v77 .throne-home,body.opening-sequence-v77 [data-castle-actor]{pointer-events:none!important}
+
+
+/* ===== MOB QUEST v78: GLOBAL TEXT / OPENING / TRAINING / SINGLE DASH GUARD ===== */
+.opening-narration-sequence-v78{background:#000!important;opacity:1!important;transition:none!important;touch-action:manipulation!important;user-select:none!important}
+.opening-narration-sequence-v78>div{width:94vw!important;max-width:520px!important;padding:0 10px!important}
+.opening-narration-sequence-v78 p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:clamp(20px,5.4vw,27px)!important;line-height:1.65!important;letter-spacing:.035em!important}
+.opening-narration-sequence-v78.grand p{font-size:clamp(24px,6.2vw,31px)!important}
+.opening-narration-sequence-v78 b,.opening-scene-caption-v76 small{display:none!important}
+.opening-scene-caption-v76 p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;text-wrap:wrap!important}
+html.opening-boot-v78::before{content:"";position:fixed;z-index:2147483647;inset:0;background:#000;pointer-events:none}
+body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-actor]{pointer-events:none!important}
+.dialog-overlay.facility-line-talk .dialog-card{width:min(94vw,var(--facility-card-width,350px))!important;max-width:440px!important;grid-template-columns:78px minmax(0,1fr)!important;gap:7px!important}
+.dialog-overlay.facility-line-talk .dialog-card>img{width:78px!important;height:120px!important}
+.dialog-overlay.facility-line-talk .dialog-body{min-height:88px!important;padding:9px 11px!important}
+.dialog-overlay.facility-line-talk .dialog-body>p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--facility-line-font,16px)!important;line-height:1.46!important;margin:4px 0!important}
+.dialog-overlay.facility-line-talk .dialog-body>small{font-size:10px!important}
+.castle-speech{max-width:calc(100% - 20px)!important;padding:9px 11px 11px!important}
+.castle-speech p{white-space:pre-line!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:wrap!important;font-size:var(--castle-speech-font,16px)!important;line-height:1.42!important;margin-top:3px!important}
+.castle-speech small{font-size:10px!important}
+.home-tutorial-bubble-v76{left:10px!important;right:10px!important;top:auto!important;bottom:calc(188px + var(--safe-bottom))!important;min-height:66px!important;grid-template-columns:48px minmax(0,1fr)!important;gap:7px!important;padding:6px 9px!important;border-radius:16px!important}
+.home-tutorial-bubble-v76 img{width:48px!important;height:58px!important}.home-tutorial-bubble-v76 b{font-size:9px!important}.home-tutorial-bubble-v76 p{font-size:clamp(9px,2.55vw,11px)!important;line-height:1.25!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;margin:2px 0!important}.home-tutorial-bubble-v76 small{display:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-panel{background:#fff8e9!important;color:#2a2016!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title h2,#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.section-title small,#trainingFeaturePopup[data-mode="program"] .battle-program-panel>.panel-note{color:#382a1b!important;-webkit-text-fill-color:#382a1b!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season{background:linear-gradient(145deg,#785933,#3d6544)!important;border-color:#cdb27d!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season span{color:#ffe3a3!important;-webkit-text-fill-color:#ffe3a3!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-season b,#trainingFeaturePopup[data-mode="program"] .battle-program-season small{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-reward{background:#ead9ad!important;color:#2d2414!important}#trainingFeaturePopup[data-mode="program"] .battle-program-reward b,#trainingFeaturePopup[data-mode="program"] .battle-program-reward small{color:#2d2414!important;-webkit-text-fill-color:#2d2414!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card{background:#183b57!important;color:#fff!important;-webkit-text-fill-color:#fff!important}#trainingFeaturePopup[data-mode="program"] .battle-program-card b,#trainingFeaturePopup[data-mode="program"] .battle-program-card small,#trainingFeaturePopup[data-mode="program"] .battle-program-card .program-number{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+.enemy-unit.enemy-lunge-unit{animation:enemyDashTowardPartyV78 .30s cubic-bezier(.18,.72,.22,1) forwards!important;transform-origin:center bottom!important}
+@keyframes enemyDashTowardPartyV78{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(0,150px,0) scale(1.075)}}
+
+
+/* ===== MOB QUEST v79: SKILL CONFIRM / VICTORY / TECH SIZE / FX MOTION ===== */
+.command-btn.special .battle-command-icon{transform:none!important;width:100%!important;height:100%!important;object-fit:contain!important}
+.skill-sprite-fx{width:min(46vw,184px)!important;height:min(46vw,184px)!important;transform:translate(-50%,-50%)!important}
+.skill-sprite-fx.earth-shake .skill-frame,.skill-sprite-fx.light-shake .skill-frame{animation:skillHorizontalShakeV79 .075s linear infinite!important}
+.skill-sprite-fx.status-noise .skill-frame{animation:skillHorizontalShakeV79 .07s linear infinite!important}
+.skill-sprite-fx.status-chill .skill-frame{animation:skillVerticalFloatV79 1s ease-in-out!important}
+.skill-sprite-fx.status-fast .skill-frame{animation:skillFastPassV79 .85s cubic-bezier(.12,.72,.22,1) both!important}
+.skill-sprite-fx.status-repeat .skill-frame{animation:skillRepeatLeftV79 1s ease-out both!important}
+.skill-sprite-fx.status-repeat .skill-frame-ghost{animation:skillRepeatRightV79 1s ease-out both!important}
+@keyframes skillHorizontalShakeV79{0%,100%{transform:translateX(-7px)}50%{transform:translateX(7px)}}
+@keyframes skillVerticalFloatV79{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+@keyframes skillFastPassV79{0%{transform:translateX(-230px);opacity:0}12%{opacity:1}80%{opacity:1}100%{transform:translateX(230px);opacity:0}}
+@keyframes skillRepeatLeftV79{0%{transform:translateX(-180px);opacity:0}45%,100%{transform:translateX(-18px);opacity:1}}
+@keyframes skillRepeatRightV79{0%{transform:translateX(180px);opacity:0}45%,100%{transform:translateX(18px);opacity:1}}
+.enemy-unit.enemy-lunge-unit{animation:enemyDashTowardPartyV79 .25s cubic-bezier(.12,.76,.18,1) forwards!important;transform-origin:center bottom!important}
+@keyframes enemyDashTowardPartyV79{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(0,150px,0) scale(1.075)}}
+.victory-banner-v79{position:fixed;z-index:310;left:50%;top:40%;transform:translate(-50%,-50%) scale(.82);width:min(86vw,390px);padding:16px 18px;border-radius:18px;background:#f1dfbd;border:4px solid #8e673b;box-shadow:0 14px 36px rgba(0,0,0,.48),inset 0 0 0 2px #fff2d5;text-align:center;color:#1f1710;opacity:0;pointer-events:none}
+.victory-banner-v79.show{animation:victoryBannerInV79 1.05s cubic-bezier(.16,.8,.22,1) both}
+.victory-banner-v79 small{display:block;font-size:9px;letter-spacing:.2em;color:#6b4c2d;font-weight:1000}.victory-banner-v79 b{display:block;font-size:34px;line-height:1.05;color:#15100b;text-shadow:0 2px 0 #fff3d8}.victory-banner-v79 span{display:block;margin-top:5px;font-size:14px;font-weight:1000;color:#1f1710}
+@keyframes victoryBannerInV79{0%{opacity:0;transform:translate(-50%,-50%) scale(.76)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}35%,82%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-54%) scale(.98)}}
+.result-overlay.victory .result-card{background:#f1dfbd!important;border:4px solid #8e673b!important;box-shadow:0 18px 45px rgba(0,0,0,.48),inset 0 0 0 2px #fff2d5!important;color:#1c150e!important}
+.result-overlay.victory .result-card h2,.result-overlay.victory .result-card p,.result-overlay.victory .result-card b,.result-overlay.victory .result-card em{color:#1c150e!important;text-shadow:none!important}
+.result-overlay.victory .result-card>small,.result-overlay.victory .result-rewards small{color:#6f5437!important}
+.result-overlay.victory .result-rewards>div,.result-overlay.victory .levelup-card{background:#ead4ad!important;border-color:#b18a59!important;color:#1c150e!important}
+
+
+/* ===== MOB QUEST v79 final: exact skill fade / unified technique size ===== */
+.skill-sprite-fx .skill-frame.skill-fade-v79.active{animation:skillFrameFadeV79 1s linear both!important}
+@keyframes skillFrameFadeV79{0%{opacity:1}72%{opacity:1}100%{opacity:0}}
+.command-btn.special{transform:none!important}
+.command-btn.special .battle-command-icon,.command-btn.magic .battle-command-icon,.command-btn.ultimate .battle-command-icon{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;transform:none!important;object-fit:contain!important}
+.victory-banner-v79{background:#f4e3c3!important;border-color:#7d5933!important;color:#15100b!important}
+.victory-banner-v79 b,.victory-banner-v79 span{color:#15100b!important;-webkit-text-fill-color:#15100b!important}
+
+
+/* ===== MOB QUEST v80: STARTER BALANCE / READABILITY / EXPLORE ===== */
+/* Exploration result is always beige with dark, high-contrast copy. */
+.explore-overlay .explore-card{
+  background:#f1dfbd!important;
+  border:3px solid #9a7144!important;
+  box-shadow:inset 0 0 0 2px #fff4d9,0 14px 34px rgba(0,0,0,.38)!important;
+  color:#21170f!important;
+  text-shadow:none!important;
+}
+.explore-overlay .explore-card>small,
+.explore-overlay .explore-card h2,
+.explore-overlay .explore-loading,
+.explore-overlay .explore-reward b,
+.explore-overlay .explore-reward p,
+.explore-overlay .explore-reward small{
+  color:#21170f!important;
+  -webkit-text-fill-color:#21170f!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+.explore-overlay .explore-loading{font-size:14px!important;font-weight:1000!important}
+.explore-overlay .explore-reward b{font-size:14px!important;font-weight:1000!important}
+.explore-overlay .explore-reward p{font-size:10px!important;font-weight:900!important}
+
+/* Level-up cards: never place dark copy on dark pills. */
+.result-overlay.victory .levelup-card{background:#ead4ad!important;color:#20160e!important}
+.result-overlay.victory .levelup-head b,
+.result-overlay.victory .levelup-head em,
+.result-overlay.victory .levelup-head small{color:#20160e!important;-webkit-text-fill-color:#20160e!important;text-shadow:none!important}
+.result-overlay.victory .levelup-head small{color:#365f80!important;-webkit-text-fill-color:#365f80!important}
+.result-overlay.victory .levelup-stats span{
+  background:#fff2d2!important;
+  border:1px solid #a87c47!important;
+  color:#21170f!important;
+  -webkit-text-fill-color:#21170f!important;
+  font-size:8px!important;
+  font-weight:1000!important;
+  line-height:1.2!important;
+  padding:6px 3px!important;
+}
+.result-overlay.victory .levelup-stats span b{color:#21170f!important;-webkit-text-fill-color:#21170f!important;font-size:8px!important}
+.result-overlay.victory .result-learn{background:#fff2d2!important;border-left-color:#8e673b!important}
+.result-overlay.victory .result-learn small,.result-overlay.victory .result-learn b{color:#21170f!important;-webkit-text-fill-color:#21170f!important}
+
+/* Opening end: visible starter-supply grant. */
+.opening-supply-v80{position:fixed;z-index:460;inset:0;display:flex;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);opacity:0;transition:opacity .22s ease;pointer-events:none}
+.opening-supply-v80.show{opacity:1}
+.opening-supply-card-v80{width:min(88vw,390px);padding:22px 18px;border-radius:22px;background:#f1dfbd;border:4px solid #8e673b;box-shadow:inset 0 0 0 2px #fff3d5,0 18px 45px rgba(0,0,0,.45);text-align:center;color:#21170f}
+.opening-supply-card-v80>small{display:block;font-size:9px;letter-spacing:.18em;font-weight:1000;color:#72502f}
+.opening-supply-card-v80 h2{margin:8px 0 16px;font-size:18px;line-height:1.35;color:#21170f}
+.opening-supply-card-v80>div{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opening-supply-card-v80 span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:72px;border-radius:14px;background:#fff2d2;border:1px solid #a87c47}
+.opening-supply-card-v80 b{font-size:20px;color:#21170f}.opening-supply-card-v80 em{margin-top:3px;font-style:normal;font-size:10px;font-weight:900;color:#6d4c2d}
+
+
+/* ===== MOB QUEST v83: SUB QUEST + ARMOR ===== */
+.subquest-panel{background:#fff4dc!important;color:#29180d!important}
+.subquest-area-list{display:grid;gap:14px}.subquest-area-block{border:2px solid #b78245;border-radius:22px;padding:12px;background:#f7dfb3;color:#29180d}.subquest-area-block>header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.subquest-area-block>header b{font-size:18px}.subquest-area-block>header small{font-weight:1000;color:#70431f}.subquest-area-block>div{display:grid;gap:8px}.subquest-card{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:2px solid #9d6b35;border-radius:16px;background:#fff9ea;color:#25150b;padding:9px 11px;min-height:72px}.subquest-card img{width:54px;height:54px;object-fit:contain;flex:none}.subquest-card span{display:grid;gap:2px;min-width:0}.subquest-card small{font-size:10px;letter-spacing:.12em;color:#8b5b2f;font-weight:1000}.subquest-card b{font-size:15px;line-height:1.3;color:#22140b}.subquest-card em{font-style:normal;font-size:10px;line-height:1.35;color:#5b3c22}.subquest-card.cleared{opacity:.6}.subquest-card.pending{background:#eee6d6;opacity:.75}.subquest-card:disabled{cursor:default}
+.equipment-slot.armor{grid-column:1/-1;background:#fff1d4!important;color:#2b1709!important}.equipment-slot.armor img{width:74px!important;height:74px!important;object-fit:contain!important}.equipment-slot.armor b,.equipment-slot.armor em,.equipment-slot.armor span,.equipment-slot.armor small{color:#2b1709!important;-webkit-text-fill-color:#2b1709!important;text-shadow:none!important}
+.armor-inventory-list .armor-row{align-items:center}.armor-inventory-list .armor-row img{width:64px;height:64px;object-fit:contain}.armor-inventory-list .armor-row small{white-space:normal;line-height:1.45}
+.blacksmith-popup-menu{grid-template-columns:repeat(3,1fr)!important}.blacksmith-popup-menu button{min-width:0!important}
+@media(max-width:390px){.blacksmith-popup-menu{grid-template-columns:1fr!important}.subquest-card b{font-size:14px}.subquest-card img{width:48px;height:48px}}
+
+
+/* ===== MOB QUEST v83: five-enemy subquest battle support ===== */
+.enemy-area.enemy-count-5{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  grid-template-rows:1fr!important;
+  padding:0!important;
+  gap:1px!important;
+}
+.enemy-count-5 .enemy-unit{padding:0!important;min-width:0!important}
+.enemy-count-5 .enemy-unit .enemy-sprite-wrap{width:100%!important;min-width:0!important;overflow:visible!important}
+.enemy-count-5 .enemy-unit .enemy-sprite-wrap>img{max-width:100%!important;object-fit:contain!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate{left:1%!important;right:1%!important;padding:2px 2px!important;border-radius:5px!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate b{font-size:4.5px!important;line-height:1.05!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate small,.enemy-count-5 .enemy-unit .enemy-nameplate p,.enemy-count-5 .enemy-unit .enemy-tags{display:none!important}
+.enemy-count-5 .enemy-unit .enemy-nameplate .gauge{height:3px!important;margin-top:1px!important}
+.enemy-count-5 .enemy-target-mark{font-size:3px!important;right:1px!important;bottom:1px!important;padding:1px 2px!important}
+@media(max-width:380px){.enemy-count-5 .enemy-unit .enemy-nameplate b{font-size:4px!important}.enemy-count-5 .enemy-target-mark{display:none!important}}
+
+
+/* ===== MOB QUEST v84: SUBQUEST READABILITY + ADVENTURE ABANDON ===== */
+.subquest-panel,.subquest-panel .section-title,.subquest-panel .section-title *,
+.subquest-panel .panel-note,.subquest-area-block,.subquest-area-block *,
+.subquest-card,.subquest-card span,.subquest-card small,.subquest-card b,.subquest-card em{
+  color:#160d07!important;
+  -webkit-text-fill-color:#160d07!important;
+  text-shadow:none!important;
+}
+.subquest-panel .pill{background:#fff7e6!important;border:1px solid #8b5b2f!important;color:#160d07!important;-webkit-text-fill-color:#160d07!important}
+.subquest-card:disabled{color:#160d07!important;-webkit-text-fill-color:#160d07!important;opacity:.72}
+.subquest-card.cleared{opacity:.68!important}.subquest-card.pending{background:#eadfc9!important;opacity:.76!important}
+.adventure-abandon-btn{position:absolute;z-index:18;right:12px;bottom:calc(124px + var(--safe-bottom));min-width:116px;padding:9px 13px;border-radius:14px;border:1px solid #c29a74;background:rgba(53,25,18,.94);color:#fff4df;font-size:10px;font-weight:1000;letter-spacing:.04em;box-shadow:0 7px 18px rgba(0,0,0,.34)}
+.adventure-abandon-btn:disabled{opacity:.45}.adventure-abandon-btn[hidden]{display:none!important}
+@media(max-height:720px){.adventure-abandon-btn{bottom:calc(108px + var(--safe-bottom))}}

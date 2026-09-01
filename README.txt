@@ -1,3 +1,91 @@
+MOB QUEST playable core v84
+- サブクエスト追加: ネオン街Q3-5 / マグマQ1-5 / 海底Q1-5 / 草原II Q1-5
+- 確定済みサブクエスト34本プレイ可能、未確定26本は設定待ち
+- サブクエストのベージュUIを黒文字へ固定
+- 城の施設移動をロード→背景描画→会話の順へ修正
+- 冒険中のHOME移動を禁止し「冒険を諦める」を追加
+- 冒険を諦めた場合、冒険開始後の報酬・EXP・イベント進行等を完全ロールバック
+
+MOB QUEST playable core v83
+- トレーニングに「サブクエスト」(icon/24.png)を追加
+- サブクエストはメインエリアクリア後に解放・一度クリアすると再挑戦不可
+- 確定済みサブクエストは会話→敵出現→戦闘→会話→CLEAR→報酬一覧まで実装
+- 未確定の報酬/会話があるクエストは内容を捏造せず「設定待ち」でロック
+- 防具67種(bogu/01.png～67.png)を追加。防具は購入不可、ドロップ/サブクエスト入手のみ
+- 防具1枠を装備画面へ追加。ステータス・耐性・特殊効果を戦闘へ反映
+- 鍛冶屋に売却を追加：武器20%、防具100%
+- 5体同時戦闘レイアウトを追加
+- 最新武器88種・メイン/サブ武器・メダル3枠仕様を維持
+
+MOB QUEST playable core v82
+- 最初の草原の全滅救済を1回→最大2回へ変更
+- 1回目・2回目は全メンバーHP/MP全回復、ダウン解除、状態異常解除、そのまま戦闘続行
+- 3回目の全滅から通常DEFEAT処理
+- 救済回数を0/1/2で保存し、キャンプのチェックポイント復元でも回数が巻き戻らないよう修正
+- 旧セーブの firstGrassReviveUsed=true は1回使用済みとして互換処理
+- 救済演出文は従来指定の「これは物語の始まり」「まだ全滅するわけにはいかない！」「1度だけ全回復する！」を維持
+
+MOB QUEST playable core v81
+- 最初の草原の通常敵Lvを再調整
+- モブスライム Lv1-3 / モブロック Lv2-3 / モブジョーロ Lv3 / モブテンデビ Lv2-3
+- モブバード Lv1-3 / ピヨミドリ・レッド Lv2-3 / モブビーバー Lv2
+- AREA1: モブビーバーLv3×2 + モブサバンナLv5（サバンナ中央）
+- AREA2: モブイワキリLv6
+- AREA3: モブアックスLv6
+- AREA4: モブホークLv8
+- 専用技: サバンナダンス / イワキリサンダー / アックススクラッチ / ホークダイブを指定属性・小ダメージ帯へ統一
+
+8/31 starter balance + readability update
+- 初期所持金を0G、ダイヤを0へ変更
+- オープニング終了時に15,000G＋モブテント×2を支給する演出を追加
+- 最初の草原の通常戦・探索遭遇は敵最大2体（イベント戦は従来仕様）
+- 最初の草原で初回全滅時のみ、物語救済イベントでパーティー全員HP/MP全回復・復活
+- レベルアップ時のステータス上昇値を高コントラスト化
+- 探索結果バナーを全エリア共通でベージュ背景＋黒文字へ変更
+
+MOB QUEST playable core v79
+- 技素材最新版を反映（魔法/特技/状態異常/全体魔法）
+- 必殺技は既存の正方形カットイン＋枠なぞりを固定し、その後に指定skill/skill2アニメーションを再生
+- パッシブ最新版を反映（勇者の使命、デザート10%、デンデン10%など）
+- 砂漠Ⅱ AREA3 四人衆30%復活時の戦闘中セリフ演出を復旧
+- 会心の一撃！を先に表示してからダメージ数値を表示
+- 戦闘中セリフ表示時間を延長
+- 勝利演出をベージュ枠＋黒文字で強化
+- 魔法/特技/必殺技に使用確認を追加
+- 特技アイコン/エフェクトサイズを他コマンドと統一
+
+MOB QUEST playable core v78
+
+- オープニング黒字幕を単一常駐レイヤー化。各メッセージ間のロード画面表示を廃止
+- オープニング連打を220msゲートで抑止し、二重進行/フリーズを防止
+- オープニング字幕の「タップで進む」を削除
+- 日本語共通改行を再設計。語中分割・1〜2文字孤立・短すぎる末尾行を防止
+- 王の間の吹き出しを実寸計測して話者頭上へ配置し、余白を縮小
+- HOME説明を画面下側へ移動し、横長コンパクト表示へ変更
+- トレーニングコーチ初回説明を読みやすい2メッセージへ整理
+- バトルプログラムの白背景/白文字競合を解消
+- 敵近接攻撃の突進を一段階・一回の直進モーションへ変更
+
+MOB QUEST playable core v77
+- NOW LOADING / START CHECK 停止を根本修正
+- index.htmlにCSS・data.js・game.jsを直接内包し、外部JS読み込み失敗を回避
+- 初期画面をタイトルに変更し、起動失敗時もローダー永久停止しない
+- 初期セットアップをtry/catch化し、タイトルのNEW/CONTINUE/設定だけは必ず再バインド
+- NEW GAME時の黒背景オープニングガードをv77へ更新
+- v76までの会話、トレーニング配色、酒場ロック、v75戦闘モーションを維持
+
+MOB QUEST playable core v76
+
+v76 dialogue/opening/contrast hotfix
+- Opening prologue restored to pure black background + white text; removed NARRATION label/card.
+- King dialogue in opening is anchored speech, not narration.
+- Opening Mob Pink runs into the throne room and speaks from the scene.
+- HOME tutorial bubble reduced and moved above menu icons.
+- Facility dialogue now uses balanced Japanese line breaking; 1-2 character orphan lines are prevented.
+- Castle speech bubble width is content-based, reducing unexplained right-side whitespace.
+- Tavern figure shop button is forcibly hidden before desert clear.
+- Training contrast rules locked for Gold/EXP/Boss/Battle Program.
+
 MOB QUEST playable core v75
 - 敵攻撃を味方側へ大きく突進するダッシュモーションへ修正
 - 敵被弾を赤フラッシュ＋敵ユニット全体シェイクへ修正
