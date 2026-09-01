@@ -2818,6 +2818,16 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .subquest-clear-card-v85.reward-stage .subquest-clear-title-v85{font-size:24px}.subquest-clear-card-v85.reward-stage .subquest-clear-name-v85,.subquest-clear-card-v85.reward-stage .subquest-clear-complete-v85{display:none}
 @media(max-width:360px){.quest-screen.subquest-mode #questTitle{font-size:16px!important}.quest-screen.subquest-mode #questAreaPill{min-width:96px!important;font-size:9px!important}.subquest-clear-card-v85{padding-left:13px;padding-right:13px}.subquest-reward-row-v85{grid-template-columns:70px minmax(0,1fr)}.subquest-reward-row-v85 b{font-size:12px}}
 
+
+/* ===== MOB QUEST v86: sequential subquests / stable labels ===== */
+.quest-screen.subquest-mode #questDescription{display:none!important}
+.quest-screen.subquest-mode .quest-card{padding-bottom:18px!important}
+.subquest-panel .panel-note{display:none!important}
+.subquest-area-block>header small{color:#29180d!important;-webkit-text-fill-color:#29180d!important}
+.subquest-card{opacity:1!important}
+.subquest-card:disabled{opacity:.72!important}
+.subquest-clear-next-v85:disabled{opacity:.65!important;pointer-events:none!important}
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -2837,7 +2847,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v85</div>
+      <div class="title-version">v87</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3231,7 +3241,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=85" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=87" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -3240,7 +3250,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v81
+// MOB QUEST v87
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -4002,6 +4012,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
   }
 }
 
+
 (() => {
 'use strict';
 
@@ -4012,7 +4023,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=85;
+const GAME_ASSET_VERSION=87;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -4400,7 +4411,9 @@ const SPECIAL_ENEMIES=[
   {id:'sq-wing-slime',name:'モブハネスライム',stage:'草原Ⅱ',category:'elite',attribute:'風',image:'enemy/01.png',symbol:'翼',levelMin:50,levelMax:50,alwaysSpecial:true,specialOptions:[{special:'ハネパニック',kind:'confuseSingle',power:.78,chance:.45,skillElement:'風',skillType:'magic'},{special:'ハネアタック',kind:'stunSingle',power:.82,chance:.35,skillElement:'風',skillType:'physical'}],mods:{spd:1.3}},
   {id:'sq-red-hawk',name:'モブレッドホーク',stage:'草原Ⅱ',category:'elite',attribute:'火',image:'boss/02.png',symbol:'炎',levelMin:60,levelMax:60,special:'レッドホークフレイム',kind:'aoe',power:.90,skillElement:'火',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
   {id:'sq-blue-hawk',name:'モブブルーホーク',stage:'草原Ⅱ',category:'elite',attribute:'水',image:'boss/02.png',symbol:'水',levelMin:60,levelMax:60,special:'ブルーホークウェイブ',kind:'aoe',power:.90,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
-  {id:'sq-young-dragon',name:'若きモブドラゴン',stage:'マグマ',category:'elite',attribute:'火',image:'boss/09.png',symbol:'竜',levelMin:40,levelMax:40,special:'ヤングドラゴンフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',mods:{hp:.72,spd:1.35,atk:.92,mag:.95}}
+  {id:'sq-young-dragon',name:'若きモブドラゴン',stage:'マグマ',category:'elite',attribute:'火',image:'boss/09.png',symbol:'竜',levelMin:40,levelMax:40,special:'ヤングドラゴンフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',mods:{hp:.72,spd:1.35,atk:.92,mag:.95}},
+  {id:'sq-encore',name:'モブアンコール',stage:'田舎町Ⅱ',category:'elite',attribute:'闇',image:'spenemy/014.png',symbol:'音',levelMin:63,levelMax:63,special:'アンコール・ノイズ',kind:'single',power:1.18,skillElement:'闇',skillType:'magic',actionCount:3,forceActionCount:true,mods:{mag:1.1}},
+  {id:'sq-umi-denden2',name:'モブウミデンデンⅡ',stage:'田舎町Ⅱ',category:'boss',attribute:'雷',image:'boss/51.png',symbol:'海',levelMin:70,levelMax:70,special:'マシンガングミ・オール',kind:'aoe',power:.84,skillElement:'雷',skillType:'physical',actionCount:3,forceActionCount:true,oneAoePerTurn:true,mods:{hp:1.16,atk:1.12,spd:1.08}}
 ];
 function specialEnemyTemplate(id){return SPECIAL_ENEMIES.find(x=>x.id===id)||null;}
 function trainingEnemyTemplate(id){return enemyTemplate(id)||specialEnemyTemplate(id)||trainingEnemyCatalog().find(x=>x.id===id)||null;}
@@ -4937,12 +4950,76 @@ const SUBQUEST_AREAS=[
     {id:'grassland2-5',no:5,name:'空の支配者',reward:{diamonds:50,coins:50000,weapons:['33','34'],armor:'34'},intro:[['denden','空はいいでやんすね～。オイラも飛びたいでやんす！'],['nyoro','あ、僕は空飛べるニョロ'],['tetsu','そうなのでござるか！？'],['nyoro','この傘でぴゅーんと飛べるニョロ！'],['denden','羨ましいでやんす～！'],['show',['sq-red-hawk','sq-blue-hawk']],['tetsu','皆構えよ！強力なモンスターでござる！！'],['denden','オイラの雷で叩き落としてやるでやんす！']],waves:[[{id:'sq-red-hawk',level:60},{id:'sq-blue-hawk',level:60}]],post:[['nyoro','僕たち強くなってるニョロ！'],['tetsu','さあ！魔王の元へいざ！']]}
   ];}
 }
+
+
+/* ===== MOB QUEST v87: SUBQUEST 2 confirmed additions ===== */
+{
+  const area=id=>SUBQUEST_AREAS.find(a=>a.worldId===id);
+  const sea=area('sea');if(sea){sea.required=['nekoku','pink','desert'];sea.quests=[
+    {id:'sea-1',no:1,name:'深海調査',reward:{diamonds:10,coins:30000,weapons:['24'],armor:'25'},intro:[['nekoku','海底は平和だ。だから守らないと'],['pink','それでみんな強いのでありますね'],['nekoku','オラも修行中だ'],['show',['s-mist','s-nessie']],['nekoku','国王様の役に立つならもっと強くなるぞ'],['desert','良い忠誠心だ']],waves:[[{id:'s-mist',level:40},{id:'s-mist',level:40},{id:'s-nessie',level:40},{id:'s-nessie',level:40}]],post:[['pink','モブネコクー、十分強いであります！頼もしいですね♪']]},
+    {id:'sea-2',no:2,name:'海に潜むニンジャ',reward:{diamonds:10,coins:30000,weapons:['25'],armor:'26'},intro:[['desert','ここの住人は海底から外には出ないのか？'],['nekoku','むしろここにいることの方が少ないぞ。色んなエリアでみんな戦っているぞ'],['pink','凄いですね～。尊敬であります！'],['show',['s-ninja','s-ninja','s-ninja','s-ninja']],['nekoku','色んなエリアの文化で海底は毎日進化してるぞ']],waves:[[{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40}]],post:[['desert','通りで技が多様なわけだ']]},
+    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底にはカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間がいっぱいいるぞ'],['pink','いずれ共闘する日が来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
+    {id:'sea-4',no:4,name:'モブウェイブの本気',reward:{diamonds:10,coins:50000,weapons:['27'],armor:'28'},intro:[['nekoku','モブウェイブは長年国王様の側近なんだぞ'],['pink','風格ありましたからね～。納得であります！'],['show',['sq-wave-serious']],['desert','腕試しにはもってこいだな']],waves:[[{id:'sq-wave-serious',level:50}]],post:[['desert','学びの多い戦いだったな'],['nekoku','オラ、モブウェイブ好きだ。いいやつで強い'],['pink','仲間になって欲しいでありますね～']]},
+    {id:'sea-5',no:5,name:'ライバル再び',reward:{diamonds:50,coins:50000,weapons:['28'],armor:'29'},intro:[['nekoku','モブジョーンズは海底の英雄なんだぞ'],['pink','英雄でありますか！'],['nekoku','有名な戦いには必ずモブジョーンズの功績があるぞ'],['desert','まだまだ力を秘めていそうだったな'],['show',['sq-power-jones']],['nekoku','ある戦いで敗れて以来、強さをさらに求めているぞ'],['desert','良い志だ']],waves:[[{id:'sq-power-jones',level:55}]],post:[['pink','これほどの力でも勝てなかったでありますか？'],['nekoku','一対一ではなかったと聞いてるぞ'],['pink','きっと卑怯な手を使われたであります！']]}
+  ];}
+
+  const grass2=area('grassland2');if(grass2){grass2.required=['tetsu','denden','nyoro'];grass2.quests=[
+    {id:'grassland2-1',no:1,name:'モブハネスライム',reward:{diamonds:10,coins:50000,weapons:['29'],armor:'30'},intro:[['tetsu','皆はどれくらい旅をしているでござる？'],['denden','短いような、長いようなでやんす！'],['nyoro','友情には時間なんて関係ないニョロ！'],['tetsu','それはそうでござるな。野暮でござった'],['show',['sq-wing-slime','sq-wing-slime']],['tetsu','拙者、共闘とは無縁でござった。勇者様たちと会えて気楽に戦えるでござる！']],waves:[[{id:'sq-wing-slime',level:50},{id:'sq-wing-slime',level:50}]],post:[['denden','モブテツ、強いでやんす！'],['nyoro','1人で戦えるわけだニョロ'],['tetsu','いやいや、みんなの力があってこそでござる！']]},
+    {id:'grassland2-2',no:2,name:'スライムの逆襲',reward:{diamonds:10,coins:50000,weapons:['30'],armor:'31'},intro:[['denden','サムライは他にもいるでやんすか？'],['tetsu','どうでござろう？旅に出てまだ会ったことないでござる'],['nyoro','敵にいたら嫌だニョロ'],['show',['g2-slime','g2-slime','g2-slime','g2-slime']],['tetsu','その時は拙者がお相手するでござる！']],waves:[Array.from({length:5},()=>({id:'g2-slime',level:50})),Array.from({length:5},()=>({id:'g2-slime',level:50}))],post:[['tetsu','魔王軍の猛者たち、戦うのが楽しみでござる！'],['denden','・・なんかオイラも強くなった気がするでござる！あ！やんすでやんす！']]},
+    {id:'grassland2-3',no:3,name:'カエル王国',reward:{diamonds:10,coins:50000,weapons:['31'],armor:'32'},intro:[['nyoro','監獄はどんなところだったニョロ？'],['tetsu','名前ほど嫌なところじゃないでござる。いいやつもいっぱいいたでござるよ'],['denden','もしかしたら他にも脱獄しているかもしれないでやんすね！'],['tetsu','再会出来たら拙者嬉しいでござる'],['show',['g2-merakero','g2-keroking']],['nyoro','旅を続けていればきっと会えるニョロ！'],['denden','そうでやんす！']],waves:[[{id:'g2-merakero',level:53},{id:'g2-merakero',level:53},{id:'g2-keroking',level:57}]],post:[['tetsu','拙者、まだまだ腕を磨くでござる！']]},
+    {id:'grassland2-4',no:4,name:'狙撃部隊',reward:{diamonds:10,coins:50000,weapons:['32'],armor:'33'},intro:[['denden','オイラの仲間も監獄に行ったやつがいるでやんす'],['nyoro','なんでニョロ？'],['denden','理由は分からないでやんすが、風の噂で教育係をやっていると聞いたでやんす'],['tetsu','教育係・・拙者は見たことないでござる'],['show',['g2-tsuru','g2-tsuru','g2-tsuru']],['denden','オイラ、いつか会いたいと思ってずっと忘れてないでやんす！']],waves:[[{id:'g2-tsuru',level:55},{id:'g2-tsuru',level:55},{id:'g2-tsuru',level:55}]],post:[['tetsu','その者の名を聞いてもよいでござるか？'],['denden','モブエーデンというでやんす。護衛隊の中でも人望のあるやつでやんした'],['tetsu','知らない名でござる。でも、会えるといいでござるな！']]},
+    {id:'grassland2-5',no:5,name:'空の支配者',reward:{diamonds:50,coins:50000,weapons:['33','34'],armor:'34'},intro:[['denden','空はいいでやんすね～。オイラも飛びたいでやんす！'],['nyoro','あ、僕は空飛べるニョロ'],['tetsu','そうなのでござるか！？'],['nyoro','この傘でぴゅーんと飛べるニョロ！'],['denden','羨ましいでやんす～！'],['show',['sq-red-hawk','sq-blue-hawk']],['tetsu','皆構えよ！強力なモンスターでござる！！'],['denden','オイラの雷で叩き落としてやるでやんす！']],waves:[[{id:'sq-red-hawk',level:60},{id:'sq-blue-hawk',level:60}]],post:[['nyoro','僕たち強くなってるニョロ！'],['tetsu','さあ！魔王の元へいざ！']]}
+  ];}
+
+  const tribe=area('tribe');if(tribe){tribe.required=['jessie','money','pink'];tribe.quests=[
+    {id:'tribe-1',no:1,name:'森の狩人',reward:{diamonds:20,coins:50000,weapons:['14','15','16'],armor:'35'},intro:[['pink','不気味な雰囲気ですが、空気はいいでありますね！'],['jessie','魔王軍のせいで邪気があるだけ。昔は歴史あるエリアだったのよ'],['money','じゃあ魔王を倒せば元に戻るの？'],['jessie','どうかしら？新しいボス次第かな'],['show',['t-ohno','t-ohno','t-ohno']],['jessie','とにかく、今は正気じゃないわ'],['pink','戦うであります！']],waves:[[{id:'t-ohno',level:55},{id:'t-ohno',level:55},{id:'t-ohno',level:55}]],post:[['money','新しいボスか。ちょっと難しいかもね']]},
+    {id:'tribe-2',no:2,name:'戦士の宴',reward:{diamonds:20,coins:50000,weapons:['17','18','19'],armor:'36'},intro:[['pink','このエリアのモンスターは戦士でありますね'],['jessie','そうね。みんな強い心を持っている。いや、持っていた'],['money','魔王の支配には抗えないってことね'],['show',['t-ohno','t-warrior','t-kiba']],['jessie','このエリアは世界の平和のため絶対に必要なの。魔王を倒して必ず取り戻す！']],waves:[[{id:'t-ohno',level:56,preemptive:true,alwaysSpecial:true,specialOptions:[{special:'戦士の毒撃',kind:'poisonSingle',power:.86,chance:.35,skillType:'physical'},{special:'戦士の混乱撃',kind:'confuseSingle',power:.84,chance:.30,skillType:'physical'}]},{id:'t-warrior',level:56,preemptive:true,alwaysSpecial:true,specialOptions:[{special:'戦士の毒撃',kind:'poisonSingle',power:.86,chance:.35,skillType:'physical'},{special:'戦士の混乱撃',kind:'confuseSingle',power:.84,chance:.30,skillType:'physical'}]},{id:'t-kiba',level:56,preemptive:true,alwaysSpecial:true,specialOptions:[{special:'戦士の毒撃',kind:'poisonSingle',power:.86,chance:.35,skillType:'physical'},{special:'戦士の混乱撃',kind:'confuseSingle',power:.84,chance:.30,skillType:'physical'}]}]],post:[['money','モブジェシーって本当に強いわね']]},
+    {id:'tribe-3',no:3,name:'タフネスの脅威',reward:{diamonds:20,coins:50000,weapons:['20','21','22'],armor:'37'},intro:[['money','ねえ、あなた本当にただの保安官？'],['pink','失礼ですよ！保安官は強き役目であります！'],['jessie','いいのよ。そうね、ただの保安官ではないかもね'],['money','どこかで会った気がするのよね'],['pink','2人ともネオン街ですからね'],['show',['t-tough']],['jessie','さあ、目の前の敵に集中よ']],waves:[[{id:'t-tough',level:58,actionCount:3,forceActionCount:true,mods:{hp:2.2,def:1.1}}]],post:[['pink','ネオン街は強者揃いですね。心強いであります！']]},
+    {id:'tribe-4',no:4,name:'二人の長',reward:{diamonds:20,coins:50000,weapons:['23','24','25'],armor:'38'},intro:[['money','な～んか、もう少しなんだけどなー'],['pink','どうしたでありますか？'],['money','何か思い出せそうなの'],['jessie','このエリアについて？'],['money','う～ん。どうなんだろう'],['show',['t-hisui','t-ryugo']],['pink','強敵登場であります！'],['jessie','油断しないことね']],waves:[[{id:'t-hisui',level:58,actionCount:2,forceActionCount:true},{id:'t-ryugo',level:58,actionCount:2,forceActionCount:true}]],post:[['money','まあ、今は楽しいからいいかな'],['pink','い、今のが楽しいでありますか・・？'],['money','そういうことじゃないわよ']]},
+    {id:'tribe-5',no:5,name:'暴走する力',reward:{diamonds:100,coins:50000,weapons:['26','27','28'],armor:'39'},intro:[['jessie','モブマニー、身体に違和感とかはないの？'],['money','それは大丈夫！頭はずーっとボーっとしてるけどね'],['pink','きっと時間が解決するであります！'],['show',['boss-debuff2','boss-berserk2']],['jessie','私がサポートするから無理しすぎないようにね']],waves:[[{id:'boss-debuff2',level:60,actionCount:2,forceActionCount:true,alwaysSpecial:true,specialOptions:[{special:'暴走混乱',kind:'confuseSingle',power:.88,chance:.40,skillType:'magic'},{special:'暴走毒撃',kind:'poisonSingle',power:.90,chance:.40,skillType:'physical'}]},{id:'boss-berserk2',level:60,actionCount:2,forceActionCount:true,alwaysSpecial:true,specialOptions:[{special:'暴走毒撃',kind:'poisonSingle',power:.90,chance:.40,skillType:'physical'},{special:'暴走混乱',kind:'confuseSingle',power:.88,chance:.40,skillType:'physical'}]}]],post:[['money','モブジェシーは優しいのね。こんなお姉ちゃん欲しかったわ'],['jessie','私はもう少し素直な妹が欲しいわ'],['money','なによ！私は素直な魔女っ娘よ！'],['pink','微笑ましいでありますね～']]}
+  ];}
+
+  const rural2=area('rural2');if(rural2){rural2.required=['denden','desert','nekoku'];rural2.quests=[
+    {id:'rural2-1',no:1,name:'アンコール！',reward:{diamonds:30,coins:50000,weapons:['29','30','31'],armor:'40'},intro:[['nekoku','オラ、この町の匂い好きだ'],['denden','海を感じる町でやんす'],['desert','見た目だけなら一番平和だな'],['show',['sq-encore']],['denden','中身も平和にするでやんす！']],waves:[[{id:'sq-encore',level:63}]],post:[['desert','この町にもまだまだ強者がいるな'],['nekoku','やっぱりいい町だ']]},
+    {id:'rural2-2',no:2,name:'ジュラシック再び',reward:{diamonds:30,coins:50000,weapons:['37'],armor:'41'},intro:[['denden','みんな強くなってるからオイラちょっと焦ってるでやんす'],['nekoku','お前、強いから大丈夫だぞ'],['denden','ありがとうでやんす。でも、自分のことは自分が一番分かってるでやんす'],['desert','ハングリー精神か。いいものだな'],['show',['r2-rapty','r2-tira']],['denden','たくさん戦って強くなるでやんす！']],waves:[[{id:'r2-rapty',level:63,actionCount:2,forceActionCount:true},{id:'r2-tira',level:63,actionCount:2,forceActionCount:true}]],post:[['nekoku','強さは肉体だけじゃないぞ。モブデンデン、凄く強いぞ'],['desert','見習うべき心の強さだ'],['denden','ありがとうでやんす。ちょっと照れるでやんす']]},
+    {id:'rural2-3',no:3,name:'三つのソウル',reward:{diamonds:30,coins:50000,weapons:['32','33','34'],armor:'42'},intro:[['desert','ある王国とやらには、やはり王がいるのか？'],['denden','いや、王ではなく女王がいるでやんす'],['nekoku','珍しい国だなー'],['desert','強いのか？'],['show',['r2-akui','r2-shitsui','r2-yamai']],['denden','強くて高貴な方でやんす。オイラに戦いを教えてくれた最高の先生でもあるでやんす']],waves:[[{id:'r2-akui',level:64},{id:'r2-shitsui',level:64},{id:'r2-yamai',level:64}]],post:[['nekoku','女王様、オラ会ってみたい']]},
+    {id:'rural2-4',no:4,name:'魂の説法',reward:{diamonds:30,coins:50000,weapons:['32','33','34'],armor:'42'},intro:[['denden','砂漠の王はずっとミラモブでやんすか？'],['desert','俺の知る限りはそうだな'],['nekoku','やっぱり魔王のせいで悪いやつになったのか？'],['desert','その可能性もあるが、元々正義とは縁遠いやつだった'],['denden','ミラモブは顔が怖いでやんす'],['show',['r2-kuukai','r2-akui','r2-shitsui','r2-yamai']],['desert','ミラモブも、こいつらのような分かりやすい悪意ならどれほどマシか']],waves:[[{id:'r2-kuukai',level:66},{id:'r2-akui',level:64},{id:'r2-shitsui',level:64},{id:'r2-yamai',level:64}]],post:[['nekoku','みんな浮いてる。羨ましいぞ'],['desert','俺も少しばかり空への憧れはある'],['denden','オイラは地上の方が好きでやんす']]},
+    {id:'rural2-5',no:5,name:'最強護衛隊長',reward:{diamonds:100,coins:80000,weapons:['38','39'],armor:'44'},intro:[['denden','感じるでやんす。この時が来たでやんす'],['desert','例のライバルか'],['nekoku','今のお前なら簡単に勝てるぞ'],['show',['sq-umi-denden2']],['denden','本気の姿でやんす。それでこそやる意味があるでやんす！']],waves:[[{id:'sq-umi-denden2',level:70}]],post:[['desert','いい流れを作れたな'],['nekoku','魔王も近いぞ'],['denden','やってやるでやんす！']]}
+  ];}
+
+  const neon2=area('neon2');if(neon2){neon2.quests=[
+    {id:'neon2-1',no:1,name:'セキュリティ暴走',reward:{diamonds:30,coins:80000,weapons:['40'],armor:'45'},intro:[['show',['n2-tama','n2-tama','n2-tama']]],waves:[[{id:'n2-tama'},{id:'n2-tama'},{id:'n2-tama'}]],post:[]},
+    {id:'neon2-2',no:2,name:'ネオン幼竜',reward:{diamonds:30,coins:80000,weapons:['41'],armor:'46'},intro:[['show',['n2-kodora','n2-kodora','n2-kodora','n2-kodora']]],waves:[[{id:'n2-kodora'},{id:'n2-kodora'},{id:'n2-kodora'},{id:'n2-kodora'}]],post:[]},
+    {id:'neon2-3',no:3,name:'タイガーネットワーク',reward:{diamonds:30,coins:80000,weapons:['42'],armor:'47'},intro:[['show',['n2-tiger','n2-tiger']]],waves:[[{id:'n2-tiger'},{id:'n2-tiger'}]],post:[]},
+    {id:'neon2-4',no:4,name:'マスターの番犬',reward:{diamonds:30,coins:80000,weapons:['43'],armor:'48'},intro:[['show',['n2-banken','n2-golem','n2-palette']]],waves:[[{id:'n2-banken'},{id:'n2-golem'},{id:'n2-palette'}]],post:[]},
+    {id:'neon2-5',no:5,name:'ネオン・マスタークラス',reward:{diamonds:100,coins:80000,weapons:['44','45'],armor:'49'},intro:[['show',['n2-palette','boss-neomaster']]],waves:[[{id:'n2-palette'}],[{id:'boss-neomaster',name:'モブネオマスター幻影'}]],post:[]}
+  ];}
+
+  const magma2=area('magma2');if(magma2){magma2.quests=[
+    {id:'magma2-1',no:1,name:'変異スライム',reward:{diamonds:30,coins:80000,weapons:['46'],armor:'50'},intro:[['show',['m2-yogan','m2-yogan','m2-yogan']]],waves:[[{id:'m2-yogan'},{id:'m2-yogan'},{id:'m2-yogan'}]],post:[]},
+    {id:'magma2-2',no:2,name:'灼熱地獄',reward:{diamonds:30,coins:80000,weapons:['47'],armor:'51'},intro:[['show',['m2-salamander','m2-honotail']]],waves:[[{id:'m2-salamander'},{id:'m2-salamander'},{id:'m2-honotail'},{id:'m2-honotail'}]],post:[]},
+    {id:'magma2-3',no:3,name:'ゴーレム工場',reward:{diamonds:30,coins:80000,weapons:['48'],armor:'52'},intro:[['show',['m2-golem','m2-golem','m2-golem','m2-golem']]],waves:[[{id:'m2-golem'},{id:'m2-golem'},{id:'m2-golem'},{id:'m2-golem'}]],post:[]},
+    {id:'magma2-4',no:4,name:'バスター量産計画',reward:{diamonds:100,coins:80000,weapons:['49'],armor:'53'},intro:[['show',['m2-buster','m2-buster']]],waves:[[{id:'m2-buster',actionCount:2,forceActionCount:true},{id:'m2-buster',actionCount:2,forceActionCount:true}]],post:[]},
+    {id:'magma2-5',no:5,name:'ドラゴン・トライアル',reward:{diamonds:200,coins:80000,weapons:['50'],armor:'54'},intro:[['show',['boss-dragon2','boss-gidora']]],waves:[[{id:'boss-dragon2',mods:{hp:.72}}],[{id:'boss-gidora',mods:{hp:.72}}]],post:[]}
+  ];}
+
+  const desert2=area('desert2');if(desert2){desert2.quests=[
+    {id:'desert2-1',no:1,name:'不滅の王',reward:{diamonds:30,coins:80000,weapons:['51'],armor:'55'},intro:[['show',['boss-mira-d2','boss-mira2-d2']]],waves:[[{id:'boss-mira-d2'}],[{id:'boss-mira2-d2'}]],post:[]},
+    {id:'desert2-2',no:2,name:'ソウルフュージョン実験体',reward:{diamonds:30,coins:80000,weapons:['52'],armor:'56'},intro:[['show',['d2-slamummy','d2-twinsoul','d2-mirabuster']]],waves:[[{id:'d2-slamummy'},{id:'d2-twinsoul'},{id:'d2-mirabuster'}]],post:[]},
+    {id:'desert2-3',no:3,name:'大地と業火',reward:{diamonds:30,coins:80000,weapons:['53'],armor:'57'},intro:[['show',['d2-miraearth','d2-mirakarami']]],waves:[[{id:'d2-miraearth'},{id:'d2-mirakarami'}]],post:[]},
+    {id:'desert2-4',no:4,name:'夜と時間',reward:{diamonds:30,coins:80000,weapons:['54'],armor:'58'},intro:[['show',['d2-miranight','d2-miratime']]],waves:[[{id:'d2-miranight'},{id:'d2-miratime'}]],post:[]},
+    {id:'desert2-5',no:5,name:'ミラモブの系譜',pending:true,note:'敵編成が資料未設定',reward:{diamonds:300,coins:100000,weapons:['55'],armor:'59'}}
+  ];}
+}
+
 function ensureSubquestMeta(){if(!state.meta.subquests||typeof state.meta.subquests!=='object')state.meta.subquests={cleared:{}};state.meta.subquests.cleared=state.meta.subquests.cleared||{};return state.meta.subquests;}
 function subquestArea(worldId){return SUBQUEST_AREAS.find(a=>a.worldId===worldId)||null;}
 function subquestById(id){for(const a of SUBQUEST_AREAS){const q=a.quests.find(x=>x.id===id);if(q)return{area:a,quest:q};}return null;}
 function subquestCleared(id){return!!ensureSubquestMeta().cleared[id];}
 function subquestAreaUnlocked(a){return state.test?.enabled||worldCleared(a.worldId);}
 function subquestRequiredReady(a){return(a.required||[]).every(id=>state.party.some(x=>canonicalPlayerId(x[0])===canonicalPlayerId(id)));}
+function subquestNextQuest(area){if(!area)return null;const quests=[...(area.quests||[])].sort((a,b)=>Number(a.no||0)-Number(b.no||0));return quests.find(q=>!subquestCleared(q.id))||null;}
+function subquestVisibleQuest(area){const q=subquestNextQuest(area);return q&&!q.pending?q:null;}
 const TRAINING_MODES=[
   {id:'test',name:'テスト戦闘',icon:'mqicon/04.png',desc:'自由設定'},
   {id:'program',name:'バトルプログラム',icon:'icon/22.png',desc:'シーズン制バトル'},
@@ -5090,16 +5167,47 @@ async function finishBattleProgramReturn(win){
   }else await facilityTalk('ナイスクリア！\nこの調子で頑張ってくれ！','モブコーチ','play/003.png');
 }
 
-function renderSubquestList(){const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();const areas=SUBQUEST_AREAS.filter(subquestAreaUnlocked);root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><p class="panel-note">エリアをクリアすると5つのサブクエストが解放されます。クリア済みクエストには再挑戦できません。</p><div class="subquest-area-list">${areas.map(a=>`<section class="subquest-area-block"><header><b>${a.name}</b><small>${a.quests.filter(q=>subquestCleared(q.id)).length}/5 CLEAR</small></header><div>${a.quests.map(q=>{const done=subquestCleared(q.id),pending=!!q.pending,requiredReady=subquestRequiredReady(a);return`<button class="subquest-card ${done?'cleared':''} ${pending?'pending':''}" data-subquest-id="${q.id}" type="button" ${done||pending?'disabled':''}><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${done?'CLEAR / 再挑戦不可':pending?(q.note||'設定待ち'):requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button>`;}).join('')}</div></section>`).join('')||'<div class="camp-empty-note">まだサブクエストが解放されていません。<br>メインストーリーのエリアをクリアすると追加されます。</div>'}</div></section>`;bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));}
-async function confirmSubquest(id){const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;if(!subquestAreaUnlocked(area))return;if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}await facilityTalk('このクエストでいいかな？','モブコーチ','play/003.png');const ans=await dialog(quest.name,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(ans!=='yes')return;await facilityTalk('レッツトレーニング！','モブコーチ','play/003.png');await startSubquest(area,quest);}
+function renderSubquestList(){
+  const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();
+  const areas=SUBQUEST_AREAS.filter(subquestAreaUnlocked),visible=areas.map(area=>({area,quest:subquestVisibleQuest(area)})).filter(x=>x.quest);
+  root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${visible.map(({area:a,quest:q})=>{const requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;}).join('')||'<div class="camp-empty-note">現在挑戦できるサブクエストはありません。</div>'}</div></section>`;
+  bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));
+}
+async function confirmSubquest(id){const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;if(subquestVisibleQuest(area)?.id!==quest.id)return renderSubquestList();if(!subquestAreaUnlocked(area))return;if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}await facilityTalk('このクエストでいいかな？','モブコーチ','play/003.png');const ans=await dialog(quest.name,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(ans!=='yes')return;await facilityTalk('レッツトレーニング！','モブコーチ','play/003.png');await startSubquest(area,quest);}
 function subquestBg(area){const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===area.worldId),a=w?.areas?.[0];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/02.png'};}
-async function startSubquest(area,quest){markTrainingPlayed();state.quest={type:'subquest',subquestId:quest.id,areaIndex:0,battleIndex:0,battleReady:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:subquestBg(area).bg,fallbackBg:subquestBg(area).fallback};$('#trainingFeaturePopup').hidden=true;renderQuestScreen();showScreen('quest');await runSubquestLines(area,quest.intro||[]);await startQuestBattle();}
+async function startSubquest(area,quest){markTrainingPlayed();state.quest={type:'subquest',subquestId:quest.id,subquestWorldId:area.worldId,subquestAreaName:area.name,subquestQuestNo:quest.no,subquestQuestName:quest.name,areaIndex:0,battleIndex:0,battleReady:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:subquestBg(area).bg,fallbackBg:subquestBg(area).fallback};$('#trainingFeaturePopup').hidden=true;renderQuestScreen();showScreen('quest');await runSubquestLines(area,quest.intro||[]);await startQuestBattle();}
 async function runSubquestLines(area,lines=[]){if(!lines.length)return;const bg=subquestBg(area);showScreen('adventure');setImage($('#adventureBg'),bg.bg,bg.fallback);const sc=$('#storyScene');[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.add(`story-world-${area.worldId}`);storySceneExtras=(area.required||[]).filter(id=>!['yusha','pink'].includes(id));$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';for(const row of lines){if(row[0]==='show'){await storyShowGuests(row[1]||[]);continue;}await storySay(row[0],row[1]||'');}await storyHideGuests().catch(()=>{});sc.hidden=true;sc.style.visibility='';$('#storyBubble').hidden=true;$('#storyGuest').hidden=true;storySceneExtras=[];renderQuestScreen();showScreen('quest');}
+function grantSubquestReward(quest){
+  if(!quest?.id)return false;const meta=ensureSubquestMeta();if(meta.cleared[quest.id])return false;
+  meta.cleared[quest.id]=true;const reward=quest.reward||{};
+  state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+Math.max(0,Number(reward.diamonds)||0);
+  state.coins=Math.max(0,Number(state.coins)||0)+Math.max(0,Number(reward.coins)||0);state.meta.coins=state.coins;
+  for(const id of reward.weapons||[])addWeapon(String(id).padStart(2,'0'),1);
+  if(reward.armor)addArmor(String(reward.armor).padStart(2,'0'),1);
+  for(const id of reward.medals||[])addMedal(String(id).padStart(2,'0'),1);
+  saveMeta();renderHome();return true;
+}
 function subquestRewardRows(reward){const out=[];if(reward.diamonds)out.push({label:'DIAMOND',value:`×${reward.diamonds}`});if(reward.coins)out.push({label:'COIN',value:`${Number(reward.coins).toLocaleString()}G`});for(const id of reward.weapons||[]){const w=weaponById(id);out.push({label:'WEAPON',value:w?.name||id});}if(reward.armor){const a=armorById(reward.armor);out.push({label:'ARMOR',value:a?.name||reward.armor});}for(const id of reward.medals||[]){const w=weaponById(id);out.push({label:'MEDAL',value:`${w?.name||id}メダル`});}return out;}
 function createSubquestClearOverlay(quest){const ov=document.createElement('div');ov.className='subquest-clear-overlay-v85';ov.innerHTML='<div class="subquest-clear-card-v85"><div class="subquest-clear-shine-v85"></div><small class="subquest-clear-kicker-v85">TRAINING SUB QUEST</small><h2 class="subquest-clear-title-v85">SUB QUEST CLEAR!</h2><strong class="subquest-clear-name-v85"></strong><span class="subquest-clear-complete-v85"></span><div class="subquest-clear-rewards-v85" hidden><small>QUEST REWARD</small><h3>報酬をゲットした！</h3><div class="subquest-reward-list-v85"></div></div><button class="subquest-clear-next-v85" type="button">報酬を見る</button></div>';ov.querySelector('.subquest-clear-name-v85').textContent=quest.name||'サブクエスト';ov.querySelector('.subquest-clear-complete-v85').textContent=`QUEST ${quest.no||''} COMPLETE`;document.body.appendChild(ov);requestAnimationFrame(()=>ov.classList.add('show'));return ov;}
-function waitSubquestClearButton(ov){return new Promise(resolve=>{const btn=ov.querySelector('.subquest-clear-next-v85');btn.onclick=()=>resolve(btn);});}
-async function showSubquestReward(quest){grantSubquestReward(quest);const ov=createSubquestClearOverlay(quest);await fixedDelay(500);let btn=await waitSubquestClearButton(ov);const card=ov.querySelector('.subquest-clear-card-v85'),rewards=ov.querySelector('.subquest-clear-rewards-v85'),list=ov.querySelector('.subquest-reward-list-v85');card.classList.add('reward-stage');rewards.hidden=false;list.textContent='';for(const row of subquestRewardRows(quest.reward||{})){const el=document.createElement('div');el.className='subquest-reward-row-v85';const label=document.createElement('span'),value=document.createElement('b');label.textContent=row.label;value.textContent=row.value;el.append(label,value);list.appendChild(el);}btn.textContent='OK';await fixedDelay(220);btn=await waitSubquestClearButton(ov);ov.classList.remove('show');ov.classList.add('hide');await fixedDelay(180);ov.remove();}
-async function finishSubquestReturn(){const found=subquestById(state.quest?.subquestId);if(!found){endQuestToTraining();return;}await runSubquestLines(found.area,found.quest.post||[]);await showSubquestReward(found.quest);state.quest=null;state.training.mode='subquest';renderTraining();showScreen('training');const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='subquest';}renderSubquestList();}
+function waitSubquestClearButton(ov){return new Promise(resolve=>{const btn=ov?.querySelector('.subquest-clear-next-v85');if(!btn)return resolve(null);const done=()=>{btn.removeEventListener('click',done);resolve(btn);};btn.addEventListener('click',done,{once:true});});}
+async function showSubquestReward(quest){
+  grantSubquestReward(quest);const ov=createSubquestClearOverlay(quest),btn=ov.querySelector('.subquest-clear-next-v85');
+  try{
+    const first=await waitSubquestClearButton(ov);if(!first)return;
+    first.disabled=true;const card=ov.querySelector('.subquest-clear-card-v85'),rewards=ov.querySelector('.subquest-clear-rewards-v85'),list=ov.querySelector('.subquest-reward-list-v85');
+    card.classList.add('reward-stage');rewards.hidden=false;list.textContent='';
+    for(const row of subquestRewardRows(quest.reward||{})){const el=document.createElement('div');el.className='subquest-reward-row-v85';const label=document.createElement('span'),value=document.createElement('b');label.textContent=row.label;value.textContent=row.value;el.append(label,value);list.appendChild(el);}
+    first.textContent='OK';await fixedDelay(180);first.disabled=false;await waitSubquestClearButton(ov);
+    ov.classList.remove('show');ov.classList.add('hide');await fixedDelay(180);
+  }finally{ov?.remove();}
+}
+async function finishSubquestReturn(){
+  const q=state.quest;if(!q||q.type!=='subquest'||q.subquestFinishing)return;q.subquestFinishing=true;const found=subquestById(q.subquestId);
+  if(!found){endQuestToTraining();return;}
+  try{await runSubquestLines(found.area,found.quest.post||[]);await showSubquestReward(found.quest);}
+  catch(err){console.error('[MOB QUEST] subquest clear recovery',err);grantSubquestReward(found.quest);toast('サブクエスト報酬を受け取りました');}
+  state.quest=null;state.training.mode='subquest';renderTraining();showScreen('training');const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='subquest';}renderSubquestList();
+}
 function renderTrainingFeature(mode){
   const root=$('#trainingFeaturePanel');root.hidden=false;if(mode==='subquest'){renderSubquestList();return;}const testFree=!!state.test?.enabled;if(mode==='boss')syncDefeatedHistoryFromProgress();
   if(mode==='program'){if(state.training.programSeason)return renderBattleProgramList(state.training.programSeason);return renderBattleProgramSeasonSelect();}
@@ -5134,12 +5242,12 @@ async function startTrainingQuest(type,opt={}){
 }
 function questWorld(){return state.quest?.type==='journal'?MOB_DATA.adventureWorlds?.[state.quest.worldIndex]:null;}
 function questBackground(){const q=state.quest;if(!q)return{bg:'back/metal.png',fallback:'back2/002.png'};if(q.type==='subquest'){const f=subquestById(q.subquestId);return f?subquestBg(f.area):{bg:q.bg||'back/sougen.png',fallback:q.fallback||'back2/02.png'};}if(q.type==='journal'){const w=questWorld(),a=w?.areas?.[q.areaIndex];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/002.png'};}if(q.type==='exp')return{bg:q.areaIndex===3?'back/metal2.png':'back/metal.png',fallback:'back2/002.png'};if(q.type==='gold')return{bg:q.areaIndex===3?'back/gold2.png':'back/gold.png',fallback:'back2/002.png'};return{bg:q.areaIndex===3?'back/boss2.png':'back/boss.png',fallback:'back2/002.png'};}
-function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;if(q.type==='program'){const f=battleProgramById(q.programId);return `バトルプログラム / ${f?.season?.name||''} / PROGRAM ${q.programNo||''}`;}if(q.type==='subquest'){const f=subquestById(q.subquestId);return `${f?.area?.name||''}・QUEST ${f?.quest?.no||''}`;}return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
-function renderQuestScreen(){const q=state.quest;if(!q)return renderTraining();const screen=$('#questScreen'),bg=questBackground(),sub=q.type==='subquest'?subquestById(q.subquestId):null;setImage($('#questBg'),bg.bg,bg.fallback);screen?.classList.toggle('quest-no-back',q.type!=='journal');screen?.classList.toggle('subquest-mode',q.type==='subquest');$('#questTitle').textContent=questTitleText();$('#questKicker').textContent=q.type==='journal'?'ADVENTURE JOURNAL':q.type==='subquest'?'SUB QUEST':'TRAINING QUEST';$('#questAreaPill').textContent=q.type==='subquest'?'AREA 1 / 1':`AREA ${q.areaIndex+1} / 4`;$('#questAreaName').textContent=q.type==='subquest'?(sub?.quest?.name||'サブクエスト'):`AREA ${q.areaIndex+1}`;$('#questModeLabel').textContent=q.type==='subquest'?`QUEST ${sub?.quest?.no||''}`:q.type==='journal'?(questWorld()?.name||'JOURNAL'):(q.difficulty||'').toUpperCase();$('#questDescription').textContent=q.type==='subquest'?'このサブクエストはAREA 1で完結します。クリア後は再挑戦できません。':q.type==='journal'?`戦闘 ${q.battleIndex+1}/3。イベント・セリフは発生しません。`:'探索なし。キャンプとバトルのみ。クリアかゲームオーバーまで退出できません。';const back=$('#questBackBtn');if(back){back.hidden=q.type!=='journal';back.style.display=q.type==='journal'?'':'none';}const explore=$('#questExploreBtn');explore.style.display=q.type==='journal'?'flex':'none';explore.disabled=q.type==='journal'&&(q.battleReady||q.finished);const battleBtn=$('#questBattleBtn');battleBtn.disabled=q.finished||(q.type==='journal'&&!q.battleReady);battleBtn.onclick=startQuestBattle;$('#questBattleHint').textContent=q.finished?'CLEAR':q.type==='journal'?(q.battleReady?'戦闘可能':'探索が必要'):'戦闘開始';$('#questCampBtn').disabled=q.campUsed||q.finished;$('#questCampBtn small').textContent=q.campUsed?'このAREAは休憩済み':'1 AREA 1回';$('#questExploreResult').hidden=true;bindImages($('#questScreen'));}
+function questTitleText(){const q=state.quest;if(!q)return'';if(q.type==='journal')return`${questWorld()?.name||''}・冒険日記`;if(q.type==='program'){const f=battleProgramById(q.programId);return `バトルプログラム / ${f?.season?.name||''} / PROGRAM ${q.programNo||''}`;}if(q.type==='subquest'){const f=subquestById(q.subquestId),areaName=q.subquestAreaName||f?.area?.name||'',no=q.subquestQuestNo||f?.quest?.no||'';return `${areaName}・QUEST ${no}`;}return TRAINING_MODES.find(x=>x.id===q.type)?.name||'トレーニング';}
+function renderQuestScreen(){const q=state.quest;if(!q)return renderTraining();const screen=$('#questScreen'),bg=questBackground(),sub=q.type==='subquest'?subquestById(q.subquestId):null;setImage($('#questBg'),bg.bg,bg.fallback);screen?.classList.toggle('quest-no-back',q.type!=='journal');screen?.classList.toggle('subquest-mode',q.type==='subquest');$('#questTitle').textContent=questTitleText();$('#questKicker').textContent=q.type==='journal'?'ADVENTURE JOURNAL':q.type==='subquest'?'SUB QUEST':'TRAINING QUEST';$('#questAreaPill').textContent=q.type==='subquest'?'AREA 1 / 1':`AREA ${q.areaIndex+1} / 4`;$('#questAreaName').textContent=q.type==='subquest'?(q.subquestQuestName||sub?.quest?.name||'サブクエスト'):`AREA ${q.areaIndex+1}`;$('#questModeLabel').textContent=q.type==='subquest'?`QUEST ${q.subquestQuestNo||sub?.quest?.no||''}`:q.type==='journal'?(questWorld()?.name||'JOURNAL'):(q.difficulty||'').toUpperCase();$('#questDescription').textContent=q.type==='subquest'?'':q.type==='journal'?`戦闘 ${q.battleIndex+1}/3。イベント・セリフは発生しません。`:'探索なし。キャンプとバトルのみ。クリアかゲームオーバーまで退出できません。';const back=$('#questBackBtn');if(back){back.hidden=q.type!=='journal';back.style.display=q.type==='journal'?'':'none';}const explore=$('#questExploreBtn');explore.style.display=q.type==='journal'?'flex':'none';explore.disabled=q.type==='journal'&&(q.battleReady||q.finished);const battleBtn=$('#questBattleBtn');battleBtn.disabled=q.finished||(q.type==='journal'&&!q.battleReady);battleBtn.onclick=startQuestBattle;$('#questBattleHint').textContent=q.finished?'CLEAR':q.type==='journal'?(q.battleReady?'戦闘可能':'探索が必要'):'戦闘開始';$('#questCampBtn').disabled=q.campUsed||q.finished;$('#questCampBtn small').textContent=q.campUsed?'このAREAは休憩済み':'1 AREA 1回';$('#questExploreResult').hidden=true;bindImages($('#questScreen'));}
 function currentQuestConfigs(){const q=state.quest;if(!q)return[];if(q.type==='subquest'){const f=subquestById(q.subquestId);return f?.quest?.waves?.[0]||[];}if(q.type==='journal')return journalEncounter();if(q.type==='boss')return bossQuestConfigs();return makeTurntableConfigs(q.type,q.difficulty,q.areaIndex);}
 async function questExplore(){const q=state.quest;if(!q||q.type!=='journal'||q.battleReady)return;const box=$('#questExploreResult');box.hidden=false;box.textContent='勇者一行は周囲を探索した';await fixedDelay(420);for(let i=0;i<6;i++){box.textContent=`探索中${'.'.repeat(i%3+1)}`;await fixedDelay(180);}const r=Math.random();let resultWait=900;if(r<.70){const it=weightedPickItem();addItem(it.id,1);box.innerHTML=`<img src="${it.image}" alt=""><b>${it.name}を見つけた！</b><br><small>1つ入手</small>`;bindImages(box);resultWait=1500;}else if(r<.90){const arr=AREA_FLAVOR[questWorld()?.id]||['周囲を見渡した'];box.textContent=pick(arr);}else box.textContent='敵の気配を感じる…';q.battleReady=true;await fixedDelay(resultWait);box.hidden=true;renderQuestScreen();}
 async function questCamp(){const q=state.quest;if(!q||q.campUsed)return;const hasTent=tentCount()>0,ans=await dialog(`キャンプで休みますか？\nテント：全回復${hasTent?'':'（未所持）'}\n椅子：HP・MP30%回復`,[[hasTent?'テント':'テントなし','tent',hasTent?'primary':''],['椅子','chair'],['戻る','no']],'CAMP');if(ans==='no'||!ans)return;if(ans==='tent'&&!hasTent)return;if(ans==='tent')consumeItem('mob-tent',1);for(const [id,lv] of state.party){const st=baseStats(player(id),lv),v=q.vitals[id];if(!v||v.dead)continue;if(ans==='tent'){v.hp=st.maxHp;v.mp=st.maxMp;}else{v.hp=Math.min(st.maxHp,v.hp+Math.ceil(st.maxHp*.30));v.mp=Math.min(st.maxMp,v.mp+Math.ceil(st.maxMp*.30));}}q.campUsed=true;toast(ans==='tent'?'HP・MPが全回復した！':'HP・MPが少し回復した！');renderQuestScreen();}
-async function startQuestBattle(){const q=state.quest;if(!q||q.finished||q.startingBattle||q.type==='journal'&&!q.battleReady)return;q.startingBattle=true;const btn=$('#questBattleBtn');if(btn)btn.disabled=true;try{const configs=currentQuestConfigs();if(!configs.length){toast('出現可能な敵がいません');return;}const bg=questBackground(),sub= q.type==='subquest'?subquestById(q.subquestId):null,waves=sub?.quest?.waves||null;await startBattleLoaded({mode:'quest',returnScreen:'quest',enemyConfigs:waves?undefined:configs,waves:waves||undefined,party:state.party,questVitals:q.vitals,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:q.type==='boss'||configs.some(x=>trainingEnemyTemplate(x.id)?.category==='boss'),questType:q.type,questArea:q.areaIndex,questDifficulty:q.difficulty||'',worldId:sub?.area?.worldId||'',adventureLabel:questTitleText()});}finally{if(state.quest)state.quest.startingBattle=false;if(state.quest&&screens.quest.classList.contains('active'))renderQuestScreen();}}
+async function startQuestBattle(){const q=state.quest;if(!q||q.finished||q.startingBattle||q.type==='journal'&&!q.battleReady)return;q.startingBattle=true;const btn=$('#questBattleBtn');if(btn)btn.disabled=true;try{const configs=currentQuestConfigs();if(!configs.length){toast('出現可能な敵がいません');return;}const bg=questBackground(),sub= q.type==='subquest'?subquestById(q.subquestId):null,waves=sub?.quest?.waves||null;await startBattleLoaded({mode:'quest',returnScreen:'quest',enemyConfigs:waves?undefined:configs,waves:waves||undefined,party:state.party,questVitals:q.vitals,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:q.type==='boss'||configs.some(x=>trainingEnemyTemplate(x.id)?.category==='boss'),questType:q.type,questArea:q.areaIndex,questDifficulty:q.difficulty||'',worldId:q.subquestWorldId||sub?.area?.worldId||'',subquestId:q.subquestId||'',adventureLabel:questTitleText()});}finally{if(state.quest)state.quest.startingBattle=false;if(state.quest&&screens.quest.classList.contains('active'))renderQuestScreen();}}
 function persistQuestVitals(){const q=state.quest,b=state.battle;if(!q||!b)return;q.vitals={};b.allies.forEach(a=>{q.vitals[a.id]={hp:Math.max(0,a.hp),mp:Math.max(0,a.mpNow),dead:!!a.dead,status:clone(a.status||{})};});}
 function advanceQuestAfterWin(){const q=state.quest;if(!q)return;if(q.type==='subquest'){q.finished=true;return;}if(q.type==='program'){markBattleProgramWin();return;}if(q.type==='journal'){q.battleReady=false;q.explored=false;q.battleIndex++;if(q.battleIndex<3)return;q.battleIndex=0;}q.areaIndex++;q.campUsed=false;if(q.areaIndex>=4)q.finished=true;}
 function endQuestToTraining(){state.quest=null;setTrainingMode(state.training.mode||'menu');showScreen('training');}
@@ -6723,7 +6831,9 @@ function calcEnemyDamage(target,power,type='physical'){
   return Math.max(1,Math.round(Math.max(raw,naturalFloor)));
 }
 function wakeEnemyOnHit(e){if(e?.status.sleep>0&&Math.random()<.70){e.status.sleep=0;notice(`${e.name}は眠りから覚めた！`,'status');}}
-function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=true;state.battle?.defeatedEnemies?.push({uid:e.uid,id:e.id,name:e.name,level:e.level,category:e.category,coinReward:e.coinReward||0,rewardExp:e.rewardExp,rewardCoin:e.rewardCoin,rewardCoinBase:e.rewardCoinBase,rewardCoinPerLevel:e.rewardCoinPerLevel,rewardExpScale:e.rewardExpScale||1,rewardCoinScale:e.rewardCoinScale||1});}
+function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=true;state.battle?.defeatedEnemies?.push({uid:e.uid,id:e.id,name:e.name,level:e.level,category:e.category,coinReward:e.coinReward||0,rewardExp:e.rewardExp,rewardCoin:e.rewardCoin,rewardCoinBase:e.rewardCoinBase,rewardCoinPerLevel:e.rewardCoinPerLevel,rewardExpScale:e.rewardExpScale||1,rewardCoinScale:e.rewardCoinScale||1});
+  const b=state.battle;if(b?.config?.subquestId==='rural2-2'&&!b.rural2DinoRage&&['r2-rapty','r2-tira'].includes(e.id)){const survivor=(b.enemies||[]).find(x=>x.hp>0&&['r2-rapty','r2-tira'].includes(x.id));if(survivor){b.rural2DinoRage=true;const h=Math.round(survivor.maxHp*.50);survivor.hp=Math.min(survivor.maxHp,survivor.hp+h);survivor.atkBuff=Math.max(survivor.atkBuff||0,.20);survivor.atkBuffTurns=99;survivor.magBuff=Math.max(survivor.magBuff||0,.20);survivor.magBuffTurns=99;floatNumber(h,'heal',`enemy:${survivor.uid}`);notice(`${survivor.name}が強化！ HP50%回復`,'buff',1000);}}
+}
 function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
   if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;if(e.shieldTurns>0)d=Math.round(d*(1-(e.damageReduction||.2)));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=state.battle?.mode==='story'&&state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);
   if(e.hp<=0){
@@ -7006,6 +7116,7 @@ function enemySpecialSpec(e){if(e.specialOptions?.length)return pick(e.specialOp
 async function enemyAction(actionIndex=1,enemyId){
   const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.id==='boss-gladi'&&b.gladiSpecialReady){b.gladiSpecialReady=false;await bossSpecial({special:'グラビディ・グラディエーター',kind:'aoeStun',power:1.55,chance:.70,skillElement:'無',skillType:'physical'});if(!livingRoster().length)finishBattle(false);return;}if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}
   if(e.halfDefBuff&&!e.halfDefTriggered&&e.hp/e.maxHp<=.5){e.halfDefTriggered=true;e.defBuff=Math.max(e.defBuff||0,Number(e.halfDefBuff)||0);e.defBuffTurns=99;notice(`${e.name} DEF ↑${Math.round((Number(e.halfDefBuff)||0)*100)}%`,'buff',650);}
+  if(e.oneAoePerTurn&&actionIndex===1){await bossSpecial({special:e.special||'全体攻撃',kind:'aoe',power:Number(e.power)||.84,skillElement:e.skillElement||e.attribute,skillType:e.skillType||'physical'});if(!livingRoster().length)finishBattle(false);return;}
   if(e.firstActionSpec&&!e.firstActionUsed&&b.turn===1&&actionIndex===1){e.firstActionUsed=true;await bossSpecial(e.firstActionSpec);if(!livingRoster().length)finishBattle(false);return;}
   const hasSource=!!(e.special||e.specialOptions?.length),useSpecial=e.alwaysSpecial?true:e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
   if(useSpecial)await bossSpecial(enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
@@ -7588,6 +7699,8 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
+
+
 </script>
 </body>
 </html>

@@ -2805,3 +2805,13 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .subquest-clear-next-v85{position:relative;z-index:2;width:100%;min-height:54px;margin-top:18px;border-radius:16px;background:#397cb8;border:2px solid #8ec5ef;color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:16px;font-weight:1000;letter-spacing:.06em;box-shadow:0 7px 15px rgba(42,83,119,.24)}
 .subquest-clear-card-v85.reward-stage .subquest-clear-title-v85{font-size:24px}.subquest-clear-card-v85.reward-stage .subquest-clear-name-v85,.subquest-clear-card-v85.reward-stage .subquest-clear-complete-v85{display:none}
 @media(max-width:360px){.quest-screen.subquest-mode #questTitle{font-size:16px!important}.quest-screen.subquest-mode #questAreaPill{min-width:96px!important;font-size:9px!important}.subquest-clear-card-v85{padding-left:13px;padding-right:13px}.subquest-reward-row-v85{grid-template-columns:70px minmax(0,1fr)}.subquest-reward-row-v85 b{font-size:12px}}
+
+
+/* ===== MOB QUEST v86: sequential subquests / stable labels ===== */
+.quest-screen.subquest-mode #questDescription{display:none!important}
+.quest-screen.subquest-mode .quest-card{padding-bottom:18px!important}
+.subquest-panel .panel-note{display:none!important}
+.subquest-area-block>header small{color:#29180d!important;-webkit-text-fill-color:#29180d!important}
+.subquest-card{opacity:1!important}
+.subquest-card:disabled{opacity:.72!important}
+.subquest-clear-next-v85:disabled{opacity:.65!important;pointer-events:none!important}

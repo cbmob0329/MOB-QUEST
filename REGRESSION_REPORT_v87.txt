@@ -1,0 +1,20 @@
+MOB QUEST v87 REGRESSION REPORT
+
+RESULT: PASS
+- SUBQUEST_AREAS total: 60
+- data-complete/non-pending: 58
+- pending: 2
+  - 田舎町 QUEST3 海賊が来た！
+  - 砂漠Ⅱ QUEST5 ミラモブの系譜
+- v87 new/overridden quest IDs: 35 / 35 unique
+- required party definitions: PASS
+- weapon reward ID range: PASS (<=88)
+- armor reward ID range: PASS (<=67)
+- Desert II Q1 uses boss-mira-d2: PASS
+- sequential subquest display logic retained: PASS
+- Umidenden II one-AoE-per-turn branch: PASS
+- Rural II Jurassic survivor heal/buff branch: PASS
+- external game.js syntax: PASS
+- external data.js syntax: PASS
+- index inline data/game synchronization: PASS
+- ZIP integrity: PASS
