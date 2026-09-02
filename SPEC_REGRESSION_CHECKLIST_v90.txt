@@ -1,41 +1,19 @@
-MOB QUEST v90 REGRESSION CHECKLIST
+MOB QUEST v90 SPEC REGRESSION CHECKLIST
 
-[BOOT / TITLE]
-- 静的 #titleScreen を #app 内に置く。
-- title background は back/title.png。欠損時に back/rpgmain.png へ戻さない。
-- NEW / CONTINUE / 設定はスマホ・PCともゲーム領域内に表示。
-- v88/v89の動的 #titleScreenV88 は使用しない。
-
-[OPENING]
-- 黒背景プロローグはゲーム領域中央。
-- NOW LOADINGをプロローグの間に挟まない。
-- 王様とモブピンクは王の間のキャラクター追従吹き出し。
-- 「勇者は深く頷いた」は画面のどこをタップしても進む。
-- モブピンクは画面外から王様の隣へ入る。
-- 日本語の保護語句を途中分割しない。1～2文字だけの末尾行を作らない。
-- 最後に15,000G + モブテントx2を一度だけ支給。
-- 3秒タイトル表示後NEXT、HOMEチュートリアルへ進む。
-
-[RECENT FIXES]
-- 戦闘中ストーリー台詞は画面タップ待ち。
-- 技の最後のフレームは0.70秒でフェードアウト。
-- サブクエストはQUEST1→2→3→4→5、未解放/クリア済み非表示。
-- サブクエストCLEARは専用演出＋項目別報酬表示。
-- ベージュのサブクエストUIは黒文字。
-- 冒険中は通常HOME移動禁止、諦める場合は開始前へ完全ロールバック。
-- 城の施設は背景/素材読込→描画→会話の順。
-- 5体戦闘対応。
-
-[GRASSLAND]
-- 通常戦/探索遭遇は最大2体。
-- 全滅救済は最大2回。
-- g-slime Lv1-3 / rock 2-3 / jouro 3 / tendevi 2-3 / bird 1-3 / piyo green/red 2-3 / beaver 2。
-- AREA1 Beaver Lv3 x2 + Savanna Lv5。
-- AREA2 Iwakiri Lv6。
-- AREA3 Axe Lv6。
-- AREA4 Hawk Lv8。
-
-[CONTENT]
-- 武器88種、防具67種。
-- 読みかけの本、魔王城IIを維持。
-- パーティー保存最大12人を維持。
+[ ] v89 stable title/boot path retained; title version only changes to v90
+[ ] battle dialogue still waits for tap
+[ ] opening caption still accepts screen-wide tap
+[ ] v88 earlier final-animation fade remains intact
+[ ] existing castle/home/subquest/equipment/weapon systems retained
+[ ] Demon Castle AREA4 uses full current reveal sequence and Dark Money battle
+[ ] Money Friends unlock remains after Demon Castle
+[ ] Unfinished Book has no random battles
+[ ] Book AREA3 forced-loss still ends at 3 turns without game over
+[ ] Hero book-world transformation still applies full authored effects
+[ ] Mob Navi solo event still ends at 3 turns
+[ ] Navi Master barrier still breaks after 4 hits and returns after 2 turns
+[ ] Mob Kaijin joins and Hero learns Reading Book
+[ ] Demon Castle II Enma forms each have both Judgment Sword + Judgment Flame
+[ ] Demon Castle II Maou -> Ul Mob Lilith transformation still advances correctly
+[ ] final report locks non-castle actions until report and ending
+[ ] final ending unlocks other world, event quest and Lv120

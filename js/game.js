@@ -3689,7 +3689,7 @@ function bindEvents(){
 
 
 
-/* ===== MOB QUEST v89: climax integration on stable v88 ===== */
+/* ===== MOB QUEST v90: climax integration on stable v88 ===== */
 const _renderAdventureV89Climax=renderAdventure;
 renderAdventure=function(){const r=_renderAdventureV89Climax();const w=currentWorld();if(w?.oneBattlePerArea&&!state.adventure.awaitingReport&&!state.adventure.completed){const p=$('#adventureProgress'),d=$('#areaDescription');if(p)p.textContent=`${currentArea()?.name||'AREA'}　戦闘 1/1`;if(d)d.textContent='探索するとボス戦へ進みます。通常モンスターとのエンカウントはありません。';}return r;};
 function setAdventureVitalV89Final(id,opt={}){const row=state.party.find(x=>canonicalPlayerId(x[0])===canonicalPlayerId(id)),p=player(id);if(!row||!p)return;const st=baseStats(p,row[1]),v=ensureAdventureVitals(),x=v[id]||(v[id]={hp:st.maxHp,mp:st.maxMp,dead:false,status:{}});if(opt.full){x.hp=st.maxHp;x.mp=st.maxMp;x.dead=false;x.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};}if(opt.dead){x.hp=0;x.dead=true;}state.adventure.vitals=v;saveAdventure();}
@@ -3727,6 +3727,334 @@ STORY_EVENTS['pre:demonCastle2:0']={worldId:'demonCastle2',area:0,steps:[['guest
 STORY_EVENTS['pre:demonCastle2:1']={worldId:'demonCastle2',area:1,steps:[['guest','dc2-lilith'],['say','dc2-lilith','僕の闇を抑えられるのは\n魔王様だけ'],['say','money','じゃあ戦いなさいよ！'],['narrate','モブリリスが3体に分身した！']]};STORY_EVENTS['post:demonCastle2:1']={worldId:'demonCastle2',area:1,steps:[['say','dc2-lilith','僕が、負けた、、'],['say','pink','モブリリス\n好敵手でありました！']]};
 STORY_EVENTS['pre:demonCastle2:2']={worldId:'demonCastle2',area:2,steps:[['guest','dc2-enma'],['say','dc2-enma','ここから先へは通さない'],['say','denden','やってやるでやんす！']]};STORY_EVENTS['post:demonCastle2:2']={worldId:'demonCastle2',area:2,steps:[['say','pink','残るは魔王のみ！'],['say','jessie','しっかり準備して挑みましょう！']]};
 STORY_EVENTS['pre:demonCastle2:3']={worldId:'demonCastle2',area:3,steps:[['guest','dc2-maou'],['say','dc2-maou','よくぞここまで来た\n勇者よ'],['say','money','あんたなんかに渡すもんですか！'],['say','kaijin','あのヒーローは俺の獲物だ！']]};STORY_EVENTS['post:demonCastle2:3']={worldId:'demonCastle2',area:3,forceHome:true,v89Custom:'finalBossPost'};
+
+
+/* ===== MOB QUEST v90: canonical climax dialogue / boss fidelity ===== */
+
+/* Demon Castle AREA4: restore the current canonical reveal and Dark Money sequence. */
+demonFinalPreV89Final=async function(){
+  await openStoryScene('demonCastle',3);
+  await storyShowGuests(['boss-maou-castle','boss-ace'],{slow:true});
+  await storySay('boss-maou-castle','そろそろ回復したであろう\n立て');
+  await storySay('boss-maou-castle','モブリリスがやられた\n我が軍は私とお前だけだ');
+  await storySay('boss-ace','なんと、、');
+  await storySay('boss-maou-castle','だが、終わりでは無い\n勇者を滅ぼし\n新たな軍勢を作る');
+  await storySay('boss-ace','では、現状援軍などは無いと？');
+  await storySay('boss-maou-castle','不要であろう\n私とお前がいる');
+  await storySay('boss-ace','この日をどれほど夢見たことか\n力を得て\nお前の側近となり\n討伐する\nこの日を！！');
+  await storySay('boss-ace','俺はネオン街の戦士\nモブエース\nお前を倒すチャンスを\nずっと伺っていた');
+  await storySay('boss-maou-castle','先に攻撃させてやる\n早く攻め入るが良い');
+  await storySay('boss-ace','その油断が、お前の命取りだ！');
+  await storyNarrate('戦闘開始――');
+  await storyDarkBattlePulse();
+  await fixedDelay(650);
+  await storySay('boss-maou-castle','もう終わりか？');
+  await storySay('boss-ace','はあ、はあ、\n化け物め・・');
+  await storySay('boss-maou-castle','お前は最初から間違えている\nやつは世界を滅ぼす\nお前などが何をやったところで\n結果は変わらない');
+  await storySay('boss-ace','・・意味ならあるさ\n必ず・・！！');
+  await storySay('boss-maou-castle','お前の働きには感謝しているぞ\n安らかに眠れ');
+  await storySay('boss-ace','あとは任せたぞ・・');
+  await storyHideGuests();
+  await storyShowGuest('boss-maou-castle',{slow:true});
+  await storySay('money','モブエース！？');
+  await storySay('boss-maou-castle','一足遅かったな');
+  await storySay('jessie','モブエース・・');
+  await storySay('desert','仲間割れか？');
+  await storySay('tetsu','腐っているでござる・・！');
+  await storySay('nyoro','仲間を手にかけるなんて');
+  await storySay('denden','血も涙もないでやんす！');
+  await storySay('boss-maou-castle','仲間だと？\nハハハッ！こいつがか？\n笑わせるな');
+  await storySay('jessie','それ以上モブエースを侮辱してみなさい\n後悔させてやるわ');
+  await storySay('boss-maou-castle','ネオン街での戦いは\n2つの心を持つ魔女によって終結された\n王の息子と娘が魔女を封印し\n封印が解かれる日まで\n長年見守り続けてきた');
+  await storySay('nekoku','・・思い出した\nネオン街の悪夢\n国王様から聞いたことがある');
+  await storySay('money','私は\nあんたに封印されたはず・・！');
+  await storySay('boss-maou-castle','全て教えてやろう\nモブジェシー、モブエース\nお前たちはネオン街の王\nモブネオンキングの子息だ\nそしてモブマニーは\n王に娘として育てられた魔女');
+  await storySay('pink','2人は姉妹ということでありますか!?');
+  await storySay('boss-maou-castle','モブジェシー、モブエースは\n命をかけてモブマニーを封印し\n記憶を改ざんしようとした\n封印はうまくいったが\n様々な記憶にノイズを入れることになった');
+  await storySay('desert','噛み合わなかったのはそのためか');
+  await storySay('jessie','それがなんだというの？\nモブマニーは大切な妹で心強い仲間\n何も変わらない！');
+  await storySay('boss-maou-castle','お前たちはそうであろうな\nだが\nモブマニー、お前はどうだ？\nネオン街を半壊し王を消した魔女\nどんな気分だ？');
+  await storySay('money','・・・・');
+  await storySay('desert','答えなくていい\nお前は俺たちの仲間だ\nどうなっても変わらない');
+  await storySay('nyoro','分からないニョロ・・\nこんな話をして\n魔王になんのメリットがあるニョロ？');
+  await storySay('riro','鍵・・ネ');
+  await storySay('boss-maou-castle','ほう、さすがだなサクラ一族');
+  await storySay('riro','モブマニーは異世界への扉を開く最後の鍵');
+  await storySay('pink','・・・・！\nモブマニーが\n最後のレコード・・？');
+  await storySay('boss-maou-castle','その通り\nお前たちに易々とレコードを渡したのは\n全てのレコードを1か所に集結させるため\nモブマニーを手にし\n我ら魔王軍は異世界へと侵略する');
+  await storySay('jessie','それがお前の野望・・！');
+  await storySay('pink','そんなこと絶対にさせない！');
+  await storySay('boss-maou-castle','おしゃべりはここまでだ\nこの魔法を発動するまで\n良い時間稼ぎになった\n魔力解放の陣');
+  await storySay('money','うわああああああ！！！！');
+  await storyFlash();
+  await storyHideGuest();
+  await storyShowGuest('boss-yami-money',{slow:true});
+  await storySay('jessie','モブマニー・・？');
+  await storySay('boss-yami-money','私はモブマニー\n闇の魔女\nモブマニー');
+  await storySay('boss-maou-castle','さあ、どんな風に踊ってくれるのだ？\nいずれまた会おう\n勇者と仲間達よ');
+  await storySay('desert','魔力が巨大すぎる！一度退くぞ！');
+  await storySay('pink','ここで逃げたら\nモブマニーは元に戻らないかもしれない！\n戦うべきであります！');
+  await storySay('boss-yami-money','私は全てを滅ぼす存在\n勇者よ、覚悟!!');
+  await storySay('jessie','戦わないで！');
+  await storySay('riro','モブジェシー危なイ！');
+  await storySay('tetsu','下がるでござる！');
+  await storyFlash();
+  await storySay('jessie','うっ・・');
+  await storySay('nyoro','まともに当たったニョロ！\n早く手当てをしないと！');
+  await storySay('pink','僕に任せるであります');
+  await storySay('pink','僕たち王国の兵士には\n自身の生命エネルギーを\n他者に与える力があります');
+  await storySay('desert','馬鹿な真似はよせ！');
+  await storySay('pink','80年であります\nモブマニーが自らを封印し\n前ネオン街の王が闇に消えてから\n80年であります');
+  await storySay('pink','その間\nモブジェシーとモブエースは\nずっと戦い続けたのであります\n守り続けたのであります\n大切な妹を！');
+  await storySay('pink','僕たち兵士はいくらでも代わりがいる！\n僕たちは所詮モブキャラだから！\nでも!!\nみなさんは違います・・\n勇者様\nお供できて\n光栄でした！');
+  await storyFlash();
+  await storySay('money','（みんな聞こえる！？）\n（私は大丈夫だから、）\n（遠慮なくぶっ飛ばして！）');
+  await storySay('desert','そういうことなら任せろ');
+  await storySay('pink','必ず助けるであります！');
+  await storySay('jessie','信じるよ！');
+};
+
+demonFinalPostV89Final=async function(){
+  await openStoryScene('demonCastle',3);
+  await storyShowGuest('money',{slow:true});
+  await storySay('jessie','モブマニー！');
+  await storySay('pink','無事でありますか！？');
+  await storySay('denden','返事するでやんす！');
+  await storySay('money','・・・・\n・・・・\n・・・・\nうわ！');
+  await storySay('desert','気が付いたか！');
+  await storySay('nyoro','良かったニョロ～！！');
+  await storySay('nekoku','オラ、嬉しい！');
+  await storySay('tetsu','そなたは最高のサムライでござる！');
+  await storySay('jessie','闇に勝ったのね');
+  await storySay('money','う～ん\n友達になった！');
+  await storySay('money','あの子はあの子で大変そうでさ\nここまで来たら友達になろうって！');
+  await storySay('desert','あの力が使えるのか？');
+  await storySay('money','うん！私もっと強くなったよ！');
+  await storyNarrate('7枚目のレコード「読みかけの本」を手に入れた！');
+  state.meta.moneyFriendsUnlocked=true;state.meta.record7Obtained=true;saveMeta();
+  await storyNarrate('モブマニーは新必殺技「マニーフレンズ」を覚えた！');
+  await storyNarrate('ヤミモブマニーに変身し、全ステータス20%アップ\n状態異常耐性20%アップ・魔法会心率10%アップ');
+  await storySay('money','みんな\n・・・・\nありがとう！');
+};
+
+bookArrivalV89Final=async function(){
+  await openStoryScene('unfinishedBook',0);
+  await storySay('denden','ここが本の中でやんすか？');
+  await storySay('jessie','実感ないわね');
+  await storySay('desert','魔王を倒す武器か\nそんなものがあるとは思えんな');
+  await storySay('nyoro','なんか平和なところニョロね～');
+  await storyShowGuest('book-navi',{slow:true});
+  await storySay('book-navi','おや？\n君たち異世界の住人だね？');
+  await storySay('tetsu','皆警戒を！\n只者ではないでござる！');
+  await storySay('desert','敵意どころか気配が無い\n何者だ？');
+  await storySay('book-navi','私はこの世界を管理している者だ\nと言っても\n見守っているだけだがね');
+  await storySay('nekoku','オラたち悪いやつじゃないぞ');
+  await storySay('book-navi','だろうね');
+  await storySay('nyoro','僕たち魔王を倒したいニョロ！');
+  await storySay('pink','ここに\n超強い武器があるはずです！');
+  await storySay('book-navi','超強い武器か\nあるにはあるな\nいや、いるな');
+  await storySay('riro','いる、とは\nどういう意味ですカ？');
+  await storySay('book-navi','おっと、時間だ\n気を付けることだ\n今この世界は悪の手に落ちている\n怪人軍団に注意しろ');
+  await storyHideGuest();
+  await storySay('money','凄まじい魔力ね');
+  await storySay('jessie','怪人は気になるけど、\n先へ進みましょう！');
+};
+
+bookArea3PostV89Final=async function(){
+  setAdventureVitalV89Final('yusha',{dead:true});state.meta.bookHeroDown=true;saveMeta();
+  await openStoryScene('unfinishedBook',2);
+  await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('money','なによ、、\nコイツこんなに強いなんて、、');
+  await storySay('nekoku','オラ、もう動けない、、');
+  await storySay('pink','み、みんな、しっかりするであります！');
+  await storySay('desert','ここで終わるわけにはいかない・・\n一旦引くぞ！');
+  await storySay('book-kaijin-boss','ははは！\n逃がすとでも思っているのか？');
+  await storyFlash();
+  await storyNarrate('巨大な黒いエネルギーが勇者を直撃した！');
+  await storySay('pink','勇者様ー！！');
+  await storySay('desert','まずいぞ・・！');
+  await storySay('money','こうなったら私の魔力で！！');
+  await storyShowGuest('book-navi',{slow:true});
+  await storySay('book-navi','まだ早いですね');
+  await storySay('book-kaijin-boss','モブナビ！！\n俺の邪魔をするな！');
+  await storySay('book-navi','そうはいかない');
+  await storyHideGuest();
+  await storySay('pink','勇者様・・');
+  await storySay('nyoro','もうだめだニョロ・・');
+  await storySayRed('money','なーに言ってるのよ！');
+  await storySay('jessie','そうよ！きっと勇者はまだ助かる！');
+  await storySay('tetsu','立ち上がって先へ進むでござる！');
+  await storySay('desert','そうだな\n必ず勝機はあるはずだ');
+  await storySay('nekoku','あいつ、嫌いだ');
+};
+
+bookArea4PreV89Final=async function(){
+  await openStoryScene('unfinishedBook',3);
+  await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('book-kaijin-boss','さあフィナーレだ！\n俺達怪人軍団は\n遂に目的を果たすのだ！！');
+  await storySay('desert','勇者の意志は俺たちと共にある！');
+  await storySay('riro','サクラ一族の名のもと、あなたを倒しまス！');
+  await storySay('denden','やるだけやってやるでやんす！！');
+  await storyNarrate('思い出が苦しくなる時は');
+  await storyNarrate('読みかけの本を読もう');
+  await storyNarrate('無力で惨めなその気持ち');
+  await storyNarrate('あのヒーローにやっつけてもらおう');
+  await storyFlash();
+  setAdventureVitalV89Final('yusha',{full:true});state.meta.bookHeroDown=false;saveMeta();
+  await storyNarrate('勇者は「あのヒーロー」に変身した！');
+  await storyNarrate('全回復 / 全ステータス20%アップ / ダメージ軽減70% / 与ダメージ50%アップ\n状態異常無効 / 通常攻撃全体化 / 会心率100%');
+  await storySay('book-kaijin-boss','あ、あのヒーロー、、\nなぜお前が！？');
+  await storySay('pink','勇者様の・・特別な力');
+  await storySay('desert','これが勇者');
+  await storySay('jessie','魔王を倒すのは\nやっぱり勇者');
+  await storySay('money','凄い！凄いよ勇者！');
+  await storySay('nekoku','カッコいいぞ');
+  await storySay('nyoro','勇者様ー！！');
+  await storySay('riro','伝説再び・・ですネ');
+  await storySay('tetsu','圧倒的な覇気\n至高のサムライでござる！');
+  await storySay('denden','オイラ信じていたでやんす！');
+  await storySay('book-kaijin-boss','そ、それがどうした！\n俺は強くなった！\nお前なんて・・！！');
+};
+
+bookArea4PostV89Final=async function(){
+  await openStoryScene('unfinishedBook',3);
+  await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});
+  await storySay('book-navi','それがあなたの役目だ\nさっさと捨て台詞を吐いて消えなさい');
+  await storySay('book-kaijin-boss','俺は、、');
+  await storySay('book-navi','あなたは今やあのヒーロー\n気付いてしまいましたか');
+  await storySay('jessie','気付く？');
+  await storySay('book-navi','私はこの世界の支配者\n怪人はヒーローに倒される\nそんな当たり前のループに疲れました');
+  await storySay('book-navi','なので\n2人とも消えてもらうことにしました');
+  await storySay('book-kaijin-boss','なんだと？\nあのヒーローが消えたのは\nお前の仕業か？');
+  await storySay('book-navi','如何にも\nあのヒーローが消えて\nあなたが誰かに倒されれば\n二度と復活しない');
+  await storySay('pink','とんでもないやつであります！！');
+  await storySay('book-navi','私はこの世界の秩序を保っている\n私は神なのです\n神の言うことに不満でも？');
+  await storySay('tetsu','大いにあるでござる！\nお主は神などではない！\nただの悪党でござる！');
+  await storyFlash();
+  await storySay('book-kaijin-boss','ぐは・・ッ');
+  await storySay('desert','ここは勇者に任せるしかないな');
+  await storySay('pink','勇者様！！');
+  await storySay('nyoro','僕たちのヒーロー！！');
+  await storyHideGuests();$('#storyScene').hidden=true;
+  await startBookNaviSoloV89Final();
+  await openStoryScene('unfinishedBook',3);
+  await storyShowGuest('book-navi',{slow:true});
+  await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');
+  await storySay('denden','オイラたちも一緒に戦うでやんす！');
+  await storySay('tetsu','ヒーロー殿、助太刀いたす！');
+  await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');
+  await storySay('money','敵の敵は味方じゃないの？');
+  await storySay('book-kaijin-boss','ハハッ・・\nヒーローと共闘か\nおもしれえ！やってやるよ！！');
+  await storySay('nekoku','お前、カッコイイぞ');
+  await storySay('book-kaijin-boss','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');
+  await storySay('book-navi','やれやれ、面倒だな');
+  await storyNarrate('モブナビがモブナビマスターへ変身した！');
+  await storyHideGuest();
+  await storyShowGuest('book-navi-master',{slow:true});
+  await storySay('book-navi-master','さあ、どんなエンディングになるかな？');
+  await storySay('book-kaijin-boss','最高の物語になりそうだな！！');
+  await storyHideGuest();$('#storyScene').hidden=true;
+  await startBookNaviMasterV89Final();
+  await openStoryScene('unfinishedBook',3);
+  await storyShowGuest('book-navi-master',{slow:true});
+  await storySay('book-navi-master','こ、の、わた、、、');
+  await storyHideGuest();
+  await storySay('desert','やったな');
+  await storyNarrate('勇者は元の姿へ戻った');
+  await storySay('money','おかえり勇者！');
+  await storySay('pink','勇者様、\n最高の力を手に入れたであります！');
+  await storySay('riro','恐らく\n外の世界で同じような効果は期待できなイ\nでも\n間違いなく強くはなるはずでス');
+  await storySay('nyoro','怪人はこれからどうするニョロ？');
+  await storySay('book-kaijin-boss','さあな\n俺には目的も意味もねえ');
+  await storySay('money','なら魔王を倒すの手伝ってよ！\n敵の敵は味方でしょ？');
+  await storySay('jessie','なにそれ\n最高じゃない！');
+  await storySay('book-kaijin-boss','ハハッ・・\n最後まで付き合ってやるよ！');
+  storyJoin('kaijin');state.meta.heroPassive2Unlocked=true;state.meta.bookCompleted=true;saveMeta();
+  await renderStoryParty();
+  await storyNarrate('モブ怪人のボスが仲間に加わった！');
+  await storyNarrate('モブ勇者は新必殺技「読みかけの本」を習得した！\n全ステータス20%アップ＋必殺技威力20%アップ');
+  const worlds=MOB_DATA.adventureWorlds||[],wi=worlds.findIndex(w=>w.id==='demonCastle2');
+  if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];
+  if(!state.adventure.reportedWorlds.includes('unfinishedBook'))state.adventure.reportedWorlds.push('unfinishedBook');
+  if(wi>=0)state.adventure.worldIndex=wi;
+  state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.awaitingReport=null;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;saveAdventure();
+};
+
+finalBossPostV89Final=async function(){
+  await openStoryScene('demonCastle2',3);
+  await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});
+  await storySay('dc2-maou','馬鹿な・・\nこの私が\n勇者などに・・‼︎');
+  await storyHideGuests();
+  await storyShowGuest('boss-lilith-castle',{slow:true});
+  await storySay('boss-lilith-castle','ウッ・・・');
+  await storySay('money','モブリリス！\n無事なの！？');
+  await storySay('kaijin','あのヒーローの力だ\n悪を討ち、モブリリスを救った');
+  await storySay('boss-lilith-castle','僕だって悪だよ\n魔王軍のNo.2 モブリリスだ');
+  await storySay('jessie','いいえ\nあなたはやろうと思えば\n私達をいつでも倒せたはず');
+  await storySay('desert','ソウルフュージョンか');
+  await storySay('denden','使われたら終わってたでやんす');
+  await storySay('boss-lilith-castle','買い被りすぎだよ\n使いたくなかっただけ\n魂を雑になんか扱えない\n僕にそんな資格はない');
+  await storySay('riro','あなたはまだやり直せまス\nサクラ一族として\nあなたを魔王に任命します');
+  await storyNarrate('パーティーのみんな「！？」');
+  await storySay('riro','世界の秩序を守るには\nバランスが大切でス\n全てのエリアに新たなボスが必要でス');
+  await storySay('riro','草原にはモブテツ\n砂漠にはモブデザート\n田舎町にはモブデンデン\nネオン街にはモブマニー\nマグマにはモブニョロ\nそして\n魔王城にはモブリリス');
+  await storySay('tetsu','拙者がボスでござるか？\n・・・・\n平和のためならやるでござる！');
+  await storySay('desert','砂漠は俺が守る\n安心しろ');
+  await storySay('denden','オイラ、もう何も怖くないでやんす\n町を守るでやんす！');
+  await storySay('money','私が王・・\nいや無理でしょ！');
+  await storySay('jessie','私もサポートするから安心して');
+  await storySay('nyoro','偉大なる王達に負けないように\n僕もっと強くなるニョロ！');
+  await storySay('kaijin','俺は元の世界に帰るぜ\nいいものを見せてもらった');
+  await storySay('nekoku','あれ？オラは？');
+  await storySay('riro','海底は王がまだいますかラ\nあなたは部族村を任せまス');
+  await storySay('nekoku','部族村か\n楽しみだ！');
+  await storySay('boss-lilith-castle','僕は・・\nいや、引き受けるよ\n魔王として世界を回ってみたい\nだから、\n君たちのパーティーに入っていいかな？');
+  await storySay('money','大歓迎よ！\n魔法いっぱい教えてね！');
+  await storySay('pink','まだまだ世界には\n危険なエリアがいっぱいであります！\nこんな心強い仲間は最高であります！');
+  await storySay('desert','これは旅の終わりであり\n旅の始まりだな');
+  storyJoin('lilith');state.meta.finalBossDefeated=true;saveMeta();await renderStoryParty();
+  await storyNarrate('モブリリスが仲間になった！');
+  await storySay('pink','王様に報告へ行きましょう！');
+};
+
+/* Full latest Demon Castle II event text. */
+STORY_EVENTS['arrival:demonCastle2']={worldId:'demonCastle2',area:0,steps:[
+  ['say','pink','ついに\n最終決戦であります‼︎'],['say','desert','長かった旅もここで終わりだ\n魔王を討つ！'],['say','money','絶対許さないんだから！'],['say','jessie','さあ行きましょう！']
+]};
+STORY_EVENTS['pre:demonCastle2:0']={worldId:'demonCastle2',area:0,steps:[
+  ['guest','boss-lilith-castle'],['say','boss-lilith-castle','ようこそ、また会ったね'],['say','money','モブリリス！'],['say','tetsu','No.2がここで登場でござるか？'],['say','boss-lilith-castle','レコードを揃えたんだね\n僕も揃えたかったな'],['say','jessie','大人しく道を開けなさい！'],['say','boss-lilith-castle','君たちこそ、大人しく帰った方がいいよ\n今回は\n容赦しない'],['guests',['dc2-kirin','dc2-hell','dc2-riva','dc2-kufu']],['say','boss-lilith-castle','この子達が遊んでくれるよ\nじゃあね'],['say','kaijin','俺の初陣にはピッタリの相手だな！'],['say','nyoro','力を合わせるニョロ！']
+]};
+STORY_EVENTS['post:demonCastle2:0']={worldId:'demonCastle2',area:0,steps:[['say','denden','モブリリスを追うでやんす！'],['say','riro','彼女を放っておくのは危険ネ']]};
+STORY_EVENTS['pre:demonCastle2:1']={worldId:'demonCastle2',area:1,steps:[
+  ['guest','dc2-lilith'],['say','dc2-lilith','君たちもしつこいねー\nでも、さすがだね'],['say','pink','少しは見直したでありますか？'],['say','dc2-lilith','まあね\nでも\n来ない方が良かった'],['say','desert','お前の目的はなんだ？\nなぜ魔王に加担する？'],['say','dc2-lilith','僕の闇を抑えられるのは\n魔王様だけ\n闇は僕を食べようとしてる\n僕はまだ消えたくない'],['say','money','じゃあ戦いなさいよ！\nあんたはそんな弱虫じゃないでしょ！'],['say','dc2-lilith','君とは境遇が似ているね\nネオン街の魔女\nだから\nちょっとムカつく'],['say','desert','もはや必要なのは言葉ではない\n戦うぞ！'],['narrate','モブリリスが3体に分身した！'],['say','dc2-lilith','消えろ']
+]};
+STORY_EVENTS['post:demonCastle2:1']={worldId:'demonCastle2',area:1,steps:[['say','dc2-lilith','僕が、負けた、、\n僕は、、、'],['say','money','生まれ変わったら\nまた会いましょう'],['say','pink','モブリリス\n好敵手でありました！']]};
+STORY_EVENTS['pre:demonCastle2:2']={worldId:'demonCastle2',area:2,steps:[
+  ['guest','dc2-enma'],['say','dc2-enma','まさかモブリリスがやられるとはな'],['say','kaijin','こりゃ強そうなのが出て来たな'],['say','nekoku','こいつ、危険\n地獄の番人\nモブ閻魔'],['say','dc2-enma','魔王の助っ人に来て正解だったな\nここから先へは通さない'],['say','desert','誰が相手でも\n俺たちは引かない！'],['say','denden','やってやるでやんす！'],['say','money','閻魔が何よ！\n魔女の力見せてやるわ！'],['say','tetsu','最高の強者、楽しみでござる！']
+]};
+STORY_EVENTS['post:demonCastle2:2']={worldId:'demonCastle2',area:2,steps:[['say','dc2-enma','私は地獄の王・・\n滅びは・・しない・・'],['say','pink','残るは魔王のみです！'],['say','riro','最後の戦いでス'],['say','jessie','しっかり準備して挑みましょう！']]};
+STORY_EVENTS['pre:demonCastle2:3']={worldId:'demonCastle2',area:3,steps:[
+  ['guest','dc2-maou'],['say','dc2-maou','よくぞここまで来た\n勇者よ\nあのヒーローの力を得たのだな'],['say','pink','勇者様は無敵であります！'],['say','dc2-maou','あのヒーローは伝説の存在\n私のモノにする日を\n心待ちにしていたぞ‼︎'],['say','desert','それが狙いか'],['say','dc2-maou','私は全てを超越する魔王'],['say','money','あんたなんかに渡すもんですか！'],['say','jessie','あなたを倒せば全て終わる！'],['say','dc2-maou','不可能だ'],['say','nyoro','平和を取り戻すニョロ！'],['say','denden','オイラ、やるんでやんす！'],['say','nekoku','オラ、やる気だ！'],['say','dc2-maou','その他大勢が偉そうに'],['say','kaijin','あのヒーローは俺の獲物だ！'],['say','riro','最後の戦いネ！'],['say','dc2-maou','もうよい\nかかって来るがいい'],['say','tetsu','いざ！尋常に・・'],['narrate','勝負！！']
+]};
+
+/* Add the missing final castle report conversation before the canonical ending captions. */
+finalEndingV89Final=async function(){
+  await facilityTalk('皆のもの\nほんっっっとーに！\nよくやった！','モブスライムキング','play/007.png');
+  await facilityTalk('みんなの力で成し遂げました！','モブピンク','play/02.png');
+  await facilityTalk('うむ\n感謝するぞ\n世界に平和が訪れた','モブスライムキング','play/007.png');
+  await facilityTalk('少しいいかな？','モブリリス','play/14.png');
+  await facilityTalk('魔王城の魔女モブリリスか\n良い、話せ','モブスライムキング','play/007.png');
+  await facilityTalk('あの町を破壊した本当の理由\n王様は知っているのかな？','モブリリス','play/14.png');
+  await facilityTalk('・・・うむ','モブスライムキング','play/007.png');
+  await facilityTalk('そうか\nならいい\n悪いことしたね','モブリリス','play/14.png');
+  await facilityTalk('あの町は封印の町\n封印していたのは\nモブマニー、そして\n異世界へのゲート','モブスライムキング','play/007.png');
+  await facilityTalk('モブマニーの解放と共に\n異世界のゲートも開いた\n魔王様はその力を求めたんだ','モブリリス','play/14.png');
+  await facilityTalk('これから\n新たな戦いが始まるかもしれん\n皆その時は頼むぞ！','モブスライムキング','play/007.png');
+  await facilityTalk('我々の冒険は終わらないであります！\nでも\n勇者様と魔王を倒す旅は\nここでひと段落でありますね\nまた会うであります！\nみなさん、それまでお達者で！','モブピンク','play/02.png');
+  try{const a=new Audio('music/end.wav');a.volume=.55;a.play().catch(()=>{});}catch(_){ }
+  for(const line of ['ゲームクリアおめでとうございます！','レコードの間から異世界へ行けるようになりました！','さらに、トレーニングにイベントクエストが追加されました！','レベル上限が120まで解放されました！','新たな武器やフィギュアも追加されていきます！','冒険はまだまだ終わりません！','ですが、','ここまで遊んでくれてありがとうございました！','CB Memory'])await openingSceneCaption(line);
+  state.meta.gameCleared=true;state.meta.eventQuestUnlocked=true;state.meta.otherWorldUnlocked=true;saveMeta();await fixedDelay(3000);await showTitle();
+};
 
 const _runStoryEventV89Final=runStoryEvent;
 runStoryEvent=async function(key,forceHomeOverride=false){const ev=STORY_EVENTS[key];if(!ev?.v89Custom)return _runStoryEventV89Final(key,forceHomeOverride);if(storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;try{if(ev.v89Custom==='demonFinalPre')await demonFinalPreV89Final();else if(ev.v89Custom==='demonFinalPost')await demonFinalPostV89Final();else if(ev.v89Custom==='bookArrival')await bookArrivalV89Final();else if(ev.v89Custom==='bookArea3Post')await bookArea3PostV89Final();else if(ev.v89Custom==='bookArea4Pre')await bookArea4PreV89Final();else if(ev.v89Custom==='bookArea4Post')await bookArea4PostV89Final();else if(ev.v89Custom==='finalBossPost')await finalBossPostV89Final();markStoryDone(key);ok=true;}finally{storyBusy=false;}if(!ok)return false;if(ev.v89Custom==='bookArea4Post'){await closeStoryScene(false);await travelTo('castle','元の世界へ戻っています…',renderCastle);await openCastleRoom('records');await facilityTalk('よく戻った！\n次はいよいよ魔王城Ⅱじゃ！','モブスライムキング','play/007.png');return true;}const home=!!(ev.forceHome||forceHomeOverride);await closeStoryScene(home);if(!home&&screens.adventure.classList.contains('active'))renderAdventure();return true;};

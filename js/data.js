@@ -1,4 +1,4 @@
-// MOB QUEST v89
+// MOB QUEST v90
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -762,7 +762,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
 
 
 
-/* ===== MOB QUEST v89 : canonical climax / boss update ===== */
+/* ===== MOB QUEST v90 : canonical climax / boss update ===== */
 (()=>{
   const enemies=MOB_DATA.enemyCatalog=MOB_DATA.enemyCatalog||[];
   const players=MOB_DATA.players=MOB_DATA.players||[];
@@ -842,9 +842,9 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic'},
     {special:'薔薇の鼓動',kind:'poisonSingle',power:1.78,chance:.70,skillElement:'闇',skillType:'physical'}
   ]});
-  up('dc2-enma',{name:'モブ閻魔',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:90,levelMax:90,bossId:'enma',special:'ジャッジメントソード',kind:'aoeStunChance',power:1.90,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[1,3]});
-  up('dc2-enma2',{name:'モブ閻魔 第二形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:92,levelMax:92,bossId:'enma2',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.55,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[1,3]});
-  up('dc2-enma3',{name:'モブ閻魔 最終形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:94,levelMax:94,bossId:'enmaFinal',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.65,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[2,3]});
+  up('dc2-enma',{name:'モブ閻魔',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:90,levelMax:90,bossId:'enma',special:'ジャッジメントソード',kind:'aoeStunChance',power:1.90,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[1,3],specialOptions:[{special:'ジャッジメントソード',kind:'aoeStunChance',power:1.90,chance:.30,skillElement:'火',skillType:'physical'},{special:'ジャッジメントフレイム',kind:'burnSingle',power:2.55,chance:.70,skillElement:'火',skillType:'magic'}]});
+  up('dc2-enma2',{name:'モブ閻魔 第二形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:92,levelMax:92,bossId:'enma2',special:'ジャッジメントソード',kind:'aoeStunChance',power:1.95,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[1,3],specialOptions:[{special:'ジャッジメントソード',kind:'aoeStunChance',power:1.95,chance:.30,skillElement:'火',skillType:'physical'},{special:'ジャッジメントフレイム',kind:'burnSingle',power:2.60,chance:.70,skillElement:'火',skillType:'magic'}]});
+  up('dc2-enma3',{name:'モブ閻魔 最終形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:94,levelMax:94,bossId:'enmaFinal',special:'ジャッジメントソード',kind:'aoeStunChance',power:2.00,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[2,3],specialOptions:[{special:'ジャッジメントソード',kind:'aoeStunChance',power:2.00,chance:.30,skillElement:'火',skillType:'physical'},{special:'ジャッジメントフレイム',kind:'burnSingle',power:2.65,chance:.70,skillElement:'火',skillType:'magic'}]});
   up('dc2-maou',{name:'モブ魔王',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/22.png',symbol:'王',levelMin:95,levelMax:95,bossId:'maou2',special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
     {special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic'},
     {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:1.95,chance:.30,skillElement:'闇',skillType:'magic'}

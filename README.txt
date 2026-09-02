@@ -1,62 +1,19 @@
-MOB QUEST playable core v90
-- v89のUI/オープニング退行を全面復元
-- 静的タイトル、黒背景プロローグ、王の間の吹き出し、日本語改行制御、HOMEチュートリアルを正本へ復元
-- v88の読みかけの本/魔王城II、戦闘台詞タップ待ち、技0.70秒フェードを維持
-- v87サブクエスト順番制、v84冒険諦める、武器88、防具67、5体戦闘を維持
-- v81/v80草原Lv・通常遭遇最大2体を復元
+MOB QUEST v90 - CLIMAX FIDELITY STABLE
 
-MOB QUEST playable core v89
-- v88起動不能の原因を修正：タイトル画面にCSSが存在せず、#app外へ生成されていた問題を解消
-- タイトルを#app内へ生成し、スマホ/PC共通の固定レイアウトを追加
-- NEW GAME / CONTINUE / 設定を必ず画面内にオーバーレイ表示
-- CSS / data.js / game.js をindex.htmlへ再内蔵し、端末キャッシュやGitHub Pagesのファイル更新ズレを回避
-- 外部css/jsファイルも同梱して保守可能
-- v88までのストーリー・サブクエスト・防具・冒険ロールバック・戦闘台詞タップ送りを維持
+BASE
+- MOB-QUEST-playable-core-v89-CLIMAX-STABLE.zip
+- v89 stable boot/title/HOME/castle/subquest/equipment/weapon/tap interaction code retained.
 
-MOB QUEST playable core v88 COMPLETE
+v90 CHANGES
+- Restored the latest canonical Demon Castle AREA4 reveal/dialogue sequence instead of the abbreviated v89 version.
+- Restored the latest canonical Unfinished Book arrival, forced-loss aftermath, Hero transformation, Mob Navi betrayal, solo battle follow-up, Navi Master finale and Kaijin join dialogue.
+- Restored Demon Castle II AREA1-4 dialogue from the latest script, including Lilith/Enma/Maou finale conversations.
+- Restored the long post-final-boss world-order/Lilith-join scene.
+- Restored the full final King-room report before the ending captions.
+- Corrected all three Mob Enma forms so both canonical specials are available: Judgment Sword and Judgment Flame.
+- Existing v89 combat gimmicks remain: book forced-loss, Hero book-world power, Navi barrier, enemy revival, final transformations, Lv120 unlock.
 
-2026-09-02 完成版
-
-■ 今回の操作・演出修正
-- 戦闘中のストーリー台詞は自動送りを廃止。
-  画面のどこかをタップするまで次へ進みません。
-- オープニング「勇者は深く頷いた」を含む字幕は、字幕外を含む画面全体タップで進行。
-- 全技の最後のスプライトフレームを従来より早くフェードアウト。
-  最終フレームは0.70秒、後半で自然に透明化。
-
-■ クライマックス
-- 魔王城 AREA4：モブエース / モブ魔王 / ヤミモブマニーイベント。
-- 7枚目のレコード「読みかけの本」。
-- 王への報告後、レコードルームから本の世界へ入る進行。
-- 読みかけの本は通常エンカウント無し。各AREAは探索→ボス戦。
-- AREA2：怪人幹部撃破後、覚醒して復活。
-- AREA3：モブ怪人のボスに強制敗北。ゲームオーバーにならず1HPで耐え、3ターン後ストーリー進行。
-- AREA4：歌→勇者が「あのヒーロー」に変身。本の世界限定超強化。
-- モブナビ3ターンイベント戦。
-- モブナビマスター：80%バリア。4回攻撃で破壊、2ターン後に再展開。
-- モブ怪人加入。勇者が必殺技「読みかけの本」を習得。
-- 魔王城Ⅱ：覚醒リリス四姉妹、モブリリス、モブ閻魔3形態、モブ魔王→ウルモブリリス。
-- 最終決戦後モブリリス加入。
-- 王への最終報告→エンディング→タイトル。
-
-■ 維持した既存仕様
-- サブクエストはQUEST1→2→3→4→5の順番制。
-- 未解放QUEST・クリア済みQUESTは非表示。
-- 防具67種 / 武器88種。
-- 5体同時戦闘。
-- 冒険中は通常HOME移動不可。「冒険を諦める」で冒険開始前へ完全ロールバック。
-- 城の施設は背景画像を読み込み・描画後に会話開始。
-- 最初の草原の全滅救済は最大2回。
-- 初期0G / 0ダイヤ、オープニング終了時15,000G＋テント×2。
-- メイン4＋スーパーサブ2＋控え4に加え、終盤加入キャラを待機枠として保存可能（最大12人保存）。
-
-■ 検査
-- js/game.js 構文：PASS
-- js/data.js 構文：PASS
-- 実ブラウザ起動：PASS
-- BOOT READY：PASS
-- v88表示：PASS
-- Page Error：0
-- Console Error：0
-- 回帰検査：25/25 PASS
-- ZIP整合性検査：PASS
+STABILITY POLICY
+- Built only from the current v89 stable branch.
+- The older broken v89/v90 restoration branch was not used.
+- No title-screen replacement, no boot rewrite, no HOME layout rewrite.

@@ -1,12 +1,15 @@
-MOB QUEST v89 BOOT REGRESSION CHECKLIST
+MOB QUEST v89 SPEC REGRESSION CHECKLIST
 
-- タイトル画面は#app内に置く。
-- タイトル背景画像の自然サイズでUIを押し出さない。
-- NEW GAME / CONTINUE / 設定はスマホviewport内に固定。
-- タイトル画像/ロゴが404でも操作UIを隠さない。
-- index.htmlへCSS/data/gameを内蔵し、HTML/JS/CSSの版ズレを防止。
-- スマホ390x844とPC1280x900で起動する。
-- NEW GAME押下でオープニングへ進む。
-- pageerror / ReferenceError / TypeError / SyntaxErrorを0件にする。
-- v88の戦闘台詞タップ送り、オープニング全画面タップ、技フェード0.70秒を維持。
-- v88のサブクエスト、冒険ロールバック、城遷移、読みかけの本、魔王城Ⅱを維持。
+[ ] Existing v87/v88 title DOM and showTitle() boot path retained
+[ ] v88 battle dialogue waits for tap
+[ ] v88 opening caption accepts screen-wide tap
+[ ] v88 skill final-frame fade timings retained
+[ ] Existing castle/home/subquest/equipment/weapon systems retained
+[ ] Demon Castle AREA4 excludes Money from battle party
+[ ] 7th record / book portal unlocks after Demon Castle report
+[ ] Unfinished Book uses one battle per AREA and no normal encounter progression
+[ ] Book AREA3 forced loss at 3 turns does not game over
+[ ] Book AREA4 Hero power applies
+[ ] Navi Master 4-hit barrier / 2-turn reset works
+[ ] Demon Castle II waves/forms advance
+[ ] Final boss report triggers ending and Lv120 unlock

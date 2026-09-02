@@ -1,31 +1,32 @@
 MOB QUEST v88 REGRESSION REPORT
 
-RESULT: PASS
+BASE: MOB-QUEST-playable-core-v87-subquest2-expansion (1).zip
+POLICY: v87を正本とし、今回の3変更以外は変更しない。
 
-PASS: v88
-PASS: battle_tap
-PASS: opening_anywhere
-PASS: fade
-PASS: iife_scope
-PASS: book
-PASS: castle2
-PASS: book_loss
-PASS: book_power
-PASS: navi
-PASS: kaijin
-PASS: lilith
-PASS: ending
-PASS: reports
-PASS: portal
-PASS: snapshot
-PASS: homeblock
-PASS: subquest_hidden
-PASS: five_enemy
-PASS: weapons88
-PASS: armor67
-PASS: grass_rescue2
-PASS: castle_preload
-PASS: party12
-PASS: css_balance
+[PASS] GAME_ASSET_VERSION = 88
+[PASS] v87タイトル構造維持
+[PASS] v87黒背景オープニング維持
+[PASS] 王の間の吹き出し維持
+[PASS] balancedJapaneseText / 日本語改行制御維持
+[PASS] 「勇者は深く頷いた」画面外タップ進行
+[PASS] 戦闘イベント台詞は2.5秒放置しても自動で消えない
+[PASS] 戦闘イベント台詞は画面タップでのみ解除
+[PASS] 技最終フレーム 1000ms -> 700ms
+[PASS] 必殺技アニメ最終フレーム 420ms -> 320ms
+[PASS] 最終フレームは後半で実際にフェードアウト
+[PASS] サブクエスト順番制維持
+[PASS] サブクエストクリア演出維持
+[PASS] 冒険を諦める完全ロールバック維持
+[PASS] 草原全滅救済2回維持
+[PASS] 初期0G/0ダイヤ・OP支給維持
+[PASS] 5体戦闘維持
+[PASS] 城の背景描画後に会話する仕様維持
+[PASS] 防具67種維持
+[PASS] 武器88種維持
+[PASS] index内蔵JSと外部data/game一致
+[PASS] index内蔵CSSと外部CSS一致
+[PASS] CSS brace balance
 
-TOTAL: 25/25 PASS
+STATIC REGRESSION: 23/23 PASS
+BROWSER 390x844: PASS / Page Error 0
+BROWSER 1280x900: PASS / Page Error 0
