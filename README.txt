@@ -48,3 +48,14 @@ Base: v93 BOOK ENTRY / SUBQUEST FIX STABLE.
 - After 「ぐは・・ッ」 Kaijin boss moves down to the party side.
 - Navi Master party immortality removed.
 - Navi Master 80% damage reduction now applies only while barrier is active; barrier break allows full damage.
+
+
+=== v95 ARMOR / DEMON CASTLE FIDELITY ===
+Base: v94 BOOK STAGING / NAVI MASTER FIX STABLE.
+- Armor 01-67 retained as canonical drop-only equipment; dedicated Armor equipment tab restored.
+- Armor subquest drops, stat/trait effects, inventory, equipping, and 100% blacksmith sale retained.
+- Demon Castle dialogue rebuilt from the newly uploaded canonical script.
+- Tavern facility buttons are icon-only.
+- Demon Castle exploration uses dark red-purple and white text.
+- Unlearned ultimate skills are not rendered in the battle ultimate list.
+- Castle menu labels use white banners for readability.

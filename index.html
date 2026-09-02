@@ -2893,6 +2893,23 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 @keyframes bookHeroMoveToNaviV94{0%{opacity:.15;transform:translate(-23vw,18vh) scale(.90)}100%{opacity:1;transform:translate(2vw,0) scale(1.12)}}
 @media(max-height:720px){.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-kaijin-boss"]{transform:translate(-8vw,14vh) scale(.84)!important}}
 
+
+/* ===== MOB QUEST v95 UI ===== */
+/* Tavern facilities are icon-only: no card/banner and no labels. */
+.tavern-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px 12px!important;align-items:center!important}
+.tavern-menu-grid>button,.tavern-menu-grid>button:last-child{min-height:112px!important;height:112px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:4px!important;display:flex!important;align-items:center!important;justify-content:center!important;grid-column:auto!important}
+.tavern-menu-grid>button img,.tavern-menu-grid>button:last-child img{width:104px!important;height:104px!important;object-fit:contain!important;filter:drop-shadow(0 5px 4px rgba(0,0,0,.28))!important}
+.tavern-menu-grid>button b,.tavern-menu-grid>button small{display:none!important}
+/* Demon Castle exploration: dark red-purple with high-contrast white text. */
+.explore-overlay.area-theme-redblack .explore-card{background:#3d153f!important;border:3px solid #7b3d72!important;color:#fff!important;text-shadow:0 2px 2px rgba(0,0,0,.65)!important}
+.explore-overlay.area-theme-redblack .explore-card>small,.explore-overlay.area-theme-redblack .explore-card h2,.explore-overlay.area-theme-redblack .explore-loading,.explore-overlay.area-theme-redblack .explore-reward b,.explore-overlay.area-theme-redblack .explore-reward p,.explore-overlay.area-theme-redblack .explore-reward small{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 2px 2px rgba(0,0,0,.7)!important}
+/* Castle menu labels get a white banner without covering the icon art. */
+.castle-main-icons>button b{display:inline-block!important;background:rgba(255,255,255,.96)!important;color:#161116!important;-webkit-text-fill-color:#161116!important;text-shadow:none!important;border-radius:8px!important;padding:5px 9px!important;box-shadow:0 2px 5px rgba(0,0,0,.22)!important;line-height:1.15!important}
+.castle-main-icons>button small{display:inline-block!important;background:rgba(255,255,255,.92)!important;color:#4d2446!important;-webkit-text-fill-color:#4d2446!important;text-shadow:none!important;border-radius:7px!important;padding:3px 6px!important}
+/* Dedicated armor tab. */
+.armor-equipment-v95 .equipment-party-strip{margin:8px 0 12px!important}.armor-current-v95{display:grid;gap:8px;margin:10px 0 14px}.armor-current-v95>button{display:grid;grid-template-columns:76px 1fr;gap:10px;align-items:center;text-align:left;padding:10px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.17)}.armor-current-v95>button img{width:72px;height:72px;object-fit:contain}.armor-current-v95>button span{display:grid;gap:3px}.armor-current-v95>button em{font-size:9px;color:#d8e0ea}.armor-current-v95>button.empty i{font-size:36px;font-style:normal;text-align:center}.armor-owned-grid-v95{display:grid;grid-template-columns:1fr;gap:8px}.armor-owned-grid-v95>button{display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:center;text-align:left;padding:9px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}.armor-owned-grid-v95>button.active{outline:2px solid #fff}.armor-owned-grid-v95>button.disabled{opacity:.45}.armor-owned-grid-v95 img{width:68px;height:68px;object-fit:contain}.armor-owned-grid-v95>button div{display:grid;gap:2px}.armor-owned-grid-v95 small{font-size:8px}.armor-owned-grid-v95 em,.armor-owned-grid-v95 p,.armor-owned-grid-v95 strong{font-size:8px;margin:0}.demon-maou-silhouette-v95 img{filter:brightness(0)!important;opacity:.9!important}
+/* ===== END MOB QUEST v95 UI ===== */
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -2912,7 +2929,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v94</div>
+      <div class="title-version">v95</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3055,6 +3072,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="page-scroll nav-spacer equipment-scroll">
       <div class="equipment-tabs glass">
         <button class="equipment-tab active" data-equipment-tab="equip" type="button">装備</button>
+        <button class="equipment-tab" data-equipment-tab="armor" type="button">防具</button>
         <button class="equipment-tab" data-equipment-tab="figures" type="button">フィギュア</button>
       </div>
       <div id="equipmentContent"></div>
@@ -4194,6 +4212,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(money){money.ults=money.ults||[];if(!money.ults.some(u=>u.name==='マニーフレンズ'))money.ults.push({name:'マニーフレンズ',image:'boss/57.png',cost:55,kind:'moneyFriends',power:0,desc:'ヤミモブマニーに変身。全ステータス20%アップ、状態異常耐性20%アップ、魔法会心率10%アップ。'});}
 })();
 
+
 (() => {
 'use strict';
 
@@ -4204,7 +4223,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=94;
+const GAME_ASSET_VERSION=95;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -4537,7 +4556,7 @@ function useInventoryItemOn(id,pid){const it=itemData(id),t=inventoryTargetStatu
 
 function playerDetailMagic(p){const element=normalizeElement(p.attribute),all=MOB_DATA.magicCatalog||[];return all.find(x=>x.element===element&&x.tier==='medium')||all.find(x=>x.element===element)||null;}
 function playerDetailTechnique(p){return temporaryTechnique({...p,equipment:equipmentFor(p.id)});}
-function openPlayerDetail(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),magic=playerDetailMagic(p),tech=playerDetailTechnique(p),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true));body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>${p.attribute} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>魔法</h3>${magic?`<div class="player-detail-list"><span><b>${magic.name}</b><small>MP ${magic.cost} / ${magic.element}属性 / ${magic.target==='all'?'敵全体':'敵単体'}</small></span></div>`:'<p>現在使用できる魔法はありません。</p>'}</section><section><h3>特技</h3>${tech?`<div class="player-detail-list"><span><b>${tech.name}</b><small>MP ${tech.cost} / 現在使用可能な基本特技</small></span></div>`:'<p>現在使用できる特技はありません。</p>'}</section><section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;}
+function openPlayerDetail(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),magic=playerDetailMagic(p),tech=playerDetailTechnique(p),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>${p.attribute} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>魔法</h3>${magic?`<div class="player-detail-list"><span><b>${magic.name}</b><small>MP ${magic.cost} / ${magic.element}属性 / ${magic.target==='all'?'敵全体':'敵単体'}</small></span></div>`:'<p>現在使用できる魔法はありません。</p>'}</section><section><h3>特技</h3>${tech?`<div class="player-detail-list"><span><b>${tech.name}</b><small>MP ${tech.cost} / 現在使用可能な基本特技</small></span></div>`:'<p>現在使用できる特技はありません。</p>'}</section><section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;}
 function closePlayerDetail(){const ov=$('#playerDetailOverlay');if(ov)ov.hidden=true;}
 function defaultMeta(){return{coins:0,diamonds:0,exp:{},inventory:{},drinkSets:{},weapons:{},medals:{},armors:{},equipment:{},subquests:{cleared:{}},figures:{},figureEquipment:{},figureOrder:[],ultimateCooldowns:{},openingCompleted:false,starterGrantReceived:false,firstGrassReviveUsed:false,firstGrassReviveCount:0,defeatedBosses:[],defeatedElites:[]};}
 function loadMeta(){try{const v=JSON.parse(localStorage.getItem('mobQuestMetaV1'));if(v&&typeof v==='object'){const equipment={...(v.equipment||{})};if(equipment.jerry&&!equipment.jessie){equipment.jessie=equipment.jerry;delete equipment.jerry;}return{...defaultMeta(),...v,exp:{...(v.exp||{})},inventory:{...(v.inventory||{})},drinkSets:{...(v.drinkSets||{})},weapons:{...(v.weapons||{})},medals:{...(v.medals||{})},armors:{...(v.armors||{})},subquests:{cleared:{...(v.subquests?.cleared||{})}},equipment,figures:{...(v.figures||{})},figureEquipment:{...(v.figureEquipment||{})},figureOrder:[...(v.figureOrder||[])],ultimateCooldowns:{...(v.ultimateCooldowns||{})},defeatedBosses:[...(v.defeatedBosses||[])],defeatedElites:[...(v.defeatedElites||[])]};}}catch(_){}return defaultMeta();}
@@ -5814,6 +5833,19 @@ async function checkBattleHpDialogue(){
   }
   const gladi=(b.enemies||[]).find(e=>e.id==='boss-gladi'&&e.hp>0);
   if(gladi){const rate=gladi.hp/Math.max(1,gladi.maxHp);if(rate<=.70&&!b.storyHpFlags.gladi70){b.storyHpFlags.gladi70=true;await enemyStoryCutin(gladi,'いいぞ\n闘いはこうでなくてはな',1050);}if(rate<=.50&&!b.storyHpFlags.gladi50){b.storyHpFlags.gladi50=true;b.gladiSpecialReady=true;await enemyStoryCutin(gladi,'認めよう\nお前たちは強者だ！',1050);await actionCutin('次のターン、グラビディ・グラディエーターが来る！','danger',900);}}
+  const castleLilith=(b.enemies||[]).find(e=>e.id==='boss-lilith-castle'&&e.hp>0);
+  if(castleLilith&&b.config?.lilithSplitBattle){
+    const rate=castleLilith.hp/Math.max(1,castleLilith.maxHp);
+    if(b.turn===1&&!b.storyHpFlags.castleLilithTurn1){
+      b.storyHpFlags.castleLilithTurn1=true;b.castleLilithDoubleSpecialTurn=2;
+      await enemyStoryCutin(castleLilith,'あれ？もしかして僕なめられてる？',1050);
+      await actionCutin('次のターン、モブリリスが必殺技を2連発する！','danger',900);
+    }
+    if(rate<=.50&&!b.storyHpFlags.castleLilith50){
+      b.storyHpFlags.castleLilith50=true;
+      await enemyStoryCutin(castleLilith,'強いね\nまだまだこれからだよ',1050);
+    }
+  }
   const karami=(b.enemies||[]).find(e=>e.id==='d2-mirakarami');
   if(karami&&karami.hp>0&&karami.hp/Math.max(1,karami.maxHp)<=.50&&!b.storyHpFlags.d2Karami50){
     b.storyHpFlags.d2Karami50=true;
@@ -7309,6 +7341,11 @@ function enemyMainSkillPower(e,spec){
 function enemySpecialSpec(e){if(e.specialOptions?.length)return pick(e.specialOptions);if(e.special)return e;return temporaryEnemySpecial(e);}
 async function enemyAction(actionIndex=1,enemyId){
   const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b.enemy;if(!e||e.hp<=0)return;if(e.id==='boss-gladi'&&b.gladiSpecialReady){b.gladiSpecialReady=false;await bossSpecial({special:'グラビディ・グラディエーター',kind:'aoeStun',power:1.55,chance:.70,skillElement:'無',skillType:'physical'});if(!livingRoster().length)finishBattle(false);return;}if(e.escapeRate&&!e.noEscape&&actionIndex===1&&Math.random()<e.escapeRate){await actionCutin(`${e.name}は逃げ出した！`,'system',620);e.hp=0;e.escaped=true;if(b.targetEnemyId===e.uid){const n=livingEnemies()[0];b.targetEnemyId=n?.uid||null;}renderBattle();await delay(220);return;}if(e.status.sleep>0){e.status.sleep--;notice(`${e.name}は眠っている！`,'status');await delay(350);return;}if(e.status.stun>0){e.status.stun--;notice(`${e.name}はひるんで動けない！`,'status');await delay(350);return;}if(e.status.paralyze>0){e.status.paralyze--;notice(`${e.name}はマヒして動けない！`,'status');await delay(350);return;}
+  if(e.id==='boss-lilith-castle'&&b.config?.lilithSplitBattle&&Number(b.castleLilithDoubleSpecialTurn)===Number(b.turn)){
+    await bossSpecial(enemySpecialSpec(e));
+    if(!livingRoster().length)finishBattle(false);
+    return;
+  }
   if(e.halfDefBuff&&!e.halfDefTriggered&&e.hp/e.maxHp<=.5){e.halfDefTriggered=true;e.defBuff=Math.max(e.defBuff||0,Number(e.halfDefBuff)||0);e.defBuffTurns=99;notice(`${e.name} DEF ↑${Math.round((Number(e.halfDefBuff)||0)*100)}%`,'buff',650);}
   if(e.oneAoePerTurn&&actionIndex===1){await bossSpecial({special:e.special||'全体攻撃',kind:'aoe',power:Number(e.power)||.84,skillElement:e.skillElement||e.attribute,skillType:e.skillType||'physical'});if(!livingRoster().length)finishBattle(false);return;}
   if(e.firstActionSpec&&!e.firstActionUsed&&b.turn===1&&actionIndex===1){e.firstActionUsed=true;await bossSpecial(e.firstActionSpec);if(!livingRoster().length)finishBattle(false);return;}
@@ -7432,7 +7469,7 @@ function openSkillMenu(type){
     if(testAll){$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)} / TEST ALL TECHNIQUE`;$('#skillMenuTitle').textContent='特技';list.innerHTML=all.map(t=>`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-tech-id="${t.id}" type="button"><span class="skill-symbol">技</span><div><b>${t.name}</b><small>${t.kind==='status'?`敵単体を${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]}にする`:`${t.element}属性 / ${t.tier==='large'?'中～大':'小'}ダメージ`}</small></div><em>MP ${t.cost}</em></button>`).join('');$$('[data-tech-id]',list).forEach(btn=>btn.onclick=async()=>{const t=all.find(x=>x.id===btn.dataset.techId);if(!t||a.mpNow<t.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('special',t,a))return;$('#skillMenu').hidden=true;act('special',t);});return;}
     const t=temporaryTechnique(a);$('#skillMenuKicker').textContent=`${a.name} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='特技';list.innerHTML=`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-use-special type="button"><span class="skill-symbol">技</span><div><b>${t.name}</b><small>正式な習得者は未決定。現在は武器種に合わせた基本特技。</small></div><em>MP ${t.cost}</em></button>`;$('[data-use-special]',list).onclick=async()=>{if(a.mpNow<t.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('special',t,a))return;$('#skillMenu').hidden=true;act('special',t);};return;
   }
-  const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=a.ults.map((u,i)=>{const req=i<4?ULT_UNLOCK_LEVELS[i]:null,ok=unlocked.includes(u),cd=ok?ultimateRemaining(a,i):0,base=ultimateEffectiveCt(a,u,i),ready=ok&&cd<=0;return`<button class="skill-item ${!ok?'locked':''} ${ok&&(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button" ${!ok?'disabled':''}><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc}${!ok?(i<4?` / Lv${req}で習得`:' / イベントで解放'):` / CT ${base}ターン`}</small></div><em>${!ok?'LOCK':ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('');bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=async()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('ultimate',u,a))return;$('#skillMenu').hidden=true;act('ultimate',u);});
+  const unlocked=availableUlts(a);unlocked.forEach(u=>preloadAsset(u.image,'high'));$('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}`;$('#skillMenuTitle').textContent='必殺技';list.innerHTML=unlocked.map(u=>{const i=a.ults.indexOf(u),cd=ultimateRemaining(a,i),base=ultimateEffectiveCt(a,u,i),ready=cd<=0;return`<button class="skill-item ${(!ready||a.mpNow<u.cost)?'disabled':''}" data-ult-index="${i}" type="button"><span class="ult-thumb"><img src="${u.image}" alt=""><i>必</i></span><div><b>${u.name}</b><small>${u.desc} / CT ${base}ターン</small></div><em>${ready?`READY / MP ${u.cost}`:`CT ${cd}`}</em></button>`;}).join('')||'<div class="switch-guide">習得済みの必殺技はありません。</div>';bindImages(list);$$('[data-ult-index]',list).forEach(btn=>btn.onclick=async()=>{const i=Number(btn.dataset.ultIndex),u=a.ults[i];if(!availableUlts(a).includes(u))return;if(ultimateRemaining(a,i)>0)return notice(`あと${ultimateRemaining(a,i)}ターンで使用可能！`,'system');if(a.mpNow<u.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('ultimate',u,a))return;$('#skillMenu').hidden=true;act('ultimate',u);});
 }
 function battleItemCandidates(it){const all=state.battle?.allies||[];if(it.type==='revive')return all.filter(a=>a.dead||a.hp<=0);return all.filter(a=>!a.dead&&a.hp>0);}
 function battleItemCanUseOn(it,t){if(!it||!t)return false;if(it.type==='revive')return !!t.dead||t.hp<=0;if(t.dead||t.hp<=0)return false;if(it.type==='hp')return t.hp<t.maxHp;if(it.type==='mp')return t.mpNow<t.maxMp;if(it.type==='cure')return Number(t.status?.[it.status]||0)>0;if(it.type==='cureAll')return Object.values(t.status||{}).some(v=>Number(v)>0);if(it.type==='hpmp'||it.type==='full')return t.hp<t.maxHp||t.mpNow<t.maxMp;if(it.type==='battleBuff')return true;return false;}
@@ -8845,6 +8882,124 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
+
+
+
+
+/* ===== MOB QUEST v95: ARMOR RESTORE / DEMON CASTLE FIDELITY / UI READABILITY ===== */
+
+/* Armor is drop-only equipment. Dedicated tab restores a visible, direct equipment workflow. */
+function renderArmorEquipmentV95(){
+  if(!equipmentPlayerId||!player(equipmentPlayerId))equipmentPlayerId=state.party[0]?.[0]||'yusha';
+  const p=player(equipmentPlayerId),lv=currentPlayerLevel(p.id),eq=equipmentFor(p.id),root=$('#equipmentContent');
+  const owned=ARMORS.filter(a=>armorOwned(a.id)>0),cur=armorById(eq.armor);
+  root.innerHTML=`<section class="panel armor-equipment-v95">
+    <div class="section-title"><div><small>ARMOR / DROP EQUIPMENT</small><h2>防具</h2></div><span class="pill">所持 ${owned.reduce((n,a)=>n+armorOwned(a.id),0)} / ${ARMORS.length}種</span></div>
+    <p class="panel-note">防具はサブクエスト等のドロップで入手します。ショップ販売はありません。鍛冶屋では価格100%で売却できます。</p>
+    <div class="equipment-party-strip">${state.party.map(([id])=>{const q=player(id);return `<button class="${q.id===p.id?'active':''}" data-armor-player-v95="${q.id}" type="button"><img src="${versionedPlay(q.image)}" alt="${q.name}"><b>${q.name}</b></button>`;}).join('')}</div>
+    <div class="armor-current-v95"><div><small>${p.name} / Lv${lv}</small><h3>現在の防具</h3></div>${cur?`<button data-open-armor-picker-v95 type="button"><img src="${cur.image}" alt="${cur.name}"><span><b>${cur.name}</b><small>${armorStatsText(cur)}</small><em>${cur.traitLabel||'特性なし'}</em></span></button>`:`<button data-open-armor-picker-v95 type="button" class="empty"><i>＋</i><span><b>防具なし</b><small>所持防具から選択</small></span></button>`}</div>
+    <div class="armor-owned-grid-v95">${owned.length?owned.map(a=>{const equipped=eq.armor===a.id,free=freeArmorCount(a.id,p.id);return `<button data-equip-armor-v95="${a.id}" class="${equipped?'active':''} ${!equipped&&free<1?'disabled':''}" type="button" ${!equipped&&free<1?'disabled':''}><img src="${a.image}" alt="${a.name}"><div><small>${a.id}</small><b>${a.name}</b><em>${armorStatsText(a)}</em><p>${a.traitLabel||'特性なし'}</p><strong>所持 ${armorOwned(a.id)}${equipped?' / 装備中':` / 未装備 ${free}`}</strong></div></button>`;}).join(''):'<div class="camp-empty-note">まだ防具を所持していません。サブクエスト等で入手できます。</div>'}</div>
+  </section>`;
+  bindImages(root);
+  $$('[data-armor-player-v95]',root).forEach(b=>b.onclick=()=>{equipmentPlayerId=b.dataset.armorPlayerV95;renderArmorEquipmentV95();});
+  $('[data-open-armor-picker-v95]',root)?.addEventListener('click',()=>openWeaponPicker(p.id,'armor',0,renderArmorEquipmentV95));
+  $$('[data-equip-armor-v95]',root).forEach(b=>b.onclick=()=>{const id=b.dataset.equipArmorV95;if(eq.armor===id){eq.armor=null;}else{if(freeArmorCount(id,p.id)<1)return toast('この防具は他のメンバーが装備中です');eq.armor=id;}state.meta.equipment[p.id]=eq;saveMeta();renderArmorEquipmentV95();});
+}
+const _renderEquipmentV95Base=renderEquipment;
+renderEquipment=function(){if(equipmentTab==='armor'){ $$('.equipment-tab').forEach(b=>b.classList.toggle('active',b.dataset.equipmentTab==='armor')); $('#equipmentCoin').textContent=`${state.coins.toLocaleString()} G`; return renderArmorEquipmentV95(); }return _renderEquipmentV95Base();};
+
+/* Demon Castle opening: uploaded script, no dialogue abbreviation. */
+runDemonCastleArrivalStory=async function(){
+  await openStoryScene('demonCastle',0);
+  await storySay('pink','ここが魔王城でありますね・・！');
+  await storyShowGuest('boss-ace',{slow:true});
+  await storySay('boss-ace','まさか本当にここまで来るとはな');
+  await storySay('money','！？');
+  await storySay('jessie','モブエース！！');
+  await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');
+  await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');
+  await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');
+  await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');
+  await storySay('pink','なぜ魔王軍に！');
+  await storySay('denden','退屈だからでやんすか！？');
+  await storySay('boss-ace','退屈か\nそうであれば\nどれほど幸せだろな');
+  await storySay('money','はっきりとは覚えてないけど\n悪いやつではなかったはずよ！');
+  await storySay('boss-ace','そうか\n少しは覚えているのか');
+  await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');
+  await storySay('boss-ace','捨ててなどいない\nお前と同じだモブジェシー！');
+  await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');
+  await storySay('nekoku','オラ、みんなを守るぞ');
+  await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');
+  await storySay('denden','それでも戦うでやんす！！');
+  $('#storyScene').hidden=true;await startDemonAceStoryBattle();
+  await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});
+  await storySay('boss-ace','俺はまだ・・\n消えるわけにはいかない・・');
+  await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');
+  await storyNarrate('？？？「情けない」');
+  await storyShowGuests(['boss-ace','boss-maou-castle'],{slow:true});
+  const maou=$('[data-story-actor="boss-maou-castle"]',$('#storyGuestGroup'));if(maou)maou.classList.add('demon-maou-silhouette-v95');
+  await storySay('boss-maou-castle','我の側近が無様な姿を晒すとは');
+  await storySay('boss-ace','申し訳、、ありません・・');await storySay('pink','魔王であります！！');
+  await storySay('desert','こんなに早く出会うとはな');await storySay('boss-maou-castle','まあよい\n一度引き上げるぞ');
+  await storySay('jessie','逃がさないわよ！');await storyFlash();await storyImpact('バチィッ!!');await storySay('boss-ace','グッ・・・！');
+  await storySay('boss-maou-castle','随分と嫌われたようだな\n行くぞ');
+  await storyHideGuests();await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');
+  await storySay('desert','城内にいるはずだ\n先へ進むぞ！');
+};
+
+Object.assign(STORY_EVENTS,{
+  'pre:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','c-succubus']],['say','c-killwitch','我ら！'],['sayAs','c-succubus','リリス親衛隊！','モブララウィッチ'],['say','c-killwitch','モブキラウィッチ！'],['sayAs','c-succubus','モブララウィッチ！','モブララウィッチ'],['narrate','2人で「お命頂戴！」'],['say','denden','か、かっけえでやんす・・'],['say','nekoku','オラ、好きだ'],['say','money','何馬鹿な事言ってるの！\nこの2人相当強いわよ！'],['say','jessie','簡単には通してくれなさそうね'],['say','nyoro','早く倒してモブエースを追うニョロ！']
+  ]},
+  'post:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','c-succubus']],['sayAs','c-succubus','リリス様・・','モブララウィッチ'],['say','c-killwitch','申し訳、、ありません、、'],['guest','boss-lilith-castle'],['say','boss-lilith-castle','2人ともよく頑張ったね'],['say','boss-lilith-castle','もういいから\nゆっくり休んでね\nあとは僕に任せて'],['narrate','モブララウィッチとモブキラウィッチの身体が光り、ゆっくりモブリリスへ重なって消えていった。'],['hideGuests'],['guest','boss-lilith-castle'],['say','boss-lilith-castle','どうも勇者様\n引き返すならここが最後だよ'],['say','money','出たわね魔王軍 No.2！'],['say','jessie','薔薇の魔女、モブリリス・・！'],['say','boss-lilith-castle','ネオン街の魔女に保安官ね\n大人しくお家に帰る気はない？'],['say','pink','魔王を倒すまで\n僕たちは止まらないであります！'],['say','desert','薔薇の魔女がもう相手をしてくれるのか？'],['say','boss-lilith-castle','そんなわけないでしょ\nそこのピンクちゃん\n死相が出てるわ\n警告に来てあげただけ'],['say','pink','そんな脅し怖くないであります！'],['say','boss-lilith-castle','脅し？\n僕割と優しいんだけどね\nまあ\nせいぜい死なないことね'],['hideGuest'],['say','desert','死相など全員に出ている\n覚悟を決めて\n先へ進むぞ！']
+  ]},
+  'pre:demonCastle:1':{worldId:'demonCastle',area:1,steps:[
+    ['guestSlow','boss-gladi'],['say','boss-gladi','我・・見参！'],['say','desert','魔王軍 No.3の登場か'],['say','jessie','ゴールデンバレットの\nグラディモブ！'],['say','denden','撃ち合いなら負けないでやんす！'],['say','boss-gladi','エース\nララ\nキラ\nやつらを倒すとは\n賞賛に値するぞ'],['say','money','あなたもリストに加えてあげるわ！'],['say','boss-gladi','ネオン街の魔女\nお前に弾丸を撃ち込むこの時\n心待ちにしていたぞ'],['say','money','？\n私はあんたに恨みなんてないけど\nモブエースを助けるため\nそこを通してもらうわ！'],['say','boss-gladi','いいだろう\nどこからでもかかってくるがよい！'],['say','jessie','みんな気を付けて！\nやつの攻撃は通常攻撃で状態異常弾丸を使ってくる！\nかかったらすぐアイテムで回復するのよ！']
+  ]},
+  'post:demonCastle:1':{worldId:'demonCastle',area:1,steps:[
+    ['guest','boss-gladi'],['say','boss-gladi','グフッ・・'],['say','pink','我々の勝ちであります！'],['say','boss-gladi','我の負けだ・・\nだが\n魔王様には遠く及ばない\nネオン街の魔女よ\n二度もお前に敗れるとはな'],['say','money','さっきから何を言っているの？\n誰かと間違えてない？'],['say','boss-gladi','先へ進むがいい\nそして\n運命とどう戦うのか\nその答えを見せてくれ'],['say','denden','いい戦いだったでやんす！'],['say','boss-gladi','良い腕だったぞモブデンデン\nまたいずれどこかで・・'],['hideGuest'],['say','desert','残りはモブリリス、そして魔王だけだ'],['say','jessie','奥の手でもない限りはね'],['say','nekoku','オラ\n誰が相手でも戦う！'],['say','nyoro','魔王まであと少しニョロ！'],['say','pink','先へ進むであります！']
+  ]},
+  'pre:demonCastle:2':{worldId:'demonCastle',area:2,steps:[
+    ['guest','boss-lilith-castle'],['say','boss-lilith-castle','凄いね君たち\nグラディモブ\n強かったでしょ'],['say','desert','ああ\n強敵だった'],['say','boss-lilith-castle','まあ\n僕の方が強いんだけどね\nちょっとだけ寂しくなるな'],['say','money','あんたなんて\n私の魔法でぶっ飛ばしてやるわ！'],['say','boss-lilith-castle','ネオン街の魔女\n僕も手合わせしてみたかった\n良い機会ね'],['say','jessie','あなたを倒せば\nあとは魔王だけ！'],['say','boss-lilith-castle','うーん\nそれはどうだろう\n行ってみないと分からないよね\nまあ\n行けないんだけどね'],['guests',['c-lilith-hell','c-lilith-kirin','c-lilith-kufu','c-lilith-riva'],{raised:true}],['say','boss-lilith-castle','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん'],['say','pink','あれを全部相手は大変であります・・'],['say','desert','2手に分かれよう'],['say','denden','ナイスアイデアでやんす！'],['say','jessie','どう分かれるの？'],['say','riro','勇者様が\n決めればいいでス'],['say','denden','そうでやんすね！'],['say','money','リリスがいる方は3体\n戦力の分け方が大事ね！'],['narrate','パーティーを2つ作ってください\nAパーティー：モブリリス、モブヘルリリス、モブキリンリリス\nBパーティー：モブクフリリス、モブリヴァリリス'],['lilithSplit'],['say','nyoro','素晴らしい采配ニョロ！'],['say','desert','では、まずBパーティーの出陣だ！']
+  ]},
+  'post:demonCastle:2':{worldId:'demonCastle',area:2,steps:[
+    ['guest','boss-lilith-castle'],['say','boss-lilith-castle','僕の負けだね\nいいソウルを持ったチーム\nでも僕は特別なんだ'],['say','money','なによ！まだやる気！？'],['say','boss-lilith-castle','そんなつもりないよ\n今はね\n代わりに良い話を聞かせてあげよう'],['say','denden','笑える話でやんすか？'],['say','boss-lilith-castle','かもね'],['say','desert','あまり時間はないのだが\n薔薇の魔女からの話\n興味はあるな'],['say','boss-lilith-castle','聞いてどうするかは\n君たち次第だけどね'],
+    ['say','boss-lilith-castle','モブネオンキングがネオン街を治めていた頃\n魔王様からネオン街を支配するよう命令が下った\nネオン街に隠されている「ある秘宝」を手に入れるため\nグラディモブ モブドラゴン ミラモブ\n最高のメンバーでネオン街へ向かった'],
+    ['say','boss-lilith-castle','ネオン街の王はモブドラゴンと互角\n気高い戦士だったけど兵力が違う\n魔王軍からしてみれば簡単な任務だった\nでも\nそんな時1人の魔女が現れた'],
+    ['say','boss-lilith-castle','その魔女は数々のボスを一瞬で倒し\nグラディモブすら寄せ付けなかった\nしかし\n魔女は暴走しネオン街の王を攻撃した\n魔王軍は撤退し\nネオン街と魔女の戦いになる'],
+    ['say','boss-lilith-castle','長い長い戦いの果て\nネオン街の戦士達によって\nついに魔女は封印された\nそれが\nある町の消滅と共に封印が解かれた\nそして今\n本来の力を失い勇者と旅をし\n僕の目の前にいる'],
+    ['say','boss-lilith-castle','そう君だよ\nネオン街の魔女\nモブマニー'],['say','money','私が、王を・・？'],['say','jessie','そんなはずは無い！\nモブマニーは魔王に封印された！\n私はこの目で見た！'],['say','desert','どういうことだ？'],['say','boss-lilith-castle','僕の話はここまで\nあとは魔王様にでも聞くんだね\n君たちとはまた会う気がするよ\nまたね'],['hideGuest'],['say','money','私が、、'],['say','denden','気にすることないでやんす！\nもし魔女だとしても\n今は優しくて強い\n勇者パーティーのモブマニーでやんす！'],['say','nyoro','そうだニョロ！'],['say','nekoku','オラ、モブマニー好き\n大事な仲間'],['say','pink','言いたいこと\n全部言われたであります'],['say','jessie','モブマニー\n今のあなたが本当のあなたよ'],['say','money','・・・ありがとう'],['say','desert','さあ最終決戦だ\n魔王の元へ行くぞ！']
+  ]}
+});
+
+/* Full AREA4 reveal / Dark Money script from the uploaded Demon Castle source. */
+demonFinalPreV89Final=async function(){
+  await openStoryScene('demonCastle',3);await storyShowGuests(['boss-maou-castle','boss-ace'],{slow:true});
+  await storySay('boss-maou-castle','そろそろ回復したであろう\n立て');await storySay('boss-maou-castle','モブリリスがやられた\n我が軍は私とお前だけだ');await storySay('boss-ace','なんと、、');
+  await storySay('boss-maou-castle','だが、終わりでは無い\n勇者を滅ぼし\n新たな軍勢を作る');await storySay('boss-ace','では、現状援軍などは無いと？');await storySay('boss-maou-castle','不要であろう\n私とお前がいる');await storySay('boss-ace','そうか');
+  await storySay('boss-ace','この日をどれほど夢見たことか\n力を得て\nお前の側近となり\n討伐する\nこの日を！！');await storySay('boss-maou-castle','・・・・');await storySay('boss-ace','俺はネオン街の戦士\nモブエース\nお前を倒すチャンスを\nずっと伺っていた');
+  await storySay('boss-maou-castle','この状況がチャンスだと？');await storySay('boss-ace','長年お前を見てきた\n闘い方、癖、仲間の強さ\n1対1なら\n今の俺なら勝てる!!');await storySay('boss-maou-castle','言いたいことはそれだけか？\nならば\n早く攻め入るが良い\n先に攻撃させてやる');await storySay('boss-ace','その油断が、お前の命取りだ！');
+  await storyDarkBattlePulse();await fixedDelay(900);await storySay('boss-maou-castle','もう終わりか？');await storySay('boss-ace','はあ、はあ、\n化け物め・・');await storySay('boss-maou-castle','化け物か\n悪くない響きだ');await storySay('boss-ace','くそ、、\nこんなはずでは');
+  await storySay('boss-maou-castle','お前は最初から間違えている\nやつは\n世界を滅ぼす\nお前などが\n何をやったところで\n結果は変わらない');await storySay('boss-ace','・・意味ならあるさ\n必ず・・！！');await storySay('boss-maou-castle','お前の働きには感謝しているぞ\n安らかに眠れ');await storySay('boss-ace','あとは任せたぞ・・');
+  await storyHideGuests();await storyShowGuest('boss-maou-castle',{slow:true});await storySay('money','モブエース！？');await storySay('boss-maou-castle','一足遅かったな');await storySay('jessie','モブエース・・');await storySay('desert','仲間割れか？');await storySay('tetsu','腐っているでござる・・！');await storySay('nyoro','仲間を手にかけるなんて');await storySay('denden','血も涙もないでやんす！');
+  await storySay('boss-maou-castle','仲間だと？\nハハハッ！こいつがか？\n笑わせるな');await storySay('jessie','それ以上モブエースを侮辱してみなさい\n後悔させてやるわ');await storySay('money','モブジェシー？');await storySay('boss-maou-castle','先代モブネオンキング\nモブエース\nあとは、お前達だけだな');await storySay('money','どういうこと？');await storySay('desert','何か秘密がありそうだな');await storySay('pink','僕たちを惑わそうとしているであります!!');
+  await storySay('boss-maou-castle','ネオン街での戦いは\n2つの心を持つ魔女によって終結された\n王の息子と娘が魔女を封印し\n封印が解かれる日まで\n長年見守り続けてきた');await storySay('nekoku','・・思い出した\nネオン街の悪夢\n国王様から聞いたことがある');await storySay('money','私は\nあんたに封印されたはず・・！');await storySay('boss-maou-castle','私に見覚えがあるか？');await storySay('money','それは・・');await storySay('boss-maou-castle','モブジェシー、お前はどうだ？');await storySay('jessie','私は・・！');
+  await storySay('boss-maou-castle','全て教えてやろう\nモブジェシー、モブエース\nお前たちはネオン街の王\nモブネオンキングの子息だ\nそして\nモブマニーは\nネオン街に突如現れ\n王に娘として育てられた魔女');await storySay('pink','2人は姉妹ということでありますか!?');await storySay('boss-maou-castle','モブジェシー、モブエースは\n命をかけてモブマニーを封印し\n記憶を改ざんしようとした\n封印はうまくいったが\n様々な記憶にノイズを入れることなったのだ');await storySay('desert','噛み合わなかったのはそのためか');
+  await storySay('jessie','それがなんだというの？\nモブマニーは大切な妹で心強い仲間\n何も変わらない！');await storySay('boss-maou-castle','お前たちはそうであろうな\nだが\nモブマニー、お前はどうだ？\nネオン街を半壊し王を消した魔女\nどんな気分だ？');await storySay('money','・・・・');await storySay('desert','答えなくていい\nお前は俺たちの仲間だ\nどうなっても変わらない');await storySay('boss-maou-castle','どうなっても、か');await storySay('nyoro','分からないニョロ・・\nこんな話をして\n魔王になんのメリットがあるニョロ？');await storySay('denden','そうでやんす\nこの程度じゃ僕たちは揺るがないでやんす！');await storySay('boss-maou-castle','下等な生き物は察しがいいな');await storySay('riro','鍵・・ネ');await storySay('pink','鍵？');await storySay('boss-maou-castle','ほうさすがだなサクラ一族');await storySay('riro','モブマニーは異世界への扉を開く最後の鍵');await storySay('jessie','どういうこと？');await storySay('pink','・・・・！');await storySay('pink','モブマニーが\n最後のレコード・・？');
+  await storySay('boss-maou-castle','その通り\nお前たちに易々とレコードを渡したのは\n全てのレコードを1か所に集結させるため\nモブマニーを手にし\n我ら魔王軍は異世界へと侵略する');await storySay('jessie','それがお前の野望・・！');await storySay('pink','そんなこと絶対にさせない！');await storySay('boss-maou-castle','おしゃべりはここまでだ\nこの魔法を発動するまで\n良い時間稼ぎになった\n「魔力解放の陣」');await storySay('money','うわああああああ！！！！');await storyFlash();await storyHideGuest();await storyShowGuest('boss-yami-money',{slow:true});await storySay('jessie','モブマニー・・？');await storySay('boss-yami-money','私はモブマニー\n闇の魔女\nモブマニー');await storySay('jessie','そんな・・！');await storySay('boss-maou-castle','さあ、どんな風に踊ってくれるのだ？\nいずれまた会おう\n勇者と仲間達よ');
+  await storySay('desert','魔力が巨大すぎる！一度退くぞ！');await storySay('denden','急ぐでやんす！');await storySay('pink','ここで逃げたら\nモブマニーは元に戻らないかもしれない！\n戦うべきであります！');await storySay('boss-yami-money','私は全てを滅ぼす存在\n勇者よ、覚悟!!');await storySay('jessie','戦わないで！');await storySay('riro','モブジェシー危なイ！');await storySay('tetsu','下がるでござる！');await storyFlash();await storyImpact('ズドン!!');await storySay('jessie','うっ・・');await storySay('nyoro','まともに当たったニョロ！\n早く手当てをしないと！');await storySay('desert','いや、これは・・');await storySay('denden','そんな、、');await storySay('pink','僕に任せるであります');await storySay('denden','何をする気でやんす！？');
+  await storySay('pink','僕たち王国の兵士には\n自身の生命エネルギーを\n他者に与える力があります');await storySay('nyoro','ニョロ！？');await storySay('desert','馬鹿な真似はよせ！');await storySay('pink','80年であります');await storySay('nekoku','・・・・');await storySay('pink','モブマニーが自らを封印し\n前ネオン街の王が闇に消えてから\n80年であります');await storySay('desert','80年・・');await storySay('pink','その間\nモブジェシーは・・\nモブジェシーとモブエースは\nずっと\nずっと\n戦い続けたのであります\n守り続けたのであります\n大切な妹を！');await storySay('pink','僕たち兵士はいくらでも代わりがいる！\n僕たちは所詮モブキャラだから！\nでも!!\nみなさんは違います・・\n勇者様\nお供できて\n光栄でした！');
+  await storyFlash();await storySay('jessie','ん・・');await storySay('tetsu','モブジェシー！');await storySay('pink','気が付いたでありますか！？');await storySay('boss-yami-money','（みんな聞こえる！？）');await storySay('denden','モブマニーでやんす！');await storySay('nyoro','聞こえるニョロ！');await storySay('boss-yami-money','（私は大丈夫だから、）\n（遠慮なくぶっ飛ばして！）');await storySay('desert','そういうことなら任せろ');await storySay('pink','必ず助けるであります！');await storySay('jessie','信じるよ！');
+};
+
+demonFinalPostV89Final=async function(){
+  await openStoryScene('demonCastle',3);await storyShowGuest('money',{slow:true});await storySay('jessie','モブマニー！');await storySay('pink','無事でありますか！？');await storySay('denden','返事するでやんす！');await storySay('money','・・・・\n・・・・\n・・・・\nうわ！');await storySay('desert','気が付いたか！');await storySay('nyoro','良かったニョロ～！！');await storySay('nekoku','オラ、嬉しい！');await storySay('tetsu','そなたは最高のサムライでござる！');await storySay('riro','本当に良かっタ・・');await storySay('jessie','闇に勝ったのね');await storySay('money','う～ん\n友達になった！');await storyNarrate('パーティーみんな「え！？」');await storySay('money','あの子はあの子で大変そうでさ\nここまで来たら友達になろうって！');await storySay('desert','あの力が使えるのか？');await storySay('money','うん！私もっと強くなったよ！');await storySay('nyoro','心強いニョロ～！');await storySay('tetsu','また手合わせ願いたいでござるなー');await storySay('nekoku','！\n何か落ちてるぞ？');await storySay('desert','これは、、レコード！');
+  await storyNarrate('7枚目のレコード\n「読みかけの本」を手に入れた！');state.meta.moneyFriendsUnlocked=true;state.meta.record7Obtained=true;saveMeta();
+  await storySay('money','なんか\n私の友達が持ってたみたいね');await storySay('pink','7枚揃ったであります！\n王様に報告しましょう！');await storySay('money','待って！\nみんな\n・・・・\nありがとう！');await storyNarrate('モブマニーは新必殺技を覚えた！\n新必殺技「マニーフレンズ」\nヤミモブマニーに変身し、全てのステータス20%アップ\nさらに状態異常耐性を20%アップ、魔法会心率を10%アップする\n戦闘終了後、解除される');
+};
+
+/* ===== END MOB QUEST v95 ===== */
 
 
 </script>

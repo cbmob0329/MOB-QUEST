@@ -1,0 +1,12 @@
+MOB QUEST v95 REGRESSION CHECKLIST
+
+- Base is v94.
+- v94 Reading Book fixes preserved.
+- v93 Record Room / camp abandon / sequential subquest fixes preserved.
+- Armor tab visible; Armor 01-67 remain registered.
+- Armor drop/equip/effects/inventory/100% sale paths present.
+- Demon Castle final overrides are after v94, so they are the runtime definitions.
+- Tavern facilities are icon-only; existing figure unlock/hide logic unchanged.
+- Demon Castle exploration = dark red-purple / white text.
+- Ultimate battle list renders only availableUlts().
+- Castle menu labels have white banners.
