@@ -1,0 +1,20 @@
+MOB QUEST v89 ROOT CAUSE REPORT
+
+症状
+- スマホ：真っ暗
+- PC：タイトル背景画像だけ表示し、ゲーム操作不可
+
+原因
+1. v88のcreateTitleV88()がタイトル画面を#app外のdocument.body直下へ生成していた。
+2. v88 CSSに.title-screen-v88 / .title-ui-v88 / .title-bg-v88のレイアウト定義が存在しなかった。
+3. bodyはheight:100%かつoverflow:hidden。無スタイルの大きいタイトル画像が通常フローに置かれ、NEW GAME / CONTINUE / 設定が画像の下＝画面外へ押し出された。
+4. PCでは画像が読み込めるため「画像だけ」に見え、スマホでは画像の表示条件によって暗いbody背景だけが残り「真っ暗」に見えた。
+5. v88はCSS/JSを外部ファイル読込へ戻しており、GitHub Pagesや端末キャッシュでHTML・CSS・JSのバージョンがずれる余地があった。
+
+修正
+- タイトル画面を#app内へ生成。
+- スマホ/PC共通のタイトル専用CSSを追加。
+- NEW GAME / CONTINUE / 設定を常にviewport内へabsolute固定。
+- タイトル画像またはロゴが読み込めなくても操作UIとMOB QUEST文字が残るfallbackを追加。
+- CSS / data.js / game.jsをindex.htmlへ再内蔵し、コードの更新ズレを防止。
+- v89へ更新。

@@ -1,0 +1,31 @@
+MOB QUEST v89 REGRESSION REPORT
+
+RESULT: PASS
+- PASS: v89 game version
+- PASS: v89 title label
+- PASS: title appended in app
+- PASS: title CSS exists
+- PASS: title hidden rule
+- PASS: missing logo fallback
+- PASS: index inline css
+- PASS: index inline js
+- PASS: boot ready
+- PASS: opening whole-screen tap
+- PASS: battle dialogue tap wait
+- PASS: skill fade 0.70s
+- PASS: subquest sequential
+- PASS: subquest clear persistence
+- PASS: adventure abandon
+- PASS: castle preload/deferred
+- PASS: book world
+- PASS: demon castle ii
+- PASS: first grass rescue twice
+- PASS: 12 party persistence
+- PASS: armor support
+- PASS: weapon support
+- PASS: five enemy support
+- PASS: css braces
+- PASS: inline CSS parity
+- PASS: inline JS parity
+
+Browser: mobile 390x844 / desktop 1280x900. BOOT READY, title visible, NEW GAME in viewport, pageerror 0, NEW GAME enters opening caption.

@@ -1,0 +1,12 @@
+MOB QUEST v89 BOOT REGRESSION CHECKLIST
+
+- タイトル画面は#app内に置く。
+- タイトル背景画像の自然サイズでUIを押し出さない。
+- NEW GAME / CONTINUE / 設定はスマホviewport内に固定。
+- タイトル画像/ロゴが404でも操作UIを隠さない。
+- index.htmlへCSS/data/gameを内蔵し、HTML/JS/CSSの版ズレを防止。
+- スマホ390x844とPC1280x900で起動する。
+- NEW GAME押下でオープニングへ進む。
+- pageerror / ReferenceError / TypeError / SyntaxErrorを0件にする。
+- v88の戦闘台詞タップ送り、オープニング全画面タップ、技フェード0.70秒を維持。
+- v88のサブクエスト、冒険ロールバック、城遷移、読みかけの本、魔王城Ⅱを維持。

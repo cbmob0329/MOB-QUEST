@@ -1,0 +1,12 @@
+MOB QUEST v89 導入について
+
+このZIPはv88 COMPLETEを修正したコード更新一式です。
+既存GitHubリポジトリ内の画像・音声素材フォルダ（back / back2 / play / enemy / boss / icon / mqicon / skill / ult / bogu / buki / music 等）は削除せず、そのまま残してください。
+
+上書き対象:
+- index.html
+- css/style.css
+- js/data.js
+- js/game.js
+
+v89のindex.htmlにはCSS/data/gameも内蔵しているため、ブラウザ側で外部CSS/JSだけ古い版を掴んで起動不能になる問題を防いでいます。
