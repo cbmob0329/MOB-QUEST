@@ -1,25 +1,31 @@
-MOB QUEST v91 - POSTGAME GATE STABLE
+MOB QUEST v92 - BOOK FIDELITY / BATTLE UI STABLE
 
 BASE
-- MOB-QUEST-playable-core-v90-CLIMAX-FIDELITY-STABLE.zip
-- v90 stable boot/title/HOME/castle/subquest/equipment/weapon/tap interaction and climax code retained.
+- MOB-QUEST-playable-core-v91-POSTGAME-GATE-STABLE.zip
+- v91のタイトル / HOME / お城 / 冒険 / 装備 / サブクエスト / クリア後ゲートを維持。
 
-v91 CHANGES
-- Implemented the post-game OTHER WORLD entrance that the ending already announced.
-- After game clear, the Record Room changes from LOCKED to OTHER WORLD and opens an Other World hub.
-- Added the canonical post-game index for "影の国の冒険日記":
-  1. 影の世界 / 2. 影の城 / 3. 桃屋敷 / 4. 影の秘密 / 5. 影とヒカリ.
-- Added the canonical boss/midboss/join index for the five Shadow chapters.
-- Added the canonical "落ちた英雄" five-world index and listed its specified bosses/midbosses.
-- Added "アンティークワールド" and "神の書" to the Other World hub without inventing missing battle data.
-- Implemented the post-game EVENT QUEST entry in Training. It appears only after game clear (or test mode).
-- Event Quest individual battles remain DATA WAIT because the supplied canonical files do not yet define their enemy/reward data.
-- Kept the actual Lv120 cap unlock already working in v90 and surfaced LEVEL CAP 120 in the post-game UI.
-- Fixed a v90 duplicate-function regression: the shortened final King-room report could override the complete version. v91 pins the full canonical report as the final runtime definition.
-- Added the missing final-report lines "どういうことでありますか？" and "異世界！？" from the latest script.
-- Castle Record Room menu label now changes dynamically: LOCKED -> BOOK -> OTHER WORLD.
+v92 修正
+1. 「読みかけの本.txt」を基準に、読みかけの本ルートを台詞省略なし方向へ復元。
+   - 魔王城報告 → 7枚のレコード → レコードルーム → 読みかけの本出現
+   - 本の世界到着
+   - AREA 1～4 前後イベント
+   - 勇者ダウン / 黒塗り
+   - あのヒーロー変身（パーティー画像も play/13.png）
+   - モブナビの正体説明
+   - 勇者単独3ターン戦
+   - モブナビマスター前の実パーティー編成
+   - 戦闘後の仲間加入 / 新必殺技 / レコードルーム帰還 / 王様の台詞
+2. 変身能力の数値説明ナレーションを削除（原文仕様「ナレーションなど説明不要」）。
+3. 読みかけの本の敵画像を個別スケール＋最大サイズ上限で縮小。
+4. 魔王城 / 魔王城II のモブリリス敵画像を縮小（旧 1.18 → v92 0.64 + 上限）。
+5. 特技ボタンを他の戦闘ボタンと同一ボックス / 同一アイコン占有率へ統一。
+6. 必殺技CTが 0 になった瞬間に「必殺技CTが溜まった！」演出を表示。
+7. 会心表示を中央バナーから廃止。
+   - 敵の位置に「会心の一撃！」
+   - その直下に会心ダメージ数値
+8. 読みかけの本の「あのヒーロー」は通常攻撃だけでなく魔法・特技・単体攻撃型必殺も全体攻撃化。
+9. GAME_ASSET_VERSION を 92 に更新。
 
-STABILITY POLICY
-- Built directly from v90 CLIMAX FIDELITY STABLE.
-- No title boot rewrite, HOME layout replacement, battle core replacement, or save-key migration.
-- Unknown post-game enemy stats/rewards were not fabricated.
+NOTES
+- 添付アセットフォルダは従来どおりこのコードZIPには含めていません。
+- v91セーブキーは変更していません。v91からそのまま継続できます。

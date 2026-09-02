@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=89;
+const GAME_ASSET_VERSION=92;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -2428,7 +2428,7 @@ async function beginBattle(config){
   const enemies=buildEnemyWave(waveConfigs.shift()||[],partySize,bg,fallbackBg);const first=enemies[0];
   state.battle={mode:config.mode||'training',returnScreen:config.returnScreen||'training',allies,mainIds:allies.slice(0,4).map(a=>a.id),superIds:allies.slice(4,6).map(a=>a.id),reserveIds:allies.slice(6,10).map(a=>a.id),enemies,enemy:first,targetEnemyId:first?.uid||null,actingEnemyId:null,pendingWaveConfigs:waveConfigs,defeatedEnemies:[],turn:1,queue:[],queuePos:0,busy:false,auto:!!state.autoBattle,finished:false,criticalCtReducedThisAction:false,teamGuard:0,teamGuardTurns:0,yushaGuard:0,yushaGuardTurns:0,config,bg,fallbackBg};
   const neonBattle=/ネオン街/.test(String(config.adventureLabel||currentWorld()?.name||''));if(neonBattle)for(const a of allies){const rate=Number(a.figureEffects?.allStatPercent||0);if(rate>0){const hpRatio=a.maxHp?a.hp/a.maxHp:1,mpRatio=a.maxMp?a.mpNow/a.maxMp:1;for(const k of ['maxHp','maxMp','atk','mag','def','res','spd'])a[k]=Math.round(a[k]*(1+rate));a.hp=Math.max(1,Math.round(a.maxHp*hpRatio));a.mpNow=Math.round(a.maxMp*mpRatio);}}
-  if(config?.bookHeroPower){const y=allies.find(x=>x.id==='yusha');if(y){y.dead=false;y.hp=y.maxHp;y.mpNow=y.maxMp;y.transformed=true;y.allBuff=.20;y.allBuffTurns=99;y.bookHeroDamageCut=.70;y.bookHeroDamageBoost=.50;y.bookHeroStatusImmune=true;y.bookHeroNormalAoe=true;y.bookHeroCrit100=true;}}
+  if(config?.bookHeroPower){const y=allies.find(x=>x.id==='yusha');if(y){y.dead=false;y.hp=y.maxHp;y.mpNow=y.maxMp;y.transformed=true;y.allBuff=.20;y.allBuffTurns=99;y.bookHeroDamageCut=.70;y.bookHeroDamageBoost=.50;y.bookHeroStatusImmune=true;y.bookHeroNormalAoe=true;y.bookHeroAllAoe=true;y.bookHeroCrit100=true;}}
   state.noticeQueue=[];state.noticeBusy=false;setImage($('#battleBg'),bg,fallbackBg);$('#battleModeLabel').textContent=config.mode==='adventure'?(config.bossBattle?'BOSS / MID BOSS':'FIELD BATTLE'):config.mode==='story'?'EVENT BATTLE':config.mode==='quest'?'TRAINING QUEST':'TRAINING';$('#resultOverlay').hidden=true;$('#skillMenu').hidden=true;$('#autoBtn').classList.toggle('active',!!state.autoBattle);$('#autoBtn').textContent=state.autoBattle?'AUTO ON':'AUTO';$('#speedBtn').textContent=`×${state.speed}`;$('#battleBackBtn').disabled=config.mode==='story';$('#battleBackBtn').style.display=(config.mode==='training'?'':'none');renderBattle();showScreen('battle');await actionCutin(`${enemies.map(e=>e.name).join('・')}が現れた！`,'danger',1000);await fixedDelay(100);startRound();
 }
 
@@ -2925,20 +2925,20 @@ async function performMagic(a,skill=null,auto=false){
   if(a.mpNow<(free?0:cost)){notice('MPが足りない！','danger');return false;}if(!free)a.mpNow-=cost;else notice('武器特性 / 消費MP 0！','buff',520);
   const magicReady=preloadAssets(chosen.frames||[]);await actionCutin(`${a.name}の${chosen.name}！`,'system',620);await magicReady;const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element};
   try{
-    if(chosen.target==='all'||(a.figureEffects||figureEffectsFor(a.id)).magicAoe){await skillSprite(chosen.frames,'enemy-all',chosen.mode);await playerAoeDamage(a,chosen.power,'magic',0);}
+    if(chosen.target==='all'||a.bookHeroAllAoe||(a.figureEffects||figureEffectsFor(a.id)).magicAoe){await skillSprite(chosen.frames,'enemy-all',chosen.mode);await playerAoeDamage(a,chosen.power,'magic',0);}
     else{const targetBefore=targetEnemy();await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power,'magic');const darkHeal=weaponDarkMagicHitHeal(a);if(darkHeal>0&&String(targetBefore?.attribute||'').includes('闇')&&!a.dead){const h=heal(a,darkHeal);if(h)notice(`武器特性 / HP +${h}`,'heal',520);}const rep=weaponFollowupSpec(a,'magicFollowup',element);if(rep.chance>0&&targetEnemy()?.hp>0&&Math.random()<rep.chance){notice('武器特性 / 追撃魔法！','buff',520);await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power*(rep.power||.5),'magic');}if(a.id==='jessie'&&element==='雷'&&targetEnemy()?.hp>0&&passiveChance(.50)){await passiveBeat(a,'ダブルサンダー！');await skillSprite(chosen.frames,'enemy',chosen.mode);applyEnemyDamage(a,chosen.power*.9,'magic');await fixedDelay(600);}}
   }finally{state.battle.weaponAttackContext=prev;}await delay(auto?260:360);return true;
 }
 function temporaryTechnique(a){const w=String(weaponCombatType(a)||a.weapon||'');if(w.includes('大剣'))return{name:'大剣・強斬り',cost:4,power:1.14};if(w.includes('太刀'))return{name:'太刀・疾風斬り',cost:4,power:1.12};if(w.includes('槍'))return{name:'槍・貫通突き',cost:4,power:1.10};if(w.includes('銃'))return{name:'ガンラッシュ',cost:4,power:1.10};if(w.includes('杖'))return{name:'スタッフブロウ',cost:3,power:1.06};return{name:'特殊攻撃',cost:3,power:1.08};}
 async function performSpecial(a,tech=null){
   const t=tech?.id?tech:temporaryTechnique(a),cost=Math.max(0,Math.ceil((t.cost||0)*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;await actionCutin(`${a.name}の${t.name}！`,'system',600);
-  if(t.kind==='status'){await skillSprite(t.frames||[],'enemy',t.mode);const e=targetEnemy();if(e){const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:normalizeElement(t.element||'無')};try{applyEnemyDamageTo(a,e,t.power||1.20,'physical',TEMP_BALANCE.critRate,false);}finally{state.battle.weaponAttackContext=prev;}if(e.hp>0&&applyEnemyStatusTo(e,t.status,t.chance||.60,t.status==='stun'?1:3))notice(`${e.name}は${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]||'状態異常'}になった！`,'status',720);else if(e.hp>0)notice('状態異常は効かなかった！','system',520);}}
-  else if(t.id){await skillSprite(t.frames||[],'enemy',t.mode);const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:normalizeElement(t.element||'無')};try{applyEnemyDamage(a,t.power||1,'physical',TEMP_BALANCE.critRate,false);}finally{state.battle.weaponAttackContext=prev;}}
-  else{await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);}await delay(340);return true;
+  if(t.kind==='status'){const all=!!a.bookHeroAllAoe&&livingEnemies().length>1;await skillSprite(t.frames||[],all?'enemy-all':'enemy',t.mode);const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:normalizeElement(t.element||'無')};try{if(all)await playerAoeDamage(a,t.power||1.20,'physical',TEMP_BALANCE.critRate,t.status,t.chance||.60,t.status==='stun'?1:3);else{const e=targetEnemy();if(e){applyEnemyDamageTo(a,e,t.power||1.20,'physical',TEMP_BALANCE.critRate,false);if(e.hp>0&&applyEnemyStatusTo(e,t.status,t.chance||.60,t.status==='stun'?1:3))notice(`${e.name}は${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]||'状態異常'}になった！`,'status',720);else if(e.hp>0)notice('状態異常は効かなかった！','system',520);}}}finally{state.battle.weaponAttackContext=prev;}}
+  else if(t.id){const all=!!a.bookHeroAllAoe&&livingEnemies().length>1;await skillSprite(t.frames||[],all?'enemy-all':'enemy',t.mode);const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:normalizeElement(t.element||'無')};try{if(all)await playerAoeDamage(a,t.power||1,'physical',TEMP_BALANCE.critRate);else applyEnemyDamage(a,t.power||1,'physical',TEMP_BALANCE.critRate,false);}finally{state.battle.weaponAttackContext=prev;}}
+  else{await weaponElementAttackFx(a,{quick:true});if(a.bookHeroAllAoe&&livingEnemies().length>1)await playerAoeDamage(a,t.power,'physical',TEMP_BALANCE.critRate);else applyEnemyDamage(a,t.power,'physical',TEMP_BALANCE.critRate,false);}await delay(340);return true;
 }
 async function performUltimate(a,u){if(Number(a.ultLockedTurns||0)>0){notice('必殺技が封印されている！','danger');return false;}const ui=a.ults.indexOf(u);if(ui<0||ultimateRemaining(a,ui)>0){notice('必殺技のCTが溜まっていません！','danger');return false;}const cost=Math.max(0,Math.ceil(u.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8))));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;if(!Array.isArray(a.ultCooldowns))initUltimateCooldowns(a);a.ultCooldowns[ui]=ultimateEffectiveCt(a,u,ui);persistUltimateCooldownsFromBattle();const prevAttackContext=state.battle.weaponAttackContext;state.battle.weaponAttackContext={...(prevAttackContext||{}),normal:false,sure:!!u.sure,element:u.attackElement||normalizeElement(a.attribute)};let total=0,r,lastHitEnemy=null;
   try{await ultimateCutin(a,u);await playUltimatePostAnimation(a,u);
-  const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(240);return r;};
+  const hit=async(power=u.power,type=u.type||'physical',crit=u.crit||0)=>{const e=targetEnemy();lastHitEnemy=e;if(a.bookHeroAllAoe&&livingEnemies().length>1){const x=await playerAoeDamage(a,power,type,crit);r={value:x,crit:false,aoe:true};total+=x;}else{r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;}await delay(240);return r;};
   const hitEnemy=async(e,power=u.power,type=u.type||'physical',crit=u.crit||0)=>{lastHitEnemy=e;r=applyEnemyDamageTo(a,e,power,type,crit);total+=r.value;await delay(220);return r;};
   const aoe=async(power=u.power,type=u.type||'physical',crit=u.crit||0,status='',chance=0,turns=3)=>{const x=await playerAoeDamage(a,power,type,crit,status,chance,turns);total+=x;return x;};
   const allEnemyDebuff=(key,value,turns=3)=>{for(const e of livingEnemies()){e[key]=value;e[`${key}Turns`]=turns;}};
@@ -4187,6 +4187,215 @@ finalEndingV89Final=async function(){
   state.meta.gameCleared=true;state.meta.eventQuestUnlocked=true;state.meta.otherWorldUnlocked=true;state.meta.postgamePortalVisited=false;saveMeta();await fixedDelay(3000);await showTitle();
 };
 /* ===== END MOB QUEST v91 ===== */
+
+/* ===== MOB QUEST v92: BOOK SCRIPT FIDELITY / SCALE / BATTLE FEEDBACK ===== */
+
+/* Book-world and Mob Lilith art were oversized in both story scenes and battle.
+   Use source-pixel scaling, but keep these authored characters inside the same visual range as the party. */
+const _enemyVisualTuneV92Base=enemyVisualTune;
+enemyVisualTune=function(e){
+  const id=e?.id||e?.enemyTemplate?.id||'';
+  const name=e?.name||e?.enemyTemplate?.name||'';
+  if(/^book-/.test(id)){
+    if(id==='book-minion'||id==='book-captain')return{scale:.76,y:4};
+    if(/^book-exec-/.test(id))return{scale:.70,y:3};
+    return{scale:.62,y:3};
+  }
+  if(id==='boss-lilith-castle'||id==='dc2-lilith'||name==='モブリリス')return{scale:.64,y:4};
+  return _enemyVisualTuneV92Base(e);
+};
+const _applyStoryGuestNaturalSizeV92Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  _applyStoryGuestNaturalSizeV92Base(holder,img,info,opt);if(!holder||!img)return;
+  const id=info?.enemyTemplate?.id||info?.id||'',name=info?.enemyTemplate?.name||info?.name||'';if(!(/^book-/.test(id)||id==='boss-lilith-castle'||id==='dc2-lilith'||name==='モブリリス'))return;
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;const minor=/^book-(minion|captain|exec)/.test(id),multi=!!opt?.multi;
+  const maxW=scene.width*(multi?(minor?.20:.24):(minor?.34:.43)),maxH=scene.height*(minor?.24:.34),r=img.naturalWidth>0&&img.naturalHeight>0?img.naturalWidth/img.naturalHeight:1;
+  let w=Math.min(parseFloat(holder.style.width)||maxW,maxW),h=Math.min(parseFloat(holder.style.height)||maxH,maxH);if(w/h>r)w=h*r;else h=w/r;holder.style.setProperty('width',`${Math.max(1,Math.round(w))}px`,'important');holder.style.setProperty('height',`${Math.max(1,Math.round(h))}px`,'important');
+};
+const _applyEnemyVisualSizesV92Base=applyEnemyVisualSizes;
+applyEnemyVisualSizes=function(root=$('#enemyArea')){
+  _applyEnemyVisualSizesV92Base(root);if(!root)return;
+  const clampV92=()=>$$('[data-enemy-target]',root).forEach(unit=>{const e=enemyByUid(unit.dataset.enemyTarget),id=e?.id||'',name=e?.name||'';if(!(/^book-/.test(id)||id==='boss-lilith-castle'||id==='dc2-lilith'||name==='モブリリス'))return;const img=$('.enemy-sprite',unit);if(!img||!(img.naturalWidth>0&&img.naturalHeight>0))return;const field=$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};const minor=/^book-(minion|captain|exec)/.test(id),maxW=(fr.width||440)*(minor?.25:.46),maxH=(fr.height||360)*(minor?.38:.56),r=img.naturalWidth/img.naturalHeight;let w=Math.min(parseFloat(img.style.width)||maxW,maxW),h=Math.min(parseFloat(img.style.height)||maxH,maxH);if(w/h>r)w=h*r;else h=w/r;img.style.setProperty('width',`${Math.max(1,Math.round(w))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(h))}px`,'important');});
+  clampV92();requestAnimationFrame(clampV92);$$('.enemy-sprite',root).forEach(img=>{if(!img.complete)img.addEventListener('load',()=>requestAnimationFrame(clampV92),{once:true});});
+};
+
+/* The transformed Hero must also be reflected in the battle HUD, not only cut-ins. */
+const _allyMarkupV92Base=allyMarkup;
+allyMarkup=function(a){
+  const s=_allyMarkupV92Base(a);
+  if(!(a?.transformed&&a.id==='yusha'))return s;
+  return s.replace(versionedPlay(a.image),versionedPlay('play/13.png'));
+};
+
+function setBookStoryHeroArtV92(mode='normal'){
+  const holder=$('[data-story-actor="yusha"]',$('#storyScene'));if(!holder)return;
+  const img=$('img',holder);if(!img)return;
+  holder.classList.toggle('book-hero-down-v92',mode==='down');
+  holder.classList.toggle('book-hero-transformed-v92',mode==='hero');
+  const src=mode==='hero'?versionedPlay('play/13.png'):versionedPlay(player('yusha')?.image||'play/01.png');
+  setImage(img,src,'');
+}
+
+/* Critical feedback: no center banner. The label sits immediately above the actual damage number. */
+function showCriticalDamageV92(value,target='enemy'){
+  const layer=$('#battleFxLayer');if(!layer)return;
+  const el=document.createElement('div');el.className='float-number crit critical-damage-v92';
+  const label=document.createElement('span');label.textContent='会心の一撃！';
+  const num=document.createElement('b');num.textContent=String(Math.round(value));
+  el.append(label,num);positionEffect(el,target);layer.appendChild(el);setTimeout(()=>el.remove(),Math.max(360,850/state.speed));
+}
+
+/* Ultimate CT ready feedback. Trigger only when a usable ultimate crosses from >0 to 0. */
+function ultimateReadyTransitionsV92(a,before,after){
+  if(!a)return[];const usable=new Set(availableUlts(a));
+  return (a.ults||[]).map((u,i)=>({u,i})).filter(x=>usable.has(x.u)&&(Number(before?.[x.i])||0)>0&&(Number(after?.[x.i])||0)<=0).map(x=>x.u);
+}
+function showUltimateReadyBeatV92(a,ults=[]){
+  if(!a||!ults.length)return;let el=$('#ultimateReadyBeatV92');
+  if(!el){el=document.createElement('div');el.id='ultimateReadyBeatV92';el.className='ultimate-ready-v92';document.body.appendChild(el);}
+  el.innerHTML='';const small=document.createElement('small'),b=document.createElement('b'),span=document.createElement('span');
+  small.textContent='ULTIMATE READY';b.textContent='必殺技CTが溜まった！';span.textContent=`${a.name} / ${ults.map(u=>u.name).join('・')}`;el.append(small,b,span);
+  el.classList.remove('play');void el.offsetWidth;el.classList.add('play');clearTimeout(showUltimateReadyBeatV92.timer);showUltimateReadyBeatV92.timer=setTimeout(()=>el.classList.remove('play'),Math.max(700,Math.round(1500/state.speed)));
+}
+advanceUltimateCooldowns=function(a,usedIndex=-1){
+  if(!a)return;if(!Array.isArray(a.ultCooldowns))initUltimateCooldowns(a);const before=a.ultCooldowns.slice();
+  a.ultCooldowns=a.ultCooldowns.map((v,i)=>i===usedIndex?v:Math.max(0,(Number(v)||0)-1));persistUltimateCooldownsFromBattle();
+  const ready=ultimateReadyTransitionsV92(a,before,a.ultCooldowns);if(ready.length)showUltimateReadyBeatV92(a,ready);
+};
+criticalUltimateCharge=function(a){
+  if(!a)return 0;if(!Array.isArray(a.ultCooldowns))initUltimateCooldowns(a);const before=a.ultCooldowns.slice();let changed=0;
+  a.ultCooldowns=a.ultCooldowns.map(v=>{v=Math.max(0,Number(v)||0);if(v>0){changed++;return Math.max(0,v-1);}return v;});
+  if(changed)persistUltimateCooldownsFromBattle();const ready=ultimateReadyTransitionsV92(a,before,a.ultCooldowns);if(ready.length)showUltimateReadyBeatV92(a,ready);return changed;
+};
+
+/* Replace only the critical rendering branch. Keep damage calculation, healing, CT reduction and hit FX untouched. */
+const _applyEnemyDamageToV92Base=applyEnemyDamageTo;
+applyEnemyDamageTo=function(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
+  if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;const reductionActive=e.shieldTurns>0||e.permanentDamageReduction||(e.naviBarrier&&!(e.naviBarrierBrokenTurns>0));if(reductionActive&&e.damageReduction>0)d=Math.round(d*(1-e.damageReduction));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=!!state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);if(e.naviBarrier&&e.hp>0&&!(e.naviBarrierBrokenTurns>0)){e.naviBarrierHits=(Number(e.naviBarrierHits)||0)+1;if(e.naviBarrierHits>=4){e.naviBarrierHits=0;e.naviBarrierBrokenTurns=2;notice('バリアが剥がれた！今のうちに攻撃だ！','buff',1100);fx('break',`enemy:${uid}`);}}
+  if(e.hp<=0){recordEnemyDefeat(e);if((e.id==='boss-debuff'||e.id==='boss-berserk')&&state.battle?.pendingWaveConfigs?.[0]?.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'))state.battle.forcePhaseChange='tribe';if(state.battle.targetEnemyId===uid){const next=livingEnemies().find(x=>x.uid!==uid);state.battle.targetEnemyId=next?.uid||null;if(!state.battle.actingEnemyId)state.battle.enemy=next||e;}}
+  if(r.crit&&!a.dead){const rate=weaponCritHealRate(a);if(rate>0)heal(a,a.maxHp*rate);criticalUltimateCharge(a);}
+  renderBattle();if(r.crit)showCriticalDamageV92(d,`enemy:${uid}`);else floatNumber(d,'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);if(showHitPulse)pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
+};
+
+/* Book final formation: the player can really reorder the current 10-slot party before Navi Master. */
+async function bookPartyFormationV92(){
+  return new Promise(resolve=>{
+    let selected=null;const ov=document.createElement('div');ov.className='book-formation-overlay-v92';ov.id='bookFormationV92';document.body.appendChild(ov);
+    const render=()=>{
+      ov.innerHTML=`<div class="book-formation-card-v92"><small>FINAL FORMATION</small><h2>パーティー編成</h2><p>入れ替えたい2人を順番にタップしてください。<br>モブ怪人は共闘枠として自動参加します。</p><div class="book-formation-grid-v92"></div><button class="book-formation-done-v92" type="button">決定</button></div>`;
+      const grid=$('.book-formation-grid-v92',ov);
+      state.party.forEach(([id,lv],i)=>{const q=player(id);if(!q)return;const btn=document.createElement('button');btn.type='button';btn.className=selected===i?'selected':'';btn.innerHTML=`<img src="${versionedPlay(q.image)}" alt=""><span><small>${zoneForIndex(i).key} ${zoneForIndex(i).n}</small><b>${q.name}</b><em>Lv${lv}</em></span>`;btn.onclick=()=>{if(selected===null){selected=i;render();return;}if(selected===i){selected=null;render();return;}[state.party[selected],state.party[i]]=[state.party[i],state.party[selected]];selected=null;saveParty();state.training.party=state.party.map(x=>[...x]);render();};grid.appendChild(btn);});
+      bindImages(ov);
+      $('.book-formation-done-v92',ov).onclick=()=>{const card=$('.book-formation-card-v92',ov);card.innerHTML=`<small>CONFIRM</small><h2>このパーティーで挑みますか？</h2><div class="book-formation-confirm-v92"><button data-v92-confirm-yes type="button">はい</button><button data-v92-confirm-no type="button">いいえ</button></div>`;$('[data-v92-confirm-yes]',card).onclick=()=>{ov.remove();resolve();};$('[data-v92-confirm-no]',card).onclick=render;};
+    };render();
+  });
+}
+
+/* ===== Reading Book: canonical script from the user supplied 読みかけの本.txt ===== */
+bookArrivalV89Final=async function(){
+  await openStoryScene('unfinishedBook',0);
+  await storySay('denden','ここが本の中でやんすか？');
+  await storySay('jessie','実感ないわね');
+  await storySay('desert','魔王を倒す武器か\nそんなものがあるとは思えんな');
+  await storySay('nyoro','なんか平和なところニョロね～');
+  await storyShowGuest('book-navi',{slow:true});
+  await storySay('book-navi','おや？\n君たち異世界の住人だね？');
+  await storySay('tetsu','皆警戒を！\n只者ではないでござる！');
+  await storySay('desert','敵意どころか気配が無い\n何者だ？');
+  await storySay('book-navi','私はこの世界を管理している者だ\nと言っても\n見守っているだけだがね');
+  await storySay('nekoku','オラたち悪いやつじゃないぞ');
+  await storySay('book-navi','だろうね');
+  await storySay('nyoro','僕たち魔王を倒したいニョロ！');
+  await storySay('pink','ここに\n超強い武器があるはずです！');
+  await storySay('book-navi','超強い武器か\nあるにはあるな\nいや、いるな');
+  await storySay('riro','いる、とは\nどういう意味ですカ？');
+  await storySay('book-navi','おっと、時間だ\n気を付けることだ\n今この世界は悪の手に落ちている\n怪人軍団に注意しろ');
+  await storyHideGuest();await storySay('money','凄まじい魔力ね');await storySay('jessie','怪人は気になるけど、\n先へ進みましょう！');
+};
+
+STORY_EVENTS['pre:unfinishedBook:0']={worldId:'unfinishedBook',area:0,steps:[
+  ['guests',['book-minion','book-captain','book-minion']],['say','book-captain','キーキー！！'],['say','desert','これが怪人か？'],['say','pink','見た目は可愛いですが'],['say','denden','強い覇気を感じるでやんす！'],['say','tetsu','手加減無用でござるな']
+]};
+STORY_EVENTS['post:unfinishedBook:0']={worldId:'unfinishedBook',area:0,steps:[['say','jessie','これで手下なら\nボスは相当な強さね'],['say','nyoro','気を引き締めるニョロ！']]};
+STORY_EVENTS['pre:unfinishedBook:1']={worldId:'unfinishedBook',area:1,steps:[
+  ['guests',['book-exec-blue','book-exec-red']],['say','desert','敵の幹部の登場だな'],['say','tetsu','強者のオーラでござる'],['say','book-exec-blue','我々の邪魔をするものは'],['say','book-exec-red','始末しろとの命令だ'],['say','nekoku','そこ通してもらわないと困るぞ'],['say','nyoro','突き進むニョロ！']
+]};
+STORY_EVENTS['post:unfinishedBook:1']={worldId:'unfinishedBook',area:1,steps:[['say','money','この本読んでみたくなったわ'],['say','riro','あのヒーローは\nとっても強いのネ']]};
+STORY_EVENTS['pre:unfinishedBook:2']={worldId:'unfinishedBook',area:2,steps:[
+  ['guest','book-kaijin-boss'],['say','book-kaijin-boss','ようこそ偽物のヒーロー達よ！\n残る正義はお前たちのみ！\n悪は必ず勝つのだ‼︎'],['say','denden','敵のボスでやんすね！'],['say','book-kaijin-boss','そう！\nこの俺がボス！\n一番偉いのだ！\n俺に従え！'],['say','money','分かりやすい悪役ね'],['say','jessie','保安官として見過ごせないわ！'],['say','pink','正義の強さを見せるであります！'],['say','desert','魔王に近い魔力だ\n始めから全力で行くぞ！'],['say','book-kaijin-boss','あのヒーローはこの世界から消えた！\nこの世界では俺が悪であり正義！\n俺こそが\n神だ‼︎']
+]};
+
+bookArea3PostV89Final=async function(){
+  setAdventureVitalV89Final('yusha',{dead:true});state.meta.bookHeroDown=true;saveMeta();
+  await openStoryScene('unfinishedBook',2);setBookStoryHeroArtV92('down');await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('money','なによ、、\nコイツこんなに強いなんて、、');await storySay('nekoku','オラ、もう動けない、、');await storySay('pink','み、みんな、しっかりするであります！');await storySay('desert','ここで終わるわけにはいかない・・\n一旦引くぞ！');await storySay('book-kaijin-boss','ははは！\n逃がすとでも思っているのか？');
+  await storyFlash();setBookStoryHeroArtV92('down');
+  await storySay('pink','勇者様ー！！');await storySay('desert','まずいぞ・・！');await storySay('money','こうなったら私の魔力で！！');
+  await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','まだ早いですね');await storySay('book-kaijin-boss','モブナビ！！\n俺の邪魔をするな！');await storySay('book-navi','そうはいかない');await storySay('book-kaijin-boss','クソー！！！');
+  await storyHideGuest();await storyShowGuest('book-navi',{slow:false});await storySay('book-navi','さて\n勇者がやられたようだね\nだが私に出来るのはここまでだ\nやつを倒しに行ってくれ');await storyHideGuest();
+  await storySay('pink','勇者様・・');await storySay('nyoro','もうだめだニョロ・・');await storySayRed('money','なーに言ってるのよ！');await storySay('jessie','そうよ！きっと勇者はまだ助かる！');await storySay('tetsu','立ち上がって先へ進むでござる！');await storySay('desert','そうだな\n必ず勝機はあるはずだ');await storySay('nekoku','あいつ、嫌いだ');
+};
+
+bookArea4PreV89Final=async function(){
+  await openStoryScene('unfinishedBook',3);setBookStoryHeroArtV92('down');await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('book-kaijin-boss','さあフィナーレだ！\n俺達怪人軍団は\n遂に目的を果たすのだ！！');await storySay('desert','勇者の意志は俺たちと共にある！');await storySay('riro','サクラ一族の名のもと、あなたを倒しまス！');await storySay('denden','やるだけやってやるでやんす！！');
+  await storyNarrate('思い出が苦しくなる時は');await storyNarrate('読みかけの本を読もう');await storyNarrate('無力で惨めなその気持ち');await storyNarrate('あのヒーローにやっつけてもらおう');
+  await storyFlash();await storySay('book-kaijin-boss','なんだこの光は！？');setAdventureVitalV89Final('yusha',{full:true});state.meta.bookHeroDown=false;saveMeta();setBookStoryHeroArtV92('hero');await storyFlash();setBookStoryHeroArtV92('hero');
+  /* Canonical source explicitly says no narration for the numeric transformation bonuses. */
+  await storySay('book-kaijin-boss','あ、あのヒーロー、、\nなぜお前が！？');await storySay('pink','勇者様の・・特別な力');await storySay('desert','これが勇者');await storySay('jessie','魔王を倒すのは\nやっぱり勇者');await storySay('money','凄い！凄いよ勇者！');await storySay('nekoku','カッコいいぞ');await storySay('nyoro','勇者様ー！！');await storySay('riro','伝説再び・・ですネ');await storySay('tetsu','圧倒的な覇気\n至高のサムライでござる！');await storySay('denden','オイラ信じていたでやんす！');await storySay('book-kaijin-boss','そ、それがどうした！\n俺は強くなった！\nお前なんて・・！！');
+};
+
+bookArea4PostV89Final=async function(){
+  await openStoryScene('unfinishedBook',3);setBookStoryHeroArtV92('hero');await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});
+  await storySay('book-kaijin-boss','また、始まるのか・・\nまた、終わるのか・・');await storySay('book-navi','それがあなたの役目だ\nさっさと捨て台詞を吐いて消えなさい');await storySay('book-kaijin-boss','俺は、、');
+  await storySay('book-navi','なんですか？');await storySay('pink','勇者様？');await storySay('book-kaijin-boss','なんのつもりだ？');await storySay('book-navi','ふう～・・\nそうですか\nあなたは今やあのヒーロー\n気付いてしまいましたか');await storySay('jessie','気付く？');await storySay('desert','何かありそうだな');
+  await storySay('book-navi','私はこの世界の支配者\n怪人はヒーローに倒される\nそんな当たり前のループに疲れました\nなので\n2人とも消えてもらうことにしました');await storySay('book-kaijin-boss','なんだと？\nあのヒーローが消えたのは\nお前の仕業か？');await storySay('book-navi','如何にも\nあのヒーローが消えて\nあなたが誰かに倒されれば\n二度と復活しない\nだからずっと待っていました\nあのヒーローが消えて\nあなたが倒れる日を');await storySay('pink','とんでもないやつであります！！');await storySay('book-navi','そうですか？\n私はこの世界の秩序を保っている\n私は神なのです\n神の言うことに不満でも？');await storySay('tetsu','大いにあるでござる！\nお主は神などではない！\nただの悪党でござる！');
+  await storyFlash();await storySay('book-kaijin-boss','ぐは・・ッ');await storySay('desert','ここは勇者に任せるしかないな');await storySay('pink','勇者様！！');await storySay('nyoro','僕たちのヒーロー！！');
+  await storyHideGuests();$('#storyScene').hidden=true;await startBookNaviSoloV89Final();
+  await openStoryScene('unfinishedBook',3);setBookStoryHeroArtV92('hero');await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');await storySay('denden','オイラたちも一緒に戦うでやんす！');await storySay('tetsu','ヒーロー殿、助太刀いたす！');await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');await storySay('money','敵の敵は味方じゃないの？');await storySay('book-kaijin-boss','ハハッ・・\nヒーローと共闘か\nおもしれえ！やってやるよ！！');await storySay('nekoku','お前、カッコイイぞ');await storySay('book-kaijin-boss','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');
+  await storyHideGuests();$('#storyScene').hidden=true;await bookPartyFormationV92();
+  await openStoryScene('unfinishedBook',3);setBookStoryHeroArtV92('hero');await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','やれやれ、面倒だな');await storyFlash();await storyHideGuest();await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','さあ、どんなエンディングになるかな？');await storySay('book-kaijin-boss','最高の物語になりそうだな！！');await storyHideGuest();$('#storyScene').hidden=true;await startBookNaviMasterV89Final();
+  await openStoryScene('unfinishedBook',3);setBookStoryHeroArtV92('hero');await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','こ、の、わた、、、');await storyHideGuest();await storySay('desert','やったな');setBookStoryHeroArtV92('normal');await storyFlash();setBookStoryHeroArtV92('normal');await storySay('money','おかえり勇者！');await storySay('pink','勇者様、\n最高の力を手に入れたであります！');await storySay('riro','恐らく\n外の世界で同じような効果は期待できなイ\nでも\n間違いなく強くはなるはずでス');await storySay('nyoro','怪人はこれからどうするニョロ？');await storySay('book-kaijin-boss','さあな\n俺には目的も意味もねえ');await storySay('money','なら魔王を倒すの手伝ってよ！\n敵の敵は味方でしょ？');await storySay('jessie','なにそれ\n最高じゃない！');await storySay('book-kaijin-boss','ハハッ・・\n最後まで付き合ってやるよ！');
+  storyJoin('kaijin');state.meta.heroPassive2Unlocked=true;state.meta.bookCompleted=true;saveMeta();await renderStoryParty();await storyNarrate('モブ怪人のボスが仲間に加わった！');await storyNarrate('モブ勇者は新必殺技「読みかけの本」を習得した！');await storyNarrate('使用するとあのヒーローに変身し、全ステータス20%アップ\nさらに、必殺技の威力20%アップ');
+  const worlds=MOB_DATA.adventureWorlds||[],wi=worlds.findIndex(w=>w.id==='demonCastle2');if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('unfinishedBook'))state.adventure.reportedWorlds.push('unfinishedBook');if(wi>=0)state.adventure.worldIndex=wi;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.awaitingReport=null;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;saveAdventure();
+};
+
+/* Canonical Demon Castle report -> Record Room -> Book discovery. */
+const _submitAdventureReportV92Base=submitAdventureReport;
+submitAdventureReport=async function(){
+  const r=state.adventure.awaitingReport;if(!r||r.worldId!=='demonCastle')return _submitAdventureReportV92Base();
+  if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('demonCastle'))state.adventure.reportedWorlds.push('demonCastle');
+  state.adventure.awaitingReport=null;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;const wi=(MOB_DATA.adventureWorlds||[]).findIndex(w=>w.id==='unfinishedBook');if(wi>=0)state.adventure.worldIndex=wi;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.meta.bookPortalReady=true;state.meta.bookEntered=false;saveMeta();saveAdventure();
+  await facilityTalk('王様ー！！\nレコードが7枚揃ったであります！','モブピンク','play/02.png');await facilityTalk('おーーー！！','モブスライムキング','play/007.png');await facilityTalk('よくぞ揃えた！\n勇者、\nモブピンク、\n皆の者！\n本当によくやった！','モブスライムキング','play/007.png');await facilityTalk('これで魔王を倒せますね！','モブピンク','play/02.png');await facilityTalk('では早速レコードルームへ向かうのじゃ！','モブスライムキング','play/007.png');
+  renderRecordRoom();await facilityTalk('これで全てのレコードが揃った\nさあ！\nレコード達よ！\n世界を救ってくれ‼︎','モブスライムキング','play/007.png');await facilityTalk('本・・でありますか？','モブピンク','play/02.png');await facilityTalk('本・・じゃな','モブスライムキング','play/007.png');await facilityTalk('タイトルは、\n読みかけの本？','モブピンク','play/02.png');await facilityTalk('これは！\n本の中に入れるであります！','モブピンク','play/02.png');await facilityTalk('きっとそこに\n最強の武器があるのじゃ！','モブスライムキング','play/007.png');await facilityTalk('準備が出来次第、\n本の世界へ行くであります！','モブピンク','play/02.png');await narrationDialog('準備完了後、本をタップしてください');renderRecordRoom();
+};
+
+const _renderRecordRoomV92Base=renderRecordRoom;
+renderRecordRoom=function(){
+  if(state.meta?.bookCompleted&&!postgameUnlockedV91()){castleView='records';setCastleBackground('back/king4.png','back2/003.png');setCastleHeader('RECORD ROOM','レコードルーム','BOOK CLEAR');const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock book-ready-v92 book-clear-v92"><div></div><div class="book-item-v92"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>CLEAR / あのヒーロー</small></div><p>次の目的地：魔王城Ⅱ</p></div>${castleHomeButton()}</section>`;bindImages(root);bindCastleContentEvents();return;}
+  if(!(state.meta?.bookPortalReady&&!state.meta?.bookCompleted))return _renderRecordRoomV92Base();
+  castleView='records';setCastleBackground('back/king4.png','back2/003.png');setCastleHeader('RECORD ROOM','レコードルーム','BOOK');const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
+  root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock book-ready-v92"><button data-book-king-v92 type="button" class="book-king-v92"><img src="play/007.png" alt="モブスライムキング"><span>モブスライムキング</span></button><button data-enter-book-v92 type="button" class="book-item-v92"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>BOOK / 7 RECORDS</small></button><p>準備完了後、本をタップしてください</p></div>${castleHomeButton()}</section>`;bindImages(root);bindCastleContentEvents();
+  $('[data-book-king-v92]',root).onclick=()=>facilityTalk('急いで準備するのじゃ！','モブスライムキング','play/007.png');
+  $('[data-enter-book-v92]',root).onclick=async()=>{const a=await dialog('本の世界へ入りますか？',[['はい','yes','primary'],['いいえ','no']],'読みかけの本');if(a!=='yes')return;state.meta.bookEntered=true;saveMeta();ensureAdventureRunSnapshot();const flash=document.createElement('div');flash.className='book-enter-flash-v92';document.body.appendChild(flash);await nextPaint();flash.classList.add('show');await fixedDelay(520);flash.remove();await travelTo('adventure','読みかけの本へ…',renderAdventure);await handleAdventureEntry();};
+};
+
+/* The base v89 wrapper used a shortened post-book King line. Pin the full supplied return dialogue. */
+const _runStoryEventV92Base=runStoryEvent;
+runStoryEvent=async function(key,forceHomeOverride=false){
+  if(key!=='post:unfinishedBook:3')return _runStoryEventV92Base(key,forceHomeOverride);
+  const ev=STORY_EVENTS[key];if(storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;try{await bookArea4PostV89Final();markStoryDone(key);ok=true;}finally{storyBusy=false;}if(!ok)return false;
+  await closeStoryScene(false);await travelTo('castle','元の世界へ戻っています…',renderCastle);await openCastleRoom('records');await facilityTalk('おお！無事に戻ったか！','モブスライムキング','play/007.png');await narrationDialog('モブピンクは起こった出来事を話した');await facilityTalk('そうか\nでは勇者はあのヒーローでもあるのか！\nこれで怖いもん無しじゃな！\n皆の者、準備が整い次第、\n再び魔王城へ向かってくれ！\n王の間にて知らせを待つ！\n武運を祈っておるぞ！','モブスライムキング','play/007.png');state.meta.bookKingReturnDone=true;saveMeta();return true;
+};
+
+/* After the Book return, the King has only this one line until the final-castle report. */
+const _castleActorSpeakV92Base=castleActorSpeak;
+castleActorSpeak=function(kind,actorEl){
+  if(kind==='king'&&state.meta?.bookKingReturnDone&&!state.adventure.awaitingReport&&!state.meta?.finalBossDefeated){showCastleSpeech('モブスライムキング','武運を祈る！',actorEl,'center');return;}
+  return _castleActorSpeakV92Base(kind,actorEl);
+};
+
+/* ===== END MOB QUEST v92 ===== */
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
 let bootSetupError=null;

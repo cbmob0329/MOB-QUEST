@@ -1,0 +1,45 @@
+MOB QUEST v92 REGRESSION REPORT
+
+BASE
+PASS: v91 POSTGAME GATE STABLE をベースに使用。
+
+SYNTAX / INLINE
+PASS: node --check js/data.js
+PASS: node --check js/game.js
+PASS: index.html 内インラインJS node --check
+PASS: index.html 内インラインCSS = css/style.css
+PASS: index.html 内インラインJS = js/data.js + js/game.js
+
+STABLE REGRESSION
+PASS: MOB STORY タイトルロゴ保持。
+PASS: v88 戦闘中キャラ台詞タップ進行保持。
+PASS: v88 最終フレームフェード 700ms / 320ms 系統保持。
+PASS: v91 クリア後異世界ゲート / イベントクエスト保持。
+PASS: v91 セーブ互換（保存キー変更なし）。
+
+READING BOOK FIDELITY
+PASS: 7枚報告から本出現までの会話を復元。
+PASS: item/39.png を読みかけの本として表示。
+PASS: AREA1 モブテツ「手加減無用でござるな」復元。
+PASS: AREA2 モブテツ / モブニョロ台詞復元。
+PASS: AREA3 怪人ボス自己紹介 / 「俺こそが 神だ」まで復元。
+PASS: 勇者ダウン後のモブナビ台詞「さて～やつを倒しに行ってくれ」復元。
+PASS: 勇者ダウン時のパーティー画像黒塗り。
+PASS: AREA4 変身前「なんだこの光は！？」復元。
+PASS: 変身後パーティー勇者画像 play/13.png。
+PASS: 変身能力の数値ナレーションを出さない。
+PASS: モブナビ正体説明「だからずっと待っていました～」復元。
+PASS: 勇者単独3ターン戦の既存ロジック保持。
+PASS: モブナビマスター前に実際のパーティー並べ替え画面を表示。
+PASS: 帰還後の王様会話「武運を祈っておるぞ！」まで復元。
+PASS: 以後の王様通常台詞を「武運を祈る！」へ固定（最終報告時は報告優先）。
+
+BATTLE UI / SIZE
+PASS: 読みかけの本敵に個別スケール＋画面比最大上限。
+PASS: モブリリスを大幅縮小＋最大上限。
+PASS: 特技ボタンを他ボタンと同じ高さ / アイコン占有率へ統一。
+PASS: 必殺技CT ready transition detection 実装。
+PASS: 会心中央バナーを非表示、ターゲット位置で文字＋数値を同時表示。
+
+BROWSER SMOKE
+NOTE: container Chromium file:// smoke testは環境側DBus/zygote待機でtimeout。静的構文・インライン一致・回帰アサーションは全PASS。
