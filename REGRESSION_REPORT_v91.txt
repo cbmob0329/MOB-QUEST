@@ -1,0 +1,37 @@
+MOB QUEST v91 REGRESSION REPORT
+Date: 2026-09-02
+Base: MOB-QUEST-playable-core-v90-CLIMAX-FIDELITY-STABLE.zip
+
+RESULT: STATIC / STRUCTURAL CHECKS PASSED
+
+PASS
+- js/data.js: node --check
+- js/game.js: node --check
+- index.html inline JS: node --check
+- index inline CSS == css/style.css
+- index inline JS == js/data.js + js/game.js
+- Title version label: v91
+- v90 stable boot path retained
+- v90 climax / Book / Demon Castle II blocks retained
+- Lv120 post-clear level-cap condition retained
+- Post-game Record Room OTHER WORLD route present
+- Shadow World canonical five-chapter index present
+- Fallen Hero canonical five-world index present
+- Training EVENT QUEST unlock route present
+- EVENT QUEST hidden before unlock in normal mode
+- No fabricated stats/rewards added for undefined post-game/event content
+- Full King-room ending redefined after the v90 shortened duplicate
+- No BOOT-FIX / RESTORED-UI-COMPLETE old-branch marker imported
+
+BROWSER SMOKE NOTE
+- Container Chromium headless file:// smoke timed out in the runtime DBus/headless environment and produced no DOM, matching the environment limitation seen in v90.
+- No JavaScript SyntaxError/ReferenceError was emitted to Chromium stderr before timeout.
+- Release decision therefore uses JavaScript parse, inline-sync and structural regression checks.
+
+FILES CHANGED FROM v90
+- index.html
+- js/data.js (build identity comment only)
+- js/game.js
+- README.txt
+- SPEC_REGRESSION_CHECKLIST_v91.txt (new)
+- REGRESSION_REPORT_v91.txt (new)

@@ -1,0 +1,31 @@
+MOB QUEST v91 SPEC REGRESSION CHECKLIST
+
+POSTGAME / NEW
+[PASS] Ending flags still unlock gameCleared / otherWorldUnlocked / eventQuestUnlocked.
+[PASS] Player level cap remains 120 after game clear.
+[PASS] Record Room changes to OTHER WORLD after game clear.
+[PASS] Castle Record Room menu label changes dynamically.
+[PASS] Other World hub includes 影の国の冒険日記.
+[PASS] Shadow chapter names/bosses/midbosses match the supplied canonical outline.
+[PASS] Other World hub includes 落ちた英雄 with its supplied canonical five-world outline.
+[PASS] アンティークワールド and 神の書 are shown without invented battle values.
+[PASS] Training EVENT QUEST appears only after post-game unlock (test mode may preview it).
+[PASS] Undefined Event Quest battle data is not fabricated.
+[PASS] Full final King-room report is the last active runtime definition.
+
+v90 / CLIMAX RETAINED
+[PASS] 読みかけの本 Record Room entry retained before Book completion.
+[PASS] Book no-random / one-battle-per-area progression retained.
+[PASS] Book AREA3 forced-loss sequence retained.
+[PASS] Hero book-world power retained.
+[PASS] Navi Master barrier gimmick retained.
+[PASS] Demon Castle II dialogue / Enma 3-form combat definitions retained.
+[PASS] Final-boss -> Lilith join -> castle report path retained.
+
+CORE RETAINED
+[PASS] Title MOB STORY / v91 label.
+[PASS] Boot recovery code retained.
+[PASS] HOME / Castle / Tavern / Training / Equipment / Inventory systems retained.
+[PASS] Existing subquests and rewards retained.
+[PASS] Existing save key retained; no destructive migration.
+[PASS] Story tap interaction patch retained.

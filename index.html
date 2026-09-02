@@ -2854,7 +2854,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v90</div>
+      <div class="title-version">v91</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3248,7 +3248,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=90" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=91" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -3257,7 +3257,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v90
+// MOB QUEST v91
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -8206,6 +8206,125 @@ submitAdventureReport=async function(){const r=state.adventure.awaitingReport;if
 
 const _openHomeActionV89Final2=openHomeAction;
 openHomeAction=function(action){if(state.meta?.finalBossDefeated&&!state.meta?.gameCleared&&action!=='castle')return facilityTalk('お城へ向かおう！','モブピンク','play/02.png');if(action==='adventure'&&currentWorld()?.id==='unfinishedBook'&&state.meta?.bookPortalReady&&!state.meta?.bookEntered)return facilityTalk('レコードルームの「読みかけの本」から入るであります！','モブピンク','play/02.png');return _openHomeActionV89Final2(action);};
+
+
+/* ===== MOB QUEST v91: POSTGAME GATE / EVENT QUEST UNLOCK / ENDING FIX ===== */
+const V91_POSTGAME_WORLDS=[
+  {
+    id:'shadow',name:'影の国の冒険日記',tag:'POST GAME / SHADOW',status:'OPEN',
+    summary:'謎のモンスター・アサモブと共に影の世界を巡るクリア後の冒険。',
+    chapters:[
+      ['1. 影の世界','中ボス：モブキンカク / モブギンカク','ボス：モブ牛魔王','加入：ミケモブ'],
+      ['2. 影の城','中ボス：モブバットウ','ボス：モブノタチ',''],
+      ['3. 桃屋敷','中ボス：アメノモブ','ボス：ヨルモブ','加入：アサモブ'],
+      ['4. 影の秘密','中ボス：モブノオト','ボス：モブカゲドラ',''],
+      ['5. 影とヒカリ','中ボス：モブアリス','ボス：モブノヒカり','']
+    ]
+  },
+  {id:'antique',name:'アンティークワールド',tag:'OTHER WORLD',status:'DATA WAIT',summary:'異世界コンテンツ。現在の正式資料では各AREAの敵・ボス詳細が未設定。',chapters:[]},
+  {
+    id:'fallen',name:'落ちた英雄',tag:'OTHER WORLD / LOST HERO',status:'INDEX',
+    summary:'旧世界を巡る異世界編。正式資料に記載済みの対戦相手を表示。',
+    chapters:[
+      ['1. 旧モブキングダム','中ボス：モブリリス','ボス：モブスラキング',''],
+      ['2. 旧砂漠','中ボス：ミニミラモブ','ボス：ヒルモブ',''],
+      ['3. 旧ネオン街','中ボス：モブマシン','ボス：モブハカセ',''],
+      ['4. 旧魔王城','中ボス：モブプリンス','ボス：モブリリクイーン',''],
+      ['5. 旧モブキングダムⅡ','中ボス：モブセンシ / モブマジック / モブパラディン','ボス：モブユーシャ','']
+    ]
+  },
+  {id:'godbook',name:'神の書',tag:'OTHER WORLD',status:'DATA WAIT',summary:'異世界コンテンツ。正式資料ではタイトルのみ定義済み。',chapters:[]}
+];
+function postgameUnlockedV91(){return !!state.meta?.gameCleared;}
+function eventQuestUnlockedV91(){return !!(state.meta?.gameCleared||state.meta?.eventQuestUnlocked||state.test?.enabled);}
+function otherWorldCardV91(w){
+  const isOpen=w.status==='OPEN'||w.status==='INDEX';
+  return `<article class="training-feature-card ${isOpen?'':'locked'}" style="text-align:left"><div class="feature-head"><img src="${w.id==='shadow'?'icon/14.png':'icon/21.png'}" alt=""><div><small>${w.tag}</small><h3>${w.name}</h3><p>${w.summary}</p></div></div><div class="feature-meta"><span>${w.status}</span><span>${w.chapters.length?`${w.chapters.length} CHAPTER`:'DETAIL PENDING'}</span></div><button data-v91-otherworld="${w.id}" type="button">${w.chapters.length?'詳細を見る':'登録状況を見る'}</button></article>`;
+}
+function renderOtherWorldHubV91(){
+  castleView='records';setCastleBackground('back/king4.png','back2/003.png');setCastleHeader('OTHER WORLD','異世界ゲート','POST GAME');
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
+  root.innerHTML=`<section class="castle-room-stage record-stage"><div class="panel" style="width:min(94%,720px);margin:12px auto 22px"><div class="section-title"><div><small>RECORD ROOM / OTHER WORLD</small><h2>異世界ゲート</h2></div><span class="pill">OPEN</span></div><p class="panel-note">7枚のレコードと「読みかけの本」の先に、新しい世界へのゲートが開いた。</p><div class="training-feature-grid">${V91_POSTGAME_WORLDS.map(otherWorldCardV91).join('')}</div><button data-v91-record-back type="button" style="margin-top:14px">← レコードルームへ戻る</button></div>${castleHomeButton()}</section>`;
+  bindImages(root);bindCastleContentEvents();
+  $$('[data-v91-otherworld]',root).forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();renderOtherWorldDetailV91(b.dataset.v91Otherworld);});
+  const back=$('[data-v91-record-back]',root);if(back)back.onclick=e=>{e.preventDefault();e.stopPropagation();renderRecordRoom();};
+}
+function renderOtherWorldDetailV91(id){
+  const w=V91_POSTGAME_WORLDS.find(x=>x.id===id);if(!w)return renderOtherWorldHubV91();
+  castleView='records';setCastleBackground(id==='shadow'?'back/shadow.png':'back/king4.png','back2/003.png');setCastleHeader('OTHER WORLD',w.name,w.status);
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
+  const rows=w.chapters.length?w.chapters.map((c,i)=>`<article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><small>CHAPTER ${i+1}</small><h3>${c[0]}</h3><p>${[c[1],c[2],c[3]].filter(Boolean).join('<br>')}</p></div></div><div class="feature-meta"><span>正式ストーリー索引</span><span>戦闘データ待ち</span></div></article>`).join(''):`<div class="camp-empty-note">正式資料では個別のAREA・敵編成・報酬がまだ設定されていません。<br>未設定の内容は自動生成せず、この入口だけを保持しています。</div>`;
+  root.innerHTML=`<section class="castle-room-stage record-stage"><div class="panel" style="width:min(94%,720px);margin:12px auto 22px"><div class="section-title"><div><small>${w.tag}</small><h2>${w.name}</h2></div><span class="pill">${w.status}</span></div><p class="panel-note">${w.summary}</p>${id==='shadow'?'<p class="panel-note"><b>物語の核：</b>表世界の光が落とした闇を食べて生活している影の世界。食べ物がすべて黒いのもそのため。</p>':''}<div class="training-feature-grid">${rows}</div><button data-v91-world-back type="button" style="margin-top:14px">← 異世界一覧へ戻る</button></div>${castleHomeButton()}</section>`;
+  bindImages(root);bindCastleContentEvents();const back=$('[data-v91-world-back]',root);if(back)back.onclick=e=>{e.preventDefault();e.stopPropagation();renderOtherWorldHubV91();};
+}
+const _renderRecordRoomV91Base=renderRecordRoom;
+renderRecordRoom=function(){
+  if(!postgameUnlockedV91())return _renderRecordRoomV91Base();
+  castleView='records';setCastleBackground('back/king4.png','back2/003.png');setCastleHeader('RECORD ROOM','レコードルーム','OTHER WORLD OPEN');
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
+  root.innerHTML=`<section class="castle-room-stage record-stage"><div class="panel" style="width:min(94%,680px);margin:12px auto 22px"><div class="section-title"><div><small>RECORD COMPLETE</small><h2>レコードルーム</h2></div><span class="pill">7 / 7</span></div><div class="training-feature-grid"><article class="training-feature-card"><div class="feature-head"><img src="icon/21.png" alt=""><div><h3>読みかけの本</h3><p>本の世界での物語は完了した。</p></div></div><div class="feature-meta"><span>CLEAR</span><span>あのヒーロー</span></div></article><article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><h3>異世界ゲート</h3><p>ゲームクリア後に開かれた新しい世界への入口。</p></div></div><div class="feature-meta"><span>POST GAME</span><span>LEVEL CAP 120</span></div><button data-v91-enter-otherworld type="button">異世界へ</button></article></div></div>${castleHomeButton()}</section>`;
+  bindImages(root);bindCastleContentEvents();const b=$('[data-v91-enter-otherworld]',root);if(b)b.onclick=e=>{e.preventDefault();e.stopPropagation();state.meta.postgamePortalVisited=true;saveMeta();renderOtherWorldHubV91();};
+};
+
+
+const _renderCastleV91=renderCastle;
+renderCastle=function(){
+  _renderCastleV91();
+  const rec=$('[data-castle-menu="records"]');if(!rec)return;
+  const small=$('small',rec);if(!small)return;
+  if(postgameUnlockedV91())small.textContent='OTHER WORLD';
+  else if(state.meta?.bookPortalReady&&!state.meta?.bookCompleted)small.textContent='BOOK';
+  else small.textContent='LOCKED';
+};
+
+if(!TRAINING_MODES.some(x=>x.id==='event'))TRAINING_MODES.push({id:'event',name:'イベントクエスト',icon:'icon/14.png',desc:'ゲームクリア後の特別クエスト'});
+TRAINING_GUIDE_TEXT.event='ゲームクリア後のイベントクエストだ！\nここから特別なクエストへ挑戦できるぞ！';
+const _renderTrainingModeCarouselV91=renderTrainingModeCarousel;
+renderTrainingModeCarousel=function(){
+  _renderTrainingModeCarouselV91();
+  if(!eventQuestUnlockedV91())$('[data-training-mode="event"]',$('#trainingModeCarousel'))?.remove();
+};
+const _renderTrainingFeatureV91=renderTrainingFeature;
+renderTrainingFeature=function(mode){
+  if(mode!=='event')return _renderTrainingFeatureV91(mode);
+  const root=$('#trainingFeaturePanel');if(!root)return;root.hidden=false;
+  root.innerHTML=`<section class="panel"><div class="section-title"><div><small>POST GAME</small><h2>イベントクエスト</h2></div><span class="pill">UNLOCKED</span></div><p class="panel-note">ゲームクリア特典として解放された専用モードです。</p><div class="training-feature-grid"><article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><h3>EVENT QUEST</h3><p>入口は解放済みです。現在の正式仕様資料には個別イベントの敵編成・報酬データがまだ定義されていません。</p></div></div><div class="feature-meta"><span>LEVEL CAP 120</span><span>POST GAME</span><span>QUEST DATA WAIT</span></div><button type="button" disabled>個別クエスト準備中</button></article></div></section>`;bindImages(root);
+};
+const _renderTrainingV91=renderTraining;
+renderTraining=function(){
+  if(state.training.mode!=='event')return _renderTrainingV91();
+  if(!eventQuestUnlockedV91()){state.training.mode='menu';return _renderTrainingV91();}
+  renderTrainingModeCarousel();$('#trainingPageTitle').textContent='イベントクエスト';$('#trainingRandomBtn').style.display='none';$('#trainingTestPanel').hidden=true;
+  const feature=$('#trainingFeaturePanel');if(feature)feature.hidden=false;const sticky=$('#trainingStickyAction');if(sticky){sticky.hidden=true;sticky.style.display='none';}renderTrainingFeature('event');
+};
+const _setTrainingModeV91=setTrainingMode;
+setTrainingMode=async function(mode){
+  if(mode!=='event')return _setTrainingModeV91(mode);
+  if(!eventQuestUnlockedV91())return toast('ゲームクリア後に解放されます');
+  state.training.mode='event';renderTraining();await showTrainingModeGuide('event');const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='event';}const title=$('#trainingFeaturePopupTitle');if(title)title.textContent='イベントクエスト';
+};
+
+/* v90 had a later shortened duplicate ending function. v91 pins the complete canonical castle report as the final definition. */
+finalEndingV89Final=async function(){
+  await facilityTalk('皆のもの\nほんっっっとーに！\nよくやった！','モブスライムキング','play/007.png');
+  await facilityTalk('みんなの力で成し遂げました！','モブピンク','play/02.png');
+  await facilityTalk('うむ\n感謝するぞ\n世界に平和が訪れた','モブスライムキング','play/007.png');
+  await facilityTalk('少しいいかな？','モブリリス','play/14.png');
+  await facilityTalk('魔王城の魔女モブリリスか\n良い、話せ','モブスライムキング','play/007.png');
+  await facilityTalk('あの町を破壊した本当の理由\n王様は知っているのかな？','モブリリス','play/14.png');
+  await facilityTalk('・・・うむ','モブスライムキング','play/007.png');
+  await facilityTalk('そうか\nならいい\n悪いことしたね','モブリリス','play/14.png');
+  await facilityTalk('どういうことでありますか？','モブピンク','play/02.png');
+  await facilityTalk('あの町は封印の町\n封印していたのは\nモブマニー、そして\n異世界へのゲート','モブスライムキング','play/007.png');
+  await facilityTalk('異世界！？','モブピンク','play/02.png');
+  await facilityTalk('モブマニーの解放と共に\n異世界のゲートも開いた\n魔王様はその力を求めたんだ','モブリリス','play/14.png');
+  await facilityTalk('これから\n新たな戦いが始まるかもしれん\n皆その時は頼むぞ！','モブスライムキング','play/007.png');
+  await facilityTalk('我々の冒険は終わらないであります！\nでも\n勇者様と魔王を倒す旅は\nここでひと段落でありますね\nまた会うであります！\nみなさん、それまでお達者で！','モブピンク','play/02.png');
+  try{const a=new Audio('music/end.wav');a.volume=.55;a.play().catch(()=>{});}catch(_){ }
+  for(const line of ['ゲームクリアおめでとうございます！','レコードの間から異世界へ行けるようになりました！','さらに、トレーニングにイベントクエストが追加されました！','レベル上限が120まで解放されました！','新たな武器やフィギュアも追加されていきます！','冒険はまだまだ終わりません！','ですが、','ここまで遊んでくれてありがとうございました！','CB Memory'])await openingSceneCaption(line);
+  state.meta.gameCleared=true;state.meta.eventQuestUnlocked=true;state.meta.otherWorldUnlocked=true;state.meta.postgamePortalVisited=false;saveMeta();await fixedDelay(3000);await showTitle();
+};
+/* ===== END MOB QUEST v91 ===== */
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
 let bootSetupError=null;
