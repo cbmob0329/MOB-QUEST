@@ -59,3 +59,20 @@ Base: v94 BOOK STAGING / NAVI MASTER FIX STABLE.
 - Demon Castle exploration uses dark red-purple and white text.
 - Unlearned ultimate skills are not rendered in the battle ultimate list.
 - Castle menu labels use white banners for readability.
+
+
+=== v96 OPENING / FIGURE GACHA / MOB PIECE TRIAL ===
+Base: v95 ARMOR / DEMON CASTLE FIDELITY STABLE.
+- Opening castle speech anchors to visible character art.
+- Adventure is locked until Training is used; pressing Adventure guides directly to Training.
+- Tavern/coaching facility dialogue uses natural browser wrapping, preventing orphan symbols and overflow.
+- Event Quest guide replaced with one line: 「今はまだ利用できないぞ！」.
+- Subquests require the corresponding main story world to be cleared; Grass QUEST 1 no longer appears before Grass clear.
+- All party-formation cards use beige/black presentation, larger numeric text, and a green HP bar.
+- Figure tag RPG resonances 41-52 restored; tag 52 Reading Book added.
+- Figure gacha 001-022 implemented from uploaded pools. Rates: R50 / SR30 / SSR15 / UR4.5 / MOB0.5; 10th pull SR+ guaranteed; pickup shares 55% of its rarity bucket.
+- MOB Piece Battle trial implemented in Maple menu: 25-card deck, five-card draw, center move/exchange cost, center Power +50%, tag effects, best-of-three CPU battle, trial Rank points.
+- MOB Piece tag effects 01-08 use uploaded specification; 09-52 are provisional balanced effects designed for the trial.
+
+- Final validation: area-tag resonances 41-48/52 now apply +10% all stats only in their matching battle area; 3-piece adds 10% damage reduction.
+- Gacha 017/020/022 are intentionally data-wait/disabled because the uploaded gacha spec conflicts with or references figure definitions absent from the uploaded figure lists. No wrong character is substituted.

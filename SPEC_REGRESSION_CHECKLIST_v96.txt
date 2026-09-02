@@ -1,0 +1,18 @@
+MOB QUEST v96 REGRESSION CHECKLIST
+
+- Base is v95.
+- v95 armor and Demon Castle fidelity retained.
+- v94 Reading Book staging / Navi Master fixes retained.
+- v93 Record Room, camp abandon, subquest queue retained.
+- Opening bubbles anchor to visible actor image.
+- Adventure is Training-gated.
+- Grass subquest requires Grass main clear.
+- Facility text has overflow-safe wrapping and no injected unnatural newline.
+- Tavern/camp/training/book/Lilith formation cards receive beige styling + HP bars.
+- Figure tag 52 exists; 41-52 canonical RPG resonance labels present.
+- Gacha 001-022 definitions present.
+- Gacha base rates total 100%.
+- MOB Piece deck is 25 pieces and source-defined 01-08 piece effects are preserved.
+
+- Area resonance is applied independently of legacy neon-only figure traits.
+- Gacha 017/020/022 cannot consume diamonds until their missing/conflicting figure data is supplied.
