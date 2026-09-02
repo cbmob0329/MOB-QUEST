@@ -29,3 +29,7 @@ v92 修正
 NOTES
 - 添付アセットフォルダは従来どおりこのコードZIPには含めていません。
 - v91セーブキーは変更していません。v91からそのまま継続できます。
+
+
+=== v93 ===
+Reading Book uses back/yomi1.png through back/yomi4.png and is entered only from the book in the Record Room. Test selection prepares that book in the Record Room. The Record Room is unlocked from the start. Adventure quit moved into CAMP. Subquests now expose only one global next quest (starting Grassland QUEST 1), and the required-party warning no longer shows a literal \n.

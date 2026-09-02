@@ -2851,3 +2851,13 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 
 .command-grid .command-btn.special{background:#4a5a36!important;border:1px solid var(--line)!important}
 .book-clear-v92{grid-template-columns:1fr!important}.book-clear-v92 .book-item-v92{width:min(100%,420px)!important;margin:auto!important}.book-clear-v92>div:empty{display:none!important}
+
+
+/* ===== MOB QUEST v93 ===== */
+.record-empty-v93{min-height:64vh;display:flex;align-items:flex-end;justify-content:center;padding:18px}
+.record-room-home-v93{margin-top:auto}
+.camp-main-menu .camp-abandon-v93{grid-column:1/-1;min-height:62px;border-color:rgba(120,36,36,.42)}
+.camp-main-menu .camp-abandon-v93>span{width:42px;height:42px}
+.camp-main-menu .camp-abandon-v93>span i{font-style:normal;font-size:28px;line-height:1}
+/* old floating quit control is retired; quit now lives in CAMP */
+#adventureScreen #abandonAdventureBtn{display:none!important}

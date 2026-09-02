@@ -1,0 +1,13 @@
+MOB QUEST v93 REGRESSION CHECKLIST
+
+- Base: v92 BOOK FIDELITY / BATTLE UI STABLE
+- Reading Book AREA backgrounds: back/yomi1.png .. back/yomi4.png
+- Reading Book can only be entered by tapping the book in Record Room
+- Test Reading Book selection spawns book in Record Room
+- Record Room unlocked from the beginning
+- Record Room navigation uses HOME only
+- Adventure quit removed from field and moved into CAMP
+- Subquest list is one global next quest; initial = Grassland QUEST 1 only
+- Test mode no longer exposes every subquest area
+- Required-character warning uses a real newline
+- v92 book dialogue, enemy scale, skill button, ultimate CT and critical feedback preserved

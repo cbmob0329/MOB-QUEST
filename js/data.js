@@ -813,10 +813,10 @@ for(const [element,id] of Object.entries(_v73Middle)){
   ]});
 
   ensureWorld({id:'unfinishedBook',name:'読みかけの本',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
-    {name:'AREA 1',bg:'back/book.png',boss:[{id:'book-minion',level:70,qty:2},{id:'book-captain',level:80}]},
-    {name:'AREA 2',bg:'back/book2.png',boss:[{id:'book-exec-blue',level:83},{id:'book-exec-red',level:83}],nextWave:[{id:'book-exec-blue2',level:87},{id:'book-exec-red2',level:87}]},
-    {name:'AREA 3',bg:'back/book3.png',boss:[{id:'book-kaijin-boss',level:90,actionCount:3,forceActionCount:true}]},
-    {name:'AREA 4',bg:'back/book4.png',boss:[{id:'book-captain',level:80,qty:2},{id:'book-kaijin-boss',level:90}]}
+    {name:'AREA 1',bg:'back/yomi1.png',boss:[{id:'book-minion',level:70,qty:2},{id:'book-captain',level:80}]},
+    {name:'AREA 2',bg:'back/yomi2.png',boss:[{id:'book-exec-blue',level:83},{id:'book-exec-red',level:83}],nextWave:[{id:'book-exec-blue2',level:87},{id:'book-exec-red2',level:87}]},
+    {name:'AREA 3',bg:'back/yomi3.png',boss:[{id:'book-kaijin-boss',level:90,actionCount:3,forceActionCount:true}]},
+    {name:'AREA 4',bg:'back/yomi4.png',boss:[{id:'book-captain',level:80,qty:2},{id:'book-kaijin-boss',level:90}]}
   ]});
 
   /* 最後の仲間：モブ怪人のボス */

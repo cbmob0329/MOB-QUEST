@@ -1,0 +1,4 @@
+MOB QUEST v93
+Targeted flow patch.
+Validation performed after build: JavaScript parse, inline/external sync, required string checks, ZIP integrity.
+Browser runtime flow was not claimed as fully exercised in this container.

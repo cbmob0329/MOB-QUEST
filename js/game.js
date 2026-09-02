@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=92;
+const GAME_ASSET_VERSION=93;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -1159,7 +1159,7 @@ function renderSubquestList(){
   root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${visible.map(({area:a,quest:q})=>{const requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;}).join('')||'<div class="camp-empty-note">現在挑戦できるサブクエストはありません。</div>'}</div></section>`;
   bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));
 }
-async function confirmSubquest(id){const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;if(subquestVisibleQuest(area)?.id!==quest.id)return renderSubquestList();if(!subquestAreaUnlocked(area))return;if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}await facilityTalk('このクエストでいいかな？','モブコーチ','play/003.png');const ans=await dialog(quest.name,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(ans!=='yes')return;await facilityTalk('レッツトレーニング！','モブコーチ','play/003.png');await startSubquest(area,quest);}
+async function confirmSubquest(id){const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;if(subquestVisibleQuest(area)?.id!==quest.id)return renderSubquestList();if(!subquestAreaUnlocked(area))return;if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}await facilityTalk('このクエストでいいかな？','モブコーチ','play/003.png');const ans=await dialog(quest.name,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(ans!=='yes')return;await facilityTalk('レッツトレーニング！','モブコーチ','play/003.png');await startSubquest(area,quest);}
 function subquestBg(area){const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===area.worldId),a=w?.areas?.[0];return{bg:a?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/02.png'};}
 async function startSubquest(area,quest){markTrainingPlayed();state.quest={type:'subquest',subquestId:quest.id,subquestWorldId:area.worldId,subquestAreaName:area.name,subquestQuestNo:quest.no,subquestQuestName:quest.name,areaIndex:0,battleIndex:0,battleReady:true,campUsed:false,vitals:freshQuestVitals(),finished:false,locked:true,bg:subquestBg(area).bg,fallbackBg:subquestBg(area).fallback};$('#trainingFeaturePopup').hidden=true;renderQuestScreen();showScreen('quest');await runSubquestLines(area,quest.intro||[]);await startQuestBattle();}
 async function runSubquestLines(area,lines=[]){if(!lines.length)return;const bg=subquestBg(area);showScreen('adventure');setImage($('#adventureBg'),bg.bg,bg.fallback);const sc=$('#storyScene');[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.add(`story-world-${area.worldId}`);storySceneExtras=(area.required||[]).filter(id=>!['yusha','pink'].includes(id));$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';for(const row of lines){if(row[0]==='show'){await storyShowGuests(row[1]||[]);continue;}await storySay(row[0],row[1]||'');}await storyHideGuests().catch(()=>{});sc.hidden=true;sc.style.visibility='';$('#storyBubble').hidden=true;$('#storyGuest').hidden=true;storySceneExtras=[];renderQuestScreen();showScreen('quest');}
@@ -4394,6 +4394,114 @@ castleActorSpeak=function(kind,actorEl){
   if(kind==='king'&&state.meta?.bookKingReturnDone&&!state.adventure.awaitingReport&&!state.meta?.finalBossDefeated){showCastleSpeech('モブスライムキング','武運を祈る！',actorEl,'center');return;}
   return _castleActorSpeakV92Base(kind,actorEl);
 };
+
+
+/* ===== MOB QUEST v93: BOOK ENTRY / RECORD ROOM / CAMP / SUBQUEST FLOW ===== */
+
+/* Reading Book uses the authored yomi backgrounds and is entered only through the book in the Record Room. */
+function recordRoomHomeButtonV93(){return `<button class="castle-room-home record-room-home-v93" data-record-home-v93 type="button"><img src="mqicon/06.png" alt="HOME"><b>HOME</b><small>ホームへ戻る</small></button>`;}
+function bindRecordRoomHomeV93(root){const b=$('[data-record-home-v93]',root);if(b)b.onclick=async e=>{e.preventDefault();e.stopPropagation();await goHome();};}
+
+const _renderCastleV93Base=renderCastle;
+renderCastle=function(){
+  _renderCastleV93Base();
+  const back=$('#castleBackBtn');if(back)back.hidden=false;
+  const rec=$('[data-castle-menu="records"]');if(!rec)return;
+  const small=$('small',rec);if(small)small.textContent=postgameUnlockedV91()?'OTHER WORLD':state.meta?.bookPortalReady&&!state.meta?.bookCompleted?'BOOK':'OPEN';
+  rec.classList.remove('locked');rec.disabled=false;
+};
+
+const _renderRecordRoomV93Prior=renderRecordRoom;
+renderRecordRoom=function(){
+  const castleBack=$('#castleBackBtn');if(castleBack)castleBack.hidden=true;
+  castleView='records';setCastleBackground('back/king4.png','back2/003.png');
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view';
+
+  if(postgameUnlockedV91()){
+    setCastleHeader('RECORD ROOM','レコードルーム','OTHER WORLD OPEN');
+    root.innerHTML=`<section class="castle-room-stage record-stage"><div class="panel" style="width:min(94%,680px);margin:12px auto 22px"><div class="section-title"><div><small>RECORD COMPLETE</small><h2>レコードルーム</h2></div><span class="pill">7 / 7</span></div><div class="training-feature-grid"><article class="training-feature-card"><div class="feature-head"><img src="icon/21.png" alt=""><div><h3>読みかけの本</h3><p>本の世界での物語は完了した。</p></div></div><div class="feature-meta"><span>CLEAR</span><span>あのヒーロー</span></div></article><article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><h3>異世界ゲート</h3><p>ゲームクリア後に開かれた新しい世界への入口。</p></div></div><div class="feature-meta"><span>POST GAME</span><span>LEVEL CAP 120</span></div><button data-v91-enter-otherworld type="button">異世界へ</button></article></div></div>${recordRoomHomeButtonV93()}</section>`;
+    bindImages(root);bindRecordRoomHomeV93(root);const ow=$('[data-v91-enter-otherworld]',root);if(ow)ow.onclick=e=>{e.preventDefault();e.stopPropagation();state.meta.postgamePortalVisited=true;saveMeta();renderOtherWorldHubV91();};return;
+  }
+
+  if(state.meta?.bookCompleted){
+    setCastleHeader('RECORD ROOM','レコードルーム','BOOK CLEAR');
+    root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock book-ready-v92 book-clear-v92"><div></div><div class="book-item-v92"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>CLEAR / あのヒーロー</small></div><p>次の目的地：魔王城Ⅱ</p></div>${recordRoomHomeButtonV93()}</section>`;
+    bindImages(root);bindRecordRoomHomeV93(root);return;
+  }
+
+  if(state.meta?.bookPortalReady){
+    setCastleHeader('RECORD ROOM','レコードルーム','BOOK');
+    root.innerHTML=`<section class="castle-room-stage record-stage"><div class="record-room-lock book-ready-v92"><button data-book-king-v92 type="button" class="book-king-v92"><img src="play/007.png" alt="モブスライムキング"><span>モブスライムキング</span></button><button data-enter-book-v92 type="button" class="book-item-v92"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>BOOK / 7 RECORDS</small></button><p>準備完了後、本をタップしてください</p></div>${recordRoomHomeButtonV93()}</section>`;
+    bindImages(root);bindRecordRoomHomeV93(root);
+    const king=$('[data-book-king-v92]',root);if(king)king.onclick=()=>facilityTalk('急いで準備するのじゃ！','モブスライムキング','play/007.png');
+    const book=$('[data-enter-book-v92]',root);if(book)book.onclick=async()=>{const a=await dialog('本の世界へ入りますか？',[['はい','yes','primary'],['いいえ','no']],'読みかけの本');if(a!=='yes')return;state.meta.bookEntered=true;saveMeta();ensureAdventureRunSnapshot();const flash=document.createElement('div');flash.className='book-enter-flash-v92';document.body.appendChild(flash);await nextPaint();flash.classList.add('show');await fixedDelay(520);flash.remove();await travelTo('adventure','読みかけの本へ…',renderAdventure);await handleAdventureEntry();};
+    return;
+  }
+
+  /* The Record Room itself is unlocked from the beginning. Before the seventh record it is intentionally empty. */
+  setCastleHeader('RECORD ROOM','レコードルーム','OPEN');
+  root.innerHTML=`<section class="castle-room-stage record-stage record-empty-v93">${recordRoomHomeButtonV93()}</section>`;
+  bindImages(root);bindRecordRoomHomeV93(root);
+};
+
+/* HOME -> Adventure must never be a shortcut into Reading Book. Re-entry is also from the book. */
+const _openHomeActionV93Base=openHomeAction;
+openHomeAction=function(action){
+  if(action==='adventure'&&currentWorld()?.id==='unfinishedBook'&&!state.meta?.bookCompleted){return facilityTalk('読みかけの本へは、レコードの間にある本をタップして入るであります！','モブピンク','play/02.png');}
+  return _openHomeActionV93Base(action);
+};
+
+/* Test checkpoint: selecting Reading Book prepares the Record Room book instead of opening Adventure directly. */
+const _applyTestChapterV93Base=applyTestChapter;
+applyTestChapter=function(){
+  if(!state.test?.enabled)return;
+  const worlds=MOB_DATA.adventureWorlds||[],wi=clamp(Number($('#testChapterSelect')?.value)||0,0,Math.max(0,worlds.length-1)),selected=worlds[wi];
+  _applyTestChapterV93Base();
+  if(selected?.id==='unfinishedBook'){
+    state.meta.bookPortalReady=true;state.meta.bookEntered=false;state.meta.bookCompleted=false;state.meta.bookHeroDown=false;state.meta.bookKingReturnDone=false;state.meta.record7Obtained=true;
+    saveMeta();saveAdventure();renderHome();showScreen('home');toast('レコードの間に「読みかけの本」を出現させました');
+  }
+};
+
+/* Adventure quit belongs inside CAMP, never as a floating field button. */
+const _renderAdventureV93Base=renderAdventure;
+renderAdventure=function(){_renderAdventureV93Base();const old=$('#abandonAdventureBtn');if(old)old.hidden=true;};
+const _renderCampMainV93Base=renderCampMain;
+renderCampMain=function(){
+  _renderCampMainV93Base();const menu=$('#campMainMenu');if(!menu)return;
+  let b=$('#campAbandonBtnV93',menu);if(!b){b=document.createElement('button');b.id='campAbandonBtnV93';b.className='camp-abandon-v93';b.type='button';b.innerHTML='<span><i>×</i></span><b>冒険を諦める</b><small>冒険開始前の状態へ戻る</small>';menu.appendChild(b);}
+  b.hidden=!adventureRunActive()||!!state.adventure.awaitingReport||storyBusy;b.disabled=b.hidden;b.onclick=abandonAdventure;
+};
+
+/* Subquests advance as one global queue. The initial listing is Grassland QUEST 1 only. Test mode does not reveal every area. */
+subquestAreaUnlocked=function(a){if(!a)return false;if(a.worldId==='grassland')return true;return worldCleared(a.worldId);};
+function globalVisibleSubquestV93(){
+  for(const area of SUBQUEST_AREAS){
+    if(!subquestAreaUnlocked(area))continue;
+    const q=subquestVisibleQuest(area);if(q)return{area,quest:q};
+    /* A pending unfinished quest blocks later areas rather than exposing the whole catalog. */
+    const next=subquestNextQuest(area);if(next?.pending)return null;
+  }
+  return null;
+}
+renderSubquestList=function(){
+  const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();const found=globalVisibleSubquestV93();
+  const body=found?(()=>{const a=found.area,q=found.quest,requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;})():'<div class="camp-empty-note">現在挑戦できるサブクエストはありません。</div>';
+  root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${body}</div></section>`;
+  bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));
+};
+
+/* Ensure the required-party warning uses a real line break, never the literal characters "\\n". */
+const _confirmSubquestV93Base=confirmSubquest;
+confirmSubquest=async function(id){
+  const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;
+  const global=globalVisibleSubquestV93();if(!global||global.quest.id!==quest.id)return renderSubquestList();
+  if(!subquestAreaUnlocked(area))return;
+  if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}
+  return _confirmSubquestV93Base(id);
+};
+
+/* ===== END MOB QUEST v93 ===== */
 
 /* ===== END MOB QUEST v92 ===== */
 
