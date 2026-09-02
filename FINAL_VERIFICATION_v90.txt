@@ -1,0 +1,40 @@
+MOB QUEST v90 FINAL VERIFICATION
+
+FINAL RESULT: PASS
+
+Current-turn verification:
+- external js/game.js syntax: PASS
+- external js/data.js syntax: PASS
+- index.html inline JavaScript syntax: PASS
+- index.html inline CSS == css/style.css: PASS
+- index.html inline data.js + game.js == external files: PASS
+- version: v90 / GAME_ASSET_VERSION 90
+- static title UI restored: PASS
+- old dynamic v88/v89 title hidden: PASS
+- black opening narration: PASS
+- opening whole-screen tap handling: PASS
+- actor-following castle speech path: PASS
+- Japanese dialogue balancing: PASS
+- battle story tap wait: PASS
+- skill final fade: 0.70 sec
+- first grass rescue maximum 2 times: PASS
+- first grassland normal encounter max 2: PASS
+- sequential subquest display: PASS
+- cleared subquests hidden: PASS
+- rich subquest clear/reward UI: PASS
+- adventure abandon rollback: PASS
+- castle load-before-dialogue: PASS
+- five-enemy battle layout: PASS
+- unfinishedBook / demonCastle2 retained: PASS
+- party persistence up to 12: PASS
+- WEAPONS: 88 / 88
+- ARMORS: 67 / 67
+
+Browser verification:
+- Mobile 390x844: title v90 PASS, NEW GAME visible, opening narration visible inside game area, page error 0, console error 0.
+- Desktop 1280x900: app centered at 480px width, title v90 PASS, NEW GAME visible, opening narration inside centered game area, page error 0, console error 0.
+
+Packaging:
+- ZIP integrity: PASS
+- re-extracted external JS syntax: PASS
+- re-extracted inline JS syntax: PASS

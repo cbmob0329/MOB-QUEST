@@ -1,0 +1,11 @@
+MOB QUEST v90 DEPLOY
+
+GitHub Pagesでは、このZIPの以下4ファイルを上書きしてください。
+- index.html
+- css/style.css
+- js/data.js
+- js/game.js
+
+既存の画像・音声フォルダ（back / back2 / play / enemy / boss / icon / mqicon / skill / ult / bogu / wepon / music など）は削除せず、そのまま残してください。
+
+v90はindex.htmlにもCSS・data.js・game.jsを内蔵しているため、HTMLだけ新しく外部JS/CSSだけ古い状態になりにくい構成です。

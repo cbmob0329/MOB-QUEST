@@ -1,0 +1,38 @@
+MOB QUEST v90 REGRESSION REPORT
+
+RESULT: PASS
+
+STATIC REGRESSION: 36 / 36 PASS
+- v90 static canonical title: PASS
+- old dynamic title disabled: PASS
+- title does not fall back to old HOME map: PASS
+- modern black opening narration: PASS
+- whole-screen tap for 「勇者は深く頷いた」: PASS
+- actor-following castle speech: PASS
+- Japanese dialogue balancing: PASS
+- content-fit facility dialogue: PASS
+- HOME tutorial restored: PASS
+- initial 0G / 0 diamond: PASS
+- 15,000G + tent x2 supply: PASS
+- battle story tap wait: PASS
+- skill fade 0.70s: PASS
+- first grass rescue x2: PASS
+- grass normal/ambush max 2: PASS
+- sequential subquests: PASS
+- rich subquest clear/reward: PASS
+- adventure abandon rollback: PASS
+- castle load-before-dialogue: PASS
+- five-enemy battle: PASS
+- unfinishedBook / demonCastle2: PASS
+- party save 12: PASS
+- WEAPONS 88: PASS
+- ARMORS 67: PASS
+- inline CSS/JS parity: PASS
+
+RUNTIME DATA CHECK: PASS
+- Grassland canonical levels/formations confirmed at runtime.
+- World tail order: desert2 -> demonCastle -> unfinishedBook -> demonCastle2.
+
+BROWSER FLOW TEST
+- Mobile 390x844: title PASS, black prologue centered PASS, king speech bubble PASS, outside-caption tap PASS, Pink entrance bubble PASS, page error 0.
+- Desktop 1280x900: app width 480 and centered, title PASS, black prologue centered PASS, king speech bubble PASS, outside-caption tap PASS, Pink entrance bubble PASS, page error 0.

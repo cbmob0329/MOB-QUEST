@@ -633,3 +633,24 @@ add('sq-enetchaser-neo','モブエネチェイサーネオ','spenemy/011.png','�
 add('sq-high-abyss','モブハイアビスソルジャー','spenemy/013.png','海底');
 add('sq-power-jones','モブパワージョーンズ','spenemy/014.png','海底');
 })();
+
+// ===== MOB QUEST v90 : RESTORE CANONICAL GRASSLAND BALANCE AFTER v89 UI REGRESSION =====
+(()=>{
+  const e=id=>(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);
+  const patch=(id,x)=>{const t=e(id);if(t)Object.assign(t,x);};
+  patch('g-slime',{levelMin:1,levelMax:3});
+  patch('g-rock',{levelMin:2,levelMax:3});
+  patch('g-jouro',{levelMin:3,levelMax:3});
+  patch('g-tendevi',{levelMin:2,levelMax:3});
+  patch('g-bird',{levelMin:1,levelMax:3});
+  patch('g-piyo-green',{levelMin:2,levelMax:3});
+  patch('g-piyo-red',{levelMin:2,levelMax:3});
+  patch('g-beaver',{levelMin:2,levelMax:2});
+  patch('g-savanna',{levelMin:5,levelMax:5,special:'サバンナダンス',kind:'single',power:.80,skillElement:'地',skillType:'physical'});
+  patch('g-iwakiri',{levelMin:6,levelMax:6,special:'イワキリサンダー',kind:'aoe',power:.66,skillElement:'雷',skillType:'magic'});
+  patch('g-axe',{levelMin:6,levelMax:6,special:'アックススクラッチ',kind:'single',power:.80,skillElement:'風',skillType:'physical'});
+  patch('boss-hawk',{levelMin:8,levelMax:8,special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
+  const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id==='grassland');
+  if(w?.areas?.length>=4){w.areas[0].boss=[{id:'g-beaver',level:3,qty:2},{id:'g-savanna',level:5}];w.areas[1].boss=[{id:'g-iwakiri',level:6}];w.areas[2].boss=[{id:'g-axe',level:6}];w.areas[3].boss=[{id:'boss-hawk',level:8}];}
+  const legacy=(MOB_DATA.bosses||[]).find(x=>x.id==='hawk');if(legacy)Object.assign(legacy,{special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
+})();
