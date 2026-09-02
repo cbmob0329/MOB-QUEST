@@ -1,4 +1,4 @@
-// MOB QUEST v88
+// MOB QUEST v89
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -760,3 +760,119 @@ for(const [element,id] of Object.entries(_v73Middle)){
   }
 }
 
+
+
+/* ===== MOB QUEST v89 : canonical climax / boss update ===== */
+(()=>{
+  const enemies=MOB_DATA.enemyCatalog=MOB_DATA.enemyCatalog||[];
+  const players=MOB_DATA.players=MOB_DATA.players||[];
+  const worlds=MOB_DATA.adventureWorlds=MOB_DATA.adventureWorlds||[];
+  const enemy=id=>enemies.find(e=>e.id===id);
+  const playerById=id=>players.find(p=>p.id===id);
+  const world=id=>worlds.find(w=>w.id===id);
+  const up=(id,patch)=>{const e=enemy(id);if(e)Object.assign(e,patch);else enemies.push({id,...patch});};
+  const ensureWorld=cfg=>{let w=world(cfg.id);if(w)Object.assign(w,cfg);else{worlds.push(cfg);w=cfg;}return w;};
+
+  /* 魔王城 AREA4：ヤミモブマニー */
+  up('boss-yami-money',{name:'ヤミモブマニー',stage:'魔王城',category:'boss',attribute:'闇',image:'boss/57.png',symbol:'闇',levelMin:90,levelMax:90,bossId:'yamiMoney',special:'ネオン・マニーズ・ボム',kind:'aoeStunChance',power:1.95,chance:.30,skillElement:'闇',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.18,mag:1.18}});
+  const dc=world('demonCastle');if(dc?.areas?.[3])dc.areas[3].boss=[{id:'boss-yami-money',level:90,actionCount:2,forceActionCount:true}];
+
+  /* 読みかけの本 */
+  up('book-minion',{name:'モブ怪人の手下',stage:'読みかけの本',category:'elite',attribute:'闇',image:'enemy/148.png',symbol:'怪',levelMin:70,levelMax:70,special:'ポイズンアタック',kind:'poisonSingle',power:1.45,chance:.70,skillElement:'闇',skillType:'physical',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'ポイズンアタック',kind:'poisonSingle',power:1.45,chance:.70,skillElement:'闇',skillType:'physical'},
+    {special:'フラッシュパンチ',kind:'stunSingle',power:1.45,chance:.40,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-captain',{name:'モブ怪人の隊長',stage:'読みかけの本',category:'elite',attribute:'闇',image:'enemy/149.png',symbol:'隊',levelMin:80,levelMax:80,special:'キーキー連撃',kind:'v88MultiRandom',hits:3,power:.92,skillElement:'無',skillType:'physical',actionCount:2,forceActionCount:true});
+  up('book-exec-blue',{name:'モブ怪人幹部青',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:83,levelMax:83,special:'アクノウォールウェーブ',kind:'aoe',power:1.32,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'アクノウォールウェーブ',kind:'aoe',power:1.32,skillElement:'水',skillType:'magic'},
+    {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-red',{name:'モブ怪人幹部赤',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:83,levelMax:83,special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical'},
+    {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+    {special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic'},
+    {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+    {special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical'},
+    {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-kaijin-boss',{name:'モブ怪人のボス',stage:'読みかけの本',category:'boss',attribute:'闇・無',image:'boss/37.png',symbol:'怪',levelMin:90,levelMax:90,bossId:'kaijinBoss',special:'パーフェクトスマイル',kind:'aoeSleepChance',power:1.95,chance:.30,skillElement:'闇',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.20,permanentDamageReduction:true,specialOptions:[
+    {special:'パーフェクトスマイル',kind:'aoeSleepChance',power:1.95,chance:.30,skillElement:'闇',skillType:'physical'},
+    {special:'アクノソシキ',kind:'stunSingle',power:2.65,chance:.80,skillElement:'闇',skillType:'physical'}
+  ]});
+  up('book-navi',{name:'モブナビ',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/52.png',symbol:'導',levelMin:90,levelMax:90,bossId:'mobNavi',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,specialOptions:[
+    {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
+    {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
+  ]});
+  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,naviBarrier:true,specialOptions:[
+    {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
+    {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
+  ]});
+
+  ensureWorld({id:'unfinishedBook',name:'読みかけの本',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
+    {name:'AREA 1',bg:'back/book.png',boss:[{id:'book-minion',level:70,qty:2},{id:'book-captain',level:80}]},
+    {name:'AREA 2',bg:'back/book2.png',boss:[{id:'book-exec-blue',level:83},{id:'book-exec-red',level:83}],nextWave:[{id:'book-exec-blue2',level:87},{id:'book-exec-red2',level:87}]},
+    {name:'AREA 3',bg:'back/book3.png',boss:[{id:'book-kaijin-boss',level:90,actionCount:3,forceActionCount:true}]},
+    {name:'AREA 4',bg:'back/book4.png',boss:[{id:'book-captain',level:80,qty:2},{id:'book-kaijin-boss',level:90}]}
+  ]});
+
+  /* 最後の仲間：モブ怪人のボス */
+  if(!playerById('kaijin')){
+    players.push({id:'kaijin',name:'モブ怪人のボス',image:'boss/37.png',symbol:'怪',attribute:'闇',weapon:'大剣・太刀',role:'怪人',passive:'悪役の意地',ults:[
+      {name:'アクノソシキ',image:'boss/37.png',cost:35,kind:'damage',power:2.15,attackElement:'闇',desc:'敵単体に闇属性大ダメージ。'},
+      {name:'パーフェクトスマイル',image:'boss/37.png',cost:42,kind:'aoeDamage',power:1.75,attackElement:'闇',desc:'敵全体に闇属性ダメージ。'},
+      {name:'キーキー連撃',image:'boss/37.png',cost:38,kind:'multiHit',power:1.80,attackElement:'無',desc:'敵へ連続攻撃。'},
+      {name:'怪人共闘',image:'boss/37.png',cost:48,kind:'selfAllBuff',power:0,desc:'自身の能力を強化する。'}
+    ]});
+    TEMP_BALANCE.playerTargets=TEMP_BALANCE.playerTargets||{};
+    TEMP_BALANCE.playerGrowth=TEMP_BALANCE.playerGrowth||{};
+    TEMP_BALANCE.playerTargets.kaijin={hp:[140,1280,1520],mp:[95,1100,1380],atk:[50,680,820],mag:[42,570,700],def:[42,560,690],res:[38,520,650],spd:[42,570,690]};
+    TEMP_BALANCE.playerGrowth.kaijin={hp:56,mp:2.4,atk:7.8,mag:6.0,def:4.0,res:3.8,spd:2.8};
+  }
+
+  /* 魔王城Ⅱ */
+  up('dc2-hell',{name:'覚醒モブヘルリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'火',image:'boss/44.png',symbol:'炎',levelMin:85,levelMax:85,special:'ローズ・オブ・ファイヤー',kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-kirin',{name:'覚醒モブキリンリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'雷',image:'boss/45.png',symbol:'雷',levelMin:85,levelMax:85,special:'サンダーボルト',kind:'aoeParalyzeChance',power:1.30,chance:.20,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-riva',{name:'覚醒モブリヴァリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'水',image:'boss/46.png',symbol:'水',levelMin:85,levelMax:85,special:'ダイダルローズ',kind:'ctSingle',power:1.40,ctAdd:2,skillElement:'水',skillType:'physical',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-kufu',{name:'覚醒モブクフリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'光',image:'boss/47.png',symbol:'光',levelMin:85,levelMax:85,special:'ライトニング・エナジーキューブ',kind:'aoeSleepChance',power:1.30,chance:.20,skillElement:'光',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-lilith',{name:'モブリリス',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/21.png',symbol:'薔',levelMin:85,levelMax:85,bossId:'lilith2',special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic'},
+    {special:'薔薇の鼓動',kind:'poisonSingle',power:1.78,chance:.70,skillElement:'闇',skillType:'physical'}
+  ]});
+  up('dc2-enma',{name:'モブ閻魔',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:90,levelMax:90,bossId:'enma',special:'ジャッジメントソード',kind:'aoeStunChance',power:1.90,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[1,3]});
+  up('dc2-enma2',{name:'モブ閻魔 第二形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:92,levelMax:92,bossId:'enma2',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.55,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[1,3]});
+  up('dc2-enma3',{name:'モブ閻魔 最終形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:94,levelMax:94,bossId:'enmaFinal',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.65,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[2,3]});
+  up('dc2-maou',{name:'モブ魔王',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/22.png',symbol:'王',levelMin:95,levelMax:95,bossId:'maou2',special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic'},
+    {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:1.95,chance:.30,skillElement:'闇',skillType:'magic'}
+  ]});
+  up('dc2-ulrilis',{name:'ウルモブリリス',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/36.png',symbol:'闇',levelMin:99,levelMax:99,bossId:'ulLilith',special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.48,heal:.06,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.48,heal:.06,skillElement:'闇',skillType:'magic'},
+    {special:'薔薇の鼓動',kind:'poisonSingle',power:1.85,chance:.70,skillElement:'闇',skillType:'physical'},
+    {special:'キング・ダーク・カノン',kind:'single',power:2.70,skillElement:'闇',skillType:'magic'},
+    {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:2.00,chance:.30,skillElement:'闇',skillType:'magic'}
+  ]});
+  ensureWorld({id:'demonCastle2',name:'魔王城Ⅱ',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
+    {name:'AREA 1',bg:'back/maoh.png',boss:[{id:'dc2-hell',level:85},{id:'dc2-kirin',level:85},{id:'dc2-riva',level:85},{id:'dc2-kufu',level:85}]},
+    {name:'AREA 2',bg:'back/maoh2.png',boss:[{id:'dc2-lilith',level:85,qty:3}]},
+    {name:'AREA 3',bg:'back/maoh3.png',boss:[{id:'dc2-enma',level:90}],nextWaves:[[{id:'dc2-enma2',level:92}],[{id:'dc2-enma3',level:94}]]},
+    {name:'AREA 4',bg:'back/maoh4.png',boss:[{id:'dc2-maou',level:95}],nextWave:[{id:'dc2-ulrilis',level:99}]}
+  ]});
+
+  /* v88 のクライマックス順序を固定 */
+  const book=world('unfinishedBook'),dc2=world('demonCastle2');
+  if(book&&dc2){
+    MOB_DATA.adventureWorlds=MOB_DATA.adventureWorlds.filter(w=>!['unfinishedBook','demonCastle2'].includes(w.id));
+    const i=MOB_DATA.adventureWorlds.findIndex(w=>w.id==='demonCastle');
+    MOB_DATA.adventureWorlds.splice(i<0?MOB_DATA.adventureWorlds.length:i+1,0,book,dc2);
+  }
+
+  /* 通常世界で使う第五必殺技 / マニーフレンズ */
+  const y=playerById('yusha');
+  if(y){y.ults=y.ults||[];const u={name:'読みかけの本',image:'play/13.png',cost:55,kind:'heroTransform',power:0,desc:'あのヒーローに変身。全ステータス20%アップ＋必殺技威力20%アップ。'};if(y.ults[4])Object.assign(y.ults[4],u);else y.ults.push(u);}
+  const money=playerById('money');
+  if(money){money.ults=money.ults||[];if(!money.ults.some(u=>u.name==='マニーフレンズ'))money.ults.push({name:'マニーフレンズ',image:'boss/57.png',cost:55,kind:'moneyFriends',power:0,desc:'ヤミモブマニーに変身。全ステータス20%アップ、状態異常耐性20%アップ、魔法会心率10%アップ。'});}
+})();
