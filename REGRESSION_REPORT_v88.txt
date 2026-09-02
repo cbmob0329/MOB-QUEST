@@ -1,0 +1,31 @@
+MOB QUEST v88 REGRESSION REPORT
+
+RESULT: PASS
+
+PASS: v88
+PASS: battle_tap
+PASS: opening_anywhere
+PASS: fade
+PASS: iife_scope
+PASS: book
+PASS: castle2
+PASS: book_loss
+PASS: book_power
+PASS: navi
+PASS: kaijin
+PASS: lilith
+PASS: ending
+PASS: reports
+PASS: portal
+PASS: snapshot
+PASS: homeblock
+PASS: subquest_hidden
+PASS: five_enemy
+PASS: weapons88
+PASS: armor67
+PASS: grass_rescue2
+PASS: castle_preload
+PASS: party12
+PASS: css_balance
+
+TOTAL: 25/25 PASS

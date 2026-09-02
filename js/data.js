@@ -1,4 +1,4 @@
-// MOB QUEST v87
+// MOB QUEST v42
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -45,7 +45,7 @@ const MOB_DATA = {
         {name:'特別だと信じる力',image:'ult/02.png',cost:20,kind:'selfAllBuff',power:0,desc:'自身の全能力20%UP＋被ダメージ10%軽減。'},
         {name:'エピソード・ジューマンジ',image:'ult/03.png',cost:30,kind:'jumanji',power:2.05,type:'magic',desc:'敵単体大ダメージ＋自身バフ＋敵デバフ。'},
         {name:'ネバー・エンディング・ブラスト',image:'ult/04.png',cost:38,kind:'lowHpBurst',power:2.55,type:'magic',desc:'敵単体極大ダメージ。味方残HPが少ないほど強化。'},
-        {name:'読みかけの本',image:'play/13.png',cost:55,kind:'heroTransform',power:0,desc:'HP50%回復し「あのヒーロー」に変身。全能力30%UP＋自身の全必殺技CT-3。'}
+        {name:'読みかけの本',image:'play/13.png',cost:55,kind:'heroTransform',power:0,desc:'HP50%回復し「あのヒーロー」に変身。全能力30%UP。'}
       ]
     },
     {
@@ -509,254 +509,127 @@ TEMP_BALANCE.playerTargets={
 }
 
 
-/* ===== MOB QUEST v73 CANONICAL SKILL MATERIALS =====
-   Source priority: 技のスプライトシート素材について(5).txt
-   Learners are still undecided. Normal play uses the character element's middle spell;
-   TEST MODE + 全技 uses every catalog entry. */
-MOB_DATA.magicCatalog=[
-  {id:'hono',name:'ホノ',element:'火',tier:'small',cost:6,power:1.05,target:'single',frames:['skill/01.png','skill/02.png','skill/03.png','skill/04.png']},
-  {id:'honoma',name:'ホノマ',element:'火',tier:'medium',cost:12,power:1.55,target:'single',frames:['skill/05.png','skill/06.png','skill/07.png','skill/08.png','skill/04.png']},
-  {id:'honomagma',name:'ホノマグマ',element:'火',tier:'large',cost:22,power:2.15,target:'single',frames:['skill/09.png','skill/10.png','skill/11.png','skill/12.png','skill/05.png','skill/06.png']},
-  {id:'nepu',name:'ネプ',element:'水',tier:'small',cost:6,power:1.05,target:'single',frames:['skill/13.png','skill/14.png','skill/15.png','skill/16.png']},
-  {id:'nepuma',name:'ネプマ',element:'水',tier:'medium',cost:12,power:1.55,target:'single',frames:['skill/17.png','skill/18.png','skill/19.png','skill/17.png']},
-  {id:'nepumachun',name:'ネプマチューン',element:'水',tier:'large',cost:22,power:2.15,target:'single',frames:['skill/20.png','skill/21.png','skill/22.png','skill/23.png','skill/22.png','skill/21.png']},
-  {id:'toru',name:'トル',element:'雷',tier:'small',cost:7,power:1.08,target:'single',frames:['skill/24.png','skill/25.png','skill/26.png','skill/27.png']},
-  {id:'toruma',name:'トルマ',element:'雷',tier:'medium',cost:13,power:1.58,target:'single',frames:['skill/29.png','skill/30.png','skill/31.png']},
-  {id:'torumaden',name:'トルマデン',element:'雷',tier:'large',cost:23,power:2.18,target:'single',frames:['skill/32.png','skill/33.png','skill/34.png','skill/30.png','skill/28.png']},
-  {id:'gore',name:'ゴレ',element:'地',tier:'small',cost:7,power:1.08,target:'single',frames:['skill/35.png','skill/36.png','skill/37.png','skill/38.png']},
-  {id:'gorema',name:'ゴレマ',element:'地',tier:'medium',cost:13,power:1.58,target:'single',frames:['skill/39.png','skill/40.png','skill/41.png','skill/42.png']},
-  {id:'goremagardy',name:'ゴレマガーディ',element:'地',tier:'large',cost:23,power:2.18,target:'single',frames:['skill/41.png','skill/43.png','skill/44.png','skill/45.png'],mode:'earthLargeV74'},
-  {id:'hoku',name:'ホク',element:'風',tier:'small',cost:6,power:1.05,target:'single',frames:['skill/45.png','skill/46.png','skill/47.png','skill/48.png']},
-  {id:'hokuma',name:'ホクマ',element:'風',tier:'medium',cost:12,power:1.55,target:'single',frames:['skill/49.png','skill/50.png','skill/51.png','skill/52.png']},
-  {id:'hokumawing',name:'ホクマウィング',element:'風',tier:'large',cost:22,power:2.15,target:'single',frames:['skill/47.png','skill/51.png','skill/53.png','skill/52.png'],mode:'windLargeV74'},
-  {id:'neo',name:'ネオ',element:'光',tier:'small',cost:7,power:1.10,target:'single',frames:['skill/54.png','skill/55.png','skill/56.png'],mode:'lightSmall'},
-  {id:'neoma',name:'ネオマ',element:'光',tier:'medium',cost:14,power:1.62,target:'single',frames:['skill/54.png','skill/55.png','skill/57.png','skill/58.png','skill/56.png']},
-  {id:'neomanipool',name:'ネオマニプール',element:'光',tier:'large',cost:24,power:2.22,target:'single',frames:['skill/57.png','skill/58.png','skill/59.png','skill/60.png'],mode:'lightLargeV74'},
-  {id:'mira',name:'ミラ',element:'闇',tier:'small',cost:7,power:1.10,target:'single',frames:['skill/61.png','skill/62.png','skill/63.png','skill/64.png']},
-  {id:'mirama',name:'ミラマ',element:'闇',tier:'medium',cost:14,power:1.62,target:'single',frames:['skill/65.png','skill/66.png','skill/67.png','skill/68.png']},
-  {id:'miramazone',name:'ミラマゾーン',element:'闇',tier:'large',cost:24,power:2.22,target:'single',frames:['skill/69.png','skill/70.png','skill/71.png','skill/72.png']},
-  {id:'anoma',name:'アノマ',element:'無',tier:'medium',cost:10,power:1.25,target:'single',frames:['skill/127.png','skill/128.png','skill/129.png','skill/130.png']},
-  {id:'anomaun',name:'アノマウン',element:'無',tier:'large',cost:18,power:1.90,target:'single',frames:['skill/131.png','skill/132.png','skill/133.png','skill/134.png']},
-  {id:'garagaranotabi',name:'ガラガラノタビ',element:'地',tier:'all',cost:18,power:1.20,target:'all',frames:['skill/39.png','skill/40.png','skill/41.png','skill/42.png']},
-  {id:'girigirinokaruma',name:'ギリギリノカルマ',element:'闇',tier:'all',cost:19,power:1.22,target:'all',frames:['skill/65.png','skill/66.png','skill/67.png','skill/68.png']},
-  {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:18,power:1.20,target:'all',frames:['skill/17.png','skill/18.png','skill/19.png','skill/17.png']},
-  {id:'kizuitakitsutsuki',name:'キヅイタキツツキ',element:'地',tier:'all',cost:18,power:1.20,target:'all',frames:['skill/39.png','skill/40.png','skill/41.png','skill/42.png']},
-  {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:18,power:1.20,target:'all',frames:['skill/49.png','skill/50.png','skill/51.png','skill/52.png']},
-  {id:'kamaenohanashi',name:'カマエノハナシ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:['skill/54.png','skill/55.png','skill/57.png','skill/58.png','skill/56.png']}
-];
-MOB_DATA.techniqueCatalog=[
-  {id:'magsword',name:'マグソード',element:'火',kind:'slash',tier:'small',cost:7,power:1.15,frames:['skill/73.png','skill/74.png','skill/75.png','skill/76.png']},
-  {id:'magmasword',name:'マグマソード',element:'火',kind:'slash',tier:'large',cost:15,power:1.78,frames:['skill/77.png','skill/78.png','skill/79.png','skill/80.png']},
-  {id:'nepusword',name:'ネプソード',element:'水',kind:'slash',tier:'small',cost:7,power:1.15,frames:['skill/81.png','skill/82.png','skill/83.png','skill/84.png']},
-  {id:'nepumasword',name:'ネプマソード',element:'水',kind:'slash',tier:'large',cost:15,power:1.78,frames:['skill/81.png','skill/82.png','skill/85.png','skill/86.png']},
-  {id:'torusword',name:'トルソード',element:'雷',kind:'slash',tier:'small',cost:8,power:1.18,frames:['skill/87.png','skill/88.png','skill/89.png','skill/90.png']},
-  {id:'torumasword',name:'トルマソード',element:'雷',kind:'slash',tier:'large',cost:16,power:1.82,frames:['skill/91.png','skill/92.png','skill/93.png','skill/94.png']},
-  {id:'goresword',name:'ゴレソード',element:'地',kind:'slash',tier:'small',cost:8,power:1.18,frames:['skill/120.png','skill/121.png','skill/122.png','skill/123.png']},
-  {id:'goremasword',name:'ゴレマソード',element:'地',kind:'slash',tier:'large',cost:16,power:1.82,frames:['skill/124.png','skill/125.png','skill/126.png','skill/123.png']},
-  {id:'neosword',name:'ネオソード',element:'光',kind:'slash',tier:'small',cost:8,power:1.20,frames:['skill/112.png','skill/113.png','skill/114.png','skill/115.png']},
-  {id:'neomasword',name:'ネオマソード',element:'光',kind:'slash',tier:'large',cost:17,power:1.86,frames:['skill/116.png','skill/117.png','skill/118.png','skill/119.png']},
-  {id:'mirasword',name:'ミラソード',element:'闇',kind:'slash',tier:'small',cost:8,power:1.20,frames:['skill/103.png','skill/104.png','skill/105.png','skill/106.png']},
-  {id:'miramasword',name:'ミラマソード',element:'闇',kind:'slash',tier:'large',cost:17,power:1.86,frames:['skill/108.png','skill/109.png','skill/110.png','skill/111.png']},
-  {id:'anosword',name:'アノソード',element:'無',kind:'slash',tier:'small',cost:7,power:1.12,frames:['skill/95.png','skill/96.png','skill/97.png','skill/98.png']},
-  {id:'anomasword',name:'アノマソード',element:'無',kind:'slash',tier:'large',cost:15,power:1.72,frames:['skill/99.png','skill/100.png','skill/101.png','skill/102.png']},
-  {id:'noise-scratch',name:'ノイズスクラッチ',element:'無',kind:'status',status:'confuse',cost:10,power:1.20,chance:.60,frames:[]},
-  {id:'chill-lofi',name:'チルローファイ',element:'無',kind:'status',status:'sleep',cost:10,power:1.20,chance:.60,frames:[]},
-  {id:'fast-beat',name:'ファストビート',element:'火',kind:'status',status:'burn',cost:10,power:1.20,chance:.60,frames:[]},
-  {id:'repeat-intro',name:'リピートイントロ',element:'闇',kind:'status',status:'poison',cost:10,power:1.20,chance:.60,frames:[]},
-  {id:'long-scratch',name:'ロングスクラッチ',element:'雷',kind:'status',status:'paralyze',cost:10,power:1.20,chance:.60,frames:[]}
-];
-const _v73Middle={火:'honoma',水:'nepuma',雷:'toruma',地:'gorema',風:'hokuma',光:'neoma',闇:'mirama',無:'anoma'};
-for(const [element,id] of Object.entries(_v73Middle)){
-  const m=MOB_DATA.magicCatalog.find(x=>x.id===id);if(m)Object.assign(MOB_DATA.elements[element],{temporary:false,spell:m.name,cost:m.cost,power:m.power,frames:[...m.frames]});
-}
-
-/* ===== MOB QUEST v73 CANONICAL BOSS / AREA FIXES =====
-   ボス(20260827-071616).txt / 冒険イベント最新版を優先。 */
+/* ===== MOB QUEST v88 : 2026-09-02 canonical climax / boss update ===== */
 (()=>{
-  const enemy=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
-  const up=(id,patch)=>{const e=enemy(id);if(e)Object.assign(e,patch);else MOB_DATA.enemyCatalog.push({id,...patch});};
-  const world=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
-  up('d2-miraearth',{image:'enemy/37.png'});
-  up('d2-mirakarami',{image:'enemy/38.png'});
-  up('d2-miranight',{image:'enemy/39.png'});
-  up('d2-miratime',{image:'enemy/40.png'});
-  up('c-succubus',{name:'モブララウィッチ',image:'enemy/147.png'});
-  up('c-lilith-hell',{name:'モブヘルリリス',stage:'魔王城',category:'elite',attribute:'火',image:'boss/40.png',symbol:'炎',levelMin:80,levelMax:80,special:'ローズ・オブ・ファイヤー',kind:'burnSingle',power:1.55,chance:.40,skillElement:'火',skillType:'magic'});
-  up('c-lilith-kirin',{name:'モブキリンリリス',stage:'魔王城',category:'elite',attribute:'雷',image:'boss/41.png',symbol:'雷',levelMin:80,levelMax:80,special:'サンダーボルト',kind:'aoeParalyzeChance',power:1.20,chance:.20,skillElement:'雷',skillType:'magic'});
-  up('c-lilith-kufu',{name:'モブクフリリス',stage:'魔王城',category:'elite',attribute:'光',image:'boss/42.png',symbol:'光',levelMin:80,levelMax:80,special:'ライトニング・エナジーキューブ',kind:'aoeSleepChance',power:1.20,chance:.20,skillElement:'光',skillType:'magic'});
-  up('c-lilith-riva',{name:'モブリヴァリリス',stage:'魔王城',category:'elite',attribute:'水',image:'boss/43.png',symbol:'水',levelMin:80,levelMax:80,special:'ダイダルローズ',kind:'ctSingle',power:1.30,ctAdd:2,skillElement:'水',skillType:'physical'});
-  up('boss-lilith-castle',{actionCount:2,specialOptions:[
-    {special:'ブラックホール',kind:'healAoeBoss',power:1.25,heal:.06,skillElement:'闇',skillType:'magic'},
-    {special:'薔薇の鼓動',kind:'poisonSingle',power:1.72,chance:.70,skillElement:'闇',skillType:'physical'}
+  const enemies=MOB_DATA.enemyCatalog=MOB_DATA.enemyCatalog||[];
+  const players=MOB_DATA.players=MOB_DATA.players||[];
+  const worlds=MOB_DATA.adventureWorlds=MOB_DATA.adventureWorlds||[];
+  const enemy=id=>enemies.find(e=>e.id===id);
+  const playerById=id=>players.find(p=>p.id===id);
+  const world=id=>worlds.find(w=>w.id===id);
+  const up=(id,patch)=>{const e=enemy(id);if(e)Object.assign(e,patch);else enemies.push({id,...patch});};
+  const ensureWorld=cfg=>{let w=world(cfg.id);if(w)Object.assign(w,cfg);else{worlds.push(cfg);w=cfg;}return w;};
+
+  /* 魔王城 AREA4：ヤミモブマニー */
+  up('boss-yami-money',{name:'ヤミモブマニー',stage:'魔王城',category:'boss',attribute:'闇',image:'boss/57.png',symbol:'闇',levelMin:90,levelMax:90,bossId:'yamiMoney',special:'ネオン・マニーズ・ボム',kind:'aoeStunChance',power:1.95,chance:.30,skillElement:'闇',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.18,mag:1.18}});
+  const dc=world('demonCastle');if(dc?.areas?.[3])dc.areas[3].boss=[{id:'boss-yami-money',level:90,actionCount:2,forceActionCount:true}];
+
+  /* 読みかけの本 */
+  up('book-minion',{name:'モブ怪人の手下',stage:'読みかけの本',category:'elite',attribute:'闇',image:'enemy/148.png',symbol:'怪',levelMin:70,levelMax:70,special:'ポイズンアタック',kind:'poisonSingle',power:1.45,chance:.70,skillElement:'闇',skillType:'physical',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'ポイズンアタック',kind:'poisonSingle',power:1.45,chance:.70,skillElement:'闇',skillType:'physical'},
+    {special:'フラッシュパンチ',kind:'stunSingle',power:1.45,chance:.40,skillElement:'無',skillType:'physical'}
   ]});
-  const d=world('demonCastle');if(d){
-    d.areas[0].boss=[{id:'c-killwitch',level:80},{id:'c-succubus',level:80}];
-    d.areas[1].boss=[{id:'c-miraheld',level:75,escort:true},{id:'boss-gladi',level:82},{id:'c-yamieater',level:75,escort:true}];
-    /* Bパーティー戦 → Aパーティー戦。編成分割UIはgame.js側で保持。 */
-    d.areas[2].boss=[{id:'c-lilith-kufu',level:80},{id:'c-lilith-riva',level:80}];
-    d.areas[2].nextWave=[{id:'c-lilith-hell',level:80},{id:'boss-lilith-castle',level:85,actionCount:2},{id:'c-lilith-kirin',level:80}];
-    delete d.areas[2].nextWaves;
-    d.areas[3].boss=[{id:'boss-maou-castle',level:95}];
+  up('book-captain',{name:'モブ怪人の隊長',stage:'読みかけの本',category:'elite',attribute:'闇',image:'enemy/149.png',symbol:'隊',levelMin:80,levelMax:80,special:'キーキー連撃',kind:'v88MultiRandom',hits:3,power:.92,skillElement:'無',skillType:'physical',actionCount:2,forceActionCount:true});
+  up('book-exec-blue',{name:'モブ怪人幹部青',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:83,levelMax:83,special:'アクノウォールウェーブ',kind:'aoe',power:1.32,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'アクノウォールウェーブ',kind:'aoe',power:1.32,skillElement:'水',skillType:'magic'},
+    {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-red',{name:'モブ怪人幹部赤',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:83,levelMax:83,special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,specialOptions:[
+    {special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical'},
+    {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+    {special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic'},
+    {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+    {special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical'},
+    {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
+  ]});
+  up('book-kaijin-boss',{name:'モブ怪人のボス',stage:'読みかけの本',category:'boss',attribute:'闇・無',image:'boss/37.png',symbol:'怪',levelMin:90,levelMax:90,bossId:'kaijinBoss',special:'パーフェクトスマイル',kind:'aoeSleepChance',power:1.95,chance:.30,skillElement:'闇',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.20,permanentDamageReduction:true,specialOptions:[
+    {special:'パーフェクトスマイル',kind:'aoeSleepChance',power:1.95,chance:.30,skillElement:'闇',skillType:'physical'},
+    {special:'アクノソシキ',kind:'stunSingle',power:2.65,chance:.80,skillElement:'闇',skillType:'physical'}
+  ]});
+  up('book-navi',{name:'モブナビ',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/52.png',symbol:'導',levelMin:90,levelMax:90,bossId:'mobNavi',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,specialOptions:[
+    {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
+    {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
+  ]});
+  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,naviBarrier:true,specialOptions:[
+    {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
+    {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
+  ]});
+
+  ensureWorld({id:'unfinishedBook',name:'読みかけの本',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
+    {name:'AREA 1',bg:'back/book.png',boss:[{id:'book-minion',level:70,qty:2},{id:'book-captain',level:80}]},
+    {name:'AREA 2',bg:'back/book2.png',boss:[{id:'book-exec-blue',level:83},{id:'book-exec-red',level:83}],nextWave:[{id:'book-exec-blue2',level:87},{id:'book-exec-red2',level:87}]},
+    {name:'AREA 3',bg:'back/book3.png',boss:[{id:'book-kaijin-boss',level:90,actionCount:3,forceActionCount:true}]},
+    {name:'AREA 4',bg:'back/book4.png',boss:[{id:'book-captain',level:80,qty:2},{id:'book-kaijin-boss',level:90}]}
+  ]});
+
+  /* 最後の仲間：モブ怪人のボス */
+  if(!playerById('kaijin')){
+    players.push({id:'kaijin',name:'モブ怪人のボス',image:'boss/37.png',symbol:'怪',attribute:'闇',weapon:'大剣・太刀',role:'怪人',passive:'悪役の意地',ults:[
+      {name:'アクノソシキ',image:'boss/37.png',cost:35,kind:'damage',power:2.15,attackElement:'闇',desc:'敵単体に闇属性大ダメージ。'},
+      {name:'パーフェクトスマイル',image:'boss/37.png',cost:42,kind:'aoeDamage',power:1.75,attackElement:'闇',desc:'敵全体に闇属性ダメージ。'},
+      {name:'キーキー連撃',image:'boss/37.png',cost:38,kind:'multiHit',power:1.80,attackElement:'無',desc:'敵へ連続攻撃。'},
+      {name:'怪人共闘',image:'boss/37.png',cost:48,kind:'selfAllBuff',power:0,desc:'自身の能力を強化する。'}
+    ]});
+    TEMP_BALANCE.playerTargets=TEMP_BALANCE.playerTargets||{};
+    TEMP_BALANCE.playerGrowth=TEMP_BALANCE.playerGrowth||{};
+    TEMP_BALANCE.playerTargets.kaijin={hp:[140,1280,1520],mp:[95,1100,1380],atk:[50,680,820],mag:[42,570,700],def:[42,560,690],res:[38,520,650],spd:[42,570,690]};
+    TEMP_BALANCE.playerGrowth.kaijin={hp:56,mp:2.4,atk:7.8,mag:6.0,def:4.0,res:3.8,spd:2.8};
   }
+
+  /* 魔王城Ⅱ */
+  up('dc2-hell',{name:'覚醒モブヘルリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'火',image:'boss/44.png',symbol:'炎',levelMin:85,levelMax:85,special:'ローズ・オブ・ファイヤー',kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-kirin',{name:'覚醒モブキリンリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'雷',image:'boss/45.png',symbol:'雷',levelMin:85,levelMax:85,special:'サンダーボルト',kind:'aoeParalyzeChance',power:1.30,chance:.20,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-riva',{name:'覚醒モブリヴァリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'水',image:'boss/46.png',symbol:'水',levelMin:85,levelMax:85,special:'ダイダルローズ',kind:'ctSingle',power:1.40,ctAdd:2,skillElement:'水',skillType:'physical',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-kufu',{name:'覚醒モブクフリリス',stage:'魔王城Ⅱ',category:'elite',attribute:'光',image:'boss/47.png',symbol:'光',levelMin:85,levelMax:85,special:'ライトニング・エナジーキューブ',kind:'aoeSleepChance',power:1.30,chance:.20,skillElement:'光',skillType:'magic',actionCount:2,actionCountRange:[1,2]});
+  up('dc2-lilith',{name:'モブリリス',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/21.png',symbol:'薔',levelMin:85,levelMax:85,bossId:'lilith2',special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic'},
+    {special:'薔薇の鼓動',kind:'poisonSingle',power:1.78,chance:.70,skillElement:'闇',skillType:'physical'}
+  ]});
+  up('dc2-enma',{name:'モブ閻魔',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:90,levelMax:90,bossId:'enma',special:'ジャッジメントソード',kind:'aoeStunChance',power:1.90,chance:.30,skillElement:'火',skillType:'physical',actionCount:3,actionCountRange:[1,3]});
+  up('dc2-enma2',{name:'モブ閻魔 第二形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:92,levelMax:92,bossId:'enma2',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.55,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[1,3]});
+  up('dc2-enma3',{name:'モブ閻魔 最終形態',stage:'魔王城Ⅱ',category:'boss',attribute:'火',image:'boss/30.png',symbol:'閻',levelMin:94,levelMax:94,bossId:'enmaFinal',special:'ジャッジメントフレイム',kind:'burnSingle',power:2.65,chance:.70,skillElement:'火',skillType:'magic',actionCount:3,actionCountRange:[2,3]});
+  up('dc2-maou',{name:'モブ魔王',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/22.png',symbol:'王',levelMin:95,levelMax:95,bossId:'maou2',special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic'},
+    {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:1.95,chance:.30,skillElement:'闇',skillType:'magic'}
+  ]});
+  up('dc2-ulrilis',{name:'ウルモブリリス',stage:'魔王城Ⅱ',category:'boss',attribute:'闇',image:'boss/36.png',symbol:'闇',levelMin:99,levelMax:99,bossId:'ulLilith',special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.48,heal:.06,skillElement:'闇',skillType:'magic',actionCount:3,actionCountRange:[2,3],specialOptions:[
+    {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.48,heal:.06,skillElement:'闇',skillType:'magic'},
+    {special:'薔薇の鼓動',kind:'poisonSingle',power:1.85,chance:.70,skillElement:'闇',skillType:'physical'},
+    {special:'キング・ダーク・カノン',kind:'single',power:2.70,skillElement:'闇',skillType:'magic'},
+    {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:2.00,chance:.30,skillElement:'闇',skillType:'magic'}
+  ]});
+  ensureWorld({id:'demonCastle2',name:'魔王城Ⅱ',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
+    {name:'AREA 1',bg:'back/maoh.png',boss:[{id:'dc2-hell',level:85},{id:'dc2-kirin',level:85},{id:'dc2-riva',level:85},{id:'dc2-kufu',level:85}]},
+    {name:'AREA 2',bg:'back/maoh2.png',boss:[{id:'dc2-lilith',level:85,qty:3}]},
+    {name:'AREA 3',bg:'back/maoh3.png',boss:[{id:'dc2-enma',level:90}],nextWaves:[[{id:'dc2-enma2',level:92}],[{id:'dc2-enma3',level:94}]]},
+    {name:'AREA 4',bg:'back/maoh4.png',boss:[{id:'dc2-maou',level:95}],nextWave:[{id:'dc2-ulrilis',level:99}]}
+  ]});
+
+  /* v88 のクライマックス順序を固定 */
+  const book=world('unfinishedBook'),dc2=world('demonCastle2');
+  if(book&&dc2){
+    MOB_DATA.adventureWorlds=MOB_DATA.adventureWorlds.filter(w=>!['unfinishedBook','demonCastle2'].includes(w.id));
+    const i=MOB_DATA.adventureWorlds.findIndex(w=>w.id==='demonCastle');
+    MOB_DATA.adventureWorlds.splice(i<0?MOB_DATA.adventureWorlds.length:i+1,0,book,dc2);
+  }
+
+  /* 通常世界で使う第五必殺技 / マニーフレンズ */
+  const y=playerById('yusha');
+  if(y){y.ults=y.ults||[];const u={name:'読みかけの本',image:'play/13.png',cost:55,kind:'heroTransform',power:0,desc:'あのヒーローに変身。全ステータス20%アップ＋必殺技威力20%アップ。'};if(y.ults[4])Object.assign(y.ults[4],u);else y.ults.push(u);}
+  const money=playerById('money');
+  if(money){money.ults=money.ults||[];if(!money.ults.some(u=>u.name==='マニーフレンズ'))money.ults.push({name:'マニーフレンズ',image:'boss/57.png',cost:55,kind:'moneyFriends',power:0,desc:'ヤミモブマニーに変身。全ステータス20%アップ、状態異常耐性20%アップ、魔法会心率10%アップ。'});}
 })();
 
-
-/* ===== MOB QUEST v79: SKILL / ULTIMATE / PASSIVE CANONICAL UPDATE ===== */
-(()=>{
-  const p=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
-  const u=(pid,i,patch)=>{const q=p(pid);if(q?.ults?.[i])Object.assign(q.ults[i],patch);};
-  const seq=(dir,a,b)=>Array.from({length:b-a+1},(_,i)=>`${dir}/${String(a+i).padStart(2,'0')}.png`);
-
-  // Latest player/passive sheet.
-  if(p('yusha')){p('yusha').passive='勇者の使命';p('yusha').passive2='あのヒーローにやっつけてもらおう';}
-  if(p('lilith'))p('lilith').image='play/11.png';
-
-  // Ultimate: current square cut-in stays fixed; effectFrames play after the frame-trace cut-in.
-  u('yusha',0,{effectFrames:seq('skill2',47,50),effectMode:'ultimateV79'});
-  u('yusha',2,{effectFrames:seq('skill2',51,54),effectMode:'ultimateV79'});
-  u('yusha',3,{name:'ネバー・エンディング・フレイム',effectFrames:seq('skill2',55,58),effectMode:'ultimateV79'});
-  u('pink',0,{effectFrames:seq('skill2',44,46),effectMode:'ultimateV79'});
-  u('pink',2,{effectFrames:seq('skill',131,134),effectMode:'ultimateV79'});
-  u('pink',3,{effectFrames:seq('skill2',21,24),effectMode:'ultimateV79'});
-  u('desert',0,{effectFrames:seq('skill2',66,69),effectMode:'ultimateV79'});
-  u('desert',1,{effectFrames:seq('skill2',59,62),effectMode:'ultimateV79'});
-  u('desert',2,{effectFrames:seq('skill2',106,109),effectMode:'ultimateV79'});
-  u('desert',3,{effectFrames:seq('skill2',70,73),effectMode:'ultimateV79'});
-  u('nyoro',0,{effectFrames:seq('skill2',98,101),effectMode:'ultimateV79'});
-  u('nyoro',1,{effectFrames:seq('skill2',102,105),effectMode:'ultimateV79'});
-  u('nyoro',2,{effectFrames:seq('skill2',231,234),effectMode:'ultimateV79'});
-  u('nyoro',3,{effectFrames:seq('skill2',235,238),effectMode:'ultimateV79'});
-  u('nekoku',0,{effectFrames:seq('skill2',153,156),effectMode:'ultimateV79'});
-  u('nekoku',1,{effectFrames:seq('skill2',239,242),effectMode:'ultimateV79'});
-  u('nekoku',2,{effectFrames:seq('skill2',197,200),effectMode:'ultimateV79'});
-  u('nekoku',3,{effectFrames:seq('skill2',149,152),effectMode:'ultimateV79'});
-  u('jessie',0,{effectFrames:seq('skill2',137,140),effectMode:'ultimateV79'});
-  u('jessie',1,{effectFrames:seq('skill2',177,180),effectMode:'ultimateV79'});
-  u('jessie',2,{effectFrames:seq('skill2',145,148),effectMode:'ultimateV79'});
-  u('jessie',3,{effectFrames:seq('skill2',189,192),effectMode:'ultimateV79'});
-  u('denden',0,{hits:[3,3],effectFrames:seq('skill2',74,77),effectMode:'ultimateV79'});
-  u('denden',2,{effectFrames:seq('skill2',82,85),effectMode:'ultimateV79'});
-  u('money',0,{effectFrames:seq('skill2',33,36),effectMode:'ultimateV79'});
-  u('money',1,{effectFrames:seq('skill2',90,93),effectMode:'ultimateV79'});
-  u('riro',0,{effectFrames:seq('skill2',206,209),effectMode:'ultimateV79'});
-  u('riro',2,{effectFrames:seq('skill2',157,160),effectMode:'ultimateV79'});
-  u('riro',3,{effectFrames:seq('skill2',181,184),effectMode:'ultimateV79'});
-  u('tetsu',0,{effectFrames:seq('skill2',1,4),effectMode:'ultimateV79'});
-  u('tetsu',1,{effectFrames:seq('skill2',173,176),effectMode:'ultimateV79'});
-  u('tetsu',2,{effectFrames:seq('skill2',5,8),effectMode:'ultimateV79'});
-  u('tetsu',3,{effectFrames:seq('skill2',214,217),effectMode:'ultimateV79'});
-  u('lilith',0,{effectFrames:seq('skill2',161,164),effectMode:'ultimateV79'});
-  u('lilith',1,{effectFrames:seq('skill2',169,172),effectMode:'ultimateV79'});
-  u('lilith',2,{kind:'aoeCrit',power:2.10,type:'magic',crit:.10,hits:null,desc:'敵全体に闇属性大ダメージ。独立10%会心判定。',effectFrames:seq('skill2',165,168),effectMode:'ultimateV79'});
-  u('lilith',3,{kind:'teamHealMpGuard',power:0,heal:.26,mpHeal:.18,desc:'味方全体のHPとMPを中回復。2ターン被ダメージ30%軽減。'});
-
-  // Canonical ultimate elements/effects from the latest party sheet.
-  u('yusha',0,{attackElement:'光'});u('yusha',2,{attackElement:'雷'});u('yusha',3,{attackElement:'火'});
-  u('pink',0,{attackElement:'無'});u('pink',2,{attackElement:'無'});u('pink',3,{attackElement:'光'});
-  for(let i=0;i<4;i++)u('desert',i,{attackElement:'地'});
-  for(let i=0;i<4;i++)u('nyoro',i,{attackElement:'火'});
-  for(let i=0;i<4;i++)u('nekoku',i,{attackElement:'水'});
-  for(let i=0;i<4;i++)u('jessie',i,{attackElement:'雷'});
-  for(let i=0;i<4;i++)u('denden',i,{attackElement:'雷'});
-  u('denden',0,{hits:[3,3],desc:'ランダムな敵へ3回、雷属性小ダメージ。'});
-  u('money',0,{attackElement:'光'});u('money',1,{attackElement:'火・水・光'});
-  for(let i=0;i<4;i++)u('riro',i,{attackElement:'風'});
-  for(let i=0;i<4;i++)u('tetsu',i,{attackElement:'地'});
-  u('lilith',0,{attackElement:'闇'});u('lilith',1,{kind:'lilithSisters',power:1.30,type:'magic',attackElement:'闇',desc:'火・雷・光・水の中ダメージをランダムな敵へ各1回。'});u('lilith',2,{attackElement:'闇'});
-  u('naraku',0,{attackElement:'闇'});u('naraku',2,{attackElement:'闇・火'});u('naraku',3,{attackElement:'闇'});
-
-  // Canonical magic sprite sequences.
-  MOB_DATA.magicCatalog=[
-    {id:'hono',name:'ホノ',element:'火',tier:'small',cost:6,power:1.05,target:'single',frames:seq('skill',1,4)},
-    {id:'honoma',name:'ホノマ',element:'火',tier:'medium',cost:12,power:1.55,target:'single',frames:[...seq('skill',5,8),'skill/04.png']},
-    {id:'honomagma',name:'ホノマグマ',element:'火',tier:'large',cost:22,power:2.15,target:'single',frames:[...seq('skill',9,12),'skill/05.png','skill/06.png']},
-    {id:'nepu',name:'ネプ',element:'水',tier:'small',cost:6,power:1.05,target:'single',frames:seq('skill',13,16)},
-    {id:'nepuma',name:'ネプマ',element:'水',tier:'medium',cost:12,power:1.55,target:'single',frames:['skill/17.png','skill/18.png','skill/19.png','skill/17.png']},
-    {id:'nepumachun',name:'ネプマチューン',element:'水',tier:'large',cost:22,power:2.15,target:'single',frames:[...seq('skill',20,23),'skill/22.png','skill/21.png']},
-    {id:'toru',name:'トル',element:'雷',tier:'small',cost:7,power:1.08,target:'single',frames:seq('skill',24,27)},
-    {id:'toruma',name:'トルマ',element:'雷',tier:'medium',cost:13,power:1.58,target:'single',frames:seq('skill',29,31)},
-    {id:'torumaden',name:'トルマデン',element:'雷',tier:'large',cost:23,power:2.18,target:'single',frames:[...seq('skill',32,34),'skill/30.png','skill/28.png']},
-    {id:'gore',name:'ゴレ',element:'地',tier:'small',cost:7,power:1.08,target:'single',frames:seq('skill',35,38)},
-    {id:'gorema',name:'ゴレマ',element:'地',tier:'medium',cost:13,power:1.58,target:'single',frames:seq('skill',39,42)},
-    {id:'goremagardy',name:'ゴレマガーディ',element:'地',tier:'large',cost:23,power:2.18,target:'single',frames:['skill/43.png','skill/40.png','skill/41.png','skill/42.png','skill/44.png'],mode:'earthLargeV79'},
-    {id:'hoku',name:'ホク',element:'風',tier:'small',cost:6,power:1.05,target:'single',frames:seq('skill',45,48)},
-    {id:'hokuma',name:'ホクマ',element:'風',tier:'medium',cost:12,power:1.55,target:'single',frames:seq('skill',49,52)},
-    {id:'hokumawing',name:'ホクマウィング',element:'風',tier:'large',cost:22,power:2.15,target:'single',frames:['skill/51.png','skill/53.png','skill/52.png'],mode:'windLargeV79'},
-    {id:'neo',name:'ネオ',element:'光',tier:'small',cost:7,power:1.10,target:'single',frames:['skill/54.png','skill/55.png','skill/56.png'],mode:'lightSmallV79'},
-    {id:'neoma',name:'ネオマ',element:'光',tier:'medium',cost:14,power:1.62,target:'single',frames:['skill/54.png','skill/55.png','skill/57.png','skill/58.png','skill/56.png']},
-    {id:'neomanipool',name:'ネオマニプール',element:'光',tier:'large',cost:24,power:2.22,target:'single',frames:['skill/55.png','skill/57.png','skill/58.png','skill/59.png','skill/60.png'],mode:'lightLargeV79'},
-    {id:'mira',name:'ミラ',element:'闇',tier:'small',cost:7,power:1.10,target:'single',frames:seq('skill',61,64)},
-    {id:'mirama',name:'ミラマ',element:'闇',tier:'medium',cost:14,power:1.62,target:'single',frames:seq('skill',65,68)},
-    {id:'miramazone',name:'ミラマゾーン',element:'闇',tier:'large',cost:24,power:2.22,target:'single',frames:seq('skill',69,72)},
-    {id:'anoma',name:'アノマ',element:'無',tier:'medium',cost:10,power:1.25,target:'single',frames:['skill/127.png','skill/130.png']},
-    {id:'anomaun',name:'アノマウン',element:'無',tier:'large',cost:18,power:1.90,target:'single',frames:['skill/131.png','skill/134.png']},
-    {id:'garagaranotabi',name:'ガラガラノタビ',element:'地',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',193,196)},
-    {id:'kumanokomiteitanoaberto',name:'クマノコ・ミテイタ・アノベルト',element:'闇',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',133,136)},
-    {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',110,113)},
-    {id:'kizutsukukitsutsuki',name:'キズツクキツツキ',element:'雷',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',201,202)},
-    {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',114,117)},
-    {id:'watashinomirai',name:'ワタシのミライ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',125,128)}
-  ];
-
-  MOB_DATA.techniqueCatalog=[
-    {id:'magsword',name:'マグソード',element:'火',kind:'slash',tier:'small',cost:7,power:1.15,frames:seq('skill',73,76)},
-    {id:'magmasword',name:'マグマソード',element:'火',kind:'slash',tier:'large',cost:15,power:1.78,frames:seq('skill',77,80)},
-    {id:'nepusword',name:'ネプソード',element:'水',kind:'slash',tier:'small',cost:7,power:1.15,frames:seq('skill',81,84)},
-    {id:'nepumasword',name:'ネプマソード',element:'水',kind:'slash',tier:'large',cost:15,power:1.78,frames:['skill/81.png','skill/82.png','skill/85.png','skill/86.png']},
-    {id:'torusword',name:'トルソード',element:'雷',kind:'slash',tier:'small',cost:8,power:1.18,frames:seq('skill',87,90)},
-    {id:'torumasword',name:'トルマソード',element:'雷',kind:'slash',tier:'large',cost:16,power:1.82,frames:seq('skill',91,94)},
-    {id:'goresword',name:'ゴレソード',element:'地',kind:'slash',tier:'small',cost:8,power:1.18,frames:seq('skill',120,123)},
-    {id:'goremasword',name:'ゴレマソード',element:'地',kind:'slash',tier:'large',cost:16,power:1.82,frames:[...seq('skill',124,126),'skill/123.png']},
-    {id:'neosword',name:'ネオソード',element:'光',kind:'slash',tier:'small',cost:8,power:1.20,frames:seq('skill',112,115)},
-    {id:'neomasword',name:'ネオマソード',element:'光',kind:'slash',tier:'large',cost:17,power:1.86,frames:seq('skill',116,119)},
-    {id:'mirasword',name:'ミラソード',element:'闇',kind:'slash',tier:'small',cost:8,power:1.20,frames:seq('skill',103,106)},
-    {id:'miramasword',name:'ミラマソード',element:'闇',kind:'slash',tier:'large',cost:17,power:1.86,frames:seq('skill',108,111)},
-    {id:'anosword',name:'アノソード',element:'無',kind:'slash',tier:'small',cost:7,power:1.12,frames:seq('skill',95,98)},
-    {id:'anomasword',name:'アノマソード',element:'無',kind:'slash',tier:'large',cost:15,power:1.72,frames:seq('skill',99,102)},
-    {id:'mobgiri',name:'MOB斬り',element:'地・風',kind:'slash',tier:'large',cost:13,power:1.62,frames:seq('skill2',9,12)},
-    {id:'shippugiri',name:'疾風斬り',element:'風',kind:'slash',tier:'large',cost:13,power:1.62,priorityChance:.40,frames:seq('skill2',13,16)},
-    {id:'noise-scratch',name:'ノイズスクラッチ',element:'無',kind:'status',status:'confuse',cost:10,power:1.20,chance:.60,frames:['skill/46.png'],mode:'statusNoiseV79'},
-    {id:'chill-lofi',name:'チルローファイ',element:'無',kind:'status',status:'sleep',cost:10,power:1.20,chance:.60,frames:['skill/48.png'],mode:'statusChillV79'},
-    {id:'fast-beat',name:'ファストビート',element:'火',kind:'status',status:'burn',cost:10,power:1.20,chance:.60,frames:['skill/76.png'],mode:'statusFastV79'},
-    {id:'repeat-intro',name:'リピートイントロ',element:'闇',kind:'status',status:'poison',cost:10,power:1.20,chance:.60,frames:['skill/103.png'],mode:'statusRepeatV79'},
-    {id:'long-scratch',name:'ロングスクラッチ',element:'雷',kind:'status',status:'paralyze',cost:10,power:1.20,chance:.60,frames:['skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],mode:'statusLongV79'}
-  ];
-
-  const middle={火:'honoma',水:'nepuma',雷:'toruma',地:'gorema',風:'hokuma',光:'neoma',闇:'mirama',無:'anoma'};
-  for(const [element,id] of Object.entries(middle)){const m=MOB_DATA.magicCatalog.find(x=>x.id===id);if(m)Object.assign(MOB_DATA.elements[element],{temporary:false,spell:m.name,cost:m.cost,power:m.power,frames:[...m.frames],mode:m.mode||''});}
+/* v88 SUBQUEST special enemies */
+(()=>{const extras=[{"id":"sq-299101812","name":"モブゴールデンミイラ","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/008.png","symbol":"SQ","levelMin":12,"levelMax":12},{"id":"sq-779254037","name":"モブゴールデンネコミイラ","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/009.png","symbol":"SQ","levelMin":10,"levelMax":10},{"id":"sq-124048509","name":"モブミニガーディアンⅡの小型","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/001.png","symbol":"SQ","levelMin":20,"levelMax":20},{"id":"sq-375939973","name":"モブハイアビスソルジャー","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/013.png","symbol":"SQ","levelMin":48,"levelMax":48},{"id":"sq-620537060","name":"モブパワージョーンズ","stage":"サブクエスト","category":"elite","attribute":"無","image":"spenemy/014.png","symbol":"SQ","levelMin":55,"levelMax":55},{"id":"sq-82023321","name":"モブレッドホーク","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/001.png","symbol":"SQ","levelMin":60,"levelMax":60},{"id":"sq-311141370","name":"モブアンコール","stage":"サブクエスト","category":"normal","attribute":"無","image":"spenemy/014.png","symbol":"SQ","levelMin":63,"levelMax":63}];for(const e of extras){if(!(MOB_DATA.enemyCatalog||[]).some(x=>x.id===e.id))MOB_DATA.enemyCatalog.push(e);}
+const add=(id,name,image,stage='サブクエスト')=>{if(!(MOB_DATA.enemyCatalog||[]).some(x=>x.id===id))MOB_DATA.enemyCatalog.push({id,name,stage,category:'elite',attribute:'無',image,symbol:'SQ',levelMin:10,levelMax:99});};
+add('sq-savanna-variant','モブサバンナ亜種','spenemy/007.png','草原');
+add('sq-mini-guardian2','モブミニガーディアンⅡ','spenemy/010.png','田舎町');
+add('sq-enetchaser-neo','モブエネチェイサーネオ','spenemy/011.png','ネオン街');
+add('sq-high-abyss','モブハイアビスソルジャー','spenemy/013.png','海底');
+add('sq-power-jones','モブパワージョーンズ','spenemy/014.png','海底');
 })();
-
-// ===== MOB QUEST v81 : grassland level rebalance =====
-{
-  const enemy=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
-  const world=id=>(MOB_DATA.adventureWorlds||[]).find(w=>w.id===id);
-  const boss=id=>(MOB_DATA.bosses||[]).find(b=>b.id===id);
-  const set=(id,props)=>{const e=enemy(id);if(e)Object.assign(e,props);};
-
-  // Normal monsters: exact opening-grassland level bands.
-  set('g-slime',{levelMin:1,levelMax:3});
-  set('g-rock',{levelMin:2,levelMax:3});
-  set('g-jouro',{levelMin:3,levelMax:3});
-  set('g-tendevi',{levelMin:2,levelMax:3});
-  set('g-bird',{levelMin:1,levelMax:3});
-  set('g-piyo-green',{levelMin:2,levelMax:3});
-  set('g-piyo-red',{levelMin:2,levelMax:3});
-  set('g-beaver',{levelMin:2,levelMax:2});
-
-  // Mid-bosses / boss. Small-damage skills stay deliberately modest for the opening area.
-  set('g-savanna',{levelMin:5,levelMax:5,special:'サバンナダンス',kind:'single',power:.80,skillElement:'地',skillType:'physical'});
-  set('g-iwakiri',{levelMin:6,levelMax:6,special:'イワキリサンダー',kind:'aoe',power:.66,skillElement:'雷',skillType:'magic'});
-  set('g-axe',{levelMin:6,levelMax:6,special:'アックススクラッチ',kind:'single',power:.80,skillElement:'風',skillType:'physical'});
-  set('boss-hawk',{levelMin:8,levelMax:8,special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
-  const hawk=boss('hawk');if(hawk)Object.assign(hawk,{special:'ホークダイブ',kind:'aoe',power:.66,skillType:'physical',skillElement:'風'});
-
-  // Exact AREA formations. arrangeBossFormation() keeps the unique elite in the centre.
-  const grass=world('grassland');
-  if(grass){
-    grass.areas[0].boss=[{id:'g-beaver',level:3,qty:2},{id:'g-savanna',level:5}];
-    grass.areas[1].boss=[{id:'g-iwakiri',level:6}];
-    grass.areas[2].boss=[{id:'g-axe',level:6}];
-    grass.areas[3].boss=[{id:'boss-hawk',level:8}];
-  }
-}
-
