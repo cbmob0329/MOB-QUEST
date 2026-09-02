@@ -1,0 +1,42 @@
+MOB QUEST v94 SPEC REGRESSION CHECKLIST
+
+BASE
+[PASS] v93 BOOK ENTRY / SUBQUEST FIX STABLE retained as the baseline.
+[PASS] Reading Book remains entered from the Record Room book, not Adventure.
+[PASS] Record Room remains unlocked from the start with HOME-only navigation.
+[PASS] Test Reading Book entry still stages the book in Record Room.
+[PASS] Adventure abandon remains inside CAMP.
+[PASS] Subquests remain one-at-a-time; first visible quest is Grassland QUEST 1.
+[PASS] Required-character warning still uses real line breaks.
+
+READING BOOK / EVENT STAGING
+[PASS] AREA backgrounds remain back/yomi1.png through back/yomi4.png.
+[PASS] Mob Navi / Navi Master entrance sizes tightened only in story staging beyond the v92 battle scale.
+[PASS] Kaijin minion / captain entrance sizes tightened only in story staging beyond the v92 battle scale.
+[PASS] Awakened red executive uses boss/55.png.
+[PASS] Awakened blue executive uses boss/56.png.
+[PASS] AREA3 Hero remains normal until the giant black sphere visibly hits.
+[PASS] Hero becomes black/down only after impact.
+[PASS] Downed Hero is also black on the normal Adventure field.
+[PASS] Story scene is hidden during party render, preventing a one-frame normal-Hero flash.
+[PASS] Adventure field level labels are removed.
+[PASS] AREA3 Kaijin boss stays continuously visible while Navi fades in beside him.
+[PASS] Kaijin boss leaves only after his scripted 「クソー！！！」 line.
+[PASS] Money 「なーに言ってるのよ！」 uses enlarged text and bubble.
+[PASS] Hero transformation hides the normal Hero first, then slowly fades in play/13.png.
+[PASS] Transformed Hero is slightly larger than normal Hero in story and battle.
+[PASS] After 「俺は、、」 transformed Hero is staged to Navi's right.
+[PASS] After 「ぐは・・ッ」 Kaijin boss visibly moves toward the party side.
+
+NAVI MASTER
+[PASS] Final Navi Master battle no longer uses scriptedImmortalParty.
+[PASS] Navi Master permanentDamageReduction is false.
+[PASS] 80% reduction applies while Navi barrier is active.
+[PASS] After barrier break, permanent 80% reduction no longer remains.
+[PASS] Barrier-break duration preserves two full subsequent player turns before restoration.
+[PASS] Final party wipe resolves as a real defeat and allows formation/retry.
+
+BATTLE UI FROM v92
+[PASS] Special command button size normalization retained.
+[PASS] Ultimate CT ready notification retained.
+[PASS] Critical hit label + damage display retained.

@@ -1,4 +1,4 @@
-// MOB QUEST v92
+// MOB QUEST v94
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -791,11 +791,11 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical'},
     {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
-  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'boss/56.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
     {special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic'},
     {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
-  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'boss/55.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
     {special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical'},
     {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
@@ -807,7 +807,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
     {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
   ]});
-  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,naviBarrier:true,specialOptions:[
+  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:false,naviBarrier:true,specialOptions:[
     {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
     {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
   ]});

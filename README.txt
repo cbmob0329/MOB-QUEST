@@ -33,3 +33,18 @@ NOTES
 
 === v93 ===
 Reading Book uses back/yomi1.png through back/yomi4.png and is entered only from the book in the Record Room. Test selection prepares that book in the Record Room. The Record Room is unlocked from the start. Adventure quit moved into CAMP. Subquests now expose only one global next quest (starting Grassland QUEST 1), and the required-party warning no longer shows a literal \n.
+
+=== v94 ===
+Base: v93 BOOK ENTRY / SUBQUEST FIX STABLE.
+- Reading Book event entrance scale reduced for Mob Navi / Navi Master / minions / captain.
+- Awakened executives: red boss/55.png, blue boss/56.png.
+- AREA3 Hero stays normal until a large black sphere attack visibly hits, then becomes black/down.
+- Downed Hero stays black on the normal Adventure field with no one-frame normal-art flash.
+- Adventure field level badges removed.
+- AREA3 Navi now appears beside the Kaijin boss; the boss leaves only after its scripted line.
+- Money's 「なーに言ってるのよ！」 bubble/text enlarged.
+- Hero transformation disappears first, then play/13.png slowly fades in, slightly larger than normal Hero.
+- After 「俺は、、」 transformed Hero is staged to Navi's right.
+- After 「ぐは・・ッ」 Kaijin boss moves down to the party side.
+- Navi Master party immortality removed.
+- Navi Master 80% damage reduction now applies only while barrier is active; barrier break allows full damage.

@@ -2861,3 +2861,22 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .camp-main-menu .camp-abandon-v93>span i{font-style:normal;font-size:28px;line-height:1}
 /* old floating quit control is retired; quit now lives in CAMP */
 #adventureScreen #abandonAdventureBtn{display:none!important}
+
+
+/* ===== MOB QUEST v94: Reading Book staging ===== */
+.adventure-party small{display:none!important}
+.book-hero-down-v94 img{filter:brightness(0) grayscale(1)!important;opacity:.62!important}
+.story-party-actor.book-hero-transformed-v94{overflow:visible!important;z-index:9!important}
+.story-party-actor.book-hero-transformed-v94 img{transform:scale(1.12)!important;transform-origin:center bottom!important;filter:none!important}
+.book-hero-relocated-v94{opacity:0!important;visibility:hidden!important}
+.story-bubble.story-bubble-emphasis-v94{width:min(92%,390px)!important;max-width:92%!important;border-width:5px!important;box-shadow:0 10px 0 rgba(0,0,0,.25),0 16px 34px rgba(0,0,0,.30)!important}
+.story-bubble.story-bubble-emphasis-v94>b{font-size:14px!important}.story-bubble.story-bubble-emphasis-v94>p{font-size:22px!important;line-height:1.25!important;font-weight:1000!important;white-space:pre-line!important}
+.book-black-sphere-v94{position:absolute;z-index:31;width:106px;height:106px;border-radius:50%;background:#050509;border:6px solid #2c1334;box-shadow:0 0 0 6px rgba(20,5,28,.42),0 0 28px rgba(42,10,55,.9),0 0 55px rgba(0,0,0,.88);pointer-events:none}
+.book-black-sphere-v94::before,.book-black-sphere-v94::after{content:"";position:absolute;left:50%;top:50%;width:136%;height:10px;background:#13061b;transform-origin:left center}.book-black-sphere-v94::before{transform:translate(-50%,-50%) rotate(28deg)}.book-black-sphere-v94::after{transform:translate(-50%,-50%) rotate(-31deg)}.book-black-sphere-v94.impact{box-shadow:0 0 0 16px rgba(24,4,34,.45),0 0 64px rgba(0,0,0,1)}
+
+.story-guest-group.book-navi-beside-v94{left:60%!important;right:auto!important;width:28%!important;justify-content:center!important;gap:0!important}
+.story-guest-group.book-navi-beside-v94 .story-guest-multi{margin:0!important}
+.story-guest-group.book-triad-v94{gap:4px!important;justify-content:center!important}.story-guest-group.book-triad-v94 [data-story-actor="book-kaijin-boss"]{transform:translateX(-2vw) scale(.92)!important}.story-guest-group.book-triad-v94 [data-story-actor="book-navi"]{transform:translateX(0)!important}.story-guest-group.book-triad-v94 [data-story-actor="yusha"]{transform:translateX(2vw) scale(1.12)!important;transform-origin:center bottom!important;animation:bookHeroMoveToNaviV94 .9s ease both}.story-guest-group.book-triad-v94 [data-story-actor="yusha"] img{filter:none!important}
+.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-kaijin-boss"]{transform:translate(-9vw,17vh) scale(.86)!important;transition:transform .8s ease!important;z-index:12!important}.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-navi"]{transform:translateX(8vw)!important;transition:transform .8s ease!important}.book-hero-battle-v94 img{transform:scale(1.10)!important;transform-origin:center bottom!important}
+@keyframes bookHeroMoveToNaviV94{0%{opacity:.15;transform:translate(-23vw,18vh) scale(.90)}100%{opacity:1;transform:translate(2vw,0) scale(1.12)}}
+@media(max-height:720px){.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-kaijin-boss"]{transform:translate(-8vw,14vh) scale(.84)!important}}

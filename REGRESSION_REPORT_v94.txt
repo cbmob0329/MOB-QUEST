@@ -1,0 +1,31 @@
+MOB QUEST v94 REGRESSION REPORT
+
+Release: BOOK STAGING / NAVI MASTER FIX STABLE
+Base: v93 BOOK ENTRY / SUBQUEST FIX STABLE
+
+STATIC VALIDATION
+- js/data.js: Node syntax check PASS
+- js/game.js: Node syntax check PASS
+- index inline main JS: Node syntax check PASS
+- index inline CSS: exact external css/style.css sync PASS
+- index inline JS: exact js/data.js + js/game.js sync PASS
+- visible title version: v94 PASS
+- GAME_ASSET_VERSION: 94 PASS
+- Reading Book backgrounds yomi1-yomi4 retained PASS
+- awakened executive paths: red boss/55.png / blue boss/56.png PASS
+- story-only tighter entrance scale for Navi / Navi Master / minions / captain PASS
+- AREA3 black sphere -> impact -> Hero down/black order PASS
+- Adventure-field Hero persistent black state + level-label removal PASS
+- AREA3 Kaijin boss remains visible while Navi appears beside him PASS
+- Money emphasis bubble PASS
+- transformed Hero slow fade-in + larger scale PASS
+- Hero relocation to Navi right PASS
+- Kaijin boss movement to party side PASS
+- Navi Master permanentDamageReduction:false PASS
+- final Navi Master no scriptedImmortalParty PASS
+- barrier broken window adjusted to preserve two full subsequent player turns PASS
+- v93 Record Room / CAMP / subquest route markers retained PASS
+
+IMPORTANT
+This package keeps the same code-only project format as prior stable releases. Image/audio folders are referenced by path and are not embedded in the ZIP.
+Validation is syntax/sync/structural. A full browser playthrough is not claimed in this asset-less build environment.

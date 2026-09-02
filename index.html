@@ -2874,6 +2874,25 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 /* old floating quit control is retired; quit now lives in CAMP */
 #adventureScreen #abandonAdventureBtn{display:none!important}
 
+
+/* ===== MOB QUEST v94: Reading Book staging ===== */
+.adventure-party small{display:none!important}
+.book-hero-down-v94 img{filter:brightness(0) grayscale(1)!important;opacity:.62!important}
+.story-party-actor.book-hero-transformed-v94{overflow:visible!important;z-index:9!important}
+.story-party-actor.book-hero-transformed-v94 img{transform:scale(1.12)!important;transform-origin:center bottom!important;filter:none!important}
+.book-hero-relocated-v94{opacity:0!important;visibility:hidden!important}
+.story-bubble.story-bubble-emphasis-v94{width:min(92%,390px)!important;max-width:92%!important;border-width:5px!important;box-shadow:0 10px 0 rgba(0,0,0,.25),0 16px 34px rgba(0,0,0,.30)!important}
+.story-bubble.story-bubble-emphasis-v94>b{font-size:14px!important}.story-bubble.story-bubble-emphasis-v94>p{font-size:22px!important;line-height:1.25!important;font-weight:1000!important;white-space:pre-line!important}
+.book-black-sphere-v94{position:absolute;z-index:31;width:106px;height:106px;border-radius:50%;background:#050509;border:6px solid #2c1334;box-shadow:0 0 0 6px rgba(20,5,28,.42),0 0 28px rgba(42,10,55,.9),0 0 55px rgba(0,0,0,.88);pointer-events:none}
+.book-black-sphere-v94::before,.book-black-sphere-v94::after{content:"";position:absolute;left:50%;top:50%;width:136%;height:10px;background:#13061b;transform-origin:left center}.book-black-sphere-v94::before{transform:translate(-50%,-50%) rotate(28deg)}.book-black-sphere-v94::after{transform:translate(-50%,-50%) rotate(-31deg)}.book-black-sphere-v94.impact{box-shadow:0 0 0 16px rgba(24,4,34,.45),0 0 64px rgba(0,0,0,1)}
+
+.story-guest-group.book-navi-beside-v94{left:60%!important;right:auto!important;width:28%!important;justify-content:center!important;gap:0!important}
+.story-guest-group.book-navi-beside-v94 .story-guest-multi{margin:0!important}
+.story-guest-group.book-triad-v94{gap:4px!important;justify-content:center!important}.story-guest-group.book-triad-v94 [data-story-actor="book-kaijin-boss"]{transform:translateX(-2vw) scale(.92)!important}.story-guest-group.book-triad-v94 [data-story-actor="book-navi"]{transform:translateX(0)!important}.story-guest-group.book-triad-v94 [data-story-actor="yusha"]{transform:translateX(2vw) scale(1.12)!important;transform-origin:center bottom!important;animation:bookHeroMoveToNaviV94 .9s ease both}.story-guest-group.book-triad-v94 [data-story-actor="yusha"] img{filter:none!important}
+.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-kaijin-boss"]{transform:translate(-9vw,17vh) scale(.86)!important;transition:transform .8s ease!important;z-index:12!important}.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-navi"]{transform:translateX(8vw)!important;transition:transform .8s ease!important}.book-hero-battle-v94 img{transform:scale(1.10)!important;transform-origin:center bottom!important}
+@keyframes bookHeroMoveToNaviV94{0%{opacity:.15;transform:translate(-23vw,18vh) scale(.90)}100%{opacity:1;transform:translate(2vw,0) scale(1.12)}}
+@media(max-height:720px){.story-guest-group.book-kaijin-to-party-v94 [data-story-actor="book-kaijin-boss"]{transform:translate(-8vw,14vh) scale(.84)!important}}
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -2893,7 +2912,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v93</div>
+      <div class="title-version">v94</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3287,7 +3306,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <!-- DIALOG -->
   <div id="dialogOverlay" class="dialog-overlay" hidden>
     <div class="dialog-card">
-      <img id="dialogCharacter" src="play/02.png?mqv=91" alt="モブピンク">
+      <img id="dialogCharacter" src="play/02.png?mqv=94" alt="モブピンク">
       <div class="dialog-body"><small id="dialogSpeaker">モブピンク</small><p id="dialogText"></p><div id="dialogChoices" class="dialog-choices"></div></div>
     </div>
   </div>
@@ -3296,7 +3315,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v92
+// MOB QUEST v94
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -4089,11 +4108,11 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'アクノフレイムソード',kind:'single',power:1.82,skillElement:'火',skillType:'physical'},
     {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.92,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
-  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'enemy/150.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+  up('book-exec-blue2',{name:'モブ怪人幹部青・覚醒',stage:'読みかけの本',category:'elite',attribute:'水',image:'boss/56.png',symbol:'青',levelMin:87,levelMax:87,special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
     {special:'アクノウォールウェーブ',kind:'aoe',power:1.38,skillElement:'水',skillType:'magic'},
     {special:'キーキー連撃',kind:'v88MultiRandomStun',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
-  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'enemy/151.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
+  up('book-exec-red2',{name:'モブ怪人幹部赤・覚醒',stage:'読みかけの本',category:'elite',attribute:'火',image:'boss/55.png',symbol:'赤',levelMin:87,levelMax:87,special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical',actionCount:2,forceActionCount:true,mods:{hp:1.12,atk:1.08,mag:1.08},specialOptions:[
     {special:'アクノフレイムソード',kind:'single',power:1.90,skillElement:'火',skillType:'physical'},
     {special:'キーキー連撃',kind:'v88MultiRandomConfuse',hits:3,power:.98,chance:.30,skillElement:'無',skillType:'physical'}
   ]});
@@ -4105,7 +4124,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
     {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
   ]});
-  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,naviBarrier:true,specialOptions:[
+  up('book-navi-master',{name:'モブナビマスター',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'神',levelMin:90,levelMax:90,bossId:'mobNaviMaster',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:false,naviBarrier:true,specialOptions:[
     {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
     {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
   ]});
@@ -4174,6 +4193,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
   const money=playerById('money');
   if(money){money.ults=money.ults||[];if(!money.ults.some(u=>u.name==='マニーフレンズ'))money.ults.push({name:'マニーフレンズ',image:'boss/57.png',cost:55,kind:'moneyFriends',power:0,desc:'ヤミモブマニーに変身。全ステータス20%アップ、状態異常耐性20%アップ、魔法会心率10%アップ。'});}
 })();
+
 (() => {
 'use strict';
 
@@ -4184,7 +4204,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=93;
+const GAME_ASSET_VERSION=94;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7008,7 +7028,7 @@ function recordEnemyDefeat(e){if(!e||e._defeatRecorded)return;e._defeatRecorded=
   const b=state.battle;if(b?.config?.subquestId==='rural2-2'&&!b.rural2DinoRage&&['r2-rapty','r2-tira'].includes(e.id)){const survivor=(b.enemies||[]).find(x=>x.hp>0&&['r2-rapty','r2-tira'].includes(x.id));if(survivor){b.rural2DinoRage=true;const h=Math.round(survivor.maxHp*.50);survivor.hp=Math.min(survivor.maxHp,survivor.hp+h);survivor.atkBuff=Math.max(survivor.atkBuff||0,.20);survivor.atkBuffTurns=99;survivor.magBuff=Math.max(survivor.magBuff||0,.20);survivor.magBuffTurns=99;floatNumber(h,'heal',`enemy:${survivor.uid}`);notice(`${survivor.name}が強化！ HP50%回復`,'buff',1000);}}
 }
 function applyEnemyDamageTo(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
-  if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;const reductionActive=e.shieldTurns>0||e.permanentDamageReduction||(e.naviBarrier&&!(e.naviBarrierBrokenTurns>0));if(reductionActive&&e.damageReduction>0)d=Math.round(d*(1-e.damageReduction));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=!!state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);if(e.naviBarrier&&e.hp>0&&!(e.naviBarrierBrokenTurns>0)){e.naviBarrierHits=(Number(e.naviBarrierHits)||0)+1;if(e.naviBarrierHits>=4){e.naviBarrierHits=0;e.naviBarrierBrokenTurns=2;notice('バリアが剥がれた！今のうちに攻撃だ！','buff',1100);fx('break',`enemy:${uid}`);}}
+  if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;const reductionActive=e.shieldTurns>0||e.permanentDamageReduction||(e.naviBarrier&&!(e.naviBarrierBrokenTurns>0));if(reductionActive&&e.damageReduction>0)d=Math.round(d*(1-e.damageReduction));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=!!state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);if(e.naviBarrier&&e.hp>0&&!(e.naviBarrierBrokenTurns>0)){e.naviBarrierHits=(Number(e.naviBarrierHits)||0)+1;if(e.naviBarrierHits>=4){e.naviBarrierHits=0;e.naviBarrierBrokenTurns=3;notice('バリアが剥がれた！今のうちに攻撃だ！','buff',1100);fx('break',`enemy:${uid}`);}}
   if(e.hp<=0){
     recordEnemyDefeat(e);
     if((e.id==='boss-debuff'||e.id==='boss-berserk')&&state.battle?.pendingWaveConfigs?.[0]?.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'))state.battle.forcePhaseChange='tribe';
@@ -8447,7 +8467,7 @@ criticalUltimateCharge=function(a){
 /* Replace only the critical rendering branch. Keep damage calculation, healing, CT reduction and hit FX untouched. */
 const _applyEnemyDamageToV92Base=applyEnemyDamageTo;
 applyEnemyDamageTo=function(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
-  if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;const reductionActive=e.shieldTurns>0||e.permanentDamageReduction||(e.naviBarrier&&!(e.naviBarrierBrokenTurns>0));if(reductionActive&&e.damageReduction>0)d=Math.round(d*(1-e.damageReduction));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=!!state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);if(e.naviBarrier&&e.hp>0&&!(e.naviBarrierBrokenTurns>0)){e.naviBarrierHits=(Number(e.naviBarrierHits)||0)+1;if(e.naviBarrierHits>=4){e.naviBarrierHits=0;e.naviBarrierBrokenTurns=2;notice('バリアが剥がれた！今のうちに攻撃だ！','buff',1100);fx('break',`enemy:${uid}`);}}
+  if(!e||e.hp<=0)return{value:0,crit:false};const uid=e.uid,r=calcDamage(a,type,power,crit,e);if(r.miss){renderBattle();showMiss(`enemy:${uid}`);return{...r,value:0};}let d=r.value;const reductionActive=e.shieldTurns>0||e.permanentDamageReduction||(e.naviBarrier&&!(e.naviBarrierBrokenTurns>0));if(reductionActive&&e.damageReduction>0)d=Math.round(d*(1-e.damageReduction));if(e.allyShieldTurns>0)d=Math.round(d*(1-(e.allyShieldReduction||.10)));const scriptedImmortal=!!state.battle?.config?.scriptedImmortalEnemy;e.hp=Math.max(scriptedImmortal?1:0,e.hp-d);if(e.naviBarrier&&e.hp>0&&!(e.naviBarrierBrokenTurns>0)){e.naviBarrierHits=(Number(e.naviBarrierHits)||0)+1;if(e.naviBarrierHits>=4){e.naviBarrierHits=0;e.naviBarrierBrokenTurns=3;notice('バリアが剥がれた！今のうちに攻撃だ！','buff',1100);fx('break',`enemy:${uid}`);}}
   if(e.hp<=0){recordEnemyDefeat(e);if((e.id==='boss-debuff'||e.id==='boss-berserk')&&state.battle?.pendingWaveConfigs?.[0]?.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'))state.battle.forcePhaseChange='tribe';if(state.battle.targetEnemyId===uid){const next=livingEnemies().find(x=>x.uid!==uid);state.battle.targetEnemyId=next?.uid||null;if(!state.battle.actingEnemyId)state.battle.enemy=next||e;}}
   if(r.crit&&!a.dead){const rate=weaponCritHealRate(a);if(rate>0)heal(a,a.maxHp*rate);criticalUltimateCharge(a);}
   renderBattle();if(r.crit)showCriticalDamageV92(d,`enemy:${uid}`);else floatNumber(d,'damage',`enemy:${uid}`);if(showGenericFx)fx(type==='magic'?'magic':'slash',`enemy:${uid}`);if(showHitPulse)pulseEnemy('hit',uid);wakeEnemyOnHit(e);if(e.hp<=0)notice(`${e.name} DOWN`,'danger',520);return{...r,value:d};
@@ -8679,6 +8699,132 @@ confirmSubquest=async function(id){
 
 /* ===== END MOB QUEST v93 ===== */
 
+
+/* ===== MOB QUEST v94: READING BOOK EVENT STAGING / NAVI MASTER FIX ===== */
+
+let bookHeroStoryModeV94='normal';
+const _storyActorInfoV94Base=storyActorInfo;
+storyActorInfo=function(key){
+  const info=_storyActorInfoV94Base(key);
+  if(key==='yusha'&&bookHeroStoryModeV94==='hero')info.image=versionedPlay('play/13.png');
+  return info;
+};
+
+const _renderStoryPartyV94Base=renderStoryParty;
+renderStoryParty=async function(extraIds=null){
+  await _renderStoryPartyV94Base(extraIds);
+  const root=$('#storyPartyLine'),hero=$('[data-story-actor="yusha"]',root),img=hero?.querySelector('img');
+  if(!hero||!img)return;
+  hero.classList.remove('book-hero-down-v94','book-hero-transformed-v94');
+  if(state.meta?.bookHeroDown){hero.classList.add('book-hero-down-v94');return;}
+  if(bookHeroStoryModeV94==='hero'){
+    if(!String(img.getAttribute('src')||'').includes('play/13.png')){await readyStoryImage(img,versionedPlay('play/13.png'));await sizeStoryPartyImages(root);}
+    hero.classList.add('book-hero-transformed-v94');
+  }
+};
+
+const _renderAdventureV94Base=renderAdventure;
+renderAdventure=function(){
+  const r=_renderAdventureV94Base(),root=$('#adventureParty');
+  if(root){$$('small',root).forEach(el=>el.remove());$$('[data-player-detail]',root).forEach(btn=>btn.classList.toggle('book-hero-down-v94',btn.dataset.playerDetail==='yusha'&&!!state.meta?.bookHeroDown));}
+  return r;
+};
+
+const _enemyVisualTuneV94Base=enemyVisualTune;
+/* v94 only tightens story/entrance sizing. Battle sizing remains on the v92 authored scale. */
+enemyVisualTune=function(e){return _enemyVisualTuneV94Base(e);};
+const _applyStoryGuestNaturalSizeV94Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  _applyStoryGuestNaturalSizeV94Base(holder,img,info,opt);
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return;
+  const id=info?.enemyTemplate?.id||info?.id||'',scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  let maxW=0,maxH=0;
+  if(id==='book-navi'||id==='book-navi-master'){maxW=scene.width*(opt.multi?.145:.235);maxH=scene.height*(opt.multi?.205:.255);}
+  else if(id==='book-minion'){maxW=scene.width*(opt.multi?.115:.175);maxH=scene.height*(opt.multi?.165:.205);}
+  else if(id==='book-captain'){maxW=scene.width*(opt.multi?.135:.195);maxH=scene.height*(opt.multi?.185:.225);}
+  else return;
+  const r=img.naturalWidth/img.naturalHeight;let w=Math.min(parseFloat(holder.style.width)||maxW,maxW),h=Math.min(parseFloat(holder.style.height)||maxH,maxH);if(w/h>r)w=h*r;else h=w/r;
+  holder.style.setProperty('width',`${Math.max(1,Math.round(w))}px`,'important');holder.style.setProperty('height',`${Math.max(1,Math.round(h))}px`,'important');
+};
+
+async function bookBlackSphereAttackV94(){
+  const scene=$('#storyScene'),from=storyAnchor('book-kaijin-boss'),to=storyAnchor('yusha');
+  if(!scene||!from||!to){await storyFlash();await storyImpact('ズドン!!');return;}
+  const sr=scene.getBoundingClientRect(),fr=storyAnchorRect(from),tr=storyAnchorRect(to),sx=fr.left-sr.left+fr.width*.5,sy=fr.top-sr.top+fr.height*.42,tx=tr.left-sr.left+tr.width*.5,ty=tr.top-sr.top+tr.height*.42;
+  const orb=document.createElement('div');orb.className='book-black-sphere-v94';orb.style.left=`${sx-53}px`;orb.style.top=`${sy-53}px`;scene.appendChild(orb);const dx=tx-sx,dy=ty-sy;
+  const anim=orb.animate([{transform:'translate(0,0) scale(.18)',opacity:.15},{transform:'translate(0,0) scale(.82)',opacity:1,offset:.28},{transform:`translate(${dx*.72}px,${dy*.72}px) scale(1.08)`,opacity:1,offset:.78},{transform:`translate(${dx}px,${dy}px) scale(1.28)`,opacity:1}],{duration:880,easing:'cubic-bezier(.18,.7,.2,1)',fill:'forwards'});
+  try{await anim.finished;}catch(_){}scene.classList.add('shake');orb.classList.add('impact');await fixedDelay(230);orb.remove();scene.classList.remove('shake');await storyFlash();await storyImpact('ズドン!!');
+}
+
+async function bookHeroTransformV94(){
+  const root=$('#storyPartyLine'),hero=$('[data-story-actor="yusha"]',root),img=hero?.querySelector('img');
+  setAdventureVitalV89Final('yusha',{full:true});state.meta.bookHeroDown=false;saveMeta();bookHeroStoryModeV94='hero';if(!hero||!img)return;
+  hero.style.transition='opacity .34s ease';hero.style.opacity='0';await fixedDelay(390);hero.classList.remove('book-hero-down-v94','book-hero-down-v92');
+  await readyStoryImage(img,versionedPlay('play/13.png'));await sizeStoryPartyImages(root);hero.classList.add('book-hero-transformed-v94');hero.style.transition='none';hero.style.opacity='0';await nextPaint();hero.style.transition='opacity 1.15s ease';hero.style.opacity='1';await fixedDelay(1220);hero.style.removeProperty('transition');hero.style.removeProperty('opacity');
+}
+
+async function storySayBigV94(key,text){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-emphasis-v94');try{await storySay(key,text);}finally{bubble?.classList.remove('story-bubble-emphasis-v94');}}
+async function storyShowSecondaryGuestsV94(keys=[],className=''){
+  const group=$('#storyGuestGroup'),ids=(keys||[]).filter(Boolean).slice(0,4);if(!group||!ids.length)return;
+  group.hidden=false;group.className=`story-guest-group ${className}`.trim();group.dataset.count=String(ids.length);
+  group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
+  bindImages(group);
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
+  await nextPaint();group.classList.add('visible');await fixedDelay(950);await fixedDelay(220);
+}
+function hideStoryPartyHeroV94(on=true){const h=$('[data-story-actor="yusha"]',$('#storyPartyLine'));h?.classList.toggle('book-hero-relocated-v94',!!on);}
+async function showBookBossNaviHeroV94(){hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';await storyHideGuests().catch(()=>{});await storyShowGuests(['book-kaijin-boss','book-navi','yusha'],{slow:true});const group=$('#storyGuestGroup');group?.classList.add('book-triad-v94');const hero=$('[data-story-actor="yusha"]',group);hero?.classList.add('book-hero-guest-v94');}
+async function moveBookKaijinToPartyV94(){const group=$('#storyGuestGroup');if(!group)return;group.classList.add('book-kaijin-to-party-v94');await fixedDelay(900);}
+function restoreStoryPartyHeroV94(){hideStoryPartyHeroV94(false);}
+
+startBookNaviMasterV89Final=async function(){
+  const avg=Math.max(1,Math.round(state.party.reduce((a,x)=>a+(Number(x[1])||1),0)/Math.max(1,state.party.length))),rest=state.party.filter(x=>canonicalPlayerId(x[0])!=='yusha'&&canonicalPlayerId(x[0])!=='kaijin'),party=[levelRowV89Final('yusha'),['kaijin',avg],...rest].slice(0,10),bg=storySceneBg('unfinishedBook',3);
+  return new Promise(async resolve=>{scriptedBattleResolve=resolve;await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs:[{id:'book-navi-master',level:90}],party,bg:bg,fallbackBg:bg.fallback,bossBattle:true,bookHeroPower:true,bookNaviMasterFinal:true,storyLabel:'モブナビマスター FINAL BATTLE'});});
+};
+
+const _finishBattleV94Base=finishBattle;
+finishBattle=function(win){
+  const b=state.battle;if(b?.mode==='story'&&b.config?.bookNaviMasterFinal&&!win){if(b.finished)return;b.finished=true;b.resultWin=false;b.auto=false;$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);notice('DEFEAT... 全員がダウンした','danger',1100);setTimeout(()=>{const r=scriptedBattleResolve;scriptedBattleResolve=null;state.battle=null;renderAdventure();showScreen('adventure');if(r)r(false);},Math.max(700,Math.round(1150/state.speed)));return;}return _finishBattleV94Base(win);
+};
+async function bookNaviMasterBattleLoopV94(){let first=true;while(true){if(!first){await narrationDialog('モブナビマスターに全滅させられた。\nパーティーを編成し直して再挑戦します。');await bookPartyFormationV92();bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','さあ、もう一度だ');await storyHideGuest();$('#storyScene').hidden=true;}first=false;const win=await startBookNaviMasterV89Final();if(win!==false)return true;}}
+
+bookArea3PostV89Final=async function(){
+  bookHeroStoryModeV94='normal';await openStoryScene('unfinishedBook',2);await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('money','なによ、、\nコイツこんなに強いなんて、、');await storySay('nekoku','オラ、もう動けない、、');await storySay('pink','み、みんな、しっかりするであります！');await storySay('desert','ここで終わるわけにはいかない・・\n一旦引くぞ！');await storySay('book-kaijin-boss','ははは！\n逃がすとでも思っているのか？');
+  await bookBlackSphereAttackV94();setAdventureVitalV89Final('yusha',{dead:true});state.meta.bookHeroDown=true;saveMeta();const hero=$('[data-story-actor="yusha"]',$('#storyPartyLine'));hero?.classList.add('book-hero-down-v94');
+  await storySay('pink','勇者様ー！！');await storySay('desert','まずいぞ・・！');await storySay('money','こうなったら私の魔力で！！');
+  /* Keep the Kaijin boss continuously visible; Navi fades in at his side rather than replacing him. */
+  await storyShowSecondaryGuestsV94(['book-navi'],'book-navi-beside-v94');await storySay('book-navi','まだ早いですね');await storySay('book-kaijin-boss','モブナビ！！\n俺の邪魔をするな！');await storySay('book-navi','そうはいかない');await storySay('book-kaijin-boss','クソー！！！');
+  await storyHideGuest();await storySay('book-navi','さて\n勇者がやられたようだね\nだが私に出来るのはここまでだ\nやつを倒しに行ってくれ');await storyHideGuests();
+  await storySay('pink','勇者様・・');await storySay('nyoro','もうだめだニョロ・・');await storySayBigV94('money','なーに言ってるのよ！');await storySay('jessie','そうよ！きっと勇者はまだ助かる！');await storySay('tetsu','立ち上がって先へ進むでござる！');await storySay('desert','そうだな\n必ず勝機はあるはずだ');await storySay('nekoku','あいつ、嫌いだ');
+};
+
+bookArea4PreV89Final=async function(){
+  bookHeroStoryModeV94='normal';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-kaijin-boss',{slow:true});
+  await storySay('book-kaijin-boss','さあフィナーレだ！\n俺達怪人軍団は\n遂に目的を果たすのだ！！');await storySay('desert','勇者の意志は俺たちと共にある！');await storySay('riro','サクラ一族の名のもと、あなたを倒しまス！');await storySay('denden','やるだけやってやるでやんす！！');
+  await storyNarrate('思い出が苦しくなる時は');await storyNarrate('読みかけの本を読もう');await storyNarrate('無力で惨めなその気持ち');await storyNarrate('あのヒーローにやっつけてもらおう');await storyFlash();await storyFlash();await storySay('book-kaijin-boss','なんだこの光は！？');await bookHeroTransformV94();
+  await storySay('book-kaijin-boss','あ、あのヒーロー、、\nなぜお前が！？');await storySay('pink','勇者様の・・特別な力');await storySay('desert','これが勇者');await storySay('jessie','魔王を倒すのは\nやっぱり勇者');await storySay('money','凄い！凄いよ勇者！');await storySay('nekoku','カッコいいぞ');await storySay('nyoro','勇者様ー！！');await storySay('riro','伝説再び・・ですネ');await storySay('tetsu','圧倒的な覇気\n至高のサムライでござる！');await storySay('denden','オイラ信じていたでやんす！');await storySay('book-kaijin-boss','そ、それがどうした！\n俺は強くなった！\nお前なんて・・！！');
+};
+
+bookArea4PostV89Final=async function(){
+  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});await storySay('book-kaijin-boss','また、始まるのか・・\nまた、終わるのか・・');await storySay('book-navi','それがあなたの役目だ\nさっさと捨て台詞を吐いて消えなさい');await storySay('book-kaijin-boss','俺は、、');
+  await showBookBossNaviHeroV94();await storySay('book-navi','なんですか？');await storySay('pink','勇者様？');await storySay('book-kaijin-boss','なんのつもりだ？');await storySay('book-navi','ふう～・・\nそうですか\nあなたは今やあのヒーロー\n気付いてしまいましたか');await storySay('jessie','気付く？');await storySay('desert','何かありそうだな');
+  await storySay('book-navi','私はこの世界の支配者\n怪人はヒーローに倒される\nそんな当たり前のループに疲れました\nなので\n2人とも消えてもらうことにしました');await storySay('book-kaijin-boss','なんだと？\nあのヒーローが消えたのは\nお前の仕業か？');await storySay('book-navi','如何にも\nあのヒーローが消えて\nあなたが誰かに倒されれば\n二度と復活しない\nだからずっと待っていました\nあのヒーローが消えて\nあなたが倒れる日を');await storySay('pink','とんでもないやつであります！！');await storySay('book-navi','そうですか？\n私はこの世界の秩序を保っている\n私は神なのです\n神の言うことに不満でも？');await storySay('tetsu','大いにあるでござる！\nお主は神などではない！\nただの悪党でござる！');
+  await storyImpact('ドン!!');await storySay('book-kaijin-boss','ぐは・・ッ');await moveBookKaijinToPartyV94();await storySay('desert','ここは勇者に任せるしかないな');await storySay('pink','勇者様！！');await storySay('nyoro','僕たちのヒーロー！！');
+  await storyHideGuests();restoreStoryPartyHeroV94();$('#storyScene').hidden=true;await startBookNaviSoloV89Final();
+  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});$('#storyGuestGroup')?.classList.add('book-kaijin-to-party-v94');await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');await storySay('denden','オイラたちも一緒に戦うでやんす！');await storySay('tetsu','ヒーロー殿、助太刀いたす！');await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');await storySay('money','敵の敵は味方じゃないの？');await storySay('book-kaijin-boss','ハハッ・・\nヒーローと共闘か\nおもしれえ！やってやるよ！！');await storySay('nekoku','お前、カッコイイぞ');await storySay('book-kaijin-boss','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');await storyHideGuests();$('#storyScene').hidden=true;await bookPartyFormationV92();
+  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','やれやれ、面倒だな');await storyFlash();await storyHideGuest();await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','さあ、どんなエンディングになるかな？');await storySay('book-kaijin-boss','最高の物語になりそうだな！！');await storyHideGuest();$('#storyScene').hidden=true;await bookNaviMasterBattleLoopV94();
+  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','こ、の、わた、、、');await storyHideGuest();await storySay('desert','やったな');bookHeroStoryModeV94='normal';setBookStoryHeroArtV92('normal');await storyFlash();setBookStoryHeroArtV92('normal');
+  await storySay('money','おかえり勇者！');await storySay('pink','勇者様、\n最高の力を手に入れたであります！');await storySay('riro','恐らく\n外の世界で同じような効果は期待できなイ\nでも\n間違いなく強くはなるはずでス');await storySay('nyoro','怪人はこれからどうするニョロ？');await storySay('book-kaijin-boss','さあな\n俺には目的も意味もねえ');await storySay('money','なら魔王を倒すの手伝ってよ！\n敵の敵は味方でしょ？');await storySay('jessie','なにそれ\n最高じゃない！');await storySay('book-kaijin-boss','ハハッ・・\n最後まで付き合ってやるよ！');
+  storyJoin('kaijin');state.meta.heroPassive2Unlocked=true;state.meta.bookCompleted=true;state.meta.bookHeroDown=false;saveMeta();await renderStoryParty();await storyNarrate('モブ怪人のボスが仲間に加わった！');await storyNarrate('モブ勇者は新必殺技「読みかけの本」を習得した！');await storyNarrate('使用するとあのヒーローに変身し、全ステータス20%アップ\nさらに、必殺技の威力20%アップ');
+  const worlds=MOB_DATA.adventureWorlds||[],wi=worlds.findIndex(w=>w.id==='demonCastle2');if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('unfinishedBook'))state.adventure.reportedWorlds.push('unfinishedBook');if(wi>=0)state.adventure.worldIndex=wi;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.awaitingReport=null;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;saveAdventure();
+};
+
+const _allyMarkupV94Base=allyMarkup;
+allyMarkup=function(a){let s=_allyMarkupV94Base(a);if(a?.id==='yusha'&&a?.transformed)s=s.replace('class="ally-hud-art"','class="ally-hud-art book-hero-battle-v94"');return s;};
+/* ===== END MOB QUEST v94 ===== */
+
+
 /* ===== END MOB QUEST v92 ===== */
 
 window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
@@ -8699,6 +8845,8 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
+
+
 </script>
 </body>
 </html>
