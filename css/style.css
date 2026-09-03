@@ -2933,3 +2933,48 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 /* v96 final text guard */
 .dialog-card p,.dialog-card b,.dialog-card small,.facility-popup-card p,.facility-popup-card b,.facility-popup-card small,.training-feature-card p,.training-feature-card b,.subquest-card p,.subquest-card b,.subquest-card em,.quest-card p,.quest-card b,.quest-card em,.facility-menu-grid b,.facility-menu-grid small,.tavern-popup-card p,.tavern-popup-card b,.camp-menu p,.camp-menu b{max-width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow-wrap:anywhere!important;word-break:normal!important}
 .gacha-data-wait-v96{margin:9px 0;padding:10px;border-radius:12px;background:#5a3551;color:#fff;text-align:center}.gacha-data-wait-v96 b{display:block;font-size:15px}.gacha-data-wait-v96 p{margin:5px 0 0;font-size:10px;line-height:1.45}.gacha-actions-v96 button:disabled{opacity:.42!important;filter:grayscale(1)!important}.gacha-carousel-v96>button.data-wait{opacity:.72}.gacha-carousel-v96>button.data-wait small{color:#7b243d!important;font-weight:1000}
+
+
+/* ===== MOB QUEST v97: Maple figure shop layout guard ===== */
+.dialog-overlay.exact-lines-v97 .dialog-body>p{
+  white-space:pre-line!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+}
+.tavern-figure-popup .maple-shop-card{
+  width:min(94vw,455px)!important;
+  max-height:calc(100dvh - 28px - var(--safe-top) - var(--safe-bottom))!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+}
+.maple-shop-host{
+  display:grid!important;
+  grid-template-columns:88px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-height:112px!important;
+  padding:8px 10px!important;
+  margin:7px 0!important;
+  border-radius:14px!important;
+  background:#f4e6c7!important;
+  color:#21180f!important;
+  overflow:hidden!important;
+}
+.maple-shop-host>img{
+  display:block!important;
+  width:88px!important;
+  height:104px!important;
+  max-width:88px!important;
+  max-height:104px!important;
+  min-width:0!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  justify-self:center!important;
+}
+.maple-shop-host>div{min-width:0!important;overflow:hidden!important}
+.maple-shop-host b{display:block!important;font-size:14px!important;line-height:1.25!important;color:#21180f!important}
+.maple-shop-host p{margin:5px 0 0!important;font-size:11px!important;line-height:1.45!important;color:#3f3022!important;overflow-wrap:anywhere!important}
+.tavern-figure-popup .settings-head{position:sticky!important;top:-12px!important;z-index:12!important;background:#111a27!important;margin:-12px -12px 4px!important;padding:12px!important}
+/* ===== END MOB QUEST v97 ===== */

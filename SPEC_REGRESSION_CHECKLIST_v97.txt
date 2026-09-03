@@ -1,0 +1,16 @@
+MOB QUEST v97 regression checklist
+
+BASE
+- v96 is the only source branch.
+- v96 figure gacha / MOB Piece / v95 Demon Castle / v94 Book fixes retained.
+
+MAPLE
+- Tavern first intro: 「やっほ〜 / モブメープルです！」 then 「これからよろしくねー」.
+- Figure-shop first intro: 「やっほ〜 / 私はフィギュアを売ってるよ」 then 「色んなガチャを用意すから / 好きなガチャを選んでね」.
+- Repeat: 「やっほ〜 / どのガチャにする？」.
+- Manual line breaks are preserved.
+
+FIGURE SHOP POPUP
+- Popup stays hidden until renderFigureGachaShopV96() completes.
+- Maple image has explicit width/height/max limits and object-fit:contain.
+- Shop card vertical scrolling enabled.

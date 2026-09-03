@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=96;
+const GAME_ASSET_VERSION=97;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -4940,3 +4940,72 @@ async function finishMobPieceBattleV96(win){const b=mobPieceBattleV96,ov=ensureM
 /* ===== END MOB QUEST v96 ===== */
 
 
+
+
+/* ===== MOB QUEST v97: MAPLE DIALOGUE / FIGURE SHOP POPUP FIX ===== */
+
+/* Exact facility dialogue for lines whose manual breaks are part of the script.
+   Unlike the generic facility formatter, this preserves explicit \n positions. */
+async function facilityTalkExactV97(text,speaker='モブメープル',image='play/009.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  if(!overlay||!img||!speakerEl||!textEl||!choices)return;
+  const exact=String(text??'').replace(/\r/g,'').trim();
+  const lines=exact.split('\n'),longest=Math.max(1,...lines.map(x=>[...x].length)),total=[...exact.replace(/\n/g,'')].length;
+  speakerEl.textContent=speaker;
+  setImage(img,versionedPlay(image||'play/009.png'),'');img.alt=speaker||'';
+  choices.innerHTML='';
+  overlay.classList.add('facility-line-talk','text-safe-v96','exact-lines-v97');
+  overlay.hidden=false;
+  textEl.textContent=exact;
+  textEl.dataset.lineLength=String(total);
+  overlay.style.setProperty('--facility-card-width',`${longest<=10?330:longest<=14?360:400}px`);
+  textEl.style.setProperty('--facility-line-font',longest>=17?'14px':longest>=14?'15px':'16px');
+  await new Promise(resolve=>{
+    let ready=false;
+    const timer=setTimeout(()=>ready=true,90);
+    const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};
+    overlay.addEventListener('pointerup',next,{capture:true,passive:false});
+  });
+  await fixedDelay(80);
+  overlay.hidden=true;
+  overlay.classList.remove('facility-line-talk','text-safe-v96','exact-lines-v97');
+  overlay.style.removeProperty('--facility-card-width');
+  choices.innerHTML='';
+  textEl.style.removeProperty('--facility-line-font');
+  delete textEl.dataset.lineLength;
+}
+
+/* Maple's first tavern greeting is intentionally split into two subtitles. */
+enterTavern=async function(){
+  tavernView='menu';renderTavern();
+  await facilityIntro('tavern',{speaker:'モブイルカエル',image:'play/001.png',first:'いらっしゃい♪ ここは酒場です。パーティー編成とドリンク販売をしています。',repeat:'いらっしゃいませ♪ ゆっくりしていってくださいね！'});
+  if(mapleShopUnlocked()&&!facilityFlag('tavern:maple-intro')){
+    await facilityTalk('あら、いい所に来ましたね！今日から、新しい店員が増えたの','モブイルカエル','play/001.png');
+    await facilityTalkExactV97('やっほ〜\nモブメープルです！','モブメープル','play/009.png');
+    await facilityTalkExactV97('これからよろしくねー','モブメープル','play/009.png');
+    await facilityTalk('モブメープルちゃんはフィギュアを売ってくれます♪ 詳しくは本人に聞いてみてください！','モブイルカエル','play/001.png');
+    markFacilityFlag('tavern:maple-intro');renderTavern();
+  }
+};
+
+/* Always render the shop before revealing it. This prevents the legacy placeholder
+   card from becoming visible for a frame and guarantees a bounded Maple portrait. */
+showTavernFigureShop=async function(){
+  if(!mapleShopUnlocked())return;
+  const popup=$('#tavernFigurePopup');
+  if(!popup)return;
+  popup.hidden=true;
+  const first=!facilityFlag('tavern:maple-shop');
+  if(first){
+    await facilityTalkExactV97('やっほ〜\n私はフィギュアを売ってるよ','モブメープル','play/009.png');
+    await facilityTalkExactV97('色んなガチャを用意すから\n好きなガチャを選んでね','モブメープル','play/009.png');
+    markFacilityFlag('tavern:maple-shop');
+  }else{
+    await facilityTalkExactV97('やっほ〜\nどのガチャにする？','モブメープル','play/009.png');
+  }
+  renderFigureGachaShopV96();
+  await nextPaint();
+  popup.hidden=false;
+};
+
+/* ===== END MOB QUEST v97 ===== */

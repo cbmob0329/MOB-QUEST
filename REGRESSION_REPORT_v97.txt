@@ -1,0 +1,5 @@
+MOB QUEST v97 release report
+
+Targeted patch only. No battle, adventure, armor, subquest, gacha probability, or MOB Piece balance changes.
+Primary defect fixed: unbounded play/009.png inside .maple-shop-host could render at native size and cover the figure-shop popup.
+The popup is now rendered while hidden and revealed only after one paint, preventing the legacy placeholder/native-image frame.

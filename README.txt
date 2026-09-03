@@ -76,3 +76,14 @@ Base: v95 ARMOR / DEMON CASTLE FIDELITY STABLE.
 
 - Final validation: area-tag resonances 41-48/52 now apply +10% all stats only in their matching battle area; 3-piece adds 10% damage reduction.
 - Gacha 017/020/022 are intentionally data-wait/disabled because the uploaded gacha spec conflicts with or references figure definitions absent from the uploaded figure lists. No wrong character is substituted.
+
+
+=== v97 ===
+Base: v96 FIGURE GACHA / MOB PIECE STABLE.
+- Maple tavern introduction split into two exact subtitle cards.
+- Maple figure-shop introduction split into two exact subtitle cards.
+- Repeat shop line changed to 「やっほ〜 / どのガチャにする？」.
+- Explicit Maple line breaks are preserved instead of being auto-reflowed.
+- Figure-shop popup is rendered while hidden, then shown after layout is ready.
+- Maple portrait in the figure shop is hard-limited to a compact contained size; native-size image overflow bug fixed.
+- Figure-shop card now scrolls vertically instead of clipping its gacha UI.
