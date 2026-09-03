@@ -3545,6 +3545,31 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 @keyframes v109Core{0%{transform:rotate(45deg) scale(.35);opacity:0}40%{opacity:1}100%{transform:rotate(405deg) scale(1.08);opacity:0}}
 @keyframes v109Particle{0%{opacity:0;transform:translateY(12px) scale(.4)}35%{opacity:1}100%{opacity:0;transform:translateY(-30px) scale(.9)}}
 /* ===== END MOB QUEST v109 SUPPORT MAGIC FX ===== */
+
+/* ===== MOB QUEST v110: GACHA / MOB PIECE / OPENING UX ===== */
+/* Figure images use filename variants only. Never show the gacha barrel as an asset fallback. */
+img[data-figure-image-v110]{background:rgba(255,255,255,.08);border-radius:8px}
+img[data-figure-image-v110].figure-loading-v110{background:conic-gradient(from 0deg,rgba(255,255,255,.08),rgba(255,255,255,.48),rgba(255,255,255,.08));animation:figureLoadPulseV110 .8s linear infinite}
+img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 8px,rgba(0,0,0,.12) 8px 16px)!important}
+@keyframes figureLoadPulseV110{to{filter:brightness(1.18)}}
+.gacha-loading-v110{position:fixed;z-index:899;inset:0;background:rgba(2,5,9,.94);display:flex;align-items:center;justify-content:center;color:#fff;pointer-events:auto}.gacha-loading-v110[hidden]{display:none!important}.gacha-loading-v110>div,.figure-inline-loader-v110{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}.gacha-loading-v110 i,.figure-inline-loader-v110 i,.piece-loading-v110 i{width:42px;height:42px;border:5px solid rgba(255,255,255,.22);border-top-color:#fff;border-radius:50%;animation:spinLoaderV110 .65s linear infinite}.gacha-loading-v110 b{font-size:15px;letter-spacing:.08em}.gacha-loading-v110 small{font-size:11px;color:#d8e4ef}.figure-inline-loader-v110{min-height:220px;color:#20180f}.figure-inline-loader-v110 i{border-color:#bea77f;border-top-color:#3b2c1a}.gacha-common-note-v110{margin:6px 0 8px;padding:7px 9px;border-radius:9px;background:#253b50;color:#fff;font-size:10px;font-weight:1000;text-align:center}@keyframes spinLoaderV110{to{transform:rotate(360deg)}}
+.gacha-result-final-v110{width:min(97vw,500px)!important;max-height:94dvh!important}.gacha-result-grid-v110{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:10px 0 12px}.gacha-result-grid-v110>button{position:relative;min-width:0;min-height:112px;padding:4px 2px;border:2px solid #8c714a;border-radius:10px;background:#fff2d7;color:#20180f;overflow:hidden}.gacha-result-grid-v110>button>span{display:block;position:relative;height:70px}.gacha-result-grid-v110 img{width:100%;height:68px;object-fit:contain}.gacha-result-grid-v110 b{display:block;font-size:7px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gacha-result-grid-v110 small{position:absolute;left:4px;top:3px;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#172536;color:#fff;font-size:8px;font-weight:1000}.gacha-result-grid-v110 .gacha-rarity-neon-v103{font-size:7px!important;right:1px!important;bottom:1px!important}.gacha-result-detail-v110{z-index:60!important}
+
+/* Dark MOB PIECE surfaces always use light text. */
+.piece-deck-actions-v102 button,.piece-deck-actions-v102 button b,.piece-deck-actions-v102 .primary-btn{color:#fff!important;-webkit-text-fill-color:#fff!important}.piece-tags-v103,.piece-tags-v103>b,.piece-tags-v103 i{color:#fff!important;-webkit-text-fill-color:#fff!important}.piece-tags-v103 i{background:#334b63!important;border:1px solid rgba(255,255,255,.2)!important}.piece-compact-summary-v102 small{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.piece-detail-modal-v110{z-index:230!important}.piece-detail-actions-v110{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.piece-detail-actions-v110 button{min-height:46px;border-radius:11px;background:#30465d;color:#fff;font-weight:1000}.piece-detail-actions-v110 [data-piece-detail-remove-v110]{background:#8b4738}.piece-detail-modal-v110 .piece-tag-effects-v96,.piece-detail-modal-v110 section p{overflow-wrap:anywhere}.piece-confirm-v102{z-index:240!important}
+[data-piece-player-card-v103]{touch-action:none!important;user-select:none!important;-webkit-user-select:none!important}.piece-player-card-v103.grab-v103{z-index:120!important;filter:drop-shadow(0 14px 10px #000b)!important}.piece-player-card-v103.drop-target-v103{outline:4px solid #9dff9d!important;outline-offset:2px}
+.piece-loading-v110{position:absolute;inset:0;z-index:250;background:rgba(2,5,9,.91);display:flex;align-items:center;justify-content:center;color:#fff}.piece-loading-v110>div{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center}.piece-loading-v110 b{font-size:13px}.piece-loading-v110 i{border-color:#ffffff33;border-top-color:#fff}
+
+/* Individual AUTO BATTLE. Each figure owns HP and physically attacks a target. */
+.piece-battlefloor-fight-v110{height:350px!important;min-height:350px!important;background:radial-gradient(circle at 50% 50%,#fff9df 0,#dcc592 48%,#8d6c42 100%)!important;border:4px solid #2a1c10!important;overflow:hidden!important}.fight-arena-v110{perspective:700px}.fight-arena-v110.combat-v110:after{content:"AUTO BATTLE";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-9deg);font-size:32px;font-weight:1000;letter-spacing:.06em;color:rgba(83,55,24,.09);pointer-events:none}.fight-arena-v110 .fight-piece-v107{transition:left .7s cubic-bezier(.2,.9,.2,1),top .7s cubic-bezier(.2,.9,.2,1)!important}.fight-arena-v110.combat-v110 .fight-piece-v107{will-change:transform;transition:none!important}.piece-mini-life-v110{position:absolute;left:10%;right:10%;bottom:-4px;height:6px;border:2px solid #111;border-radius:999px;background:#3b1d1d;overflow:hidden;z-index:20}.piece-mini-life-v110>b{display:block;height:100%;background:#72d66c;transition:width .18s linear}.fight-piece-v107.piece-ko-v110{pointer-events:none}.piece-skill-fx-v110{position:absolute;z-index:110;width:138px;height:138px;object-fit:contain;transform:translate(-50%,-50%) scale(.8);filter:drop-shadow(0 3px 2px #0009);animation:pieceSkillPopV110 .45s ease-out both;pointer-events:none}@keyframes pieceSkillPopV110{0%{opacity:0;transform:translate(-50%,-50%) scale(.28) rotate(-18deg)}35%{opacity:1;transform:translate(-50%,-50%) scale(1.2) rotate(5deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45) rotate(14deg)}}
+.piece-impact-v110{position:absolute;z-index:105;width:150px;height:110px;transform:translate(-50%,-50%);pointer-events:none}.piece-impact-v110 svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 5px 0 #0005);animation:impactCloudV110 .62s ease-out both}.piece-impact-v110 svg path{fill:#fff;stroke:#111;stroke-width:7;stroke-linejoin:round}.piece-impact-v110 svg path.in{fill:#f4f0df;stroke-width:4}.piece-impact-v110.skill svg{width:125%;height:125%;left:-12%;top:-12%}.piece-impact-v110.crit svg{filter:drop-shadow(0 0 10px #fff) drop-shadow(0 5px 0 #0005)}.piece-impact-v110 b{position:absolute;left:50%;top:50%;font-size:22px;color:#fff5aa;-webkit-text-stroke:2px #111;text-shadow:0 2px 0 #111;animation:impactStarV110 .62s ease-out both;--rad:calc(var(--a) * 1deg);transform:translate(-50%,-50%) rotate(var(--a)) translateX(0)}@keyframes impactCloudV110{0%{opacity:0;transform:scale(.2) rotate(-7deg)}25%{opacity:1;transform:scale(1.22) rotate(6deg)}100%{opacity:0;transform:scale(1.65) rotate(-4deg)}}@keyframes impactStarV110{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(0) scale(.4)}25%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(var(--d)) rotate(calc(var(--a) * -1)) scale(1.15)}}
+.piece-between-battle-v110 strong{display:block;margin:18px auto 8px;font-size:32px;color:#fff;-webkit-text-stroke:2px #171717;text-shadow:0 4px 0 #171717}.piece-between-battle-v110{background:#23384e!important;color:#fff!important}.piece-between-battle-v110 h2,.piece-between-battle-v110 p,.piece-between-battle-v110 small{color:#fff!important}
+
+/* Opening: keep the speech card above the speaking sprite and its tail on the sprite center. */
+.castle-speech.opening-position-v110{z-index:24!important;max-width:calc(100% - 20px)!important;margin:0!important}.castle-speech.opening-position-v110 p{margin-top:3px!important}
+@media(max-width:380px){.gacha-result-grid-v110{gap:3px}.gacha-result-grid-v110>button{min-height:100px}.gacha-result-grid-v110>button>span{height:60px}.gacha-result-grid-v110 img{height:58px}.piece-battlefloor-fight-v110{height:315px!important;min-height:315px!important}.piece-skill-fx-v110{width:112px;height:112px}.piece-impact-v110{width:126px;height:94px}}
+/* ===== END MOB QUEST v110 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3564,7 +3589,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v109</div>
+      <div class="title-version">v110</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3969,7 +3994,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v109
+<script id="mobQuestInlineData">// MOB QUEST v110
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5140,7 +5165,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=109;
+const GAME_ASSET_VERSION=110;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -11165,6 +11190,158 @@ setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<109){state.me
 /* ===== END MOB QUEST v109 ===== */
 
 
+/* ===== MOB QUEST v110: GACHA / MOB PIECE INDIVIDUAL BATTLE / OPENING BUBBLE FIX ===== */
+window.__mobV110Runtime=true;
+
+/* ---------- figure assets: never substitute a figure with the gacha barrel ---------- */
+const figureReadyV110=new Map();
+function figureCandidatesV110(src){
+  src=String(src||'').trim();const out=[];if(src)out.push(src);
+  const m=src.match(/^(fig|figene|figboss)\/(\d+)\.png$/i);
+  if(m){const d=m[1].toLowerCase(),n=String(Number(m[2]));out.push(`${d}/${n}.png`,`${d}/${n.padStart(2,'0')}.png`,`${d}/${n.padStart(3,'0')}.png`,`${d}/${n}.PNG`,`${d}/${n.padStart(2,'0')}.PNG`);}
+  return [...new Set(out.filter(Boolean))];
+}
+function probeFigureImageV110(src,timeout=2800){
+  if(figureReadyV110.get(src)===true)return Promise.resolve(true);
+  return new Promise(resolve=>{const im=new Image();let done=false;const end=v=>{if(done)return;done=true;if(v)figureReadyV110.set(src,true);resolve(v);};im.onload=()=>end(true);im.onerror=()=>end(false);im.src=src;setTimeout(()=>end(false),timeout);});
+}
+async function ensureFigureAssetV110(f,timeout=2800){
+  if(!f||f.pending||!f.image)return false;
+  const rows=await Promise.all(figureCandidatesV110(f.image).map(async src=>[src,await probeFigureImageV110(src,timeout)]));
+  const hit=rows.find(x=>x[1]);if(hit){f.image=hit[0];delete f.runtimeImageMissingV103;return true;}return false;
+}
+async function preloadFigureRowsV110(rows,timeout=2800){await Promise.all([...(rows||[])].filter(Boolean).map(x=>ensureFigureAssetV110(typeof x==='string'?figureById(x):x,timeout)));}
+imageCandidatesV103=figureCandidatesV110;
+testImageV103=(src,timeout=2200)=>probeFigureImageV110(src,timeout);
+ensureFigureImageV103=(f)=>ensureFigureAssetV110(f,2800);
+preloadRowsV103=async function(rows,limit=48){const list=[...(rows||[])].filter(Boolean).slice(0,limit);await Promise.all(list.map(async x=>{const src=typeof x==='string'?x:x?.image;if(!src)return;const f=typeof x==='object'&&/^(?:fig|figene|figboss)\//i.test(String(src))?x:null;if(f)await ensureFigureAssetV110(f,2200);else await probeFigureImageV110(src,1800);}));};
+usableFigureV103=f=>!!(f&&!f.pending&&f.name&&!/^\/+$/u.test(String(f.name))&&f.image);
+figureImageCandidatesV101=f=>figureCandidatesV110(f?.image);
+figureImgAttrsV101=function(f){const c=figureCandidatesV110(f?.image);return `src="${c[0]||''}" data-fallback-chain="${c.slice(1).join('|')}" data-figure-image-v110="1" data-figure-id="${String(f?.id||'').padStart(2,'0')}"`;};
+figureImageTagV101=function(f,cls=''){return `<img ${figureImgAttrsV101(f)} alt="${f?.name||''}"${cls?` class="${cls}"`:''}>`;};
+patchFigureMarkupImagesV101=function(html,f){if(!f)return String(html||'');const src=String(f.image||''),attrs=figureImgAttrsV101(f);return String(html||'').replace(`<img src="${src}" alt="${f.name}">`,`<img ${attrs} alt="${f.name}">`);};
+const _bindImageV110Base=bindImage;
+bindImage=function(img){
+  if(img&&/^(?:fig|figene|figboss)\//i.test(String(img.getAttribute('src')||''))){
+    const src=String(img.getAttribute('src')||''),c=figureCandidatesV110(src);img.dataset.figureImageV110='1';img.dataset.fallbackChain=c.slice(1).join('|');delete img.dataset.fallbackSrc;img.classList.add('figure-loading-v110');
+    img.addEventListener('load',()=>img.classList.remove('figure-loading-v110','asset-missing'));
+  }
+  return _bindImageV110Base(img);
+};
+
+/* All enabled gacha banners always contain the shared fig/01-25 pool. Figure 17 stays excluded only because its source definition is explicitly pending. */
+gachaPoolV96=function(b){return [...new Set([...COMMON_GACHA_V96,...(b?.extra||[])])].map(figureByImageV96).filter(usableFigureV103);};
+safeRollV103=async function(b,guaranteed=false){for(let i=0;i<24;i++){const f=gachaRollV96(b,guaranteed);if(f&&usableFigureV103(f))return f;}return gachaPoolV96(b)[0]||null;};
+
+/* ---------- gacha input lock / loading / final 5 x 2 summary ---------- */
+let gachaBusyV110=false;
+function ensureGachaLoadingV110(){let e=$('#gachaLoadingV110');if(e)return e;e=document.createElement('div');e.id='gachaLoadingV110';e.className='gacha-loading-v110';e.hidden=true;e.innerHTML='<div><i></i><b>FIGURE LOADING...</b><small>フィギュアを読み込んでいます</small></div>';document.body.appendChild(e);return e;}
+function showGachaLoadingV110(text='フィギュアを読み込んでいます'){const e=ensureGachaLoadingV110();const s=$('small',e);if(s)s.textContent=text;e.hidden=false;}
+function hideGachaLoadingV110(){const e=$('#gachaLoadingV110');if(e)e.hidden=true;}
+function closeGachaDetailPopV110(pop){pop?.remove?.();}
+function appendGachaFigureDetailV110(ov,f){
+  $$('.gacha-result-detail-v110',ov).forEach(x=>x.remove());const pop=document.createElement('div');pop.className='gacha-result-detail-v96 gacha-result-detail-v100 gacha-result-detail-v110';pop.innerHTML=`<div><button data-gacha-detail-close-v110 type="button">×</button>${figureDetailMarkupV96(f)}</div>`;ov.appendChild(pop);bindImages(pop);$('[data-gacha-detail-close-v110]',pop).onclick=()=>closeGachaDetailPopV110(pop);
+}
+showGachaLineupV96=async function(b){
+  const ov=ensureGachaOverlayV96();if(b.disabledReason){ov.innerHTML=`<div class="figure-gacha-card-v96 lineup"><div class="settings-head"><div><small>LINEUP / ${b.id}</small><h2>${b.name}</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><div class="gacha-data-wait-v96"><b>専用フィギュアデータ待ち</b><p>${b.disabledReason}</p></div></div>`;ov.hidden=false;return;}
+  const pool=gachaPoolV96(b),picks=new Set(gachaPickupsV96(b).map(x=>x.id));ov.innerHTML=`<div class="figure-gacha-card-v96 lineup gacha-lineup-loading-v110"><div class="settings-head"><div><small>LINEUP / ${b.id}</small><h2>${b.name}</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><div class="figure-inline-loader-v110"><i></i><b>全${pool.length}体を読み込み中…</b></div></div>`;ov.hidden=false;
+  await preloadFigureRowsV110(pool,2600);
+  ov.innerHTML=`<div class="figure-gacha-card-v96 lineup"><div class="settings-head"><div><small>LINEUP / ${b.id}</small><h2>全${pool.length}種！</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><h3>このガチャのピックアップはこちら！</h3><div class="gacha-common-note-v110">すべてのガチャに共通フィギュアが含まれます</div><div class="gacha-lineup-grid-v96">${pool.map(f=>`<button data-gacha-figure-v96="${f.id}" class="${picks.has(f.id)?'pickup':''}" type="button">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity}${picks.has(f.id)?' / PICK UP':''}</small></button>`).join('')}</div></div>`;ov.hidden=false;bindImages(ov);$$('[data-gacha-figure-v96]',ov).forEach(x=>x.onclick=e=>{e.stopPropagation();appendGachaFigureDetailV110(ov,figureById(x.dataset.gachaFigureV96));});
+};
+openGachaDetailV96=function(id){
+  if(gachaBusyV110)return;const b=FIGURE_GACHAS_V96.find(x=>x.id===id);if(!b)return;const ov=ensureGachaOverlayV96(),pool=gachaPoolV96(b),disabled=!!b.disabledReason;
+  ov.innerHTML=`<div class="figure-gacha-card-v96"><div class="settings-head"><div><small>GACHA ${b.id}</small><h2>${b.name}</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><img class="gacha-detail-banner-v96" src="gacha/${b.id}.png" alt="${b.name}"><div class="gacha-rate-v96"><span>R 50%</span><span>SR 30%</span><span>SSR 15%</span><span>UR 4.5%</span><span>MOB 0.5%</span></div>${disabled?`<div class="gacha-data-wait-v96"><b>専用フィギュアデータ待ち</b><p>${b.disabledReason}</p></div>`:`<p>全${pool.length}種 / 共通フィギュア入り / 10連は最後の1体がSR以上確定</p>`}<div class="gacha-actions-v96"><button data-gacha-lineup-v96 type="button">ラインナップを見る</button><button data-gacha-one-v96 type="button" ${disabled?'disabled':''}>1回 <b>5</b>ダイヤ</button><button data-gacha-ten-v96 type="button" ${disabled?'disabled':''}>10連 <b>50</b>ダイヤ</button><button data-gacha-close-v96 type="button">キャンセル</button></div></div>`;ov.hidden=false;bindImages(ov);$('[data-gacha-lineup-v96]',ov).onclick=()=>showGachaLineupV96(b);$('[data-gacha-one-v96]',ov).onclick=()=>drawGachaV96(b,1);$('[data-gacha-ten-v96]',ov).onclick=()=>drawGachaV96(b,10);
+};
+function showGachaResultV110(b,results){return new Promise(resolve=>{
+  const ov=ensureGachaOverlayV96();ov.classList.add('gacha-result-overlay-v100','gacha-sequential-overlay-v102');let idx=0;
+  const finish=()=>{ov.hidden=true;ov.className='figure-gacha-overlay-v96';resolve();};
+  const summary=()=>{ov.innerHTML=`<div class="figure-gacha-card-v96 result gacha-result-final-v110"><div class="gacha-result-title-v100"><small>GACHA ${b.id}</small><h2>10連結果</h2><p>出た順に左上から表示</p></div><div class="gacha-result-grid-v110">${results.map((f,i)=>`<button data-gacha-summary-v110="${i}" class="rarity-${figureRarityClass(f.rarity)}" type="button"><span>${figureImageTagV101(f)}${gachaRarityLabelV103(f)}</span><b>${f.name}</b><small>${i+1}</small></button>`).join('')}</div><button data-gacha-final-close-v110 class="primary-btn gacha-result-close-v100" type="button">結果を閉じる</button></div>`;ov.hidden=false;bindImages(ov);$$('[data-gacha-summary-v110]',ov).forEach(x=>x.onclick=e=>{e.stopPropagation();appendGachaFigureDetailV110(ov,results[Number(x.dataset.gachaSummaryV110)]);});$('[data-gacha-final-close-v110]',ov).onclick=finish;};
+  const render=()=>{const f=results[idx];if(!f)return finish();const last=idx===results.length-1,r=figureRarityClass(f.rarity),ten=results.length===10;ov.innerHTML=`<div class="figure-gacha-card-v96 result gacha-result-card-v100 gacha-result-card-v102 gacha-v103 rarity-${r}"><div class="gacha-result-title-v100"><small>GACHA ${b.id}　${idx+1}/${results.length}</small><h2>${f.rarity} FIGURE GET!</h2></div><button data-gacha-result-figure-v102="${f.id}" class="gacha-single-reveal-v102 gacha-single-v103 rarity-${r}" type="button">${gachaRarityFxV102(f)}<span>${figureImageTagV101(f)}${gachaRarityLabelV103(f)}</span><b>${f.name}</b><small>タップで性能を見る</small></button><button data-gacha-next-v102 class="primary-btn gacha-next-v102" type="button">${last?(ten?'全結果を見る':'結果を閉じる'):'NEXT'}</button></div>`;ov.hidden=false;bindImages(ov);$('[data-gacha-result-figure-v102]',ov).onclick=e=>{e.stopPropagation();appendGachaFigureDetailV110(ov,f);};$('[data-gacha-next-v102]',ov).onclick=()=>{if(last){ten?summary():finish();}else{idx++;render();}};};render();
+});}
+showGachaResultV100=showGachaResultV110;showGachaResultV96=showGachaResultV110;
+drawGachaV96=async function(b,count){
+  if(gachaBusyV110)return;gachaBusyV110=true;hideGachaSurfacesV100();
+  try{
+    if(b.disabledReason){await facilityTalk('このガチャは専用フィギュアデータの準備中だよ！','モブメープル','play/009.png');restoreGachaCarouselV100(b.id);return;}
+    const cost=count===10?50:5;if((Number(state.meta?.diamonds)||0)<cost){await facilityTalk('ダイヤが足りないよ！','モブメープル','play/009.png');restoreGachaCarouselV100(b.id);return;}
+    const ans=await dialog('このガチャを引く？',[['はい','yes','primary'],['いいえ','no']],'モブメープル','play/009.png');if(ans!=='yes'){restoreGachaCarouselV100(b.id);return;}
+    showGachaLoadingV110('ガチャ演出を準備しています…');state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)-cost;const results=[];
+    for(let i=0;i<count;i++){const f=await safeRollV103(b,count===10&&i===9);if(f){addFigure(f.id,1);results.push(f);}}
+    saveMeta();await preloadFigureRowsV110(results,3200);hideGachaLoadingV110();await runGachaCapsuleAnimationV100(results);
+    /* The result overlay itself blocks every underlying menu, so release the busy lock here to avoid an unclickable result screen. */
+    gachaBusyV110=false;await showGachaResultV110(b,results);restoreGachaCarouselV100(b.id);
+  }finally{hideGachaLoadingV110();gachaBusyV110=false;}
+};
+
+/* ---------- MOB PIECE deck/list detail layer ---------- */
+function showPieceFigureDetailV110(f,{deckIndex=null}={}){
+  const ov=ensureMobPieceOverlayV96();if(!f)return;$$('.piece-detail-modal-v110',ov).forEach(x=>x.remove());const pop=document.createElement('div');pop.className='piece-detail-modal-v103 piece-detail-modal-v110';
+  pop.innerHTML=`<div><button class="piece-detail-close-v103" data-piece-detail-close-v110 type="button">×</button>${figureDetailMarkupV96(f,true)}<section><b>モブピース性能</b><p>${pieceTagLinesV96(f)||'タグ効果なし'}</p></section><div class="piece-detail-actions-v110">${deckIndex!=null?'<button data-piece-detail-remove-v110 type="button">外す</button>':''}<button data-piece-detail-close2-v110 type="button">閉じる</button></div></div>`;ov.appendChild(pop);bindImages(pop);const close=()=>pop.remove();$('[data-piece-detail-close-v110]',pop).onclick=close;$('[data-piece-detail-close2-v110]',pop).onclick=close;
+  const rem=$('[data-piece-detail-remove-v110]',pop);if(rem)rem.onclick=()=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');const d=normalizedMobPieceDeckV96();d.splice(Number(deckIndex),1);state.meta.mobPieceDeck=d;saveMeta();close();renderMobPieceDeckV96();};
+}
+renderMobPieceDeckV96=function(resetScroll=false){
+  const ov=ensureMobPieceOverlayV96(),deck=normalizedMobPieceDeckV96(),raw=FIGURES.filter(f=>figureOwned(f.id)>0&&!f.pending),owned=sortedFilteredFiguresV102(raw),cost=mobPieceDeckCostV100(deck),selected=new Set(deck);if(resetScroll)mobPieceUiV102.deckScroll=0;const empty=deck.length===0;
+  ov.innerHTML=`<div class="mob-piece-card-v96 deck mob-piece-deck-v100 mob-piece-deck-v102"><div class="settings-head"><div><small>DECK</small><h2>デッキ編成 ${deck.length}/25</h2><p>同キャラ不可　TOTAL COST <b>${cost}/80</b></p></div><button data-piece-back-v96 class="sheet-close" type="button">←</button></div><div class="piece-deck-actions-v96 piece-deck-actions-v102"><button data-piece-auto-v96 type="button">おすすめ25体</button><button data-piece-clear-v96 type="button">全てはずす</button><button data-piece-deck-done-v102 class="primary-btn" type="button">編成決定</button></div><div class="piece-deck-guide-v102"><b>25種類のフィギュアを編成</b><span>同キャラ不可 / 最大コスト80</span></div><div class="piece-deck-slots-v96 ${empty?'empty-v102':''}">${empty?'<p>まだフィギュアを選んでいません。</p>':deck.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f);return`<button data-piece-deck-detail-v110="${i}" type="button">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity} / C${s.cost}</small></button>`;}).join('')}</div><div class="piece-owned-head-v102"><h3>所持フィギュア</h3>${mobPieceFilterBarV102()}</div><div class="piece-owned-grid-v96">${owned.map(f=>{const s=mobPieceStatsV96(f),blocked=selected.has(f.id)||deck.length>=25||cost+s.cost>80;return`<button data-piece-add-v96="${f.id}" type="button" ${blocked?'disabled':''}>${figureImageTagV101(f)}<div><b>${f.name}</b><small>${f.rarity} / COST ${s.cost}</small><em>L ${s.life}　P ${s.power}　D ${s.defense}　S ${s.speed}</em><span>${selected.has(f.id)?'編成済み':'所持 '+figureOwned(f.id)}</span></div></button>`;}).join('')||'<p class="piece-empty-v102">条件に合うフィギュアがありません。</p>'}</div></div>`;
+  ov.hidden=false;bindImages(ov);restorePieceScrollV102('.mob-piece-deck-v102',mobPieceUiV102.deckScroll);$('[data-piece-back-v96]',ov).onclick=openMobPieceMenuV96;$('[data-piece-auto-v96]',ov).onclick=()=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');autoMobPieceDeckV96();};$('[data-piece-clear-v96]',ov).onclick=async()=>{if(!(await pieceOverlayConfirmV102('デッキを全て外しますか？')))return;state.meta.mobPieceDeck=[];saveMeta();mobPieceUiV102.deckScroll=0;renderMobPieceDeckV96();};$('[data-piece-deck-done-v102]',ov).onclick=async()=>{const d=normalizedMobPieceDeckV96();if(d.length!==25)return pieceOverlayNoticeV102(`25体編成してください。現在 ${d.length}/25`);if(mobPieceDeckCostV100(d)>80)return pieceOverlayNoticeV102('デッキコストは80までです。');if(await pieceOverlayConfirmV102('このデッキで決定しますか？',`25体 / COST ${mobPieceDeckCostV100(d)}/80`))openMobPieceMenuV96();};
+  bindMobPieceFiltersV102(ov,(reset)=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');renderMobPieceDeckV96(reset);});$$('[data-piece-add-v96]',ov).forEach(b=>b.onclick=()=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');const d=normalizedMobPieceDeckV96(),id=b.dataset.pieceAddV96,f=figureById(id);if(!f||d.length>=25||d.includes(id))return;const nc=mobPieceDeckCostV100(d)+mobPieceStatsV96(f).cost;if(nc>80)return pieceOverlayNoticeV102('デッキコスト80を超えます。');d.push(id);state.meta.mobPieceDeck=d;saveMeta();renderMobPieceDeckV96();});$$('[data-piece-deck-detail-v110]',ov).forEach(b=>b.onclick=()=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');const i=Number(b.dataset.pieceDeckDetailV110);showPieceFigureDetailV110(figureById(deck[i]),{deckIndex:i});});
+};
+renderMobPieceFigureListV96=function(resetScroll=false){
+  const ov=ensureMobPieceOverlayV96(),raw=FIGURES.filter(f=>figureOwned(f.id)>0&&!f.pending),owned=sortedFilteredFiguresV102(raw);if(resetScroll)mobPieceUiV102.listScroll=0;ov.innerHTML=`<div class="mob-piece-card-v96 list mob-piece-list-v102"><div class="settings-head"><div><small>PIECE LIST</small><h2>フィギュア一覧</h2></div><button data-piece-back-v96 class="sheet-close" type="button">←</button></div>${mobPieceFilterBarV102()}<div class="piece-list-grid-v96 piece-list-grid-v102">${owned.map(f=>`<button data-piece-detail-v110="${f.id}" class="rarity-${figureRarityClass(f.rarity)}" type="button"><span>${figureImageTagV101(f)}</span><b>${f.rarity}</b></button>`).join('')||'<p class="piece-empty-v102">条件に合うフィギュアがありません。</p>'}</div></div>`;ov.hidden=false;bindImages(ov);restorePieceScrollV102('.mob-piece-list-v102',mobPieceUiV102.listScroll);$('[data-piece-back-v96]',ov).onclick=openMobPieceMenuV96;bindMobPieceFiltersV102(ov,(reset)=>{mobPieceUiV102.listScroll=capturePieceScrollV102('.mob-piece-list-v102');renderMobPieceFigureListV96(reset);});$$('[data-piece-detail-v110]',ov).forEach(b=>b.onclick=()=>{mobPieceUiV102.listScroll=capturePieceScrollV102('.mob-piece-list-v102');showPieceFigureDetailV110(figureById(b.dataset.pieceDetailV110));});
+};
+
+/* ---------- hand drag: a drag never falls through as a tap ---------- */
+bindPlayerDragV103=function(ov){
+  $$('[data-piece-player-card-v103]',ov).forEach(card=>{let start=null,target=-1,pid=null;const clear=()=>{card.style.transform='';card.classList.remove('grab-v103');$$('[data-piece-player-card-v103]',ov).forEach(x=>x.classList.remove('drop-target-v103'));};
+    card.onpointerdown=e=>{if(e.button!=null&&e.button!==0)return;pid=e.pointerId;start={x:e.clientX,y:e.clientY,i:Number(card.dataset.piecePlayerCardV103),moved:false};target=start.i;card.setPointerCapture?.(pid);card.classList.add('grab-v103');};
+    card.onpointermove=e=>{if(!start)return;const dx=e.clientX-start.x,dy=e.clientY-start.y;if(Math.hypot(dx,dy)>6)start.moved=true;if(!start.moved)return;e.preventDefault?.();card.style.transform=`translate(${dx}px,${dy}px) scale(1.08)`;const cards=$$('[data-piece-player-card-v103]',ov);let best=-1,bd=Infinity;for(const el of cards){const r=el.getBoundingClientRect(),d=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2));if(d<bd){bd=d;best=Number(el.dataset.piecePlayerCardV103);}}target=best;cards.forEach(x=>x.classList.toggle('drop-target-v103',Number(x.dataset.piecePlayerCardV103)===target));};
+    card.onpointerup=e=>{if(!start)return;const s=start;start=null;try{card.releasePointerCapture?.(pid);}catch(_){ }clear();if(s.moved){if(target>=0&&target!==s.i)movePieceV103(s.i,target);}else showBattlePieceDetailV103(s.i);target=-1;};
+    card.onpointercancel=()=>{start=null;target=-1;clear();};
+  });
+};
+function showPieceLoadingV110(text='フィギュアを読み込んでいます…'){const ov=ensureMobPieceOverlayV96();$$('.piece-loading-v110',ov).forEach(x=>x.remove());const p=document.createElement('div');p.className='piece-loading-v110';p.innerHTML=`<div><i></i><b>${text}</b></div>`;ov.appendChild(p);return p;}
+showBattlePieceDetailV103=function(i){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;rememberPieceBattleScrollV107();const f=figureById(b.pHand[i]),pop=document.createElement('div');pop.className='piece-detail-modal-v103 piece-detail-modal-v107 piece-detail-modal-v110';pop.innerHTML=`<div><button class="piece-detail-close-v103" type="button">×</button>${figureDetailMarkupV96(f,true)}<section><b>現在発動している効果</b>${pieceEffectLinesV101(b.pHand).map(x=>`<p>${x}</p>`).join('')||'<p>なし</p>'}</section><section class="piece-position-v103"><b>配置移動</b>${[0,1,2,3,4].map(n=>`<button data-piece-position-v103="${n}" type="button">${n+1}</button>`).join('')}</section><button data-piece-exchange-v103 type="button" ${b.exchanged?'disabled':''}>${b.exchanged?'交換済み':'このフィギュアを交換'}</button></div>`;ov.appendChild(pop);bindImages(pop);$('.piece-detail-close-v103',pop).onclick=()=>pop.remove();$$('[data-piece-position-v103]',pop).forEach(x=>x.onclick=()=>{const to=Number(x.dataset.piecePositionV103);pop.remove();movePieceV103(i,to);});$('[data-piece-exchange-v103]',pop).onclick=async()=>{if(b.exchanged)return;rememberPieceBattleScrollV107();pop.remove();const ok=await pieceOverlayConfirmV102('このフィギュアを交換しますか？',f?.name||'');if(!ok){restorePieceBattleScrollV107();return showBattlePieceDetailV103(i);}const card=$(`[data-piece-player-card-v103="${i}"]`,ov);card?.classList.add('exchange-out-v103');await waitRealV100(280);const old=b.pHand[i];b.pDiscard.push(old);const next=drawPieceCardV96('p');b.pHand[i]=next;b.exchanged=true;b.exchangeRevealV103=i;const loader=showPieceLoadingV110('新しいフィギュアを読み込んでいます…');await preloadFigureRowsV110([figureById(next)],2600);loader.remove();renderMobPieceRoundV96();setTimeout(()=>{if(b)b.exchangeRevealV103=-1;},700);};
+};
+
+/* ---------- individual 5 vs 5 auto battle ---------- */
+function pieceFightersV110(hand,enemyHand,side){
+  const own=handTagEffectsV96(hand).effects||{},opp=handTagEffectsV96(enemyHand).effects||{};
+  return hand.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f),center=i===2?1.25:1;let life=s.life*center*(1+(own.lifePct||0)),atk=s.power*center*(1+(own.attackPct||0)),def=s.defense*center*(1+(own.defensePct||0)),spd=s.speed*center;if(i===2){life*=1+(own.centerLifePct||0);atk*=1+(own.centerAttackPct||0);def*=1+(own.centerDefensePct||0);}atk*=Math.max(.2,1+(opp.enemyAttackPct||0));def*=Math.max(.2,1+(opp.enemyDefensePct||0));const maxHp=Math.max(25,Math.round(life));return{key:`${side}-${i}`,side,index:i,id,f,maxHp,hp:maxHp,atk:Math.max(1,Math.round(atk)),def:Math.max(1,Math.round(def)),spd:Math.max(1,Math.round(spd)),nextAt:Math.random()*8};});
+}
+function pieceTeamStatsFromFightersV110(rows,hand){return{life:rows.reduce((n,x)=>n+x.maxHp,0),attack:rows.reduce((n,x)=>n+x.atk,0),defense:rows.reduce((n,x)=>n+x.def,0),speed:rows.reduce((n,x)=>n+x.spd,0),tag:handTagEffectsV96(hand)};}
+function fightPiecesV110(rows){return rows.map(x=>`<span class="fight-piece-v107 ${x.side} q${x.index+1}" data-fighter-v110="${x.key}">${figureImageTagV101(x.f)}<i class="piece-mini-life-v110"><b style="width:100%"></b></i></span>`).join('');}
+function fighterElV110(arena,key){return $(`[data-fighter-v110="${key}"]`,arena);}
+function updateFighterHpV110(arena,f){const el=fighterElV110(arena,f.key),bar=$('.piece-mini-life-v110 b',el);if(bar)bar.style.width=`${Math.max(0,Math.min(100,f.hp/f.maxHp*100))}%`;if(f.hp<=0)el?.classList.add('piece-ko-v110');}
+function sumAliveHpV110(rows){return rows.reduce((n,x)=>n+Math.max(0,x.hp),0);}
+function weightedTargetV110(rows){const alive=rows.filter(x=>x.hp>0);if(!alive.length)return null;return alive[Math.floor(Math.random()*alive.length)];}
+function raritySkillChanceV110(r){return ({R:.16,SR:.21,SSR:.27,UR:.34,MOB:.40})[r]||.18;}
+function pieceHitDamageV110(a,d,skill=false,crit=false){let raw=a.atk*(skill?1.14:.90)+a.spd*.15-d.def*.43;raw*=.84+Math.random()*.30;if(skill)raw*=1.18;if(crit)raw*=1.55;const floor=Math.max(4,Math.round(d.maxHp*.07));return Math.max(floor,Math.round(raw));}
+const PIECE_SKILL_FX_V110=[['skill/01.png','skill/02.png','skill/03.png','skill/04.png'],['skill/17.png','skill/18.png','skill/19.png','skill/17.png'],['skill/29.png','skill/30.png','skill/31.png','skill/30.png'],['skill/39.png','skill/40.png','skill/41.png','skill/42.png'],['skill/49.png','skill/50.png','skill/51.png','skill/52.png'],['skill/54.png','skill/55.png','skill/57.png','skill/58.png'],['skill/65.png','skill/66.png','skill/67.png','skill/68.png']];
+function playPieceSkillFxV110(arena,targetEl,seed=0){if(!arena||!targetEl)return;const ar=arena.getBoundingClientRect(),tr=targetEl.getBoundingClientRect(),frames=PIECE_SKILL_FX_V110[Math.abs(seed)%PIECE_SKILL_FX_V110.length],fx=document.createElement('img');fx.className='piece-skill-fx-v110';fx.style.left=`${tr.left-ar.left+tr.width/2}px`;fx.style.top=`${tr.top-ar.top+tr.height/2}px`;let i=0;fx.onerror=()=>{try{fx.remove();}catch(_){ }};fx.src=frames[0];arena.appendChild(fx);const timer=setInterval(()=>{i++;if(i>=frames.length){clearInterval(timer);setTimeout(()=>fx.remove(),90);return;}fx.src=frames[i];},65);}
+function spawnImpactV110(arena,targetEl,skill=false,crit=false){if(!arena||!targetEl)return;const ar=arena.getBoundingClientRect(),tr=targetEl.getBoundingClientRect(),x=tr.left-ar.left+tr.width/2,y=tr.top-ar.top+tr.height/2,fx=document.createElement('div');fx.className=`piece-impact-v110 ${skill?'skill':''} ${crit?'crit':''}`;fx.style.left=`${x}px`;fx.style.top=`${y}px`;fx.innerHTML=`<svg viewBox="0 0 180 130"><path d="M23 83C1 67 10 42 34 43C26 19 55 7 69 27C80 3 112 8 114 34C139 17 158 39 148 59C177 58 183 89 158 101C157 125 124 130 109 110C89 132 59 123 58 105C35 122 10 105 23 83Z"/><path class="in" d="M54 73C46 55 66 43 79 56C88 39 112 49 109 68C130 67 134 91 115 96C101 110 82 100 80 88C64 98 49 89 54 73Z"/></svg>${Array.from({length:9},(_,i)=>`<b style="--a:${i*40}deg;--d:${54+(i%3)*14}px">${i%3?'☆':'★'}</b>`).join('')}`;arena.appendChild(fx);setTimeout(()=>fx.remove(),720);}
+function crowdJukeV110(arena,rows,except){const live=shuffleV96(rows.filter(x=>x.hp>0&&x.key!==except)).slice(0,2);for(const f of live){const el=fighterElV110(arena,f.key);el?.animate([{transform:'translate(0,0)'},{transform:`translate(${Math.round((Math.random()-.5)*34)}px,${Math.round((Math.random()-.5)*22)}px) rotate(${Math.round((Math.random()-.5)*22)}deg)`},{transform:'translate(0,0)'}],{duration:260+Math.random()*180,easing:'ease-in-out'});}}
+async function animatePieceStrikeV110(arena,a,d,{skill=false,crit=false,ko=false}={}){const ae=fighterElV110(arena,a.key),de=fighterElV110(arena,d.key);if(!ae||!de)return waitRealV100(120);const ar=arena.getBoundingClientRect(),ra=ae.getBoundingClientRect(),rd=de.getBoundingClientRect(),dx=(rd.left+rd.width/2)-(ra.left+ra.width/2),dy=(rd.top+rd.height/2)-(ra.top+ra.height/2),dur=skill?340:250;crowdJukeV110(arena,[...pieceFightRowsV110],a.key);ae.style.zIndex='70';ae.animate([{transform:'translate(0,0) rotate(0) scale(1)'},{offset:.52,transform:`translate(${dx*.72}px,${dy*.72}px) rotate(${skill?18:7}deg) scale(${skill?1.24:1.12})`},{offset:.66,transform:`translate(${dx*.78}px,${dy*.78}px) rotate(${skill?-12:-5}deg) scale(1.06)`},{transform:'translate(0,0) rotate(0) scale(1)'}],{duration:dur,easing:'cubic-bezier(.18,.84,.25,1)'});await waitRealV100(Math.round(dur*.52));if(skill)playPieceSkillFxV110(arena,de,a.index+(a.side==='cpu'?3:0));spawnImpactV110(arena,de,skill,crit);const fly=(d.side==='cpu'?1:-1)*(70+Math.random()*85),rot=(Math.random()>.5?1:-1)*(ko?720:300);de.animate([{transform:'translate(0,0) rotate(0) scale(1)'},{offset:.45,transform:`translate(${fly}px,${-28-Math.random()*65}px) rotate(${rot}deg) scale(${ko?.65:.88})`},{transform:ko?`translate(${fly*1.55}px,${-90-Math.random()*60}px) rotate(${rot*1.6}deg) scale(.35)`:'translate(0,0) rotate(0) scale(1)'}],{duration:ko?620:390,easing:'cubic-bezier(.12,.8,.25,1)',fill:ko?'forwards':'none'});await waitRealV100(Math.round(dur*.52));ae.style.zIndex='';}
+let pieceFightRowsV110=[];
+resolveMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const loading=showPieceLoadingV110('バトル用フィギュアを読み込んでいます…');await preloadFigureRowsV110([...b.pHand,...b.cHand].map(figureById),3000);loading.remove();
+  const pRows=pieceFightersV110(b.pHand,b.cHand,'player'),cRows=pieceFightersV110(b.cHand,b.pHand,'cpu');pieceFightRowsV110=[...pRows,...cRows];const p=pieceTeamStatsFromFightersV110(pRows,b.pHand),c=pieceTeamStatsFromFightersV110(cRows,b.cHand);b.pLifeMax=p.life;b.cLifeMax=c.life;b.pLife=p.life;b.cLife=c.life;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107 mob-piece-fight-v110">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107 piece-battlefloor-fight-v110"><div class="fight-arena-v107 fight-arena-v110">${fightPiecesV110(cRows)}${fightPiecesV110(pRows)}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}</div>`;ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v110',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(620);start?.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('combat-v110');
+  let steps=0;while(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)&&steps<320){steps++;const actors=pieceFightRowsV110.filter(x=>x.hp>0),a=actors.reduce((best,x)=>!best||x.nextAt<best.nextAt?x:best,null);if(!a)break;const enemies=a.side==='player'?cRows:pRows,d=weightedTargetV110(enemies);if(!d)break;a.nextAt+=1000/Math.max(18,a.spd);const skill=Math.random()<raritySkillChanceV110(a.f?.rarity),crit=Math.random()<clamp(.05+a.spd/2400,.05,.16),dmg=Math.min(d.hp,pieceHitDamageV110(a,d,skill,crit)),ko=dmg>=d.hp;d.hp=Math.max(0,d.hp-dmg);await animatePieceStrikeV110(arena,a,d,{skill,crit,ko});updateFighterHpV110(arena,d);const pLife=sumAliveHpV110(pRows),cLife=sumAliveHpV110(cRows);b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);if(!pRows.some(x=>x.hp>0)||!cRows.some(x=>x.hp>0))break;await waitRealV100(35+Math.random()*65);}
+  /* Minimum damage guarantees natural KO well before the guard; this is only a no-draw failsafe. */
+  if(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)){const pp=sumAliveHpV110(pRows)/Math.max(1,b.pLifeMax),cc=sumAliveHpV110(cRows)/Math.max(1,b.cLifeMax),losers=pp>=cc?cRows:pRows;for(const x of losers){x.hp=0;updateFighterHpV110(arena,x);}b.pLife=sumAliveHpV110(pRows);b.cLife=sumAliveHpV110(cRows);setFightLifeV107(ov,'player',b.pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',b.cLife,b.cLifeMax);}
+  await waitRealV100(620);const win=b.cLife<=0;if(win)b.pWins++;else b.cWins++;b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);const done=b.pWins>=2||b.cWins>=2;ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV107(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'PLAYER 1 WIN!':'PLAYER 2 WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${done?'MATCH RESULT':'次のバトルへ'}<span>${done?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);if(done)return finishMobPieceBattleV96(b.pWins>=2);ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107 piece-between-battle-v110"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>第${b.round}バトル終了。新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(1000);nextMobPieceRoundV96();
+};
+
+/* ---------- opening throne-room speech: keep the bubble above the visible actor ---------- */
+showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
+  const box=$('#castleSpeech');if(!box)return;const clean=facilityTextV96(text),n=[...clean].length;box.className=`castle-speech side-${side} text-safe-v96 opening-position-v110`;$('small',box).textContent=speaker;$('p',box).textContent=clean;box.hidden=false;box.style.left='';box.style.top='';box.style.width='';box.style.transform='none';box.style.removeProperty('--tail-x');box.style.removeProperty('--castle-speech-font');const stage=box.parentElement,anchor=actorEl?.querySelector?.('img')||actorEl;
+  if(anchor&&stage){const sr=stage.getBoundingClientRect(),ar=anchor.getBoundingClientRect(),sw=sr.width||320,natural=Math.max(205,Math.min(340,n*14+54)),bw=Math.min(sw-20,natural),ax=ar.left+ar.width*.5-sr.left;box.style.width=`${bw}px`;const bh=box.offsetHeight||92;let left=ax-bw/2;if(side==='left')left-=18;if(side==='right')left+=18;left=Math.max(10,Math.min(left,sw-bw-10));let top=ar.top-sr.top-bh-16;top=Math.max(8,top);box.style.left=`${left}px`;box.style.top=`${top}px`;box.style.setProperty('--tail-x',`${Math.max(25,Math.min(ax-left,bw-25))}px`);}
+  box.style.setProperty('--castle-speech-font',n>=34?'13px':n>=23?'14px':'16px');clearTimeout(showCastleSpeech.timer);showCastleSpeech.timer=setTimeout(()=>{if(box)box.hidden=true;},3000);
+};
+
+/* ===== END MOB QUEST v110 ===== */
+
+
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
 /* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
@@ -11187,7 +11364,6 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
-
 
 
 

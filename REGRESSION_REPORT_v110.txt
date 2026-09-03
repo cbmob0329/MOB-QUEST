@@ -1,0 +1,26 @@
+MOB QUEST v110 REGRESSION REPORT
+
+Base: v109 MULTIACTION / SUPPORT MAGIC STABLE
+
+Implemented
+- Restored the common fig/01-25 gacha pool on every enabled banner (undefined figure 17 remains excluded).
+- Removed barrel/player-image fallback from all figure images. Figure filename variants only + loading state.
+- Gacha pull input is locked immediately; loading/cinematic/result phases cannot leak taps to other menus.
+- 10-pull keeps sequential reveal, then shows all 10 in pull order as a 5 x 2 summary with Close.
+- Gacha result figures are tappable for performance details.
+- Deck figures open details first; Remove / Close choices are explicit.
+- Figure List details render above the Mob Piece layer with Close.
+- Dark Mob Piece action buttons / active-tag text forced white.
+- Drag threshold and pointer logic changed so a drag never falls through as a tap.
+- Exchange confirmation remains above detail; replacement figure preloads before reveal.
+- Mob Piece battle rewritten as actual 5-vs-5 individual HP combat using each figure LIFE / POWER / DEF / SPD and tag bonuses.
+- Natural KO required; no aggregate ATK-DEF shortcut.
+- Dynamic dash / high-speed motion / spin / knockback / skill sprites / fresh smoke / stars per impact.
+- 2-win match rule preserved: each battle ends when one team LIFE reaches zero; next battle redraws five figures.
+- Opening throne-room speech bubbles repositioned above the visible speaking sprite.
+
+Preserved
+- v109 support/healing magic and multi-action enemy balance.
+- v108 normalized player HP.
+- v106 Demon Castle progression/staging fixes.
+- v99 core-scope runtime architecture.

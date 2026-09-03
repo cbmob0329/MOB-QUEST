@@ -236,3 +236,7 @@ Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
 - Added 17 support/healing spells with 2-3 turn buffs, player learnsets, selected enemy learners, and CSS-only battle effects.
 - Added Tetsu-only モブテツウォーク and Money-only ネオンカスタード.
 - GAME_ASSET_VERSION and title updated to v109.
+
+
+[v110]
+Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading without barrel fallback, Mob Piece detail/drag UX, individual 5v5 auto-battle simulation, opening speech positioning.
