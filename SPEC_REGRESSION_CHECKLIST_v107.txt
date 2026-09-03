@@ -1,0 +1,12 @@
+v107 checklist
+[ ] title v107
+[ ] GAME_ASSET_VERSION 107
+[ ] runtime patch is inside main IIFE before boot binding
+[ ] move/exchange do not jump scroll to top
+[ ] exchange confirmation is visible immediately
+[ ] BATTLE confirmation Yes/No
+[ ] gather -> START -> brawl
+[ ] each battle continues to LIFE 0
+[ ] winner gets 1 win, fresh draw; first to 2 wins
+[ ] player v107 balance migration refills HP/MP once
+[ ] v106 Demon Castle patch retained

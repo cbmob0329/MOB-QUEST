@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=106;
+const GAME_ASSET_VERSION=107;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5754,6 +5754,125 @@ Object.assign(STORY_EVENTS,{
   ]}
 });
 /* ===== END MOB QUEST v106 ===== */
+
+
+
+
+/* ===== MOB QUEST v107: MOB PIECE 2-WIN BATTLE / SCROLL / CONFIRM / PLAYER POWER ===== */
+window.__mobV107PatchRuntime=true;
+
+function pieceBattleCardV107(){const ov=ensureMobPieceOverlayV96();return $('.mob-piece-card-v96.battle',ov)||$('.mob-piece-card-v96',ov);}
+function rememberPieceBattleScrollV107(){const b=mobPieceBattleV96,card=pieceBattleCardV107();if(b&&card)b.uiScrollV107=card.scrollTop;return b?.uiScrollV107||0;}
+function restorePieceBattleScrollV107(){const b=mobPieceBattleV96;if(!b)return;requestAnimationFrame(()=>{const card=pieceBattleCardV107();if(card)card.scrollTop=Math.max(0,Number(b.uiScrollV107)||0);});}
+function currentMobPieceStatsV107(){const b=mobPieceBattleV96;if(!b)return null;const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects;return{p:handBattleStatsV96(b.pHand,2,cTag),c:handBattleStatsV96(b.cHand,2,pTag)};}
+
+startMobPieceBattleV96=function(rank=false){
+  const deck=normalizedMobPieceDeckV96(),unique=new Set(deck);
+  if(deck.length!==25)return pieceOverlayNoticeV102('デッキは25体必ず編成してください。');
+  if(unique.size!==25)return pieceOverlayNoticeV102('同じフィギュアはデッキに1体までです。');
+  if(mobPieceDeckCostV100(deck)>80)return pieceOverlayNoticeV102('デッキコストは80までです。');
+  const cpu=cpuPieceDeckV96(rank).filter(id=>usableFigureV103(figureById(id)));
+  if(cpu.length<25)return pieceOverlayNoticeV102('対戦データを準備できませんでした。');
+  mobPieceBattleV96={rank,pDeck:shuffleV96(deck),cDeck:shuffleV96(cpu),pPos:0,cPos:0,pDiscard:[],cDiscard:[],pWins:0,cWins:0,round:0,center:2,exchanged:false,uiScrollV107:0};
+  nextMobPieceRoundV96();
+};
+
+nextMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96;if(!b)return;
+  b.round++;b.center=2;b.exchanged=false;b.exchangeRevealV103=-1;b.uiScrollV107=0;
+  b.pHand=Array.from({length:5},()=>drawPieceCardV96('p'));
+  b.cHand=Array.from({length:5},()=>drawPieceCardV96('c'));
+  try{await renderMobPieceDrawV100();}catch(_){ }
+  renderMobPieceRoundV96();
+};
+
+movePieceV103=function(from,to){
+  const b=mobPieceBattleV96;if(!b||from===to||to<0||to>4)return;
+  rememberPieceBattleScrollV107();
+  const old=handBattleStatsV96(b.pHand,2,handTagEffectsV96(b.cHand).effects);
+  [b.pHand[from],b.pHand[to]]=[b.pHand[to],b.pHand[from]];
+  b.center=2;b.previewBeforeV103=old;
+  renderMobPieceRoundV96();
+};
+
+showBattlePieceDetailV103=function(i){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  rememberPieceBattleScrollV107();
+  const f=figureById(b.pHand[i]),pop=document.createElement('div');pop.className='piece-detail-modal-v103 piece-detail-modal-v107';
+  pop.innerHTML=`<div><button class="piece-detail-close-v103" type="button">×</button>${figureDetailMarkupV96(f,true)}<section><b>現在発動している効果</b>${pieceEffectLinesV101(b.pHand).map(x=>`<p>${x}</p>`).join('')||'<p>なし</p>'}</section><section class="piece-position-v103"><b>配置移動</b>${[0,1,2,3,4].map(n=>`<button data-piece-position-v103="${n}" type="button">${n+1}</button>`).join('')}</section><button data-piece-exchange-v103 type="button" ${b.exchanged?'disabled':''}>${b.exchanged?'交換済み':'このフィギュアを交換'}</button></div>`;
+  ov.appendChild(pop);bindImages(pop);
+  $('.piece-detail-close-v103',pop).onclick=()=>pop.remove();
+  $$('[data-piece-position-v103]',pop).forEach(x=>x.onclick=()=>{const to=Number(x.dataset.piecePositionV103);pop.remove();movePieceV103(i,to);});
+  $('[data-piece-exchange-v103]',pop).onclick=async()=>{
+    if(b.exchanged)return;
+    rememberPieceBattleScrollV107();
+    pop.remove();
+    const ok=await pieceOverlayConfirmV102('このフィギュアを交換しますか？',f?.name||'');
+    if(!ok){restorePieceBattleScrollV107();return showBattlePieceDetailV103(i);}
+    const card=$(`[data-piece-player-card-v103="${i}"]`,ov);card?.classList.add('exchange-out-v103');
+    await waitRealV100(300);
+    const old=b.pHand[i];b.pDiscard.push(old);b.pHand[i]=drawPieceCardV96('p');b.exchanged=true;b.exchangeRevealV103=i;
+    renderMobPieceRoundV96();
+    setTimeout(()=>{if(b)b.exchangeRevealV103=-1;},700);
+  };
+};
+
+function pieceScoreV107(b){return `<div class="piece-score-v96 piece-score-v107"><span>PLAYER 1 <b>${b.pWins}</b></span><em>BATTLE ${b.round}<small>2勝先取</small></em><span>PLAYER 2 <b>${b.cWins}</b></span></div>`;}
+function pieceBattlePrepLifeV107(st){return Math.max(700,Math.round(st.life));}
+
+renderMobPieceRoundV96=function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cTag=handTagEffectsV96(b.cHand).effects,pTag=handTagEffectsV96(b.pHand).effects;
+  const p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,2,pTag),old=b.previewBeforeV103;b.previewBeforeV103=null;
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v103 mob-piece-battle-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="piece-field-v103 cpu"><div>${b.cHand.map((id,i)=>cpuCardV103(id,i)).join('')}</div></div>${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}<div class="piece-battlefloor-v103 piece-battlefloor-ready-v107"><b>BATTLE FLOOR</b><div class="piece-floor-mark-v102">MOB</div><small>配置を変えると総合値が変化します</small></div>${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}<div class="piece-field-v103 player"><div>${b.pHand.map((id,i)=>playerCardV103(id,i,i===2)).join('')}</div></div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}<div class="piece-command-v103"><button class="primary-btn" data-piece-keep-v96 type="button">BATTLE</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
+  ov.hidden=false;bindImages(ov);bindPlayerDragV103(ov);restorePieceBattleScrollV107();animateStatsV103(old,p,ov);
+  $('[data-piece-keep-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('バトルしますか？',`BATTLE ${b.round} / 2勝先取`))resolveMobPieceRoundV96();else restorePieceBattleScrollV107();};
+  $('[data-piece-quit-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('対戦をやめますか？','現在の対戦結果は失われます。')){mobPieceBattleV96=null;openMobPieceMenuV96();}else restorePieceBattleScrollV107();};
+};
+
+function fightPiecesV107(hand,side){return hand.map((id,i)=>{const f=figureById(id);return `<span class="fight-piece-v107 ${side} q${i+1}" data-fight-side-v107="${side}" data-fight-i-v107="${i}">${figureImageTagV101(f)}</span>`;}).join('');}
+function smokeSvgV107(cls){return `<svg class="brawl-smoke-v107 ${cls}" viewBox="0 0 160 110" aria-hidden="true"><path d="M18 70 C2 58 8 38 28 37 C25 17 46 8 60 22 C68 3 96 5 100 27 C119 12 139 26 132 45 C157 46 163 70 144 82 C148 101 118 108 104 93 C91 111 62 107 59 92 C37 107 13 94 18 70 Z"/><path class="inner" d="M47 53 C53 39 68 36 76 47 C87 34 106 42 106 57 C119 60 118 76 104 79 C96 90 77 85 75 76 C60 84 43 70 47 53 Z"/></svg>`;}
+function fightArenaFxV107(){return `${smokeSvgV107('sm1')}${smokeSvgV107('sm2')}${smokeSvgV107('sm3')}<i class="piece-impact-ring-v107 r1"></i><i class="piece-impact-ring-v107 r2"></i><i class="piece-speed-slash-v107 a"></i><i class="piece-speed-slash-v107 b"></i><i class="piece-energy-burst-v107"></i>${Array.from({length:16},(_,i)=>`<b class="brawl-star-v107 z${i+1}">${i%3===0?'★':'☆'}</b>`).join('')}`;}
+function setFightLifeV107(root,side,val,max){const num=$(`[data-life-num-v103="${side}"]`,root),bar=$(`.piece-life-v103.${side} i`,root);if(num)num.textContent=`${Math.max(0,Math.round(val))}/${max}`;if(bar)bar.style.width=`${Math.max(0,Math.min(100,val/Math.max(1,max)*100))}%`;}
+function calcPieceStrikeV107(att,def,defLife,skill=false){const ratio=(att.attack*.95+att.speed*.30)/(Math.max(110,def.defense*.72+120));let pct=.072+ratio*.036+Math.random()*.045;if(skill)pct+=.055;pct=clamp(pct,.075,.225);return Math.max(35,Math.round(defLife*pct));}
+function triggerFightImpactV107(arena,targetSide,skill=false){if(!arena)return;const cards=$$(`.fight-piece-v107.${targetSide}`,arena),target=cards[Math.floor(Math.random()*cards.length)];if(target){const classes=['blown-v107','spin-v107','slam-v107'];const c=classes[Math.floor(Math.random()*classes.length)];target.classList.remove(...classes);void target.offsetWidth;target.classList.add(c);setTimeout(()=>target.classList.remove(c),520);}arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107');void arena.offsetWidth;arena.classList.add(targetSide==='cpu'?'impact-right-v107':'impact-left-v107');if(skill)arena.classList.add('skill-impact-v107');setTimeout(()=>arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107'),430);}
+async function animateLifeFastV107(root,side,from,to,max){const start=performance.now(),dur=360;return new Promise(resolve=>{const tick=now=>{const t=Math.min(1,(now-start)/dur),v=Math.round(from+(to-from)*t);setFightLifeV107(root,side,v,max);if(t<1)requestAnimationFrame(tick);else resolve();};requestAnimationFrame(tick);});}
+
+async function resolveMobPieceRoundV96(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cStats=b.cHand.map(id=>mobPieceStatsV96(figureById(id))),cCenter=cStats.map(x=>x.power+x.speed*.5+x.defense*.25).indexOf(Math.max(...cStats.map(x=>x.power+x.speed*.5+x.defense*.25)));
+  const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects,p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,cCenter,pTag);
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107"><div class="fight-arena-v107">${fightPiecesV107(b.cHand,'cpu')}${fightPiecesV107(b.pHand,'player')}${fightArenaFxV107()}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}</div>`;
+  ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v107',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(650);if(start)start.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('brawling-v107');
+  let pLife=b.pLife,cLife=b.cLife,turn=0;const maxTurns=28;
+  while(pLife>0&&cLife>0&&turn<maxTurns){
+    turn++;
+    const pChance=clamp(.48+(p.speed-c.speed)/Math.max(600,p.speed+c.speed),.28,.72),pAtk=Math.random()<pChance,skill=Math.random()<.24;
+    if(pAtk){const dmg=calcPieceStrikeV107(p,c,b.cLifeMax,skill),before=cLife;cLife=Math.max(0,cLife-dmg);triggerFightImpactV107(arena,'cpu',skill);await animateLifeFastV107(ov,'cpu',before,cLife,b.cLifeMax);}else{const dmg=calcPieceStrikeV107(c,p,b.pLifeMax,skill),before=pLife;pLife=Math.max(0,pLife-dmg);triggerFightImpactV107(arena,'player',skill);await animateLifeFastV107(ov,'player',before,pLife,b.pLifeMax);}
+    if(pLife<=0||cLife<=0)break;await waitRealV100(95+Math.random()*105);
+  }
+  if(pLife>0&&cLife>0){if(pLife/b.pLifeMax>=cLife/b.cLifeMax)cLife=0;else pLife=0;}
+  b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);await waitRealV100(520);
+  const win=cLife<=0;if(win)b.pWins++;else b.cWins++;
+  b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);
+  const matchDone=b.pWins>=2||b.cWins>=2;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV107(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'PLAYER 1 WIN!':'PLAYER 2 WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${matchDone?'MATCH RESULT':'次のバトルへ'}<span>${matchDone?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);
+  if(matchDone)return finishMobPieceBattleV96(b.pWins>=2);
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>手札を捨てて、新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(900);nextMobPieceRoundV96();
+}
+
+finishMobPieceBattleV96=async function(win){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();let rank=Number(state.meta.mobPieceRank)||0;
+  if(b?.rank){rank=Math.max(0,rank+(win?20:-10));state.meta.mobPieceRank=rank;saveMeta();}
+  ov.innerHTML=`<div class="mob-piece-card-v96 final piece-match-result-v107 ${win?'win':'lose'}"><small>${b?.rank?'RANK MATCH':'TRIAL MATCH'}</small><h2>${win?'PLAYER 1 勝利！':'PLAYER 2 勝利…'}</h2><div class="piece-final-score-v107"><b>${b?.pWins||0}</b><span>−</span><b>${b?.cWins||0}</b></div><p>2勝先取で決着</p>${b?.rank?`<p>RANK POINT ${rank}</p>`:''}<button class="primary-btn" data-piece-finish-v96 type="button">モブピースメニューへ</button></div>`;
+  $('[data-piece-finish-v96]',ov).onclick=openMobPieceMenuV96;mobPieceBattleV96=null;
+};
+
+/* Existing saves can contain HP/MP based on v104. Refill once after the stronger v107 base-stat migration. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<107){state.meta.playerBalanceVersion=107;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v107 balance migration]',e);}},0);
+/* ===== END MOB QUEST v107 ===== */
 
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */

@@ -220,3 +220,10 @@ Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
 - v103-v105 runtime blocks were moved back inside the core IIFE before boot, preventing the old out-of-scope runtime-patch architecture regression.
 - GAME_ASSET_VERSION and title version updated to v106.
 - Final v106 safeguard: restored the complete STORY_EVENTS registry after runtime-scope relocation and added explicit Demon Castle actor image fallbacks (Ace / Demon King / Lilith / witches / four sisters).
+
+
+=== v107 ===
+- Mob Piece Battle: preserve scroll after reposition/exchange; confirmations always foreground.
+- BATTLE now confirms before start; figures gather to center then START and intense brawl.
+- Restored 2-win match rule: each battle continues until one LIFE reaches 0, winner gains 1 win, then fresh draw.
+- Stronger player base stats for Adventure, targeting Lv80 + endgame equipment clearability.

@@ -3493,6 +3493,42 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 }
 /* ===== END MOB QUEST v106 ===== */
 #adventureBg.asset-loading-v106{visibility:hidden!important}
+
+
+/* ===== MOB QUEST v107: MOB PIECE BATTLE UX / INTENSE BRAWL ===== */
+.piece-confirm-v102{z-index:180!important}
+.piece-detail-modal-v107{z-index:120!important}
+.piece-score-v107 em{display:flex!important;flex-direction:column;align-items:center;gap:1px}.piece-score-v107 em small{font-size:7px!important;color:#dfe9f3!important;letter-spacing:.05em}
+.piece-battlefloor-ready-v107 small{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:8px;font-weight:1000;color:#52371d}
+.mob-piece-battle-v107,.mob-piece-fight-v107{scroll-behavior:auto!important}
+.piece-battlefloor-fight-v107{height:350px!important;overflow:hidden!important;background:radial-gradient(circle at 50% 45%,#f8df9c 0,#d8ae62 56%,#a97739 100%)!important}
+.fight-arena-v107{position:absolute;inset:0;overflow:hidden;isolation:isolate}
+.fight-piece-v107{position:absolute;width:20%;height:34%;z-index:12;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 6px 4px #0008);will-change:transform,left,top;transition:left .7s cubic-bezier(.2,.9,.2,1),top .7s cubic-bezier(.2,.9,.2,1),transform .25s ease}
+.fight-piece-v107 img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.fight-piece-v107.cpu.q1{left:3%;top:1%}.fight-piece-v107.cpu.q2{left:22%;top:1%}.fight-piece-v107.cpu.q3{left:41%;top:1%}.fight-piece-v107.cpu.q4{left:60%;top:1%}.fight-piece-v107.cpu.q5{left:78%;top:1%}
+.fight-piece-v107.player.q1{left:3%;top:65%}.fight-piece-v107.player.q2{left:22%;top:65%}.fight-piece-v107.player.q3{left:41%;top:65%}.fight-piece-v107.player.q4{left:60%;top:65%}.fight-piece-v107.player.q5{left:78%;top:65%}
+.gathering-v107 .fight-piece-v107.cpu.q1{left:22%;top:25%;transform:rotate(-8deg)}.gathering-v107 .fight-piece-v107.cpu.q2{left:31%;top:22%;transform:rotate(6deg)}.gathering-v107 .fight-piece-v107.cpu.q3{left:40%;top:24%;transform:rotate(-4deg)}.gathering-v107 .fight-piece-v107.cpu.q4{left:49%;top:21%;transform:rotate(7deg)}.gathering-v107 .fight-piece-v107.cpu.q5{left:58%;top:25%;transform:rotate(-5deg)}
+.gathering-v107 .fight-piece-v107.player.q1{left:22%;top:49%;transform:rotate(7deg)}.gathering-v107 .fight-piece-v107.player.q2{left:31%;top:52%;transform:rotate(-6deg)}.gathering-v107 .fight-piece-v107.player.q3{left:40%;top:49%;transform:rotate(4deg)}.gathering-v107 .fight-piece-v107.player.q4{left:49%;top:52%;transform:rotate(-7deg)}.gathering-v107 .fight-piece-v107.player.q5{left:58%;top:49%;transform:rotate(5deg)}
+.fight-arena-v107:not(.brawling-v107) .brawl-smoke-v107,.fight-arena-v107:not(.brawling-v107) .brawl-star-v107,.fight-arena-v107:not(.brawling-v107) .piece-impact-ring-v107,.fight-arena-v107:not(.brawling-v107) .piece-speed-slash-v107,.fight-arena-v107:not(.brawling-v107) .piece-energy-burst-v107{opacity:0!important}
+.fight-start-v107{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);font-size:31px;font-weight:1000;color:#fff;-webkit-text-stroke:4px #151515;paint-order:stroke fill;text-shadow:0 5px 0 #111,0 0 24px #ffd85a;letter-spacing:.08em;white-space:nowrap}
+.start-flash-v107:after{content:'';position:absolute;z-index:55;inset:0;background:#fff;animation:startFlashV107 .55s ease forwards;pointer-events:none}@keyframes startFlashV107{0%{opacity:0}30%{opacity:.85}100%{opacity:0}}
+.brawling-v107 .fight-piece-v107{transition:none}.brawling-v107 .fight-piece-v107.cpu.q1{animation:brawlA107 .72s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.cpu.q2{animation:brawlB107 .48s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.cpu.q3{animation:brawlC107 .62s linear infinite}.brawling-v107 .fight-piece-v107.cpu.q4{animation:brawlD107 .55s ease-in-out infinite alternate-reverse}.brawling-v107 .fight-piece-v107.cpu.q5{animation:brawlE107 .68s ease-in-out infinite alternate}
+.brawling-v107 .fight-piece-v107.player.q1{animation:brawlD107 .57s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.player.q2{animation:brawlE107 .51s ease-in-out infinite alternate-reverse}.brawling-v107 .fight-piece-v107.player.q3{animation:brawlA107 .63s linear infinite}.brawling-v107 .fight-piece-v107.player.q4{animation:brawlB107 .49s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.player.q5{animation:brawlC107 .71s ease-in-out infinite alternate-reverse}
+@keyframes brawlA107{0%{left:15%;top:34%;transform:rotate(-9deg) scale(.94)}45%{left:48%;top:40%;transform:rotate(13deg) scale(1.08)}100%{left:69%;top:31%;transform:rotate(-5deg) scale(.98)}}
+@keyframes brawlB107{0%{left:67%;top:44%;transform:rotate(10deg)}50%{left:35%;top:28%;transform:rotate(-16deg) scale(1.12)}100%{left:18%;top:50%;transform:rotate(8deg)}}
+@keyframes brawlC107{0%{left:32%;top:22%;transform:rotate(0) scale(.9)}33%{left:59%;top:47%;transform:rotate(110deg) scale(1.06)}66%{left:24%;top:48%;transform:rotate(220deg)}100%{left:47%;top:25%;transform:rotate(360deg) scale(.9)}}
+@keyframes brawlD107{0%{left:8%;top:45%;transform:translateX(-8px) rotate(-6deg)}55%{left:42%;top:42%;transform:translateX(18px) rotate(14deg) scale(1.1)}100%{left:74%;top:38%;transform:translateX(-4px) rotate(-8deg)}}
+@keyframes brawlE107{0%{left:73%;top:25%;transform:translateY(-8px) rotate(6deg)}50%{left:45%;top:51%;transform:translateY(10px) rotate(-18deg) scale(1.12)}100%{left:16%;top:31%;transform:translateY(-3px) rotate(9deg)}}
+.fight-piece-v107.blown-v107{animation:blownV107 .48s cubic-bezier(.1,.8,.2,1)!important;z-index:40!important}@keyframes blownV107{0%{transform:translate(0,0) rotate(0) scale(1)}45%{transform:translate(95px,-60px) rotate(105deg) scale(.84)}100%{transform:translate(-12px,8px) rotate(0) scale(1)}}
+.fight-piece-v107.spin-v107{animation:spinHitV107 .48s ease!important;z-index:40!important}@keyframes spinHitV107{50%{transform:translate(-52px,22px) rotate(540deg) scale(1.18)}100%{transform:none}}
+.fight-piece-v107.slam-v107{animation:slamHitV107 .48s ease!important;z-index:40!important}@keyframes slamHitV107{0%{transform:none}35%{transform:translateY(-68px) scale(1.08)}70%{transform:translateY(28px) scale(.86,1.18)}100%{transform:none}}
+.brawl-smoke-v107{position:absolute;z-index:28;width:40%;height:auto;overflow:visible;filter:drop-shadow(0 3px 0 #1118);pointer-events:none;opacity:.93}.brawl-smoke-v107 path{fill:#fff;stroke:#1b1b1b;stroke-width:7;stroke-linejoin:round}.brawl-smoke-v107 path.inner{fill:#f8f8f8;stroke-width:4}.brawl-smoke-v107.sm1{left:8%;top:27%;animation:smokeDriftA107 .72s ease-in-out infinite alternate}.brawl-smoke-v107.sm2{left:34%;top:32%;width:44%;animation:smokeDriftB107 .58s ease-in-out infinite alternate-reverse}.brawl-smoke-v107.sm3{right:3%;top:24%;width:35%;animation:smokeDriftC107 .66s ease-in-out infinite alternate}
+@keyframes smokeDriftA107{to{transform:translate(38px,-16px) rotate(5deg) scale(1.16)}}@keyframes smokeDriftB107{to{transform:translate(-31px,17px) rotate(-7deg) scale(.92)}}@keyframes smokeDriftC107{to{transform:translate(-25px,23px) rotate(8deg) scale(1.12)}}
+.piece-impact-ring-v107{position:absolute;z-index:42;width:80px;height:80px;border:7px solid #fff;border-radius:50%;opacity:0;box-shadow:0 0 0 5px #111}.piece-impact-ring-v107.r1{left:23%;top:35%}.piece-impact-ring-v107.r2{right:18%;top:43%}.impact-left-v107 .piece-impact-ring-v107.r1,.impact-right-v107 .piece-impact-ring-v107.r2{animation:ringPopV107 .4s ease-out}.piece-speed-slash-v107{position:absolute;z-index:44;width:115px;height:13px;border-radius:999px;background:#fff;border:4px solid #161616;opacity:0;transform:rotate(-28deg)}.piece-speed-slash-v107.a{left:16%;top:36%}.piece-speed-slash-v107.b{right:12%;top:51%;transform:rotate(23deg)}.impact-left-v107 .piece-speed-slash-v107.a,.impact-right-v107 .piece-speed-slash-v107.b{animation:slashPopV107 .34s ease-out}.piece-energy-burst-v107{position:absolute;z-index:46;left:50%;top:45%;width:42px;height:42px;border-radius:50%;transform:translate(-50%,-50%);opacity:0;background:radial-gradient(circle,#fff 0 18%,#ffe25a 20% 35%,#ff6b41 38% 48%,transparent 52%);filter:drop-shadow(0 0 10px #fff)}.skill-impact-v107 .piece-energy-burst-v107{animation:energyBurstV107 .42s ease-out}@keyframes ringPopV107{0%{opacity:.95;transform:scale(.2)}100%{opacity:0;transform:scale(2.2)}}@keyframes slashPopV107{0%{opacity:0;transform:translateX(-70px) rotate(-28deg) scaleX(.3)}40%{opacity:1}100%{opacity:0;transform:translateX(80px) rotate(-28deg) scaleX(1.5)}}@keyframes energyBurstV107{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}35%{opacity:1;transform:translate(-50%,-50%) scale(2.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.5)}}
+.brawl-star-v107{position:absolute;z-index:48;font-size:25px;color:#ffd52c;-webkit-text-stroke:2px #181818;opacity:.85;animation:starFlyV107 .55s ease-in-out infinite alternate}.brawl-star-v107.z1{left:15%;top:28%}.brawl-star-v107.z2{left:27%;top:54%;animation-delay:-.2s}.brawl-star-v107.z3{left:39%;top:24%;animation-delay:-.3s}.brawl-star-v107.z4{left:52%;top:58%;animation-delay:-.1s}.brawl-star-v107.z5{left:68%;top:32%;animation-delay:-.35s}.brawl-star-v107.z6{left:79%;top:50%;animation-delay:-.15s}.brawl-star-v107.z7{left:21%;top:46%;animation-delay:-.4s}.brawl-star-v107.z8{left:60%;top:22%;animation-delay:-.27s}.brawl-star-v107.z9{left:44%;top:49%;animation-delay:-.08s}.brawl-star-v107.z10{left:72%;top:61%;animation-delay:-.31s}.brawl-star-v107.z11{left:9%;top:58%;animation-delay:-.18s}.brawl-star-v107.z12{left:86%;top:27%;animation-delay:-.24s}.brawl-star-v107.z13{left:34%;top:66%;animation-delay:-.37s}.brawl-star-v107.z14{left:57%;top:42%;animation-delay:-.12s}.brawl-star-v107.z15{left:47%;top:18%;animation-delay:-.29s}.brawl-star-v107.z16{left:81%;top:67%;animation-delay:-.04s}@keyframes starFlyV107{to{transform:translate(18px,-23px) rotate(35deg) scale(1.35);opacity:.35}}
+.piece-round-result-v107,.piece-between-battle-v107,.piece-match-result-v107{text-align:center!important}.piece-round-result-mark-v107{margin:40px 0 24px;padding:24px 12px;border:4px solid #704d2f;border-radius:24px;background:#fffaf0;box-shadow:0 14px 28px #0003}.piece-round-result-mark-v107 h2{font-size:34px;margin:8px 0;color:#1e160d!important}.piece-round-result-mark-v107>b{font-size:52px;color:#2c9a4b!important;-webkit-text-stroke:2px #111}.piece-round-result-v107.lose .piece-round-result-mark-v107>b{color:#d45454!important}.piece-round-next-v107{font-size:20px;font-weight:1000;color:#fff!important;background:#263e56;border-radius:16px;padding:15px}.piece-round-next-v107 span{display:block;font-size:10px;margin-top:5px;color:#fff!important}.piece-between-battle-v107{padding:52px 18px!important}.piece-between-battle-v107 h2{font-size:42px!important;margin:10px}.piece-between-battle-v107 strong{display:block;font-size:29px;color:#2fbd5d!important;-webkit-text-stroke:1.5px #111;animation:betweenPulseV107 .55s ease-in-out infinite alternate}@keyframes betweenPulseV107{to{transform:scale(1.12)}}.piece-final-score-v107{display:flex;justify-content:center;align-items:center;gap:18px;margin:22px}.piece-final-score-v107 b{font-size:64px}.piece-final-score-v107 span{font-size:35px}.piece-match-result-v107 button{min-height:54px;width:100%;border-radius:14px}
+@media(max-height:760px){.piece-battlefloor-fight-v107{height:285px!important}.fight-piece-v107{height:31%}.piece-round-result-mark-v107{margin:20px 0 16px;padding:16px}.piece-round-result-mark-v107 h2{font-size:28px}.piece-round-result-mark-v107>b{font-size:42px}}
+/* ===== END MOB QUEST v107 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3512,7 +3548,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v106</div>
+      <div class="title-version">v107</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3917,7 +3953,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v105
+<script id="mobQuestInlineData">// MOB QUEST v107
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -4960,6 +4996,28 @@ for(const [element,id] of Object.entries(_v73Middle)){
 /* ===== END MOB QUEST v105 ===== */
 
 
+/* ===== MOB QUEST v107: PLAYER POWER REBALANCE ===== */
+{
+  MOB_DATA.playerBalanceVersion=107;
+  Object.assign(TEMP_BALANCE.playerTargets,{
+    yusha:{hp:[260,3600,4300],mp:[90,550,660],atk:[55,450,540],mag:[52,425,515],def:[48,500,610],res:[48,490,600],spd:[42,255,310]},
+    pink:{hp:[320,4200,4900],mp:[82,470,570],atk:[40,320,390],mag:[35,300,365],def:[64,610,745],res:[62,600,735],spd:[31,185,225]},
+    desert:{hp:[295,3950,4650],mp:[72,400,490],atk:[64,500,605],mag:[32,320,390],def:[52,520,635],res:[44,460,565],spd:[55,275,335]},
+    nyoro:{hp:[260,3500,4150],mp:[90,530,640],atk:[54,430,520],mag:[56,450,545],def:[42,430,525],res:[48,450,550],spd:[54,275,335]},
+    nekoku:{hp:[295,3800,4450],mp:[100,580,700],atk:[50,360,435],mag:[58,455,550],def:[54,480,585],res:[60,520,635],spd:[42,245,300]},
+    jessie:{hp:[250,3450,4050],mp:[96,550,665],atk:[56,450,545],mag:[56,440,535],def:[42,430,525],res:[48,460,560],spd:[66,315,385]},
+    denden:{hp:[250,3400,4000],mp:[82,470,570],atk:[64,500,605],mag:[42,350,425],def:[42,420,515],res:[42,420,515],spd:[69,330,405]},
+    money:{hp:[225,3200,3800],mp:[125,690,840],atk:[32,280,340],mag:[70,520,635],def:[40,400,490],res:[68,560,685],spd:[52,270,330]},
+    riro:{hp:[275,3700,4350],mp:[105,620,750],atk:[52,420,510],mag:[60,450,545],def:[48,470,575],res:[65,550,675],spd:[55,285,350]},
+    tetsu:{hp:[360,4550,5300],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[74,650,795],res:[50,500,610],spd:[34,225,275]},
+    kaijin:{hp:[340,4250,5000],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[60,580,710],res:[58,540,660],spd:[57,290,355]},
+    lilith:{hp:[260,3550,4200],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[44,450,550],res:[72,620,760],spd:[60,295,360]},
+    naraku:{hp:[340,4400,5150],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[68,600,735],res:[68,600,735],spd:[48,265,325]}
+  });
+}
+/* ===== END MOB QUEST v107 PLAYER POWER REBALANCE ===== */
+
+
 (() => {
 'use strict';
 
@@ -4970,7 +5028,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=106;
+const GAME_ASSET_VERSION=107;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10718,6 +10776,125 @@ Object.assign(STORY_EVENTS,{
 /* ===== END MOB QUEST v106 ===== */
 
 
+
+
+/* ===== MOB QUEST v107: MOB PIECE 2-WIN BATTLE / SCROLL / CONFIRM / PLAYER POWER ===== */
+window.__mobV107PatchRuntime=true;
+
+function pieceBattleCardV107(){const ov=ensureMobPieceOverlayV96();return $('.mob-piece-card-v96.battle',ov)||$('.mob-piece-card-v96',ov);}
+function rememberPieceBattleScrollV107(){const b=mobPieceBattleV96,card=pieceBattleCardV107();if(b&&card)b.uiScrollV107=card.scrollTop;return b?.uiScrollV107||0;}
+function restorePieceBattleScrollV107(){const b=mobPieceBattleV96;if(!b)return;requestAnimationFrame(()=>{const card=pieceBattleCardV107();if(card)card.scrollTop=Math.max(0,Number(b.uiScrollV107)||0);});}
+function currentMobPieceStatsV107(){const b=mobPieceBattleV96;if(!b)return null;const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects;return{p:handBattleStatsV96(b.pHand,2,cTag),c:handBattleStatsV96(b.cHand,2,pTag)};}
+
+startMobPieceBattleV96=function(rank=false){
+  const deck=normalizedMobPieceDeckV96(),unique=new Set(deck);
+  if(deck.length!==25)return pieceOverlayNoticeV102('デッキは25体必ず編成してください。');
+  if(unique.size!==25)return pieceOverlayNoticeV102('同じフィギュアはデッキに1体までです。');
+  if(mobPieceDeckCostV100(deck)>80)return pieceOverlayNoticeV102('デッキコストは80までです。');
+  const cpu=cpuPieceDeckV96(rank).filter(id=>usableFigureV103(figureById(id)));
+  if(cpu.length<25)return pieceOverlayNoticeV102('対戦データを準備できませんでした。');
+  mobPieceBattleV96={rank,pDeck:shuffleV96(deck),cDeck:shuffleV96(cpu),pPos:0,cPos:0,pDiscard:[],cDiscard:[],pWins:0,cWins:0,round:0,center:2,exchanged:false,uiScrollV107:0};
+  nextMobPieceRoundV96();
+};
+
+nextMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96;if(!b)return;
+  b.round++;b.center=2;b.exchanged=false;b.exchangeRevealV103=-1;b.uiScrollV107=0;
+  b.pHand=Array.from({length:5},()=>drawPieceCardV96('p'));
+  b.cHand=Array.from({length:5},()=>drawPieceCardV96('c'));
+  try{await renderMobPieceDrawV100();}catch(_){ }
+  renderMobPieceRoundV96();
+};
+
+movePieceV103=function(from,to){
+  const b=mobPieceBattleV96;if(!b||from===to||to<0||to>4)return;
+  rememberPieceBattleScrollV107();
+  const old=handBattleStatsV96(b.pHand,2,handTagEffectsV96(b.cHand).effects);
+  [b.pHand[from],b.pHand[to]]=[b.pHand[to],b.pHand[from]];
+  b.center=2;b.previewBeforeV103=old;
+  renderMobPieceRoundV96();
+};
+
+showBattlePieceDetailV103=function(i){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  rememberPieceBattleScrollV107();
+  const f=figureById(b.pHand[i]),pop=document.createElement('div');pop.className='piece-detail-modal-v103 piece-detail-modal-v107';
+  pop.innerHTML=`<div><button class="piece-detail-close-v103" type="button">×</button>${figureDetailMarkupV96(f,true)}<section><b>現在発動している効果</b>${pieceEffectLinesV101(b.pHand).map(x=>`<p>${x}</p>`).join('')||'<p>なし</p>'}</section><section class="piece-position-v103"><b>配置移動</b>${[0,1,2,3,4].map(n=>`<button data-piece-position-v103="${n}" type="button">${n+1}</button>`).join('')}</section><button data-piece-exchange-v103 type="button" ${b.exchanged?'disabled':''}>${b.exchanged?'交換済み':'このフィギュアを交換'}</button></div>`;
+  ov.appendChild(pop);bindImages(pop);
+  $('.piece-detail-close-v103',pop).onclick=()=>pop.remove();
+  $$('[data-piece-position-v103]',pop).forEach(x=>x.onclick=()=>{const to=Number(x.dataset.piecePositionV103);pop.remove();movePieceV103(i,to);});
+  $('[data-piece-exchange-v103]',pop).onclick=async()=>{
+    if(b.exchanged)return;
+    rememberPieceBattleScrollV107();
+    pop.remove();
+    const ok=await pieceOverlayConfirmV102('このフィギュアを交換しますか？',f?.name||'');
+    if(!ok){restorePieceBattleScrollV107();return showBattlePieceDetailV103(i);}
+    const card=$(`[data-piece-player-card-v103="${i}"]`,ov);card?.classList.add('exchange-out-v103');
+    await waitRealV100(300);
+    const old=b.pHand[i];b.pDiscard.push(old);b.pHand[i]=drawPieceCardV96('p');b.exchanged=true;b.exchangeRevealV103=i;
+    renderMobPieceRoundV96();
+    setTimeout(()=>{if(b)b.exchangeRevealV103=-1;},700);
+  };
+};
+
+function pieceScoreV107(b){return `<div class="piece-score-v96 piece-score-v107"><span>PLAYER 1 <b>${b.pWins}</b></span><em>BATTLE ${b.round}<small>2勝先取</small></em><span>PLAYER 2 <b>${b.cWins}</b></span></div>`;}
+function pieceBattlePrepLifeV107(st){return Math.max(700,Math.round(st.life));}
+
+renderMobPieceRoundV96=function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cTag=handTagEffectsV96(b.cHand).effects,pTag=handTagEffectsV96(b.pHand).effects;
+  const p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,2,pTag),old=b.previewBeforeV103;b.previewBeforeV103=null;
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v103 mob-piece-battle-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="piece-field-v103 cpu"><div>${b.cHand.map((id,i)=>cpuCardV103(id,i)).join('')}</div></div>${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}<div class="piece-battlefloor-v103 piece-battlefloor-ready-v107"><b>BATTLE FLOOR</b><div class="piece-floor-mark-v102">MOB</div><small>配置を変えると総合値が変化します</small></div>${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}<div class="piece-field-v103 player"><div>${b.pHand.map((id,i)=>playerCardV103(id,i,i===2)).join('')}</div></div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}<div class="piece-command-v103"><button class="primary-btn" data-piece-keep-v96 type="button">BATTLE</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
+  ov.hidden=false;bindImages(ov);bindPlayerDragV103(ov);restorePieceBattleScrollV107();animateStatsV103(old,p,ov);
+  $('[data-piece-keep-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('バトルしますか？',`BATTLE ${b.round} / 2勝先取`))resolveMobPieceRoundV96();else restorePieceBattleScrollV107();};
+  $('[data-piece-quit-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('対戦をやめますか？','現在の対戦結果は失われます。')){mobPieceBattleV96=null;openMobPieceMenuV96();}else restorePieceBattleScrollV107();};
+};
+
+function fightPiecesV107(hand,side){return hand.map((id,i)=>{const f=figureById(id);return `<span class="fight-piece-v107 ${side} q${i+1}" data-fight-side-v107="${side}" data-fight-i-v107="${i}">${figureImageTagV101(f)}</span>`;}).join('');}
+function smokeSvgV107(cls){return `<svg class="brawl-smoke-v107 ${cls}" viewBox="0 0 160 110" aria-hidden="true"><path d="M18 70 C2 58 8 38 28 37 C25 17 46 8 60 22 C68 3 96 5 100 27 C119 12 139 26 132 45 C157 46 163 70 144 82 C148 101 118 108 104 93 C91 111 62 107 59 92 C37 107 13 94 18 70 Z"/><path class="inner" d="M47 53 C53 39 68 36 76 47 C87 34 106 42 106 57 C119 60 118 76 104 79 C96 90 77 85 75 76 C60 84 43 70 47 53 Z"/></svg>`;}
+function fightArenaFxV107(){return `${smokeSvgV107('sm1')}${smokeSvgV107('sm2')}${smokeSvgV107('sm3')}<i class="piece-impact-ring-v107 r1"></i><i class="piece-impact-ring-v107 r2"></i><i class="piece-speed-slash-v107 a"></i><i class="piece-speed-slash-v107 b"></i><i class="piece-energy-burst-v107"></i>${Array.from({length:16},(_,i)=>`<b class="brawl-star-v107 z${i+1}">${i%3===0?'★':'☆'}</b>`).join('')}`;}
+function setFightLifeV107(root,side,val,max){const num=$(`[data-life-num-v103="${side}"]`,root),bar=$(`.piece-life-v103.${side} i`,root);if(num)num.textContent=`${Math.max(0,Math.round(val))}/${max}`;if(bar)bar.style.width=`${Math.max(0,Math.min(100,val/Math.max(1,max)*100))}%`;}
+function calcPieceStrikeV107(att,def,defLife,skill=false){const ratio=(att.attack*.95+att.speed*.30)/(Math.max(110,def.defense*.72+120));let pct=.072+ratio*.036+Math.random()*.045;if(skill)pct+=.055;pct=clamp(pct,.075,.225);return Math.max(35,Math.round(defLife*pct));}
+function triggerFightImpactV107(arena,targetSide,skill=false){if(!arena)return;const cards=$$(`.fight-piece-v107.${targetSide}`,arena),target=cards[Math.floor(Math.random()*cards.length)];if(target){const classes=['blown-v107','spin-v107','slam-v107'];const c=classes[Math.floor(Math.random()*classes.length)];target.classList.remove(...classes);void target.offsetWidth;target.classList.add(c);setTimeout(()=>target.classList.remove(c),520);}arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107');void arena.offsetWidth;arena.classList.add(targetSide==='cpu'?'impact-right-v107':'impact-left-v107');if(skill)arena.classList.add('skill-impact-v107');setTimeout(()=>arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107'),430);}
+async function animateLifeFastV107(root,side,from,to,max){const start=performance.now(),dur=360;return new Promise(resolve=>{const tick=now=>{const t=Math.min(1,(now-start)/dur),v=Math.round(from+(to-from)*t);setFightLifeV107(root,side,v,max);if(t<1)requestAnimationFrame(tick);else resolve();};requestAnimationFrame(tick);});}
+
+async function resolveMobPieceRoundV96(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cStats=b.cHand.map(id=>mobPieceStatsV96(figureById(id))),cCenter=cStats.map(x=>x.power+x.speed*.5+x.defense*.25).indexOf(Math.max(...cStats.map(x=>x.power+x.speed*.5+x.defense*.25)));
+  const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects,p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,cCenter,pTag);
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107"><div class="fight-arena-v107">${fightPiecesV107(b.cHand,'cpu')}${fightPiecesV107(b.pHand,'player')}${fightArenaFxV107()}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}</div>`;
+  ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v107',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(650);if(start)start.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('brawling-v107');
+  let pLife=b.pLife,cLife=b.cLife,turn=0;const maxTurns=28;
+  while(pLife>0&&cLife>0&&turn<maxTurns){
+    turn++;
+    const pChance=clamp(.48+(p.speed-c.speed)/Math.max(600,p.speed+c.speed),.28,.72),pAtk=Math.random()<pChance,skill=Math.random()<.24;
+    if(pAtk){const dmg=calcPieceStrikeV107(p,c,b.cLifeMax,skill),before=cLife;cLife=Math.max(0,cLife-dmg);triggerFightImpactV107(arena,'cpu',skill);await animateLifeFastV107(ov,'cpu',before,cLife,b.cLifeMax);}else{const dmg=calcPieceStrikeV107(c,p,b.pLifeMax,skill),before=pLife;pLife=Math.max(0,pLife-dmg);triggerFightImpactV107(arena,'player',skill);await animateLifeFastV107(ov,'player',before,pLife,b.pLifeMax);}
+    if(pLife<=0||cLife<=0)break;await waitRealV100(95+Math.random()*105);
+  }
+  if(pLife>0&&cLife>0){if(pLife/b.pLifeMax>=cLife/b.cLifeMax)cLife=0;else pLife=0;}
+  b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);await waitRealV100(520);
+  const win=cLife<=0;if(win)b.pWins++;else b.cWins++;
+  b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);
+  const matchDone=b.pWins>=2||b.cWins>=2;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV107(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'PLAYER 1 WIN!':'PLAYER 2 WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${matchDone?'MATCH RESULT':'次のバトルへ'}<span>${matchDone?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);
+  if(matchDone)return finishMobPieceBattleV96(b.pWins>=2);
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>手札を捨てて、新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(900);nextMobPieceRoundV96();
+}
+
+finishMobPieceBattleV96=async function(win){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();let rank=Number(state.meta.mobPieceRank)||0;
+  if(b?.rank){rank=Math.max(0,rank+(win?20:-10));state.meta.mobPieceRank=rank;saveMeta();}
+  ov.innerHTML=`<div class="mob-piece-card-v96 final piece-match-result-v107 ${win?'win':'lose'}"><small>${b?.rank?'RANK MATCH':'TRIAL MATCH'}</small><h2>${win?'PLAYER 1 勝利！':'PLAYER 2 勝利…'}</h2><div class="piece-final-score-v107"><b>${b?.pWins||0}</b><span>−</span><b>${b?.cWins||0}</b></div><p>2勝先取で決着</p>${b?.rank?`<p>RANK POINT ${rank}</p>`:''}<button class="primary-btn" data-piece-finish-v96 type="button">モブピースメニューへ</button></div>`;
+  $('[data-piece-finish-v96]',ov).onclick=openMobPieceMenuV96;mobPieceBattleV96=null;
+};
+
+/* Existing saves can contain HP/MP based on v104. Refill once after the stronger v107 base-stat migration. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<107){state.meta.playerBalanceVersion=107;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v107 balance migration]',e);}},0);
+/* ===== END MOB QUEST v107 ===== */
+
+
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
 /* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
@@ -10740,6 +10917,7 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
+
 
 
 
