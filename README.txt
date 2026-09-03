@@ -166,3 +166,19 @@ Base: v101 CASTLE / MOB PIECE / GACHA FIX STABLE.
 - Strict contrast pass for Mob Piece UI.
 - Gacha icon/32 square-shadow CSS removed; barrel shards/burst before figure reveal; rarity effects strengthened.
 - 10-pull results reveal one figure at a time with NEXT below the figure.
+
+
+=== v103 ===
+Base: v102 MOBPIECE / GACHA UX STABLE.
+- Undefined figure #17 is excluded from gacha/Mob Piece until canonical data exists.
+- Gacha result images are preflight-loaded; failed image entries reroll instead of showing the barrel fallback.
+- 10-pull cinematic no longer previews the highest rarity result before result 1/10.
+- Rarity neon label beside each revealed figure and stronger rarity-specific reveal effects.
+- Mob Piece tag/rarity filters preserve scroll position.
+- Mob Piece movement buttons removed. Player cards can be dragged to reorder freely; card detail provides tap-based position selection.
+- Placement can be changed repeatedly and TOTAL stats animate as green outlined counters.
+- Exchange is once per round, confirmed, and uses outgoing/incoming animation.
+- Tapping a player piece opens stats, details, active effects, placement buttons and a required close button.
+- Mob Piece uses persistent PLAYER LIFE bars; damage animates and LIFE 0 loses. No draw result.
+- Central battle floor brawl animation strengthened with colliding figures, outlined white cartoon smoke and hit stars.
+- Figure/armor/equipment assets are preloaded on demand to reduce blank-image flashes.

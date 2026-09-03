@@ -1,0 +1,8 @@
+MOB QUEST v103 REGRESSION CHECKLIST
+- Base v102 retained.
+- Gacha 10-pull no pre-reveal spoiler.
+- Invalid/undefined figure entries cannot be rolled.
+- Mob Piece filter scroll stays in place.
+- Mob Piece free reorder + one exchange + detail popup.
+- Mob Piece LIFE battle / no draw.
+- Equipment/Figure/Armor asset preloading present.
