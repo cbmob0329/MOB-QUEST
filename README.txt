@@ -227,6 +227,7 @@ Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
 - BATTLE now confirms before start; figures gather to center then START and intense brawl.
 - Restored 2-win match rule: each battle continues until one LIFE reaches 0, winner gains 1 win, then fresh draw.
 - Stronger player base stats for Adventure, targeting Lv80 + endgame equipment clearability.
+<<<<<<< HEAD
 
 
 === v109 ===
@@ -236,3 +237,5 @@ Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
 - Added 17 support/healing spells with 2-3 turn buffs, player learnsets, selected enemy learners, and CSS-only battle effects.
 - Added Tetsu-only モブテツウォーク and Money-only ネオンカスタード.
 - GAME_ASSET_VERSION and title updated to v109.
+=======
+>>>>>>> c2d3186d288f3356f1eee720ff75f6c045eed3ce

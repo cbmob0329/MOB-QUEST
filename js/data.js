@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // MOB QUEST v109
+=======
+// MOB QUEST v107
+>>>>>>> c2d3186d288f3356f1eee720ff75f6c045eed3ce
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1061,6 +1065,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
   });
 }
 /* ===== END MOB QUEST v107 PLAYER POWER REBALANCE ===== */
+<<<<<<< HEAD
 
 /* ===== MOB QUEST v108: HP NORMALIZATION / OFFENSE KEEP / ENEMY DAMAGE REBALANCE ===== */
 {
@@ -1157,3 +1162,5 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(const [id,skills] of Object.entries(enemySupport)){const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.supportSkillsV109=[...skills];}
 }
 /* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
+=======
+>>>>>>> c2d3186d288f3356f1eee720ff75f6c045eed3ce

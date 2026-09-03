@@ -8,7 +8,11 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
+<<<<<<< HEAD
 const GAME_ASSET_VERSION=109;
+=======
+const GAME_ASSET_VERSION=107;
+>>>>>>> c2d3186d288f3356f1eee720ff75f6c045eed3ce
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5874,6 +5878,7 @@ finishMobPieceBattleV96=async function(win){
 setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<107){state.meta.playerBalanceVersion=107;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v107 balance migration]',e);}},0);
 /* ===== END MOB QUEST v107 ===== */
 
+<<<<<<< HEAD
 /* ===== MOB QUEST v108: HP SCALE / ENEMY DAMAGE NORMALIZATION ===== */
 const _calcEnemyDamageV108Base=calcEnemyDamage;
 calcEnemyDamage=function(target,power,type='physical'){
@@ -6032,6 +6037,8 @@ enemyAction=async function(actionIndex=1,enemyId){
 setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<109){state.meta.playerBalanceVersion=109;saveMeta();}}catch(e){console.warn('[v109 support migration]',e);}},0);
 /* ===== END MOB QUEST v109 ===== */
 
+=======
+>>>>>>> c2d3186d288f3356f1eee720ff75f6c045eed3ce
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
