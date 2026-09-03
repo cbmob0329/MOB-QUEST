@@ -1,0 +1,18 @@
+MOB QUEST v109 REGRESSION REPORT
+
+PASS
+- Based on verified v108 package contents.
+- Runtime patch remains inside the main game IIFE before v99 boot/bind block.
+- GAME_ASSET_VERSION = 109 / title label = v109.
+- Split JS syntax: data.js PASS, game.js PASS.
+- Standalone inline JS syntax: PASS.
+- Split CSS+JS and standalone index are synchronized.
+- 17 requested support/healing spells are present.
+- Existing attack magic/technique data is retained; support spells are appended.
+- v108 max-HP percentage hard cap is bypassed by v109 calcEnemyDamage override.
+- Multi-action offense scaling = 2 actions 0.82 / 3 actions 0.68 / 4+ actions 0.58.
+- Heavy/extreme skills relax the multi-action reduction instead of being hard-capped.
+- Heavy-special follow-up normal-attack logic excludes scripted Lilith castle sequence and Book Kaijin Boss forced-loss special barrage.
+- v108 player HP normalization remains unchanged.
+- v107 Mob Piece 2-win rules are untouched by v109 patch.
+- v105 boss paralysis immunity/status-duration rules remain untouched.

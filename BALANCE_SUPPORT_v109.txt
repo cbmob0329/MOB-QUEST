@@ -1,0 +1,29 @@
+MOB QUEST v109
+
+MULTI-ACTION
+- HP percentage hard cap: removed.
+- 2 actions: offense x0.82
+- 3 actions: offense x0.68
+- 4 actions: offense x0.58
+- Large skill (power >=1.60): reduction is partially relaxed.
+- Extreme skill (power >=2.20): nearly full skill identity is retained.
+- After a boss uses a heavy skill (power >=1.80), later actions in the same turn use normal attacks.
+
+SUPPORT / HEAL MAGIC
+DEF single: Sugar Chair 10%, Caramel Hello Back 18%, Maple Air Chair 28% (3T)
+ATK single: Shoga Entry 10%, Wasabi Stomach 18%, Shichimi Suicide 28% (3T)
+ATK party: Back Follow Call 8%, Gold Routine 15% (3T)
+DEF party: Party Backspin 8%, Block Bronx 15% (3T)
+Mob Tetsu Walk: party SPD +10%, evade +3%, 3T (Tetsu only)
+Neon Custard: party HP 30% + each ailment 50% cleanse chance (Money only)
+Candy: single HP 22%
+Candy Neon: single HP 38%
+Candy Neon Piece: single HP 60%
+Star Marshmallow: party HP 18%
+Star Pokkin Marshmallow: party HP 32%
+
+Effects are CSS/DOM generated; no new animation image assets are required.
+
+SCRIPT EXCEPTIONS
+- boss-lilith-castle: 既存固有連撃を優先。
+- book-kaijin-boss: 「3ターン目から4回行動・必殺技連発」の絶対敗北イベントを優先。

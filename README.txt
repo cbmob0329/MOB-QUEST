@@ -207,3 +207,32 @@ Base: v104 PLAYER BALANCE / LEARNSET STABLE.
 - Previously generic enemies receive level/attribute-based formal magic or techniques instead of temporary placeholder attacks.
 - Player-side elemental/status resistances from v104 remain active in battle.
 - Target balance: Lv80 + strongest equipment can clear Demon Castle II.
+
+=== v106 DEMON CASTLE PROGRESSION / STAGING FIX ===
+Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
+- Fixed Demon Castle party split progression deadlock. Confirmation is now rendered inside the split overlay with explicit はい / いいえ, so it cannot hide behind the higher-z-index formation layer.
+- Demon King silhouette is applied before the guest group is revealed; the full-color boss no longer flashes for a frame.
+- Demon Castle background loading resets stale fallback history and uses a multi-stage castle fallback chain. The adventure background stays hidden while a fallback is loading instead of exposing a broken-image glyph.
+- Kira Witch + Lara Witch 「お命頂戴！」 is now simultaneous character dialogue instead of explanatory narration.
+- Post-Area1 witch absorption is now visual staging: Lilith appears between the two witches; both glow, shrink and merge into Lilith before disappearing.
+- Lilith's four sisters summon is rebuilt as a five-character group (Lilith + 4 sisters), compact enough to fit the phone screen, with staggered summon animation.
+- Demon King + Ace retreat uses a teleport animation rather than simply disappearing.
+- v103-v105 runtime blocks were moved back inside the core IIFE before boot, preventing the old out-of-scope runtime-patch architecture regression.
+- GAME_ASSET_VERSION and title version updated to v106.
+- Final v106 safeguard: restored the complete STORY_EVENTS registry after runtime-scope relocation and added explicit Demon Castle actor image fallbacks (Ace / Demon King / Lilith / witches / four sisters).
+
+
+=== v107 ===
+- Mob Piece Battle: preserve scroll after reposition/exchange; confirmations always foreground.
+- BATTLE now confirms before start; figures gather to center then START and intense brawl.
+- Restored 2-win match rule: each battle continues until one LIFE reaches 0, winner gains 1 win, then fresh draw.
+- Stronger player base stats for Adventure, targeting Lv80 + endgame equipment clearability.
+
+
+=== v109 ===
+- Removed v108 max-HP percentage hard cap from enemy per-hit damage.
+- Multi-action enemies now use offense scaling: 2 actions 82%, 3 actions 68%, 4 actions 58%; large/extreme skills recover part of that power.
+- Heavy boss skills (power 1.80+) mark the turn; later actions that turn become normal attacks instead of repeating extreme specials.
+- Added 17 support/healing spells with 2-3 turn buffs, player learnsets, selected enemy learners, and CSS-only battle effects.
+- Added Tetsu-only モブテツウォーク and Money-only ネオンカスタード.
+- GAME_ASSET_VERSION and title updated to v109.

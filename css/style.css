@@ -3406,3 +3406,131 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .player-resist-v104 span{background:#fffaf0!important;color:#24190f!important;border:2px solid #b58b5f!important}
 .player-resist-v104 b{color:#177a35!important;font-weight:1000!important}.player-resist-v104 b.weak{color:#b72f35!important}
 /* ===== END MOB QUEST v104 ===== */
+
+/* ===== MOB QUEST v106: Demon Castle progression / staging ===== */
+/* Never expose the browser's broken-image glyph while a castle background fallback is being tried. */
+#adventureBg.asset-missing{visibility:hidden!important}
+
+/* Demon King must already be black before the group fades in. */
+.demon-maou-silhouette-v95 img{filter:brightness(0)!important;opacity:.94!important}
+
+/* Source-authored Lilith family summon: Lilith + four sisters must all fit on a phone. */
+.story-guest-group.demon-lilith-family-v106{
+  left:2%!important;right:2%!important;width:auto!important;
+  bottom:47%!important;height:22%!important;
+  gap:1px!important;justify-content:space-between!important;align-items:flex-end!important;
+  overflow:visible!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi{
+  flex:0 0 19%!important;width:19%!important;height:100%!important;
+  max-width:19%!important;min-width:0!important;margin:0!important;
+  transform-origin:center bottom!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi img{
+  width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi{
+  opacity:0;transform:translateY(-16px) scale(.72);
+  animation:demonLilithSummonV106 .62s cubic-bezier(.2,.9,.25,1.25) forwards;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(1){animation-delay:.05s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(2){animation-delay:.14s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(3){animation-delay:.23s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(4){animation-delay:.32s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(5){animation-delay:.41s}
+@keyframes demonLilithSummonV106{
+  0%{opacity:0;transform:translateY(-20px) scale(.68);filter:brightness(2.4) drop-shadow(0 0 18px #fff)}
+  58%{opacity:1;transform:translateY(3px) scale(1.08);filter:brightness(1.45) drop-shadow(0 0 14px #a971ff)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 8px 8px rgba(0,0,0,.4))}
+}
+
+/* Witches stand apart with Lilith centered, then physically merge into her instead of narration explaining it. */
+.story-guest-group.demon-witch-merge-v106{
+  left:12%!important;right:12%!important;width:auto!important;bottom:47%!important;height:24%!important;
+  justify-content:space-between!important;gap:7%!important;overflow:visible!important;
+}
+.story-guest-group.demon-witch-merge-v106 .story-guest-multi{transform-origin:center bottom!important;transition:transform 1.45s ease-in,opacity 1.25s ease-in,filter .35s ease!important}
+.story-guest-group.demon-witch-merge-v106 [data-story-actor="boss-lilith-castle"]{z-index:5!important}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-killwitch"]{
+  transform:translateX(130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-succubus"]{
+  transform:translateX(-130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="boss-lilith-castle"]{
+  animation:demonLilithAbsorbV106 .55s ease-in-out 2 alternate;
+}
+.demon-merge-glow-v106{position:absolute;z-index:4;left:50%;bottom:22%;width:74px;height:74px;transform:translateX(-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(217,123,255,.58) 34%,rgba(132,53,187,.18) 58%,transparent 72%);animation:demonMergeGlowV106 1.45s ease forwards}
+@keyframes demonLilithAbsorbV106{from{filter:brightness(1) drop-shadow(0 8px 8px rgba(0,0,0,.4))}to{filter:brightness(1.85) drop-shadow(0 0 20px #e9b3ff)}}
+@keyframes demonMergeGlowV106{0%{opacity:0;transform:translateX(-50%) scale(.25)}45%{opacity:1;transform:translateX(-50%) scale(1.6)}100%{opacity:0;transform:translateX(-50%) scale(.55)}}
+.story-guest-group.demon-witch-merge-done-v106{justify-content:center!important}
+
+/* Demon King + Ace teleport away visibly instead of simply disappearing. */
+.story-guest-group.demon-teleport-v106 .story-guest-multi{animation:demonTeleportV106 .86s ease-in forwards!important}
+@keyframes demonTeleportV106{0%{opacity:1;transform:scale(1);filter:brightness(1)}45%{opacity:1;transform:scale(.82);filter:brightness(1.9) drop-shadow(0 0 22px #744cff)}100%{opacity:0;transform:scale(.08) translateY(-20px);filter:brightness(3) blur(2px)}}
+
+/* Inline A/B confirmation lives inside z-index 180 split overlay, so it can never be hidden behind it. */
+.lilith-inline-confirm-v106{position:sticky;z-index:6;bottom:0;margin:12px 0 0;padding:12px;border:3px solid #4d3048;border-radius:16px;background:#fff8e9;color:#24191e;box-shadow:0 10px 28px rgba(0,0,0,.28);text-align:center}
+.lilith-inline-confirm-v106 strong{display:block;font-size:15px;font-weight:1000;color:#24191e!important;margin-bottom:9px}
+.lilith-inline-confirm-v106>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lilith-inline-confirm-v106 button{height:46px;border-radius:12px;font-size:14px;font-weight:1000;color:#fff;background:#273f59;border:2px solid #6886a4}
+.lilith-inline-confirm-v106 button[data-lilith-no-v106]{background:#fff;color:#381f2b;border-color:#805267}
+
+@media(max-height:720px){
+  .story-guest-group.demon-lilith-family-v106{bottom:45%!important;height:20%!important}
+  .story-guest-group.demon-witch-merge-v106{bottom:45%!important;height:21%!important}
+}
+/* ===== END MOB QUEST v106 ===== */
+#adventureBg.asset-loading-v106{visibility:hidden!important}
+
+
+/* ===== MOB QUEST v107: MOB PIECE BATTLE UX / INTENSE BRAWL ===== */
+.piece-confirm-v102{z-index:180!important}
+.piece-detail-modal-v107{z-index:120!important}
+.piece-score-v107 em{display:flex!important;flex-direction:column;align-items:center;gap:1px}.piece-score-v107 em small{font-size:7px!important;color:#dfe9f3!important;letter-spacing:.05em}
+.piece-battlefloor-ready-v107 small{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:8px;font-weight:1000;color:#52371d}
+.mob-piece-battle-v107,.mob-piece-fight-v107{scroll-behavior:auto!important}
+.piece-battlefloor-fight-v107{height:350px!important;overflow:hidden!important;background:radial-gradient(circle at 50% 45%,#f8df9c 0,#d8ae62 56%,#a97739 100%)!important}
+.fight-arena-v107{position:absolute;inset:0;overflow:hidden;isolation:isolate}
+.fight-piece-v107{position:absolute;width:20%;height:34%;z-index:12;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 6px 4px #0008);will-change:transform,left,top;transition:left .7s cubic-bezier(.2,.9,.2,1),top .7s cubic-bezier(.2,.9,.2,1),transform .25s ease}
+.fight-piece-v107 img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.fight-piece-v107.cpu.q1{left:3%;top:1%}.fight-piece-v107.cpu.q2{left:22%;top:1%}.fight-piece-v107.cpu.q3{left:41%;top:1%}.fight-piece-v107.cpu.q4{left:60%;top:1%}.fight-piece-v107.cpu.q5{left:78%;top:1%}
+.fight-piece-v107.player.q1{left:3%;top:65%}.fight-piece-v107.player.q2{left:22%;top:65%}.fight-piece-v107.player.q3{left:41%;top:65%}.fight-piece-v107.player.q4{left:60%;top:65%}.fight-piece-v107.player.q5{left:78%;top:65%}
+.gathering-v107 .fight-piece-v107.cpu.q1{left:22%;top:25%;transform:rotate(-8deg)}.gathering-v107 .fight-piece-v107.cpu.q2{left:31%;top:22%;transform:rotate(6deg)}.gathering-v107 .fight-piece-v107.cpu.q3{left:40%;top:24%;transform:rotate(-4deg)}.gathering-v107 .fight-piece-v107.cpu.q4{left:49%;top:21%;transform:rotate(7deg)}.gathering-v107 .fight-piece-v107.cpu.q5{left:58%;top:25%;transform:rotate(-5deg)}
+.gathering-v107 .fight-piece-v107.player.q1{left:22%;top:49%;transform:rotate(7deg)}.gathering-v107 .fight-piece-v107.player.q2{left:31%;top:52%;transform:rotate(-6deg)}.gathering-v107 .fight-piece-v107.player.q3{left:40%;top:49%;transform:rotate(4deg)}.gathering-v107 .fight-piece-v107.player.q4{left:49%;top:52%;transform:rotate(-7deg)}.gathering-v107 .fight-piece-v107.player.q5{left:58%;top:49%;transform:rotate(5deg)}
+.fight-arena-v107:not(.brawling-v107) .brawl-smoke-v107,.fight-arena-v107:not(.brawling-v107) .brawl-star-v107,.fight-arena-v107:not(.brawling-v107) .piece-impact-ring-v107,.fight-arena-v107:not(.brawling-v107) .piece-speed-slash-v107,.fight-arena-v107:not(.brawling-v107) .piece-energy-burst-v107{opacity:0!important}
+.fight-start-v107{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);font-size:31px;font-weight:1000;color:#fff;-webkit-text-stroke:4px #151515;paint-order:stroke fill;text-shadow:0 5px 0 #111,0 0 24px #ffd85a;letter-spacing:.08em;white-space:nowrap}
+.start-flash-v107:after{content:'';position:absolute;z-index:55;inset:0;background:#fff;animation:startFlashV107 .55s ease forwards;pointer-events:none}@keyframes startFlashV107{0%{opacity:0}30%{opacity:.85}100%{opacity:0}}
+.brawling-v107 .fight-piece-v107{transition:none}.brawling-v107 .fight-piece-v107.cpu.q1{animation:brawlA107 .72s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.cpu.q2{animation:brawlB107 .48s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.cpu.q3{animation:brawlC107 .62s linear infinite}.brawling-v107 .fight-piece-v107.cpu.q4{animation:brawlD107 .55s ease-in-out infinite alternate-reverse}.brawling-v107 .fight-piece-v107.cpu.q5{animation:brawlE107 .68s ease-in-out infinite alternate}
+.brawling-v107 .fight-piece-v107.player.q1{animation:brawlD107 .57s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.player.q2{animation:brawlE107 .51s ease-in-out infinite alternate-reverse}.brawling-v107 .fight-piece-v107.player.q3{animation:brawlA107 .63s linear infinite}.brawling-v107 .fight-piece-v107.player.q4{animation:brawlB107 .49s ease-in-out infinite alternate}.brawling-v107 .fight-piece-v107.player.q5{animation:brawlC107 .71s ease-in-out infinite alternate-reverse}
+@keyframes brawlA107{0%{left:15%;top:34%;transform:rotate(-9deg) scale(.94)}45%{left:48%;top:40%;transform:rotate(13deg) scale(1.08)}100%{left:69%;top:31%;transform:rotate(-5deg) scale(.98)}}
+@keyframes brawlB107{0%{left:67%;top:44%;transform:rotate(10deg)}50%{left:35%;top:28%;transform:rotate(-16deg) scale(1.12)}100%{left:18%;top:50%;transform:rotate(8deg)}}
+@keyframes brawlC107{0%{left:32%;top:22%;transform:rotate(0) scale(.9)}33%{left:59%;top:47%;transform:rotate(110deg) scale(1.06)}66%{left:24%;top:48%;transform:rotate(220deg)}100%{left:47%;top:25%;transform:rotate(360deg) scale(.9)}}
+@keyframes brawlD107{0%{left:8%;top:45%;transform:translateX(-8px) rotate(-6deg)}55%{left:42%;top:42%;transform:translateX(18px) rotate(14deg) scale(1.1)}100%{left:74%;top:38%;transform:translateX(-4px) rotate(-8deg)}}
+@keyframes brawlE107{0%{left:73%;top:25%;transform:translateY(-8px) rotate(6deg)}50%{left:45%;top:51%;transform:translateY(10px) rotate(-18deg) scale(1.12)}100%{left:16%;top:31%;transform:translateY(-3px) rotate(9deg)}}
+.fight-piece-v107.blown-v107{animation:blownV107 .48s cubic-bezier(.1,.8,.2,1)!important;z-index:40!important}@keyframes blownV107{0%{transform:translate(0,0) rotate(0) scale(1)}45%{transform:translate(95px,-60px) rotate(105deg) scale(.84)}100%{transform:translate(-12px,8px) rotate(0) scale(1)}}
+.fight-piece-v107.spin-v107{animation:spinHitV107 .48s ease!important;z-index:40!important}@keyframes spinHitV107{50%{transform:translate(-52px,22px) rotate(540deg) scale(1.18)}100%{transform:none}}
+.fight-piece-v107.slam-v107{animation:slamHitV107 .48s ease!important;z-index:40!important}@keyframes slamHitV107{0%{transform:none}35%{transform:translateY(-68px) scale(1.08)}70%{transform:translateY(28px) scale(.86,1.18)}100%{transform:none}}
+.brawl-smoke-v107{position:absolute;z-index:28;width:40%;height:auto;overflow:visible;filter:drop-shadow(0 3px 0 #1118);pointer-events:none;opacity:.93}.brawl-smoke-v107 path{fill:#fff;stroke:#1b1b1b;stroke-width:7;stroke-linejoin:round}.brawl-smoke-v107 path.inner{fill:#f8f8f8;stroke-width:4}.brawl-smoke-v107.sm1{left:8%;top:27%;animation:smokeDriftA107 .72s ease-in-out infinite alternate}.brawl-smoke-v107.sm2{left:34%;top:32%;width:44%;animation:smokeDriftB107 .58s ease-in-out infinite alternate-reverse}.brawl-smoke-v107.sm3{right:3%;top:24%;width:35%;animation:smokeDriftC107 .66s ease-in-out infinite alternate}
+@keyframes smokeDriftA107{to{transform:translate(38px,-16px) rotate(5deg) scale(1.16)}}@keyframes smokeDriftB107{to{transform:translate(-31px,17px) rotate(-7deg) scale(.92)}}@keyframes smokeDriftC107{to{transform:translate(-25px,23px) rotate(8deg) scale(1.12)}}
+.piece-impact-ring-v107{position:absolute;z-index:42;width:80px;height:80px;border:7px solid #fff;border-radius:50%;opacity:0;box-shadow:0 0 0 5px #111}.piece-impact-ring-v107.r1{left:23%;top:35%}.piece-impact-ring-v107.r2{right:18%;top:43%}.impact-left-v107 .piece-impact-ring-v107.r1,.impact-right-v107 .piece-impact-ring-v107.r2{animation:ringPopV107 .4s ease-out}.piece-speed-slash-v107{position:absolute;z-index:44;width:115px;height:13px;border-radius:999px;background:#fff;border:4px solid #161616;opacity:0;transform:rotate(-28deg)}.piece-speed-slash-v107.a{left:16%;top:36%}.piece-speed-slash-v107.b{right:12%;top:51%;transform:rotate(23deg)}.impact-left-v107 .piece-speed-slash-v107.a,.impact-right-v107 .piece-speed-slash-v107.b{animation:slashPopV107 .34s ease-out}.piece-energy-burst-v107{position:absolute;z-index:46;left:50%;top:45%;width:42px;height:42px;border-radius:50%;transform:translate(-50%,-50%);opacity:0;background:radial-gradient(circle,#fff 0 18%,#ffe25a 20% 35%,#ff6b41 38% 48%,transparent 52%);filter:drop-shadow(0 0 10px #fff)}.skill-impact-v107 .piece-energy-burst-v107{animation:energyBurstV107 .42s ease-out}@keyframes ringPopV107{0%{opacity:.95;transform:scale(.2)}100%{opacity:0;transform:scale(2.2)}}@keyframes slashPopV107{0%{opacity:0;transform:translateX(-70px) rotate(-28deg) scaleX(.3)}40%{opacity:1}100%{opacity:0;transform:translateX(80px) rotate(-28deg) scaleX(1.5)}}@keyframes energyBurstV107{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}35%{opacity:1;transform:translate(-50%,-50%) scale(2.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.5)}}
+.brawl-star-v107{position:absolute;z-index:48;font-size:25px;color:#ffd52c;-webkit-text-stroke:2px #181818;opacity:.85;animation:starFlyV107 .55s ease-in-out infinite alternate}.brawl-star-v107.z1{left:15%;top:28%}.brawl-star-v107.z2{left:27%;top:54%;animation-delay:-.2s}.brawl-star-v107.z3{left:39%;top:24%;animation-delay:-.3s}.brawl-star-v107.z4{left:52%;top:58%;animation-delay:-.1s}.brawl-star-v107.z5{left:68%;top:32%;animation-delay:-.35s}.brawl-star-v107.z6{left:79%;top:50%;animation-delay:-.15s}.brawl-star-v107.z7{left:21%;top:46%;animation-delay:-.4s}.brawl-star-v107.z8{left:60%;top:22%;animation-delay:-.27s}.brawl-star-v107.z9{left:44%;top:49%;animation-delay:-.08s}.brawl-star-v107.z10{left:72%;top:61%;animation-delay:-.31s}.brawl-star-v107.z11{left:9%;top:58%;animation-delay:-.18s}.brawl-star-v107.z12{left:86%;top:27%;animation-delay:-.24s}.brawl-star-v107.z13{left:34%;top:66%;animation-delay:-.37s}.brawl-star-v107.z14{left:57%;top:42%;animation-delay:-.12s}.brawl-star-v107.z15{left:47%;top:18%;animation-delay:-.29s}.brawl-star-v107.z16{left:81%;top:67%;animation-delay:-.04s}@keyframes starFlyV107{to{transform:translate(18px,-23px) rotate(35deg) scale(1.35);opacity:.35}}
+.piece-round-result-v107,.piece-between-battle-v107,.piece-match-result-v107{text-align:center!important}.piece-round-result-mark-v107{margin:40px 0 24px;padding:24px 12px;border:4px solid #704d2f;border-radius:24px;background:#fffaf0;box-shadow:0 14px 28px #0003}.piece-round-result-mark-v107 h2{font-size:34px;margin:8px 0;color:#1e160d!important}.piece-round-result-mark-v107>b{font-size:52px;color:#2c9a4b!important;-webkit-text-stroke:2px #111}.piece-round-result-v107.lose .piece-round-result-mark-v107>b{color:#d45454!important}.piece-round-next-v107{font-size:20px;font-weight:1000;color:#fff!important;background:#263e56;border-radius:16px;padding:15px}.piece-round-next-v107 span{display:block;font-size:10px;margin-top:5px;color:#fff!important}.piece-between-battle-v107{padding:52px 18px!important}.piece-between-battle-v107 h2{font-size:42px!important;margin:10px}.piece-between-battle-v107 strong{display:block;font-size:29px;color:#2fbd5d!important;-webkit-text-stroke:1.5px #111;animation:betweenPulseV107 .55s ease-in-out infinite alternate}@keyframes betweenPulseV107{to{transform:scale(1.12)}}.piece-final-score-v107{display:flex;justify-content:center;align-items:center;gap:18px;margin:22px}.piece-final-score-v107 b{font-size:64px}.piece-final-score-v107 span{font-size:35px}.piece-match-result-v107 button{min-height:54px;width:100%;border-radius:14px}
+@media(max-height:760px){.piece-battlefloor-fight-v107{height:285px!important}.fight-piece-v107{height:31%}.piece-round-result-mark-v107{margin:20px 0 16px;padding:16px}.piece-round-result-mark-v107 h2{font-size:28px}.piece-round-result-mark-v107>b{font-size:42px}}
+/* ===== END MOB QUEST v107 ===== */
+
+
+/* ===== MOB QUEST v109 SUPPORT MAGIC FX ===== */
+.support-magic-fx-v109{position:absolute;width:92px;height:92px;transform:translate(-50%,-58%);pointer-events:none;z-index:45;animation:v109SupportRise .9s ease-out both}
+.support-magic-fx-v109 .support-ring-v109{position:absolute;inset:14px;border:4px solid currentColor;border-radius:50%;box-shadow:0 0 0 3px rgba(255,255,255,.9),0 0 16px currentColor;animation:v109Ring .75s ease-out both}
+.support-magic-fx-v109 .support-core-v109{position:absolute;left:31px;top:31px;width:30px;height:30px;border:4px solid #111;background:#fff;border-radius:8px;transform:rotate(45deg);animation:v109Core .7s ease-in-out both}
+.support-magic-fx-v109 .support-mark-v109{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:1000 12px/1 system-ui,sans-serif;color:#111;text-shadow:0 1px 0 #fff;z-index:3}
+.support-magic-fx-v109 b{position:absolute;width:10px;height:10px;background:#fff;border:3px solid #111;border-radius:50%;animation:v109Particle .8s ease-out both}.support-magic-fx-v109 b.p1{left:5px;top:42px}.support-magic-fx-v109 b.p2{right:3px;top:30px;animation-delay:.05s}.support-magic-fx-v109 b.p3{left:24px;top:2px;animation-delay:.1s}.support-magic-fx-v109 b.p4{right:20px;bottom:4px;animation-delay:.15s}.support-magic-fx-v109 b.p5{left:8px;bottom:12px;animation-delay:.2s}.support-magic-fx-v109 b.p6{right:8px;top:58px;animation-delay:.25s}
+.support-magic-fx-v109.atk{color:#f15a44}.support-magic-fx-v109.def{color:#57a7df}.support-magic-fx-v109.heal{color:#63c987}.support-magic-fx-v109.spd{color:#e8c84f}
+.support-magic-fx-v109.heal .support-core-v109{border-radius:50%;transform:none}.support-magic-fx-v109.def .support-core-v109{border-radius:4px 4px 10px 10px;transform:none;height:34px;top:28px}.support-magic-fx-v109.spd .support-ring-v109{border-style:dashed;animation:v109SpinRing .7s linear both}
+@keyframes v109SupportRise{0%{opacity:0;transform:translate(-50%,-35%) scale(.55)}25%{opacity:1}100%{opacity:0;transform:translate(-50%,-78%) scale(1.12)}}
+@keyframes v109Ring{0%{transform:scale(.3);opacity:0}35%{opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes v109SpinRing{0%{transform:scale(.45) rotate(0);opacity:0}30%{opacity:1}100%{transform:scale(1.3) rotate(210deg);opacity:0}}
+@keyframes v109Core{0%{transform:rotate(45deg) scale(.35);opacity:0}40%{opacity:1}100%{transform:rotate(405deg) scale(1.08);opacity:0}}
+@keyframes v109Particle{0%{opacity:0;transform:translateY(12px) scale(.4)}35%{opacity:1}100%{opacity:0;transform:translateY(-30px) scale(.9)}}
+/* ===== END MOB QUEST v109 SUPPORT MAGIC FX ===== */

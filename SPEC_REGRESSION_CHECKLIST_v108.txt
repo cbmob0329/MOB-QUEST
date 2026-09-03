@@ -1,0 +1,25 @@
+MOB QUEST v108 SPEC REGRESSION CHECKLIST
+
+[BASE]
+- v107 used as the only base.
+- v106 Demon Castle fixes preserved.
+- v107 MOB PIECE 2-win implementation preserved.
+
+[PLAYER BALANCE]
+- Lv99 raw HP average: 1380.77.
+- Raw HP by character matches BALANCE_v108.txt.
+- v107 ATK/MAG/MP/SPD kept.
+- DEF/MND returned to v104 moderate bands.
+- Existing sub attributes, element resistance, status resistance, learnsets preserved.
+
+[ENEMY BALANCE]
+- v105 enemy HP/DEF/RES preserved.
+- v105 enemy skills/resistance/status rules preserved.
+- Enemy ATK/MAG growth slightly reduced.
+- Multi-action bosses use per-hit outgoing damage scaling.
+- Boss paralysis immunity / 1-2 turn boss status cap preserved.
+
+[VERSION]
+- GAME_ASSET_VERSION 108.
+- title version v108.
+- standalone index inline JS equals js/data.js + js/game.js.

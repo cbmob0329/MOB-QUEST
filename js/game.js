@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=105;
+const GAME_ASSET_VERSION=109;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -440,9 +440,24 @@ async function abandonAdventure(){
 }
 
 
-function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{let chain=String(img.dataset.fallbackChain||'').split('|').map(v=>v.trim()).filter(Boolean);const tried=new Set(String(img.dataset.triedList||'').split('|').map(v=>v.trim()).filter(Boolean));const current=img.getAttribute('src')||'';if(current)tried.add(current);img.dataset.triedList=[...tried].join('|');while(chain.length&&tried.has(chain[0]))chain.shift();if(chain.length){const next=chain.shift();img.dataset.fallbackChain=chain.join('|');img.src=next;return;}const f=img.dataset.fallbackSrc;if(f&&!tried.has(f)&&current!==f){tried.add(f);img.dataset.triedList=[...tried].join('|');img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
+function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{let chain=String(img.dataset.fallbackChain||'').split('|').map(v=>v.trim()).filter(Boolean);const tried=new Set(String(img.dataset.triedList||'').split('|').map(v=>v.trim()).filter(Boolean));const current=img.getAttribute('src')||'';if(current)tried.add(current);img.dataset.triedList=[...tried].join('|');while(chain.length&&tried.has(chain[0]))chain.shift();if(chain.length){const next=chain.shift();img.dataset.fallbackChain=chain.join('|');img.src=next;return;}const f=img.dataset.fallbackSrc;if(f&&!tried.has(f)&&current!==f){tried.add(f);img.dataset.triedList=[...tried].join('|');img.src=f;return;}img.classList.add('asset-missing');img.classList.remove('asset-loading-v106');});img.addEventListener('load',()=>img.classList.remove('asset-missing','asset-loading-v106'));}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
-function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
+function setImage(img,src,fallback=''){
+  if(!img)return;
+  img.classList.remove('asset-missing');
+  if(img.id==='adventureBg')img.classList.add('asset-loading-v106');
+  img.dataset.tried='0';
+  img.dataset.triedList='';
+  img.dataset.fallbackChain='';
+  if(fallback)img.dataset.fallbackSrc=fallback;else delete img.dataset.fallbackSrc;
+  /* v106: Demon Castle backgrounds sometimes arrive late/missing in asset packs. Never leave a broken-image '?' on screen. */
+  if(/^back\/maoh(?:2|3|4)?\.png$/i.test(String(src||''))){
+    const chain=['back/maoh.png','back/maoh2.png','back/maoh3.png','back/maoh4.png','back2/09.png','back/rpgmain.png'].filter(x=>x!==src&&x!==fallback);
+    img.dataset.fallbackChain=chain.join('|');
+    img.dataset.fallbackSrc='back/rpgmain.png';
+  }
+  img.src=src;bindImage(img);
+}
 
 const assetPreloadCache=new Map();
 const assetImageCache=new Map();
@@ -1410,11 +1425,24 @@ const STORY_GUESTS={
 };
 /* v32: モブジェシー is the canonical play/06.png player character. */
 const STORY_ONLY_ACTORS={};
+/* v106: explicit Demon Castle actor fallback prevents a missing lookup from rendering the blue '?' placeholder. */
+const STORY_ACTOR_FALLBACKS_V106={
+  'boss-ace':{name:'モブエース',image:'boss/08.png',symbol:'A',category:'boss'},
+  'boss-maou-castle':{name:'モブ魔王',image:'boss/22.png',symbol:'王',category:'boss'},
+  'boss-lilith-castle':{name:'モブリリス',image:'boss/21.png',symbol:'薔',category:'boss'},
+  'c-killwitch':{name:'モブキラウィッチ',image:'enemy/146.png',symbol:'魔',category:'elite'},
+  'c-succubus':{name:'モブララウィッチ',image:'enemy/147.png',symbol:'魔',category:'elite'},
+  'c-lilith-hell':{name:'モブヘルリリス',image:'boss/40.png',symbol:'炎',category:'boss'},
+  'c-lilith-kirin':{name:'モブキリンリリス',image:'boss/41.png',symbol:'雷',category:'boss'},
+  'c-lilith-kufu':{name:'モブクフリリス',image:'boss/42.png',symbol:'光',category:'boss'},
+  'c-lilith-riva':{name:'モブリヴァリリス',image:'boss/43.png',symbol:'水',category:'boss'}
+};
 let storySceneExtras=[];
 function storyActorInfo(key){
   const e=STORY_ONLY_ACTORS[key];if(e)return{key,...e,image:versionedPlay(e.image),player:false,eventOnly:true};
   const p=player(key);if(p)return{key,name:p.name,image:versionedPlay(p.image),symbol:p.symbol||'仲',player:true};
   const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false,category:t.category||'normal',enemyTemplate:t,sizeClass:enemySizeClass(t),winged:enemyIsWinged(t)};
+  const f=STORY_ACTOR_FALLBACKS_V106[key];if(f)return{key,...f,player:false,eventOnly:true,sizeClass:f.category==='boss'?'boss':'elite',winged:false};
   return{key,name:key||'???',image:'',symbol:'?'};
 }
 function storyFlags(){if(!state.adventure.storyFlags||typeof state.adventure.storyFlags!=='object')state.adventure.storyFlags={};return state.adventure.storyFlags;}
@@ -1554,13 +1582,38 @@ async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#story
 async function storyHideGuest(){const g=$('#storyGuest'),hiddenKey=g.dataset.hiddenPartyActor;g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';if(hiddenKey){const a=$(`[data-story-actor="${hiddenKey}"]`,$('#storyScene'));a?.classList.remove('guest-duplicate-hidden');delete g.dataset.hiddenPartyActor;}}
 async function storyShowGuests(keys=[],opt={}){
   await storyHideGuest().catch(()=>{});
-  const group=$('#storyGuestGroup'),ids=(keys||[]).filter(Boolean).slice(0,4);if(!ids.length)return;
-  group.hidden=false;group.className='story-guest-group';group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
+  const group=$('#storyGuestGroup'),maxCount=opt.allowFive?5:4,ids=(keys||[]).filter(Boolean).slice(0,maxCount);if(!ids.length)return;
+  group.hidden=false;group.className='story-guest-group';
+  if(opt.compactLilith)group.classList.add('demon-lilith-family-v106');
+  if(opt.mergeSetup)group.classList.add('demon-witch-merge-v106');
+  if(opt.summon)group.classList.add('demon-lilith-summon-v106');
+  if(opt.raised)group.classList.add('story-guests-raised-v106');
+  group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
-  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});if(opt.compactLilith){holder.style.setProperty('width',ids.length>=5?'19%':'23%','important');holder.style.setProperty('height','100%','important');}}else img.classList.add('asset-missing');}));
+  /* The silhouette class must exist BEFORE opacity changes, otherwise the real boss flashes for one frame. */
+  for(const key of (opt.silhouetteKeys||[])){const holder=$(`[data-story-actor="${key}"]`,group);holder?.classList.add('demon-maou-silhouette-v95');}
   await nextPaint();group.classList.add('visible');await fixedDelay(opt.slow?950:520);await fixedDelay(500);
 }
 async function storyHideGuests(){const group=$('#storyGuestGroup');if(group.hidden)return;group.classList.remove('visible');await fixedDelay(480);group.hidden=true;group.innerHTML='';group.dataset.count='0';}
+async function demonWitchesMergeIntoLilithV106(){
+  const group=$('#storyGuestGroup');if(!group||group.hidden)return;
+  group.classList.add('demon-witch-merge-active-v106');
+  const glow=document.createElement('div');glow.className='demon-merge-glow-v106';group.appendChild(glow);
+  await fixedDelay(1550);
+  for(const key of ['c-killwitch','c-succubus']){$(`[data-story-actor="${key}"]`,group)?.remove();}
+  glow.remove();group.dataset.count='1';group.classList.remove('demon-witch-merge-active-v106');group.classList.add('demon-witch-merge-done-v106');
+  const lilith=$('[data-story-actor="boss-lilith-castle"]',group);if(lilith){lilith.style.setProperty('width','38%','important');lilith.style.setProperty('height','100%','important');}
+  await fixedDelay(420);
+}
+async function demonLilithSummonV106(){
+  await storyShowGuests(['c-lilith-hell','c-lilith-kirin','boss-lilith-castle','c-lilith-kufu','c-lilith-riva'],{allowFive:true,compactLilith:true,raised:true,summon:true,slow:true});
+}
+async function demonTeleportPairV106(){
+  const group=$('#storyGuestGroup');if(!group||group.hidden){await storyHideGuests();return;}
+  group.classList.add('demon-teleport-v106');await fixedDelay(900);await storyHideGuests();group.classList.remove('demon-teleport-v106');
+}
+
 async function storyExclaim(key){const g=$('#storyGuestMark');if($('#storyGuest').dataset.storyActor===key){g.hidden=false;void g.offsetWidth;await fixedDelay(700);g.hidden=true;}else{const a=storyAnchor(key);if(a){const mark=document.createElement('i');mark.className='story-mark';mark.textContent='!';a.appendChild(mark);await fixedDelay(700);mark.remove();}}await fixedDelay(500);}
 async function storyFlash(){const f=$('#storyFlash');f.classList.remove('play');void f.offsetWidth;f.classList.add('play');await fixedDelay(460);f.classList.remove('play');await fixedDelay(500);}
 async function storyImpact(text='ドン！ッ',dodge=false){if(dodge){const acts=$$('.story-party-actor',$('#storyPartyLine'));acts.forEach((a,i)=>a.classList.add(i%2?'dodge-right':'dodge-left'));}const sc=$('#storyScene'),el=$('#storyImpact');el.textContent=text;el.hidden=false;sc.classList.add('shake');el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await fixedDelay(720);sc.classList.remove('shake');el.hidden=true;el.classList.remove('play');$$('.story-party-actor',$('#storyPartyLine')).forEach(a=>a.classList.remove('dodge-left','dodge-right'));await fixedDelay(500);}
@@ -1675,9 +1728,23 @@ function normalizeLilithSplit(){const roster=state.party.map(x=>[x[0],Number(x[1
   const A=[],B=[];roster.forEach((row,i)=>(i%2?B:A).push([...row]));if(!B.length&&A.length>1)B.push(A.pop());return{A,B};
 }
 function renderLilithSplitOverlay(root,split){const roster=state.party.map(x=>[x[0],Number(x[1])||5]),teamOf=id=>split.A.some(x=>x[0]===id)?'A':'B';root.innerHTML=`<div class="lilith-split-card"><div class="settings-head"><div><small>PARTY SPLIT</small><h2>パーティーを2つ作ってください</h2></div></div><div class="lilith-opponents"><div><b>Aパーティー</b><span>モブリリス / モブヘルリリス / モブキリンリリス</span></div><div><b>Bパーティー</b><span>モブクフリリス / モブリヴァリリス</span></div></div><p>キャラクターをタップするとA/Bを移動します。</p><div class="lilith-split-roster">${roster.map(([id,lv])=>{const q=player(id),team=teamOf(id);return`<button type="button" data-lilith-member="${id}" class="team-${team.toLowerCase()}"><em>${team}</em><img src="${versionedPlay(q.image)}" alt="${q.name}"><b>${q.name}</b><small>Lv${lv}</small></button>`;}).join('')}</div><div class="lilith-team-count"><span>A ${split.A.length}人</span><span>B ${split.B.length}人</span></div><button type="button" class="primary-btn" data-lilith-confirm>このパーティーで挑む</button></div>`;bindImages(root);}
-async function chooseLilithSplit(){let overlay=document.querySelector('#lilithSplitOverlay');if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}const split=normalizeLilithSplit();overlay.hidden=false;renderLilithSplitOverlay(overlay,split);return await new Promise(resolve=>{const bind=()=>{$$('[data-lilith-member]',overlay).forEach(btn=>btn.onclick=()=>{const id=btn.dataset.lilithMember,from=split.A.some(x=>x[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(x=>x[0]===id);to.push(from.splice(i,1)[0]);renderLilithSplitOverlay(overlay,split);bind();});$('[data-lilith-confirm]',overlay).onclick=async()=>{if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');const ans=await dialog('このパーティーで挑みますか？',[['はい','yes','primary'],['いいえ','no']],'PARTY SPLIT');if(ans!=='yes')return;state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;resolve(state.meta.lilithSplit);};};bind();});}
-function currentLilithSplit(){const v=state.meta?.lilithSplit;return v&&Array.isArray(v.A)&&Array.isArray(v.B)&&v.A.length&&v.B.length?v:null;}
-function switchBattleToLilithPartyA(){const b=state.battle,split=b?.config?.lilithSplit;if(!b||!split?.A?.length)return;persistAdventureVitalsFor(b.allies||[]);const vitals=state.adventure.vitals||{},allies=split.A.map(([id,lv])=>buildAlly(player(id),lv,vitals[id])).filter(Boolean);for(const a of allies)initUltimateCooldowns(a);b.allies=allies;b.mainIds=allies.slice(0,4).map(a=>a.id);b.superIds=allies.slice(4,6).map(a=>a.id);b.reserveIds=allies.slice(6,10).map(a=>a.id);b.queue=[];b.queuePos=0;}
+async function chooseLilithSplit(){
+  let overlay=document.querySelector('#lilithSplitOverlay');if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}
+  const split=normalizeLilithSplit();overlay.hidden=false;renderLilithSplitOverlay(overlay,split);
+  return await new Promise(resolve=>{
+    const clearInline=()=>$('.lilith-inline-confirm-v106',overlay)?.remove();
+    const bind=()=>{
+      $$('[data-lilith-member]',overlay).forEach(btn=>btn.onclick=()=>{clearInline();const id=btn.dataset.lilithMember,from=split.A.some(x=>x[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(x=>x[0]===id);to.push(from.splice(i,1)[0]);renderLilithSplitOverlay(overlay,split);bind();});
+      const confirmBtn=$('[data-lilith-confirm]',overlay);if(!confirmBtn)return;
+      confirmBtn.onclick=()=>{
+        if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');
+        clearInline();const card=$('.lilith-split-card',overlay),box=document.createElement('div');box.className='lilith-inline-confirm-v106';box.innerHTML='<strong>このパーティーで挑みますか？</strong><div><button type="button" data-lilith-yes-v106 class="primary-btn">はい</button><button type="button" data-lilith-no-v106>いいえ</button></div>';card.appendChild(box);box.scrollIntoView({block:'nearest',behavior:'smooth'});
+        $('[data-lilith-no-v106]',box).onclick=()=>box.remove();
+        $('[data-lilith-yes-v106]',box).onclick=()=>{state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;box.remove();resolve(state.meta.lilithSplit);};
+      };
+    };bind();
+  });
+}
 
 const STORY_EVENTS={
   'arrival:desert':{worldId:'desert',area:0,layout:'partyLeftGuestRight',steps:[
@@ -3023,7 +3090,7 @@ async function applyRoundDots(){
   for(const a of fieldAllies()){if(a.dead)continue;for(const k of ['poison','burn'])if(a.status[k]>0){const d=Math.max(1,Math.round(a.maxHp*.025));a.hp=Math.max(state.battle?.mode==='story'&&state.battle?.config?.scriptedImmortalParty?1:0,a.hp-d);a.status[k]--;floatNumber(d,'damage',a.id);const card=$(`[data-ally-id="${a.id}"]`,$('#partyHud')||document);if(card){card.classList.remove('status-damage-shake');void card.offsetWidth;card.classList.add('status-damage-shake');setTimeout(()=>card.classList.remove('status-damage-shake'),420);}if(a.hp<=0){a.dead=true;notice(`${a.name} DOWN`,'danger');}else notice(`${a.name}に${k==='poison'?'毒':'やけど'}ダメージ！`,'status');}}
   if(!livingEnemies().length)state.battle.targetEnemyId=null;renderBattle();await checkSpecialRevives();
 }
-function tickBuffs(){const b=state.battle;for(const e of b.enemies||[]){for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(e.naviBarrierBrokenTurns>0){e.naviBarrierBrokenTurns--;if(e.naviBarrierBrokenTurns===0){e.naviBarrierHits=0;notice('再びバリアを張った！連続攻撃で破壊しろ！','danger',1100);}}}if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns','ultLockedTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
+function tickBuffs(){const b=state.battle;for(const e of b.enemies||[]){for(const k of ['shieldTurns','allyShieldTurns','atkBuffTurns','defBuffTurns','defDebuffTurns','spdDebuffTurns'])if(e[k]>0&&e[k]<90)e[k]--;if(e.naviBarrierBrokenTurns>0){e.naviBarrierBrokenTurns--;if(e.naviBarrierBrokenTurns===0){e.naviBarrierHits=0;notice('再びバリアを張った！連続攻撃で破壊しろ！','danger',1100);}}}if(b.teamGuardTurns>0)b.teamGuardTurns--;if(b.yushaGuardTurns>0)b.yushaGuardTurns--;fieldAllies().forEach(a=>{for(const k of ['guardTurns','damageCutTurns','atkBuffTurns','atkDebuffTurns','defBuffTurns','spdBuffTurns','spdDebuffTurns','evasionBuffTurns','ultLockedTurns'])if(a[k]>0)a[k]--;if(a.allBuffTurns>0&&a.allBuffTurns<90)a.allBuffTurns--;});}
 function initiativeSpeed(entry){if(entry.type==='enemy'){const e=enemyByUid(entry.enemyId);if(e?.preemptive&&(state.battle?.turn||1)===1)return 10000+e.spd;return e?e.spd*(e.spdDebuffTurns>0?1-e.spdDebuff:1):0;}const a=allyById(entry.id);return a?effective('spd',a):0;}
 async function playFrezardFusion(){
   const b=state.battle,field=$('#battleField')||$('#battleScreen'),layer=$('#battleFxLayer');if(!b||!field||!layer)return;const fr=field.getBoundingClientRect(),center={x:fr.width*.5,y:fr.height*.43},sources=(b.enemies||[]).slice(0,2);const ghosts=[];
@@ -5494,34 +5561,6 @@ showGachaResultV96=showGachaResultV100;
 /* ===== END MOB QUEST v102 ===== */
 
 
-/* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
-window.__mobV99PatchRuntime=true;
-/* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
-
-window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-let bootSetupError=null;
-try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
-catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
-function bindEssentialBootEvents(){
-  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
-  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
-}
-bindEssentialBootEvents();
-window.__mobBootReady=true;
-/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
-(async()=>{
-  try{showTitle();}
-  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
-})();
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
-setTimeout(startFastBackgroundWarmup,1400);
-})();
-
-
-
-
-
-
 /* ===== MOB QUEST v103: GACHA SAFE REVEAL / MOB PIECE LIFE BATTLE / ASSET PRELOAD ===== */
 try{const bad=FIGURES.find(f=>f.id==='17'&&/^\/+$/u.test(String(f.name||'')));if(bad){bad.pending=true;bad.name='未設定フィギュア17';}}catch(_){ }
 
@@ -5683,3 +5722,343 @@ function enemyFormalDetailV105(e){
 
 /* v104 already introduced character-specific resistances; retain them as the actual incoming-damage/status layer. */
 /* ===== END MOB QUEST v105 ===== */
+
+
+
+/* ===== MOB QUEST v106: DEMON CASTLE PROGRESSION / STAGING FIX ===== */
+window.__mobV106PatchRuntime=true;
+
+/* Keep the authored Demon Castle opening, but apply the Demon King silhouette before reveal. */
+runDemonCastleArrivalStory=async function(){
+  await openStoryScene('demonCastle',0);
+  await storySay('pink','ここが魔王城でありますね・・！');
+  await storyShowGuest('boss-ace',{slow:true});
+  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
+  await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');await storySay('pink','なぜ魔王軍に！');await storySay('denden','退屈だからでやんすか！？');await storySay('boss-ace','退屈か\nそうであれば\nどれほど幸せだろな');await storySay('money','はっきりとは覚えてないけど\n悪いやつではなかったはずよ！');await storySay('boss-ace','そうか\n少しは覚えているのか');await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない\nお前と同じだモブジェシー！');await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');await storySay('denden','それでも戦うでやんす！！');
+  $('#storyScene').hidden=true;await startDemonAceStoryBattle();
+  await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('？？？「情けない」');
+  await storyShowGuests(['boss-ace','boss-maou-castle'],{slow:true,silhouetteKeys:['boss-maou-castle']});
+  await storySay('boss-maou-castle','我の側近が無様な姿を晒すとは');await storySay('boss-ace','申し訳、、ありません・・');await storySay('pink','魔王であります！！');await storySay('desert','こんなに早く出会うとはな');await storySay('boss-maou-castle','まあよい\n一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();await storyImpact('バチィッ!!');await storySay('boss-ace','グッ・・・！');await storySay('boss-maou-castle','随分と嫌われたようだな\n行くぞ');
+  await demonTeleportPairV106();await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ\n先へ進むぞ！');
+};
+
+Object.assign(STORY_EVENTS,{
+  'pre:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','c-succubus']],['say','c-killwitch','我ら！'],['sayAs','c-succubus','リリス親衛隊！','モブララウィッチ'],['say','c-killwitch','モブキラウィッチ！'],['sayAs','c-succubus','モブララウィッチ！','モブララウィッチ'],['sayDual','c-killwitch','お命頂戴！','c-succubus','お命頂戴！'],['say','denden','か、かっけえでやんす・・'],['say','nekoku','オラ、好きだ'],['say','money','何馬鹿な事言ってるの！\nこの2人相当強いわよ！'],['say','jessie','簡単には通してくれなさそうね'],['say','nyoro','早く倒してモブエースを追うニョロ！']
+  ]},
+  'post:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','boss-lilith-castle','c-succubus'],{mergeSetup:true,raised:true}],['sayAs','c-succubus','リリス様・・','モブララウィッチ'],['say','c-killwitch','申し訳、、ありません、、'],['say','boss-lilith-castle','2人ともよく頑張ったね'],['say','boss-lilith-castle','もういいから\nゆっくり休んでね\nあとは僕に任せて'],['witchMergeLilith'],['say','boss-lilith-castle','どうも勇者様\n引き返すならここが最後だよ'],['say','money','出たわね魔王軍 No.2！'],['say','jessie','薔薇の魔女、モブリリス・・！'],['say','boss-lilith-castle','ネオン街の魔女に保安官ね\n大人しくお家に帰る気はない？'],['say','pink','魔王を倒すまで\n僕たちは止まらないであります！'],['say','desert','薔薇の魔女がもう相手をしてくれるのか？'],['say','boss-lilith-castle','そんなわけないでしょ\nそこのピンクちゃん\n死相が出てるわ\n警告に来てあげただけ'],['say','pink','そんな脅し怖くないであります！'],['say','boss-lilith-castle','脅し？\n僕割と優しいんだけどね\nまあ\nせいぜい死なないことね'],['hideGuests'],['say','desert','死相など全員に出ている\n覚悟を決めて\n先へ進むぞ！']
+  ]},
+  'pre:demonCastle:2':{worldId:'demonCastle',area:2,steps:[
+    ['guest','boss-lilith-castle'],['say','boss-lilith-castle','凄いね君たち\nグラディモブ\n強かったでしょ'],['say','desert','ああ\n強敵だった'],['say','boss-lilith-castle','まあ\n僕の方が強いんだけどね\nちょっとだけ寂しくなるな'],['say','money','あんたなんて\n私の魔法でぶっ飛ばしてやるわ！'],['say','boss-lilith-castle','ネオン街の魔女\n僕も手合わせしてみたかった\n良い機会ね'],['say','jessie','あなたを倒せば\nあとは魔王だけ！'],['say','boss-lilith-castle','うーん\nそれはどうだろう\n行ってみないと分からないよね\nまあ\n行けないんだけどね'],['lilithSummon'],['say','boss-lilith-castle','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん'],['say','pink','あれを全部相手は大変であります・・'],['say','desert','2手に分かれよう'],['say','denden','ナイスアイデアでやんす！'],['say','jessie','どう分かれるの？'],['say','riro','勇者様が\n決めればいいでス'],['say','denden','そうでやんすね！'],['say','money','リリスがいる方は3体\n戦力の分け方が大事ね！'],['narrate','パーティーを2つ作ってください\nAパーティー：モブリリス、モブヘルリリス、モブキリンリリス\nBパーティー：モブクフリリス、モブリヴァリリス'],['lilithSplit'],['say','nyoro','素晴らしい采配ニョロ！'],['say','desert','では、まずBパーティーの出陣だ！']
+  ]}
+});
+/* ===== END MOB QUEST v106 ===== */
+
+
+
+
+/* ===== MOB QUEST v107: MOB PIECE 2-WIN BATTLE / SCROLL / CONFIRM / PLAYER POWER ===== */
+window.__mobV107PatchRuntime=true;
+
+function pieceBattleCardV107(){const ov=ensureMobPieceOverlayV96();return $('.mob-piece-card-v96.battle',ov)||$('.mob-piece-card-v96',ov);}
+function rememberPieceBattleScrollV107(){const b=mobPieceBattleV96,card=pieceBattleCardV107();if(b&&card)b.uiScrollV107=card.scrollTop;return b?.uiScrollV107||0;}
+function restorePieceBattleScrollV107(){const b=mobPieceBattleV96;if(!b)return;requestAnimationFrame(()=>{const card=pieceBattleCardV107();if(card)card.scrollTop=Math.max(0,Number(b.uiScrollV107)||0);});}
+function currentMobPieceStatsV107(){const b=mobPieceBattleV96;if(!b)return null;const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects;return{p:handBattleStatsV96(b.pHand,2,cTag),c:handBattleStatsV96(b.cHand,2,pTag)};}
+
+startMobPieceBattleV96=function(rank=false){
+  const deck=normalizedMobPieceDeckV96(),unique=new Set(deck);
+  if(deck.length!==25)return pieceOverlayNoticeV102('デッキは25体必ず編成してください。');
+  if(unique.size!==25)return pieceOverlayNoticeV102('同じフィギュアはデッキに1体までです。');
+  if(mobPieceDeckCostV100(deck)>80)return pieceOverlayNoticeV102('デッキコストは80までです。');
+  const cpu=cpuPieceDeckV96(rank).filter(id=>usableFigureV103(figureById(id)));
+  if(cpu.length<25)return pieceOverlayNoticeV102('対戦データを準備できませんでした。');
+  mobPieceBattleV96={rank,pDeck:shuffleV96(deck),cDeck:shuffleV96(cpu),pPos:0,cPos:0,pDiscard:[],cDiscard:[],pWins:0,cWins:0,round:0,center:2,exchanged:false,uiScrollV107:0};
+  nextMobPieceRoundV96();
+};
+
+nextMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96;if(!b)return;
+  b.round++;b.center=2;b.exchanged=false;b.exchangeRevealV103=-1;b.uiScrollV107=0;
+  b.pHand=Array.from({length:5},()=>drawPieceCardV96('p'));
+  b.cHand=Array.from({length:5},()=>drawPieceCardV96('c'));
+  try{await renderMobPieceDrawV100();}catch(_){ }
+  renderMobPieceRoundV96();
+};
+
+movePieceV103=function(from,to){
+  const b=mobPieceBattleV96;if(!b||from===to||to<0||to>4)return;
+  rememberPieceBattleScrollV107();
+  const old=handBattleStatsV96(b.pHand,2,handTagEffectsV96(b.cHand).effects);
+  [b.pHand[from],b.pHand[to]]=[b.pHand[to],b.pHand[from]];
+  b.center=2;b.previewBeforeV103=old;
+  renderMobPieceRoundV96();
+};
+
+showBattlePieceDetailV103=function(i){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  rememberPieceBattleScrollV107();
+  const f=figureById(b.pHand[i]),pop=document.createElement('div');pop.className='piece-detail-modal-v103 piece-detail-modal-v107';
+  pop.innerHTML=`<div><button class="piece-detail-close-v103" type="button">×</button>${figureDetailMarkupV96(f,true)}<section><b>現在発動している効果</b>${pieceEffectLinesV101(b.pHand).map(x=>`<p>${x}</p>`).join('')||'<p>なし</p>'}</section><section class="piece-position-v103"><b>配置移動</b>${[0,1,2,3,4].map(n=>`<button data-piece-position-v103="${n}" type="button">${n+1}</button>`).join('')}</section><button data-piece-exchange-v103 type="button" ${b.exchanged?'disabled':''}>${b.exchanged?'交換済み':'このフィギュアを交換'}</button></div>`;
+  ov.appendChild(pop);bindImages(pop);
+  $('.piece-detail-close-v103',pop).onclick=()=>pop.remove();
+  $$('[data-piece-position-v103]',pop).forEach(x=>x.onclick=()=>{const to=Number(x.dataset.piecePositionV103);pop.remove();movePieceV103(i,to);});
+  $('[data-piece-exchange-v103]',pop).onclick=async()=>{
+    if(b.exchanged)return;
+    rememberPieceBattleScrollV107();
+    pop.remove();
+    const ok=await pieceOverlayConfirmV102('このフィギュアを交換しますか？',f?.name||'');
+    if(!ok){restorePieceBattleScrollV107();return showBattlePieceDetailV103(i);}
+    const card=$(`[data-piece-player-card-v103="${i}"]`,ov);card?.classList.add('exchange-out-v103');
+    await waitRealV100(300);
+    const old=b.pHand[i];b.pDiscard.push(old);b.pHand[i]=drawPieceCardV96('p');b.exchanged=true;b.exchangeRevealV103=i;
+    renderMobPieceRoundV96();
+    setTimeout(()=>{if(b)b.exchangeRevealV103=-1;},700);
+  };
+};
+
+function pieceScoreV107(b){return `<div class="piece-score-v96 piece-score-v107"><span>PLAYER 1 <b>${b.pWins}</b></span><em>BATTLE ${b.round}<small>2勝先取</small></em><span>PLAYER 2 <b>${b.cWins}</b></span></div>`;}
+function pieceBattlePrepLifeV107(st){return Math.max(700,Math.round(st.life));}
+
+renderMobPieceRoundV96=function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cTag=handTagEffectsV96(b.cHand).effects,pTag=handTagEffectsV96(b.pHand).effects;
+  const p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,2,pTag),old=b.previewBeforeV103;b.previewBeforeV103=null;
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v103 mob-piece-battle-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="piece-field-v103 cpu"><div>${b.cHand.map((id,i)=>cpuCardV103(id,i)).join('')}</div></div>${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}<div class="piece-battlefloor-v103 piece-battlefloor-ready-v107"><b>BATTLE FLOOR</b><div class="piece-floor-mark-v102">MOB</div><small>配置を変えると総合値が変化します</small></div>${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}<div class="piece-field-v103 player"><div>${b.pHand.map((id,i)=>playerCardV103(id,i,i===2)).join('')}</div></div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}<div class="piece-command-v103"><button class="primary-btn" data-piece-keep-v96 type="button">BATTLE</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
+  ov.hidden=false;bindImages(ov);bindPlayerDragV103(ov);restorePieceBattleScrollV107();animateStatsV103(old,p,ov);
+  $('[data-piece-keep-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('バトルしますか？',`BATTLE ${b.round} / 2勝先取`))resolveMobPieceRoundV96();else restorePieceBattleScrollV107();};
+  $('[data-piece-quit-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('対戦をやめますか？','現在の対戦結果は失われます。')){mobPieceBattleV96=null;openMobPieceMenuV96();}else restorePieceBattleScrollV107();};
+};
+
+function fightPiecesV107(hand,side){return hand.map((id,i)=>{const f=figureById(id);return `<span class="fight-piece-v107 ${side} q${i+1}" data-fight-side-v107="${side}" data-fight-i-v107="${i}">${figureImageTagV101(f)}</span>`;}).join('');}
+function smokeSvgV107(cls){return `<svg class="brawl-smoke-v107 ${cls}" viewBox="0 0 160 110" aria-hidden="true"><path d="M18 70 C2 58 8 38 28 37 C25 17 46 8 60 22 C68 3 96 5 100 27 C119 12 139 26 132 45 C157 46 163 70 144 82 C148 101 118 108 104 93 C91 111 62 107 59 92 C37 107 13 94 18 70 Z"/><path class="inner" d="M47 53 C53 39 68 36 76 47 C87 34 106 42 106 57 C119 60 118 76 104 79 C96 90 77 85 75 76 C60 84 43 70 47 53 Z"/></svg>`;}
+function fightArenaFxV107(){return `${smokeSvgV107('sm1')}${smokeSvgV107('sm2')}${smokeSvgV107('sm3')}<i class="piece-impact-ring-v107 r1"></i><i class="piece-impact-ring-v107 r2"></i><i class="piece-speed-slash-v107 a"></i><i class="piece-speed-slash-v107 b"></i><i class="piece-energy-burst-v107"></i>${Array.from({length:16},(_,i)=>`<b class="brawl-star-v107 z${i+1}">${i%3===0?'★':'☆'}</b>`).join('')}`;}
+function setFightLifeV107(root,side,val,max){const num=$(`[data-life-num-v103="${side}"]`,root),bar=$(`.piece-life-v103.${side} i`,root);if(num)num.textContent=`${Math.max(0,Math.round(val))}/${max}`;if(bar)bar.style.width=`${Math.max(0,Math.min(100,val/Math.max(1,max)*100))}%`;}
+function calcPieceStrikeV107(att,def,defLife,skill=false){const ratio=(att.attack*.95+att.speed*.30)/(Math.max(110,def.defense*.72+120));let pct=.072+ratio*.036+Math.random()*.045;if(skill)pct+=.055;pct=clamp(pct,.075,.225);return Math.max(35,Math.round(defLife*pct));}
+function triggerFightImpactV107(arena,targetSide,skill=false){if(!arena)return;const cards=$$(`.fight-piece-v107.${targetSide}`,arena),target=cards[Math.floor(Math.random()*cards.length)];if(target){const classes=['blown-v107','spin-v107','slam-v107'];const c=classes[Math.floor(Math.random()*classes.length)];target.classList.remove(...classes);void target.offsetWidth;target.classList.add(c);setTimeout(()=>target.classList.remove(c),520);}arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107');void arena.offsetWidth;arena.classList.add(targetSide==='cpu'?'impact-right-v107':'impact-left-v107');if(skill)arena.classList.add('skill-impact-v107');setTimeout(()=>arena.classList.remove('impact-left-v107','impact-right-v107','skill-impact-v107'),430);}
+async function animateLifeFastV107(root,side,from,to,max){const start=performance.now(),dur=360;return new Promise(resolve=>{const tick=now=>{const t=Math.min(1,(now-start)/dur),v=Math.round(from+(to-from)*t);setFightLifeV107(root,side,v,max);if(t<1)requestAnimationFrame(tick);else resolve();};requestAnimationFrame(tick);});}
+
+async function resolveMobPieceRoundV96(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const cStats=b.cHand.map(id=>mobPieceStatsV96(figureById(id))),cCenter=cStats.map(x=>x.power+x.speed*.5+x.defense*.25).indexOf(Math.max(...cStats.map(x=>x.power+x.speed*.5+x.defense*.25)));
+  const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects,p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,cCenter,pTag);
+  b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107">${pieceScoreV107(b)}${pieceLifeBarV103('PLAYER 2 LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('PLAYER 2',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107"><div class="fight-arena-v107">${fightPiecesV107(b.cHand,'cpu')}${fightPiecesV107(b.pHand,'player')}${fightArenaFxV107()}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('PLAYER 1',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('PLAYER 1 LIFE',b.pLife,b.pLifeMax,'player')}</div>`;
+  ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v107',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(650);if(start)start.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('brawling-v107');
+  let pLife=b.pLife,cLife=b.cLife,turn=0;const maxTurns=28;
+  while(pLife>0&&cLife>0&&turn<maxTurns){
+    turn++;
+    const pChance=clamp(.48+(p.speed-c.speed)/Math.max(600,p.speed+c.speed),.28,.72),pAtk=Math.random()<pChance,skill=Math.random()<.24;
+    if(pAtk){const dmg=calcPieceStrikeV107(p,c,b.cLifeMax,skill),before=cLife;cLife=Math.max(0,cLife-dmg);triggerFightImpactV107(arena,'cpu',skill);await animateLifeFastV107(ov,'cpu',before,cLife,b.cLifeMax);}else{const dmg=calcPieceStrikeV107(c,p,b.pLifeMax,skill),before=pLife;pLife=Math.max(0,pLife-dmg);triggerFightImpactV107(arena,'player',skill);await animateLifeFastV107(ov,'player',before,pLife,b.pLifeMax);}
+    if(pLife<=0||cLife<=0)break;await waitRealV100(95+Math.random()*105);
+  }
+  if(pLife>0&&cLife>0){if(pLife/b.pLifeMax>=cLife/b.cLifeMax)cLife=0;else pLife=0;}
+  b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);await waitRealV100(520);
+  const win=cLife<=0;if(win)b.pWins++;else b.cWins++;
+  b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);
+  const matchDone=b.pWins>=2||b.cWins>=2;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV107(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'PLAYER 1 WIN!':'PLAYER 2 WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${matchDone?'MATCH RESULT':'次のバトルへ'}<span>${matchDone?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);
+  if(matchDone)return finishMobPieceBattleV96(b.pWins>=2);
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>手札を捨てて、新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(900);nextMobPieceRoundV96();
+}
+
+finishMobPieceBattleV96=async function(win){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();let rank=Number(state.meta.mobPieceRank)||0;
+  if(b?.rank){rank=Math.max(0,rank+(win?20:-10));state.meta.mobPieceRank=rank;saveMeta();}
+  ov.innerHTML=`<div class="mob-piece-card-v96 final piece-match-result-v107 ${win?'win':'lose'}"><small>${b?.rank?'RANK MATCH':'TRIAL MATCH'}</small><h2>${win?'PLAYER 1 勝利！':'PLAYER 2 勝利…'}</h2><div class="piece-final-score-v107"><b>${b?.pWins||0}</b><span>−</span><b>${b?.cWins||0}</b></div><p>2勝先取で決着</p>${b?.rank?`<p>RANK POINT ${rank}</p>`:''}<button class="primary-btn" data-piece-finish-v96 type="button">モブピースメニューへ</button></div>`;
+  $('[data-piece-finish-v96]',ov).onclick=openMobPieceMenuV96;mobPieceBattleV96=null;
+};
+
+/* Existing saves can contain HP/MP based on v104. Refill once after the stronger v107 base-stat migration. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<107){state.meta.playerBalanceVersion=107;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v107 balance migration]',e);}},0);
+/* ===== END MOB QUEST v107 ===== */
+
+/* ===== MOB QUEST v108: HP SCALE / ENEMY DAMAGE NORMALIZATION ===== */
+const _calcEnemyDamageV108Base=calcEnemyDamage;
+calcEnemyDamage=function(target,power,type='physical'){
+  const e=actingEnemy()||state.battle?.enemy;
+  let d=_calcEnemyDamageV108Base(target,power,type);
+  if(!e||!target)return d;
+  const lv=clamp(Number(e.level)||1,1,120),cat=e.category|| (e.isBoss?'boss':e.isElite?'elite':'normal');
+  let scale=1;
+  if(cat==='normal')scale=clamp(.95-lv*.0055,.50,.92);
+  else if(cat==='elite')scale=clamp(.90-lv*.0040,.56,.88);
+  else if(cat==='boss')scale=clamp(.86-lv*.0028,.58,.84);
+
+  /* Multi-action bosses must threaten through a sequence, not erase one ally with each individual hit. */
+  const assumedActions=Math.max(1,Number(e.actionCount)|| (cat==='boss'?3:cat==='elite'?2:1));
+  const actionScale=assumedActions>=4?.56:assumedActions===3?.68:assumedActions===2?.82:1;
+  if(cat!=='normal')scale*=actionScale;
+  d=Math.max(1,Math.round(d*scale));
+
+  /* Per-hit safety ceiling. Extreme attacks remain dangerous, but repeated-action bosses stay playable at Lv80 with endgame gear. */
+  const p=Math.max(.1,Number(power)||1),isExtreme=p>=2.0;
+  let capPct;
+  if(cat==='normal')capPct=isExtreme?.20:.16;
+  else if(cat==='elite')capPct=assumedActions>=2?(isExtreme?.28:.23):(isExtreme?.38:.30);
+  else {
+    capPct=assumedActions>=4?.22:assumedActions===3?.28:assumedActions===2?.36:.48;
+    if(isExtreme)capPct=Math.min(.54,capPct+.06);
+  }
+  const cap=Math.max(1,Math.round((Number(target.maxHp)||1)*capPct));
+  return Math.max(1,Math.min(d,cap));
+};
+
+/* Existing v107 saves had inflated max HP. Rebuild current/checkpoint vitals once at the normalized v108 maxima. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<108){state.meta.playerBalanceVersion=108;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v108 balance migration]',e);}},0);
+/* ===== END MOB QUEST v108 ===== */
+
+
+
+
+
+/* ===== MOB QUEST v109: MULTI-ACTION REBALANCE + SUPPORT MAGIC RUNTIME ===== */
+window.__mobV109Runtime=true;
+
+/* v108's percentage-of-max-HP hard cap is intentionally removed.
+   Multi-action pressure is controlled by offensive scaling, while large/extreme skills retain their identity. */
+calcEnemyDamage=function(target,power,type='physical'){
+  const e=actingEnemy()||state.battle?.enemy;
+  let d=_calcEnemyDamageV108Base(target,power,type);
+  if(!e||!target)return d;
+  const lv=clamp(Number(e.level)||1,1,120),cat=e.category||(e.isBoss?'boss':e.isElite?'elite':'normal');
+  let levelScale=1;
+  if(cat==='normal')levelScale=clamp(.95-lv*.0055,.50,.92);
+  else if(cat==='elite')levelScale=clamp(.90-lv*.0040,.56,.88);
+  else if(cat==='boss')levelScale=clamp(.86-lv*.0028,.58,.84);
+  const actions=Math.max(1,Number(e.actionCount)|| (cat==='boss'?3:cat==='elite'?2:1));
+  let actionScale=actions>=4?.58:actions===3?.68:actions===2?.82:1;
+  const p=Math.max(.1,Number(power)||1);
+  if(p>=2.20)actionScale=actionScale+(1-actionScale)*.76;      // extreme: nearly full power
+  else if(p>=1.60)actionScale=actionScale+(1-actionScale)*.46; // large: partially relax reduction
+  return Math.max(1,Math.round(d*levelScale*actionScale));
+};
+
+const _weaponEvasionV109Base=weaponEvasion;
+weaponEvasion=function(a){return clamp(_weaponEvasionV109Base(a)+(Number(a?.evasionBuffTurns||0)>0?Number(a?.evasionBuff||0):0),0,.65);};
+
+function supportMagicTextV109(sk){
+  if(!sk?.support)return'';
+  return sk.effectText||({defBuff:'味方単体のDEFアップ',atkBuff:'味方単体のATKアップ',partyAtkBuff:'味方全体のATKアップ',partyDefBuff:'味方全体のDEFアップ',partySpdEvade:'味方全体のSPD・回避率アップ',partyHealCleanse:'味方全体回復＋状態異常解除',healSingle:'味方単体回復',healParty:'味方全体回復'}[sk.supportKind]||'補助魔法');
+}
+function supportMagicTargetsV109(sk){return sk?.target==='party'?livingField():livingField();}
+function supportMagicCanTargetV109(sk,t){if(!t||t.dead||t.hp<=0)return false;if(sk?.supportKind==='healSingle')return t.hp<t.maxHp;return true;}
+function supportMagicFxV109(kind,target,party=false){
+  const layer=$('#battleFxLayer');if(!layer||!target)return;
+  const el=document.createElement('div');
+  const k=/heal|custard/.test(kind)?'heal':/def/.test(kind)?'def':/spd|walk/.test(kind)?'spd':'atk';
+  el.className=`support-magic-fx-v109 ${k} ${party?'party':''}`;
+  el.innerHTML=`<i class="support-ring-v109"></i><i class="support-core-v109"></i><i class="support-mark-v109">${k==='heal'?'＋':k==='def'?'DEF':k==='spd'?'SPD':'ATK'}</i>${Array.from({length:6},(_,i)=>`<b class="p${i+1}"></b>`).join('')}`;
+  positionEffect(el,target);layer.appendChild(el);setTimeout(()=>el.remove(),Math.max(560,Math.round(1050/state.speed)));
+}
+async function partySupportFxV109(kind,targets){for(const t of targets){supportMagicFxV109(kind,t.id,true);await delay(45);}}
+function applyBuffV109(t,stat,ratio,turns){const key=`${stat}Buff`,tk=`${stat}BuffTurns`;t[key]=Math.max(Number(t[key])||0,Number(ratio)||0);t[tk]=Math.max(Number(t[tk])||0,Number(turns)||3);}
+
+const _performMagicV109Base=performMagic;
+performMagic=async function(a,skill=null,auto=false){
+  const chosen=skill?.id?skill:defaultMagicFor(a);
+  if(!chosen?.support)return _performMagicV109Base(a,skill,auto);
+  if(chosen.exclusive&&chosen.exclusive!==a.id){notice('この魔法は専用魔法です','danger');return false;}
+  const cut=clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8),cost=Math.max(0,Math.ceil((chosen.cost||0)*(1-cut)));
+  if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}
+  let target=chosen.targetId?allyById(chosen.targetId):null;
+  if(chosen.target==='ally'&&!supportMagicCanTargetV109(chosen,target)){notice(chosen.supportKind==='healSingle'?'対象のHPは減っていません':'対象を選択してください','system');return false;}
+  a.mpNow-=cost;await actionCutin(`${a.name}の${chosen.name}！`,'buff',620);
+  const turns=Math.max(2,Number(chosen.turns)||3),targets=chosen.target==='party'?livingField():[target];
+  switch(chosen.supportKind){
+    case'defBuff':applyBuffV109(target,'def',chosen.ratio,turns);supportMagicFxV109('def',target.id);notice(`${target.name} DEF ↑${Math.round(chosen.ratio*100)}% / ${turns}ターン`,'buff');break;
+    case'atkBuff':applyBuffV109(target,'atk',chosen.ratio,turns);supportMagicFxV109('atk',target.id);notice(`${target.name} ATK ↑${Math.round(chosen.ratio*100)}% / ${turns}ターン`,'buff');break;
+    case'partyAtkBuff':for(const t of targets)applyBuffV109(t,'atk',chosen.ratio,turns);await partySupportFxV109('atk',targets);notice(`味方全体 ATK ↑${Math.round(chosen.ratio*100)}% / ${turns}ターン`,'buff');break;
+    case'partyDefBuff':for(const t of targets)applyBuffV109(t,'def',chosen.ratio,turns);await partySupportFxV109('def',targets);notice(`味方全体 DEF ↑${Math.round(chosen.ratio*100)}% / ${turns}ターン`,'buff');break;
+    case'partySpdEvade':for(const t of targets){applyBuffV109(t,'spd',chosen.ratio,turns);t.evasionBuff=Math.max(Number(t.evasionBuff)||0,Number(chosen.evasion)||.03);t.evasionBuffTurns=Math.max(Number(t.evasionBuffTurns)||0,turns);}await partySupportFxV109('spd',targets);notice(`味方全体 SPD ↑${Math.round(chosen.ratio*100)}% / 回避率 +${Math.round((chosen.evasion||.03)*100)}%`,'buff');break;
+    case'healSingle':{const h=heal(target,target.maxHp*(chosen.heal||.22));supportMagicFxV109('heal',target.id);notice(`${target.name} HP +${h}`,'heal');break;}
+    case'healParty':{let h=0;for(const t of targets)h+=heal(t,t.maxHp*(chosen.heal||.18));await partySupportFxV109('heal',targets);notice(`味方全体 HP +${h}`,'heal');break;}
+    case'partyHealCleanse':{let h=0,cleared=0;for(const t of targets){h+=heal(t,t.maxHp*(chosen.heal||.30));for(const k of Object.keys(t.status||{}))if(Number(t.status[k])>0&&Math.random()<(chosen.cleanseChance||.50)){t.status[k]=0;cleared++;}}await partySupportFxV109('custard',targets);notice(`味方全体 HP +${h}${cleared?` / 状態異常 ${cleared}件解除`:''}`,'heal',900);break;}
+  }
+  renderBattle();await delay(auto?260:360);return true;
+};
+
+const _battleEffectSummaryV109Base=battleEffectSummary;
+battleEffectSummary=function(kind,item){if(kind==='magic'&&item?.support)return supportMagicTextV109(item)+(item.targetName?` / 対象：${item.targetName}`:'');return _battleEffectSummaryV109Base(kind,item);};
+
+function renderSupportTargetMenuV109(a,sk){
+  const list=$('#skillMenuList'),targets=livingField();$('#skillMenuKicker').textContent=`${sk.name} / MP ${sk.cost}`;$('#skillMenuTitle').textContent='対象を選択';
+  list.innerHTML=targets.map(t=>{const ok=supportMagicCanTargetV109(sk,t);return `<button class="skill-item ${ok?'':'disabled'}" data-v109-support-target="${t.id}" type="button" ${ok?'':'disabled'}><span class="ult-thumb"><img src="${versionedPlay(t.image)}" alt="${t.name}"><i>補</i></span><div><b>${t.name}</b><small>HP ${Math.ceil(t.hp)}/${t.maxHp} / ${supportMagicTextV109(sk)}</small></div><em>${ok?'SELECT':'FULL'}</em></button>`;}).join('')+`<button class="skill-item" data-v109-support-back type="button"><span class="skill-symbol">←</span><div><b>魔法一覧へ戻る</b><small>対象選択をやめます</small></div><em>BACK</em></button>`;
+  bindImages(list);$$('[data-v109-support-target]',list).forEach(btn=>btn.onclick=async()=>{const t=allyById(btn.dataset.v109SupportTarget),payload={...sk,targetId:t.id,targetName:t.name};if(!await confirmBattleSkillUse('magic',payload,a))return;$('#skillMenu').hidden=true;act('magic',payload);});$('[data-v109-support-back]',list).onclick=()=>openSkillMenu('magic');
+}
+
+const _openSkillMenuV109Base=openSkillMenu;
+openSkillMenu=function(type){
+  if(type!=='magic')return _openSkillMenuV109Base(type);
+  const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;const testAll=!!(state.test?.enabled&&state.test?.allSkills),all=MOB_DATA.magicCatalog||[],skills=testAll?all:availableMagicSkillsV104(a);
+  $('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}${testAll?' / TEST ALL MAGIC':''}`;$('#skillMenuTitle').textContent='魔法';
+  list.innerHTML=skills.length?skills.map(sk=>{const support=!!sk.support,desc=support?supportMagicTextV109(sk):`${sk.target==='all'?'敵全体':'敵単体'} / ${sk.tier==='large'?'大':sk.tier==='small'?'小':sk.tier==='all'?'全体中':'中'}ダメージ`;return `<button class="skill-item ${a.mpNow<sk.cost?'disabled':''}" data-magic-id="${sk.id}" type="button"><span class="skill-symbol">${support?'補':sk.element}</span><div><b>${sk.name}</b><small>Lv${(a.learnset?.magic||[]).find(x=>x.id===sk.id)?.level||'-'} / ${desc}</small></div><em>MP ${sk.cost}</em></button>`;}).join(''):'<div class="switch-guide">現在習得している魔法はありません。</div>';
+  $$('[data-magic-id]',list).forEach(btn=>btn.onclick=async()=>{const sk=all.find(x=>x.id===btn.dataset.magicId);if(!sk||(!testAll&&!availableMagicSkillsV104(a).includes(sk)))return;if(a.mpNow<sk.cost)return notice('MPが足りない！','danger');if(sk.exclusive&&sk.exclusive!==a.id)return notice('この魔法は専用魔法です','danger');if(sk.support&&sk.target==='ally')return renderSupportTargetMenuV109(a,sk);if(!await confirmBattleSkillUse('magic',sk,a))return;$('#skillMenu').hidden=true;act('magic',sk);});
+};
+
+/* Enemy support magic: selected healer/support monsters can choose it without replacing authored specials. */
+function enemySupportSpellV109(id){return (MOB_DATA.magicCatalog||[]).find(x=>x.id===id&&x.support);}
+async function performEnemySupportMagicV109(e,sk){
+  if(!e||!sk)return false;await actionCutin(`${e.name}の${sk.name}！`,'buff',650);const allies=livingEnemies(),turns=Math.max(2,Number(sk.turns)||3);
+  if(!allies.length)return false;
+  if(sk.supportKind==='healSingle'){const t=[...allies].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0],h=Math.round(t.maxHp*(sk.heal||.22));t.hp=Math.min(t.maxHp,t.hp+h);floatNumber(h,'heal',`enemy:${t.uid}`);supportMagicFxV109('heal',`enemy:${t.uid}`);notice(`${t.name} HP +${h}`,'heal');}
+  else if(sk.supportKind==='healParty'){let h=0;for(const t of allies){const n=Math.round(t.maxHp*(sk.heal||.18));t.hp=Math.min(t.maxHp,t.hp+n);h+=n;supportMagicFxV109('heal',`enemy:${t.uid}`,true);}notice(`敵全体 HP回復`,'heal');}
+  else if(sk.supportKind==='defBuff'){const t=[...allies].sort((a,b)=>a.def-b.def)[0];t.defBuff=Math.max(t.defBuff||0,sk.ratio||.10);t.defBuffTurns=Math.max(t.defBuffTurns||0,turns);supportMagicFxV109('def',`enemy:${t.uid}`);notice(`${t.name} DEF ↑`,'buff');}
+  else if(sk.supportKind==='atkBuff'){const t=[...allies].sort((a,b)=>b.atk-a.atk)[0];t.atkBuff=Math.max(t.atkBuff||0,sk.ratio||.10);t.atkBuffTurns=Math.max(t.atkBuffTurns||0,turns);supportMagicFxV109('atk',`enemy:${t.uid}`);notice(`${t.name} ATK ↑`,'buff');}
+  else if(sk.supportKind==='partyAtkBuff'){for(const t of allies){t.atkBuff=Math.max(t.atkBuff||0,sk.ratio||.08);t.atkBuffTurns=Math.max(t.atkBuffTurns||0,turns);supportMagicFxV109('atk',`enemy:${t.uid}`,true);}notice('敵全体 ATK ↑','buff');}
+  else if(sk.supportKind==='partyDefBuff'){for(const t of allies){t.defBuff=Math.max(t.defBuff||0,sk.ratio||.08);t.defBuffTurns=Math.max(t.defBuffTurns||0,turns);supportMagicFxV109('def',`enemy:${t.uid}`,true);}notice('敵全体 DEF ↑','buff');}
+  renderBattle();await delay(320);return true;
+}
+function chooseEnemySupportV109(e,actionIndex){
+  if(actionIndex!==1||!e?.supportSkillsV109?.length)return null;const skills=e.supportSkillsV109.map(enemySupportSpellV109).filter(Boolean),allies=livingEnemies();if(!skills.length||!allies.length)return null;
+  const hurt=allies.some(x=>x.hp/x.maxHp<.58),heals=skills.filter(x=>/heal/i.test(x.supportKind)),buffs=skills.filter(x=>!heals.includes(x));
+  if(hurt&&heals.length&&Math.random()<(e.isElite?.58:.42))return pick(heals);
+  const chance=e.isElite?.30:.18;return buffs.length&&Math.random()<chance?pick(buffs):null;
+}
+
+const _bossSpecialV109Base=bossSpecial;
+bossSpecial=async function(spec){const e=actingEnemy()||state.battle?.enemy,p=Math.max(0,Number(spec?.power)||0);if(e?.isBoss&&p>=1.80)e.__v109HeavyTurn=Number(state.battle?.turn)||0;return _bossSpecialV109Base(spec);};
+const _enemyActionV109Base=enemyAction;
+enemyAction=async function(actionIndex=1,enemyId){
+  const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b?.enemy;if(!e)return _enemyActionV109Base(actionIndex,enemyId);
+  const sup=chooseEnemySupportV109(e,actionIndex);if(sup&&e.hp>0&&!e.status?.sleep&&!e.status?.stun&&!e.status?.paralyze){await performEnemySupportMagicV109(e,sup);return;}
+  const actions=Math.max(1,Number(e.actionCount)||1),heavyAlready=e.isBoss&&actions>1&&actionIndex>1&&Number(e.__v109HeavyTurn)===Number(b?.turn);
+  if(heavyAlready&&!['boss-lilith-castle','book-kaijin-boss'].includes(e.id)&&e.hp>0&&!e.status?.sleep&&!e.status?.stun&&!e.status?.paralyze){await bossNormal();if(!livingRoster().length)finishBattle(false);return;}
+  return _enemyActionV109Base(actionIndex,enemyId);
+};
+
+/* New support spells are data-only additions; no sprite sheets are required. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<109){state.meta.playerBalanceVersion=109;saveMeta();}}catch(e){console.warn('[v109 support migration]',e);}},0);
+/* ===== END MOB QUEST v109 ===== */
+
+
+/* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
+window.__mobV99PatchRuntime=true;
+/* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
+
+window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
+let bootSetupError=null;
+try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
+catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
+function bindEssentialBootEvents(){
+  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
+  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
+}
+bindEssentialBootEvents();
+window.__mobBootReady=true;
+/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
+(async()=>{
+  try{showTitle();}
+  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
+})();
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
+setTimeout(startFastBackgroundWarmup,1400);
+})();
+
+
+
+
+
+
+

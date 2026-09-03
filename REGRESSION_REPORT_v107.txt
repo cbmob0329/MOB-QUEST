@@ -1,0 +1,9 @@
+MOB QUEST v107 regression targets
+- Base: v106.
+- v106 Demon Castle staging/progression retained.
+- v105 enemy balance/resistance retained.
+- v104 learnsets/sub-elements/resistances retained; only player target stats overridden upward.
+- Mob Piece 25 unique / COST80 retained.
+- Mob Piece match rule: first to 2 wins; every battle resets LIFE and draws a fresh 5 after a result.
+- Reposition/exchange keeps battle scroll. Exchange confirm is above detail modal.
+- BATTLE requires Yes/No confirmation.

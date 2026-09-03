@@ -1,0 +1,12 @@
+MOB QUEST v107 PLAYER POWER REBALANCE
+
+Goal: Lv80 + strongest/endgame equipment can clear through Demon Castle II with good play.
+Compared with v104: HP/ATK/MAG/DEF/MND increased substantially; SPD increased moderately.
+Lv99 equipment-free headline examples:
+Hero HP3600 ATK450 MAG425 DEF500 MND490
+Desert HP3950 ATK500 DEF520
+Money HP3200 MAG520 MND560
+Tetsu HP4550 ATK540 DEF650
+Lilith HP3550 MAG560 MND620
+Naraku HP4400 ATK500 MAG465 DEF600 MND600
+Equipment, figures and resonance apply on top.

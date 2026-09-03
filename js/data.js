@@ -1,4 +1,4 @@
-// MOB QUEST v105
+// MOB QUEST v109
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1039,3 +1039,121 @@ for(const [element,id] of Object.entries(_v73Middle)){
   }
 }
 /* ===== END MOB QUEST v105 ===== */
+
+
+/* ===== MOB QUEST v107: PLAYER POWER REBALANCE ===== */
+{
+  MOB_DATA.playerBalanceVersion=107;
+  Object.assign(TEMP_BALANCE.playerTargets,{
+    yusha:{hp:[260,3600,4300],mp:[90,550,660],atk:[55,450,540],mag:[52,425,515],def:[48,500,610],res:[48,490,600],spd:[42,255,310]},
+    pink:{hp:[320,4200,4900],mp:[82,470,570],atk:[40,320,390],mag:[35,300,365],def:[64,610,745],res:[62,600,735],spd:[31,185,225]},
+    desert:{hp:[295,3950,4650],mp:[72,400,490],atk:[64,500,605],mag:[32,320,390],def:[52,520,635],res:[44,460,565],spd:[55,275,335]},
+    nyoro:{hp:[260,3500,4150],mp:[90,530,640],atk:[54,430,520],mag:[56,450,545],def:[42,430,525],res:[48,450,550],spd:[54,275,335]},
+    nekoku:{hp:[295,3800,4450],mp:[100,580,700],atk:[50,360,435],mag:[58,455,550],def:[54,480,585],res:[60,520,635],spd:[42,245,300]},
+    jessie:{hp:[250,3450,4050],mp:[96,550,665],atk:[56,450,545],mag:[56,440,535],def:[42,430,525],res:[48,460,560],spd:[66,315,385]},
+    denden:{hp:[250,3400,4000],mp:[82,470,570],atk:[64,500,605],mag:[42,350,425],def:[42,420,515],res:[42,420,515],spd:[69,330,405]},
+    money:{hp:[225,3200,3800],mp:[125,690,840],atk:[32,280,340],mag:[70,520,635],def:[40,400,490],res:[68,560,685],spd:[52,270,330]},
+    riro:{hp:[275,3700,4350],mp:[105,620,750],atk:[52,420,510],mag:[60,450,545],def:[48,470,575],res:[65,550,675],spd:[55,285,350]},
+    tetsu:{hp:[360,4550,5300],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[74,650,795],res:[50,500,610],spd:[34,225,275]},
+    kaijin:{hp:[340,4250,5000],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[60,580,710],res:[58,540,660],spd:[57,290,355]},
+    lilith:{hp:[260,3550,4200],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[44,450,550],res:[72,620,760],spd:[60,295,360]},
+    naraku:{hp:[340,4400,5150],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[68,600,735],res:[68,600,735],spd:[48,265,325]}
+  });
+}
+/* ===== END MOB QUEST v107 PLAYER POWER REBALANCE ===== */
+
+/* ===== MOB QUEST v108: HP NORMALIZATION / OFFENSE KEEP / ENEMY DAMAGE REBALANCE ===== */
+{
+  MOB_DATA.playerBalanceVersion=108;
+  /*
+    Design target:
+    - Lv99 raw HP averages about 1,381 (roughly the requested 1,200-class scale).
+    - v107 ATK/MAG/MP/SPD remain high so endgame equipment still reaches the intended offensive range.
+    - DEF/MND return to the moderate v104 band; survival comes from defense + resistance + equipment, not 3,000-4,000 HP inflation.
+    - Lv80 + strongest equipment is the reference clear point for Demon Castle II.
+  */
+  Object.assign(TEMP_BALANCE.playerTargets,{
+    yusha:{hp:[230,1350,1550],mp:[90,550,660],atk:[55,450,540],mag:[52,425,515],def:[42,410,500],res:[42,400,490],spd:[42,255,310]},
+    pink:{hp:[280,1600,1850],mp:[82,470,570],atk:[40,320,390],mag:[35,300,365],def:[55,500,610],res:[52,490,600],spd:[31,185,225]},
+    desert:{hp:[260,1450,1680],mp:[72,400,490],atk:[64,500,605],mag:[32,320,390],def:[44,430,520],res:[38,380,465],spd:[55,275,335]},
+    nyoro:{hp:[230,1250,1450],mp:[90,530,640],atk:[54,430,520],mag:[56,450,545],def:[36,350,430],res:[42,380,465],spd:[54,275,335]},
+    nekoku:{hp:[260,1300,1500],mp:[100,580,700],atk:[50,360,435],mag:[58,455,550],def:[46,400,490],res:[52,430,525],spd:[42,245,300]},
+    jessie:{hp:[220,1250,1450],mp:[96,550,665],atk:[56,450,545],mag:[56,440,535],def:[36,350,430],res:[42,380,465],spd:[66,315,385]},
+    denden:{hp:[220,1200,1400],mp:[82,470,570],atk:[64,500,605],mag:[42,350,425],def:[36,350,430],res:[36,350,430],spd:[69,330,405]},
+    money:{hp:[200,1100,1280],mp:[125,690,840],atk:[32,280,340],mag:[70,520,635],def:[34,330,405],res:[58,460,560],spd:[52,270,330]},
+    riro:{hp:[240,1300,1500],mp:[105,620,750],atk:[52,420,510],mag:[60,450,545],def:[42,390,475],res:[56,450,550],spd:[55,285,350]},
+    tetsu:{hp:[320,1700,1950],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[64,520,635],res:[42,400,490],spd:[34,225,275]},
+    kaijin:{hp:[300,1550,1800],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[50,470,575],res:[48,430,525],spd:[57,290,355]},
+    lilith:{hp:[230,1250,1450],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[38,360,440],res:[62,500,610],spd:[60,295,360]},
+    naraku:{hp:[300,1650,1900],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[58,480,585],res:[58,480,585],spd:[48,265,325]}
+  });
+
+  /* Keep enemy HP/DEF/RES identity from v105, but lower only raw offensive growth slightly. */
+  if(TEMP_BALANCE.enemyProfiles?.normal)Object.assign(TEMP_BALANCE.enemyProfiles.normal,{atkBase:16,atkPerLevel:2.15,atkQuad:.0012,magBase:16,magPerLevel:2.15,magQuad:.0012});
+  if(TEMP_BALANCE.enemyProfiles?.elite)Object.assign(TEMP_BALANCE.enemyProfiles.elite,{atkBase:24,atkPerLevel:2.55,atkQuad:.0016,magBase:24,magPerLevel:2.55,magQuad:.0016});
+  if(TEMP_BALANCE.enemyProfiles?.boss)Object.assign(TEMP_BALANCE.enemyProfiles.boss,{atkBase:34,atkPerLevel:3.15,atkQuad:.0020,magBase:34,magPerLevel:3.15,magQuad:.0020});
+}
+/* ===== END MOB QUEST v108 DATA BALANCE ===== */
+
+
+
+/* ===== MOB QUEST v109: SUPPORT / HEAL MAGIC ===== */
+{
+  MOB_DATA.supportMagicVersion=109;
+  const supportSpells=[
+    {id:'sugar-chair',name:'シュガーチェアー',element:'無',tier:'support',target:'ally',support:true,supportKind:'defBuff',cost:7,ratio:.10,turns:3,power:0,effectText:'味方単体のDEFを10%アップ / 3ターン'},
+    {id:'caramel-hello-back',name:'カラメルハローバック',element:'無',tier:'support',target:'ally',support:true,supportKind:'defBuff',cost:14,ratio:.18,turns:3,power:0,effectText:'味方単体のDEFを18%アップ / 3ターン'},
+    {id:'maple-air-chair',name:'メープルエアチェアー',element:'無',tier:'support',target:'ally',support:true,supportKind:'defBuff',cost:25,ratio:.28,turns:3,power:0,effectText:'味方単体のDEFを28%アップ / 3ターン'},
+    {id:'shoga-entry',name:'ショウガエントリー',element:'無',tier:'support',target:'ally',support:true,supportKind:'atkBuff',cost:7,ratio:.10,turns:3,power:0,effectText:'味方単体のATKを10%アップ / 3ターン'},
+    {id:'wasabi-stomach',name:'ワサビストマック',element:'無',tier:'support',target:'ally',support:true,supportKind:'atkBuff',cost:14,ratio:.18,turns:3,power:0,effectText:'味方単体のATKを18%アップ / 3ターン'},
+    {id:'shichimi-suicide',name:'シチミスーサイド',element:'無',tier:'support',target:'ally',support:true,supportKind:'atkBuff',cost:25,ratio:.28,turns:3,power:0,effectText:'味方単体のATKを28%アップ / 3ターン'},
+    {id:'back-follow-call',name:'バックフォローコール',element:'無',tier:'support',target:'party',support:true,supportKind:'partyAtkBuff',cost:20,ratio:.08,turns:3,power:0,effectText:'味方全体のATKを8%アップ / 3ターン'},
+    {id:'gold-routine',name:'ゴールドルーティーン',element:'無',tier:'support',target:'party',support:true,supportKind:'partyAtkBuff',cost:34,ratio:.15,turns:3,power:0,effectText:'味方全体のATKを15%アップ / 3ターン'},
+    {id:'party-backspin',name:'パーティーバックスピン',element:'無',tier:'support',target:'party',support:true,supportKind:'partyDefBuff',cost:18,ratio:.08,turns:3,power:0,effectText:'味方全体のDEFを8%アップ / 3ターン'},
+    {id:'block-bronx',name:'ブロックブロンクス',element:'無',tier:'support',target:'party',support:true,supportKind:'partyDefBuff',cost:32,ratio:.15,turns:3,power:0,effectText:'味方全体のDEFを15%アップ / 3ターン'},
+    {id:'mob-tetsu-walk',name:'モブテツウォーク',element:'無',tier:'support',target:'party',support:true,supportKind:'partySpdEvade',cost:28,ratio:.10,evasion:.03,turns:3,power:0,exclusive:'tetsu',effectText:'味方全体のSPDを10%アップ＋回避率3%アップ / 3ターン'},
+    {id:'neon-custard',name:'ネオンカスタード',element:'無',tier:'support',target:'party',support:true,supportKind:'partyHealCleanse',cost:38,heal:.30,cleanseChance:.50,power:0,exclusive:'money',effectText:'味方全体を中回復＋状態異常を各50%で解除'},
+    {id:'candy',name:'キャンディ',element:'無',tier:'support',target:'ally',support:true,supportKind:'healSingle',cost:6,heal:.22,power:0,effectText:'味方単体を小回復'},
+    {id:'candy-neon',name:'キャンディネオン',element:'無',tier:'support',target:'ally',support:true,supportKind:'healSingle',cost:12,heal:.38,power:0,effectText:'味方単体を中回復'},
+    {id:'candy-neon-piece',name:'キャンディネオンピース',element:'無',tier:'support',target:'ally',support:true,supportKind:'healSingle',cost:22,heal:.60,power:0,effectText:'味方単体を大回復'},
+    {id:'star-marshmallow',name:'スターマシュマロ',element:'無',tier:'support',target:'party',support:true,supportKind:'healParty',cost:18,heal:.18,power:0,effectText:'味方全体を小回復'},
+    {id:'star-pokkin-marshmallow',name:'スターポッキンマシュマロ',element:'無',tier:'support',target:'party',support:true,supportKind:'healParty',cost:32,heal:.32,power:0,effectText:'味方全体を中回復'}
+  ];
+  for(const s of supportSpells)if(!(MOB_DATA.magicCatalog||[]).some(x=>x.id===s.id))MOB_DATA.magicCatalog.push(s);
+
+  const addLearn=(pid,rows)=>{const p=(MOB_DATA.players||[]).find(x=>x.id===pid);if(!p)return;p.learnset=p.learnset||{magic:[],technique:[]};p.learnset.magic=p.learnset.magic||[];for(const [id,level] of rows)if(!p.learnset.magic.some(x=>x.id===id))p.learnset.magic.push({id,level});p.learnset.magic.sort((a,b)=>(a.level||1)-(b.level||1));};
+  addLearn('yusha', [['sugar-chair',12],['shoga-entry',18],['candy',20],['back-follow-call',36]]);
+  addLearn('pink', [['sugar-chair',1],['candy',8],['party-backspin',18],['caramel-hello-back',26],['block-bronx',40],['star-marshmallow',44]]);
+  addLearn('desert', [['shoga-entry',10],['sugar-chair',16],['wasabi-stomach',30]]);
+  addLearn('nyoro', [['shoga-entry',12],['candy',18],['back-follow-call',34]]);
+  addLearn('nekoku', [['candy',1],['sugar-chair',8],['candy-neon',16],['star-marshmallow',22],['candy-neon-piece',34],['star-pokkin-marshmallow',46]]);
+  addLearn('jessie', [['shoga-entry',8],['sugar-chair',14],['back-follow-call',24],['gold-routine',38]]);
+  addLearn('denden', [['shoga-entry',12],['wasabi-stomach',28]]);
+  addLearn('money', [['candy',1],['candy-neon',14],['back-follow-call',20],['gold-routine',32],['neon-custard',38],['candy-neon-piece',44]]);
+  addLearn('riro', [['candy',1],['sugar-chair',10],['star-marshmallow',22],['party-backspin',30],['star-pokkin-marshmallow',44]]);
+  addLearn('tetsu', [['sugar-chair',8],['party-backspin',18],['caramel-hello-back',28],['mob-tetsu-walk',32]]);
+  addLearn('kaijin', [['shoga-entry',1],['wasabi-stomach',22],['shichimi-suicide',42]]);
+  addLearn('lilith', [['candy-neon',1],['caramel-hello-back',18],['maple-air-chair',30],['gold-routine',36],['shichimi-suicide',42]]);
+  addLearn('naraku', [['sugar-chair',1],['shoga-entry',12],['caramel-hello-back',22],['wasabi-stomach',30],['maple-air-chair',42]]);
+
+  /* Selected monsters learn support magic too. Authored boss specials remain untouched. */
+  const enemySupport={
+    'g-jouro':['candy'],
+    'd-sharty':['sugar-chair'],
+    'r-scouter':['shoga-entry'],
+    'n-energy':['back-follow-call'],
+    's-doctor':['candy-neon','star-marshmallow'],
+    's-sorcerer':['caramel-hello-back'],
+    'm-hinotabi':['shoga-entry'],
+    'r2-scouter':['shoga-entry'],
+    'n2-energy':['back-follow-call'],
+    'n2-palette':['gold-routine'],
+    'm2-hinotabi':['shoga-entry'],
+    'c-minibook':['candy-neon'],
+    'c-loopmagic':['gold-routine'],
+    'c-killwitch':['star-marshmallow'],
+    'c-succubus':['caramel-hello-back']
+  };
+  for(const [id,skills] of Object.entries(enemySupport)){const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.supportSkillsV109=[...skills];}
+}
+/* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
