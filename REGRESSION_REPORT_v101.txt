@@ -1,0 +1,20 @@
+MOB QUEST v101 regression report
+
+Core checks
+- node --check js/data.js: PASS
+- node --check js/game.js: PASS
+- standalone inline CSS == css/style.css: PASS
+- standalone inline JS == js/data.js + js/game.js: PASS
+- GAME_ASSET_VERSION = 101: PASS
+
+Requested v101
+- Castle Record Room label nowrap + heavier type: PASS
+- Mob Piece quit はい / いいえ confirmation: PASS
+- Mob Piece brighter readable panels: PASS
+- Mob Piece explicit active effects / total stats: PASS
+- Mob Piece central 5v5 brawl with outlined smoke + stars: PASS
+- Gacha capsule icon/32.png: PASS
+- Gacha message フィギュア錬成パワーが集まっている…: PASS
+- Orbiting MOB letters varied font/color: PASS
+- Gacha result bright cards + rarity glow: PASS
+- Figure image fallback applied globally: PASS

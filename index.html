@@ -9,8 +9,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
 
-  <style id="mobQuestInlineStyle">
-:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
+  <style id="mobQuestInlineStyle">:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05080d;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;overscroll-behavior:none;touch-action:manipulation}button,input,select{font:inherit;color:inherit}button{border:0;cursor:pointer}button:disabled{opacity:.42;cursor:default}img{pointer-events:none;-webkit-user-drag:none;user-drag:none}#app{position:relative;width:100%;max-width:480px;height:100dvh;min-height:100svh;margin:0 auto;overflow:hidden;background:#0a1018;box-shadow:0 0 45px rgba(0,0,0,.6)}.screen{position:absolute;inset:0;display:none;overflow:hidden}.screen.active{display:block}.screen-bg,.battle-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}.bg-cover{object-fit:cover}.bg-home{object-position:50% 50%}.bg-interior{object-position:50% 48%}.bg-adventure{object-position:50% 48%;transform:scale(1.015)}.battle-bg{object-position:50% 45%;transform:scale(1.02)}.bg-overlay{position:absolute;inset:0;z-index:1;pointer-events:none}.home-overlay{background:linear-gradient(to bottom,rgba(5,10,16,.20),rgba(5,10,16,.02) 42%,rgba(5,10,16,.58) 74%,rgba(5,10,16,.92))}.interior-overlay{background:linear-gradient(to bottom,rgba(5,9,14,.42),rgba(5,9,14,.19) 35%,rgba(5,9,14,.72))}.adventure-overlay{background:linear-gradient(to bottom,rgba(7,11,17,.38),rgba(7,11,17,.06) 45%,rgba(7,11,17,.78) 90%)}.loading-overlay{background:rgba(5,9,14,.36)}.glass{background:linear-gradient(180deg,rgba(22,31,44,.92),rgba(10,16,25,.92));backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}.safe-top{padding-top:var(--safe-top)}.safe-bottom{padding-bottom:var(--safe-bottom)}
 
 /* HOME */
@@ -3262,6 +3261,83 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 }
 /* ===== END MOB QUEST v100 ===== */
 
+
+/* ===== MOB QUEST v101 readability / gacha / mob piece polish ===== */
+.castle-main-icons>button b{font-family:"Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif;font-weight:1000;letter-spacing:.01em;text-shadow:0 2px 7px rgba(0,0,0,.28);white-space:nowrap;word-break:keep-all;overflow-wrap:normal}
+.castle-main-icons>button[data-castle-menu="records"] b{font-size:15px}
+.castle-main-icons>button{box-shadow:0 12px 24px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.08)}
+.gacha-capsule-v101{width:154px;height:154px;border:none;border-radius:0;overflow:visible;background:transparent;box-shadow:none}
+.gacha-capsule-v101:before,.gacha-capsule-v101 span,.gacha-capsule-v101 em,.gacha-capsule-v101 b{display:none!important}
+.gacha-capsule-v101 img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(0,0,0,.55))}
+.gacha-cinematic-v100.spin .gacha-capsule-v101{animation:gachaCapsuleShakeV100 .16s linear infinite}
+.gacha-cinematic-message-v100{margin-top:18px;padding:12px 18px;border-radius:999px;background:rgba(6,10,16,.72);border:1px solid rgba(255,255,255,.18);font-size:18px;font-weight:1000;letter-spacing:.02em}
+.gacha-result-card-v100{background:#f7ead0!important;color:#1d1711!important;border:4px solid #60482d;box-shadow:0 20px 45px rgba(0,0,0,.45)}
+.gacha-result-title-v100{background:linear-gradient(180deg,#243b55,#152434);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 8px 18px rgba(0,0,0,.22)}
+.gacha-result-title-v100 h2,.gacha-result-title-v100 p,.gacha-result-title-v100 small{color:#fff!important}
+.gacha-result-grid-v100{gap:10px}
+.gacha-result-piece-v100{background:#fff9ee!important;border:3px solid #8e6a41!important;border-radius:16px!important;box-shadow:0 8px 18px rgba(0,0,0,.10);overflow:hidden;animation:gachaResultPopV101 .4s ease-out both;animation-delay:var(--result-delay)}
+.gacha-result-piece-v100 span{display:flex;align-items:center;justify-content:center;min-height:112px;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(246,231,204,.8));border-radius:12px;margin-bottom:6px}
+.gacha-result-piece-v100 b{font-size:12px!important;font-weight:1000}
+.gacha-result-piece-v100 small{font-size:11px!important;font-weight:1000;color:#5a3d20}
+.gacha-result-piece-v100.rarity-r{box-shadow:0 0 0 2px rgba(112,132,162,.35),0 8px 18px rgba(0,0,0,.10)}
+.gacha-result-piece-v100.rarity-sr{box-shadow:0 0 0 2px rgba(93,182,255,.45),0 0 18px rgba(93,182,255,.28),0 8px 18px rgba(0,0,0,.10)}
+.gacha-result-piece-v100.rarity-ssr{box-shadow:0 0 0 2px rgba(255,142,83,.55),0 0 20px rgba(255,142,83,.33),0 8px 18px rgba(0,0,0,.10)}
+.gacha-result-piece-v100.rarity-ur{box-shadow:0 0 0 2px rgba(255,228,91,.7),0 0 24px rgba(255,228,91,.4),0 8px 18px rgba(0,0,0,.10)}
+.gacha-result-piece-v100.rarity-mob{box-shadow:0 0 0 3px rgba(255,105,183,.82),0 0 30px rgba(255,105,183,.48),0 8px 18px rgba(0,0,0,.10)}
+.gacha-result-close-v100{margin-top:12px;min-height:48px;font-size:16px;font-weight:1000}
+.mob-piece-card-v96{background:#f7ead0;color:#20180f}
+.mob-piece-menu-card-v100 .settings-head,.mob-piece-deck-v100 .settings-head,.mob-piece-battle-v101 .piece-score-v96,.mob-piece-fight-card-v101 .piece-score-v96,.mob-piece-card-v96 .settings-head{background:linear-gradient(180deg,#243b55,#152434);color:#fff;padding:12px 14px;border-radius:18px;margin-bottom:12px;box-shadow:0 10px 22px rgba(0,0,0,.22)}
+.mob-piece-card-v96 .settings-head h2,.mob-piece-card-v96 .settings-head p,.mob-piece-card-v96 .settings-head small,.piece-score-v96 span,.piece-score-v96 em{color:#fff!important}
+.mob-piece-menu-v96>button{background:#fff8ec;color:#1f1710;border:2px solid #7b5c37;box-shadow:0 8px 18px rgba(0,0,0,.10)}
+.mob-piece-menu-v96>button small{color:#5a3c1c;font-weight:1000}
+.mob-piece-battle-v101 .piece-field-v100,.mob-piece-fight-card-v101 .piece-battle-info-v101,.mob-piece-fight-total-v101{background:#fff9ef;border:2px solid #8e6a41;border-radius:16px;box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.mob-piece-battle-v101 .piece-battlefield-v100.ready{background:linear-gradient(180deg,#fff6e6,#f0dfb6);border:2px solid #ab834d;border-radius:16px;gap:10px;padding:12px}
+.piece-ready-summary-v101{display:grid;gap:8px;background:rgba(255,255,255,.65);border:2px solid #b68e57;border-radius:14px;padding:10px 12px}
+.piece-ready-summary-v101 b{font-size:15px;font-weight:1000;color:#2b1e11}
+.piece-ready-stats-v101{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.piece-ready-stats-v101 span{background:#243b55;color:#fff;padding:6px 4px;border-radius:10px;text-align:center;font-size:12px;font-weight:1000}
+.piece-ready-effects-v101,.piece-summary-effects-v101{display:flex;flex-wrap:wrap;gap:6px}
+.piece-ready-effects-v101 i,.piece-summary-effects-v101 i{font-style:normal;background:#fff;border:2px solid #8e6a41;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:1000;color:#352515}
+.piece-command-v100 button{font-weight:1000;min-height:46px;border-radius:12px}
+.piece-hand-card-v100,.piece-owned-grid-v96 button,.piece-list-grid-v96 button,.piece-deck-slots-v96 button{background:#fffdf8!important;border:2px solid #94704a!important;box-shadow:0 7px 15px rgba(0,0,0,.08)}
+.piece-hand-card-v100.center{box-shadow:0 0 0 3px rgba(255,200,82,.7),0 10px 24px rgba(0,0,0,.12)!important}
+.piece-hand-card-v100 img,.piece-owned-grid-v96 img,.piece-list-grid-v96 img,.piece-deck-slots-v96 img,.gacha-result-piece-v100 img,.gacha-reveal-figure-v100 img,.brawl-piece-v101 img{object-fit:contain}
+.piece-battle-info-v101{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0}
+.piece-summary-v101{padding:12px;border-radius:16px}
+.piece-summary-v101.player{background:linear-gradient(180deg,#fffaf0,#f8e5bd)}
+.piece-summary-v101.cpu{background:linear-gradient(180deg,#eef5ff,#dce9f8)}
+.piece-summary-v101 small{display:block;font-size:14px;font-weight:1000;color:#2b1e11;margin-bottom:8px}
+.piece-summary-stats-v101{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.piece-summary-stats-v101 span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;border-radius:12px;background:#243b55;color:#fff;padding:6px}
+.piece-summary-stats-v101 b{font-size:11px;letter-spacing:.04em}
+.piece-summary-stats-v101 em{font-style:normal;font-size:17px;font-weight:1000}
+.piece-fight-v101{margin:12px 0}
+.piece-brawl-arena-v101{position:relative;height:320px;border-radius:22px;background:radial-gradient(circle at 50% 45%,#fff7e3 0,#f0d9a6 33%,#d5b377 65%,#c79d56 100%);overflow:hidden;border:3px solid #7a562d;box-shadow:inset 0 0 0 2px rgba(255,255,255,.32),0 12px 28px rgba(0,0,0,.18)}
+.brawl-piece-v101{position:absolute;left:50%;top:50%;width:74px;height:92px;transform:translate(calc(-50% + var(--bx)),calc(-50% + var(--by)));z-index:3;animation:brawlPieceJitterV101 .38s steps(2) infinite alternate;animation-delay:var(--bdelay)}
+.brawl-piece-v101.player{filter:drop-shadow(0 0 12px rgba(255,111,180,.26))}
+.brawl-piece-v101.cpu{filter:drop-shadow(0 0 12px rgba(111,175,255,.24))}
+.brawl-piece-v101 img{width:100%;height:100%}
+.piece-brawl-cloud-v101{position:absolute;inset:0;z-index:4;pointer-events:none}
+.piece-smoke-v101{position:absolute;display:block;width:92px;height:70px;animation:smokePulseV101 .95s ease-in-out infinite alternate}
+.piece-smoke-v101 u,.piece-smoke-v101:before,.piece-smoke-v101:after{content:"";position:absolute;display:block;background:#fff;border:4px solid #3a2e22;border-radius:999px}
+.piece-smoke-v101 u{inset:16px 10px 0 14px}
+.piece-smoke-v101:before{width:42px;height:42px;left:6px;top:22px}
+.piece-smoke-v101:after{width:50px;height:50px;right:2px;top:10px}
+.puff-1{left:18%;top:18%;animation-delay:.04s}.puff-2{left:54%;top:12%;animation-delay:.16s}.puff-3{left:66%;top:26%;animation-delay:.28s}.puff-4{left:24%;top:42%;animation-delay:.1s}.puff-5{left:48%;top:44%;animation-delay:.34s}.puff-6{left:68%;top:52%;animation-delay:.2s}.puff-7{left:40%;top:60%;animation-delay:.44s}
+.piece-star-v101{position:absolute;z-index:5;font-size:28px;color:#fff269;text-shadow:0 2px 0 #433000,0 0 12px rgba(255,242,105,.55);animation:starPopV101 .8s ease-in-out infinite}
+.star-1{left:18%;top:28%;animation-delay:.05s}.star-2{left:32%;top:14%;animation-delay:.19s}.star-3{left:64%;top:18%;animation-delay:.27s}.star-4{left:76%;top:34%;animation-delay:.14s}.star-5{left:22%;top:58%;animation-delay:.33s}.star-6{left:54%;top:56%;animation-delay:.22s}.star-7{left:70%;top:64%;animation-delay:.4s}.star-8{left:42%;top:34%;animation-delay:.31s}
+.piece-fight-total-v101{display:grid;grid-template-columns:1fr;gap:8px;padding:12px;color:#24170d;font-weight:1000}
+.piece-fight-total-v101 span{display:block;background:#243b55;color:#fff;padding:10px 12px;border-radius:12px;text-align:center}
+@keyframes gachaResultPopV101{0%{transform:translateY(16px) scale(.92);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes brawlPieceJitterV101{0%{transform:translate(calc(-50% + var(--bx) - 4px),calc(-50% + var(--by) - 2px)) rotate(-4deg)}100%{transform:translate(calc(-50% + var(--bx) + 4px),calc(-50% + var(--by) + 3px)) rotate(4deg)}}
+@keyframes smokePulseV101{0%{transform:scale(.92);opacity:.72}100%{transform:scale(1.08);opacity:.96}}
+@keyframes starPopV101{0%,100%{transform:scale(.88) rotate(-10deg);opacity:.45}50%{transform:scale(1.16) rotate(10deg);opacity:1}}
+/* ===== END MOB QUEST v101 ===== */
+
+
+/* v101 narrow-phone hardening: never split レコードルーム. */
+.castle-main-icons>button[data-castle-menu="records"] b{white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;font-size:14px!important;font-weight:1000!important;letter-spacing:-.015em!important}
+@media(max-width:380px){.castle-main-icons>button[data-castle-menu="records"] b{font-size:12.5px!important;padding-left:7px!important;padding-right:7px!important}}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3686,8 +3762,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">
-// MOB QUEST v100
+<script id="mobQuestInlineData">// MOB QUEST v101
 // 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
 // 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
 const TEMP_BALANCE = {
@@ -4577,7 +4652,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=100;
+const GAME_ASSET_VERSION=101;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5009,7 +5084,7 @@ async function abandonAdventure(){
 }
 
 
-function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{const f=img.dataset.fallbackSrc;if(f&&img.dataset.tried!=='1'){img.dataset.tried='1';img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
+function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{let chain=String(img.dataset.fallbackChain||'').split('|').map(v=>v.trim()).filter(Boolean);const tried=new Set(String(img.dataset.triedList||'').split('|').map(v=>v.trim()).filter(Boolean));const current=img.getAttribute('src')||'';if(current)tried.add(current);img.dataset.triedList=[...tried].join('|');while(chain.length&&tried.has(chain[0]))chain.shift();if(chain.length){const next=chain.shift();img.dataset.fallbackChain=chain.join('|');img.src=next;return;}const f=img.dataset.fallbackSrc;if(f&&!tried.has(f)&&current!==f){tried.add(f);img.dataset.triedList=[...tried].join('|');img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
 function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
 
@@ -9786,20 +9861,37 @@ function hideGachaSurfacesV100(){const ov=$('#figureGachaOverlayV96');if(ov)ov.h
 function restoreGachaCarouselV100(focus=''){const p=$('#tavernFigurePopup');if(!p)return;renderFigureGachaShopV98(focus);p.hidden=false;}
 function waitRealV100(ms){return new Promise(r=>setTimeout(r,ms));}
 function highestRarityFigureV100(results){return [...(results||[])].sort((a,b)=>(FIGURE_RARITY_ORDER[b?.rarity]||0)-(FIGURE_RARITY_ORDER[a?.rarity]||0))[0]||null;}
+function figureImageCandidatesV101(f){
+  const src=String(f?.image||'').trim(),m=src.match(/^(fig|figene|figboss)\/(\d+)\.png$/i),list=[];
+  if(src)list.push(src);
+  if(m){const dir=m[1].toLowerCase(),n=String(Number(m[2]));list.push(`${dir}/${n}.png`,`${dir}/${n.padStart(2,'0')}.png`,`${dir}/${n.padStart(3,'0')}.png`,`${dir}/${n}.PNG`,`${dir}/${n.padStart(2,'0')}.PNG`);}
+  list.push('icon/32.png','play/009.png');return [...new Set(list.filter(Boolean))];
+}
+function figureImgAttrsV101(f){const c=figureImageCandidatesV101(f);return `src="${c[0]}" data-fallback-chain="${c.slice(1).join('|')}" data-fallback-src="${c[c.length-1]}" data-figure-id="${String(f?.id||'').padStart(2,'0')}"`; }
+function patchFigureMarkupImagesV101(html,f){if(!f)return String(html||'');const attrs=figureImgAttrsV101(f),src=String(f.image||'');return String(html||'').replace(`<img src="${src}" alt="${f.name}">`,`<img ${attrs} alt="${f.name}">`);}
+function figureImageTagV101(f,cls=''){return `<img ${figureImgAttrsV101(f)} alt="${f?.name||''}"${cls?` class="${cls}"`:''}>`; }
+function pieceEffectLinesV101(hand){const lines=handTagEffectsV96(hand).lines||[];return lines.length?lines:['タグ共鳴なし'];}
+function pieceSummaryCardV101(title,stats,lines,theme='player'){return `<section class="piece-summary-v101 ${theme}"><small>${title}</small><div class="piece-summary-stats-v101"><span><b>POWER</b><em>${stats.attack}</em></span><span><b>DEF</b><em>${stats.defense}</em></span><span><b>LIFE</b><em>${stats.life}</em></span><span><b>SPD</b><em>${stats.speed}</em></span></div><div class="piece-summary-effects-v101">${(lines&&lines.length?lines:['タグ共鳴なし']).map(x=>`<i>${x}</i>`).join('')}</div></section>`;}
+function pieceReadySummaryCardV101(title,stats,lines){return `<section class="piece-ready-summary-v101"><b>${title}</b><div class="piece-ready-stats-v101"><span>P ${stats.attack}</span><span>D ${stats.defense}</span><span>L ${stats.life}</span><span>S ${stats.speed}</span></div><div class="piece-ready-effects-v101">${(lines&&lines.length?lines:['タグ共鳴なし']).map(x=>`<i>${x}</i>`).join('')}</div></section>`;}
+function fightFigureClusterV101(hand,side){const slots=side==='cpu'?[[-86,-58],[-28,-76],[32,-70],[88,-40],[0,-16]]:[[-82,44],[-24,66],[30,58],[86,26],[0,10]];return hand.map((id,i)=>{const f=figureById(id);const pos=slots[i]||[0,0];return `<span class="brawl-piece-v101 ${side}" style="--bx:${pos[0]}px;--by:${pos[1]}px;--bdelay:${(i*0.08).toFixed(2)}s">${figureImageTagV101(f)}</span>`;}).join('');}
+function pieceSmokePuffsV101(){return Array.from({length:7},(_,i)=>`<span class="piece-smoke-v101 puff-${i+1}"><u></u></span>`).join('')+Array.from({length:8},(_,i)=>`<span class="piece-star-v101 star-${i+1}">${i%2?'★':'☆'}</span>`).join('');}
 function ensureGachaCinematicV100(){let ov=$('#gachaCinematicV100');if(ov)return ov;ov=document.createElement('div');ov.id='gachaCinematicV100';ov.className='gacha-cinematic-v100';ov.hidden=true;document.body.appendChild(ov);return ov;}
 async function runGachaCapsuleAnimationV100(results){
-  const ov=ensureGachaCinematicV100(),hero=highestRarityFigureV100(results),fonts=['Impact, sans-serif','Georgia, serif','monospace','Arial Black, sans-serif','serif','Trebuchet MS, sans-serif'];
-  const mobTexts=Array.from({length:18},(_,i)=>{const a=i*20,r=112+(i%4)*16,fs=14+(i%5)*3;return `<i class="gacha-orbit-mob-v100" style="--a:${a}deg;--na:${-a}deg;--r:${r}px;--r66:${Math.round(r*.66)}px;--r28:${Math.round(r*.28)}px;--delay:${-(i%6)*.05}s;font-family:${fonts[i%fonts.length]};font-size:${fs}px">MOB</i>`;}).join('');
-  ov.innerHTML=`<div class="gacha-cinematic-stage-v100"><small>MOB FIGURE GACHA</small><div class="gacha-orbit-v100">${mobTexts}<div class="gacha-capsule-v100"><span></span><b>MOB</b><em></em></div><div class="gacha-capsule-glow-v100"></div>${hero?`<div class="gacha-reveal-figure-v100 rarity-${figureRarityClass(hero.rarity)}"><img src="${hero.image}" alt="${hero.name}"><b>${hero.name}</b><small>${hero.rarity}</small></div>`:''}</div><p class="gacha-cinematic-message-v100">MOBの文字が集まっている…</p></div>`;
+  const ov=ensureGachaCinematicV100(),hero=highestRarityFigureV100(results),fonts=['Impact, sans-serif','Georgia, serif','monospace','Arial Black, sans-serif','serif','Trebuchet MS, sans-serif','"Yu Gothic",sans-serif'];
+  const colors=['#ffec6e','#ff7ab6','#8ee3ff','#c1ff8a','#ffd0a8','#ffffff','#f6b1ff'];
+  const mobTexts=Array.from({length:20},(_,i)=>{const a=i*18,r=118+(i%5)*14,fs=15+(i%5)*3,color=colors[i%colors.length];return `<i class="gacha-orbit-mob-v100" style="--a:${a}deg;--na:${-a}deg;--r:${r}px;--r66:${Math.round(r*.66)}px;--r28:${Math.round(r*.28)}px;--delay:${-(i%6)*.05}s;font-family:${fonts[i%fonts.length]};font-size:${fs}px;color:${color};text-shadow:0 2px 0 #111,0 0 10px ${color};">MOB</i>`;}).join('');
+  const heroMarkup=hero?`<div class="gacha-reveal-figure-v100 rarity-${figureRarityClass(hero.rarity)}">${figureImageTagV101(hero)}<b>${hero.name}</b><small>${hero.rarity}</small></div>`:'';
+  ov.innerHTML=`<div class="gacha-cinematic-stage-v100"><small>MOB FIGURE GACHA</small><div class="gacha-orbit-v100">${mobTexts}<div class="gacha-capsule-v100 gacha-capsule-v101">`+
+    `<img src="icon/32.png" data-fallback-src="play/009.png" alt="ガチャカプセル"></div><div class="gacha-capsule-glow-v100"></div>${heroMarkup}</div><p class="gacha-cinematic-message-v100">フィギュア錬成パワーが集まっている…</p></div>`;
   ov.hidden=false;bindImages(ov);await nextPaint();
   ov.classList.add('spin');await waitRealV100(2300);
-  ov.classList.add('ingest');const msg=$('.gacha-cinematic-message-v100',ov);if(msg)msg.textContent='カプセルへ吸い込まれる！';await waitRealV100(1050);
+  ov.classList.add('ingest');const msg=$('.gacha-cinematic-message-v100',ov);if(msg)msg.textContent='フィギュア錬成パワーがカプセルへ流れ込む！';await waitRealV100(1050);
   ov.classList.add('burst');if(msg)msg.textContent='FIGURE GET!';await waitRealV100(1450);
   ov.hidden=true;ov.classList.remove('spin','ingest','burst');ov.innerHTML='';
 }
 function showGachaResultV100(b,results){return new Promise(resolve=>{
   const ov=ensureGachaOverlayV96();ov.classList.add('gacha-result-overlay-v100');
-  ov.innerHTML=`<div class="figure-gacha-card-v96 result gacha-result-card-v100"><div class="gacha-result-title-v100"><small>GACHA ${b.id}</small><h2>${results.length}体を獲得！</h2><p>タップすると性能を確認できます。</p></div><div class="gacha-result-grid-v96 gacha-result-grid-v100">${results.map((f,i)=>`<button data-gacha-result-figure-v96="${f.id}" class="gacha-result-piece-v100 rarity-${figureRarityClass(f.rarity)}" style="--result-delay:${i*.07}s" type="button"><span><img src="${f.image}" alt="${f.name}"></span><b>${f.name}</b><small>${f.rarity}</small></button>`).join('')}</div><button data-gacha-result-close-v100 class="primary-btn gacha-result-close-v100" type="button">結果を閉じる</button></div>`;
+  ov.innerHTML=`<div class="figure-gacha-card-v96 result gacha-result-card-v100"><div class="gacha-result-title-v100"><small>GACHA ${b.id}</small><h2>${results.length}体を獲得！</h2><p>レア度に応じて枠が発光します。タップすると性能を確認できます。</p></div><div class="gacha-result-grid-v96 gacha-result-grid-v100">${results.map((f,i)=>`<button data-gacha-result-figure-v96="${f.id}" class="gacha-result-piece-v100 rarity-${figureRarityClass(f.rarity)}" style="--result-delay:${i*.07}s" type="button"><span>${figureImageTagV101(f)}</span><b>${f.name}</b><small>${f.rarity}</small></button>`).join('')}</div><button data-gacha-result-close-v100 class="primary-btn gacha-result-close-v100" type="button">結果を閉じる</button></div>`;
   ov.hidden=false;bindImages(ov);
   $$('[data-gacha-result-figure-v96]',ov).forEach(x=>x.onclick=e=>{e.stopPropagation();const f=figureById(x.dataset.gachaResultFigureV96);const detail=document.createElement('div');detail.className='gacha-result-detail-v96 gacha-result-detail-v100';detail.innerHTML=`<div><button type="button">×</button>${figureDetailMarkupV96(f)}</div>`;ov.appendChild(detail);bindImages(detail);detail.querySelector('button').onclick=()=>detail.remove();});
   $('[data-gacha-result-close-v100]',ov).onclick=()=>{ov.hidden=true;ov.classList.remove('gacha-result-overlay-v100');resolve();};
@@ -9839,11 +9931,11 @@ autoMobPieceDeckV96=function(){
   state.meta.mobPieceDeck=chosen.map(f=>f.id);saveMeta();renderMobPieceDeckV96();
 };
 const _figureDetailMarkupV100Base=figureDetailMarkupV96;
-figureDetailMarkupV96=function(f,piece=false){if(!piece)return _figureDetailMarkupV100Base(f,false);if(!f)return'';const ps=mobPieceStatsV96(f);return `<div class="figure-detail-v96 rarity-${figureRarityClass(f.rarity)}"><img src="${f.image}" alt="${f.name}"><div><small>${f.rarity}</small><h3>${f.name}</h3><p>${f.statsText}</p><p>${f.traitText==='無し'?'特性なし':f.traitText}</p><div class="piece-mini-stats-v96 piece-mini-stats-v100"><b>COST ${ps.cost}</b><b>LIFE ${ps.life}</b><b>POWER ${ps.power}</b><b>DEF ${ps.defense}</b><b>SPD ${ps.speed}</b></div><div class="figure-tags">${f.tags.map(t=>`<i>${figureTagLabel(t)}</i>`).join('')}</div></div></div>`;};
+figureDetailMarkupV96=function(f,piece=false){if(!f)return'';if(!piece)return patchFigureMarkupImagesV101(_figureDetailMarkupV100Base(f,false),f);const ps=mobPieceStatsV96(f);return `<div class="figure-detail-v96 rarity-${figureRarityClass(f.rarity)}">${figureImageTagV101(f)}<div><small>${f.rarity}</small><h3>${f.name}</h3><p>${f.statsText}</p><p>${f.traitText==='無し'?'特性なし':f.traitText}</p><div class="piece-mini-stats-v96 piece-mini-stats-v100"><b>COST ${ps.cost}</b><b>LIFE ${ps.life}</b><b>POWER ${ps.power}</b><b>DEF ${ps.defense}</b><b>SPD ${ps.speed}</b></div><div class="figure-tags">${f.tags.map(t=>`<i>${figureTagLabel(t)}</i>`).join('')}</div></div></div>`;};
 openMobPieceMenuV96=function(){const ov=ensureMobPieceOverlayV96();ov.innerHTML=`<div class="mob-piece-card-v96 menu mob-piece-menu-card-v100"><div class="settings-head"><div><small>MOB PIECE BATTLE</small><h2>モブピースバトル</h2></div><button data-piece-close-v96 class="sheet-close" type="button">×</button></div><div class="mob-piece-menu-v96"><button data-piece-menu-v96="deck" type="button">デッキ編成<small>25体 / 同キャラ不可 / COST 80</small></button><button data-piece-menu-v96="list" type="button">フィギュア一覧<small>LIFE / POWER / DEF / SPD</small></button><button data-piece-menu-v96="battle" type="button">対戦<small>5 vs 5 CPU BATTLE</small></button><button data-piece-menu-v96="rank" type="button">ランクマッチ<small>RANK ${Number(state.meta.mobPieceRank)||0}</small></button></div></div>`;ov.hidden=false;$('[data-piece-close-v96]',ov).onclick=()=>ov.hidden=true;$$('[data-piece-menu-v96]',ov).forEach(b=>b.onclick=()=>{const a=b.dataset.pieceMenuV96;if(a==='deck')renderMobPieceDeckV96();else if(a==='list')renderMobPieceFigureListV96();else startMobPieceBattleV96(a==='rank');});};
 renderMobPieceDeckV96=function(){
   const ov=ensureMobPieceOverlayV96(),deck=normalizedMobPieceDeckV96(),owned=FIGURES.filter(f=>figureOwned(f.id)>0&&!f.pending),cost=mobPieceDeckCostV100(deck),selected=new Set(deck);
-  ov.innerHTML=`<div class="mob-piece-card-v96 deck mob-piece-deck-v100"><div class="settings-head"><div><small>DECK</small><h2>デッキ編成 ${deck.length}/25</h2><p>同キャラ不可 / TOTAL COST <b>${cost}/80</b></p></div><button data-piece-back-v96 class="sheet-close" type="button">←</button></div><div class="piece-deck-actions-v96"><button data-piece-auto-v96 type="button">おすすめ25体</button><button data-piece-clear-v96 type="button">全て外す</button></div><div class="piece-deck-slots-v96">${deck.length?deck.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f);return`<button data-piece-deck-remove-v96="${i}" type="button"><img src="${f.image}" alt="${f.name}"><b>${f.name}</b><small>${f.rarity} / C${s.cost}</small></button>`;}).join(''):'<p>25種類のフィギュアを選んでください。</p>'}</div><h3>所持フィギュア</h3><div class="piece-owned-grid-v96">${owned.map(f=>{const s=mobPieceStatsV96(f),blocked=selected.has(f.id)||deck.length>=25||cost+s.cost>80;return`<button data-piece-add-v96="${f.id}" type="button" ${blocked?'disabled':''}><img src="${f.image}" alt="${f.name}"><div><b>${f.name}</b><small>${f.rarity} / COST ${s.cost}</small><em>L ${s.life}　P ${s.power}　D ${s.defense}　S ${s.speed}</em><span>${selected.has(f.id)?'編成済み':'所持 '+figureOwned(f.id)}</span></div></button>`;}).join('')}</div></div>`;
+  ov.innerHTML=`<div class="mob-piece-card-v96 deck mob-piece-deck-v100"><div class="settings-head"><div><small>DECK</small><h2>デッキ編成 ${deck.length}/25</h2><p>同キャラ不可 / TOTAL COST <b>${cost}/80</b></p></div><button data-piece-back-v96 class="sheet-close" type="button">←</button></div><div class="piece-deck-actions-v96"><button data-piece-auto-v96 type="button">おすすめ25体</button><button data-piece-clear-v96 type="button">全て外す</button></div><div class="piece-deck-slots-v96">${deck.length?deck.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f);return`<button data-piece-deck-remove-v96="${i}" type="button">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity} / C${s.cost}</small></button>`;}).join(''):'<p>25種類のフィギュアを選んでください。</p>'}</div><h3>所持フィギュア</h3><div class="piece-owned-grid-v96">${owned.map(f=>{const s=mobPieceStatsV96(f),blocked=selected.has(f.id)||deck.length>=25||cost+s.cost>80;return`<button data-piece-add-v96="${f.id}" type="button" ${blocked?'disabled':''}>${figureImageTagV101(f)}<div><b>${f.name}</b><small>${f.rarity} / COST ${s.cost}</small><em>L ${s.life}　P ${s.power}　D ${s.defense}　S ${s.speed}</em><span>${selected.has(f.id)?'編成済み':'所持 '+figureOwned(f.id)}</span></div></button>`;}).join('')}</div></div>`;
   ov.hidden=false;bindImages(ov);$('[data-piece-back-v96]',ov).onclick=openMobPieceMenuV96;$('[data-piece-auto-v96]',ov).onclick=autoMobPieceDeckV96;$('[data-piece-clear-v96]',ov).onclick=()=>{state.meta.mobPieceDeck=[];saveMeta();renderMobPieceDeckV96();};
   $$('[data-piece-add-v96]',ov).forEach(b=>b.onclick=()=>{const d=normalizedMobPieceDeckV96(),id=b.dataset.pieceAddV96,f=figureById(id);if(!f||d.length>=25||d.includes(id))return;const nextCost=mobPieceDeckCostV100(d)+mobPieceStatsV96(f).cost;if(nextCost>80)return toast('デッキコスト80を超えます');d.push(id);state.meta.mobPieceDeck=d;saveMeta();renderMobPieceDeckV96();});
   $$('[data-piece-deck-remove-v96]',ov).forEach(b=>b.onclick=()=>{const d=normalizedMobPieceDeckV96();d.splice(Number(b.dataset.pieceDeckRemoveV96),1);state.meta.mobPieceDeck=d;saveMeta();renderMobPieceDeckV96();});
@@ -9877,7 +9969,7 @@ startMobPieceBattleV96=function(rank=false){
   const cpu=cpuPieceDeckV96(rank);if(cpu.length<25)return facilityTalk('対戦データを準備できませんでした。','モブメープル','play/009.png');
   mobPieceBattleV96={rank,pDeck:shuffleV96(deck),cDeck:shuffleV96(cpu),pPos:0,cPos:0,pDiscard:[],cDiscard:[],pWins:0,cWins:0,round:0,center:2,moved:false,exchanged:false};nextMobPieceRoundV96();
 };
-function pieceCardMiniV100(id,i,center=false,opponent=false){const f=figureById(id),s=mobPieceStatsV96(f);return `<article class="piece-hand-card-v100 ${center?'center':''} ${opponent?'opponent':''}" data-piece-card-index="${i}"><img src="${f.image}" alt="${f.name}"><b>${f.name}</b><small>${f.rarity} / C${s.cost}</small><em>L${s.life} P${s.power} D${s.defense} S${s.speed}</em></article>`;}
+function pieceCardMiniV100(id,i,center=false,opponent=false){const f=figureById(id),s=mobPieceStatsV96(f);return `<article class="piece-hand-card-v100 ${center?'center':''} ${opponent?'opponent':''}" data-piece-card-index="${i}">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity} / C${s.cost}</small><em>L${s.life} P${s.power} D${s.defense} S${s.speed}</em></article>`;}
 async function renderMobPieceDrawV100(){
   const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
   ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v100 drawing"><div class="piece-score-v96"><span>PLAYER 1 <b>${b.pWins}</b></span><em>ROUND ${b.round}</em><span>PLAYER 2 <b>${b.cWins}</b></span></div><div class="piece-field-v100 opponent-field-v100"><b>PLAYER 2 FIELD</b><div id="pieceCpuDrawV100" class="piece-field-row-v100"></div></div><div class="piece-battlefield-v100"><div class="piece-deck-stack-v100">MOB<small>DECK</small></div><strong>DRAW</strong></div><div class="piece-field-v100 player-field-v100"><b>PLAYER 1 FIELD</b><div id="piecePlayerDrawV100" class="piece-field-row-v100"></div></div></div>`;
@@ -9885,20 +9977,22 @@ async function renderMobPieceDrawV100(){
 }
 nextMobPieceRoundV96=async function(){const b=mobPieceBattleV96;if(!b)return;b.round++;b.center=2;b.moved=false;b.exchanged=false;b.pHand=Array.from({length:5},()=>drawPieceCardV96('p'));b.cHand=Array.from({length:5},()=>drawPieceCardV96('c'));await renderMobPieceDrawV100();renderMobPieceRoundV96();};
 renderMobPieceRoundV96=function(){
-  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const tags=handTagEffectsV96(b.pHand).lines;
-  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v100"><div class="piece-score-v96"><span>PLAYER 1 <b>${b.pWins}</b></span><em>ROUND ${b.round}</em><span>PLAYER 2 <b>${b.cWins}</b></span></div><div class="piece-field-v100 opponent-field-v100"><b>PLAYER 2 FIELD</b><div class="piece-field-row-v100">${b.cHand.map((id,i)=>pieceCardMiniV100(id,i,false,true)).join('')}</div></div><div class="piece-battlefield-v100 ready"><div><b>CENTER BONUS</b><small>センターの全ステータス +25%</small></div><div class="piece-active-tags-v96">${tags.map(x=>`<span>${x}</span>`).join('')||'<span>タグ共鳴なし</span>'}</div></div><div class="piece-field-v100 player-field-v100"><b>PLAYER 1 FIELD</b><div class="piece-hand-v100">${b.pHand.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f);return`<article class="piece-hand-card-v100 ${i===b.center?'center':''}"><img src="${f.image}" alt="${f.name}"><b>${f.name}</b><small>${f.rarity} / C${s.cost}</small><em>L${s.life} P${s.power} D${s.defense} S${s.speed}</em><div><button data-piece-center-v96="${i}" type="button" ${b.moved||i===b.center?'disabled':''}>センター移動</button><button data-piece-exchange-v96="${i}" type="button" ${b.exchanged?'disabled':''}>交換</button></div></article>`;}).join('')}</div></div><div class="piece-command-v100"><button class="primary-btn" data-piece-keep-v96 type="button">キープして戦う</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  const pPreview=handBattleStatsV96(b.pHand,b.center,{}),tags=pieceEffectLinesV101(b.pHand);
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v100 mob-piece-battle-v101"><div class="piece-score-v96"><span>PLAYER 1 <b>${b.pWins}</b></span><em>ROUND ${b.round}</em><span>PLAYER 2 <b>${b.cWins}</b></span></div><div class="piece-field-v100 opponent-field-v100"><b>PLAYER 2 FIELD</b><div class="piece-field-row-v100">${b.cHand.map((id,i)=>pieceCardMiniV100(id,i,false,true)).join('')}</div></div><div class="piece-battlefield-v100 ready"><div><b>CENTER BONUS</b><small>センターの全ステータス +25%</small></div>${pieceReadySummaryCardV101('PLAYER 1 総合ステータス',pPreview,tags)}</div><div class="piece-field-v100 player-field-v100"><b>PLAYER 1 FIELD</b><div class="piece-hand-v100">${b.pHand.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f);return `<article class="piece-hand-card-v100 ${i===b.center?'center':''}">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity} / C${s.cost}</small><em>L${s.life} P${s.power} D${s.defense} S${s.speed}</em><div><button data-piece-center-v96="${i}" type="button" ${b.moved||i===b.center?'disabled':''}>センター移動</button><button data-piece-exchange-v96="${i}" type="button" ${b.exchanged?'disabled':''}>交換</button></div></article>`;}).join('')}</div></div><div class="piece-command-v100"><button class="primary-btn" data-piece-keep-v96 type="button">キープして戦う</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
   ov.hidden=false;bindImages(ov);
   $$('[data-piece-center-v96]',ov).forEach(x=>x.onclick=()=>{const i=Number(x.dataset.pieceCenterV96);if(b.moved||i===b.center)return;b.center=i;b.moved=true;renderMobPieceRoundV96();});
-  $$('[data-piece-exchange-v96]',ov).forEach(x=>x.onclick=async()=>{const i=Number(x.dataset.pieceExchangeV96);if(b.exchanged)return;const old=b.pHand[i];b.pDiscard.push(old);b.pHand[i]=drawPieceCardV96('p');b.exchanged=true;renderMobPieceRoundV96();});
-  $('[data-piece-keep-v96]',ov).onclick=resolveMobPieceRoundV96;$('[data-piece-quit-v96]',ov).onclick=openMobPieceMenuV96;
+  $$('[data-piece-exchange-v96]',ov).forEach(x=>x.onclick=()=>{const i=Number(x.dataset.pieceExchangeV96);if(b.exchanged)return;const old=b.pHand[i];b.pDiscard.push(old);b.pHand[i]=drawPieceCardV96('p');b.exchanged=true;renderMobPieceRoundV96();});
+  $('[data-piece-keep-v96]',ov).onclick=resolveMobPieceRoundV96;
+  $('[data-piece-quit-v96]',ov).onclick=async()=>{const ans=await dialog('対戦をやめますか？',[['はい','yes','primary'],['いいえ','no']],'モブメープル','play/009.png');if(ans==='yes'){mobPieceBattleV96=null;openMobPieceMenuV96();}};
 };
-function fightFigureRowV100(hand,side){return hand.map((id,i)=>{const f=figureById(id);return `<span class="fight-piece-v100 ${side}" style="--fight-i:${i}"><img src="${f.image}" alt="${f.name}"></span>`;}).join('');}
+function fightFigureRowV100(hand,side){return fightFigureClusterV101(hand,side);}
 resolveMobPieceRoundV96=async function(){
   const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
   const cStats=b.cHand.map(id=>mobPieceStatsV96(figureById(id))),cCenter=cStats.map(x=>x.power+x.defense*.6+x.speed*.35).indexOf(Math.max(...cStats.map(x=>x.power+x.defense*.6+x.speed*.35)));
   const pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects,p=handBattleStatsV96(b.pHand,b.center,cTag),c=handBattleStatsV96(b.cHand,cCenter,pTag);
   const pv=(p.attack+p.defense*.72+p.life*.20+p.speed*.35)*(0.97+Math.random()*.06),cv=(c.attack+c.defense*.72+c.life*.20+c.speed*.35)*(0.97+Math.random()*.06),win=pv>=cv;
-  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-card-v100"><div class="piece-score-v96"><span>PLAYER 1 <b>${b.pWins}</b></span><em>BATTLE</em><span>PLAYER 2 <b>${b.cWins}</b></span></div><div class="piece-fight-v100"><div class="piece-fight-team-v100 cpu">${fightFigureRowV100(b.cHand,'cpu')}</div><div class="piece-dust-v100"><i>POKO!</i><i>BAM!</i><i>☆</i><i>★</i><b>5 vs 5</b></div><div class="piece-fight-team-v100 player">${fightFigureRowV100(b.pHand,'player')}</div></div><div class="piece-fight-total-v100"><span>YOU　P${p.attack} D${p.defense} L${p.life} S${p.speed}</span><span>CPU　P${c.attack} D${c.defense} L${c.life} S${c.speed}</span></div></div>`;ov.hidden=false;bindImages(ov);
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-card-v100 mob-piece-fight-card-v101"><div class="piece-score-v96"><span>PLAYER 1 <b>${b.pWins}</b></span><em>BATTLE</em><span>PLAYER 2 <b>${b.cWins}</b></span></div><div class="piece-battle-info-v101">${pieceSummaryCardV101('PLAYER 1 発動効果',p,pieceEffectLinesV101(b.pHand),'player')}${pieceSummaryCardV101('PLAYER 2 発動効果',c,pieceEffectLinesV101(b.cHand),'cpu')}</div><div class="piece-fight-v100 piece-fight-v101"><div class="piece-brawl-arena-v101">${fightFigureRowV100(b.cHand,'cpu')}${fightFigureRowV100(b.pHand,'player')}<div class="piece-brawl-cloud-v101">${pieceSmokePuffsV101()}</div></div></div><div class="piece-fight-total-v100 piece-fight-total-v101"><span>PLAYER 1 総合　P${p.attack} / D${p.defense} / L${p.life} / S${p.speed}</span><span>PLAYER 2 総合　P${c.attack} / D${c.defense} / L${c.life} / S${c.speed}</span></div></div>`;ov.hidden=false;bindImages(ov);
   await waitRealV100(3000);
   if(win)b.pWins++;else b.cWins++;
   const result=document.createElement('div');result.className=`piece-round-result-v100 ${win?'win':'lose'}`;result.innerHTML=`<small>ROUND ${b.round}</small><strong>${win?'WIN':'LOSE'}</strong><p>${win?'PLAYER 1 ROUND WIN!':'PLAYER 2 ROUND WIN...'}</p>`;ov.appendChild(result);await waitRealV100(3000);
@@ -9906,6 +10000,24 @@ resolveMobPieceRoundV96=async function(){
   if(b.pWins>=2||b.cWins>=2)return finishMobPieceBattleV96(b.pWins>=2);
   nextMobPieceRoundV96();
 };
+
+
+/* ===== MOB QUEST v101: GLOBAL FIGURE IMAGE RECOVERY ===== */
+const _bindImageV101GlobalBase=bindImage;
+bindImage=function(img){
+  if(img&&img.dataset.bound!=='1'){
+    const src=String(img.getAttribute('src')||'').trim(),m=src.match(/^(fig|figene|figboss)\/(\d+)\.png$/i);
+    if(m&&!img.dataset.fallbackChain){
+      const dir=m[1].toLowerCase(),n=String(Number(m[2]));
+      const candidates=[`${dir}/${n}.png`,`${dir}/${n.padStart(2,'0')}.png`,`${dir}/${n.padStart(3,'0')}.png`,`${dir}/${n}.PNG`,`${dir}/${n.padStart(2,'0')}.PNG`,'icon/32.png','play/009.png'].filter(x=>x!==src);
+      img.dataset.fallbackChain=[...new Set(candidates)].join('|');
+      img.dataset.fallbackSrc='play/009.png';
+    }
+  }
+  return _bindImageV101GlobalBase(img);
+};
+bindImages=function(root=document){$$('img',root).forEach(bindImage);};
+/* ===== END MOB QUEST v101 GLOBAL FIGURE IMAGE RECOVERY ===== */
 
 /* ---------- bind new controls after legacy handlers ---------- */
 const _bindEventsV100=bindEvents;
@@ -9942,7 +10054,6 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
-
 
 
 

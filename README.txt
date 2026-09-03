@@ -134,3 +134,23 @@ Base: v99 RUNTIME SCOPE / TAVERN GACHA FIX STABLE.
 - Castle menu banner typography/shadows improved.
 - Equipment opened from Castle/Tavern/Training now keeps that facility background and BACK returns to that facility.
 - Subquest battle enemy art is reduced slightly only for subquests.
+
+
+=== v101 ===
+Base: v100 GACHA / MOB PIECE / FACILITY UX STABLE.
+- Castle menu: 「レコードルーム」 label no longer orphan-wraps; castle plaque text is thicker/bolder.
+- Gacha cinematic capsule switched to icon/32.png.
+- Gacha intro line changed from 「MOBの文字が集まっている…」 to 「フィギュア錬成パワーが集まっている…」.
+- Orbiting MOB letters now use varied fonts and colors.
+- Gacha result/readability pass: darker-banner black-text issues corrected; result presentation is brighter and easier to read.
+- Figure cards/results now use chained image fallbacks to reduce missing-figure blanks.
+- Mob Piece Battle: quitting a match now asks 「はい / いいえ」.
+- Mob Piece Battle readability improved: brighter panels, clearer text, larger total-stat presentation, and more explicit active-effect display.
+- Mob Piece battle animation strengthened: both teams gather centrally, white outlined cartoon smoke clouds, visible figure silhouettes peeking through, and star hit accents.
+- GAME_ASSET_VERSION updated to 101.
+
+
+=== v101 FINAL SYNC ===
+- Standalone index.html rebuilt from final v101 CSS/JS.
+- Figure image recovery now applies globally to fig / figene / figboss surfaces using safe filename variants before a generic fallback.
+- Record Room plaque hardened against narrow-phone orphan wrapping.
