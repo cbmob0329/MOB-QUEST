@@ -1,0 +1,6 @@
+v104 static validation target:
+- data/game/standalone JS syntax
+- inline/external synchronization
+- 13 player balance records + learnsets
+- recommended levels Grassland none, Desert 10, Demon Castle II 80
+- ZIP integrity

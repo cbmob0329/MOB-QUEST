@@ -1,0 +1,10 @@
+MOB QUEST v104 regression checklist
+- Base lineage: v103 only.
+- No enemy stats changed.
+- No story/dialogue changes.
+- No gacha/Mob Piece changes.
+- Player stat curves formalized for yusha/pink/desert/nyoro/nekoku/jessie/denden/money/riro/tetsu/kaijin/lilith/naraku.
+- Third-tier magic level 46 where assigned.
+- No level-learned all-target magic.
+- Ultimate unlock levels 1/15/30/50 preserved.
+- Recommended levels stored and displayed without changing encounter levels.

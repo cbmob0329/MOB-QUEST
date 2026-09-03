@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=103;
+const GAME_ASSET_VERSION=104;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5575,3 +5575,54 @@ const _renderMobPieceDeckV103Base=renderMobPieceDeckV96;renderMobPieceDeckV96=fu
 const _openEquipmentScreenV103Base=openEquipmentScreen;openEquipmentScreen=async function(){const warm=[];for(const [pid] of state.party){const eq=equipmentFor(pid);if(eq.main)warm.push(weaponById(eq.main));if(eq.sub)warm.push(weaponById(eq.sub));if(eq.armor)warm.push(armorById(eq.armor));for(const id of figureEquipmentFor(pid))if(id)warm.push(figureById(id));}warm.push(...ARMORS.filter(a=>armorOwned(a.id)>0).slice(0,24),...FIGURES.filter(f=>figureOwned(f.id)>0&&usableFigureV103(f)).slice(0,24));await preloadRowsV103(warm,56);return _openEquipmentScreenV103Base();};
 setTimeout(()=>{try{preloadRowsV103([...FIGURES.filter(f=>figureOwned(f.id)>0&&usableFigureV103(f)).slice(0,36),...ARMORS.filter(a=>armorOwned(a.id)>0).slice(0,20)],56);}catch(_){ }},700);
 /* ===== END MOB QUEST v103 ===== */
+
+
+/* ===== MOB QUEST v104: FORMAL PLAYER BALANCE / LEARNSET RUNTIME ===== */
+function playerBaseElementResistanceV104(a,element){const p=player(a?.id)||a;return clamp(Number(p?.elementResist?.[normalizeElement(element)]||0),-.50,.80);}
+function playerBaseStatusResistanceV104(a,kind){const p=player(a?.id)||a;return clamp(Number(p?.statusResist?.[kind]??.20),0,.90);}
+function learnedRowsV104(a,kind){const p=player(a?.id)||a,lv=Number(a?.level)||currentPlayerLevel(p?.id)||1;return (p?.learnset?.[kind]||[]).filter(x=>lv>=Number(x.level||1));}
+function availableMagicSkillsV104(a){const all=MOB_DATA.magicCatalog||[],ids=new Set(learnedRowsV104(a,'magic').map(x=>x.id));return all.filter(x=>ids.has(x.id)&&x.target!=='all');}
+function availableTechniqueSkillsV104(a){const all=MOB_DATA.techniqueCatalog||[],ids=new Set(learnedRowsV104(a,'technique').map(x=>x.id));return all.filter(x=>ids.has(x.id));}
+function nextLearnRowsV104(p,kind,lv){return (p?.learnset?.[kind]||[]).filter(x=>Number(x.level)>lv).sort((a,b)=>a.level-b.level);}
+
+defaultMagicFor=function(a){const skills=availableMagicSkillsV104(a);if(!skills.length)return null;const affordable=skills.filter(x=>(Number(x.cost)||0)<=Number(a?.mpNow??Infinity));const pool=affordable.length?affordable:skills;return pool.slice().sort((x,y)=>(Number(y.power)||0)-(Number(x.power)||0))[0]||null;};
+
+const _openSkillMenuV104Base=openSkillMenu;
+openSkillMenu=function(type){
+  if(!['magic','special'].includes(type))return _openSkillMenuV104Base(type);
+  const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;
+  const testAll=!!(state.test?.enabled&&state.test?.allSkills);
+  if(type==='magic'){
+    const all=MOB_DATA.magicCatalog||[],skills=testAll?all:availableMagicSkillsV104(a);for(const sk of skills)for(const src of sk.frames||[])preloadAsset(src,'high');
+    $('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}${testAll?' / TEST ALL MAGIC':''}`;$('#skillMenuTitle').textContent='魔法';
+    list.innerHTML=skills.length?skills.map(sk=>`<button class="skill-item ${a.mpNow<sk.cost?'disabled':''}" data-magic-id="${sk.id}" type="button"><span class="skill-symbol">${sk.element}</span><div><b>${sk.name}</b><small>Lv${(a.learnset?.magic||[]).find(x=>x.id===sk.id)?.level||'-'} / ${sk.target==='all'?'敵全体':'敵単体'} / ${sk.tier==='large'?'大':sk.tier==='small'?'小':sk.tier==='all'?'全体中':'中'}ダメージ</small></div><em>MP ${sk.cost}</em></button>`).join(''):'<div class="switch-guide">現在習得している魔法はありません。</div>';
+    $$('[data-magic-id]',list).forEach(btn=>btn.onclick=async()=>{const sk=all.find(x=>x.id===btn.dataset.magicId);if(!sk||(!testAll&&!availableMagicSkillsV104(a).includes(sk)))return;if(a.mpNow<sk.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('magic',sk,a))return;$('#skillMenu').hidden=true;act('magic',sk);});return;
+  }
+  const all=MOB_DATA.techniqueCatalog||[],skills=testAll?all:availableTechniqueSkillsV104(a);for(const t of skills)for(const src of t.frames||[])preloadAsset(src,'high');
+  $('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}${testAll?' / TEST ALL TECHNIQUE':''}`;$('#skillMenuTitle').textContent='特技';
+  list.innerHTML=skills.length?skills.map(t=>`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-tech-id="${t.id}" type="button"><span class="skill-symbol">技</span><div><b>${t.name}</b><small>Lv${(a.learnset?.technique||[]).find(x=>x.id===t.id)?.level||'-'} / ${t.kind==='status'?`敵単体を${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]||'状態異常'}にする`:`${t.element}属性 / ${t.tier==='large'?'中～大':'小'}ダメージ`}</small></div><em>MP ${t.cost}</em></button>`).join(''):'<div class="switch-guide">現在習得している特技はありません。</div>';
+  $$('[data-tech-id]',list).forEach(btn=>btn.onclick=async()=>{const t=all.find(x=>x.id===btn.dataset.techId);if(!t||(!testAll&&!availableTechniqueSkillsV104(a).includes(t)))return;if(a.mpNow<t.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('special',t,a))return;$('#skillMenu').hidden=true;act('special',t);});
+};
+
+inflictAllyStatus=async function(a,kind,turns){if(!a||a.dead)return false;if(a.bookHeroStatusImmune)return false;const resist=clamp(playerBaseStatusResistanceV104(a,kind)+figureStatusResistance(a.id,kind)+Number(a.moneyFriendsStatusResist||0),0,.95);if(Math.random()<resist)return false;a.status[kind]=Math.max(a.status[kind],turns);if(await maybeArtistCleanse(a))return false;return true;};
+
+const _damageAllyV104Base=damageAlly;
+damageAlly=async function(a,power,type='physical',superHalf=false,element=''){
+  if(!a||a.dead)return 0;
+  const incoming=normalizeElement(element||actingEnemy()?.attribute||'無'),baseRes=playerBaseElementResistanceV104(a,incoming),old=a.__v104IncomingMul;
+  a.__v104IncomingMul=baseRes>=0?1-baseRes:1+Math.abs(baseRes);
+  const e=actingEnemy(),origAtk=e?.atk,origMag=e?.mag;
+  if(e){e.atk*=a.__v104IncomingMul;e.mag*=a.__v104IncomingMul;}
+  try{return await _damageAllyV104Base(a,power,type,superHalf,element);}finally{if(e){e.atk=origAtk;e.mag=origMag;}a.__v104IncomingMul=old;}
+};
+
+playerDetailMagic=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv,mpNow:999999};return availableMagicSkillsV104(fake);};
+playerDetailTechnique=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv};return availableTechniqueSkillsV104(fake);};
+openPlayerDetail=function(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),fake={...p,level:lv,mpNow:999999},magics=availableMagicSkillsV104(fake),techs=availableTechniqueSkillsV104(fake),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));const er=['火','水','雷','風','地','光','闇','無'].map(k=>{const n=Math.round(Number(p.elementResist?.[k]||0)*100);return`<span>${k}<b class="${n<0?'weak':''}">${n>0?'+':''}${n}%</b></span>`}).join(''),sr=[['poison','毒'],['paralyze','マヒ'],['burn','やけど'],['sleep','眠り'],['confuse','混乱'],['stun','ひるみ']].map(([k,n])=>`<span>${n}<b>${Math.round(playerBaseStatusResistanceV104(p,k)*100)}%</b></span>`).join(''),next=[...nextLearnRowsV104(p,'magic',lv).map(x=>({...x,type:'魔法'})),...nextLearnRowsV104(p,'technique',lv).map(x=>({...x,type:'特技'}))].sort((a,b)=>a.level-b.level).slice(0,5),allSkill=MOB_DATA.magicCatalog||[],allTech=MOB_DATA.techniqueCatalog||[];body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>メイン ${p.attribute} / サブ ${(p.subAttributes||[]).join('・')||'なし'} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>属性耐性</h3><div class="player-detail-stats player-resist-v104">${er}</div></section><section><h3>状態異常耐性</h3><div class="player-detail-stats player-resist-v104">${sr}</div></section><section><h3>習得魔法</h3><div class="player-detail-list">${magics.length?magics.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section><section><h3>習得特技</h3><div class="player-detail-list">${techs.length?techs.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section>${next.length?`<section><h3>次の習得</h3><div class="player-detail-list">${next.map(x=>{const sk=x.type==='魔法'?allSkill.find(s=>s.id===x.id):allTech.find(s=>s.id===x.id);return`<span><b>Lv${x.level} ${sk?.name||x.id}</b><small>${x.type}</small></span>`}).join('')}</div></section>`:''}<section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;};
+
+const _renderAdventureV104Base=renderAdventure;
+renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWorld(),title=$('#adventureStageTitle');if(title&&!state.adventure.completed){title.textContent=w?.recommendedLevel?`${w.name}　推奨Lv${w.recommendedLevel}`:(w?.name||'冒険');}return r;};
+
+/* v104 migration: old HP/MP values were based on much smaller max values. Refill once without changing progress. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<104){state.meta.playerBalanceVersion=104;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v104 balance migration]',e);}},0);
+/* ===== END MOB QUEST v104 ===== */

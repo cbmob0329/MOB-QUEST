@@ -3400,3 +3400,9 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .battle-total-top-v103,.battle-total-bottom-v103{margin:5px 0}.mob-piece-fight-v103 .piece-battlefloor-v103{height:330px}
 @media(max-height:760px){.piece-battlefloor-v103{height:225px}.mob-piece-fight-v103 .piece-battlefloor-v103{height:270px}.piece-player-card-v103{min-height:92px}.piece-player-card-v103 img{height:64px}}
 /* ===== END MOB QUEST v103 ===== */
+
+
+/* ===== MOB QUEST v104: player detail readability ===== */
+.player-resist-v104 span{background:#fffaf0!important;color:#24190f!important;border:2px solid #b58b5f!important}
+.player-resist-v104 b{color:#177a35!important;font-weight:1000!important}.player-resist-v104 b.weak{color:#b72f35!important}
+/* ===== END MOB QUEST v104 ===== */

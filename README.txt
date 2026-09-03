@@ -182,3 +182,16 @@ Base: v102 MOBPIECE / GACHA UX STABLE.
 - Mob Piece uses persistent PLAYER LIFE bars; damage animates and LIFE 0 loses. No draw result.
 - Central battle floor brawl animation strengthened with colliding figures, outlined white cartoon smoke and hit stars.
 - Figure/armor/equipment assets are preloaded on demand to reduce blank-image flashes.
+
+
+=== v104 PLAYER BALANCE / LEARNSET FORMAL ===
+Base: v103 GACHA / MOBPIECE LIFE STABLE.
+- Formalized player base stat curves for 13 characters.
+- Lv80 with endgame equipment is the target for clearing Demon Castle II.
+- Added primary/sub attributes, base elemental resistances and individual status resistances.
+- Added per-character level learnsets for single-target magic and techniques.
+- Third-tier elemental magic is learned at Lv46 where applicable.
+- All-target magic is NOT included in level learnsets (reserved for item learning).
+- Ultimate unlocks remain Lv1 / 15 / 30 / 50; story fifth ultimates remain story unlocks.
+- Added recommended levels: Desert 10 -> Demon Castle II 80; Grassland has no recommendation.
+- Existing saves receive a one-time HP/MP refill to migrate safely to the larger v104 max values.

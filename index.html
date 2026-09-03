@@ -3411,6 +3411,12 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .battle-total-top-v103,.battle-total-bottom-v103{margin:5px 0}.mob-piece-fight-v103 .piece-battlefloor-v103{height:330px}
 @media(max-height:760px){.piece-battlefloor-v103{height:225px}.mob-piece-fight-v103 .piece-battlefloor-v103{height:270px}.piece-player-card-v103{min-height:92px}.piece-player-card-v103 img{height:64px}}
 /* ===== END MOB QUEST v103 ===== */
+
+
+/* ===== MOB QUEST v104: player detail readability ===== */
+.player-resist-v104 span{background:#fffaf0!important;color:#24190f!important;border:2px solid #b58b5f!important}
+.player-resist-v104 b{color:#177a35!important;font-weight:1000!important}.player-resist-v104 b.weak{color:#b72f35!important}
+/* ===== END MOB QUEST v104 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3835,9 +3841,9 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v103
-// 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
-// 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
+<script id="mobQuestInlineData">// MOB QUEST v104
+// v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
+// 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
   base:{hp:420,mp:72,atk:38,mag:38,def:28,res:28,spd:28},
   enemy:{hpBase:1800,hpPerLevel:175,hpPerMember:350,atkBase:52,atkPerLevel:8.1,magBase:52,magPerLevel:8.0,defBase:52,defPerLevel:4.1,resBase:52,resPerLevel:4.0,spdBase:30,spdPerLevel:2.15},
@@ -4715,6 +4721,77 @@ for(const [element,id] of Object.entries(_v73Middle)){
 })();
 
 
+/* ===== MOB QUEST v104: FORMAL PLAYER BALANCE / LEARNSETS ===== */
+{
+  MOB_DATA.playerBalanceVersion=104;
+  TEMP_BALANCE.playerTargets={
+    yusha:{hp:[230,2900,3400],mp:[80,500,600],atk:[48,350,420],mag:[45,330,400],def:[42,410,500],res:[42,400,490],spd:[38,230,280]},
+    pink:{hp:[280,3400,3900],mp:[75,430,520],atk:[35,250,300],mag:[30,235,285],def:[55,500,610],res:[52,490,600],spd:[28,170,205]},
+    desert:{hp:[260,3150,3650],mp:[65,360,440],atk:[55,385,465],mag:[28,250,305],def:[44,430,520],res:[38,380,465],spd:[50,250,305]},
+    nyoro:{hp:[230,2850,3350],mp:[82,480,580],atk:[46,330,400],mag:[48,340,415],def:[36,350,430],res:[42,380,465],spd:[48,250,305]},
+    nekoku:{hp:[260,3050,3550],mp:[90,520,630],atk:[45,285,345],mag:[50,350,425],def:[46,400,490],res:[52,430,525],spd:[36,220,270]},
+    jessie:{hp:[220,2800,3250],mp:[88,500,600],atk:[48,350,425],mag:[48,335,410],def:[36,350,430],res:[42,380,465],spd:[58,280,340]},
+    denden:{hp:[220,2750,3200],mp:[72,420,510],atk:[55,390,475],mag:[36,270,330],def:[36,350,430],res:[36,350,430],spd:[60,300,365]},
+    money:{hp:[200,2550,3000],mp:[110,620,760],atk:[28,220,265],mag:[60,400,490],def:[34,330,405],res:[58,460,560],spd:[45,245,300]},
+    riro:{hp:[240,3000,3500],mp:[95,560,680],atk:[45,330,400],mag:[52,350,425],def:[42,390,475],res:[56,450,550],spd:[48,255,310]},
+    tetsu:{hp:[320,3650,4200],mp:[55,300,360],atk:[62,420,510],mag:[20,180,220],def:[64,520,635],res:[42,400,490],spd:[30,205,250]},
+    kaijin:{hp:[300,3400,3950],mp:[75,420,510],atk:[62,405,495],mag:[42,300,365],def:[50,470,575],res:[48,430,525],spd:[50,260,315]},
+    lilith:{hp:[230,2850,3350],mp:[120,680,820],atk:[32,230,280],mag:[65,430,525],def:[38,360,440],res:[62,500,610],spd:[52,265,320]},
+    naraku:{hp:[300,3500,4050],mp:[95,560,680],atk:[60,390,475],mag:[55,355,435],def:[58,480,585],res:[58,480,585],spd:[42,240,295]}
+  };
+
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const setup=(id,sub,elemRes,statusRes,magic,tech)=>{
+    const p=P(id);if(!p)return;
+    p.subAttributes=[...sub];p.elementResist={...elemRes};p.statusResist={...statusRes};
+    p.learnset={magic:magic.map(([skillId,level])=>({id:skillId,level})),technique:tech.map(([skillId,level])=>({id:skillId,level}))};
+  };
+  setup('yusha',['風','火'],{無:0,火:.08,水:-.05,雷:0,地:-.05,風:.08,光:.15,闇:-.10},{poison:.30,paralyze:.25,burn:.25,sleep:.30,confuse:.35,stun:.40},
+    [['neo',1],['hoku',1],['hono',12],['neoma',24],['hokuma',28],['honoma',32],['neomanipool',46]],
+    [['neosword',1],['shippugiri',18],['neomasword',34]]);
+  setup('pink',['光','地'],{無:.12,火:0,水:0,雷:-.05,地:.10,風:-.05,光:.08,闇:0},{poison:.35,paralyze:.35,burn:.30,sleep:.40,confuse:.45,stun:.50},
+    [['anoma',1],['gore',12],['neo',18],['anomaun',24],['gorema',30],['neoma',38]],
+    [['anosword',1],['anomasword',34]]);
+  setup('desert',['闇','水'],{無:0,火:.02,水:.08,雷:-.05,地:.18,風:-.10,光:-.05,闇:.08},{poison:.35,paralyze:.25,burn:.40,sleep:.30,confuse:.45,stun:.50},
+    [['gore',1],['mira',8],['nepu',12],['gorema',24],['mirama',28],['nepuma',32],['goremagardy',46]],
+    [['goresword',1],['mirasword',16],['mobgiri',18],['goremasword',34],['nepumasword',42]]);
+  setup('nyoro',['風','水'],{無:0,火:.18,水:.06,雷:0,地:-.05,風:.08,光:0,闇:0},{poison:.25,paralyze:.25,burn:.60,sleep:.35,confuse:.25,stun:.30},
+    [['hono',1],['hoku',8],['nepu',12],['honoma',24],['hokuma',28],['nepuma',32],['honomagma',46]],
+    [['fast-beat',18]]);
+  setup('nekoku',['光','風'],{無:0,火:-.10,水:.18,雷:-.05,地:0,風:.08,光:.08,闇:-.05},{poison:.40,paralyze:.30,burn:.25,sleep:.50,confuse:.40,stun:.30},
+    [['nepu',1],['hoku',10],['neo',14],['nepuma',24],['hokuma',30],['neoma',34],['nepumachun',46]],
+    [['chill-lofi',18]]);
+  setup('jessie',['地','光'],{無:0,火:0,水:-.05,雷:.18,地:.08,風:-.05,光:.08,闇:-.05},{poison:.25,paralyze:.50,burn:.30,sleep:.35,confuse:.45,stun:.35},
+    [['toru',1],['gore',10],['neo',14],['toruma',24],['gorema',28],['neoma',32],['torumaden',46]],
+    [['long-scratch',18]]);
+  setup('denden',['水','風'],{無:0,火:-.05,水:.08,雷:.20,地:-.08,風:.08,光:0,闇:0},{poison:.25,paralyze:.60,burn:.30,sleep:.30,confuse:.25,stun:.40},
+    [['toru',1],['nepu',10],['hoku',14],['toruma',24],['nepuma',28],['hokuma',32],['torumaden',46]],
+    [['long-scratch',18]]);
+  setup('money',['闇','雷'],{無:0,火:0,水:0,雷:.08,地:0,風:0,光:.15,闇:.12},{poison:.40,paralyze:.35,burn:.35,sleep:.45,confuse:.20,stun:.30},
+    [['neo',1],['mira',1],['toru',8],['neoma',20],['mirama',24],['toruma',28],['neomanipool',46]],
+    [['noise-scratch',18],['chill-lofi',38]]);
+  setup('riro',['闇','光'],{無:0,火:0,水:0,雷:-.05,地:-.10,風:.18,光:.08,闇:.08},{poison:.45,paralyze:.35,burn:.30,sleep:.45,confuse:.50,stun:.35},
+    [['hoku',1],['mira',10],['neo',14],['hokuma',24],['mirama',28],['neoma',32],['hokumawing',46]],
+    [['mobgiri',18],['mirasword',20],['miramasword',36]]);
+  setup('tetsu',['火','無'],{無:.05,火:.10,水:-.08,雷:0,地:.20,風:-.12,光:0,闇:0},{poison:.40,paralyze:.30,burn:.45,sleep:.30,confuse:.50,stun:.60},
+    [],[['goresword',1],['anosword',1],['magsword',12],['mobgiri',18],['goremasword',34],['anomasword',38],['magmasword',42]]);
+  setup('kaijin',['無','雷'],{無:.08,火:0,水:0,雷:.08,地:0,風:0,光:-.12,闇:.20},{poison:.50,paralyze:.45,burn:.45,sleep:.35,confuse:.55,stun:.60},
+    [['mira',1],['toru',12],['mirama',24],['toruma',32],['miramazone',46]],
+    [['mirasword',1],['anosword',1],['torusword',12],['noise-scratch',18],['miramasword',34],['anomasword',38],['torumasword',42]]);
+  setup('lilith',['風','火'],{無:0,火:.10,水:-.08,雷:0,地:-.05,風:.10,光:-.15,闇:.25},{poison:.60,paralyze:.50,burn:.55,sleep:.60,confuse:.60,stun:.50},
+    [['mira',1],['hoku',1],['hono',1],['mirama',18],['hokuma',24],['honoma',28],['miramazone',46]],
+    [['repeat-intro',16],['noise-scratch',20],['chill-lofi',38]]);
+  setup('naraku',['地','水'],{無:0,火:-.05,水:.10,雷:-.05,地:.12,風:-.08,光:-.12,闇:.22},{poison:.60,paralyze:.50,burn:.50,sleep:.55,confuse:.55,stun:.60},
+    [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
+    [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
+
+  const recommended={grassland:null,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:40,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:65,unfinishedBook:70,demonCastle2:80};
+  MOB_DATA.recommendedLevels=recommended;
+  for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
+}
+/* ===== END MOB QUEST v104 ===== */
+
+
 (() => {
 'use strict';
 
@@ -4725,7 +4802,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=103;
+const GAME_ASSET_VERSION=104;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10292,6 +10369,57 @@ const _renderMobPieceDeckV103Base=renderMobPieceDeckV96;renderMobPieceDeckV96=fu
 const _openEquipmentScreenV103Base=openEquipmentScreen;openEquipmentScreen=async function(){const warm=[];for(const [pid] of state.party){const eq=equipmentFor(pid);if(eq.main)warm.push(weaponById(eq.main));if(eq.sub)warm.push(weaponById(eq.sub));if(eq.armor)warm.push(armorById(eq.armor));for(const id of figureEquipmentFor(pid))if(id)warm.push(figureById(id));}warm.push(...ARMORS.filter(a=>armorOwned(a.id)>0).slice(0,24),...FIGURES.filter(f=>figureOwned(f.id)>0&&usableFigureV103(f)).slice(0,24));await preloadRowsV103(warm,56);return _openEquipmentScreenV103Base();};
 setTimeout(()=>{try{preloadRowsV103([...FIGURES.filter(f=>figureOwned(f.id)>0&&usableFigureV103(f)).slice(0,36),...ARMORS.filter(a=>armorOwned(a.id)>0).slice(0,20)],56);}catch(_){ }},700);
 /* ===== END MOB QUEST v103 ===== */
+
+
+/* ===== MOB QUEST v104: FORMAL PLAYER BALANCE / LEARNSET RUNTIME ===== */
+function playerBaseElementResistanceV104(a,element){const p=player(a?.id)||a;return clamp(Number(p?.elementResist?.[normalizeElement(element)]||0),-.50,.80);}
+function playerBaseStatusResistanceV104(a,kind){const p=player(a?.id)||a;return clamp(Number(p?.statusResist?.[kind]??.20),0,.90);}
+function learnedRowsV104(a,kind){const p=player(a?.id)||a,lv=Number(a?.level)||currentPlayerLevel(p?.id)||1;return (p?.learnset?.[kind]||[]).filter(x=>lv>=Number(x.level||1));}
+function availableMagicSkillsV104(a){const all=MOB_DATA.magicCatalog||[],ids=new Set(learnedRowsV104(a,'magic').map(x=>x.id));return all.filter(x=>ids.has(x.id)&&x.target!=='all');}
+function availableTechniqueSkillsV104(a){const all=MOB_DATA.techniqueCatalog||[],ids=new Set(learnedRowsV104(a,'technique').map(x=>x.id));return all.filter(x=>ids.has(x.id));}
+function nextLearnRowsV104(p,kind,lv){return (p?.learnset?.[kind]||[]).filter(x=>Number(x.level)>lv).sort((a,b)=>a.level-b.level);}
+
+defaultMagicFor=function(a){const skills=availableMagicSkillsV104(a);if(!skills.length)return null;const affordable=skills.filter(x=>(Number(x.cost)||0)<=Number(a?.mpNow??Infinity));const pool=affordable.length?affordable:skills;return pool.slice().sort((x,y)=>(Number(y.power)||0)-(Number(x.power)||0))[0]||null;};
+
+const _openSkillMenuV104Base=openSkillMenu;
+openSkillMenu=function(type){
+  if(!['magic','special'].includes(type))return _openSkillMenuV104Base(type);
+  const a=activeAlly();if(!a)return;const list=$('#skillMenuList');$('#skillMenu').hidden=false;
+  const testAll=!!(state.test?.enabled&&state.test?.allSkills);
+  if(type==='magic'){
+    const all=MOB_DATA.magicCatalog||[],skills=testAll?all:availableMagicSkillsV104(a);for(const sk of skills)for(const src of sk.frames||[])preloadAsset(src,'high');
+    $('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}${testAll?' / TEST ALL MAGIC':''}`;$('#skillMenuTitle').textContent='魔法';
+    list.innerHTML=skills.length?skills.map(sk=>`<button class="skill-item ${a.mpNow<sk.cost?'disabled':''}" data-magic-id="${sk.id}" type="button"><span class="skill-symbol">${sk.element}</span><div><b>${sk.name}</b><small>Lv${(a.learnset?.magic||[]).find(x=>x.id===sk.id)?.level||'-'} / ${sk.target==='all'?'敵全体':'敵単体'} / ${sk.tier==='large'?'大':sk.tier==='small'?'小':sk.tier==='all'?'全体中':'中'}ダメージ</small></div><em>MP ${sk.cost}</em></button>`).join(''):'<div class="switch-guide">現在習得している魔法はありません。</div>';
+    $$('[data-magic-id]',list).forEach(btn=>btn.onclick=async()=>{const sk=all.find(x=>x.id===btn.dataset.magicId);if(!sk||(!testAll&&!availableMagicSkillsV104(a).includes(sk)))return;if(a.mpNow<sk.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('magic',sk,a))return;$('#skillMenu').hidden=true;act('magic',sk);});return;
+  }
+  const all=MOB_DATA.techniqueCatalog||[],skills=testAll?all:availableTechniqueSkillsV104(a);for(const t of skills)for(const src of t.frames||[])preloadAsset(src,'high');
+  $('#skillMenuKicker').textContent=`${a.name} / Lv${a.level} / MP ${Math.floor(a.mpNow)}${testAll?' / TEST ALL TECHNIQUE':''}`;$('#skillMenuTitle').textContent='特技';
+  list.innerHTML=skills.length?skills.map(t=>`<button class="skill-item ${a.mpNow<t.cost?'disabled':''}" data-tech-id="${t.id}" type="button"><span class="skill-symbol">技</span><div><b>${t.name}</b><small>Lv${(a.learnset?.technique||[]).find(x=>x.id===t.id)?.level||'-'} / ${t.kind==='status'?`敵単体を${{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ'}[t.status]||'状態異常'}にする`:`${t.element}属性 / ${t.tier==='large'?'中～大':'小'}ダメージ`}</small></div><em>MP ${t.cost}</em></button>`).join(''):'<div class="switch-guide">現在習得している特技はありません。</div>';
+  $$('[data-tech-id]',list).forEach(btn=>btn.onclick=async()=>{const t=all.find(x=>x.id===btn.dataset.techId);if(!t||(!testAll&&!availableTechniqueSkillsV104(a).includes(t)))return;if(a.mpNow<t.cost)return notice('MPが足りない！','danger');if(!await confirmBattleSkillUse('special',t,a))return;$('#skillMenu').hidden=true;act('special',t);});
+};
+
+inflictAllyStatus=async function(a,kind,turns){if(!a||a.dead)return false;if(a.bookHeroStatusImmune)return false;const resist=clamp(playerBaseStatusResistanceV104(a,kind)+figureStatusResistance(a.id,kind)+Number(a.moneyFriendsStatusResist||0),0,.95);if(Math.random()<resist)return false;a.status[kind]=Math.max(a.status[kind],turns);if(await maybeArtistCleanse(a))return false;return true;};
+
+const _damageAllyV104Base=damageAlly;
+damageAlly=async function(a,power,type='physical',superHalf=false,element=''){
+  if(!a||a.dead)return 0;
+  const incoming=normalizeElement(element||actingEnemy()?.attribute||'無'),baseRes=playerBaseElementResistanceV104(a,incoming),old=a.__v104IncomingMul;
+  a.__v104IncomingMul=baseRes>=0?1-baseRes:1+Math.abs(baseRes);
+  const e=actingEnemy(),origAtk=e?.atk,origMag=e?.mag;
+  if(e){e.atk*=a.__v104IncomingMul;e.mag*=a.__v104IncomingMul;}
+  try{return await _damageAllyV104Base(a,power,type,superHalf,element);}finally{if(e){e.atk=origAtk;e.mag=origMag;}a.__v104IncomingMul=old;}
+};
+
+playerDetailMagic=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv,mpNow:999999};return availableMagicSkillsV104(fake);};
+playerDetailTechnique=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv};return availableTechniqueSkillsV104(fake);};
+openPlayerDetail=function(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),fake={...p,level:lv,mpNow:999999},magics=availableMagicSkillsV104(fake),techs=availableTechniqueSkillsV104(fake),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));const er=['火','水','雷','風','地','光','闇','無'].map(k=>{const n=Math.round(Number(p.elementResist?.[k]||0)*100);return`<span>${k}<b class="${n<0?'weak':''}">${n>0?'+':''}${n}%</b></span>`}).join(''),sr=[['poison','毒'],['paralyze','マヒ'],['burn','やけど'],['sleep','眠り'],['confuse','混乱'],['stun','ひるみ']].map(([k,n])=>`<span>${n}<b>${Math.round(playerBaseStatusResistanceV104(p,k)*100)}%</b></span>`).join(''),next=[...nextLearnRowsV104(p,'magic',lv).map(x=>({...x,type:'魔法'})),...nextLearnRowsV104(p,'technique',lv).map(x=>({...x,type:'特技'}))].sort((a,b)=>a.level-b.level).slice(0,5),allSkill=MOB_DATA.magicCatalog||[],allTech=MOB_DATA.techniqueCatalog||[];body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>メイン ${p.attribute} / サブ ${(p.subAttributes||[]).join('・')||'なし'} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>属性耐性</h3><div class="player-detail-stats player-resist-v104">${er}</div></section><section><h3>状態異常耐性</h3><div class="player-detail-stats player-resist-v104">${sr}</div></section><section><h3>習得魔法</h3><div class="player-detail-list">${magics.length?magics.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section><section><h3>習得特技</h3><div class="player-detail-list">${techs.length?techs.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section>${next.length?`<section><h3>次の習得</h3><div class="player-detail-list">${next.map(x=>{const sk=x.type==='魔法'?allSkill.find(s=>s.id===x.id):allTech.find(s=>s.id===x.id);return`<span><b>Lv${x.level} ${sk?.name||x.id}</b><small>${x.type}</small></span>`}).join('')}</div></section>`:''}<section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;};
+
+const _renderAdventureV104Base=renderAdventure;
+renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWorld(),title=$('#adventureStageTitle');if(title&&!state.adventure.completed){title.textContent=w?.recommendedLevel?`${w.name}　推奨Lv${w.recommendedLevel}`:(w?.name||'冒険');}return r;};
+
+/* v104 migration: old HP/MP values were based on much smaller max values. Refill once without changing progress. */
+setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<104){state.meta.playerBalanceVersion=104;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v104 balance migration]',e);}},0);
+/* ===== END MOB QUEST v104 ===== */
 </script>
 </body>
 </html>

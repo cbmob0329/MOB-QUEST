@@ -1,6 +1,6 @@
-// MOB QUEST v103
-// 未決定の初期ステータス・レベル成長・通常魔法威力・敵能力値・必殺技の数値倍率は
-// 正式設定ではありません。テスト戦闘だけを成立させるため TEMP_BALANCE に隔離しています。
+// MOB QUEST v104
+// v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
+// 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
   base:{hp:420,mp:72,atk:38,mag:38,def:28,res:28,spd:28},
   enemy:{hpBase:1800,hpPerLevel:175,hpPerMember:350,atkBase:52,atkPerLevel:8.1,magBase:52,magPerLevel:8.0,defBase:52,defPerLevel:4.1,resBase:52,resPerLevel:4.0,spdBase:30,spdPerLevel:2.15},
@@ -876,3 +876,74 @@ for(const [element,id] of Object.entries(_v73Middle)){
   const money=playerById('money');
   if(money){money.ults=money.ults||[];if(!money.ults.some(u=>u.name==='マニーフレンズ'))money.ults.push({name:'マニーフレンズ',image:'boss/57.png',cost:55,kind:'moneyFriends',power:0,desc:'ヤミモブマニーに変身。全ステータス20%アップ、状態異常耐性20%アップ、魔法会心率10%アップ。'});}
 })();
+
+
+/* ===== MOB QUEST v104: FORMAL PLAYER BALANCE / LEARNSETS ===== */
+{
+  MOB_DATA.playerBalanceVersion=104;
+  TEMP_BALANCE.playerTargets={
+    yusha:{hp:[230,2900,3400],mp:[80,500,600],atk:[48,350,420],mag:[45,330,400],def:[42,410,500],res:[42,400,490],spd:[38,230,280]},
+    pink:{hp:[280,3400,3900],mp:[75,430,520],atk:[35,250,300],mag:[30,235,285],def:[55,500,610],res:[52,490,600],spd:[28,170,205]},
+    desert:{hp:[260,3150,3650],mp:[65,360,440],atk:[55,385,465],mag:[28,250,305],def:[44,430,520],res:[38,380,465],spd:[50,250,305]},
+    nyoro:{hp:[230,2850,3350],mp:[82,480,580],atk:[46,330,400],mag:[48,340,415],def:[36,350,430],res:[42,380,465],spd:[48,250,305]},
+    nekoku:{hp:[260,3050,3550],mp:[90,520,630],atk:[45,285,345],mag:[50,350,425],def:[46,400,490],res:[52,430,525],spd:[36,220,270]},
+    jessie:{hp:[220,2800,3250],mp:[88,500,600],atk:[48,350,425],mag:[48,335,410],def:[36,350,430],res:[42,380,465],spd:[58,280,340]},
+    denden:{hp:[220,2750,3200],mp:[72,420,510],atk:[55,390,475],mag:[36,270,330],def:[36,350,430],res:[36,350,430],spd:[60,300,365]},
+    money:{hp:[200,2550,3000],mp:[110,620,760],atk:[28,220,265],mag:[60,400,490],def:[34,330,405],res:[58,460,560],spd:[45,245,300]},
+    riro:{hp:[240,3000,3500],mp:[95,560,680],atk:[45,330,400],mag:[52,350,425],def:[42,390,475],res:[56,450,550],spd:[48,255,310]},
+    tetsu:{hp:[320,3650,4200],mp:[55,300,360],atk:[62,420,510],mag:[20,180,220],def:[64,520,635],res:[42,400,490],spd:[30,205,250]},
+    kaijin:{hp:[300,3400,3950],mp:[75,420,510],atk:[62,405,495],mag:[42,300,365],def:[50,470,575],res:[48,430,525],spd:[50,260,315]},
+    lilith:{hp:[230,2850,3350],mp:[120,680,820],atk:[32,230,280],mag:[65,430,525],def:[38,360,440],res:[62,500,610],spd:[52,265,320]},
+    naraku:{hp:[300,3500,4050],mp:[95,560,680],atk:[60,390,475],mag:[55,355,435],def:[58,480,585],res:[58,480,585],spd:[42,240,295]}
+  };
+
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const setup=(id,sub,elemRes,statusRes,magic,tech)=>{
+    const p=P(id);if(!p)return;
+    p.subAttributes=[...sub];p.elementResist={...elemRes};p.statusResist={...statusRes};
+    p.learnset={magic:magic.map(([skillId,level])=>({id:skillId,level})),technique:tech.map(([skillId,level])=>({id:skillId,level}))};
+  };
+  setup('yusha',['風','火'],{無:0,火:.08,水:-.05,雷:0,地:-.05,風:.08,光:.15,闇:-.10},{poison:.30,paralyze:.25,burn:.25,sleep:.30,confuse:.35,stun:.40},
+    [['neo',1],['hoku',1],['hono',12],['neoma',24],['hokuma',28],['honoma',32],['neomanipool',46]],
+    [['neosword',1],['shippugiri',18],['neomasword',34]]);
+  setup('pink',['光','地'],{無:.12,火:0,水:0,雷:-.05,地:.10,風:-.05,光:.08,闇:0},{poison:.35,paralyze:.35,burn:.30,sleep:.40,confuse:.45,stun:.50},
+    [['anoma',1],['gore',12],['neo',18],['anomaun',24],['gorema',30],['neoma',38]],
+    [['anosword',1],['anomasword',34]]);
+  setup('desert',['闇','水'],{無:0,火:.02,水:.08,雷:-.05,地:.18,風:-.10,光:-.05,闇:.08},{poison:.35,paralyze:.25,burn:.40,sleep:.30,confuse:.45,stun:.50},
+    [['gore',1],['mira',8],['nepu',12],['gorema',24],['mirama',28],['nepuma',32],['goremagardy',46]],
+    [['goresword',1],['mirasword',16],['mobgiri',18],['goremasword',34],['nepumasword',42]]);
+  setup('nyoro',['風','水'],{無:0,火:.18,水:.06,雷:0,地:-.05,風:.08,光:0,闇:0},{poison:.25,paralyze:.25,burn:.60,sleep:.35,confuse:.25,stun:.30},
+    [['hono',1],['hoku',8],['nepu',12],['honoma',24],['hokuma',28],['nepuma',32],['honomagma',46]],
+    [['fast-beat',18]]);
+  setup('nekoku',['光','風'],{無:0,火:-.10,水:.18,雷:-.05,地:0,風:.08,光:.08,闇:-.05},{poison:.40,paralyze:.30,burn:.25,sleep:.50,confuse:.40,stun:.30},
+    [['nepu',1],['hoku',10],['neo',14],['nepuma',24],['hokuma',30],['neoma',34],['nepumachun',46]],
+    [['chill-lofi',18]]);
+  setup('jessie',['地','光'],{無:0,火:0,水:-.05,雷:.18,地:.08,風:-.05,光:.08,闇:-.05},{poison:.25,paralyze:.50,burn:.30,sleep:.35,confuse:.45,stun:.35},
+    [['toru',1],['gore',10],['neo',14],['toruma',24],['gorema',28],['neoma',32],['torumaden',46]],
+    [['long-scratch',18]]);
+  setup('denden',['水','風'],{無:0,火:-.05,水:.08,雷:.20,地:-.08,風:.08,光:0,闇:0},{poison:.25,paralyze:.60,burn:.30,sleep:.30,confuse:.25,stun:.40},
+    [['toru',1],['nepu',10],['hoku',14],['toruma',24],['nepuma',28],['hokuma',32],['torumaden',46]],
+    [['long-scratch',18]]);
+  setup('money',['闇','雷'],{無:0,火:0,水:0,雷:.08,地:0,風:0,光:.15,闇:.12},{poison:.40,paralyze:.35,burn:.35,sleep:.45,confuse:.20,stun:.30},
+    [['neo',1],['mira',1],['toru',8],['neoma',20],['mirama',24],['toruma',28],['neomanipool',46]],
+    [['noise-scratch',18],['chill-lofi',38]]);
+  setup('riro',['闇','光'],{無:0,火:0,水:0,雷:-.05,地:-.10,風:.18,光:.08,闇:.08},{poison:.45,paralyze:.35,burn:.30,sleep:.45,confuse:.50,stun:.35},
+    [['hoku',1],['mira',10],['neo',14],['hokuma',24],['mirama',28],['neoma',32],['hokumawing',46]],
+    [['mobgiri',18],['mirasword',20],['miramasword',36]]);
+  setup('tetsu',['火','無'],{無:.05,火:.10,水:-.08,雷:0,地:.20,風:-.12,光:0,闇:0},{poison:.40,paralyze:.30,burn:.45,sleep:.30,confuse:.50,stun:.60},
+    [],[['goresword',1],['anosword',1],['magsword',12],['mobgiri',18],['goremasword',34],['anomasword',38],['magmasword',42]]);
+  setup('kaijin',['無','雷'],{無:.08,火:0,水:0,雷:.08,地:0,風:0,光:-.12,闇:.20},{poison:.50,paralyze:.45,burn:.45,sleep:.35,confuse:.55,stun:.60},
+    [['mira',1],['toru',12],['mirama',24],['toruma',32],['miramazone',46]],
+    [['mirasword',1],['anosword',1],['torusword',12],['noise-scratch',18],['miramasword',34],['anomasword',38],['torumasword',42]]);
+  setup('lilith',['風','火'],{無:0,火:.10,水:-.08,雷:0,地:-.05,風:.10,光:-.15,闇:.25},{poison:.60,paralyze:.50,burn:.55,sleep:.60,confuse:.60,stun:.50},
+    [['mira',1],['hoku',1],['hono',1],['mirama',18],['hokuma',24],['honoma',28],['miramazone',46]],
+    [['repeat-intro',16],['noise-scratch',20],['chill-lofi',38]]);
+  setup('naraku',['地','水'],{無:0,火:-.05,水:.10,雷:-.05,地:.12,風:-.08,光:-.12,闇:.22},{poison:.60,paralyze:.50,burn:.50,sleep:.55,confuse:.55,stun:.60},
+    [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
+    [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
+
+  const recommended={grassland:null,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:40,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:65,unfinishedBook:70,demonCastle2:80};
+  MOB_DATA.recommendedLevels=recommended;
+  for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
+}
+/* ===== END MOB QUEST v104 ===== */
