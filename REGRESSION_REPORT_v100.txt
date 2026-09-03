@@ -1,0 +1,23 @@
+MOB QUEST v100 REGRESSION REPORT
+
+BASE
+- v99 RUNTIME SCOPE / TAVERN GACHA FIX STABLE
+
+PATCH SCOPE
+- Figure gacha cinematic and result UX
+- Mob Piece Battle revised rules/UI
+- Test MAX toggles
+- Tavern/Castle facility UI
+- Equipment return/background context
+- Blacksmith exit dialogue
+- Subquest enemy visual scale
+
+PRESERVED
+- v99 runtime-scope recovery and tavern exact dialogue
+- v95 armor / Demon Castle fidelity
+- v94 Reading Book staging / Navi Master fixes
+- v93 Reading Book entry and subquest unlock progression
+- prior battle UI / critical / ultimate CT fixes
+
+VALIDATION
+See final release checks performed before ZIP creation.

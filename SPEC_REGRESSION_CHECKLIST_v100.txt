@@ -1,0 +1,15 @@
+MOB QUEST v100 CHECKLIST
+[ ] Title/boot/Home preserved
+[ ] Tavern exact dialogue preserved
+[ ] Gacha carousel hidden during pull
+[ ] Capsule cinematic visible
+[ ] Result glow visible
+[ ] Mob Piece deck exactly 25 / unique / <=80
+[ ] Mob Piece SPD and center +25% all stats
+[ ] 5v5 / first-to-2 flow
+[ ] Test Items/Coin/Diamond MAX ON/OFF
+[ ] Tavern wood labels / floating icons
+[ ] Blacksmith exit line
+[ ] Castle banner font/shadow
+[ ] Equipment returns to source facility and uses source background
+[ ] Subquest enemies slightly smaller only in subquest

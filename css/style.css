@@ -3151,3 +3151,101 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .gacha-carousel-v98::-webkit-scrollbar{display:none!important}
 .gacha-carousel-v98>button{flex-basis:88%!important;min-width:88%!important;max-width:88%!important}
 /* ===== END MOB QUEST v99 ===== */
+/* ===== MOB QUEST v100: gacha / mob piece / facility UI ===== */
+
+/* Tavern: icon-only art remains the hero, but every icon now has a readable white wood banner. */
+.tavern-menu-grid>button,.tavern-menu-grid>button:last-child{
+  min-height:136px!important;height:136px!important;padding:3px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:2px!important;
+}
+.tavern-menu-grid>button img,.tavern-menu-grid>button:last-child img{
+  width:100px!important;height:100px!important;flex:0 0 100px!important;animation:tavernFloatV100 3.4s ease-in-out infinite!important;transform-origin:center center!important;
+}
+.tavern-menu-grid>button:nth-child(2) img{animation-delay:-.7s!important}.tavern-menu-grid>button:nth-child(3) img{animation-delay:-1.4s!important}.tavern-menu-grid>button:nth-child(4) img{animation-delay:-2.1s!important}
+.tavern-menu-grid>button b,.tavern-menu-grid>button:last-child b{
+  display:block!important;min-width:92px!important;max-width:100%!important;margin:-2px auto 0!important;padding:5px 8px 4px!important;border:1px solid #6b4c2e!important;border-radius:5px!important;
+  background:repeating-linear-gradient(0deg,#fffdf6 0,#fffdf6 5px,#f4ecdc 6px,#fffdf6 9px)!important;color:#16120e!important;-webkit-text-fill-color:#16120e!important;
+  font-size:11px!important;line-height:1.05!important;font-weight:1000!important;letter-spacing:.01em!important;text-align:center!important;text-shadow:0 1px 0 #fff!important;box-shadow:0 3px 0 rgba(77,49,27,.58),0 5px 9px rgba(0,0,0,.24)!important;white-space:nowrap!important;
+}
+.tavern-menu-grid>button small,.tavern-menu-grid>button:last-child small{display:none!important}
+@keyframes tavernFloatV100{0%,100%{transform:translateY(1px)}50%{transform:translateY(-7px)}}
+
+/* Castle banner typography: less generic, with a physical shadow under the white plaque. */
+.castle-main-icons>button b{
+  font-family:"Yu Mincho","Hiragino Mincho ProN","HGS明朝E",Georgia,serif!important;font-weight:900!important;letter-spacing:.035em!important;
+  border:1px solid rgba(72,48,28,.62)!important;border-radius:7px!important;padding:6px 11px!important;
+  background:linear-gradient(180deg,#fffef9,#f3ead8)!important;
+  box-shadow:0 4px 0 rgba(76,49,27,.58),0 7px 11px rgba(0,0,0,.30),inset 0 1px 0 #fff!important;
+  text-shadow:0 1px 0 #fff!important;
+}
+.castle-main-icons>button small{font-family:"Yu Mincho","Hiragino Mincho ProN",Georgia,serif!important;box-shadow:0 3px 0 rgba(76,49,27,.46),0 5px 8px rgba(0,0,0,.24)!important}
+
+/* Sub Quest enemies are only a little smaller. Normal Adventure/Boss rendering is unchanged. */
+.battle-screen.subquest-enemy-scale-v100 .enemy-sprite{width:92%!important;height:92%!important;object-fit:contain!important;object-position:center bottom!important}
+
+/* Gacha confirmation/result must never be hidden by the banner selector. */
+.gacha-cinematic-v100{position:fixed;inset:0;z-index:900;background:radial-gradient(circle at 50% 48%,#27394d 0,#111a27 37%,#05080e 76%);display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff}
+.gacha-cinematic-v100[hidden]{display:none!important}
+.gacha-cinematic-stage-v100{position:relative;width:min(100vw,480px);height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;text-align:center}
+.gacha-cinematic-stage-v100>small{position:absolute;top:calc(28px + var(--safe-top));font-size:11px;font-weight:1000;letter-spacing:.22em;color:#d9e6f2}
+.gacha-orbit-v100{position:relative;width:330px;height:330px;display:flex;align-items:center;justify-content:center}
+.gacha-orbit-mob-v100{position:absolute;left:50%;top:50%;font-style:normal;font-weight:1000;color:#fff;text-shadow:0 2px 0 #111,0 0 8px rgba(255,255,255,.6);opacity:0;transform-origin:0 0}
+.gacha-cinematic-v100.spin .gacha-orbit-mob-v100{animation:gachaMobOrbitV100 3.15s cubic-bezier(.24,.03,.86,.96) var(--delay) forwards}
+.gacha-capsule-v100{position:relative;z-index:4;width:112px;height:174px;border:7px solid #111;border-radius:58px;overflow:hidden;background:#f7eee0;box-shadow:0 10px 20px rgba(0,0,0,.48),inset 0 0 0 5px rgba(255,255,255,.35);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gacha-capsule-v100:before{content:"";position:absolute;left:0;right:0;top:50%;height:8px;background:#111;transform:translateY(-50%)}
+.gacha-capsule-v100 span{position:absolute;inset:0 0 50%;background:#ed4e91}.gacha-capsule-v100 em{position:absolute;inset:50% 0 0;background:#f0d7a1}.gacha-capsule-v100 b{position:relative;z-index:3;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;border:6px solid #111;color:#111;font-family:Impact,"Arial Black",sans-serif;font-size:17px;letter-spacing:.02em}
+.gacha-cinematic-v100.spin .gacha-capsule-v100{animation:gachaCapsuleShakeV100 .18s linear infinite}
+.gacha-capsule-glow-v100{position:absolute;z-index:2;width:120px;height:120px;border-radius:50%;opacity:0;box-shadow:0 0 30px 18px rgba(255,255,255,.7),0 0 80px 45px rgba(242,190,92,.50);transform:scale(.4)}
+.gacha-cinematic-v100.ingest .gacha-capsule-glow-v100{animation:gachaCapsuleChargeV100 1s ease-in forwards}
+.gacha-cinematic-v100.burst .gacha-capsule-v100{animation:gachaCapsuleBurstV100 .72s ease-out forwards}
+.gacha-cinematic-v100.burst .gacha-capsule-glow-v100{opacity:1;transform:scale(2.25);transition:.45s ease}
+.gacha-reveal-figure-v100{position:absolute;z-index:8;left:50%;top:50%;width:190px;height:225px;transform:translate(-50%,-45%) scale(.05);opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.gacha-reveal-figure-v100 img{width:170px;height:178px;object-fit:contain;filter:drop-shadow(0 12px 9px rgba(0,0,0,.45))}.gacha-reveal-figure-v100 b{font-size:18px;text-shadow:0 3px 0 #000}.gacha-reveal-figure-v100 small{font-size:11px;font-weight:1000;letter-spacing:.12em}
+.gacha-cinematic-v100.burst .gacha-reveal-figure-v100{animation:gachaFigureRevealV100 .82s .18s cubic-bezier(.18,.9,.25,1.25) forwards}
+.gacha-cinematic-message-v100{position:absolute;bottom:calc(64px + var(--safe-bottom));left:20px;right:20px;margin:0;font-size:17px;font-weight:1000;text-shadow:0 2px 0 #000}
+@keyframes gachaMobOrbitV100{0%{opacity:0;transform:rotate(var(--a)) translateX(var(--r)) rotate(var(--na)) scale(.7)}8%{opacity:1}36%{opacity:1;transform:rotate(calc(var(--a) + 360deg)) translateX(var(--r)) rotate(calc(var(--na) - 360deg)) scale(1)}68%{opacity:1;transform:rotate(calc(var(--a) + 900deg)) translateX(var(--r66)) rotate(calc(var(--na) - 900deg)) scale(.9)}88%{opacity:1;transform:rotate(calc(var(--a) + 1500deg)) translateX(var(--r28)) rotate(calc(var(--na) - 1500deg)) scale(.65)}100%{opacity:0;transform:rotate(calc(var(--a) + 2160deg)) translateX(0) scale(.1)}}
+@keyframes gachaCapsuleShakeV100{0%{transform:translate(-2px,1px) rotate(-1.5deg)}25%{transform:translate(3px,-2px) rotate(2deg)}50%{transform:translate(-3px,-1px) rotate(-2deg)}75%{transform:translate(2px,2px) rotate(1.5deg)}100%{transform:translate(-2px,1px) rotate(-1.5deg)}}
+@keyframes gachaCapsuleChargeV100{0%{opacity:0;transform:scale(.4)}55%{opacity:.68;transform:scale(1.15)}100%{opacity:1;transform:scale(1.7)}}
+@keyframes gachaCapsuleBurstV100{0%{transform:scale(1)}45%{transform:scale(1.13);filter:brightness(2.1)}100%{transform:scale(.15);opacity:0;filter:brightness(4)}}
+@keyframes gachaFigureRevealV100{0%{opacity:0;transform:translate(-50%,-45%) scale(.05)}65%{opacity:1;transform:translate(-50%,-56%) scale(1.15)}100%{opacity:1;transform:translate(-50%,-54%) scale(1)}}
+
+.figure-gacha-overlay-v96.gacha-result-overlay-v100{z-index:895!important;background:rgba(3,6,10,.94)!important;align-items:center!important;justify-content:center!important;padding:calc(20px + var(--safe-top)) 8px calc(64px + var(--safe-bottom))!important}
+.gacha-result-card-v100{width:min(96vw,460px)!important;max-height:calc(100dvh - 92px - var(--safe-top) - var(--safe-bottom))!important;overflow:auto!important;background:#101a28!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:0 16px 48px rgba(0,0,0,.65)!important}
+.gacha-result-title-v100{text-align:center;padding:4px 4px 8px}.gacha-result-title-v100 small{font-size:9px;letter-spacing:.15em;color:#bfd0df}.gacha-result-title-v100 h2{font-size:22px;margin:2px 0}.gacha-result-title-v100 p{font-size:10px;margin:2px;color:#dce5ed}
+.gacha-result-grid-v100{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+.gacha-result-piece-v100{position:relative!important;overflow:hidden!important;border:2px solid rgba(255,255,255,.32)!important;border-radius:14px!important;padding:7px!important;background:#182434!important;animation:gachaResultPopV100 .45s var(--result-delay) both ease-out!important;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 6px 13px rgba(0,0,0,.38)!important}
+.gacha-result-piece-v100>span{display:block;height:112px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden}.gacha-result-piece-v100 img{width:100%!important;height:100%!important;object-fit:contain!important}.gacha-result-piece-v100>b{display:block;font-size:10px;margin-top:4px;line-height:1.2}.gacha-result-piece-v100>small{display:block;font-size:9px;font-weight:1000}
+.gacha-result-piece-v100.rarity-sr{border-color:#98d1ff!important;box-shadow:0 0 15px rgba(105,188,255,.58),0 6px 13px rgba(0,0,0,.38)!important}.gacha-result-piece-v100.rarity-ssr{border-color:#e5b5ff!important;box-shadow:0 0 19px rgba(194,101,255,.68),0 6px 13px rgba(0,0,0,.38)!important}.gacha-result-piece-v100.rarity-ur{border-color:#ffe69a!important;box-shadow:0 0 24px rgba(255,208,79,.86),0 0 7px #fff inset,0 6px 13px rgba(0,0,0,.38)!important;animation:gachaResultPopV100 .45s var(--result-delay) both ease-out,gachaRareGlowV100 1.1s 1s infinite alternate!important}.gacha-result-piece-v100.rarity-mob{border-color:#fff!important;box-shadow:0 0 28px rgba(255,255,255,.95),0 0 16px rgba(245,97,191,.9),0 0 8px #fff inset!important;animation:gachaResultPopV100 .45s var(--result-delay) both ease-out,gachaRareGlowV100 .75s 1s infinite alternate!important}
+.gacha-result-close-v100{position:sticky!important;bottom:0!important;width:100%!important;margin-top:10px!important;z-index:4!important}.gacha-result-detail-v100{z-index:30!important}
+@keyframes gachaResultPopV100{0%{opacity:0;transform:scale(.55) translateY(18px)}75%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}@keyframes gachaRareGlowV100{from{filter:brightness(1)}to{filter:brightness(1.22)}}
+
+/* Mob Piece Battle v100: field / deck / 5-vs-5 cartoon presentation. */
+.mob-piece-overlay-v96{z-index:880!important;background:rgba(3,7,11,.92)!important;padding:calc(8px + var(--safe-top)) 6px calc(64px + var(--safe-bottom))!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
+.mob-piece-card-v96{width:min(97vw,466px)!important;max-height:calc(100dvh - 84px - var(--safe-top) - var(--safe-bottom))!important;overflow:auto!important}
+.mob-piece-menu-card-v100 .mob-piece-menu-v96 button small{white-space:normal!important;line-height:1.25!important}
+.mob-piece-deck-v100 .settings-head p{margin:2px 0 0;font-size:9px;color:#d9e1ea}.mob-piece-deck-v100 .settings-head p b{font-size:12px;color:#ffe38a}
+.piece-mini-stats-v100{grid-template-columns:repeat(5,minmax(0,1fr))!important}.piece-mini-stats-v100 b{font-size:7px!important;padding:4px 2px!important}
+.mob-piece-battle-v100{display:flex!important;flex-direction:column!important;gap:6px!important;background:#111b28!important;overflow:hidden!important;min-height:min(720px,calc(100dvh - 90px - var(--safe-top) - var(--safe-bottom)))!important}
+.piece-field-v100{border:1px solid rgba(255,255,255,.15);border-radius:13px;padding:5px;background:rgba(255,255,255,.045);min-height:122px}.piece-field-v100>b{display:block;font-size:8px;letter-spacing:.12em;color:#c8d4e0;margin:0 0 3px 3px}.opponent-field-v100{background:linear-gradient(180deg,rgba(128,55,67,.24),rgba(255,255,255,.035))}.player-field-v100{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(49,102,87,.25))}
+.piece-field-row-v100,.piece-hand-v100{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;align-items:stretch}
+.piece-hand-card-v100{position:relative;min-width:0;border:1px solid rgba(255,255,255,.18);border-radius:8px;background:#172435;padding:3px 2px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 4px 7px rgba(0,0,0,.25)}
+.piece-hand-card-v100>img{width:100%;height:62px;object-fit:contain}.piece-hand-card-v100>b{font-size:6.8px;line-height:1.1;min-height:15px;overflow:hidden}.piece-hand-card-v100>small{font-size:5.8px;color:#d2dce5}.piece-hand-card-v100>em{font-size:5.5px;font-style:normal;font-weight:900;color:#fff;white-space:nowrap}.piece-hand-card-v100.center{border:2px solid #ffe078;background:#293149;box-shadow:0 0 12px rgba(255,218,85,.52),0 4px 7px rgba(0,0,0,.25);transform:translateY(-4px)}.piece-hand-card-v100.opponent{filter:saturate(.85)}
+.piece-hand-card-v100>div{display:grid;grid-template-columns:1fr;gap:2px;width:100%;margin-top:3px}.piece-hand-card-v100 button{padding:4px 1px;border-radius:5px;background:#30455e;font-size:5.8px;font-weight:1000}.piece-hand-card-v100 button:disabled{opacity:.3}
+.piece-battlefield-v100{position:relative;min-height:92px;border-radius:14px;background:radial-gradient(circle at center,rgba(217,180,83,.16),rgba(6,12,19,.65));border:1px solid rgba(255,255,255,.14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;overflow:hidden}.piece-battlefield-v100.ready>div:first-child b{display:block;font-size:11px;color:#ffe28b}.piece-battlefield-v100.ready>div:first-child small{font-size:8px}.piece-battlefield-v100 .piece-active-tags-v96{max-height:42px;overflow:auto;display:flex;gap:3px;flex-wrap:wrap;justify-content:center}.piece-battlefield-v100 .piece-active-tags-v96 span{font-size:5.8px;padding:2px 4px}
+.piece-deck-stack-v100{width:54px;height:64px;border:3px solid #d6c49c;border-radius:8px;background:#25364a;box-shadow:-4px 4px 0 #111,-7px 7px 0 #394e66;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Impact,"Arial Black",sans-serif;font-size:18px}.piece-deck-stack-v100 small{font-size:6px;letter-spacing:.12em}.piece-battlefield-v100>strong{font-size:14px;letter-spacing:.12em}.drawing .piece-hand-card-v100{animation:pieceDrawInV100 .3s ease-out both}.piece-command-v100{display:grid;grid-template-columns:2fr 1fr;gap:5px}.piece-command-v100 button{min-height:38px;border-radius:8px;font-size:9px;font-weight:1000;background:#293c52}
+@keyframes pieceDrawInV100{0%{opacity:0;transform:translate(40px,-30px) rotate(12deg) scale(.4)}100%{opacity:1;transform:none}}
+
+.mob-piece-fight-card-v100{overflow:hidden!important}.piece-fight-v100{position:relative;min-height:430px;border-radius:15px;background:linear-gradient(180deg,#2b2634 0,#182332 48%,#21372e 100%);overflow:hidden;border:1px solid rgba(255,255,255,.14)}
+.piece-fight-team-v100{position:absolute;left:4%;right:4%;height:135px;display:flex;justify-content:center;align-items:center;gap:-2px}.piece-fight-team-v100.cpu{top:18px}.piece-fight-team-v100.player{bottom:18px}.fight-piece-v100{width:19%;height:120px;display:flex;align-items:center;justify-content:center;animation:pieceFightBobV100 .35s ease-in-out infinite alternate;animation-delay:calc(var(--fight-i) * -.06s)}.fight-piece-v100 img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 5px rgba(0,0,0,.42))}.fight-piece-v100.cpu img{transform:scaleX(-1)}
+.piece-dust-v100{position:absolute;left:50%;top:50%;width:230px;height:160px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,#efe0bd 0,#baa47e 45%,rgba(118,96,66,.15) 72%,transparent 74%);filter:drop-shadow(0 8px 8px rgba(0,0,0,.38));animation:pieceDustPulseV100 .28s ease-in-out infinite alternate}.piece-dust-v100:before,.piece-dust-v100:after{content:"";position:absolute;border-radius:50%;background:#d8c39b}.piece-dust-v100:before{width:95px;height:75px;left:-20px;top:30px}.piece-dust-v100:after{width:110px;height:86px;right:-24px;bottom:24px}.piece-dust-v100 i,.piece-dust-v100 b{position:absolute;z-index:3;font-style:normal;font-family:Impact,"Arial Black",sans-serif;text-shadow:0 2px 0 #111}.piece-dust-v100 i:nth-child(1){left:18px;top:25px;font-size:22px;transform:rotate(-15deg)}.piece-dust-v100 i:nth-child(2){right:12px;top:70px;font-size:20px;transform:rotate(12deg)}.piece-dust-v100 i:nth-child(3){left:70px;bottom:18px;font-size:25px}.piece-dust-v100 i:nth-child(4){right:65px;top:15px;font-size:22px}.piece-dust-v100 b{left:50%;top:50%;transform:translate(-50%,-50%);font-size:24px;color:#fff;white-space:nowrap}.piece-fight-total-v100{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}.piece-fight-total-v100 span{font-size:6.5px;text-align:center;background:#243449;border-radius:6px;padding:4px}
+@keyframes pieceFightBobV100{from{transform:translateY(1px) rotate(-2deg)}to{transform:translateY(-9px) rotate(3deg)}}@keyframes pieceDustPulseV100{from{transform:translate(-50%,-50%) scale(.92) rotate(-2deg)}to{transform:translate(-50%,-50%) scale(1.08) rotate(2deg)}}
+.piece-round-result-v100{position:absolute;z-index:30;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(4,8,13,.84);animation:pieceResultInV100 .35s ease-out}.piece-round-result-v100 small{font-size:12px;font-weight:1000;letter-spacing:.18em}.piece-round-result-v100 strong{font-family:Impact,"Arial Black",sans-serif;font-size:70px;letter-spacing:.04em;text-shadow:0 5px 0 #111,0 0 22px currentColor}.piece-round-result-v100.win strong{color:#9ef3bb}.piece-round-result-v100.lose strong{color:#ff9097}.piece-round-result-v100 p{font-size:14px;font-weight:1000}@keyframes pieceResultInV100{0%{opacity:0;transform:scale(1.4)}100%{opacity:1;transform:scale(1)}}
+
+/* Test toggles added in v100 use the same ON/OFF language as the other test controls. */
+#testItemsMaxBtn,#testCoinsMaxBtn,#testDiamondsMaxBtn{min-width:58px!important}
+
+@media(max-width:380px){
+  .tavern-menu-grid>button,.tavern-menu-grid>button:last-child{height:126px!important;min-height:126px!important}.tavern-menu-grid>button img,.tavern-menu-grid>button:last-child img{width:90px!important;height:90px!important;flex-basis:90px!important}.tavern-menu-grid>button b{font-size:10px!important;min-width:82px!important}
+  .piece-hand-card-v100>img{height:54px}.piece-hand-card-v100>b{font-size:6px}.piece-hand-card-v100>em{font-size:4.8px}.piece-fight-v100{min-height:390px}
+  .gacha-orbit-v100{transform:scale(.88)}
+}
+/* ===== END MOB QUEST v100 ===== */

@@ -120,3 +120,17 @@ FIGURE GACHA:
 - Figure button renders the real horizontal swipe carousel before the popup becomes visible.
 - Popup opens high on screen rather than as a shallow bottom panel.
 - Static fallback text no longer claims lineup/rates are undecided.
+
+
+=== v100 ===
+Base: v99 RUNTIME SCOPE / TAVERN GACHA FIX STABLE.
+- Gacha detail/banner surfaces are hidden before confirmation, pull cinematic, and result.
+- New capsule gacha cinematic: shaking capsule, accelerating MOB text orbit, text ingestion, glow, figure reveal.
+- Result cards use rarity-sensitive glow and stronger reveal.
+- Mob Piece Battle updated to canonical 2026-09-03 revision: exactly 25 unique pieces, max deck cost 80, SPD stat, center all stats +25%, move once and exchange once per turn, sequential five-card draw, 5v5 cartoon fight, first to two wins.
+- Test mode: Items MAX / Coin MAX / Diamond MAX are persistent ON/OFF locks while test mode is enabled.
+- Tavern menu icons: white wood-grain black-text labels and slow floating animation.
+- Blacksmith exit line restored for castle back/home path.
+- Castle menu banner typography/shadows improved.
+- Equipment opened from Castle/Tavern/Training now keeps that facility background and BACK returns to that facility.
+- Subquest battle enemy art is reduced slightly only for subquests.
