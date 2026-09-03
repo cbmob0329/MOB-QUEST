@@ -207,3 +207,16 @@ Base: v104 PLAYER BALANCE / LEARNSET STABLE.
 - Previously generic enemies receive level/attribute-based formal magic or techniques instead of temporary placeholder attacks.
 - Player-side elemental/status resistances from v104 remain active in battle.
 - Target balance: Lv80 + strongest equipment can clear Demon Castle II.
+
+=== v106 DEMON CASTLE PROGRESSION / STAGING FIX ===
+Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
+- Fixed Demon Castle party split progression deadlock. Confirmation is now rendered inside the split overlay with explicit はい / いいえ, so it cannot hide behind the higher-z-index formation layer.
+- Demon King silhouette is applied before the guest group is revealed; the full-color boss no longer flashes for a frame.
+- Demon Castle background loading resets stale fallback history and uses a multi-stage castle fallback chain. The adventure background stays hidden while a fallback is loading instead of exposing a broken-image glyph.
+- Kira Witch + Lara Witch 「お命頂戴！」 is now simultaneous character dialogue instead of explanatory narration.
+- Post-Area1 witch absorption is now visual staging: Lilith appears between the two witches; both glow, shrink and merge into Lilith before disappearing.
+- Lilith's four sisters summon is rebuilt as a five-character group (Lilith + 4 sisters), compact enough to fit the phone screen, with staggered summon animation.
+- Demon King + Ace retreat uses a teleport animation rather than simply disappearing.
+- v103-v105 runtime blocks were moved back inside the core IIFE before boot, preventing the old out-of-scope runtime-patch architecture regression.
+- GAME_ASSET_VERSION and title version updated to v106.
+- Final v106 safeguard: restored the complete STORY_EVENTS registry after runtime-scope relocation and added explicit Demon Castle actor image fallbacks (Ace / Demon King / Lilith / witches / four sisters).

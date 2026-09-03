@@ -3406,3 +3406,79 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .player-resist-v104 span{background:#fffaf0!important;color:#24190f!important;border:2px solid #b58b5f!important}
 .player-resist-v104 b{color:#177a35!important;font-weight:1000!important}.player-resist-v104 b.weak{color:#b72f35!important}
 /* ===== END MOB QUEST v104 ===== */
+
+/* ===== MOB QUEST v106: Demon Castle progression / staging ===== */
+/* Never expose the browser's broken-image glyph while a castle background fallback is being tried. */
+#adventureBg.asset-missing{visibility:hidden!important}
+
+/* Demon King must already be black before the group fades in. */
+.demon-maou-silhouette-v95 img{filter:brightness(0)!important;opacity:.94!important}
+
+/* Source-authored Lilith family summon: Lilith + four sisters must all fit on a phone. */
+.story-guest-group.demon-lilith-family-v106{
+  left:2%!important;right:2%!important;width:auto!important;
+  bottom:47%!important;height:22%!important;
+  gap:1px!important;justify-content:space-between!important;align-items:flex-end!important;
+  overflow:visible!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi{
+  flex:0 0 19%!important;width:19%!important;height:100%!important;
+  max-width:19%!important;min-width:0!important;margin:0!important;
+  transform-origin:center bottom!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi img{
+  width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi{
+  opacity:0;transform:translateY(-16px) scale(.72);
+  animation:demonLilithSummonV106 .62s cubic-bezier(.2,.9,.25,1.25) forwards;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(1){animation-delay:.05s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(2){animation-delay:.14s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(3){animation-delay:.23s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(4){animation-delay:.32s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(5){animation-delay:.41s}
+@keyframes demonLilithSummonV106{
+  0%{opacity:0;transform:translateY(-20px) scale(.68);filter:brightness(2.4) drop-shadow(0 0 18px #fff)}
+  58%{opacity:1;transform:translateY(3px) scale(1.08);filter:brightness(1.45) drop-shadow(0 0 14px #a971ff)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 8px 8px rgba(0,0,0,.4))}
+}
+
+/* Witches stand apart with Lilith centered, then physically merge into her instead of narration explaining it. */
+.story-guest-group.demon-witch-merge-v106{
+  left:12%!important;right:12%!important;width:auto!important;bottom:47%!important;height:24%!important;
+  justify-content:space-between!important;gap:7%!important;overflow:visible!important;
+}
+.story-guest-group.demon-witch-merge-v106 .story-guest-multi{transform-origin:center bottom!important;transition:transform 1.45s ease-in,opacity 1.25s ease-in,filter .35s ease!important}
+.story-guest-group.demon-witch-merge-v106 [data-story-actor="boss-lilith-castle"]{z-index:5!important}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-killwitch"]{
+  transform:translateX(130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-succubus"]{
+  transform:translateX(-130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="boss-lilith-castle"]{
+  animation:demonLilithAbsorbV106 .55s ease-in-out 2 alternate;
+}
+.demon-merge-glow-v106{position:absolute;z-index:4;left:50%;bottom:22%;width:74px;height:74px;transform:translateX(-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(217,123,255,.58) 34%,rgba(132,53,187,.18) 58%,transparent 72%);animation:demonMergeGlowV106 1.45s ease forwards}
+@keyframes demonLilithAbsorbV106{from{filter:brightness(1) drop-shadow(0 8px 8px rgba(0,0,0,.4))}to{filter:brightness(1.85) drop-shadow(0 0 20px #e9b3ff)}}
+@keyframes demonMergeGlowV106{0%{opacity:0;transform:translateX(-50%) scale(.25)}45%{opacity:1;transform:translateX(-50%) scale(1.6)}100%{opacity:0;transform:translateX(-50%) scale(.55)}}
+.story-guest-group.demon-witch-merge-done-v106{justify-content:center!important}
+
+/* Demon King + Ace teleport away visibly instead of simply disappearing. */
+.story-guest-group.demon-teleport-v106 .story-guest-multi{animation:demonTeleportV106 .86s ease-in forwards!important}
+@keyframes demonTeleportV106{0%{opacity:1;transform:scale(1);filter:brightness(1)}45%{opacity:1;transform:scale(.82);filter:brightness(1.9) drop-shadow(0 0 22px #744cff)}100%{opacity:0;transform:scale(.08) translateY(-20px);filter:brightness(3) blur(2px)}}
+
+/* Inline A/B confirmation lives inside z-index 180 split overlay, so it can never be hidden behind it. */
+.lilith-inline-confirm-v106{position:sticky;z-index:6;bottom:0;margin:12px 0 0;padding:12px;border:3px solid #4d3048;border-radius:16px;background:#fff8e9;color:#24191e;box-shadow:0 10px 28px rgba(0,0,0,.28);text-align:center}
+.lilith-inline-confirm-v106 strong{display:block;font-size:15px;font-weight:1000;color:#24191e!important;margin-bottom:9px}
+.lilith-inline-confirm-v106>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lilith-inline-confirm-v106 button{height:46px;border-radius:12px;font-size:14px;font-weight:1000;color:#fff;background:#273f59;border:2px solid #6886a4}
+.lilith-inline-confirm-v106 button[data-lilith-no-v106]{background:#fff;color:#381f2b;border-color:#805267}
+
+@media(max-height:720px){
+  .story-guest-group.demon-lilith-family-v106{bottom:45%!important;height:20%!important}
+  .story-guest-group.demon-witch-merge-v106{bottom:45%!important;height:21%!important}
+}
+/* ===== END MOB QUEST v106 ===== */
+#adventureBg.asset-loading-v106{visibility:hidden!important}

@@ -1,0 +1,18 @@
+MOB QUEST v106 REGRESSION REPORT
+
+Fixed:
+1. Demon Castle AREA3 party split could deadlock because the normal dialog (z-index 100) opened behind the party split overlay (z-index 180). Replaced with same-overlay yes/no confirmation.
+2. Demon King briefly appeared in full color before silhouette class was applied. Silhouette is now assigned before the group becomes visible.
+3. Witch-to-Lilith source-script staging was being rendered as narration text. Replaced by animated merge staging.
+4. Lilith sisters were oversized/clipped. Lilith + four sisters now use a compact five-character summon layout.
+5. Demon Castle background fallback state could retain old failed-image history. setImage now resets tried/fallback state and castle backgrounds have a safe fallback chain.
+6. v103-v105 runtime code was outside the main IIFE. Moved inside before boot.
+7. Standalone title version corrected to v106.
+
+Preserved:
+- v104 player balance / learnsets / resistances.
+- v105 enemy balance / resistances / skills and boss paralysis immunity.
+- v103 Mob Piece / gacha systems.
+- v99+ stable boot architecture and all prior story systems.
+8. Restored the complete STORY_EVENTS table after scope relocation; VM execution now reaches v106/v105/v99 runtime guards without ReferenceError.
+9. Added explicit Demon Castle story-actor image fallbacks for Ace, Demon King, Lilith, both witches, and all four sisters so a failed ID lookup cannot become the blue '?' actor placeholder.

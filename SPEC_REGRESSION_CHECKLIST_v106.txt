@@ -1,0 +1,18 @@
+MOB QUEST v106 CHECKLIST
+[OK] Full replacement build based on v105.
+[OK] GAME_ASSET_VERSION = 106.
+[OK] Title display = v106.
+[OK] v103-v105 runtime blocks execute inside core IIFE before boot.
+[OK] Demon Castle split confirmation is visible and interactive inside z-index 180 overlay.
+[OK] Split YES resolves and permits story to continue to B-party battle.
+[OK] Split NO returns to formation editing.
+[OK] Demon King silhouette class applied before reveal.
+[OK] Castle background has fallback chain and stale fallback state reset.
+[OK] Kira/Lara simultaneous line is dialogue, not narration.
+[OK] Witch absorption is visual animation, not explanatory narration.
+[OK] Lilith + four sisters fit as a five-character group.
+[OK] v104 player balance retained.
+[OK] v105 boss paralysis immunity/status duration cap retained.
+[OK] Complete STORY_EVENTS table is present before v89+ story overrides.
+[OK] VM scope execution reaches v106, v105 and v99 runtime markers.
+[OK] Demon Castle key story actors have explicit image fallback definitions; no lookup-only '?' placeholder path.

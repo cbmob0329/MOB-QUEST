@@ -3417,6 +3417,82 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
 .player-resist-v104 span{background:#fffaf0!important;color:#24190f!important;border:2px solid #b58b5f!important}
 .player-resist-v104 b{color:#177a35!important;font-weight:1000!important}.player-resist-v104 b.weak{color:#b72f35!important}
 /* ===== END MOB QUEST v104 ===== */
+
+/* ===== MOB QUEST v106: Demon Castle progression / staging ===== */
+/* Never expose the browser's broken-image glyph while a castle background fallback is being tried. */
+#adventureBg.asset-missing{visibility:hidden!important}
+
+/* Demon King must already be black before the group fades in. */
+.demon-maou-silhouette-v95 img{filter:brightness(0)!important;opacity:.94!important}
+
+/* Source-authored Lilith family summon: Lilith + four sisters must all fit on a phone. */
+.story-guest-group.demon-lilith-family-v106{
+  left:2%!important;right:2%!important;width:auto!important;
+  bottom:47%!important;height:22%!important;
+  gap:1px!important;justify-content:space-between!important;align-items:flex-end!important;
+  overflow:visible!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi{
+  flex:0 0 19%!important;width:19%!important;height:100%!important;
+  max-width:19%!important;min-width:0!important;margin:0!important;
+  transform-origin:center bottom!important;
+}
+.story-guest-group.demon-lilith-family-v106 .story-guest-multi img{
+  width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi{
+  opacity:0;transform:translateY(-16px) scale(.72);
+  animation:demonLilithSummonV106 .62s cubic-bezier(.2,.9,.25,1.25) forwards;
+}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(1){animation-delay:.05s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(2){animation-delay:.14s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(3){animation-delay:.23s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(4){animation-delay:.32s}
+.story-guest-group.demon-lilith-summon-v106 .story-guest-multi:nth-child(5){animation-delay:.41s}
+@keyframes demonLilithSummonV106{
+  0%{opacity:0;transform:translateY(-20px) scale(.68);filter:brightness(2.4) drop-shadow(0 0 18px #fff)}
+  58%{opacity:1;transform:translateY(3px) scale(1.08);filter:brightness(1.45) drop-shadow(0 0 14px #a971ff)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 8px 8px rgba(0,0,0,.4))}
+}
+
+/* Witches stand apart with Lilith centered, then physically merge into her instead of narration explaining it. */
+.story-guest-group.demon-witch-merge-v106{
+  left:12%!important;right:12%!important;width:auto!important;bottom:47%!important;height:24%!important;
+  justify-content:space-between!important;gap:7%!important;overflow:visible!important;
+}
+.story-guest-group.demon-witch-merge-v106 .story-guest-multi{transform-origin:center bottom!important;transition:transform 1.45s ease-in,opacity 1.25s ease-in,filter .35s ease!important}
+.story-guest-group.demon-witch-merge-v106 [data-story-actor="boss-lilith-castle"]{z-index:5!important}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-killwitch"]{
+  transform:translateX(130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="c-succubus"]{
+  transform:translateX(-130%) scale(.05)!important;opacity:0!important;filter:brightness(3) drop-shadow(0 0 18px #fff)!important;
+}
+.story-guest-group.demon-witch-merge-v106.demon-witch-merge-active-v106 [data-story-actor="boss-lilith-castle"]{
+  animation:demonLilithAbsorbV106 .55s ease-in-out 2 alternate;
+}
+.demon-merge-glow-v106{position:absolute;z-index:4;left:50%;bottom:22%;width:74px;height:74px;transform:translateX(-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(217,123,255,.58) 34%,rgba(132,53,187,.18) 58%,transparent 72%);animation:demonMergeGlowV106 1.45s ease forwards}
+@keyframes demonLilithAbsorbV106{from{filter:brightness(1) drop-shadow(0 8px 8px rgba(0,0,0,.4))}to{filter:brightness(1.85) drop-shadow(0 0 20px #e9b3ff)}}
+@keyframes demonMergeGlowV106{0%{opacity:0;transform:translateX(-50%) scale(.25)}45%{opacity:1;transform:translateX(-50%) scale(1.6)}100%{opacity:0;transform:translateX(-50%) scale(.55)}}
+.story-guest-group.demon-witch-merge-done-v106{justify-content:center!important}
+
+/* Demon King + Ace teleport away visibly instead of simply disappearing. */
+.story-guest-group.demon-teleport-v106 .story-guest-multi{animation:demonTeleportV106 .86s ease-in forwards!important}
+@keyframes demonTeleportV106{0%{opacity:1;transform:scale(1);filter:brightness(1)}45%{opacity:1;transform:scale(.82);filter:brightness(1.9) drop-shadow(0 0 22px #744cff)}100%{opacity:0;transform:scale(.08) translateY(-20px);filter:brightness(3) blur(2px)}}
+
+/* Inline A/B confirmation lives inside z-index 180 split overlay, so it can never be hidden behind it. */
+.lilith-inline-confirm-v106{position:sticky;z-index:6;bottom:0;margin:12px 0 0;padding:12px;border:3px solid #4d3048;border-radius:16px;background:#fff8e9;color:#24191e;box-shadow:0 10px 28px rgba(0,0,0,.28);text-align:center}
+.lilith-inline-confirm-v106 strong{display:block;font-size:15px;font-weight:1000;color:#24191e!important;margin-bottom:9px}
+.lilith-inline-confirm-v106>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lilith-inline-confirm-v106 button{height:46px;border-radius:12px;font-size:14px;font-weight:1000;color:#fff;background:#273f59;border:2px solid #6886a4}
+.lilith-inline-confirm-v106 button[data-lilith-no-v106]{background:#fff;color:#381f2b;border-color:#805267}
+
+@media(max-height:720px){
+  .story-guest-group.demon-lilith-family-v106{bottom:45%!important;height:20%!important}
+  .story-guest-group.demon-witch-merge-v106{bottom:45%!important;height:21%!important}
+}
+/* ===== END MOB QUEST v106 ===== */
+#adventureBg.asset-loading-v106{visibility:hidden!important}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3436,7 +3512,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v102</div>
+      <div class="title-version">v106</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4894,7 +4970,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=105;
+const GAME_ASSET_VERSION=106;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5326,9 +5402,24 @@ async function abandonAdventure(){
 }
 
 
-function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{let chain=String(img.dataset.fallbackChain||'').split('|').map(v=>v.trim()).filter(Boolean);const tried=new Set(String(img.dataset.triedList||'').split('|').map(v=>v.trim()).filter(Boolean));const current=img.getAttribute('src')||'';if(current)tried.add(current);img.dataset.triedList=[...tried].join('|');while(chain.length&&tried.has(chain[0]))chain.shift();if(chain.length){const next=chain.shift();img.dataset.fallbackChain=chain.join('|');img.src=next;return;}const f=img.dataset.fallbackSrc;if(f&&!tried.has(f)&&current!==f){tried.add(f);img.dataset.triedList=[...tried].join('|');img.src=f;return;}img.classList.add('asset-missing');});img.addEventListener('load',()=>img.classList.remove('asset-missing'));}
+function bindImage(img){if(!img||img.dataset.bound==='1')return;img.dataset.bound='1';img.draggable=false;img.addEventListener('error',()=>{let chain=String(img.dataset.fallbackChain||'').split('|').map(v=>v.trim()).filter(Boolean);const tried=new Set(String(img.dataset.triedList||'').split('|').map(v=>v.trim()).filter(Boolean));const current=img.getAttribute('src')||'';if(current)tried.add(current);img.dataset.triedList=[...tried].join('|');while(chain.length&&tried.has(chain[0]))chain.shift();if(chain.length){const next=chain.shift();img.dataset.fallbackChain=chain.join('|');img.src=next;return;}const f=img.dataset.fallbackSrc;if(f&&!tried.has(f)&&current!==f){tried.add(f);img.dataset.triedList=[...tried].join('|');img.src=f;return;}img.classList.add('asset-missing');img.classList.remove('asset-loading-v106');});img.addEventListener('load',()=>img.classList.remove('asset-missing','asset-loading-v106'));}
 function bindImages(root=document){$$('img',root).forEach(bindImage);}
-function setImage(img,src,fallback=''){if(!img)return;img.classList.remove('asset-missing');img.dataset.tried='0';if(fallback)img.dataset.fallbackSrc=fallback;img.src=src;bindImage(img);}
+function setImage(img,src,fallback=''){
+  if(!img)return;
+  img.classList.remove('asset-missing');
+  if(img.id==='adventureBg')img.classList.add('asset-loading-v106');
+  img.dataset.tried='0';
+  img.dataset.triedList='';
+  img.dataset.fallbackChain='';
+  if(fallback)img.dataset.fallbackSrc=fallback;else delete img.dataset.fallbackSrc;
+  /* v106: Demon Castle backgrounds sometimes arrive late/missing in asset packs. Never leave a broken-image '?' on screen. */
+  if(/^back\/maoh(?:2|3|4)?\.png$/i.test(String(src||''))){
+    const chain=['back/maoh.png','back/maoh2.png','back/maoh3.png','back/maoh4.png','back2/09.png','back/rpgmain.png'].filter(x=>x!==src&&x!==fallback);
+    img.dataset.fallbackChain=chain.join('|');
+    img.dataset.fallbackSrc='back/rpgmain.png';
+  }
+  img.src=src;bindImage(img);
+}
 
 const assetPreloadCache=new Map();
 const assetImageCache=new Map();
@@ -6296,11 +6387,24 @@ const STORY_GUESTS={
 };
 /* v32: モブジェシー is the canonical play/06.png player character. */
 const STORY_ONLY_ACTORS={};
+/* v106: explicit Demon Castle actor fallback prevents a missing lookup from rendering the blue '?' placeholder. */
+const STORY_ACTOR_FALLBACKS_V106={
+  'boss-ace':{name:'モブエース',image:'boss/08.png',symbol:'A',category:'boss'},
+  'boss-maou-castle':{name:'モブ魔王',image:'boss/22.png',symbol:'王',category:'boss'},
+  'boss-lilith-castle':{name:'モブリリス',image:'boss/21.png',symbol:'薔',category:'boss'},
+  'c-killwitch':{name:'モブキラウィッチ',image:'enemy/146.png',symbol:'魔',category:'elite'},
+  'c-succubus':{name:'モブララウィッチ',image:'enemy/147.png',symbol:'魔',category:'elite'},
+  'c-lilith-hell':{name:'モブヘルリリス',image:'boss/40.png',symbol:'炎',category:'boss'},
+  'c-lilith-kirin':{name:'モブキリンリリス',image:'boss/41.png',symbol:'雷',category:'boss'},
+  'c-lilith-kufu':{name:'モブクフリリス',image:'boss/42.png',symbol:'光',category:'boss'},
+  'c-lilith-riva':{name:'モブリヴァリリス',image:'boss/43.png',symbol:'水',category:'boss'}
+};
 let storySceneExtras=[];
 function storyActorInfo(key){
   const e=STORY_ONLY_ACTORS[key];if(e)return{key,...e,image:versionedPlay(e.image),player:false,eventOnly:true};
   const p=player(key);if(p)return{key,name:p.name,image:versionedPlay(p.image),symbol:p.symbol||'仲',player:true};
   const t=trainingEnemyTemplate(STORY_GUESTS[key]||key);if(t)return{key,name:t.name,image:t.image||'',symbol:t.symbol||'敵',player:false,category:t.category||'normal',enemyTemplate:t,sizeClass:enemySizeClass(t),winged:enemyIsWinged(t)};
+  const f=STORY_ACTOR_FALLBACKS_V106[key];if(f)return{key,...f,player:false,eventOnly:true,sizeClass:f.category==='boss'?'boss':'elite',winged:false};
   return{key,name:key||'???',image:'',symbol:'?'};
 }
 function storyFlags(){if(!state.adventure.storyFlags||typeof state.adventure.storyFlags!=='object')state.adventure.storyFlags={};return state.adventure.storyFlags;}
@@ -6440,13 +6544,38 @@ async function storyShowGuest(key,opt={}){const g=$('#storyGuest'),img=$('#story
 async function storyHideGuest(){const g=$('#storyGuest'),hiddenKey=g.dataset.hiddenPartyActor;g.classList.remove('visible');await fixedDelay(520);g.hidden=true;g.dataset.storyActor='';if(hiddenKey){const a=$(`[data-story-actor="${hiddenKey}"]`,$('#storyScene'));a?.classList.remove('guest-duplicate-hidden');delete g.dataset.hiddenPartyActor;}}
 async function storyShowGuests(keys=[],opt={}){
   await storyHideGuest().catch(()=>{});
-  const group=$('#storyGuestGroup'),ids=(keys||[]).filter(Boolean).slice(0,4);if(!ids.length)return;
-  group.hidden=false;group.className='story-guest-group';group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
+  const group=$('#storyGuestGroup'),maxCount=opt.allowFive?5:4,ids=(keys||[]).filter(Boolean).slice(0,maxCount);if(!ids.length)return;
+  group.hidden=false;group.className='story-guest-group';
+  if(opt.compactLilith)group.classList.add('demon-lilith-family-v106');
+  if(opt.mergeSetup)group.classList.add('demon-witch-merge-v106');
+  if(opt.summon)group.classList.add('demon-lilith-summon-v106');
+  if(opt.raised)group.classList.add('story-guests-raised-v106');
+  group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
-  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});if(opt.compactLilith){holder.style.setProperty('width',ids.length>=5?'19%':'23%','important');holder.style.setProperty('height','100%','important');}}else img.classList.add('asset-missing');}));
+  /* The silhouette class must exist BEFORE opacity changes, otherwise the real boss flashes for one frame. */
+  for(const key of (opt.silhouetteKeys||[])){const holder=$(`[data-story-actor="${key}"]`,group);holder?.classList.add('demon-maou-silhouette-v95');}
   await nextPaint();group.classList.add('visible');await fixedDelay(opt.slow?950:520);await fixedDelay(500);
 }
 async function storyHideGuests(){const group=$('#storyGuestGroup');if(group.hidden)return;group.classList.remove('visible');await fixedDelay(480);group.hidden=true;group.innerHTML='';group.dataset.count='0';}
+async function demonWitchesMergeIntoLilithV106(){
+  const group=$('#storyGuestGroup');if(!group||group.hidden)return;
+  group.classList.add('demon-witch-merge-active-v106');
+  const glow=document.createElement('div');glow.className='demon-merge-glow-v106';group.appendChild(glow);
+  await fixedDelay(1550);
+  for(const key of ['c-killwitch','c-succubus']){$(`[data-story-actor="${key}"]`,group)?.remove();}
+  glow.remove();group.dataset.count='1';group.classList.remove('demon-witch-merge-active-v106');group.classList.add('demon-witch-merge-done-v106');
+  const lilith=$('[data-story-actor="boss-lilith-castle"]',group);if(lilith){lilith.style.setProperty('width','38%','important');lilith.style.setProperty('height','100%','important');}
+  await fixedDelay(420);
+}
+async function demonLilithSummonV106(){
+  await storyShowGuests(['c-lilith-hell','c-lilith-kirin','boss-lilith-castle','c-lilith-kufu','c-lilith-riva'],{allowFive:true,compactLilith:true,raised:true,summon:true,slow:true});
+}
+async function demonTeleportPairV106(){
+  const group=$('#storyGuestGroup');if(!group||group.hidden){await storyHideGuests();return;}
+  group.classList.add('demon-teleport-v106');await fixedDelay(900);await storyHideGuests();group.classList.remove('demon-teleport-v106');
+}
+
 async function storyExclaim(key){const g=$('#storyGuestMark');if($('#storyGuest').dataset.storyActor===key){g.hidden=false;void g.offsetWidth;await fixedDelay(700);g.hidden=true;}else{const a=storyAnchor(key);if(a){const mark=document.createElement('i');mark.className='story-mark';mark.textContent='!';a.appendChild(mark);await fixedDelay(700);mark.remove();}}await fixedDelay(500);}
 async function storyFlash(){const f=$('#storyFlash');f.classList.remove('play');void f.offsetWidth;f.classList.add('play');await fixedDelay(460);f.classList.remove('play');await fixedDelay(500);}
 async function storyImpact(text='ドン！ッ',dodge=false){if(dodge){const acts=$$('.story-party-actor',$('#storyPartyLine'));acts.forEach((a,i)=>a.classList.add(i%2?'dodge-right':'dodge-left'));}const sc=$('#storyScene'),el=$('#storyImpact');el.textContent=text;el.hidden=false;sc.classList.add('shake');el.classList.remove('play');void el.offsetWidth;el.classList.add('play');await fixedDelay(720);sc.classList.remove('shake');el.hidden=true;el.classList.remove('play');$$('.story-party-actor',$('#storyPartyLine')).forEach(a=>a.classList.remove('dodge-left','dodge-right'));await fixedDelay(500);}
@@ -6561,9 +6690,23 @@ function normalizeLilithSplit(){const roster=state.party.map(x=>[x[0],Number(x[1
   const A=[],B=[];roster.forEach((row,i)=>(i%2?B:A).push([...row]));if(!B.length&&A.length>1)B.push(A.pop());return{A,B};
 }
 function renderLilithSplitOverlay(root,split){const roster=state.party.map(x=>[x[0],Number(x[1])||5]),teamOf=id=>split.A.some(x=>x[0]===id)?'A':'B';root.innerHTML=`<div class="lilith-split-card"><div class="settings-head"><div><small>PARTY SPLIT</small><h2>パーティーを2つ作ってください</h2></div></div><div class="lilith-opponents"><div><b>Aパーティー</b><span>モブリリス / モブヘルリリス / モブキリンリリス</span></div><div><b>Bパーティー</b><span>モブクフリリス / モブリヴァリリス</span></div></div><p>キャラクターをタップするとA/Bを移動します。</p><div class="lilith-split-roster">${roster.map(([id,lv])=>{const q=player(id),team=teamOf(id);return`<button type="button" data-lilith-member="${id}" class="team-${team.toLowerCase()}"><em>${team}</em><img src="${versionedPlay(q.image)}" alt="${q.name}"><b>${q.name}</b><small>Lv${lv}</small></button>`;}).join('')}</div><div class="lilith-team-count"><span>A ${split.A.length}人</span><span>B ${split.B.length}人</span></div><button type="button" class="primary-btn" data-lilith-confirm>このパーティーで挑む</button></div>`;bindImages(root);}
-async function chooseLilithSplit(){let overlay=document.querySelector('#lilithSplitOverlay');if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}const split=normalizeLilithSplit();overlay.hidden=false;renderLilithSplitOverlay(overlay,split);return await new Promise(resolve=>{const bind=()=>{$$('[data-lilith-member]',overlay).forEach(btn=>btn.onclick=()=>{const id=btn.dataset.lilithMember,from=split.A.some(x=>x[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(x=>x[0]===id);to.push(from.splice(i,1)[0]);renderLilithSplitOverlay(overlay,split);bind();});$('[data-lilith-confirm]',overlay).onclick=async()=>{if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');const ans=await dialog('このパーティーで挑みますか？',[['はい','yes','primary'],['いいえ','no']],'PARTY SPLIT');if(ans!=='yes')return;state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;resolve(state.meta.lilithSplit);};};bind();});}
-function currentLilithSplit(){const v=state.meta?.lilithSplit;return v&&Array.isArray(v.A)&&Array.isArray(v.B)&&v.A.length&&v.B.length?v:null;}
-function switchBattleToLilithPartyA(){const b=state.battle,split=b?.config?.lilithSplit;if(!b||!split?.A?.length)return;persistAdventureVitalsFor(b.allies||[]);const vitals=state.adventure.vitals||{},allies=split.A.map(([id,lv])=>buildAlly(player(id),lv,vitals[id])).filter(Boolean);for(const a of allies)initUltimateCooldowns(a);b.allies=allies;b.mainIds=allies.slice(0,4).map(a=>a.id);b.superIds=allies.slice(4,6).map(a=>a.id);b.reserveIds=allies.slice(6,10).map(a=>a.id);b.queue=[];b.queuePos=0;}
+async function chooseLilithSplit(){
+  let overlay=document.querySelector('#lilithSplitOverlay');if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}
+  const split=normalizeLilithSplit();overlay.hidden=false;renderLilithSplitOverlay(overlay,split);
+  return await new Promise(resolve=>{
+    const clearInline=()=>$('.lilith-inline-confirm-v106',overlay)?.remove();
+    const bind=()=>{
+      $$('[data-lilith-member]',overlay).forEach(btn=>btn.onclick=()=>{clearInline();const id=btn.dataset.lilithMember,from=split.A.some(x=>x[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(x=>x[0]===id);to.push(from.splice(i,1)[0]);renderLilithSplitOverlay(overlay,split);bind();});
+      const confirmBtn=$('[data-lilith-confirm]',overlay);if(!confirmBtn)return;
+      confirmBtn.onclick=()=>{
+        if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');
+        clearInline();const card=$('.lilith-split-card',overlay),box=document.createElement('div');box.className='lilith-inline-confirm-v106';box.innerHTML='<strong>このパーティーで挑みますか？</strong><div><button type="button" data-lilith-yes-v106 class="primary-btn">はい</button><button type="button" data-lilith-no-v106>いいえ</button></div>';card.appendChild(box);box.scrollIntoView({block:'nearest',behavior:'smooth'});
+        $('[data-lilith-no-v106]',box).onclick=()=>box.remove();
+        $('[data-lilith-yes-v106]',box).onclick=()=>{state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;box.remove();resolve(state.meta.lilithSplit);};
+      };
+    };bind();
+  });
+}
 
 const STORY_EVENTS={
   'arrival:desert':{worldId:'desert',area:0,layout:'partyLeftGuestRight',steps:[
@@ -10380,34 +10523,6 @@ showGachaResultV96=showGachaResultV100;
 /* ===== END MOB QUEST v102 ===== */
 
 
-/* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
-window.__mobV99PatchRuntime=true;
-/* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
-
-window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-let bootSetupError=null;
-try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
-catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
-function bindEssentialBootEvents(){
-  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
-  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
-}
-bindEssentialBootEvents();
-window.__mobBootReady=true;
-/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
-(async()=>{
-  try{showTitle();}
-  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
-})();
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
-setTimeout(startFastBackgroundWarmup,1400);
-})();
-
-
-
-
-
-
 /* ===== MOB QUEST v103: GACHA SAFE REVEAL / MOB PIECE LIFE BATTLE / ASSET PRELOAD ===== */
 try{const bad=FIGURES.find(f=>f.id==='17'&&/^\/+$/u.test(String(f.name||'')));if(bad){bad.pending=true;bad.name='未設定フィギュア17';}}catch(_){ }
 
@@ -10569,6 +10684,69 @@ function enemyFormalDetailV105(e){
 
 /* v104 already introduced character-specific resistances; retain them as the actual incoming-damage/status layer. */
 /* ===== END MOB QUEST v105 ===== */
+
+
+
+/* ===== MOB QUEST v106: DEMON CASTLE PROGRESSION / STAGING FIX ===== */
+window.__mobV106PatchRuntime=true;
+
+/* Keep the authored Demon Castle opening, but apply the Demon King silhouette before reveal. */
+runDemonCastleArrivalStory=async function(){
+  await openStoryScene('demonCastle',0);
+  await storySay('pink','ここが魔王城でありますね・・！');
+  await storyShowGuest('boss-ace',{slow:true});
+  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
+  await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');await storySay('pink','なぜ魔王軍に！');await storySay('denden','退屈だからでやんすか！？');await storySay('boss-ace','退屈か\nそうであれば\nどれほど幸せだろな');await storySay('money','はっきりとは覚えてないけど\n悪いやつではなかったはずよ！');await storySay('boss-ace','そうか\n少しは覚えているのか');await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない\nお前と同じだモブジェシー！');await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');await storySay('denden','それでも戦うでやんす！！');
+  $('#storyScene').hidden=true;await startDemonAceStoryBattle();
+  await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('？？？「情けない」');
+  await storyShowGuests(['boss-ace','boss-maou-castle'],{slow:true,silhouetteKeys:['boss-maou-castle']});
+  await storySay('boss-maou-castle','我の側近が無様な姿を晒すとは');await storySay('boss-ace','申し訳、、ありません・・');await storySay('pink','魔王であります！！');await storySay('desert','こんなに早く出会うとはな');await storySay('boss-maou-castle','まあよい\n一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();await storyImpact('バチィッ!!');await storySay('boss-ace','グッ・・・！');await storySay('boss-maou-castle','随分と嫌われたようだな\n行くぞ');
+  await demonTeleportPairV106();await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ\n先へ進むぞ！');
+};
+
+Object.assign(STORY_EVENTS,{
+  'pre:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','c-succubus']],['say','c-killwitch','我ら！'],['sayAs','c-succubus','リリス親衛隊！','モブララウィッチ'],['say','c-killwitch','モブキラウィッチ！'],['sayAs','c-succubus','モブララウィッチ！','モブララウィッチ'],['sayDual','c-killwitch','お命頂戴！','c-succubus','お命頂戴！'],['say','denden','か、かっけえでやんす・・'],['say','nekoku','オラ、好きだ'],['say','money','何馬鹿な事言ってるの！\nこの2人相当強いわよ！'],['say','jessie','簡単には通してくれなさそうね'],['say','nyoro','早く倒してモブエースを追うニョロ！']
+  ]},
+  'post:demonCastle:0':{worldId:'demonCastle',area:0,steps:[
+    ['guests',['c-killwitch','boss-lilith-castle','c-succubus'],{mergeSetup:true,raised:true}],['sayAs','c-succubus','リリス様・・','モブララウィッチ'],['say','c-killwitch','申し訳、、ありません、、'],['say','boss-lilith-castle','2人ともよく頑張ったね'],['say','boss-lilith-castle','もういいから\nゆっくり休んでね\nあとは僕に任せて'],['witchMergeLilith'],['say','boss-lilith-castle','どうも勇者様\n引き返すならここが最後だよ'],['say','money','出たわね魔王軍 No.2！'],['say','jessie','薔薇の魔女、モブリリス・・！'],['say','boss-lilith-castle','ネオン街の魔女に保安官ね\n大人しくお家に帰る気はない？'],['say','pink','魔王を倒すまで\n僕たちは止まらないであります！'],['say','desert','薔薇の魔女がもう相手をしてくれるのか？'],['say','boss-lilith-castle','そんなわけないでしょ\nそこのピンクちゃん\n死相が出てるわ\n警告に来てあげただけ'],['say','pink','そんな脅し怖くないであります！'],['say','boss-lilith-castle','脅し？\n僕割と優しいんだけどね\nまあ\nせいぜい死なないことね'],['hideGuests'],['say','desert','死相など全員に出ている\n覚悟を決めて\n先へ進むぞ！']
+  ]},
+  'pre:demonCastle:2':{worldId:'demonCastle',area:2,steps:[
+    ['guest','boss-lilith-castle'],['say','boss-lilith-castle','凄いね君たち\nグラディモブ\n強かったでしょ'],['say','desert','ああ\n強敵だった'],['say','boss-lilith-castle','まあ\n僕の方が強いんだけどね\nちょっとだけ寂しくなるな'],['say','money','あんたなんて\n私の魔法でぶっ飛ばしてやるわ！'],['say','boss-lilith-castle','ネオン街の魔女\n僕も手合わせしてみたかった\n良い機会ね'],['say','jessie','あなたを倒せば\nあとは魔王だけ！'],['say','boss-lilith-castle','うーん\nそれはどうだろう\n行ってみないと分からないよね\nまあ\n行けないんだけどね'],['lilithSummon'],['say','boss-lilith-castle','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん'],['say','pink','あれを全部相手は大変であります・・'],['say','desert','2手に分かれよう'],['say','denden','ナイスアイデアでやんす！'],['say','jessie','どう分かれるの？'],['say','riro','勇者様が\n決めればいいでス'],['say','denden','そうでやんすね！'],['say','money','リリスがいる方は3体\n戦力の分け方が大事ね！'],['narrate','パーティーを2つ作ってください\nAパーティー：モブリリス、モブヘルリリス、モブキリンリリス\nBパーティー：モブクフリリス、モブリヴァリリス'],['lilithSplit'],['say','nyoro','素晴らしい采配ニョロ！'],['say','desert','では、まずBパーティーの出陣だ！']
+  ]}
+});
+/* ===== END MOB QUEST v106 ===== */
+
+
+/* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
+window.__mobV99PatchRuntime=true;
+/* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
+
+window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
+let bootSetupError=null;
+try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
+catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
+function bindEssentialBootEvents(){
+  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
+  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
+}
+bindEssentialBootEvents();
+window.__mobBootReady=true;
+/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
+(async()=>{
+  try{showTitle();}
+  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
+})();
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
+setTimeout(startFastBackgroundWarmup,1400);
+})();
+
+
+
+
+
+
+
 </script>
 </body>
 </html>
