@@ -1,0 +1,19 @@
+MOB QUEST v111 - SUB QUEST STAGING / SOURCE FIDELITY
+
+BASE
+- v110 GACHA / MOB PIECE SIMULATION STABLE
+
+FIXED
+- Subquest story scenes now render only the quest-required speakers (max 3) instead of the entire current party.
+- Subquest enemy preview supports all 5 enemies and fits 1/2/3/4/5-enemy formations to the phone frame before reveal.
+- Subquest battle enemy art gets count-aware scaling only; main adventure enemy sizes are untouched.
+- Dialogue bubbles are re-balanced above the active speaker and long compressed lines are split into shorter beats.
+- Source-sheet corrections applied to Grassland Q1-Q5, Desert early quests, Rural Q3, Magma Q4-Q5 and full-formation preview counts.
+- Rural Q3 is restored from the supplied source: four Mob Knife + Mob Captain, captain 2 actions, captain protected while knives remain.
+- Five-enemy battles keep readable/contained positions; Grass Q1 rare Savanna and Desert Q1 Golden Mummy are staged near center.
+- Magma Q4/Q5 source dialogue restored instead of show-only placeholder staging.
+- Existing v110 gacha/Mob Piece changes, v109 support magic, v108 HP balance, and Demon Castle fixes are preserved.
+
+VERSION
+- GAME_ASSET_VERSION = 111
+- title version = v111

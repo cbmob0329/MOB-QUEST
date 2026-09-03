@@ -3559,3 +3559,50 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .castle-speech.opening-position-v110{z-index:24!important;max-width:calc(100% - 20px)!important;margin:0!important}.castle-speech.opening-position-v110 p{margin-top:3px!important}
 @media(max-width:380px){.gacha-result-grid-v110{gap:3px}.gacha-result-grid-v110>button{min-height:100px}.gacha-result-grid-v110>button>span{height:60px}.gacha-result-grid-v110 img{height:58px}.piece-battlefloor-fight-v110{height:315px!important;min-height:315px!important}.piece-skill-fx-v110{width:112px;height:112px}.piece-impact-v110{width:126px;height:94px}}
 /* ===== END MOB QUEST v110 ===== */
+
+/* ===== MOB QUEST v111: SUB QUEST STAGING BALANCE ===== */
+.story-scene.subquest-story-v111 .story-party-line{
+  left:4%!important;right:4%!important;bottom:8.5%!important;height:25%!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;gap:2.2vw!important;
+}
+.story-scene.subquest-story-v111 .story-party-line[data-party-count="2"] .story-party-actor,
+.story-scene.subquest-story-v111 .story-party-line[data-party-count="3"] .story-party-actor{
+  width:min(22vw,94px)!important;flex:0 0 min(22vw,94px)!important;height:86%!important;
+}
+.story-scene.subquest-story-v111 .story-guest-group.subquest-guests-v111{
+  left:3%!important;right:3%!important;bottom:49%!important;height:22%!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;gap:1.2vw!important;overflow:visible!important;
+}
+.story-scene.subquest-story-v111 .story-guest-group.subquest-guests-v111[data-count="4"]{gap:.7vw!important}
+.story-scene.subquest-story-v111 .story-guest-group.subquest-guests-v111[data-count="5"]{gap:.25vw!important}
+.story-scene.subquest-story-v111 .story-guest-group.subquest-guests-v111 .story-guest-multi{flex:none!important;min-width:0!important;transform-origin:center bottom!important}
+.story-scene.subquest-story-v111 .story-bubble{z-index:85!important;max-width:78vw!important}
+
+/* Battle formations: the subquest only gets smaller art; HUD/nameplates stay readable. */
+.battle-screen.subquest-enemy-scale-v100 .enemy-area{left:2%!important;right:2%!important;gap:3px!important;align-items:stretch!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-count-1{padding:0 18%!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-count-2{padding:0 5%!important;gap:7px!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-count-3{padding:0 1%!important;gap:5px!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-count-4{padding:0!important;gap:3px!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-count-5{padding:0!important;gap:1px!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-unit{min-width:0!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-sprite-wrap{width:100%!important;min-width:0!important;justify-content:center!important}
+.battle-screen.subquest-enemy-scale-v100 .enemy-nameplate{width:96%!important;margin-top:3px!important}
+
+/* Grass Q1: the rare Savanna is the center monster. */
+.battle-screen.subquest-layout-grass-1 .enemy-area.enemy-count-3 .enemy-unit:nth-child(2){z-index:4!important}
+.battle-screen.subquest-layout-grass-1 .enemy-area.enemy-count-3 .enemy-unit:nth-child(2) .enemy-sprite-wrap{transform:translateY(-3px)!important}
+/* Golden mummy: keep the main individual visually centered and all four fully on-screen. */
+.battle-screen.subquest-layout-desert-1 .enemy-area.enemy-count-4 .enemy-unit:nth-child(2){z-index:4!important}
+.battle-screen.subquest-layout-desert-1 .enemy-area.enemy-count-4 .enemy-unit:nth-child(2) .enemy-sprite-wrap{transform:translateY(-2px)!important}
+/* Pirate formation: four knives in front, captain slightly higher/behind without covering HP panels. */
+.battle-screen.subquest-layout-rural-3 .enemy-area.enemy-count-5{grid-template-columns:repeat(5,minmax(0,1fr))!important;align-items:end!important}
+.battle-screen.subquest-layout-rural-3 .enemy-area.enemy-count-5 .enemy-unit:nth-child(3){transform:translateY(-10px) scale(.92)!important;z-index:1!important}
+.battle-screen.subquest-layout-rural-3 .enemy-area.enemy-count-5 .enemy-unit:not(:nth-child(3)){z-index:3!important}
+
+@media(max-height:720px){
+  .story-scene.subquest-story-v111 .story-party-line{bottom:7%!important;height:22%!important}
+  .story-scene.subquest-story-v111 .story-guest-group.subquest-guests-v111{bottom:48%!important;height:20%!important}
+  .battle-screen.subquest-layout-rural-3 .enemy-area.enemy-count-5 .enemy-unit:nth-child(3){transform:translateY(-7px) scale(.90)!important}
+}
+/* ===== END MOB QUEST v111 ===== */

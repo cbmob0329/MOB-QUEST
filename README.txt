@@ -240,3 +240,10 @@ Base: v105 ENEMY BALANCE / RESISTANCE / SKILLS STABLE.
 
 [v110]
 Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading without barrel fallback, Mob Piece detail/drag UX, individual 5v5 auto-battle simulation, opening speech positioning.
+
+[v111]
+- Subquest staging pass based on the two supplied subquest specification files.
+- Only required speakers are shown during subquest dialogue; bubble placement/line pacing rebalanced.
+- 1-5 monster event previews and battles use count-aware sizing so all monsters remain inside the phone frame.
+- Corrected several old prototype formations/levels, restored Rural Q3 and Magma Q4/Q5 authored dialogue.
+- GAME_ASSET_VERSION and title updated to v111.

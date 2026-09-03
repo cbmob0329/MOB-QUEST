@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=110;
+const GAME_ASSET_VERSION=111;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -1564,6 +1564,7 @@ async function storySayLine(key,line,displayName=null,anchorKey=null){
     /* Point to the actual character art. If there is no room above, place the bubble just above the lower UI, never over a distant enemy. */
     top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);
     bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+    if($('#storyScene')?.classList.contains('subquest-story-v111')&&anchor.closest?.('#storyPartyLine'))top=clamp(Math.max(top,scene.height*.555),66,scene.height-br.height-34);
   }else bubble.classList.add('no-arrow');
   bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
   await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
@@ -1591,6 +1592,7 @@ async function storyShowGuests(keys=[],opt={}){
   group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
   await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});if(opt.compactLilith){holder.style.setProperty('width',ids.length>=5?'19%':'23%','important');holder.style.setProperty('height','100%','important');}}else img.classList.add('asset-missing');}));
+  if($('#storyScene')?.classList.contains('subquest-story-v111')){group.classList.add('subquest-guests-v111');group.dataset.subquestId=$('#storyScene')?.dataset?.subquestId||'';fitSubquestStoryGuestsV111();}
   /* The silhouette class must exist BEFORE opacity changes, otherwise the real boss flashes for one frame. */
   for(const key of (opt.silhouetteKeys||[])){const holder=$(`[data-story-actor="${key}"]`,group);holder?.classList.add('demon-maou-silhouette-v95');}
   await nextPaint();group.classList.add('visible');await fixedDelay(opt.slow?950:520);await fixedDelay(500);
@@ -6183,6 +6185,119 @@ showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
 };
 
 /* ===== END MOB QUEST v110 ===== */
+
+/* ===== MOB QUEST v111: SUB QUEST STAGING / SOURCE FIDELITY ===== */
+window.__mobV111Runtime=true;
+
+function patchSubquestV111(id,patch){
+  const found=subquestById(id);if(!found)return null;Object.assign(found.quest,patch||{});return found.quest;
+}
+function subquestShowRowV111(ids){return ['show',ids];}
+
+/* Source-file corrections: do not let old prototype values override the authored sub-quest sheet. */
+patchSubquestV111('grass-1',{
+  reward:{diamonds:10,coins:10000,weapons:['01','02'],armor:'01'},
+  intro:[['pink','勇者様！\nモンスターには亜種が存在します！\nもちろん全員にではありませんが\n強力なモンスターが\n存在するのであります！'],subquestShowRowV111(['g-savanna','sq-savanna-variant','g-savanna']),['pink','やや！\nこれはモブサバンナの亜種です！\n通常のモブサバンナより\n素早く強いであります！\n回避率も高いので\n注意して戦いましょう！']],
+  waves:[[{id:'g-savanna',level:4},{id:'sq-savanna-variant',level:7,evasion:.30},{id:'g-savanna',level:4}]],
+  post:[['pink','他にも亜種がたくさん存在するのですが\nそのほとんどが発見されていません\nどこからやってくるのやら・・']]
+});
+patchSubquestV111('grass-2',{
+  intro:[['pink','モンスターと言えばスライムですね\nやつらは種類も豊富で\n昔からどのエリアにも存在するであります'],subquestShowRowV111(Array.from({length:5},()=> 'g-slime')),['pink','やや！\n一気に5体も！？\nこの団結力もやつらの強さであります！']],
+  waves:[Array.from({length:5},()=>({id:'g-slime',level:6})),Array.from({length:5},()=>({id:'g-slime',level:6}))]
+});
+patchSubquestV111('grass-3',{
+  intro:[['pink','いい景色ですね～\n草原の高台はもっと最高であります！\nあ！\nそういえば空海(そらうみ)を知っていますか？\n空に海があるという伝説があります！\nいつか行ってみたいでありますね～'],subquestShowRowV111(['g-piyo-green','g-piyo-green','g-piyo-green']),['pink','やや！\n空飛ぶモンスターは羨ましいであります・・！']],
+  waves:[Array.from({length:3},()=>({id:'g-piyo-green',level:8}))]
+});
+patchSubquestV111('grass-4',{
+  intro:[['pink','この辺りはゴツゴツでありますね\n勇者様！聞いてください！\n僕フィギュアを集めているであります！\nアクセサリーとしてだけでなく\n対戦も出来るであります！\n今度酒場に売りに出るみたいなので\n一緒に遊びましょう♪'],subquestShowRowV111(['g-rock','g-iwakiri','g-rock']),['pink','ゴツゴツモンスターは\nフィギュアのピースに見えるであります\n（昨日遊びすぎたであります）']],
+  waves:[[{id:'g-rock',level:5},{id:'g-iwakiri',level:7},{id:'g-rock',level:5}]]
+});
+patchSubquestV111('grass-5',{
+  reward:{diamonds:50,coins:10000,weapons:['05','06'],armor:'05',medals:['01']},
+  intro:[['pink','勇者様！\n武器が集まってきたら\nメダルにするといいであります！\n3つ同じ武器を鍛冶屋に渡すと\n特性を宿したメダルにしてくれます\n強力な武器と強力なメダル\n魔王と戦うには必須であります！'],subquestShowRowV111(['sq-savanna-variant','sq-savanna-variant']),['pink','やや！\nこのモンスターたちは\nメダルを落とす予感がするであります！']],
+  waves:[[{id:'sq-savanna-variant',level:7},{id:'sq-savanna-variant',level:7}]]
+});
+patchSubquestV111('desert-1',{
+  intro:[['pink','ピラミッドと言えば\n財宝であります！\n在り処とか知らないでありますか？'],['desert','財宝か\n財宝のようなモンスターならいるぞ'],subquestShowRowV111(['sq-gold-nekomummy','sq-gold-mummy','sq-gold-nekomummy','sq-gold-nekomummy']),['pink','やや！！\nややや！！\nキラッキラであります！'],['desert','やつらはコインをたくさん落とす\n見つけたら倒すべきだ']],
+  waves:[[{id:'sq-gold-nekomummy',level:8},{id:'sq-gold-mummy',level:10},{id:'sq-gold-nekomummy',level:8},{id:'sq-gold-nekomummy',level:8}]]
+});
+patchSubquestV111('desert-2',{waves:[Array.from({length:3},()=>({id:'d-mummy',level:7})),Array.from({length:3},()=>({id:'d-nekomummy',level:8})),Array.from({length:2},()=>({id:'d-yamikamen',level:9}))]});
+patchSubquestV111('desert-5',{reward:{diamonds:50,coins:10000,weapons:['02','10'],armor:'10'}});
+
+patchSubquestV111('rural-3',{
+  pending:false,note:'',reward:{diamonds:10,coins:10000,weapons:['03','04','05'],armor:'10'},
+  intro:[['pink','海と言えば\nやっぱり海賊でありますね！'],['denden','海賊は怖いし嫌いでやんす'],['pink','護衛隊長がなにを言うでありますか'],subquestShowRowV111(['r-knife','r-knife','r-captain','r-knife','r-knife']),['denden','海賊団でやんす！'],['pink','海戦であります！！']],
+  waves:[[{id:'r-knife',level:13},{id:'r-knife',level:13},{id:'r-captain',level:16,actionCount:2,forceActionCount:true,oneAoePerTurn:true,special:'キャプテンバズーカ',kind:'aoe',power:.72,skillType:'physical'},{id:'r-knife',level:13},{id:'r-knife',level:13}]],
+  post:[['denden','海には伝説の海賊団もいるでやんす'],['pink','伝説の海賊団！'],['denden','会わないことを祈るでやんす！']]
+});
+patchSubquestV111('rural-5',{reward:{diamonds:50,coins:10000,weapons:['14'],armor:'14'}});
+
+const neon1V111=patchSubquestV111('neon-1',{});if(neon1V111){const sh=(neon1V111.intro||[]).find(x=>x?.[0]==='show');if(sh)sh[1]=Array.from({length:5},()=> 'n-slime');}
+patchSubquestV111('neon-5',{reward:{diamonds:50,coins:10000,weapons:['19'],armor:'19'}});
+const magma1V111=patchSubquestV111('magma-1',{});if(magma1V111){const sh=(magma1V111.intro||[]).find(x=>x?.[0]==='show');if(sh)sh[1]=['m-honoslime','m-honoslime','m-honoslime','m-magslime','m-magslime'];}
+patchSubquestV111('magma-4',{
+  intro:[['nyoro','マグマには隠れ洞窟もあるニョロ'],['money','秘密基地みたいなもの？'],['denden','カッコイイでやんす！'],['nyoro','ちょっと違うニョロ\n氷の洞窟と呼ばれる\nとても危険な洞窟ニョロ'],['money','マグマに氷？'],subquestShowRowV111(['m-flame','m-blizzard']),['nyoro','モブドラゴンに匹敵するモンスターが\n氷の洞窟を支配しているニョロ'],['denden','こ、怖いでやんすね']],
+  waves:[[{id:'m-flame',level:35},{id:'m-blizzard',level:35}],[{id:'m-frezard',level:37}]],
+  post:[['money','魔女の感だけど\nいずれ行くことになるのかもね']]
+});
+patchSubquestV111('magma-5',{
+  intro:[['denden','モブドラゴンは本当に\nすっごく強かったでやんす'],['money','そうね\nもう会いたくないわ'],['nyoro','マグマには\nモブドラゴンが残したモンスターが\n何体かいるニョロ'],subquestShowRowV111(['sq-young-dragon']),['money','モブドラゴン！！'],['nyoro','モブドラゴンジュニアニョロ！\nスピード攻撃に注意するニョロ！']],
+  waves:[[{id:'sq-young-dragon',level:40,actionCount:2,forceActionCount:true}]],
+  post:[['denden','恐ろしいエリアでやんす'],['nyoro','でも、強くなれるニョロ！'],['money','それはそうね\nもっともっと強くなりましょう！']]
+});
+
+/* Whenever an authored show-row is simply a shorthand for the first wave, display the full formation instead of omitting duplicate monsters. */
+for(const area of SUBQUEST_AREAS){for(const q of area.quests||[]){if(q.pending||!Array.isArray(q.waves)||!q.waves.length)continue;const show=(q.intro||[]).find(x=>x?.[0]==='show');const wave=(q.waves[0]||[]).map(x=>x?.id).filter(Boolean);if(!show||!wave.length||wave.length>5)continue;const current=(show[1]||[]).filter(Boolean),set=new Set(wave);if(current.length&&current.every(id=>set.has(id)))show[1]=[...wave];}}
+
+async function renderSubquestPartyV111(required=[]){
+  const root=$('#storyPartyLine');if(!root)return;
+  let ids=(required||[]).map(canonicalPlayerId).filter(Boolean);
+  if(!ids.length)ids=state.party.map(([id])=>canonicalPlayerId(id)).filter(Boolean).slice(0,3);
+  ids=[...new Set(ids)].slice(0,3);
+  const list=ids.map(id=>storyActorInfo(id)).filter(x=>x?.image);
+  root.dataset.partyCount=String(list.length);root.innerHTML=list.map(p=>`<div class="story-party-actor" data-story-actor="${p.key}"><img data-story-party-img src="${p.image}" alt="${p.name}"></div>`).join('');
+  bindImages(root);await sizeStoryPartyImages(root);
+}
+function fitSubquestStoryGuestsV111(){
+  const group=$('#storyGuestGroup'),scene=$('#storyScene');if(!group||group.hidden||!scene)return;
+  const holders=$$('.story-guest-multi',group),n=Math.max(1,holders.length),sw=scene.clientWidth||360,sh=scene.clientHeight||640;
+  const wf={1:.34,2:.28,3:.225,4:.185,5:.155}[n]||.155,hf=n>=5?.205:n===4?.22:n===3?.235:.255;
+  holders.forEach(h=>{h.style.setProperty('width',`${Math.min(sw*wf,n===1?150:112)}px`,'important');h.style.setProperty('height',`${Math.min(sh*hf,n===1?175:150)}px`,'important');const img=$('img',h);if(img){img.style.setProperty('width','100%','important');img.style.setProperty('height','100%','important');img.style.setProperty('object-fit','contain','important');}});
+}
+function balanceSubquestDialogueV111(text){
+  const out=[];for(const raw of String(text??'').split(/\r?\n/)){if(!raw){continue;}if([...raw].length<=20){out.push(raw);continue;}let parts=raw.match(/[^。！？!?]+[。！？!?]?/g)||[raw];if(parts.length===1&&raw.includes('、')){const i=raw.indexOf('、');if(i>5&&i<raw.length-5)parts=[raw.slice(0,i+1),raw.slice(i+1)];}out.push(...parts.map(x=>x.trim()).filter(Boolean));}return out.join('\n');}
+runSubquestLines=async function(area,lines=[]){
+  if(!lines.length)return;const bg=subquestBg(area),found=state.quest?.subquestId?subquestById(state.quest.subquestId):null,qid=found?.quest?.id||'';
+  showScreen('adventure');setImage($('#adventureBg'),bg.bg,bg.fallback);const sc=$('#storyScene');[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.add(`story-world-${area.worldId}`,'subquest-story-v111');sc.dataset.subquestId=qid;storySceneExtras=[];
+  $('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;sc.hidden=false;sc.style.visibility='hidden';await renderSubquestPartyV111(area.required||[]);await nextPaint();sc.style.visibility='visible';
+  for(const row of lines){if(row[0]==='show'){await storyShowGuests(row[1]||[],{allowFive:true});const g=$('#storyGuestGroup');g?.classList.add('subquest-guests-v111');if(g)g.dataset.subquestId=qid;fitSubquestStoryGuestsV111();continue;}await storySay(row[0],balanceSubquestDialogueV111(row[1]||''));}
+  await storyHideGuests().catch(()=>{});sc.hidden=true;sc.style.visibility='';sc.classList.remove('subquest-story-v111');delete sc.dataset.subquestId;$('#storyBubble').hidden=true;$('#storyGuest').hidden=true;storySceneExtras=[];renderQuestScreen();showScreen('quest');
+};
+
+/* Keep every sub-quest battle formation within the phone frame without changing main-story enemy sizes. */
+const _applyEnemyVisualSizesV111=applyEnemyVisualSizes;
+applyEnemyVisualSizes=function(root=$('#enemyArea')){
+  _applyEnemyVisualSizesV111(root);const b=state.battle;if(!root||b?.config?.questType!=='subquest')return;
+  const units=$$('[data-enemy-target]',root),n=Math.max(1,units.length),factor={1:.88,2:.84,3:.78,4:.70,5:.62}[n]||.62;
+  for(const unit of units){const img=$('.enemy-sprite',unit);if(!img)continue;const shrink=()=>{const w=parseFloat(img.style.width)||img.getBoundingClientRect().width,h=parseFloat(img.style.height)||img.getBoundingClientRect().height;if(w>0)img.style.setProperty('width',`${Math.max(34,w*factor)}px`,'important');if(h>0)img.style.setProperty('height',`${Math.max(38,h*factor)}px`,'important');};shrink();if(!img.complete&&img.dataset.subquestFitV111!=='1'){img.dataset.subquestFitV111='1';img.addEventListener('load',()=>requestAnimationFrame(shrink),{once:true});}}
+};
+const _beginBattleV111=beginBattle;
+beginBattle=async function(config){
+  const bs=$('#battleScreen');if(bs){[...bs.classList].filter(c=>c.startsWith('subquest-layout-')).forEach(c=>bs.classList.remove(c));delete bs.dataset.subquestId;}
+  if(config?.questType==='subquest'&&config?.subquestId&&bs){bs.dataset.subquestId=config.subquestId;bs.classList.add(`subquest-layout-${String(config.subquestId).replace(/[^a-z0-9-]/gi,'-')}`);}
+  return _beginBattleV111(config);
+};
+
+/* The pirate captain is visually behind the four knives and cannot be damaged before the front line falls, matching the authored quest rule. */
+const _applyEnemyDamageToV111=applyEnemyDamageTo;
+applyEnemyDamageTo=function(a,e,power,type='physical',crit=0,showGenericFx=true,showHitPulse=true){
+  const b=state.battle;if(b?.config?.subquestId==='rural-3'&&e?.id==='r-captain'&&livingEnemies().some(x=>x.id==='r-knife')){notice('モブナイフがキャプテンを守っている！','system',650);fx('guard',`enemy:${e.uid}`);return{value:0,crit:false,miss:false,guarded:true};}
+  return _applyEnemyDamageToV111(a,e,power,type,crit,showGenericFx,showHitPulse);
+};
+
+/* ===== END MOB QUEST v111 ===== */
+
 
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */

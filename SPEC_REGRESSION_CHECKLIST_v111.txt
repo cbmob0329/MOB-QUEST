@@ -1,0 +1,17 @@
+MOB QUEST v111 REGRESSION CHECKLIST
+
+[OK] v110 used as base.
+[OK] v111 runtime patch remains inside the main IIFE, before boot/event binding.
+[OK] Main adventure story renderer is not globally replaced; subquest-only class/logic gates visual changes.
+[OK] Main battle enemy size curve is preserved; count-aware scale gate requires questType === subquest.
+[OK] 5-enemy subquest preview no longer truncates to 4.
+[OK] Required quest speakers only are shown in subquest dialogue scenes.
+[OK] Grassland source formations corrected, including 5 slimes and 30% evade rare Savanna.
+[OK] Desert Golden Mummy formation uses 1 + 3 and smaller staging.
+[OK] Rural Q3 no longer DATA WAIT; source formation/reward/dialogue restored.
+[OK] Magma Q4/Q5 dialogue restored from source.
+[OK] Desert II Q5 remains pending because supplied source does not define its enemy formation.
+[OK] v110 gacha and Mob Piece code untouched.
+[OK] v109 support/healing magic untouched.
+[OK] v108 player/enemy balance untouched.
+[OK] JavaScript syntax checked with node --check.

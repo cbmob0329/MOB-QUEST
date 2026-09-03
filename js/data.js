@@ -1,4 +1,4 @@
-// MOB QUEST v110
+// MOB QUEST v111
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
