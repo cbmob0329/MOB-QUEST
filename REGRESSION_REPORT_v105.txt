@@ -1,0 +1,11 @@
+v105 validation targets
+- data.js / game.js syntax
+- standalone inline JS syntax
+- inline/external JS and CSS synchronization
+- 226 enemy templates formalized
+- 32 bosses paralyze immune
+- boss status cap = 2
+- no authored special removed
+- no (仮) fallback used for enemy templates lacking authored skills
+- final Demon Castle II source skills retained
+- ZIP integrity

@@ -3841,7 +3841,7 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v104
+<script id="mobQuestInlineData">// MOB QUEST v105
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -4792,6 +4792,98 @@ for(const [element,id] of Object.entries(_v73Middle)){
 /* ===== END MOB QUEST v104 ===== */
 
 
+/* ===== MOB QUEST v105: FORMAL ENEMY BALANCE / RESISTANCE / SKILLS ===== */
+{
+  MOB_DATA.enemyBalanceVersion=105;
+
+  /* Lv80 + endgame equipment can clear Demon Castle II. Enemy level may exceed recommendation. */
+  TEMP_BALANCE.enemyProfiles={
+    normal:{hpBase:110,hpPerLevel:14,hpQuad:.11,atkBase:16,atkPerLevel:2.40,atkQuad:.0015,magBase:16,magPerLevel:2.40,magQuad:.0015,defBase:14,defPerLevel:2.00,defQuad:.0015,resBase:14,resPerLevel:2.00,resQuad:.0015,spdBase:20,spdPerLevel:3.00,spdQuad:.0010},
+    elite:{hpBase:300,hpPerLevel:35,hpQuad:.50,atkBase:24,atkPerLevel:2.80,atkQuad:.0020,magBase:24,magPerLevel:2.80,magQuad:.0020,defBase:22,defPerLevel:2.45,defQuad:.0020,resBase:22,resPerLevel:2.45,resQuad:.0020,spdBase:24,spdPerLevel:3.60,spdQuad:.0012},
+    boss:{hpBase:800,hpPerLevel:60,hpQuad:1.05,atkBase:34,atkPerLevel:3.40,atkQuad:.0025,magBase:34,magPerLevel:3.40,magQuad:.0025,defBase:28,defPerLevel:2.80,defQuad:.0025,resBase:28,resPerLevel:2.80,resQuad:.0025,spdBase:30,spdPerLevel:4.40,spdQuad:.0015}
+  };
+
+  const ELEM=['火','水','雷','地','風','光','闇','無'];
+  const weakAgainst={火:'水',水:'雷',雷:'風',風:'光',光:'闇',闇:'地',地:'火',無:null};
+  const baseStatus={
+    normal:{poison:.15,burn:.15,paralyze:.15,sleep:.15,stun:.15,confuse:.15},
+    elite:{poison:.34,burn:.34,paralyze:.36,sleep:.36,stun:.40,confuse:.34},
+    boss:{poison:.65,burn:.70,paralyze:1.00,sleep:.80,stun:.85,confuse:.75}
+  };
+  const ownRes={normal:.15,elite:.22,boss:.28},weakRes={normal:-.10,elite:-.08,boss:-.05};
+  const clampN=(n,a,b)=>Math.max(a,Math.min(b,n));
+  const parts=a=>ELEM.filter(x=>String(a||'').includes(x));
+
+  const magicNames={
+    火:['ホノ','ホノマ','ホノマグマ'],水:['ネプ','ネプマ','ネプマチューン'],雷:['トル','トルマ','トルマデン'],
+    地:['ゴレ','ゴレマ','ゴレマガーディ'],風:['ホク','ホクマ','ホクマウィング'],光:['ネオ','ネオマ','ネオマニプール'],
+    闇:['ミラ','ミラマ','ミラマゾーン'],無:['アノマ','アノマウン','アノマウン']
+  };
+  const swordNames={
+    火:['マグソード','マグマソード'],水:['ネプソード','ネプマソード'],雷:['トルソード','トルマソード'],地:['ゴレソード','ゴレマソード'],
+    風:['疾風斬り','疾風斬り'],光:['ネオソード','ネオマソード'],闇:['ミラソード','ミラマソード'],無:['アノソード','アノマソード']
+  };
+  const statusByElement={火:['ファストビート','burnSingle','burn'],水:['チルローファイ','sleepSingle','sleep'],雷:['ロングスクラッチ','aoeParalyzeChance','paralyze'],地:['アックススクラッチ','stunSingle','stun'],風:['ノイズスクラッチ','confuseSingle','confuse'],光:['ノイズスクラッチ','confuseSingle','confuse'],闇:['リピートイントロ','poisonSingle','poison'],無:['ノイズスクラッチ','confuseSingle','confuse']};
+
+  const tierFor=lv=>lv>=46?2:lv>=22?1:0;
+  const formalSkill=(e,lv)=>{
+    const attr=parts(e.attribute)[0]||'無',magic=(e.normalAttackType==='magic')||/魔|ウィッチ|ソーサラー|エナジー|ミスト|ブック|ナーガ|デビ|ドクター|マニー|リリス|ナビ/.test(String(e.name||''));
+    const tier=tierFor(lv),out=[];
+    if(e.tempAi==='heal'){
+      out.push({special:'ヒールミスト',kind:'enemyHeal',power:lv>=55?.16:lv>=25?.12:.09,skillElement:attr,skillType:'magic'});
+      out.push({special:(magicNames[attr]||magicNames['無'])[tier],kind:'single',power:[.78,1.02,1.25][tier],skillElement:attr,skillType:'magic'});
+      return out;
+    }
+    if(e.tempAi==='aoe'){
+      out.push({special:`${attr}エレメントボム`,kind:'aoe',power:[.50,.63,.76][tier],skillElement:attr,skillType:magic?'magic':'physical'});
+      out.push({special:magic?(magicNames[attr]||magicNames['無'])[tier]:(swordNames[attr]||swordNames['無'])[tier?1:0],kind:'single',power:[.78,1.02,1.24][tier],skillElement:attr,skillType:magic?'magic':'physical'});
+      return out;
+    }
+    if(e.tempAi==='debuff'){
+      out.push({special:'パワーダウンミスト',kind:'aoeAtkDown',power:[.46,.56,.66][tier],debuff:lv>=60?.10:.07,skillElement:attr,skillType:'magic'});
+    }
+    const name=magic?(magicNames[attr]||magicNames['無'])[tier]:(swordNames[attr]||swordNames['無'])[tier?1:0];
+    out.push({special:name,kind:'single',power:magic?[.80,1.05,1.30][tier]:[.84,1.10,1.32][tier],skillElement:attr,skillType:magic?'magic':'physical'});
+    if(lv>=28&&(e.category==='elite'||lv>=55)){
+      const st=statusByElement[attr]||statusByElement['無'];
+      let kind=st[1],chance=e.category==='elite'?.28:.20,power=.72;
+      if(kind==='aoeParalyzeChance'){chance=e.category==='elite'?.16:.10;power=.48;}
+      out.push({special:st[0],kind,power,chance,skillElement:attr,skillType:magic?'magic':'physical'});
+    }
+    return out;
+  };
+
+  for(const e of MOB_DATA.enemyCatalog||[]){
+    const cat=e.category||'normal',own=parts(e.attribute),er={無:0,火:0,水:0,雷:0,地:0,風:0,光:0,闇:0};
+    for(const a of own){er[a]=Math.max(er[a],ownRes[cat]??.15);const w=weakAgainst[a];if(w)er[w]=Math.min(er[w],weakRes[cat]??-.10);}
+    e.elementResist={...er,...(e.elementResist||{})};
+    const sr={...(baseStatus[cat]||baseStatus.normal)};
+    for(const a of own){
+      if(a==='火')sr.burn+=.22;
+      if(a==='水')sr.sleep+=.10;
+      if(a==='雷')sr.paralyze+=.22;
+      if(a==='地')sr.stun+=.18;
+      if(a==='闇'){sr.poison+=.18;sr.confuse+=.10;}
+      if(a==='光')sr.confuse+=.10;
+    }
+    const cap=cat==='boss'?.99:cat==='elite'?.80:.65;
+    for(const k of Object.keys(sr))sr[k]=clampN(sr[k],0,cap);
+    if(cat==='boss')sr.paralyze=1;
+    e.statusResist={...sr,...(e.statusResist||{})};
+    if(cat==='boss'){e.statusResist.paralyze=1;e.statusDurationCap=2;e.paralyzeImmune=true;}
+    else if(cat==='elite')e.statusDurationCap=3;
+    else e.statusDurationCap=4;
+
+    /* Keep every authored source special exactly as authored; formalize only previously generic enemies. */
+    if(!e.special&&!e.specialOptions?.length){
+      const lv=Number(e.levelMax||e.levelMin||1);
+      e.enemySkills=formalSkill(e,lv);
+    }
+  }
+}
+/* ===== END MOB QUEST v105 ===== */
+
+
 (() => {
 'use strict';
 
@@ -4802,7 +4894,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=104;
+const GAME_ASSET_VERSION=105;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10420,6 +10512,63 @@ renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWor
 /* v104 migration: old HP/MP values were based on much smaller max values. Refill once without changing progress. */
 setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<104){state.meta.playerBalanceVersion=104;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v104 balance migration]',e);}},0);
 /* ===== END MOB QUEST v104 ===== */
+
+
+/* ===== MOB QUEST v105: FORMAL ENEMY RUNTIME ===== */
+function enemyElementResistanceV105(e,element){return clamp(Number(e?.elementResist?.[normalizeElement(element)]||0),-.50,.90);}
+function formalizeBuiltEnemyV105(e){
+  if(!e)return e;
+  if(!e.elementResist){const own=normalizeElement(e.attribute||'無'),weak={火:'水',水:'雷',雷:'風',風:'光',光:'闇',闇:'地',地:'火',無:null}[own],r=e.isBoss?.28:e.isElite?.22:.15,w=e.isBoss?-.05:e.isElite?-.08:-.10;e.elementResist={無:0,火:0,水:0,雷:0,地:0,風:0,光:0,闇:0,[own]:r};if(weak)e.elementResist[weak]=w;}
+  if(!e.statusResist)e.statusResist=e.isBoss?{poison:.65,burn:.70,paralyze:1,sleep:.80,stun:.85,confuse:.75}:e.isElite?{poison:.34,burn:.34,paralyze:.36,sleep:.36,stun:.40,confuse:.34}:{poison:.15,burn:.15,paralyze:.15,sleep:.15,stun:.15,confuse:.15};
+  if(e.isBoss){e.statusResist.paralyze=1;e.paralyzeImmune=true;e.statusDurationCap=2;}
+  return e;
+}
+const _buildEnemyFromTemplateV105Base=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(t,lv,partySize=4,groupSize=1,bg='',fallbackBg=''){return formalizeBuiltEnemyV105(_buildEnemyFromTemplateV105Base(t,lv,partySize,groupSize,bg,fallbackBg));};
+function enemyStatusResistanceV105(e,kind){return clamp(Number(e?.statusResist?.[kind]||0),0,1);}
+
+/* Elemental resistance is applied after the existing strong/weak relation multiplier. */
+const _calcDamageV105Base=calcDamage;
+calcDamage=function(attacker,type,power,crit=0,e=targetEnemy()){
+  const r=_calcDamageV105Base(attacker,type,power,crit,e);if(!r||r.miss||!e)return r;
+  const resist=enemyElementResistanceV105(e,r.element||attackElementFromContext(attacker,type));
+  r.value=Math.max(1,Math.round(Number(r.value||0)*(1-resist)));
+  r.enemyElementResist=resist;return r;
+};
+
+/* Boss rule: paralysis is completely invalid. Other ailments are resisted and can last only 1–2 turns. */
+applyEnemyStatusTo=function(e,kind,chance,turns=3){
+  if(!e||e.hp<=0)return false;
+  if((e.isBoss||e.category==='boss')&&kind==='paralyze')return false;
+  const resist=enemyStatusResistanceV105(e,kind),effective=clamp(Number(chance||0)*(1-resist),0,1);
+  if(Math.random()>=effective)return false;
+  let duration=Math.max(1,Number(turns)||1);
+  if(e.isBoss||e.category==='boss')duration=Math.min(rint(1,2),Number(e.statusDurationCap)||2);
+  else duration=Math.min(duration,Number(e.statusDurationCap)||duration);
+  if(kind==='stun')duration=Math.min(duration,1);
+  e.status[kind]=Math.max(Number(e.status[kind])||0,duration);return true;
+};
+
+/* Formal skills replace old temporary '(仮)' attacks only when no authored special exists. */
+const _enemySpecialSpecV105Base=enemySpecialSpec;
+enemySpecialSpec=function(e){
+  if(e?.specialOptions?.length)return pick(e.specialOptions);
+  if(e?.special)return e;
+  if(e?.enemySkills?.length)return pick(e.enemySkills);
+  return _enemySpecialSpecV105Base(e);
+};
+
+/* Enemy detail helper, also used by training previews/debugging. */
+function enemyFormalDetailV105(e){
+  if(!e)return null;const skills=[];
+  if(e.specialOptions?.length)for(const s of e.specialOptions)skills.push(s.special);
+  else if(e.special)skills.push(e.special);
+  else for(const s of e.enemySkills||[])skills.push(s.special);
+  return{elementResist:{...(e.elementResist||{})},statusResist:{...(e.statusResist||{})},skills:[...new Set(skills)],bossParalyzeImmune:!!(e.isBoss||e.category==='boss')};
+}
+
+/* v104 already introduced character-specific resistances; retain them as the actual incoming-damage/status layer. */
+/* ===== END MOB QUEST v105 ===== */
 </script>
 </body>
 </html>

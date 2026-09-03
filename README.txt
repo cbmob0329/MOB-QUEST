@@ -195,3 +195,15 @@ Base: v103 GACHA / MOBPIECE LIFE STABLE.
 - Ultimate unlocks remain Lv1 / 15 / 30 / 50; story fifth ultimates remain story unlocks.
 - Added recommended levels: Desert 10 -> Demon Castle II 80; Grassland has no recommendation.
 - Existing saves receive a one-time HP/MP refill to migrate safely to the larger v104 max values.
+
+
+=== v105 ENEMY BALANCE / RESISTANCE / SKILLS ===
+Base: v104 PLAYER BALANCE / LEARNSET STABLE.
+- Formalized enemy stat curves for all enemy categories.
+- Every enemy template now receives elemental resistance and status resistance.
+- Bosses are completely immune to paralysis.
+- Other boss status ailments can persist only 1-2 turns (flinch max 1).
+- Existing authored boss/midboss specials from the boss specification are preserved.
+- Previously generic enemies receive level/attribute-based formal magic or techniques instead of temporary placeholder attacks.
+- Player-side elemental/status resistances from v104 remain active in battle.
+- Target balance: Lv80 + strongest equipment can clear Demon Castle II.

@@ -1,0 +1,11 @@
+MOB QUEST v105 regression checklist
+- Base lineage: v104 only.
+- Player v104 curves/learnsets/recommended levels preserved.
+- All existing authored enemy specials preserved.
+- Enemy stat profiles formalized for normal/elite/boss.
+- Every enemy template has elementResist and statusResist.
+- Every boss has paralyze immunity and non-paralyze status duration cap 1-2 turns.
+- Enemies without authored special receive enemySkills.
+- Reading Book forced-loss/Navi barrier mechanics preserved.
+- Demon Castle II multi-action and transformation mechanics preserved.
+- No story/dialogue/UI/gacha/Mob Piece rewrites.

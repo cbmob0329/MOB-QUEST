@@ -1,0 +1,39 @@
+MOB QUEST v105 - ENEMY BALANCE / RESISTANCE / SKILLS
+
+DESIGN TARGET
+- Lv80 + strongest endgame equipment can clear Demon Castle II.
+- Enemy level may exceed the stage recommended level; gear, figures, party roles and elemental strategy are part of the intended advantage.
+
+ENEMY STAT PROFILES
+- NORMAL: HP 110 + Lv*14 + Lv^2*0.11; ATK/MAG 16 + Lv*2.40 + Lv^2*0.0015; DEF/RES 14 + Lv*2.00 + Lv^2*0.0015
+- ELITE: HP 300 + Lv*35 + Lv^2*0.50; ATK/MAG 24 + Lv*2.80 + Lv^2*0.002; DEF/RES 22 + Lv*2.45 + Lv^2*0.002
+- BOSS: HP 800 + Lv*60 + Lv^2*1.05; ATK/MAG 34 + Lv*3.40 + Lv^2*0.0025; DEF/RES 28 + Lv*2.80 + Lv^2*0.0025
+
+ELEMENT RESISTANCE
+- Normal: own attribute +15%, weakness -10%.
+- Elite: own attribute +22%, weakness -8%.
+- Boss: own attribute +28%, weakness -5%.
+- Existing strong/weak elemental relation remains active in addition to these values.
+
+STATUS RESISTANCE
+- Normal base: 15%. Elite base: roughly 34-40%.
+- Boss: poison 65%, burn 70%, sleep 80%, flinch 85%, confuse 75%, PARALYZE 100% IMMUNE.
+- Boss status duration: all non-paralysis ailments are capped to 1-2 turns; flinch remains max 1 turn.
+- Attribute families add natural resistance (fire->burn, thunder->paralysis, earth->flinch, dark->poison etc.).
+
+SKILLS
+- Existing authored boss/midboss skills are preserved.
+- Enemies without authored skills receive attribute-based formal single-target magic or physical techniques.
+- Skill tier rises with enemy level: low / middle / high; third tier from Lv46.
+- Higher-level elites can additionally use a status technique fitting their attribute.
+- Old generic skill names containing (仮) are no longer used for formalized enemy templates.
+
+REFERENCE VALUES
+Lv10: normal HP 261 ATK/MAG 40 DEF/RES 34 | elite HP 700 ATK/MAG 52 DEF/RES 47 | boss HP 1505 ATK/MAG 68 DEF/RES 56
+Lv20: normal HP 434 ATK/MAG 65 DEF/RES 55 | elite HP 1200 ATK/MAG 81 DEF/RES 72 | boss HP 2420 ATK/MAG 103 DEF/RES 85
+Lv40: normal HP 846 ATK/MAG 114 DEF/RES 96 | elite HP 2500 ATK/MAG 139 DEF/RES 123 | boss HP 4880 ATK/MAG 174 DEF/RES 144
+Lv60: normal HP 1346 ATK/MAG 165 DEF/RES 139 | elite HP 4200 ATK/MAG 199 DEF/RES 176 | boss HP 8180 ATK/MAG 247 DEF/RES 205
+Lv70: normal HP 1629 ATK/MAG 191 DEF/RES 161 | elite HP 5200 ATK/MAG 230 DEF/RES 203 | boss HP 10145 ATK/MAG 284 DEF/RES 236
+Lv80: normal HP 1934 ATK/MAG 218 DEF/RES 184 | elite HP 6300 ATK/MAG 261 DEF/RES 231 | boss HP 12320 ATK/MAG 322 DEF/RES 268
+Lv90: normal HP 2261 ATK/MAG 244 DEF/RES 206 | elite HP 7500 ATK/MAG 292 DEF/RES 259 | boss HP 14705 ATK/MAG 360 DEF/RES 300
+Lv99: normal HP 2574 ATK/MAG 268 DEF/RES 227 | elite HP 8666 ATK/MAG 321 DEF/RES 284 | boss HP 17031 ATK/MAG 395 DEF/RES 330

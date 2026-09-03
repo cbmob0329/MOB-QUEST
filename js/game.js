@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=104;
+const GAME_ASSET_VERSION=105;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5626,3 +5626,60 @@ renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWor
 /* v104 migration: old HP/MP values were based on much smaller max values. Refill once without changing progress. */
 setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<104){state.meta.playerBalanceVersion=104;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v104 balance migration]',e);}},0);
 /* ===== END MOB QUEST v104 ===== */
+
+
+/* ===== MOB QUEST v105: FORMAL ENEMY RUNTIME ===== */
+function enemyElementResistanceV105(e,element){return clamp(Number(e?.elementResist?.[normalizeElement(element)]||0),-.50,.90);}
+function formalizeBuiltEnemyV105(e){
+  if(!e)return e;
+  if(!e.elementResist){const own=normalizeElement(e.attribute||'無'),weak={火:'水',水:'雷',雷:'風',風:'光',光:'闇',闇:'地',地:'火',無:null}[own],r=e.isBoss?.28:e.isElite?.22:.15,w=e.isBoss?-.05:e.isElite?-.08:-.10;e.elementResist={無:0,火:0,水:0,雷:0,地:0,風:0,光:0,闇:0,[own]:r};if(weak)e.elementResist[weak]=w;}
+  if(!e.statusResist)e.statusResist=e.isBoss?{poison:.65,burn:.70,paralyze:1,sleep:.80,stun:.85,confuse:.75}:e.isElite?{poison:.34,burn:.34,paralyze:.36,sleep:.36,stun:.40,confuse:.34}:{poison:.15,burn:.15,paralyze:.15,sleep:.15,stun:.15,confuse:.15};
+  if(e.isBoss){e.statusResist.paralyze=1;e.paralyzeImmune=true;e.statusDurationCap=2;}
+  return e;
+}
+const _buildEnemyFromTemplateV105Base=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(t,lv,partySize=4,groupSize=1,bg='',fallbackBg=''){return formalizeBuiltEnemyV105(_buildEnemyFromTemplateV105Base(t,lv,partySize,groupSize,bg,fallbackBg));};
+function enemyStatusResistanceV105(e,kind){return clamp(Number(e?.statusResist?.[kind]||0),0,1);}
+
+/* Elemental resistance is applied after the existing strong/weak relation multiplier. */
+const _calcDamageV105Base=calcDamage;
+calcDamage=function(attacker,type,power,crit=0,e=targetEnemy()){
+  const r=_calcDamageV105Base(attacker,type,power,crit,e);if(!r||r.miss||!e)return r;
+  const resist=enemyElementResistanceV105(e,r.element||attackElementFromContext(attacker,type));
+  r.value=Math.max(1,Math.round(Number(r.value||0)*(1-resist)));
+  r.enemyElementResist=resist;return r;
+};
+
+/* Boss rule: paralysis is completely invalid. Other ailments are resisted and can last only 1–2 turns. */
+applyEnemyStatusTo=function(e,kind,chance,turns=3){
+  if(!e||e.hp<=0)return false;
+  if((e.isBoss||e.category==='boss')&&kind==='paralyze')return false;
+  const resist=enemyStatusResistanceV105(e,kind),effective=clamp(Number(chance||0)*(1-resist),0,1);
+  if(Math.random()>=effective)return false;
+  let duration=Math.max(1,Number(turns)||1);
+  if(e.isBoss||e.category==='boss')duration=Math.min(rint(1,2),Number(e.statusDurationCap)||2);
+  else duration=Math.min(duration,Number(e.statusDurationCap)||duration);
+  if(kind==='stun')duration=Math.min(duration,1);
+  e.status[kind]=Math.max(Number(e.status[kind])||0,duration);return true;
+};
+
+/* Formal skills replace old temporary '(仮)' attacks only when no authored special exists. */
+const _enemySpecialSpecV105Base=enemySpecialSpec;
+enemySpecialSpec=function(e){
+  if(e?.specialOptions?.length)return pick(e.specialOptions);
+  if(e?.special)return e;
+  if(e?.enemySkills?.length)return pick(e.enemySkills);
+  return _enemySpecialSpecV105Base(e);
+};
+
+/* Enemy detail helper, also used by training previews/debugging. */
+function enemyFormalDetailV105(e){
+  if(!e)return null;const skills=[];
+  if(e.specialOptions?.length)for(const s of e.specialOptions)skills.push(s.special);
+  else if(e.special)skills.push(e.special);
+  else for(const s of e.enemySkills||[])skills.push(s.special);
+  return{elementResist:{...(e.elementResist||{})},statusResist:{...(e.statusResist||{})},skills:[...new Set(skills)],bossParalyzeImmune:!!(e.isBoss||e.category==='boss')};
+}
+
+/* v104 already introduced character-specific resistances; retain them as the actual incoming-damage/status layer. */
+/* ===== END MOB QUEST v105 ===== */
