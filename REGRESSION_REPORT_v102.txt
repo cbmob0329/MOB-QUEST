@@ -1,0 +1,5 @@
+MOB QUEST v102 static release report
+- JS syntax check required
+- Standalone inline CSS/JS synced from external files
+- v102 asset version applied
+- ZIP integrity required

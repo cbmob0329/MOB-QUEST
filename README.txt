@@ -154,3 +154,15 @@ Base: v100 GACHA / MOB PIECE / FACILITY UX STABLE.
 - Standalone index.html rebuilt from final v101 CSS/JS.
 - Figure image recovery now applies globally to fig / figene / figboss surfaces using safe filename variants before a generic fallback.
 - Record Room plaque hardened against narrow-phone orphan wrapping.
+
+
+=== v102 ===
+Base: v101 CASTLE / MOB PIECE / GACHA FIX STABLE.
+- Mob Piece deck header/empty-state spacing rebuilt.
+- Added rarity/tag sort and filters to deck and 5-column Figure List.
+- Deck add/remove preserves scroll position.
+- Center move, exchange, deck clear/confirm, and quit use in-overlay yes/no confirmation (no Maple dialogue behind overlay).
+- Battle UI: center reserved for BATTLE FLOOR; actual 5v5 brawl now renders in center with smoke/stars; only total stats and active tags remain as text.
+- Strict contrast pass for Mob Piece UI.
+- Gacha icon/32 square-shadow CSS removed; barrel shards/burst before figure reveal; rarity effects strengthened.
+- 10-pull results reveal one figure at a time with NEXT below the figure.

@@ -1,0 +1,6 @@
+MOB QUEST v102 regression checklist
+- Base lineage: v101 only
+- Mob Piece deck/list/battle revisions only; existing RPG/story systems preserved
+- Gacha sequential result and burst effects updated
+- No save key migration
+- v95 armor, v99 runtime scope fix, v100 facility return fixes retained
