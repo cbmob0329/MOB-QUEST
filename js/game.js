@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=97;
+const GAME_ASSET_VERSION=98;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -5009,3 +5009,134 @@ showTavernFigureShop=async function(){
 };
 
 /* ===== END MOB QUEST v97 ===== */
+
+
+/* ===== MOB QUEST v98: TAVERN EXACT DIALOG / GACHA CAROUSEL FIX ===== */
+
+async function tavernTalkExactV98(text,speaker='モブイルカエル',image='play/001.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  if(!overlay||!img||!speakerEl||!textEl||!choices)return;
+  const exact=String(text??'').replace(/\r/g,'').trim();
+  const longest=Math.max(1,...exact.split('\n').map(x=>[...x].length));
+  speakerEl.textContent=speaker;
+  setImage(img,versionedPlay(image||'play/001.png'),'');
+  img.alt=speaker||'';
+  choices.innerHTML='';
+  overlay.classList.remove('facility-choice-talk');
+  overlay.classList.add('facility-line-talk','tavern-exact-v98',speaker==='モブイルカエル'?'tavern-irukaeru-v98':'tavern-maple-v98');
+  overlay.style.setProperty('--facility-card-width','500px');
+  textEl.style.setProperty('--facility-line-font',longest>=18?'14px':longest>=16?'15px':'16px');
+  textEl.textContent=exact;
+  overlay.hidden=false;
+  await nextPaint();
+  await new Promise(resolve=>{
+    let ready=false;
+    const timer=setTimeout(()=>ready=true,90);
+    const next=e=>{
+      if(!ready)return;
+      e?.preventDefault?.();e?.stopPropagation?.();
+      clearTimeout(timer);
+      overlay.removeEventListener('pointerup',next,true);
+      resolve();
+    };
+    overlay.addEventListener('pointerup',next,{capture:true,passive:false});
+  });
+  await fixedDelay(70);
+  overlay.hidden=true;
+  overlay.classList.remove('facility-line-talk','tavern-exact-v98','tavern-irukaeru-v98','tavern-maple-v98');
+  overlay.style.removeProperty('--facility-card-width');
+  textEl.style.removeProperty('--facility-line-font');
+  choices.innerHTML='';
+}
+
+/* Corrected tavern script. A v98 flag lets existing test saves see the corrected introduction once. */
+enterTavern=async function(){
+  tavernView='menu';
+  renderTavern();
+  await tavernTalkExactV98('いらっしゃいませ🎵\nゆっくりしていってくださいね！','モブイルカエル','play/001.png');
+  markFacilityFlag('tavern');
+  if(mapleShopUnlocked()&&!facilityFlag('tavern:maple-intro-v98')){
+    await tavernTalkExactV98('あら、いいところに来ましたね！\n今日から新しい仲間が増えたの！','モブイルカエル','play/001.png');
+    await tavernTalkExactV98('やっほ〜\nモブメープルです！','モブメープル','play/009.png');
+    await tavernTalkExactV98('これからよろしくねー','モブメープル','play/009.png');
+    await tavernTalkExactV98('モブメープルちゃんは、\nフィギュアを売ってくれます🎵','モブイルカエル','play/001.png');
+    await tavernTalkExactV98('詳しくは本人に聞いてみてください！','モブイルカエル','play/001.png');
+    markFacilityFlag('tavern:maple-intro');
+    markFacilityFlag('tavern:maple-intro-v98');
+    renderTavern();
+  }
+};
+
+function renderFigureGachaShopV98(focus=''){
+  const popup=$('#tavernFigurePopup'),card=$('.maple-shop-card',popup);
+  if(!popup||!card)return;
+  popup.classList.add('tavern-figure-popup-v98');
+  const banners=FIGURE_GACHAS_V96.filter(b=>b.unlock());
+  card.innerHTML=`
+    <div class="settings-head maple-gacha-head-v98">
+      <div><small>FIGURE GACHA</small><h2>フィギュアガチャ</h2></div>
+      <button id="tavernFigureCloseBtn" class="sheet-close" type="button">×</button>
+    </div>
+    <div class="maple-shop-host maple-shop-host-v98">
+      <img src="play/009.png" alt="モブメープル">
+      <div><b>モブメープル</b><p>好きなガチャを横にスワイプして選んでね！</p></div>
+    </div>
+    <div class="maple-tabs-v96 maple-tabs-v98">
+      <button class="active" type="button">ガチャ</button>
+      <button data-open-mob-piece-v96 type="button">モブピースバトル</button>
+    </div>
+    <div class="gacha-diamond-v96 gacha-diamond-v98">所持ダイヤ <b>${Math.max(0,Number(state.meta?.diamonds)||0)}</b></div>
+    <div class="gacha-carousel-v96 gacha-carousel-v98" aria-label="ガチャバナーを横にスワイプして選択">
+      ${banners.map(b=>`<button data-gacha-banner-v96="${b.id}" class="${focus===b.id?'focus':''} ${b.disabledReason?'data-wait':''}" type="button">
+        <img src="gacha/${b.id}.png" alt="${b.name}">
+        <b>${b.name}</b>
+        <small>${b.disabledReason?'専用フィギュアデータ待ち':'1回 5ダイヤ / 10連 50ダイヤ'}</small>
+      </button>`).join('')}
+    </div>
+    <div class="gacha-swipe-guide-v98">← 横にスワイプしてガチャを選択 →</div>
+    <div class="gacha-rate-note-v96 gacha-rate-note-v98">R 50% / SR 30% / SSR 15% / UR 4.5% / MOB 0.5%</div>`;
+  bindImages(card);
+  const close=$('#tavernFigureCloseBtn',card);if(close)close.onclick=()=>{popup.hidden=true;};
+  $$('[data-gacha-banner-v96]',card).forEach(x=>x.onclick=()=>openGachaDetailV96(x.dataset.gachaBannerV96));
+  const piece=$('[data-open-mob-piece-v96]',card);if(piece)piece.onclick=openMobPieceMenuV96;
+  if(focus){requestAnimationFrame(()=>{$(`[data-gacha-banner-v96="${focus}"]`,card)?.scrollIntoView?.({behavior:'auto',inline:'center',block:'nearest'});});}
+}
+
+async function openTavernFigureShopV98(){
+  if(!mapleShopUnlocked())return;
+  const popup=$('#tavernFigurePopup');if(!popup)return;
+  popup.hidden=true;
+  const first=!facilityFlag('tavern:maple-shop-v98');
+  if(first){
+    await tavernTalkExactV98('やっほ〜\n私はフィギュアを売ってるよ','モブメープル','play/009.png');
+    await tavernTalkExactV98('色んなガチャを用意すから\n好きなガチャを選んでね','モブメープル','play/009.png');
+    markFacilityFlag('tavern:maple-shop');
+    markFacilityFlag('tavern:maple-shop-v98');
+  }else{
+    await tavernTalkExactV98('やっほ〜\nどのガチャにする？','モブメープル','play/009.png');
+  }
+  renderFigureGachaShopV98();
+  await nextPaint();
+  popup.hidden=false;
+}
+showTavernFigureShop=openTavernFigureShopV98;
+
+/* Capture the figure button before legacy onclick handlers. This removes the remaining
+   path that could reveal the old static FIGURE SHOP placeholder instead of the carousel. */
+if(!window.__mobV98FigureCapture){
+  window.__mobV98FigureCapture=true;
+  document.addEventListener('click',e=>{
+    const btn=e.target?.closest?.('[data-tavern-menu="figure"]');
+    if(!btn)return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    openTavernFigureShopV98();
+  },true);
+}
+
+/* After a gacha result, return to the same horizontal banner position. */
+const _renderFigureGachaShopV96V98=renderFigureGachaShopV96;
+renderFigureGachaShopV96=function(focus=''){return renderFigureGachaShopV98(focus);};
+
+/* ===== END MOB QUEST v98 ===== */

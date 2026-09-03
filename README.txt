@@ -87,3 +87,14 @@ Base: v96 FIGURE GACHA / MOB PIECE STABLE.
 - Figure-shop popup is rendered while hidden, then shown after layout is ready.
 - Maple portrait in the figure shop is hard-limited to a compact contained size; native-size image overflow bug fixed.
 - Figure-shop card now scrolls vertically instead of clipping its gacha UI.
+
+
+=== v98 ===
+Base: v97 MAPLE DIALOG / FIGURE SHOP FIX STABLE.
+- Tavern host dialogue uses explicit authored line breaks and does not auto-reflow them.
+- Irukaeru bubble pointer moved upward to head/upper-body level instead of feet.
+- Corrected Maple introduction and shop dialogue pagination.
+- Figure gacha popup now opens directly below the page header instead of as a shallow bottom sheet.
+- Gacha selection is a horizontal swipe carousel of gacha/XXX.png banners.
+- A capture handler blocks the legacy static FIGURE SHOP placeholder path.
+- Existing v96/v97 gacha logic, rates, lineup, draw, results, and Mob Piece Battle remain in use.
