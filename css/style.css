@@ -3132,3 +3132,22 @@ body.opening-sequence-v78 .throne-home,body.opening-sequence-v78 [data-castle-ac
   .maple-shop-host-v98{display:none!important}.maple-tabs-v98 button{min-height:31px!important}
 }
 /* ===== END MOB QUEST v98 ===== */
+
+/* ===== MOB QUEST v99: runtime scope recovery / exact tavern lines ===== */
+.dialog-overlay.v99-exact-fallback .dialog-body>p{
+  white-space:pre-line!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  text-wrap:wrap!important;
+}
+/* The gacha selector is a high full-width carousel, never a shallow bottom placeholder. */
+#tavernFigurePopup.tavern-figure-popup-v98{
+  padding-top:calc(72px + var(--safe-top))!important;
+}
+#tavernFigurePopup.tavern-figure-popup-v98 .maple-shop-card{
+  min-height:calc(100dvh - 150px - var(--safe-top) - var(--safe-bottom))!important;
+}
+.gacha-carousel-v98{scrollbar-width:none!important}
+.gacha-carousel-v98::-webkit-scrollbar{display:none!important}
+.gacha-carousel-v98>button{flex-basis:88%!important;min-width:88%!important;max-width:88%!important}
+/* ===== END MOB QUEST v99 ===== */

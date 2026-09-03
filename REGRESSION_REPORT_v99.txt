@@ -1,0 +1,31 @@
+MOB QUEST v99 REGRESSION REPORT
+
+BASE
+- v98 TAVERN DIALOG / GACHA CAROUSEL STABLE
+
+ROOT CAUSE FOUND
+- Main game scope closed at the v94 boot boundary.
+- v95-v98 were appended after that closure.
+- v95 first accessed scoped symbol renderEquipment and raised ReferenceError.
+- Browser continued with previously initialized/base handlers, explaining screenshots showing old dialogue and old static figure placeholder.
+
+FIX
+- Moved complete v95-v98 implementation blocks inside the original core IIFE, before boot event binding.
+- Added v99 runtime marker.
+- Corrected base fallback dialogue so even the fallback matches the requested lines.
+- Base figure-shop fallback now renders a carousel renderer rather than simply unhiding legacy markup.
+- Removed obsolete static '仕様確定後に追加します' text from standalone HTML fallback.
+
+CHECKS
+- js/data.js: node --check PASS
+- js/game.js: node --check PASS
+- standalone inline JS: node --check PASS
+- external JS == standalone inline JS PASS
+- external CSS == standalone inline CSS PASS
+- VM execution reaches v99 runtime marker PASS
+- v98 click-capture runtime marker executes PASS
+- v95/v96/v97/v98 blocks now precede main IIFE closure PASS
+- title version v99 PASS
+
+NOTE
+- Container Chromium file:// smoke remains unreliable in this environment; DOM browser flow was not claimed as fully automated.

@@ -98,3 +98,25 @@ Base: v97 MAPLE DIALOG / FIGURE SHOP FIX STABLE.
 - Gacha selection is a horizontal swipe carousel of gacha/XXX.png banners.
 - A capture handler blocks the legacy static FIGURE SHOP placeholder path.
 - Existing v96/v97 gacha logic, rates, lineup, draw, results, and Mob Piece Battle remain in use.
+
+
+=== v99 ===
+Base: v98 TAVERN DIALOG / GACHA CAROUSEL STABLE.
+ROOT CAUSE FIX:
+- v95-v98 patch blocks had been appended after the main game IIFE was already closed.
+- v95 therefore threw ReferenceError: renderEquipment is not defined at startup.
+- Because execution stopped there, v96/v97/v98 code existed in the file but never became active.
+- v95-v98 blocks are now inside the core game scope and execute before boot event binding.
+
+TAVERN / MAPLE:
+- Exact manual dialogue line breaks now execute.
+- Maple intro: 「やっほ〜 / モブメープルです！」 then separate 「これからよろしくねー」.
+- Irukaeru corrected lines execute with exact breaks.
+- Maple shop first/repeat dialogue uses the requested split.
+- v98 upper-body speech layout is now actually active.
+
+FIGURE GACHA:
+- The obsolete static FIGURE SHOP placeholder is no longer the active path.
+- Figure button renders the real horizontal swipe carousel before the popup becomes visible.
+- Popup opens high on screen rather than as a shallow bottom panel.
+- Static fallback text no longer claims lineup/rates are undecided.

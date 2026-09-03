@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=98;
+const GAME_ASSET_VERSION=99;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -751,7 +751,17 @@ function renderTavernDrinkShop(){
   bindImages(root);$$('[data-buy-drink]',root).forEach(b=>b.onclick=async()=>{const d=DRINK_SETS.find(x=>x.id===b.dataset.buyDrink);if(!d)return;if(state.coins<d.price)return toast('ゴールドが足りません');const ans=await dialog(`${d.name}を購入しますか？\n${d.price.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']],'モブイルカエル','play/001.png');if(ans!=='yes')return;state.coins-=d.price;state.meta.coins=state.coins;addDrink(d.id,1);saveMeta();renderTavernDrinkShop();await facilityTalk('ありがとうございます🎵','モブイルカエル','play/001.png');});
 }
 function mapleShopUnlocked(){return worldCleared('desert');}
-async function showTavernFigureShop(){if(!mapleShopUnlocked())return;const first=!facilityFlag('tavern:maple-shop');if(first){await facilityTalk('やっほ～。私はフィギュアを売ってるよ。色んなガチャを用意してるから、好きなガチャを選んでね。ガチャはダイヤでしか引けないから、頑張って集めて来て！','モブメープル','play/009.png');markFacilityFlag('tavern:maple-shop');}else await facilityTalk('やっほ～どのガチャにする？','モブメープル','play/009.png');$('#tavernFigurePopup').hidden=false;}
+
+async function facilityTalkExactV99Fallback(text,speaker='モブイルカエル',image='play/001.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  if(!overlay||!img||!speakerEl||!textEl||!choices)return;
+  const exact=String(text??'').replace(/\r/g,'').trim();
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/001.png'),'');img.alt=speaker||'';choices.innerHTML='';
+  overlay.classList.add('facility-line-talk','v99-exact-fallback');overlay.hidden=false;textEl.textContent=exact;
+  await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,{capture:true,passive:false});});
+  await fixedDelay(60);overlay.hidden=true;overlay.classList.remove('facility-line-talk','v99-exact-fallback');choices.innerHTML='';
+}
+async function showTavernFigureShop(){if(!mapleShopUnlocked())return;const first=!facilityFlag('tavern:maple-shop');if(first){await facilityTalkExactV99Fallback('やっほ〜\n私はフィギュアを売ってるよ','モブメープル','play/009.png');await facilityTalkExactV99Fallback('色んなガチャを用意すから\n好きなガチャを選んでね','モブメープル','play/009.png');markFacilityFlag('tavern:maple-shop');}else await facilityTalkExactV99Fallback('やっほ〜\nどのガチャにする？','モブメープル','play/009.png');if(typeof renderFigureGachaShopV98==='function')renderFigureGachaShopV98();else if(typeof renderFigureGachaShopV96==='function')renderFigureGachaShopV96();const p=$('#tavernFigurePopup');if(p)p.hidden=false;}
 function renderTavern(){
   const landing=$('#tavernLanding'),popup=$('#tavernPartyPopup'),guide=$('#tavernPartyGuide');
   if(landing)landing.hidden=false;const maple=$('#tavernFigureMenuBtn');if(maple)maple.hidden=!mapleShopUnlocked();
@@ -852,9 +862,9 @@ async function enterTavern(){
   tavernView='menu';renderTavern();
   await facilityIntro('tavern',{speaker:'モブイルカエル',image:'play/001.png',first:'いらっしゃい♪ ここは酒場です。パーティー編成とドリンク販売をしています。',repeat:'いらっしゃいませ♪ ゆっくりしていってくださいね！'});
   if(mapleShopUnlocked()&&!facilityFlag('tavern:maple-intro')){
-    await facilityTalk('あら、いい所に来ましたね！今日から、新しい店員が増えたの','モブイルカエル','play/001.png');
-    await facilityTalk('やっほ～モブメープルです。これからよろしくねー','モブメープル','play/009.png');
-    await facilityTalk('モブメープルちゃんはフィギュアを売ってくれます♪ 詳しくは本人に聞いてみてください！','モブイルカエル','play/001.png');
+    await facilityTalkExactV99Fallback('あら、いいところに来ましたね！\n今日から新しい仲間が増えたの！','モブイルカエル','play/001.png');
+    await facilityTalkExactV99Fallback('やっほ〜\nモブメープルです！','モブメープル','play/009.png');await facilityTalkExactV99Fallback('これからよろしくねー','モブメープル','play/009.png');
+    await facilityTalkExactV99Fallback('モブメープルちゃんは、\nフィギュアを売ってくれます🎵','モブイルカエル','play/001.png');await facilityTalkExactV99Fallback('詳しくは本人に聞いてみてください！','モブイルカエル','play/001.png');
     markFacilityFlag('tavern:maple-intro');renderTavern();
   }
 }
@@ -4650,28 +4660,6 @@ allyMarkup=function(a){let s=_allyMarkupV94Base(a);if(a?.id==='yusha'&&a?.transf
 
 /* ===== END MOB QUEST v92 ===== */
 
-window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
-let bootSetupError=null;
-try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
-catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
-function bindEssentialBootEvents(){
-  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
-  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
-}
-bindEssentialBootEvents();
-window.__mobBootReady=true;
-/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
-(async()=>{
-  try{showTitle();}
-  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
-})();
-preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
-setTimeout(startFastBackgroundWarmup,1400);
-})();
-
-
-
-
 /* ===== MOB QUEST v95: ARMOR RESTORE / DEMON CASTLE FIDELITY / UI READABILITY ===== */
 
 /* Armor is drop-only equipment. Dedicated tab restores a visible, direct equipment workflow. */
@@ -5140,3 +5128,31 @@ const _renderFigureGachaShopV96V98=renderFigureGachaShopV96;
 renderFigureGachaShopV96=function(focus=''){return renderFigureGachaShopV98(focus);};
 
 /* ===== END MOB QUEST v98 ===== */
+
+/* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
+window.__mobV99PatchRuntime=true;
+/* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
+
+window.addEventListener('resize',()=>{if(screens.home.classList.contains('active'))applyHomeCommonScale();if(screens.adventure.classList.contains('active'))applyAdventurePartyScale();});
+let bootSetupError=null;
+try{lockMobileGestures();initCommonNav();bindImages();bindEvents();}
+catch(err){bootSetupError=err;console.error('[MOB QUEST] setup recovery',err);}
+function bindEssentialBootEvents(){
+  const n=$('#titleNewBtn'),c=$('#titleContinueBtn'),s=$('#titleSettingsBtn');
+  if(n)n.onclick=startNewGame;if(c)c.onclick=continueGame;if(s)s.onclick=openSettings;
+}
+bindEssentialBootEvents();
+window.__mobBootReady=true;
+/* Boot must always escape the loader, even if a malformed/missing asset throws unexpectedly. */
+(async()=>{
+  try{showTitle();}
+  catch(err){console.error('[MOB QUEST] TITLE boot recovery',err);const l=$('#loadingScreen'),t=$('#titleScreen');if(l)l.classList.remove('active');if(t)t.classList.add('active');}
+})();
+preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
+setTimeout(startFastBackgroundWarmup,1400);
+})();
+
+
+
+
+
