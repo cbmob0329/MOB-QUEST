@@ -247,3 +247,11 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - 1-5 monster event previews and battles use count-aware sizing so all monsters remain inside the phone frame.
 - Corrected several old prototype formations/levels, restored Rural Q3 and Magma Q4/Q5 authored dialogue.
 - GAME_ASSET_VERSION and title updated to v111.
+
+[v112]
+- Added formal story-area appropriate levels: Grassland 5, Desert 10, Rural 15, Neon 20, Magma 25, Sea 30, Grassland II 35, Tribe 40, Rural II 45, Neon II 50, Magma II 55, Desert II 60, Demon Castle 65, Unfinished Book 70, Demon Castle II 80.
+- Pressing Adventure now shows "このエリアの適正はLv○○です！" before the separate departure confirmation.
+- Adventure header wording changed from 推奨Lv to 適正Lv.
+- Cleared Battle Program cards become red and receive a large white CLEAR stamp; newly cleared cards use a short stamp animation.
+- Fully cleared season banners also become red with a large white CLEAR stamp.
+- GAME_ASSET_VERSION and title updated to v112.

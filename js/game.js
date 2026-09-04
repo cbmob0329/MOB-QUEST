@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=111;
+const GAME_ASSET_VERSION=112;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -1163,13 +1163,14 @@ function markBattleProgramWin(){
 }
 async function finishBattleProgramReturn(win){
   const q=state.quest,found=q?battleProgramById(q.programId):null,season=found?.season||null;
-  const pendingReward=!!q?.pendingSeasonReward;
+  const pendingReward=!!q?.pendingSeasonReward,justClearedId=win&&q?.newProgramClear?q.programId:null;
   state.quest=null;
   state.training.mode='program';
   renderTraining();showScreen('training');
   const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='program';}
   $('#trainingFeaturePopupTitle').textContent='バトルプログラム';
   if(season)renderBattleProgramList(season.id);else renderBattleProgramSeasonSelect();
+  if(justClearedId){requestAnimationFrame(()=>{const card=$(`[data-program-id=\"${justClearedId}\"]`);if(card){card.classList.add('just-cleared');setTimeout(()=>card.classList.remove('just-cleared'),900);}});}
   if(!win){await facilityTalk('惜しかったね！\n次はクリアを目指して頑張ろう！','モブコーチ','play/003.png');return;}
   if(pendingReward&&season){
     const reward=itemData(season.rewardId);
@@ -3750,7 +3751,7 @@ function openHomeAction(action){
   if(action==='castle')return dialog('お城に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('castle','お城へ向かっています…',renderCastle);await enterCastle();}});
   if(action==='tavern')return dialog('酒場に向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('tavern','酒場へ向かっています…',renderTavern);await enterTavern();}});
   if(action==='training')return dialog('トレーニングに向かいますか？',[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){await travelTo('training','トレーニングルームへ向かっています…',renderTraining);await enterTraining();}});
-  if(action==='adventure'){if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');const w=currentWorld();return dialog(`冒険に向かいますか？\n現在の目的地は「${w?.name||'草原'}」です！`,[['はい','yes','primary'],['いいえ','no']]).then(async v=>{if(v==='yes'){ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}});}
+  if(action==='adventure'){if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');const w=currentWorld();return(async()=>{const lv=Number(w?.recommendedLevel)||5;await narrationDialog(`このエリアの適正はLv${lv}です！`,[['OK','ok','primary']]);const v=await dialog(`「${w?.name||'草原'}」へ出発しますか？`,[['はい','yes','primary'],['いいえ','no']]);if(v==='yes'){ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();}})();}
 }
 function randomTraining(){
   const arr=[...MOB_DATA.players].sort(()=>Math.random()-.5).slice(0,10);state.training.party=Array.from({length:10},(_,i)=>arr[i]?[arr[i].id,rint(5,95)]:null);
@@ -5662,7 +5663,7 @@ playerDetailTechnique=function(p){const lv=currentPlayerLevel(p.id),fake={...p,l
 openPlayerDetail=function(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),fake={...p,level:lv,mpNow:999999},magics=availableMagicSkillsV104(fake),techs=availableTechniqueSkillsV104(fake),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));const er=['火','水','雷','風','地','光','闇','無'].map(k=>{const n=Math.round(Number(p.elementResist?.[k]||0)*100);return`<span>${k}<b class="${n<0?'weak':''}">${n>0?'+':''}${n}%</b></span>`}).join(''),sr=[['poison','毒'],['paralyze','マヒ'],['burn','やけど'],['sleep','眠り'],['confuse','混乱'],['stun','ひるみ']].map(([k,n])=>`<span>${n}<b>${Math.round(playerBaseStatusResistanceV104(p,k)*100)}%</b></span>`).join(''),next=[...nextLearnRowsV104(p,'magic',lv).map(x=>({...x,type:'魔法'})),...nextLearnRowsV104(p,'technique',lv).map(x=>({...x,type:'特技'}))].sort((a,b)=>a.level-b.level).slice(0,5),allSkill=MOB_DATA.magicCatalog||[],allTech=MOB_DATA.techniqueCatalog||[];body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>メイン ${p.attribute} / サブ ${(p.subAttributes||[]).join('・')||'なし'} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>属性耐性</h3><div class="player-detail-stats player-resist-v104">${er}</div></section><section><h3>状態異常耐性</h3><div class="player-detail-stats player-resist-v104">${sr}</div></section><section><h3>習得魔法</h3><div class="player-detail-list">${magics.length?magics.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section><section><h3>習得特技</h3><div class="player-detail-list">${techs.length?techs.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section>${next.length?`<section><h3>次の習得</h3><div class="player-detail-list">${next.map(x=>{const sk=x.type==='魔法'?allSkill.find(s=>s.id===x.id):allTech.find(s=>s.id===x.id);return`<span><b>Lv${x.level} ${sk?.name||x.id}</b><small>${x.type}</small></span>`}).join('')}</div></section>`:''}<section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;};
 
 const _renderAdventureV104Base=renderAdventure;
-renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWorld(),title=$('#adventureStageTitle');if(title&&!state.adventure.completed){title.textContent=w?.recommendedLevel?`${w.name}　推奨Lv${w.recommendedLevel}`:(w?.name||'冒険');}return r;};
+renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWorld(),title=$('#adventureStageTitle');if(title&&!state.adventure.completed){title.textContent=w?.recommendedLevel?`${w.name}　適正Lv${w.recommendedLevel}`:(w?.name||'冒険');}return r;};
 
 /* v104 migration: old HP/MP values were based on much smaller max values. Refill once without changing progress. */
 setTimeout(()=>{try{if(Number(state.meta?.playerBalanceVersion||0)<104){state.meta.playerBalanceVersion=104;state.adventure.vitals=null;if(state.adventure.checkpoint)state.adventure.checkpoint.vitals=null;saveMeta();saveAdventure();if(screens.adventure.classList.contains('active'))renderAdventure();}}catch(e){console.warn('[v104 balance migration]',e);}},0);
@@ -6299,6 +6300,12 @@ applyEnemyDamageTo=function(a,e,power,type='physical',crit=0,showGenericFx=true,
 /* ===== END MOB QUEST v111 ===== */
 
 
+
+/* ===== MOB QUEST v112: STORY APPROPRIATE LEVEL / BATTLE PROGRAM CLEAR STAMP ===== */
+window.__mobV112PatchRuntime=true;
+/* Adventure departure now shows the current story area's appropriate level before confirmation. */
+/* Cleared battle-program banners are styled in CSS as red cards with a large white CLEAR stamp. */
+/* ===== END MOB QUEST v112 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

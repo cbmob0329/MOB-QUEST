@@ -1,4 +1,4 @@
-// MOB QUEST v111
+// MOB QUEST v112
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -942,7 +942,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
     [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
 
-  const recommended={grassland:null,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:40,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:65,unfinishedBook:70,demonCastle2:80};
+  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:40,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:65,unfinishedBook:70,demonCastle2:80};
   MOB_DATA.recommendedLevels=recommended;
   for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
 }

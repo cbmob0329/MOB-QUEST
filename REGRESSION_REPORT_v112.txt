@@ -1,0 +1,51 @@
+MOB QUEST v112 REGRESSION REPORT
+
+BASE
+- v111 SUBQUEST STAGING / FIDELITY STABLE
+
+CHANGES
+1. Story appropriate levels
+   草原 5
+   砂漠 10
+   田舎町 15
+   ネオン街 20
+   マグマ 25
+   海底 30
+   草原Ⅱ 35
+   部族村 40
+   田舎町Ⅱ 45
+   ネオン街Ⅱ 50
+   マグマⅡ 55
+   砂漠Ⅱ 60
+   魔王城 65
+   読みかけの本 70
+   魔王城Ⅱ 80
+
+2. Adventure departure flow
+   HOME -> 冒険
+   -> 「このエリアの適正はLv○○です！」
+   -> OK
+   -> 「○○へ出発しますか？」
+   -> はい / いいえ
+   -> はい only: travel and existing adventure entry flow
+
+3. Battle Program clear visuals
+   - Individual cleared PROGRAM banner: red + large white CLEAR stamp.
+   - Newly cleared PROGRAM: stamp impact animation once on return.
+   - Fully cleared SEASON banner: red + large white CLEAR stamp.
+   - Existing clear metadata/reward flow preserved.
+
+PRESERVED
+- v111 subquest staging and source-fidelity fixes.
+- v110 gacha / Mob Piece simulation fixes.
+- v109 support/healing magic and multi-action balance.
+- v108 HP/enemy balance.
+- v106 Demon Castle staging/progression fixes.
+- Existing Battle Program Season 1-2 definitions and rewards unchanged.
+
+VERIFICATION
+- js/data.js: node --check PASS
+- js/game.js: node --check PASS
+- Single-file inline JS: node --check PASS
+- All current story worlds have an appropriate level.
+- External CSS/JS and single-file index synchronized.
