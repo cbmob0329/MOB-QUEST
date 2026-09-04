@@ -1,0 +1,1739 @@
+MOB PIECE BATTLE フィギュア能力・タグ・ルビー仕様 v2（v115実装値）
+
+【基本】
+・モブピースの個体ステータスは HP / ATK / DEF / SPD の4項目。
+・HP＝LIFE。同じ意味なので表示・戦闘計算はHPに統一。HPが0になったフィギュアはKO。
+・レア度差は存在するが、タグ構築のバフ・デバフが勝敗の中心。
+・センターは従来どおり全ステータス+25%。
+
+【レア度の基準帯】
+R    HP75～90 / ATK+DEF+SPD 合計56前後
+SR   HP88～105 / 合計64前後
+SSR  HP102～120 / 合計74前後
+UR   HP118～138 / 合計86前後
+MOB  HP138～160 / 合計100前後
+
+【ガチャ所持上限 / 超過ルビー】
+R：9体 / 超過時 RUBY +1
+SR：6体 / 超過時 RUBY +2
+SSR：4体 / 超過時 RUBY +5
+UR：2体 / 超過時 RUBY +15
+MOB：1体 / 超過時 RUBY +50
+
+【ルビー交換必要数】
+R 10 / SR 50 / SSR 100 / UR 300 / MOB 500
+・選択中ガチャのラインナップから交換。
+・交換前に確認必須。
+・所持上限到達済みは交換不可・ルビー消費なし。
+
+【デッキ同種上限】
+R・SR：同じフィギュアIDを3体まで
+SSR・UR：同じフィギュアIDを2体まで
+MOB：同じフィギュアIDを1体まで
+・同じキャラクター名でも別フィギュアIDなら別種類。
+・完全に同じフィギュアを複数入れてもタグ人数は1種類分しか数えない。
+
+【タグ重複上限】
+HP +60% / ATK +60% / DEF +60% / SPD +50%
+相手ATK -40% / 相手DEF -40% / 相手SPD -35%
+センター HP・ATK・DEF・SPD 各 +60%
+
+【モブピース用 TAG 01～52】
+01 ぷにモブ
+  2種類：HP20%UP
+  3種類：HP35%UP
+02 グリーンカラー
+  2種類：DEF18%UP
+  3種類：DEF30%UP
+03 レッドカラー
+  2種類：ATK18%UP
+  3種類：ATK30%UP
+04 イエローカラー
+  2種類：SPD18%UP
+  3種類：SPD30%UP
+05 パープルカラー
+  2種類：相手ATK12%DOWN
+  3種類：相手ATK20%DOWN
+06 ピンクカラー
+  2種類：相手DEF12%DOWN
+  3種類：相手DEF20%DOWN
+07 オレンジカラー
+  2種類：相手SPD12%DOWN
+  3種類：相手SPD20%DOWN
+08 輝き
+  2種類：HP10%・DEF10%UP
+  3種類：HP18%・DEF18%UP
+09 モンスター
+  2種類：ATK12%UP
+  3種類：ATK20%UP
+10 マスコット
+  2種類：HP15%UP
+  3種類：HP25%UP
+11 PB2
+  2種類：センターATK25%UP
+  3種類：センターATK40%UP
+12 MUSIC
+  2種類：ATK12%・SPD8%UP
+  3種類：ATK20%・SPD14%UP
+13 頼もしい仲間
+  2種類：DEF15%UP
+  3種類：DEF25%UP
+14 MOB SHOT
+  2種類：SPD15%UP
+  3種類：SPD25%UP
+15 メニュー
+  2種類：DEF10%・SPD8%UP
+  3種類：DEF18%・SPD14%UP
+16 ネコクー
+  2種類：センターDEF25%UP
+  3種類：センターDEF40%UP
+17 スライム
+  2種類：HP18%UP
+  3種類：HP30%UP
+18 美味しい食べ物
+  2種類：HP12%・DEF12%UP
+  3種類：HP20%・DEF20%UP
+19 ロゴ
+  2種類：DEF18%UP
+  3種類：DEF30%UP
+20 MOB BR
+  2種類：センターATK18%・SPD15%UP
+  3種類：センターATK30%・SPD25%UP
+21 MOB PG
+  2種類：ATK・DEF・SPD8%UP
+  3種類：ATK・DEF・SPD14%UP
+22 MOB KART
+  2種類：SPD20%UP
+  3種類：SPD35%UP
+23 ソウル
+  2種類：HP10%・DEF12%UP
+  3種類：HP18%・DEF20%UP
+24 主人公パーティー
+  2種類：ATK12%・DEF12%UP
+  3種類：ATK20%・DEF20%UP
+25 ボス
+  2種類：ATK20%UP
+  3種類：ATK35%UP
+26 ヴィラン
+  2種類：相手DEF10%・SPD8%DOWN
+  3種類：相手DEF18%・SPD14%DOWN
+27 キュート
+  2種類：HP15%UP
+  3種類：HP25%UP
+28 ホワイトカラー
+  2種類：DEF15%UP
+  3種類：DEF25%UP
+29 ブラックカラー
+  2種類：相手ATK10%・SPD8%DOWN
+  3種類：相手ATK18%・SPD14%DOWN
+30 伝説
+  2種類：センター全能力20%UP
+  3種類：センター全能力35%UP
+31 ブルーカラー
+  2種類：DEF18%UP
+  3種類：DEF30%UP
+32 立ちはだかる強敵
+  2種類：ATK10%・DEF15%UP
+  3種類：ATK18%・DEF25%UP
+33 チルタイム
+  2種類：HP15%・DEF10%UP
+  3種類：HP25%・DEF18%UP
+34 勇猛果敢
+  2種類：ATK18%UP
+  3種類：ATK30%UP
+35 破壊力
+  2種類：ATK22%UP
+  3種類：ATK38%UP
+36 技術力
+  2種類：SPD18%UP
+  3種類：SPD30%UP
+37 魔法使い
+  2種類：ATK20%UP
+  3種類：ATK34%UP
+38 ドラゴン
+  2種類：センターATK25%・SPD12%UP
+  3種類：センターATK40%・SPD22%UP
+39 鉄壁
+  2種類：DEF25%UP
+  3種類：DEF40%UP
+40 絆
+  2種類：HP15%・ATK10%UP
+  3種類：HP25%・ATK18%UP
+41 草原
+  2種類：HP10%・DEF10%UP
+  3種類：HP18%・DEF18%UP
+42 砂漠
+  2種類：ATK12%・SPD8%UP
+  3種類：ATK20%・SPD14%UP
+43 田舎町
+  2種類：HP15%・SPD8%UP
+  3種類：HP25%・SPD14%UP
+44 ネオン街
+  2種類：SPD15%UP・相手DEF8%DOWN
+  3種類：SPD25%UP・相手DEF14%DOWN
+45 海底
+  2種類：HP10%・DEF15%UP
+  3種類：HP18%・DEF25%UP
+46 部族村
+  2種類：ATK15%・DEF8%UP
+  3種類：ATK25%・DEF14%UP
+47 マグマ
+  2種類：ATK18%・HP8%UP
+  3種類：ATK30%・HP15%UP
+48 魔王城
+  2種類：DEF18%UP・相手ATK8%DOWN
+  3種類：DEF30%UP・相手ATK14%DOWN
+49 斬撃
+  2種類：ATK15%・SPD10%UP
+  3種類：ATK25%・SPD18%UP
+50 浮遊
+  2種類：SPD20%UP
+  3種類：SPD35%UP
+51 雷撃
+  2種類：ATK10%・SPD15%UP
+  3種類：ATK18%・SPD25%UP
+52 読みかけの本
+  2種類：DEF15%・SPD10%UP
+  3種類：DEF25%・SPD18%UP
+
+【全フィギュア v115 実装値】
+
+--- 一般フィギュア ---
+fig/01.png / GLOBAL ID 01
+ぷにモブグリーン
+レア度 R
+COST 1
+HP 83 / ATK 18 / DEF 20 / SPD 18
+タグ 01.02
+
+fig/02.png / GLOBAL ID 02
+ぷにモブレッド
+レア度 R
+COST 1
+HP 82 / ATK 22 / DEF 17 / SPD 17
+タグ 01.03
+
+fig/03.png / GLOBAL ID 03
+ぷにモブオレンジ
+レア度 R
+COST 1
+HP 82 / ATK 21 / DEF 18 / SPD 17
+タグ 01.07
+
+fig/04.png / GLOBAL ID 04
+ぷにモブイエロー
+レア度 R
+COST 1
+HP 82 / ATK 17 / DEF 17 / SPD 22
+タグ 01.04
+
+fig/05.png / GLOBAL ID 05
+ぷにモブパープル
+レア度 R
+COST 1
+HP 82 / ATK 18 / DEF 21 / SPD 17
+タグ 01.05
+
+fig/06.png / GLOBAL ID 06
+ぷにモブ:ピンク
+レア度 R
+COST 1
+HP 83 / ATK 19 / DEF 19 / SPD 18
+タグ 01.06
+
+fig/07.png / GLOBAL ID 07
+ぷにモブディープレッド
+レア度 R
+COST 1
+HP 82 / ATK 22 / DEF 17 / SPD 17
+タグ 01.03
+
+fig/08.png / GLOBAL ID 08
+ぷにモブイタリアンレッド
+レア度 R
+COST 1
+HP 82 / ATK 22 / DEF 17 / SPD 17
+タグ 01.03
+
+fig/09.png / GLOBAL ID 09
+ぷにモブブルー
+レア度 R
+COST 1
+HP 82 / ATK 17 / DEF 22 / SPD 17
+タグ 01.31
+
+fig/10.png / GLOBAL ID 10
+ぷにモブミントグリーン
+レア度 R
+COST 1
+HP 83 / ATK 18 / DEF 20 / SPD 18
+タグ 01.02
+
+fig/11.png / GLOBAL ID 11
+ぷにモブブロンズ
+レア度 SR
+COST 1
+HP 97 / ATK 20 / DEF 24 / SPD 20
+タグ 01.08.10
+
+fig/12.png / GLOBAL ID 12
+ぷにモブピンクゴールド
+レア度 SR
+COST 1
+HP 97 / ATK 21 / DEF 22 / SPD 21
+タグ 01.06.08
+
+fig/13.png / GLOBAL ID 13
+ぷにモブゴールド
+レア度 SR
+COST 1
+HP 97 / ATK 24 / DEF 20 / SPD 20
+タグ 01.08
+
+fig/14.png / GLOBAL ID 14
+ぷにモブシルバーホワイト
+レア度 SR
+COST 2
+HP 98 / ATK 21 / DEF 23 / SPD 20
+タグ 01.08.28
+
+fig/15.png / GLOBAL ID 15
+ぷにモブハロウィン
+レア度 SR
+COST 1
+HP 97 / ATK 19 / DEF 27 / SPD 18
+タグ 01.07.09
+
+fig/16.png / GLOBAL ID 16
+みかんちゃん
+レア度 MOB
+COST 5
+HP 160 / ATK 27 / DEF 48 / SPD 25
+タグ 08.10.13.23.27.28.30.33.40
+
+fig/17.png / GLOBAL ID 17
+/////
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 02.09.10.17
+
+fig/18.png / GLOBAL ID 18
+モブクラシックグリーン
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 02.10.33
+
+fig/19.png / GLOBAL ID 19
+モブクラシックピンク
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 06.10.33
+
+fig/20.png / GLOBAL ID 20
+モブクラシックオレンジ
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 07.10.33
+
+fig/21.png / GLOBAL ID 21
+モブクラシックレッド
+レア度 SR
+COST 2
+HP 99 / ATK 19 / DEF 27 / SPD 18
+タグ 03.10.33
+
+fig/22.png / GLOBAL ID 22
+モブメシ どら焼き
+レア度 SSR
+COST 2
+HP 116 / ATK 20 / DEF 34 / SPD 20
+タグ 10.18.29.30
+
+fig/23.png / GLOBAL ID 23
+モブメシ ピザ
+レア度 SSR
+COST 2
+HP 113 / ATK 31 / DEF 23 / SPD 20
+タグ 07.10.18.29
+
+fig/24.png / GLOBAL ID 24
+モブメシ 肉まん
+レア度 SSR
+COST 2
+HP 116 / ATK 23 / DEF 28 / SPD 23
+タグ 10.18.28.29
+
+fig/25.png / GLOBAL ID 25
+モブメシ パンケーキ
+レア度 SSR
+COST 2
+HP 115 / ATK 25 / DEF 28 / SPD 21
+タグ 04.10.18.33
+
+fig/26.png / GLOBAL ID 26
+モブKART VR
+レア度 SSR
+COST 2
+HP 112 / ATK 19 / DEF 25 / SPD 30
+タグ 08.10.22.36
+
+fig/27.png / GLOBAL ID 27
+モブKART ゴールド
+レア度 SSR
+COST 2
+HP 112 / ATK 19 / DEF 26 / SPD 29
+タグ 08.10.22.39
+
+fig/28.png / GLOBAL ID 28
+モブKART ブラック
+レア度 SSR
+COST 3
+HP 112 / ATK 21 / DEF 24 / SPD 29
+タグ 09.22.26.36.37
+
+fig/29.png / GLOBAL ID 29
+モブKART 中華店主
+レア度 SSR
+COST 2
+HP 114 / ATK 21 / DEF 25 / SPD 28
+タグ 03.18.22.32
+
+fig/30.png / GLOBAL ID 30
+モブKART ヴィラン
+レア度 SSR
+COST 3
+HP 114 / ATK 21 / DEF 25 / SPD 28
+タグ 09.22.25.26.32.37.50
+
+fig/31.png / GLOBAL ID 31
+モブKART ファイヤー
+レア度 SSR
+COST 2
+HP 114 / ATK 21 / DEF 25 / SPD 28
+タグ 03.22.26.32
+
+fig/32.png / GLOBAL ID 32
+PB2 オンラインロゴ
+レア度 SR
+COST 1
+HP 99 / ATK 25 / DEF 21 / SPD 18
+タグ 11.12.19.40
+
+fig/33.png / GLOBAL ID 33
+PB2 PB2 Vol.60ロゴ
+レア度 SR
+COST 1
+HP 96 / ATK 25 / DEF 20 / SPD 19
+タグ 11.12.19.40
+
+fig/34.png / GLOBAL ID 34
+PB2 Vol.62 マスコット
+レア度 SSR
+COST 3
+HP 111 / ATK 30 / DEF 22 / SPD 22
+タグ 04.11.27.31.40
+
+fig/35.png / GLOBAL ID 35
+PB2 Vol.63 マスコット
+レア度 SSR
+COST 3
+HP 112 / ATK 23 / DEF 25 / SPD 26
+タグ 07.11.12.27.40
+
+fig/36.png / GLOBAL ID 36
+PB2 Vol.63 マスコットⅡ
+レア度 SSR
+COST 3
+HP 111 / ATK 27 / DEF 20 / SPD 27
+タグ 07.11.12.27.40
+
+fig/37.png / GLOBAL ID 37
+PB2 Vol.63 マスコットⅢ
+レア度 SSR
+COST 3
+HP 113 / ATK 23 / DEF 31 / SPD 20
+タグ 07.11.12.19.40
+
+fig/38.png / GLOBAL ID 38
+PB2 クッションモブ
+レア度 SSR
+COST 3
+HP 116 / ATK 26 / DEF 27 / SPD 21
+タグ 06.10.11.19.40
+
+fig/39.png / GLOBAL ID 39
+PB2 CB 20th ロゴ
+レア度 UR
+COST 4
+HP 133 / ATK 33 / DEF 29 / SPD 24
+タグ 04.11.12.19.30.33.40
+
+fig/40.png / GLOBAL ID 40
+MOB SHOT PET モブコドラ
+レア度 SSR
+COST 2
+HP 112 / ATK 30 / DEF 21 / SPD 23
+タグ 03.10.14.38
+
+fig/41.png / GLOBAL ID 41
+MOB SHOT PET イルカエル
+レア度 SSR
+COST 2
+HP 112 / ATK 21 / DEF 23 / SPD 30
+タグ 10.14.27.31
+
+fig/42.png / GLOBAL ID 42
+MOB SHOT PET モブネロ
+レア度 SSR
+COST 2
+HP 110 / ATK 22 / DEF 19 / SPD 33
+タグ 14.29.34.36
+
+fig/43.png / GLOBAL ID 43
+MOB SHOT PET モブトン
+レア度 SSR
+COST 3
+HP 113 / ATK 29 / DEF 23 / SPD 22
+タグ 09.14.31.34.36.45
+
+fig/44.png / GLOBAL ID 44
+MOB SHOT PET モブデンデン
+レア度 UR
+COST 4
+HP 132 / ATK 29 / DEF 28 / SPD 29
+タグ 04.13.14.24.27.34.40.43.51
+
+fig/45.png / GLOBAL ID 45
+MOB SHOT SOUL モブスライム
+レア度 SSR
+COST 3
+HP 115 / ATK 22 / DEF 31 / SPD 21
+タグ 02.09.14.23.41
+
+fig/46.png / GLOBAL ID 46
+MOB SHOT SOUL モブロック
+レア度 SSR
+COST 3
+HP 115 / ATK 20 / DEF 32 / SPD 22
+タグ 09.14.23.29.41
+
+fig/47.png / GLOBAL ID 47
+MOB SHOT SOUL モブテツ
+レア度 UR
+COST 4
+HP 130 / ATK 31 / DEF 23 / SPD 32
+タグ 14.23.24.27.28.29.36.40.49
+
+fig/48.png / GLOBAL ID 48
+MOB SHOT SOUL モブガーディアン
+レア度 SSR
+COST 3
+HP 116 / ATK 21 / DEF 32 / SPD 21
+タグ 09.14.23.25.29.39.43
+
+fig/49.png / GLOBAL ID 49
+MOB SHOT SOUL ミラモブ
+レア度 UR
+COST 4
+HP 133 / ATK 25 / DEF 36 / SPD 25
+タグ 05.09.14.23.25.32.37.42.50
+
+fig/50.png / GLOBAL ID 50
+MOB SHOT SOUL モブホーク
+レア度 SSR
+COST 3
+HP 114 / ATK 25 / DEF 24 / SPD 25
+タグ 04.09.14.23.25.41.50
+
+fig/51.png / GLOBAL ID 51
+MOB SHOT SOUL モブドラゴン
+レア度 UR
+COST 4
+HP 132 / ATK 31 / DEF 32 / SPD 23
+タグ 03.09.14.23.25.35.38.47.50
+
+fig/52.png / GLOBAL ID 52
+スケボーネコクー
+レア度 SSR
+COST 3
+HP 111 / ATK 25 / DEF 21 / SPD 28
+タグ 10.16.27.31.33
+
+fig/53.png / GLOBAL ID 53
+レコードネコクー
+レア度 SSR
+COST 3
+HP 112 / ATK 28 / DEF 26 / SPD 20
+タグ 10.12.16.27.31.33
+
+fig/54.png / GLOBAL ID 54
+おやすみネコクー
+レア度 SSR
+COST 3
+HP 116 / ATK 23 / DEF 28 / SPD 23
+タグ 10.16.27.31.33
+
+fig/55.png / GLOBAL ID 55
+どら焼きネコクー
+レア度 UR
+COST 4
+HP 135 / ATK 22 / DEF 42 / SPD 22
+タグ 10.16.18.27.30.31.33
+
+fig/56.png / GLOBAL ID 56
+モブKART 実況モブ
+レア度 SSR
+COST 2
+HP 113 / ATK 19 / DEF 24 / SPD 31
+タグ 04.19.22.36
+
+fig/57.png / GLOBAL ID 57
+モブソフトクリーム
+レア度 SSR
+COST 2
+HP 114 / ATK 24 / DEF 27 / SPD 23
+タグ 18.27.28.33
+
+fig/58.png / GLOBAL ID 58
+CBロゴ
+レア度 MOB
+COST 5
+HP 152 / ATK 27 / DEF 36 / SPD 37
+タグ 10.11.12.19.23.29.30.40
+
+fig/59.png / GLOBAL ID 59
+モブDJ 選曲
+レア度 SSR
+COST 2
+HP 112 / ATK 25 / DEF 24 / SPD 25
+タグ 05.10.12.27
+
+fig/60.png / GLOBAL ID 60
+モブDJ ハンズアップ
+レア度 SSR
+COST 2
+HP 112 / ATK 28 / DEF 26 / SPD 20
+タグ 05.10.12.27
+
+fig/61.png / GLOBAL ID 61
+MOB BR プレイヤー
+レア度 SSR
+COST 2
+HP 115 / ATK 20 / DEF 26 / SPD 28
+タグ 05.10.20.36
+
+fig/62.png / GLOBAL ID 62
+モブゴースト
+レア度 SR
+COST 2
+HP 96 / ATK 17 / DEF 23 / SPD 24
+タグ 09.23.28
+
+fig/63.png / GLOBAL ID 63
+メニュー 冒険日記
+レア度 SR
+COST 2
+HP 96 / ATK 18 / DEF 22 / SPD 24
+タグ 05.10.20
+
+fig/64.png / GLOBAL ID 64
+メニュー バトルプログラム
+レア度 SR
+COST 2
+HP 96 / ATK 22 / DEF 22 / SPD 20
+タグ 06.15.36
+
+fig/65.png / GLOBAL ID 65
+メニュー ゴールドレコード
+レア度 SR
+COST 2
+HP 99 / ATK 21 / DEF 23 / SPD 20
+タグ 06.08.15
+
+fig/66.png / GLOBAL ID 66
+メニュー 経験値レコード
+レア度 SR
+COST 2
+HP 96 / ATK 21 / DEF 20 / SPD 23
+タグ 06.15.36
+
+fig/67.png / GLOBAL ID 67
+メニュー ボスレコード
+レア度 SR
+COST 2
+HP 98 / ATK 23 / DEF 23 / SPD 18
+タグ 06.15.25
+
+fig/68.png / GLOBAL ID 68
+メニュー ドリンクセット
+レア度 SR
+COST 2
+HP 99 / ATK 20 / DEF 24 / SPD 20
+タグ 06.15.18
+
+fig/69.png / GLOBAL ID 69
+メニュー 椅子で休む
+レア度 SR
+COST 2
+HP 96 / ATK 21 / DEF 23 / SPD 20
+タグ 06.15.33
+
+fig/70.png / GLOBAL ID 70
+酒場の看板娘 モブイルカエル
+レア度 UR
+COST 4
+HP 132 / ATK 23 / DEF 33 / SPD 30
+タグ 06.13.15.18.27.33.40
+
+fig/71.png / GLOBAL ID 71
+鍛冶屋の職人 モブゴンゾー
+レア度 UR
+COST 4
+HP 132 / ATK 33 / DEF 30 / SPD 23
+タグ 03.13.15.35.36.39.40
+
+fig/72.png / GLOBAL ID 72
+優しき熱血コーチ モブコーチ
+レア度 UR
+COST 4
+HP 138 / ATK 24 / DEF 39 / SPD 23
+タグ 08.13.15.28.29.31.40
+
+fig/73.png / GLOBAL ID 73
+宿舎の癒し モブミータ
+レア度 UR
+COST 4
+HP 133 / ATK 26 / DEF 37 / SPD 23
+タグ 08.13.15.27.29.33.40
+
+fig/74.png / GLOBAL ID 74
+頼りになる店主 モブマテリア
+レア度 UR
+COST 4
+HP 132 / ATK 29 / DEF 29 / SPD 28
+タグ 05.13.15.23.36.37.40
+
+fig/75.png / GLOBAL ID 75
+メニュー 王の間
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 02.09.15
+
+fig/76.png / GLOBAL ID 76
+メニュー MOB SHOP
+レア度 SR
+COST 2
+HP 98 / ATK 22 / DEF 24 / SPD 18
+タグ 02.09.15
+
+fig/77.png / GLOBAL ID 77
+メニュー 宿舎
+レア度 SR
+COST 2
+HP 101 / ATK 19 / DEF 27 / SPD 18
+タグ 02.09.15
+
+fig/78.png / GLOBAL ID 78
+メニュー レコードの間
+レア度 SR
+COST 2
+HP 96 / ATK 19 / DEF 25 / SPD 20
+タグ 02.09.15
+
+fig/79.png / GLOBAL ID 79
+モブキングダムの王様 モブスライムキング
+レア度 SSR
+COST 3
+HP 116 / ATK 20 / DEF 34 / SPD 20
+タグ 02.09.13.17.30.40
+
+fig/80.png / GLOBAL ID 80
+王様の右腕 モブライトアーム
+レア度 SSR
+COST 3
+HP 112 / ATK 31 / DEF 24 / SPD 19
+タグ 02.09.13.17.40
+
+fig/81.png / GLOBAL ID 81
+MOB PARTY マスコット
+レア度 SSR
+COST 3
+HP 115 / ATK 21 / DEF 26 / SPD 27
+タグ 05.10.12.20.40
+
+fig/82.png / GLOBAL ID 82
+読みかけの本を読もう
+レア度 SSR
+COST 3
+HP 115 / ATK 19 / DEF 27 / SPD 28
+タグ 05.10.20.33.40
+
+fig/83.png / GLOBAL ID 83
+モブ三味線
+レア度 SSR
+COST 3
+HP 115 / ATK 21 / DEF 26 / SPD 27
+タグ 05.10.12.20.40
+
+fig/84.png / GLOBAL ID 84
+MOB SHOT リリス四姉妹ソウル 赤
+レア度 SSR
+COST 3
+HP 114 / ATK 27 / DEF 26 / SPD 21
+タグ 03.09.23.27.37.50
+
+fig/85.png / GLOBAL ID 85
+MOB SHOT リリス四姉妹ソウル 黄
+レア度 SSR
+COST 3
+HP 113 / ATK 31 / DEF 21 / SPD 22
+タグ 04.09.23.27.37.50.51
+
+fig/86.png / GLOBAL ID 86
+MOB SHOT リリス四姉妹ソウル 青
+レア度 SSR
+COST 3
+HP 114 / ATK 26 / DEF 27 / SPD 21
+タグ 09.23.27.31.37.50
+
+fig/87.png / GLOBAL ID 87
+MOB SHOT リリス四姉妹ソウル 白
+レア度 SSR
+COST 3
+HP 113 / ATK 31 / DEF 22 / SPD 21
+タグ 09.23.27.28.37.50
+
+fig/88.png / GLOBAL ID 185
+新入りフィギュア売り モブメープル
+レア度 UR
+COST 4
+HP 136 / ATK 29 / DEF 33 / SPD 24
+タグ 06.08.13.27.29.37.40.50
+
+fig/89.png / GLOBAL ID 186
+PB2 15th ロゴレコード
+レア度 SSR
+COST 3
+HP 115 / ATK 28 / DEF 26 / SPD 20
+タグ 11.12.19.30.33.40
+
+fig/90.png / GLOBAL ID 187
+PB2 Vol.40 ロゴレコード
+レア度 SSR
+COST 3
+HP 115 / ATK 28 / DEF 26 / SPD 20
+タグ 11.12.19.30.33.40
+
+fig/91.png / GLOBAL ID 188
+MOB ARTIST イエローレコード
+レア度 SSR
+COST 3
+HP 115 / ATK 27 / DEF 25 / SPD 22
+タグ 04.11.12.19.30.33.40
+
+fig/92.png / GLOBAL ID 189
+MOB ARTIST ミントレコード
+レア度 SSR
+COST 3
+HP 115 / ATK 28 / DEF 26 / SPD 20
+タグ 11.12.19.31.33.40
+
+
+--- プレイヤーフィギュア ---
+figplay/001.png / GLOBAL ID 190
+モブ勇者
+レア度 UR
+COST 4
+HP 138 / ATK 24 / DEF 40 / SPD 22
+タグ 08.23.24.30.34.40.49.51.52
+
+figplay/002.png / GLOBAL ID 191
+モブピンク
+レア度 UR
+COST 4
+HP 138 / ATK 25 / DEF 39 / SPD 22
+タグ 06.13.24.27.33.34.39.40
+
+figplay/003.png / GLOBAL ID 192
+モブデザート
+レア度 UR
+COST 4
+HP 135 / ATK 38 / DEF 26 / SPD 22
+タグ 06.13.24.27.33.34.39.40
+
+figplay/004.png / GLOBAL ID 193
+モブデンデン
+レア度 UR
+COST 4
+HP 135 / ATK 23 / DEF 26 / SPD 37
+タグ 06.13.24.27.33.34.39.40
+
+figplay/005.png / GLOBAL ID 194
+モブニョロ
+レア度 UR
+COST 4
+HP 138 / ATK 24 / DEF 40 / SPD 22
+タグ 06.13.24.27.33.34.39.40
+
+figplay/006.png / GLOBAL ID 195
+モブマニー
+レア度 UR
+COST 4
+HP 135 / ATK 37 / DEF 27 / SPD 22
+タグ 06.13.24.27.33.34.39.40
+
+figplay/007.png / GLOBAL ID 196
+モブネコクー
+レア度 UR
+COST 4
+HP 137 / ATK 33 / DEF 32 / SPD 21
+タグ 06.13.24.27.33.34.39.40
+
+figplay/008.png / GLOBAL ID 197
+モブジェシー
+レア度 UR
+COST 4
+HP 134 / ATK 23 / DEF 30 / SPD 33
+タグ 06.13.24.27.33.34.36.40.44.51
+
+figplay/009.png / GLOBAL ID 198
+モブテツ
+レア度 UR
+COST 4
+HP 133 / ATK 34 / DEF 32 / SPD 20
+タグ 13.24.27.28.29.34.35.40.41.49
+
+figplay/010.png / GLOBAL ID 199
+モブリーロ
+レア度 UR
+COST 4
+HP 138 / ATK 24 / DEF 38 / SPD 24
+タグ 13.23.24.28.29.30.36.37.40.42
+
+figplay/011.png / GLOBAL ID 200
+モブあのヒーロー
+レア度 MOB
+COST 5
+HP 160 / ATK 30 / DEF 36 / SPD 34
+タグ 05.08.24.30.34.35.36.39.40.50.51.52
+
+figplay/012.png / GLOBAL ID 201
+モブピンク
+レア度 UR
+COST 4
+HP 138 / ATK 24 / DEF 40 / SPD 22
+タグ 06.13.24.27.33.34.39.40
+
+
+--- モンスターフィギュア ---
+figene/01.png / GLOBAL ID 88
+スライム
+レア度 SSR
+COST 3
+HP 116 / ATK 20 / DEF 34 / SPD 20
+タグ 02.09.10.17.41
+
+figene/02.png / GLOBAL ID 89
+モブロック
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 09.39.41
+
+figene/03.png / GLOBAL ID 90
+モブテンデビ
+レア度 SR
+COST 2
+HP 97 / ATK 18 / DEF 20 / SPD 26
+タグ 09.27.39.41.50
+
+figene/04.png / GLOBAL ID 91
+モブジョーロ
+レア度 SR
+COST 2
+HP 97 / ATK 26 / DEF 20 / SPD 18
+タグ 09.34.39.41
+
+figene/05.png / GLOBAL ID 92
+モブイワキリ
+レア度 SSR
+COST 3
+HP 115 / ATK 23 / DEF 31 / SPD 20
+タグ 09.32.35.41.51
+
+figene/06.png / GLOBAL ID 93
+モブサバンナ
+レア度 SR
+COST 2
+HP 96 / ATK 18 / DEF 18 / SPD 28
+タグ 04.09.36.41
+
+figene/07.png / GLOBAL ID 94
+モブメラケロ
+レア度 SSR
+COST 3
+HP 113 / ATK 28 / DEF 27 / SPD 19
+タグ 03.32.34.40.41
+
+figene/08.png / GLOBAL ID 95
+モブケロキング
+レア度 SSR
+COST 3
+HP 114 / ATK 21 / DEF 33 / SPD 20
+タグ 02.09.32.34.41.49
+
+figene/09.png / GLOBAL ID 96
+モブツルガンナー
+レア度 SSR
+COST 3
+HP 111 / ATK 20 / DEF 21 / SPD 33
+タグ 02.09.32.36.41
+
+figene/10.png / GLOBAL ID 97
+モブミイラ
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 09.28.42
+
+figene/11.png / GLOBAL ID 98
+モブネコミイラ
+レア度 SR
+COST 2
+HP 95 / ATK 18 / DEF 19 / SPD 27
+タグ 09.27.28.42
+
+figene/12.png / GLOBAL ID 99
+モブデスヘッド
+レア度 SSR
+COST 3
+HP 115 / ATK 26 / DEF 27 / SPD 21
+タグ 09.29.32.37.42.50.49
+
+figene/13.png / GLOBAL ID 100
+モブポイズン
+レア度 SR
+COST 2
+HP 98 / ATK 19 / DEF 27 / SPD 18
+タグ 09.29.42
+
+figene/14.png / GLOBAL ID 101
+モブアドベンチャー
+レア度 SR
+COST 2
+HP 99 / ATK 20 / DEF 26 / SPD 18
+タグ 03.09.27.42
+
+figene/15.png / GLOBAL ID 102
+モブスナトカゲ
+レア度 SR
+COST 2
+HP 97 / ATK 19 / DEF 19 / SPD 26
+タグ 09.36.42.49
+
+figene/16.png / GLOBAL ID 103
+モブツインソウル
+レア度 SSR
+COST 3
+HP 114 / ATK 26 / DEF 23 / SPD 25
+タグ 08.09.23.37.20.42.50.51
+
+figene/17.png / GLOBAL ID 104
+モブミラバスター
+レア度 SSR
+COST 3
+HP 114 / ATK 20 / DEF 33 / SPD 21
+タグ 09.23.26.32.36.42
+
+figene/18.png / GLOBAL ID 105
+モブヒトデ
+レア度 SR
+COST 2
+HP 97 / ATK 25 / DEF 19 / SPD 20
+タグ 09.36.43
+
+figene/19.png / GLOBAL ID 106
+モブナイフ
+レア度 SR
+COST 2
+HP 97 / ATK 27 / DEF 19 / SPD 18
+タグ 09.26.43.49
+
+figene/20.png / GLOBAL ID 107
+モブダンサー
+レア度 SR
+COST 2
+HP 97 / ATK 19 / DEF 19 / SPD 26
+タグ 09.12.43
+
+figene/21.png / GLOBAL ID 108
+モブヌルブルー
+レア度 SR
+COST 2
+HP 97 / ATK 18 / DEF 20 / SPD 26
+タグ 09.31.43
+
+figene/22.png / GLOBAL ID 109
+モブバイオリン
+レア度 SSR
+COST 3
+HP 116 / ATK 21 / DEF 32 / SPD 21
+タグ 09.26.29.33.36.37.43
+
+figene/23.png / GLOBAL ID 110
+モブラプチー
+レア度 SSR
+COST 3
+HP 114 / ATK 19 / DEF 28 / SPD 27
+タグ 09.31.32.40.43
+
+figene/24.png / GLOBAL ID 111
+モブティラ
+レア度 SSR
+COST 3
+HP 114 / ATK 28 / DEF 27 / SPD 19
+タグ 03.09.32.40.43
+
+figene/25.png / GLOBAL ID 112
+モブクウカイ
+レア度 SSR
+COST 3
+HP 114 / ATK 28 / DEF 27 / SPD 19
+タグ 05.09.23.26.37.43
+
+figene/26.png / GLOBAL ID 113
+モブアクイ
+レア度 SSR
+COST 3
+HP 115 / ATK 21 / DEF 30 / SPD 23
+タグ 05.09.23.26.43.50
+
+figene/27.png / GLOBAL ID 114
+モブシツイ
+レア度 SSR
+COST 3
+HP 113 / ATK 21 / DEF 30 / SPD 23
+タグ 05.09.23.26.43.50
+
+figene/28.png / GLOBAL ID 115
+モブヤマイ
+レア度 SSR
+COST 3
+HP 113 / ATK 21 / DEF 30 / SPD 23
+タグ 05.09.23.26.43.50
+
+figene/29.png / GLOBAL ID 116
+モブネオントカゲ
+レア度 SR
+COST 2
+HP 95 / ATK 20 / DEF 18 / SPD 26
+タグ 08.09.36.44.49
+
+figene/30.png / GLOBAL ID 117
+モブカイロ
+レア度 SR
+COST 2
+HP 97 / ATK 20 / DEF 25 / SPD 19
+タグ 05.09.34.44
+
+figene/31.png / GLOBAL ID 118
+モブバンケン
+レア度 SR
+COST 2
+HP 97 / ATK 18 / DEF 20 / SPD 26
+タグ 09.27.33.44
+
+figene/32.png / GLOBAL ID 119
+モブスラトレーナー
+レア度 SSR
+COST 3
+HP 111 / ATK 30 / DEF 22 / SPD 22
+タグ 02.09.17.35.44
+
+figene/33.png / GLOBAL ID 120
+モブエネチェイサー
+レア度 SSR
+COST 3
+HP 116 / ATK 21 / DEF 30 / SPD 23
+タグ 09.29.32.35.44
+
+figene/34.png / GLOBAL ID 121
+モブパレットレオン
+レア度 SSR
+COST 3
+HP 113 / ATK 22 / DEF 21 / SPD 31
+タグ 08.09.29.36.44.49
+
+figene/35.png / GLOBAL ID 122
+モブコドラ
+レア度 SSR
+COST 3
+HP 118 / ATK 20 / DEF 31 / SPD 23
+タグ 09.27.38.40.44
+
+figene/36.png / GLOBAL ID 123
+モブネオクマ
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 22 / SPD 22
+タグ 09.27.36.40.44
+
+figene/37.png / GLOBAL ID 124
+モブジンベエ
+レア度 SR
+COST 2
+HP 97 / ATK 25 / DEF 20 / SPD 19
+タグ 09.31.36.40.45.49
+
+figene/38.png / GLOBAL ID 125
+モブネッシー
+レア度 SR
+COST 2
+HP 99 / ATK 19 / DEF 27 / SPD 18
+タグ 09.31.39.40.45.51
+
+figene/39.png / GLOBAL ID 126
+モブバブルドクター
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 27 / SPD 19
+タグ 09.31.36.40.45
+
+figene/40.png / GLOBAL ID 127
+モブシーガード
+レア度 SR
+COST 2
+HP 99 / ATK 18 / DEF 28 / SPD 18
+タグ 09.28.31.40.45
+
+figene/41.png / GLOBAL ID 128
+モブアビスナイト
+レア度 SSR
+COST 3
+HP 113 / ATK 26 / DEF 27 / SPD 21
+タグ 09.31.36.40.45
+
+figene/42.png / GLOBAL ID 129
+モブジョーンズ
+レア度 SSR
+COST 3
+HP 113 / ATK 28 / DEF 27 / SPD 19
+タグ 09.31.32.35.40.45.49
+
+figene/43.png / GLOBAL ID 130
+モブウェイブ
+レア度 SSR
+COST 3
+HP 113 / ATK 27 / DEF 26 / SPD 21
+タグ 09.31.36.37.40.45
+
+figene/44.png / GLOBAL ID 131
+モブヒトデヤリ
+レア度 SR
+COST 2
+HP 97 / ATK 25 / DEF 20 / SPD 19
+タグ 09.31.36.40.45
+
+figene/45.png / GLOBAL ID 132
+モブウォリアー
+レア度 SR
+COST 2
+HP 96 / ATK 26 / DEF 20 / SPD 18
+タグ 09.26.32.37.46.49
+
+figene/46.png / GLOBAL ID 133
+モブキバ
+レア度 SR
+COST 2
+HP 96 / ATK 18 / DEF 19 / SPD 27
+タグ 07.09.26.32.36.46
+
+figene/47.png / GLOBAL ID 134
+モブククリ
+レア度 SSR
+COST 3
+HP 113 / ATK 20 / DEF 23 / SPD 31
+タグ 02.09.26.32.36.46
+
+figene/48.png / GLOBAL ID 135
+モブタフネス
+レア度 SSR
+COST 3
+HP 118 / ATK 24 / DEF 28 / SPD 22
+タグ 09.26.32.35.39.46
+
+figene/49.png / GLOBAL ID 136
+モブヒスイ
+レア度 SSR
+COST 3
+HP 114 / ATK 26 / DEF 26 / SPD 22
+タグ 05.09.26.32.37.46
+
+figene/50.png / GLOBAL ID 137
+モブリュウゴウ
+レア度 SSR
+COST 3
+HP 112 / ATK 33 / DEF 21 / SPD 20
+タグ 09.26.32.35.38.46.49
+
+figene/51.png / GLOBAL ID 138
+モブマグトカゲ
+レア度 SR
+COST 2
+HP 96 / ATK 28 / DEF 18 / SPD 18
+タグ 03.09.38.47.49
+
+figene/52.png / GLOBAL ID 139
+モブヒートロック
+レア度 SR
+COST 2
+HP 99 / ATK 19 / DEF 27 / SPD 18
+タグ 03.09.39.47
+
+figene/53.png / GLOBAL ID 140
+モブヒノデビ
+レア度 SR
+COST 2
+HP 95 / ATK 19 / DEF 18 / SPD 27
+タグ 03.09.27.47.50
+
+figene/54.png / GLOBAL ID 141
+モブボムスロー
+レア度 SR
+COST 2
+HP 96 / ATK 28 / DEF 18 / SPD 18
+タグ 03.09.35.47
+
+figene/55.png / GLOBAL ID 142
+モブホノテイル
+レア度 SSR
+COST 3
+HP 112 / ATK 34 / DEF 20 / SPD 20
+タグ 03.09.27.37.47
+
+figene/56.png / GLOBAL ID 143
+モブヒノタビ
+レア度 SSR
+COST 3
+HP 112 / ATK 32 / DEF 22 / SPD 20
+タグ 03.09.32.37.47
+
+figene/57.png / GLOBAL ID 144
+モブブリザード
+レア度 SSR
+COST 3
+HP 116 / ATK 21 / DEF 32 / SPD 21
+タグ 09.31.32.36.40.47
+
+figene/58.png / GLOBAL ID 145
+モブフレイム
+レア度 SSR
+COST 3
+HP 112 / ATK 32 / DEF 21 / SPD 21
+タグ 03.09.32.36.40.47
+
+figene/59.png / GLOBAL ID 146
+モブフレザード
+レア度 SSR
+COST 3
+HP 113 / ATK 28 / DEF 27 / SPD 19
+タグ 03.09.27.31.32.35.47
+
+figene/60.png / GLOBAL ID 147
+モブマグバスター
+レア度 SSR
+COST 3
+HP 111 / ATK 33 / DEF 21 / SPD 20
+タグ 03.09.26.32.35.39.47
+
+figene/61.png / GLOBAL ID 148
+モブヨーガンスライム
+レア度 SSR
+COST 3
+HP 115 / ATK 22 / DEF 31 / SPD 21
+タグ 03.09.17.32.39.47.50
+
+figene/62.png / GLOBAL ID 149
+モブピコダーク
+レア度 SR
+COST 2
+HP 98 / ATK 19 / DEF 26 / SPD 19
+タグ 05.09.27.37.48
+
+figene/63.png / GLOBAL ID 150
+モブデビルスライム
+レア度 SR
+COST 2
+HP 96 / ATK 19 / DEF 25 / SPD 20
+タグ 02.09.17.27.37.48.50
+
+figene/64.png / GLOBAL ID 151
+モブプニライダー
+レア度 SR
+COST 2
+HP 95 / ATK 25 / DEF 19 / SPD 20
+タグ 02.09.17.27.40.48.50
+
+figene/65.png / GLOBAL ID 152
+モブミニブック
+レア度 SSR
+COST 3
+HP 113 / ATK 23 / DEF 31 / SPD 20
+タグ 08.09.27.33.37.48
+
+figene/66.png / GLOBAL ID 153
+モブコクピット
+レア度 SSR
+COST 3
+HP 116 / ATK 20 / DEF 33 / SPD 21
+タグ 05.09.36.39.48.50
+
+figene/67.png / GLOBAL ID 154
+モブアサシン
+レア度 SSR
+COST 3
+HP 110 / ATK 22 / DEF 21 / SPD 31
+タグ 02.09.26.34.35.48
+
+figene/68.png / GLOBAL ID 155
+モブヘルシャドウ
+レア度 SSR
+COST 3
+HP 113 / ATK 31 / DEF 22 / SPD 21
+タグ 03.09.23.26.36.48
+
+figene/69.png / GLOBAL ID 156
+モブミラヘルド
+レア度 SSR
+COST 3
+HP 110 / ATK 29 / DEF 19 / SPD 26
+タグ 03.09.23.26.32.36.48.49
+
+figene/70.png / GLOBAL ID 157
+モブキラウィッチ
+レア度 SSR
+COST 3
+HP 113 / ATK 23 / DEF 30 / SPD 21
+タグ 05.09.27.32.37.48.50
+
+figene/71.png / GLOBAL ID 158
+モブララウィッチ
+レア度 SSR
+COST 3
+HP 113 / ATK 23 / DEF 30 / SPD 21
+タグ 03.09.27.32.37.40.48.50
+
+figene/72.png / GLOBAL ID 202
+グラディモブ
+レア度 SSR
+COST 3
+HP 112 / ATK 20 / DEF 25 / SPD 29
+タグ 03.09.29.32.34.36.48.50
+
+
+--- ボスフィギュア ---
+figboss/01.png / GLOBAL ID 159
+モブホーク
+レア度 SSR
+COST 3
+HP 114 / ATK 25 / DEF 24 / SPD 25
+タグ 04.09.25.32.34.41.50
+
+figboss/02.png / GLOBAL ID 160
+モブホークⅡ
+レア度 UR
+COST 4
+HP 132 / ATK 29 / DEF 28 / SPD 29
+タグ 04.09.25.26.32.34.41.50
+
+figboss/03.png / GLOBAL ID 161
+ミラモブ
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 21 / SPD 23
+タグ 05.09.23.25.37.42.50
+
+figboss/04.png / GLOBAL ID 162
+ミラモブⅡ
+レア度 UR
+COST 4
+HP 131 / ATK 31 / DEF 30 / SPD 25
+タグ 05.09.23.25.36.37.42.50
+
+figboss/05.png / GLOBAL ID 163
+モブガーディアン
+レア度 SSR
+COST 3
+HP 116 / ATK 21 / DEF 34 / SPD 19
+タグ 09.25.32.35.39.40.43
+
+figboss/06.png / GLOBAL ID 164
+モブガーディアンⅡ
+レア度 UR
+COST 4
+HP 138 / ATK 25 / DEF 39 / SPD 22
+タグ 09.25.26.29.32.35.39.40.43
+
+figboss/07.png / GLOBAL ID 165
+モブネオンバルス
+レア度 UR
+COST 4
+HP 136 / ATK 35 / DEF 27 / SPD 24
+タグ 08.09.25.31.32.36.44.50
+
+figboss/08.png / GLOBAL ID 166
+モブエース
+レア度 UR
+COST 4
+HP 134 / ATK 34 / DEF 27 / SPD 25
+タグ 05.08.09.25.32.34.36.44.51
+
+figboss/09.png / GLOBAL ID 167
+モブドラゴン
+レア度 SSR
+COST 3
+HP 114 / ATK 26 / DEF 28 / SPD 20
+タグ 03.09.25.32.35.38.47.50
+
+figboss/10.png / GLOBAL ID 168
+モブドラゴンⅡ
+レア度 UR
+COST 4
+HP 132 / ATK 30 / DEF 33 / SPD 23
+タグ 03.09.25.32.34.35.38.47.50
+
+figboss/11.png / GLOBAL ID 169
+モブギドラ
+レア度 MOB
+COST 5
+HP 152 / ATK 35 / DEF 38 / SPD 27
+タグ 03.09.25.30.32.34.35.36.38.47.50
+
+figboss/12.png / GLOBAL ID 170
+ミラモブファラオ
+レア度 MOB
+COST 5
+HP 151 / ATK 38 / DEF 34 / SPD 28
+タグ 08.09.23.25.30.32.36.37.42.49.50
+
+figboss/13.png / GLOBAL ID 171
+モブデーバフ
+レア度 SSR
+COST 3
+HP 113 / ATK 31 / DEF 22 / SPD 21
+タグ 05.09.23.25.29.37.46
+
+figboss/14.png / GLOBAL ID 172
+モブデーバフ第二形態
+レア度 UR
+COST 4
+HP 131 / ATK 37 / DEF 26 / SPD 23
+タグ 05.09.23.25.29.30.32.37.46
+
+figboss/15.png / GLOBAL ID 173
+モブバーサク
+レア度 SSR
+COST 3
+HP 117 / ATK 30 / DEF 24 / SPD 20
+タグ 05.09.23.25.29.35.46.49
+
+figboss/16.png / GLOBAL ID 174
+モブバーサク第二形態
+レア度 UR
+COST 4
+HP 138 / ATK 35 / DEF 27 / SPD 24
+タグ 05.09.23.25.29.32.36.46.49
+
+figboss/17.png / GLOBAL ID 175
+モブウミデンデン
+レア度 UR
+COST 4
+HP 131 / ATK 28 / DEF 27 / SPD 31
+タグ 08.09.23.25.29.30.35.43.51
+
+figboss/18.png / GLOBAL ID 176
+モブネオマスター
+レア度 UR
+COST 4
+HP 137 / ATK 25 / DEF 37 / SPD 24
+タグ 05.08.09.25.30.36.37.40.44.50
+
+figboss/19.png / GLOBAL ID 177
+モブヘルリリス
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 22 / SPD 22
+タグ 03.23.26.27.37.48.50
+
+figboss/20.png / GLOBAL ID 178
+モブキリンリリス
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 22 / SPD 22
+タグ 04.23.26.27.37.48.50
+
+figboss/21.png / GLOBAL ID 179
+モブリヴァリリス
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 22 / SPD 22
+タグ 23.26.27.31.37.48.50
+
+figboss/22.png / GLOBAL ID 180
+モブクフリリス
+レア度 SSR
+COST 3
+HP 113 / ATK 30 / DEF 22 / SPD 22
+タグ 23.26.27.28.37.48.50
+
+figboss/23.png / GLOBAL ID 181
+覚醒モブヘルリリス
+レア度 SSR
+COST 3
+HP 112 / ATK 31 / DEF 22 / SPD 21
+タグ 03.23.26.27.32.37.48.50
+
+figboss/24.png / GLOBAL ID 182
+覚醒モブキリンリリス
+レア度 SSR
+COST 3
+HP 112 / ATK 31 / DEF 22 / SPD 21
+タグ 04.23.26.27.32.37.48.50.51
+
+figboss/25.png / GLOBAL ID 183
+覚醒モブリヴァリリス
+レア度 SSR
+COST 3
+HP 112 / ATK 31 / DEF 22 / SPD 21
+タグ 23.26.27.31.32.37.48.50
+
+figboss/26.png / GLOBAL ID 184
+覚醒モブクフリリス
+レア度 SSR
+COST 3
+HP 112 / ATK 31 / DEF 22 / SPD 21
+タグ 23.26.27.28.32.37.48.50
+
+figboss/27.png / GLOBAL ID 203
+モブミラナイト
+レア度 SSR
+COST 3
+HP 114 / ATK 21 / DEF 33 / SPD 20
+タグ 09.23.26.31.32.42.49
+
+figboss/28.png / GLOBAL ID 204
+モブミラアース
+レア度 SSR
+COST 3
+HP 112 / ATK 28 / DEF 27 / SPD 19
+タグ 02.09.23.26.32.35.42
+
+figboss/29.png / GLOBAL ID 205
+モブミラタイム
+レア度 SSR
+COST 3
+HP 113 / ATK 26 / DEF 27 / SPD 21
+タグ 04.09.23.26.32.37.42
+
+figboss/30.png / GLOBAL ID 206
+モブミラカラミ
+レア度 SSR
+COST 3
+HP 115 / ATK 23 / DEF 31 / SPD 20
+タグ 03.09.23.26.32.37.42
+
+figboss/31.png / GLOBAL ID 207
+モブリリス
+レア度 UR
+COST 4
+HP 130 / ATK 32 / DEF 31 / SPD 23
+タグ 05.23.25.26.27.30.34.36.37.48.50
+
+figboss/32.png / GLOBAL ID 208
+モブ閻魔
+レア度 UR
+COST 4
+HP 138 / ATK 31 / DEF 33 / SPD 22
+タグ 03.25.30.32.34.36.48.49
+
+figboss/33.png / GLOBAL ID 209
+モブ閻魔第二形態
+レア度 UR
+COST 4
+HP 137 / ATK 30 / DEF 25 / SPD 31
+タグ 03.23.25.30.32.34.36.48.49
+
+figboss/34.png / GLOBAL ID 210
+モブ閻魔第最終形態
+レア度 UR
+COST 4
+HP 137 / ATK 38 / DEF 26 / SPD 22
+タグ 03.23.25.30.32.34.36.48.49
+
+figboss/35.png / GLOBAL ID 211
+モブ怪人幹部青
+レア度 SSR
+COST 3
+HP 112 / ATK 28 / DEF 27 / SPD 19
+タグ 26.29.31.32.34.42.49
+
+figboss/36.png / GLOBAL ID 212
+モブ怪人幹部赤
+レア度 SSR
+COST 3
+HP 112 / ATK 28 / DEF 27 / SPD 19
+タグ 02.26.29.32.34.42.49
+
+figboss/37.png / GLOBAL ID 213
+モブ怪人幹部青変身
+レア度 SSR
+COST 3
+HP 112 / ATK 29 / DEF 27 / SPD 18
+タグ 26.29.31.32.34.35.42.49
+
+figboss/38.png / GLOBAL ID 214
+モブ怪人幹部赤変身
+レア度 SSR
+COST 3
+HP 113 / ATK 27 / DEF 28 / SPD 19
+タグ 02.26.29.32.34.35.42.49
+
+figboss/39.png / GLOBAL ID 215
+モブナビ
+レア度 UR
+COST 4
+HP 138 / ATK 31 / DEF 33 / SPD 22
+タグ 08.25.28.30.32.33.36.37.52
+
+figboss/40.png / GLOBAL ID 216
+モブナビマスター
+レア度 MOB
+COST 5
+HP 160 / ATK 37 / DEF 37 / SPD 26
+タグ 08.25.28.30.32.33.36.37.39.52
+
+figboss/41.png / GLOBAL ID 217
+モブ怪人のボス
+レア度 MOB
+COST 5
+HP 159 / ATK 37 / DEF 39 / SPD 24
+タグ 10.13.24.25.26.29.30.32.34.35.39.40.51.52
+
+figboss/42.png / GLOBAL ID 218
+ウルモブリリス
+レア度 MOB
+COST 5
+HP 154 / ATK 37 / DEF 40 / SPD 23
+タグ 09.23.25.26.29.30.32.34.35.37.39.48.51
+
+figboss/43.png / GLOBAL ID 219
+モブネプチューン
+レア度 UR
+COST 4
+HP 136 / ATK 35 / DEF 27 / SPD 24
+タグ 04.09.25.30.31.32.34.36.40.45

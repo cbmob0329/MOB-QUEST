@@ -1,0 +1,16 @@
+MOB QUEST v116 REGRESSION REPORT
+BASE: v115 MOBPIECE / RUBY / FIGURE STATS STABLE
+
+ADDED
+- EXP/GOLD turntable enemy-defeat reward tables and formations.
+- Boss turntable 4-clear DIAMOND/RUBY rewards.
+- 31 exclusive boss limited figure placeholder records using spbossfig/001.png-031.png.
+- Difficulty-weighted limited figure rarity/drop counts.
+- Exact-duplicate ownership overflow converts to RUBY using v115 caps/rates, with dedicated reveal text.
+- Start/area/complete/drop presentation overlays.
+
+PRESERVED
+- v115 Mob Piece stats/tags/ruby exchange/deck duplicate rules.
+- v114 Battle Program progression gates.
+- v113 Battle Program rewards.
+- v112 story appropriate-level prompt / CLEAR stamps.

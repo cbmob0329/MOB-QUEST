@@ -1,0 +1,12 @@
+MOB QUEST v115
+
+Implemented:
+- 219 supplied figure definitions loaded while preserving historical global IDs 01-184.
+- Mob Piece stats are HP / ATK / DEF / SPD only. LIFE remains only as an internal compatibility alias.
+- Rarity gap widened slightly; explicit per-figure stats stored in mobPieceV115.
+- All 52 Mob Piece tag effects redesigned; exact duplicate figure IDs count once toward tags; stacking caps added.
+- Deck duplicate limits: R/SR 3, SSR/UR 2, MOB 1; ownership and cost validation retained.
+- Gacha ownership caps: R9 SR6 SSR4 UR2 MOB1. Overflow converts to Ruby 1/2/5/15/50.
+- Ruby exchange added per selected gacha: R10 SR50 SSR100 UR300 MOB500, with confirmation and cap checks.
+- v110 gacha input lock, sequential 10-pull, final 5x2 summary, figure detail, and auto-battle animations preserved.
+- v114 Battle Program story unlock, v113 rewards, v112 clear stamps/appropriate level, v109 battle/support systems preserved.

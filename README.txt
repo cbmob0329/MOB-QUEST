@@ -263,3 +263,10 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - Added one-time SEASON clear rewards chosen from implemented items, weapons, and EXP/GOLD/BOSS records.
 - Existing v112 red completed banners and large white CLEAR stamps remain active.
 - GAME_ASSET_VERSION and title updated to v113.
+
+[v116]
+- Turntable EXP/GOLD now comes from defeated special enemies; escaped enemies grant nothing.
+- Boss Turntable full clear grants DIAMOND/RUBY plus exclusive spbossfig/001-031 limited figures.
+- Limited duplicate overflow visibly converts to RUBY using v115 rarity caps.
+- Added stronger START / AREA / COMPLETE / LIMITED FIGURE DROP presentation.
+- Title and GAME_ASSET_VERSION updated to v116.

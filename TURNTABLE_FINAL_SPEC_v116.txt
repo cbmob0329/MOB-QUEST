@@ -1,0 +1,45 @@
+MOB QUEST v116 - TURNTABLE FINAL SPEC
+
+[EXP TURNTABLE]
+Enemy defeat rewards only. Escaped enemies give 0.
+NORMAL: Metal 1,500 EXP each. Base max 12,000 EXP.
+HARD: Metal 2,500 / Metal Coin 12,000. Base max 70,000 EXP.
+VERY HARD: Metal 4,000 / Metal Coin 18,000 / King Metal 50,000. Base max 298,000 EXP.
+INFERNO: Metal Coin 25,000 / King Metal 80,000. Base max 655,000 EXP.
+Metal escape rates remain active (Metal 30%, Coin 40%, King 20%).
+
+[GOLD TURNTABLE]
+Enemy defeat rewards only.
+NORMAL: Gold 1,000G. Base max 8,000G.
+HARD: Gold 2,000 / Gold Coin 6,000. Base max 38,000G.
+VERY HARD: Gold 3,000 / Gold Coin 10,000 / King Gold 30,000. Base max 173,000G.
+INFERNO: Gold Coin 15,000 / King Gold 60,000. Base max 465,000G.
+Gold escape rates: Gold 0%, Coin 10%, King 5%.
+
+[BOSS TURNTABLE COMPLETE REWARD]
+NORMAL: 30 DIAMOND + 1 RUBY + 1 LIMITED FIGURE.
+HARD: 45 DIAMOND + 5 RUBY + 1-2 LIMITED FIGURES (1:70%, 2:30%).
+VERY HARD: 70 DIAMOND + 12 RUBY + 1-3 LIMITED FIGURES (1:30%, 2:45%, 3:25%).
+INFERNO: 100 DIAMOND + 25 RUBY + 3 LIMITED FIGURES guaranteed.
+Premium rewards and limited figures require all 4 bosses cleared.
+
+[LIMITED FIGURES]
+spbossfig/001.png-031.png
+001-010 R / 011-019 SR / 020-027 SSR / 028-030 UR / 031 MOB
+NORMAL: R78 / SR17 / SSR4.95 / UR0.045 / MOB0.005 (UR+MOB 0.05%)
+HARD: R55 / SR30 / SSR13.5 / UR1.4 / MOB0.1
+VERY HARD: R30 / SR35 / SSR29 / UR5.5 / MOB0.5
+INFERNO: R8 / SR26 / SSR44 / UR20 / MOB2
+Same-rarity figures are uniformly selected.
+
+[DUPLICATE OVERFLOW]
+Uses v115 ownership caps: R9 / SR6 / SSR4 / UR2 / MOB1.
+If a boss limited drop exceeds the exact same figure ownership cap, the figure is not added. It is visibly converted during the drop reveal to RUBY: R+1 / SR+2 / SSR+5 / UR+15 / MOB+50.
+
+[PRESENTATION]
+- Strong RECORD SET / TRAINING START intro.
+- AREA/BOSS banner before every battle.
+- Existing battle result shows actual defeated-enemy EXP/GOLD.
+- 4 AREA clear has dedicated TRAINING COMPLETE.
+- Boss complete has ALL BOSS DEFEATED -> DIAMOND/RUBY -> sequential LIMITED FIGURE reveals -> summary.
+- Missing spbossfig images show a numbered placeholder until art is added.

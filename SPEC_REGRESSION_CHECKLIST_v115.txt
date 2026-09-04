@@ -1,0 +1,10 @@
+v115 regression checklist
+[OK] Patch inserted inside main game IIFE before v114/v99 boot guard.
+[OK] Existing FIGURES IDs 01-184 preserved by image mapping.
+[OK] New IDs 185-219 appended.
+[OK] HP replaces visible LIFE wording in Mob Piece UI.
+[OK] Exact duplicate tags use new Set(hand).
+[OK] Deck exact-duplicate caps enforced with explanation popup.
+[OK] Ruby exchange requires confirmation.
+[OK] Gacha result lock released before interactive result screen.
+[OK] 10-pull final result remains 5x2 and tappable.
