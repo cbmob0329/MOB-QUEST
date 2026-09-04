@@ -3705,6 +3705,125 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .turntable-overlay-v116 .primary-btn{margin-top:12px;min-width:150px;padding:10px 18px;border-radius:12px;background:#fff;color:#111;font-weight:1000;box-shadow:0 5px 12px rgba(0,0,0,.25)}
 #resultOverlay.turntable-result-v116.victory #resultTitle{letter-spacing:.08em}#resultOverlay.turntable-result-v116.mode-exp #resultKicker{color:#aeeaff}#resultOverlay.turntable-result-v116.mode-gold #resultKicker{color:#ffe39c}#resultOverlay.turntable-result-v116.mode-boss #resultKicker{color:#ffb4bd}
 /* ===== END MOB QUEST v116 ===== */
+
+
+/* ===== MOB QUEST v117: MAGMA EXPLORE / STATUS POPUP ===== */
+/* Magma exploration keeps the warm area identity but is intentionally bright enough for black text. */
+.explore-overlay.area-theme-red .explore-card{
+  background:repeating-linear-gradient(0deg,#f39a72 0 15px,#ffb089 15px 30px,#e98764 30px 45px)!important;
+  border:3px solid #703825!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  text-shadow:none!important;
+  box-shadow:inset 0 0 0 2px rgba(255,241,224,.82),0 14px 34px rgba(0,0,0,.38)!important;
+}
+.explore-overlay.area-theme-red .explore-card>small,
+.explore-overlay.area-theme-red .explore-card h2,
+.explore-overlay.area-theme-red .explore-loading,
+.explore-overlay.area-theme-red .explore-reward b,
+.explore-overlay.area-theme-red .explore-reward p,
+.explore-overlay.area-theme-red .explore-reward small{
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  text-shadow:none!important;
+  font-weight:1000!important;
+  opacity:1!important;
+}
+
+/* Character status is a real foreground modal, never a loose header layered over the game. */
+.player-detail-overlay{
+  position:absolute!important;
+  z-index:10020!important;
+  inset:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:calc(14px + var(--safe-top)) 10px calc(14px + var(--safe-bottom))!important;
+  background:rgba(4,12,18,.76)!important;
+  pointer-events:auto!important;
+}
+.player-detail-overlay[hidden]{display:none!important;visibility:hidden!important;pointer-events:none!important}
+.player-detail-card{
+  position:relative!important;
+  z-index:10021!important;
+  width:min(94vw,500px)!important;
+  max-height:min(84dvh,760px)!important;
+  min-height:260px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+  margin:0 auto!important;
+  padding:0!important;
+  background:#aee8f5!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  border:4px solid #153b49!important;
+  border-radius:20px!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.55)!important;
+  text-shadow:none!important;
+}
+.player-detail-head{
+  position:relative!important;
+  top:auto!important;
+  z-index:3!important;
+  flex:0 0 auto!important;
+  min-height:64px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  padding:10px 12px!important;
+  margin:0!important;
+  background:#83d6eb!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  border-bottom:3px solid #153b49!important;
+  text-shadow:none!important;
+}
+.player-detail-head small,.player-detail-head h2{color:#111!important;-webkit-text-fill-color:#111!important;text-shadow:none!important;font-weight:1000!important}
+.player-detail-head small{font-size:9px!important;letter-spacing:.14em!important}
+.player-detail-head h2{font-size:20px!important;line-height:1.1!important;margin:2px 0!important}
+.player-detail-head .sheet-close{background:#fff!important;color:#111!important;-webkit-text-fill-color:#111!important;border:2px solid #153b49!important;font-weight:1000!important}
+.player-detail-body{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  display:grid!important;
+  gap:9px!important;
+  padding:10px!important;
+  background:#c9f0f8!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+}
+.player-detail-hero,.player-detail-body section{
+  background:#eafaff!important;
+  border:2px solid #5daec3!important;
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  text-shadow:none!important;
+}
+.player-detail-hero h2,.player-detail-hero b,.player-detail-hero small,.player-detail-hero em,
+.player-detail-body h3,.player-detail-body p,.player-detail-body span,.player-detail-body b,.player-detail-body small,.player-detail-body em{
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+  text-shadow:none!important;
+  font-weight:900!important;
+}
+.player-detail-stats span,.player-detail-list>span{background:#bfeaf4!important;border:1px solid #78bdcd!important}
+.player-detail-resist-v104 .weak,.player-resist-v104 .weak{color:#7a1212!important;-webkit-text-fill-color:#7a1212!important}
+
+/* Formation: swap and status are separate so status viewing cannot accidentally reorder the party. */
+.camp-formation-v117{align-items:start!important}
+.camp-member-wrap-v117{display:grid!important;grid-template-rows:auto 30px!important;gap:4px!important;min-width:0!important}
+.camp-member-wrap-v117 .camp-member{width:100%!important;min-height:78px!important}
+.camp-member-status-v117{
+  width:100%!important;height:30px!important;border-radius:9px!important;
+  background:#9ddff0!important;border:2px solid #245260!important;
+  color:#111!important;-webkit-text-fill-color:#111!important;text-shadow:none!important;
+  font-size:10px!important;font-weight:1000!important;
+}
+/* ===== END MOB QUEST v117 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3724,7 +3843,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v116</div>
+      <div class="title-version">v117</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4129,7 +4248,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v116
+<script id="mobQuestInlineData">// MOB QUEST v117
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5301,7 +5420,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=116;
+const GAME_ASSET_VERSION=117;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -11962,6 +12081,61 @@ async function showTurntableCompleteV116(q){const ov=ensureTurntableOverlayV116(
 const _bindEventsV116Base=bindEvents;
 bindEvents=function(){_bindEventsV116Base();const btn=$('#resultSetupBtn');if(!btn)return;const base=btn.onclick;btn.onclick=async()=>{const b=state.battle,q=state.quest;if(b?.mode==='quest'&&b.resultWin&&q?.finished&&['exp','gold','boss'].includes(q.type)){btn.disabled=true;try{$('#resultOverlay').hidden=true;await showTurntableCompleteV116(q);endQuestToTraining();}finally{btn.disabled=false;}return;}return base?.();};};
 /* ===== END MOB QUEST v116 ===== */
+
+/* ===== MOB QUEST v117: MAGMA EXPLORE READABILITY / ADVENTURE STATUS POPUP ===== */
+window.__mobV117PatchRuntime=true;
+
+/* A player detail is a transient foreground UI. It must never survive a screen transition. */
+const _showScreenV117Base=showScreen;
+showScreen=function(name){
+  try{closePlayerDetail();}catch(_){}
+  return _showScreenV117Base(name);
+};
+
+const _openPlayerDetailV117Base=openPlayerDetail;
+openPlayerDetail=function(pid){
+  const ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');
+  if(!ov||!body)return;
+  /* Remove every remnant before rebuilding; this prevents the old header-only ghost. */
+  ov.hidden=true;ov.style.display='none';body.innerHTML='';
+  try{
+    ov.style.display='';
+    _openPlayerDetailV117Base(pid);
+    if(!ov.hidden){ov.classList.add('player-detail-active-v117');ov.style.display='flex';}
+  }catch(err){
+    console.warn('[v117 player detail]',err);
+    ov.hidden=true;ov.style.display='none';body.innerHTML='';
+  }
+};
+closePlayerDetail=function(){
+  const ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');
+  if(!ov)return;
+  ov.classList.remove('player-detail-active-v117');
+  ov.hidden=true;ov.style.display='none';
+  if(body)body.innerHTML='';
+};
+
+/* Closing / changing the adventure camp also closes character detail. */
+const _closeCampV117Base=closeCamp;
+closeCamp=function(){closePlayerDetail();return _closeCampV117Base();};
+const _openCampV117Base=openCamp;
+openCamp=function(){closePlayerDetail();return _openCampV117Base();};
+
+/* Formation keeps tap-to-swap, and adds an explicit status control without mixing the two actions. */
+renderCampFormation=function(){
+  closePlayerDetail();
+  const p=$('#campSubPanel'),hint=campSwapIndex===null?'キャラクターをタップでステータス確認 / 「入替」で編成':'入れ替える相手の「入替」を押してください';
+  p.innerHTML=`${campBackButton()}<div class="camp-sub-title"><small>FORMATION</small><h3>編成</h3><p>${hint}</p></div><div class="camp-formation camp-formation-v117">${state.party.map(([id,lv],i)=>{const q=player(id),z=zoneForIndex(i);return `<div class="camp-member-wrap-v117"><button class="camp-member ${campSwapIndex===i?'selected':''}" data-camp-detail-v117="${id}" type="button"><img src="${versionedPlay(q.image)}" alt="${q.name}"><span><small>${z.key} ${z.n}</small><b>${q.name}</b><em>Lv${lv}</em></span></button><button class="camp-member-status-v117" data-camp-swap="${i}" type="button">${campSwapIndex===i?'選択中':'入替'}</button></div>`;}).join('')}</div>`;
+  bindImages(p);$('[data-camp-back]',p).onclick=()=>{closePlayerDetail();renderCampPartyMenu();};
+  $$('[data-camp-detail-v117]',p).forEach(b=>b.onclick=e=>{e.stopPropagation();openPlayerDetail(b.dataset.campDetailV117);});
+  $$('[data-camp-swap]',p).forEach(b=>b.onclick=()=>{const i=Number(b.dataset.campSwap);if(campSwapIndex===null){campSwapIndex=i;return renderCampFormation();}if(campSwapIndex===i){campSwapIndex=null;return renderCampFormation();}[state.party[campSwapIndex],state.party[i]]=[state.party[i],state.party[campSwapIndex]];campSwapIndex=null;saveParty();state.training.party=state.party.map(x=>[...x]);saveCampCheckpoint();renderCampFormation();renderAdventure();});
+};
+
+/* Hard guard: battle startup can never inherit the adventure status layer. */
+const _beginBattleV117Base=beginBattle;
+beginBattle=async function(config){closePlayerDetail();return _beginBattleV117Base(config);};
+/* ===== END MOB QUEST v117 ===== */
+
 
 
 /* v114: Battle Program seasons require the corresponding story area clear + previous season clear; programs unlock in order. */

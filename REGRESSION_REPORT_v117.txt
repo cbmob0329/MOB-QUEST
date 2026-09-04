@@ -1,0 +1,39 @@
+MOB QUEST v117 REGRESSION REPORT
+
+BASE
+- v116 TURNTABLE REWARDS / LIMITED FIGURE STABLE
+
+FIXES
+1. Magma exploration readability
+   - Magma and Magma II exploration cards use a brighter warm-orange/coral banner.
+   - Exploration heading/result/subtext are black, bold, high-contrast.
+   - Camp coloration is not changed by this fix.
+
+2. Adventure character status popup
+   - Tapping an adventure party member opens the full existing character detail content.
+   - Popup is now a water-blue foreground card with black bold text.
+   - Popup is positioned inside the phone app, centered within safe areas.
+   - Body has its own scroll region so the header can never be the only visible part.
+
+3. Persistent "ステータス" ghost fix
+   - Player-detail overlay is closed + body cleared on every showScreen transition.
+   - beginBattle closes the player-detail overlay before battle rendering.
+   - closeCamp/openCamp also clear stale player detail.
+   - hidden overlay additionally disables visibility and pointer events.
+
+4. Formation access
+   - In camp formation, tapping the character card opens status.
+   - A separate 「入替」 button performs member swapping.
+   - Prevents status viewing from accidentally changing formation.
+
+PRESERVED
+- v116 turntable rewards / limited figures / duplicate-to-ruby.
+- v115 Mob Piece stats/tags/ruby/deck caps.
+- v114 Battle Program story unlock conditions.
+- All prior story/battle/subquest fixes.
+
+VALIDATION
+- js/data.js node --check PASS
+- js/game.js node --check PASS
+- single-file inline JS node --check PASS
+- external CSS/JS and index inline sources synchronized

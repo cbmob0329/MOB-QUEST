@@ -270,3 +270,11 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - Limited duplicate overflow visibly converts to RUBY using v115 rarity caps.
 - Added stronger START / AREA / COMPLETE / LIMITED FIGURE DROP presentation.
 - Title and GAME_ASSET_VERSION updated to v116.
+
+[v117]
+- Magma / Magma II exploration result banner brightened for readability; all exploration-result copy there is bold black text.
+- Adventure party character tap opens a foreground water-blue status panel with black bold text and safe in-phone positioning.
+- Character detail is forcibly closed and cleared on every screen transition and before battle startup, eliminating the persistent header-only "ステータス" ghost.
+- Camp formation now separates character-detail viewing from swapping: tap the character card for status, use the dedicated 「入替」 button for formation changes.
+- Character detail panel scrolls internally and remains above adventure/camp UI without leaking into battle.
+- Title and GAME_ASSET_VERSION updated to v117.

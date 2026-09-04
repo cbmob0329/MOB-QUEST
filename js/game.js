@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=116;
+const GAME_ASSET_VERSION=117;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -6669,6 +6669,61 @@ async function showTurntableCompleteV116(q){const ov=ensureTurntableOverlayV116(
 const _bindEventsV116Base=bindEvents;
 bindEvents=function(){_bindEventsV116Base();const btn=$('#resultSetupBtn');if(!btn)return;const base=btn.onclick;btn.onclick=async()=>{const b=state.battle,q=state.quest;if(b?.mode==='quest'&&b.resultWin&&q?.finished&&['exp','gold','boss'].includes(q.type)){btn.disabled=true;try{$('#resultOverlay').hidden=true;await showTurntableCompleteV116(q);endQuestToTraining();}finally{btn.disabled=false;}return;}return base?.();};};
 /* ===== END MOB QUEST v116 ===== */
+
+/* ===== MOB QUEST v117: MAGMA EXPLORE READABILITY / ADVENTURE STATUS POPUP ===== */
+window.__mobV117PatchRuntime=true;
+
+/* A player detail is a transient foreground UI. It must never survive a screen transition. */
+const _showScreenV117Base=showScreen;
+showScreen=function(name){
+  try{closePlayerDetail();}catch(_){}
+  return _showScreenV117Base(name);
+};
+
+const _openPlayerDetailV117Base=openPlayerDetail;
+openPlayerDetail=function(pid){
+  const ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');
+  if(!ov||!body)return;
+  /* Remove every remnant before rebuilding; this prevents the old header-only ghost. */
+  ov.hidden=true;ov.style.display='none';body.innerHTML='';
+  try{
+    ov.style.display='';
+    _openPlayerDetailV117Base(pid);
+    if(!ov.hidden){ov.classList.add('player-detail-active-v117');ov.style.display='flex';}
+  }catch(err){
+    console.warn('[v117 player detail]',err);
+    ov.hidden=true;ov.style.display='none';body.innerHTML='';
+  }
+};
+closePlayerDetail=function(){
+  const ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');
+  if(!ov)return;
+  ov.classList.remove('player-detail-active-v117');
+  ov.hidden=true;ov.style.display='none';
+  if(body)body.innerHTML='';
+};
+
+/* Closing / changing the adventure camp also closes character detail. */
+const _closeCampV117Base=closeCamp;
+closeCamp=function(){closePlayerDetail();return _closeCampV117Base();};
+const _openCampV117Base=openCamp;
+openCamp=function(){closePlayerDetail();return _openCampV117Base();};
+
+/* Formation keeps tap-to-swap, and adds an explicit status control without mixing the two actions. */
+renderCampFormation=function(){
+  closePlayerDetail();
+  const p=$('#campSubPanel'),hint=campSwapIndex===null?'キャラクターをタップでステータス確認 / 「入替」で編成':'入れ替える相手の「入替」を押してください';
+  p.innerHTML=`${campBackButton()}<div class="camp-sub-title"><small>FORMATION</small><h3>編成</h3><p>${hint}</p></div><div class="camp-formation camp-formation-v117">${state.party.map(([id,lv],i)=>{const q=player(id),z=zoneForIndex(i);return `<div class="camp-member-wrap-v117"><button class="camp-member ${campSwapIndex===i?'selected':''}" data-camp-detail-v117="${id}" type="button"><img src="${versionedPlay(q.image)}" alt="${q.name}"><span><small>${z.key} ${z.n}</small><b>${q.name}</b><em>Lv${lv}</em></span></button><button class="camp-member-status-v117" data-camp-swap="${i}" type="button">${campSwapIndex===i?'選択中':'入替'}</button></div>`;}).join('')}</div>`;
+  bindImages(p);$('[data-camp-back]',p).onclick=()=>{closePlayerDetail();renderCampPartyMenu();};
+  $$('[data-camp-detail-v117]',p).forEach(b=>b.onclick=e=>{e.stopPropagation();openPlayerDetail(b.dataset.campDetailV117);});
+  $$('[data-camp-swap]',p).forEach(b=>b.onclick=()=>{const i=Number(b.dataset.campSwap);if(campSwapIndex===null){campSwapIndex=i;return renderCampFormation();}if(campSwapIndex===i){campSwapIndex=null;return renderCampFormation();}[state.party[campSwapIndex],state.party[i]]=[state.party[i],state.party[campSwapIndex]];campSwapIndex=null;saveParty();state.training.party=state.party.map(x=>[...x]);saveCampCheckpoint();renderCampFormation();renderAdventure();});
+};
+
+/* Hard guard: battle startup can never inherit the adventure status layer. */
+const _beginBattleV117Base=beginBattle;
+beginBattle=async function(config){closePlayerDetail();return _beginBattleV117Base(config);};
+/* ===== END MOB QUEST v117 ===== */
+
 
 
 /* v114: Battle Program seasons require the corresponding story area clear + previous season clear; programs unlock in order. */
