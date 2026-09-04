@@ -1,4 +1,4 @@
-// MOB QUEST v112
+// MOB QUEST v114
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1157,3 +1157,4 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(const [id,skills] of Object.entries(enemySupport)){const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.supportSkillsV109=[...skills];}
 }
 /* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
+

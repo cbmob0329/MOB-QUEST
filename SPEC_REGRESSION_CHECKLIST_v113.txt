@@ -1,0 +1,18 @@
+MOB QUEST v113 SPEC REGRESSION CHECKLIST
+
+[KEEP]
+- v112 story appropriate-level prompt before departure.
+- v112 Battle Program red completed banners + white CLEAR stamp.
+- v111 subquest staging fixes.
+- v110 gacha / Mob Piece fixes.
+- v109 support/healing magic and multi-action damage logic.
+- v108 player HP / enemy balance baseline.
+- v106 Demon Castle progression/staging fixes.
+
+[v113]
+- SEASON 3-50 available according to story progression.
+- Main-story normal enemies are the baseline pool.
+- Selected main-story mid-bosses appear at milestone season finales.
+- No subquest-only monsters are intentionally used.
+- Every PROGRAM has a one-time first-clear diamond/coin reward.
+- Every SEASON has a one-time clear reward from existing item/weapon/record data.

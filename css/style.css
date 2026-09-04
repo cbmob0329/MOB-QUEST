@@ -3658,3 +3658,9 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   100%{transform:translate(-50%,-50%) rotate(-10deg) scale(1);opacity:.94}
 }
 /* ===== END MOB QUEST v112 ===== */
+
+/* ===== MOB QUEST v113: BATTLE PROGRAM REWARD / MID BOSS ===== */
+#trainingFeaturePopup[data-mode="program"] .program-first-reward-v113{display:block!important;margin-top:6px!important;font-size:11px!important;font-weight:1000!important;color:#ffe8a8!important;-webkit-text-fill-color:#ffe8a8!important;letter-spacing:.02em!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.mid-boss-program-v113{border:2px solid #f0c774!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 0 0 2px rgba(111,31,31,.34),0 7px 16px rgba(0,0,0,.30)!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.mid-boss-program-v113 .program-number{color:#ffe39a!important;-webkit-text-fill-color:#ffe39a!important}
+/* ===== END MOB QUEST v113 ===== */

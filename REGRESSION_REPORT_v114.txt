@@ -1,0 +1,6 @@
+MOB QUEST v114 REGRESSION REPORT
+- Base: v113 BATTLEPROGRAM SEASON50 / REWARDS STABLE
+- v113 rewards, mid-bosses, CLEAR stamps preserved.
+- Story appropriate-level departure confirmation preserved.
+- Gacha / Mob Piece / support magic / subquest staging preserved.
+- Added Battle Program story gates and sequential season/program unlocks only.

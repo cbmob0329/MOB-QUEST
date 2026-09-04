@@ -3669,6 +3669,19 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   100%{transform:translate(-50%,-50%) rotate(-10deg) scale(1);opacity:.94}
 }
 /* ===== END MOB QUEST v112 ===== */
+
+/* ===== MOB QUEST v113: BATTLE PROGRAM REWARD / MID BOSS ===== */
+#trainingFeaturePopup[data-mode="program"] .program-first-reward-v113{display:block!important;margin-top:6px!important;font-size:11px!important;font-weight:1000!important;color:#ffe8a8!important;-webkit-text-fill-color:#ffe8a8!important;letter-spacing:.02em!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.mid-boss-program-v113{border:2px solid #f0c774!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 0 0 2px rgba(111,31,31,.34),0 7px 16px rgba(0,0,0,.30)!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.mid-boss-program-v113 .program-number{color:#ffe39a!important;-webkit-text-fill-color:#ffe39a!important}
+/* ===== END MOB QUEST v113 ===== */
+
+/* ===== MOB QUEST v114: BATTLE PROGRAM LOCK UX ===== */
+#trainingFeaturePopup[data-mode="program"] .battle-program-next-open-v114{margin:12px 2px 0;padding:10px 12px;border:2px solid rgba(255,255,255,.55);border-radius:12px;background:rgba(0,0,0,.32);color:#fff!important;-webkit-text-fill-color:#fff!important;font-size:12px;font-weight:1000;line-height:1.45;text-align:center;text-shadow:0 2px 0 rgba(0,0,0,.72)}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.program-locked-v114{opacity:.58!important;filter:saturate(.35)!important;cursor:default!important;border-color:rgba(255,255,255,.30)!important;background:rgba(25,25,30,.82)!important;box-shadow:none!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.program-locked-v114 *{color:#fff!important;-webkit-text-fill-color:#fff!important}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.program-locked-v114 em{border-color:rgba(255,255,255,.45)!important;background:rgba(0,0,0,.4)!important}
+/* ===== END MOB QUEST v114 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3688,7 +3701,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v112</div>
+      <div class="title-version">v114</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4093,7 +4106,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v112
+<script id="mobQuestInlineData">// MOB QUEST v114
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5253,6 +5266,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
 }
 /* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
 
+
+
 (() => {
 'use strict';
 
@@ -5263,7 +5278,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=112;
+const GAME_ASSET_VERSION=114;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -6308,6 +6323,163 @@ const BATTLE_PROGRAM_SEASONS=[
     {id:'s2-7',no:7,label:'モブビーバー ×3 Lv.6',enemies:[{id:'g-beaver',level:6},{id:'g-beaver',level:6},{id:'g-beaver',level:6}]}
   ]}
 ];
+
+/* ===== MOB QUEST v113: BATTLE PROGRAM SEASON 3-50 / REWARDS ===== */
+const BATTLE_PROGRAM_SEASON_REWARDS_V113={
+  3:{kind:'weapon',id:'06',qty:1},4:{kind:'item',id:'09',qty:3},5:{kind:'item',id:'36',qty:2},
+  6:{kind:'weapon',id:'10',qty:1},7:{kind:'item',id:'37',qty:2},8:{kind:'weapon',id:'14',qty:1},
+  9:{kind:'item',id:'15',qty:2},10:{kind:'item',id:'38',qty:2},11:{kind:'weapon',id:'17',qty:1},
+  12:{kind:'item',id:'06',qty:3},13:{kind:'weapon',id:'20',qty:1},14:{kind:'item',id:'36',qty:3},
+  15:{kind:'weapon',id:'22',qty:1},16:{kind:'weapon',id:'24',qty:1},17:{kind:'item',id:'37',qty:3},
+  18:{kind:'weapon',id:'29',qty:1},19:{kind:'item',id:'38',qty:3},20:{kind:'weapon',id:'34',qty:1},
+  21:{kind:'item',id:'12',qty:2},22:{kind:'weapon',id:'38',qty:1},23:{kind:'item',id:'36',qty:4},
+  24:{kind:'weapon',id:'40',qty:1},25:{kind:'item',id:'37',qty:4},26:{kind:'weapon',id:'43',qty:1},
+  27:{kind:'weapon',id:'45',qty:1},28:{kind:'item',id:'38',qty:4},29:{kind:'weapon',id:'48',qty:1},
+  30:{kind:'item',id:'13',qty:2},31:{kind:'weapon',id:'50',qty:1},32:{kind:'item',id:'36',qty:5},
+  33:{kind:'weapon',id:'53',qty:1},34:{kind:'item',id:'37',qty:5},35:{kind:'weapon',id:'56',qty:1},
+  36:{kind:'weapon',id:'59',qty:1},37:{kind:'item',id:'38',qty:5},38:{kind:'weapon',id:'62',qty:1},
+  39:{kind:'item',id:'14',qty:1},40:{kind:'weapon',id:'65',qty:1},41:{kind:'item',id:'36',qty:6},
+  42:{kind:'weapon',id:'68',qty:1},43:{kind:'item',id:'37',qty:6},44:{kind:'weapon',id:'71',qty:1},
+  45:{kind:'weapon',id:'74',qty:1},46:{kind:'item',id:'38',qty:6},47:{kind:'weapon',id:'77',qty:1},
+  48:{kind:'weapon',id:'80',qty:1},49:{kind:'weapon',id:'86',qty:1},50:{kind:'weapon',id:'88',qty:1}
+};
+const BATTLE_PROGRAM_MIDBOSS_V113={
+  4:['d-sharty'],7:['r-scouter'],10:['n-golem'],14:['m-golem'],17:['s-abyssknight'],
+  21:['g2-tsuru'],25:['t-kukuri'],28:['r2-violin'],31:['n2-tiger'],34:['m2-yogan'],
+  37:['d2-mirabuster'],40:['c-killwitch'],42:['c-killwitch','c-succubus'],
+  45:['d2-miraearth','d2-mirakarami'],48:['n2-palette','m2-buster','d2-mirabuster'],50:['n2-palette','m2-buster','d2-mirabuster','c-killwitch']
+};
+const BATTLE_PROGRAM_EXPANSION_V113=[
+  [3,'砂漠Ⅰ','desert',8,10],[4,'砂漠Ⅱ','desert',10,12],[5,'砂漠Ⅲ','desert',12,14],
+  [6,'田舎町Ⅰ','rural',14,16],[7,'田舎町Ⅱ','rural',16,18],[8,'田舎町Ⅲ','rural',18,20],
+  [9,'ネオン街Ⅰ','neon',21,23],[10,'ネオン街Ⅱ','neon',23,25],[11,'ネオン街Ⅲ','neon',25,28],
+  [12,'マグマⅠ','magma',30,32],[13,'マグマⅡ','magma',32,34],[14,'マグマⅢ','magma',34,36],[15,'灼熱サバイバル','magma',36,38],
+  [16,'海底Ⅰ','sea',38,40],[17,'海底Ⅱ','sea',40,42],[18,'深海乱戦','sea',42,44],[19,'海底Ⅲ','sea',44,46],
+  [20,'草原RETURNⅠ','grassland2',44,46],[21,'草原RETURNⅡ','grassland2',46,48],[22,'原点強化','grassland2',48,50],[23,'草原MASTER','grassland2',50,52],
+  [24,'部族村Ⅰ','tribe',55,57],[25,'部族村Ⅱ','tribe',57,59],[26,'部族村Ⅲ','tribe',59,61],
+  [27,'田舎町RETURNⅠ','rural2',60,62],[28,'田舎町RETURNⅡ','rural2',62,64],[29,'田舎町MASTER','rural2',64,66],
+  [30,'ネオンRETURNⅠ','neon2',64,66],[31,'ネオンRETURNⅡ','neon2',66,68],[32,'ネオンMASTER','neon2',68,70],
+  [33,'マグマRETURNⅠ','magma2',70,72],[34,'マグマRETURNⅡ','magma2',72,74],[35,'マグマMASTER','magma2',74,76],
+  [36,'砂漠RETURNⅠ','desert2',72,74],[37,'砂漠RETURNⅡ','desert2',74,76],[38,'砂漠MASTER','desert2',76,78],
+  [39,'魔王城Ⅰ','demonCastle',76,78],[40,'魔王城Ⅱ','demonCastle',78,80],[41,'魔王城Ⅲ','demonCastle',80,82],[42,'魔王城MASTER','demonCastle',82,84],
+  [43,'WORLD MIXⅠ',['rural2','neon2','magma2','desert2','demonCastle'],82,84],
+  [44,'WORLD MIXⅡ',['rural2','neon2','magma2','desert2','demonCastle'],84,86],
+  [45,'WORLD MIXⅢ',['rural2','neon2','magma2','desert2','demonCastle'],86,88],
+  [46,'EXTREMEⅠ',['grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle'],88,90],
+  [47,'EXTREMEⅡ',['grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle'],90,92],
+  [48,'EXTREMEⅢ',['grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle'],92,94],
+  [49,'MASTERⅠ',['grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle'],94,96],
+  [50,'MASTER FINAL',['grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle'],97,99]
+];
+function battleProgramWorldV113(id){return (MOB_DATA.adventureWorlds||[]).find(w=>w.id===id)||null;}
+function battleProgramPoolV113(worldRef){
+  const ids=[];for(const wid of(Array.isArray(worldRef)?worldRef:[worldRef])){const w=battleProgramWorldV113(wid);for(const id of w?.normalIds||[])if(!ids.includes(id))ids.push(id);}return ids;
+}
+function battleProgramUnlockV113(seasonId,worldRef){
+  if(state.test?.enabled)return true;
+  if(seasonId>=49)return worldCleared('demonCastle2');
+  if(seasonId>=46)return !!state.meta?.bookCompleted||worldCleared('demonCastle2');
+  if(seasonId>=43)return worldCleared('demonCastle');
+  const wid=Array.isArray(worldRef)?worldRef[worldRef.length-1]:worldRef;return worldCleared(wid);
+}
+function battleProgramEnemyNameV113(id){return trainingEnemyTemplate(id)?.name||id;}
+function battleProgramLabelV113(enemies,mid=false){
+  const counts=new Map();for(const e of enemies){const key=`${battleProgramEnemyNameV113(e.id)}|${e.level}`;counts.set(key,(counts.get(key)||0)+1);}const text=[...counts.entries()].map(([key,n])=>{const [name,lv]=key.split('|');return `${name}${n>1?` ×${n}`:''} Lv.${lv}`;}).join(' / ');return `${mid?'MID BOSS / ':''}${text}`;
+}
+function battleProgramMakeV113(seasonId,index,no,pool,lo,hi){
+  const lv=Math.round(lo+(hi-lo)*(index/4)),pick=n=>pool[(seasonId*3+index*2+n)%pool.length];let enemies=[];let mid=false;
+  if(index===4&&BATTLE_PROGRAM_MIDBOSS_V113[seasonId]){mid=true;enemies=BATTLE_PROGRAM_MIDBOSS_V113[seasonId].map(id=>({id,level:hi}));}
+  else if(index===0)enemies=[{id:pick(0),level:lv},{id:pick(0),level:lv}];
+  else if(index===1)enemies=[{id:pick(1),level:lv},{id:pick(1),level:lv},{id:pick(1),level:lv}];
+  else if(index===2)enemies=[{id:pick(2),level:lv},{id:pick(2),level:lv},{id:pick(3),level:lv},{id:pick(3),level:lv}];
+  else enemies=[0,1,2,3].map(n=>({id:pick(n+index),level:lv}));
+  if(no===247){mid=true;enemies=[{id:'n2-palette',level:99},{id:'m2-buster',level:99},{id:'d2-mirabuster',level:99},{id:'c-killwitch',level:99}];}
+  return{id:`s${seasonId}-${no}`,no,label:battleProgramLabelV113(enemies,mid),enemies,midBoss:mid};
+}
+let battleProgramNoV113=8;
+for(const [id,name,worldRef,lo,hi] of BATTLE_PROGRAM_EXPANSION_V113){
+  const pool=battleProgramPoolV113(worldRef);if(!pool.length)continue;
+  const firstWorld=Array.isArray(worldRef)?worldRef[0]:worldRef,w=battleProgramWorldV113(firstWorld),programs=[];
+  for(let i=0;i<5;i++){programs.push(battleProgramMakeV113(id,i,battleProgramNoV113++,pool,lo,hi));}
+  BATTLE_PROGRAM_SEASONS.push({id,name,unlock:()=>battleProgramUnlockV113(id,worldRef),bg:w?.areas?.[0]?.bg||w?.fieldFallback||'back/sougen.png',fallback:w?.fieldFallback||'back2/02.png',reward:BATTLE_PROGRAM_SEASON_REWARDS_V113[id],programs});
+}
+function battleProgramFirstClearRewardV113(program){
+  const no=Number(program?.no)||1;if(no===247)return{diamonds:100,coins:100000};
+  return{diamonds:Math.max(1,Math.min(25,1+Math.floor((no-1)/10))),coins:Math.max(1000,Math.min(50000,1000+Math.floor((no-1)/5)*1000))};
+}
+function battleProgramSeasonRewardDataV113(season){
+  const r=season?.reward||(season?.rewardId?{kind:'item',id:season.rewardId,qty:1}:null);if(!r)return null;const qty=Math.max(1,Number(r.qty)||1);
+  if(r.kind==='weapon'){const d=weaponById(r.id);return d?{...r,qty,name:d.name,image:d.image,data:d}:null;}
+  const d=itemData(r.id);return d?{...r,qty,name:d.name,image:d.image,data:d}:null;
+}
+function grantBattleProgramSeasonRewardV113(season){const r=battleProgramSeasonRewardDataV113(season);if(!r)return null;if(r.kind==='weapon')addWeapon(r.id,r.qty);else addItem(r.id,r.qty);return r;}
+/* ===== END MOB QUEST v113 BATTLE PROGRAM EXPANSION ===== */
+
+/* ===== MOB QUEST v114: BATTLE PROGRAM STORY / SEQUENTIAL UNLOCK ===== */
+const BATTLE_PROGRAM_STORY_GATES_V114={
+  1:'grassland',2:'grassland',
+  3:'desert',4:'desert',5:'desert',
+  6:'rural',7:'rural',8:'rural',
+  9:'neon',10:'neon',11:'neon',
+  12:'magma',13:'magma',14:'magma',15:'magma',
+  16:'sea',17:'sea',18:'sea',19:'sea',
+  20:'grassland2',21:'grassland2',22:'grassland2',23:'grassland2',
+  24:'tribe',25:'tribe',26:'tribe',
+  27:'rural2',28:'rural2',29:'rural2',
+  30:'neon2',31:'neon2',32:'neon2',
+  33:'magma2',34:'magma2',35:'magma2',
+  36:'desert2',37:'desert2',38:'desert2',
+  39:'demonCastle',40:'demonCastle',41:'demonCastle',42:'demonCastle',
+  43:'demonCastle',44:'demonCastle',45:'demonCastle',
+  46:'unfinishedBook',47:'unfinishedBook',48:'unfinishedBook',
+  49:'demonCastle2',50:'demonCastle2'
+};
+function battleProgramStoryGateMetV114(seasonId){
+  if(state.test?.enabled)return true;
+  const id=Number(seasonId)||1,wid=BATTLE_PROGRAM_STORY_GATES_V114[id];
+  if(!wid)return false;
+  if(wid==='unfinishedBook')return !!state.meta?.bookCompleted||worldCleared('unfinishedBook');
+  return worldCleared(wid);
+}
+function battleProgramStoryGateNameV114(seasonId){
+  const wid=BATTLE_PROGRAM_STORY_GATES_V114[Number(seasonId)||1];
+  if(wid==='unfinishedBook')return '読みかけの本';
+  return battleProgramWorldV113(wid)?.name||wid||'ストーリー';
+}
+function battleProgramSeasonHasProgressV114(season){
+  return !!season?.programs?.some(p=>battleProgramCleared(p.id));
+}
+function battleProgramSeasonUnlockedV114(seasonId){
+  if(state.test?.enabled)return true;
+  const id=Number(seasonId)||1,season=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id);
+  if(!season||!battleProgramStoryGateMetV114(id))return false;
+  /* Existing v113 progress is never hidden after migration, provided its story gate is valid. */
+  if(battleProgramSeasonHasProgressV114(season))return true;
+  if(id===1)return true;
+  const prev=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id-1);
+  return !!prev&&battleProgramSeasonClear(prev);
+}
+function battleProgramProgramUnlockedV114(season,index){
+  if(state.test?.enabled)return true;
+  const i=Number(index)||0,p=season?.programs?.[i];
+  if(!season||!p||!battleProgramSeasonUnlockedV114(season.id))return false;
+  if(battleProgramCleared(p.id)||i===0)return true;
+  return battleProgramCleared(season.programs[i-1]?.id);
+}
+function battleProgramNextUnlockHintV114(){
+  if(state.test?.enabled)return 'TEST MODE：全SEASON / PROGRAM OPEN';
+  for(let id=1;id<=50;id++){
+    if(battleProgramSeasonUnlockedV114(id))continue;
+    const conditions=[];
+    if(!battleProgramStoryGateMetV114(id))conditions.push(`ストーリー「${battleProgramStoryGateNameV114(id)}」クリア`);
+    if(id>1){const prev=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id-1);if(prev&&!battleProgramSeasonClear(prev))conditions.push(`SEASON ${id-1} CLEAR`);}
+    return conditions.length?`NEXT OPEN：${conditions.join(' ＋ ')}`:`NEXT OPEN：SEASON ${id}`;
+  }
+  return 'ALL SEASON OPEN';
+}
+for(const season of BATTLE_PROGRAM_SEASONS){season.unlock=()=>battleProgramSeasonUnlockedV114(season.id);}
+/* ===== END MOB QUEST v114 BATTLE PROGRAM UNLOCK ===== */
+
 function ensureBattleProgramMeta(){
   if(!state.meta.battleProgram||typeof state.meta.battleProgram!=='object')state.meta.battleProgram={cleared:{},seasonRewards:{}};
   state.meta.battleProgram.cleared=state.meta.battleProgram.cleared||{};
@@ -6316,7 +6488,7 @@ function ensureBattleProgramMeta(){
 }
 function battleProgramSeason(id){return BATTLE_PROGRAM_SEASONS.find(s=>s.id===Number(id))||null;}
 function battleProgramById(id){for(const season of BATTLE_PROGRAM_SEASONS){const program=season.programs.find(p=>p.id===id);if(program)return{season,program};}return null;}
-function availableBattleProgramSeasons(){return BATTLE_PROGRAM_SEASONS.filter(s=>s.programs.length&&s.unlock());}
+function availableBattleProgramSeasons(){return BATTLE_PROGRAM_SEASONS.filter(s=>s.programs.length&&battleProgramSeasonUnlockedV114(s.id));}
 function battleProgramCleared(id){return !!ensureBattleProgramMeta().cleared[id];}
 function battleProgramSeasonClear(season){return !!season?.programs?.length&&season.programs.every(p=>battleProgramCleared(p.id));}
 const TURNTABLE_DIFFICULTIES={
@@ -6333,7 +6505,7 @@ const BOSS_DIFFICULTIES={
 };
 const TRAINING_GUIDE_TEXT={
   subquest:'サブクエストでは\nエリアの別のストーリーが見れて\n様々なアイテムが手に入る！\n特に防具は貴重だぞ！\nエリアクリアごとに\n必ずチェックしよう！',
-  program:'ここではモンスターと戦って報酬を得ることが出来るぞ！\nシーズンのプログラムをすべてクリアすると、\nアイテムを獲得だ！\n経験値やコインももらえるから、\n積極的に挑戦しよう！',
+  program:'ここではモンスターと戦って報酬を得ることが出来るぞ！\n各プログラムの初回クリアでダイヤとコイン！\nシーズンをすべてクリアすると、\nアイテム・武器・レコードも獲得だ！\n中ボスが登場する特別プログラムもあるぞ！',
   journal:'ここでは一度クリアしたエリアを\n再探索出来るよ！\n経験値を積んだり\nアイテムを探そう！',
   exp:'ここでは\n経験値レコードを消費して\n経験値エリアに入れるよ！\nたくさん経験を積もう！',
   gold:'ここでは\nゴールドレコードを消費して\nゴールドエリアに入れるよ！\nコインをたくさん稼ごう！',
@@ -6383,20 +6555,22 @@ function renderBattleProgramSeasonSelect(){
   const seasons=availableBattleProgramSeasons();
   ensureBattleProgramMeta();
   state.training.programSeason=null;
-  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM</small><h2>シーズンを選択</h2></div><span class="pill">CLEAR PROGRAM</span></div><p class="panel-note">好きなシーズンを選んで、プログラムをクリアしていこう。</p><div class="battle-program-season-grid">${seasons.map(season=>{const cleared=season.programs.filter(p=>battleProgramCleared(p.id)).length,done=battleProgramSeasonClear(season);return`<button class="battle-program-season ${done?'complete':''}" data-program-season="${season.id}" type="button"><span>SEASON ${season.id}</span><b>${season.name}</b><small>${cleared} / ${season.programs.length} CLEAR</small>${done?'<em>COMPLETE</em>':''}</button>`;}).join('')||'<div class="camp-empty-note">現在挑戦できるシーズンはありません。</div>'}</div></section>`;
+  const nextHint=battleProgramNextUnlockHintV114();
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM</small><h2>シーズンを選択</h2></div><span class="pill">CLEAR PROGRAM</span></div><p class="panel-note">ストーリーで出会ったモンスターのシーズンだけ出現します。さらにSEASONは順番にCLEARすると解放されます。</p><div class="battle-program-season-grid">${seasons.map(season=>{const cleared=season.programs.filter(p=>battleProgramCleared(p.id)).length,done=battleProgramSeasonClear(season);return`<button class="battle-program-season ${done?'complete':''}" data-program-season="${season.id}" type="button"><span>SEASON ${season.id}</span><b>${season.name}</b><small>${cleared} / ${season.programs.length} CLEAR</small>${done?'<em>COMPLETE</em>':''}</button>`;}).join('')||'<div class="camp-empty-note">ストーリーを進めるとバトルプログラムが解放されます。</div>'}</div><div class="battle-program-next-open-v114">${nextHint}</div></section>`;
   $$('[data-program-season]',root).forEach(btn=>btn.onclick=()=>renderBattleProgramList(Number(btn.dataset.programSeason)));
 }
 function renderBattleProgramList(seasonId){
-  const root=$('#trainingFeaturePanel'),season=battleProgramSeason(seasonId);if(!root||!season||!season.unlock())return renderBattleProgramSeasonSelect();
+  const root=$('#trainingFeaturePanel'),season=battleProgramSeason(seasonId);if(!root||!season||!battleProgramSeasonUnlockedV114(season.id))return renderBattleProgramSeasonSelect();
   state.training.programSeason=season.id;
-  const reward=itemData(season.rewardId),clearedCount=season.programs.filter(p=>battleProgramCleared(p.id)).length;
-  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>全クリ報酬</small><b>${reward?.name||'ITEM'}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map(program=>{const done=battleProgramCleared(program.id),enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}</span><div><b>${program.label}</b><small>${enemyText}</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
+  const reward=battleProgramSeasonRewardDataV113(season),clearedCount=season.programs.filter(p=>battleProgramCleared(p.id)).length;
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>SEASON CLEAR REWARD</small><b>${reward?.name||'ITEM'}${reward?.qty>1?` ×${reward.qty}`:''}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map((program,index)=>{const done=battleProgramCleared(program.id),open=battleProgramProgramUnlockedV114(season,index),first=battleProgramFirstClearRewardV113(program);if(!open)return`<button class="battle-program-card program-locked-v114" type="button" disabled><span class="program-number">PROGRAM ${program.no} / LOCKED</span><div><b>？？？？</b><small>前のPROGRAMをCLEARで解放</small><small class="program-first-reward-v113">初回報酬　？？？</small></div><em>LOCK</em></button>`;const enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''} ${program.midBoss?'mid-boss-program-v113':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}${program.midBoss?' / MID BOSS':''}</span><div><b>${program.label}</b><small>${enemyText}</small><small class="program-first-reward-v113">初回報酬　💎${first.diamonds}　${Number(first.coins).toLocaleString()}G</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
   bindImages(root);
   $('[data-program-back]',root).onclick=renderBattleProgramSeasonSelect;
   $$('[data-program-id]',root).forEach(btn=>btn.onclick=()=>confirmBattleProgram(btn.dataset.programId));
 }
 async function confirmBattleProgram(programId){
-  const found=battleProgramById(programId);if(!found||!found.season.unlock())return;
+  const found=battleProgramById(programId);if(!found||!battleProgramSeasonUnlockedV114(found.season.id))return;
+  const index=found.season.programs.findIndex(p=>p.id===found.program.id);if(!battleProgramProgramUnlockedV114(found.season,index)){toast('前のPROGRAMをCLEARすると解放されます');return;}
   const answer=await dialog('このプログラムに挑戦するかい？',[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');
   if(answer!=='yes')return;
   await facilityTalk('レッツトレーニング！武運を祈る！','モブコーチ','play/003.png');
@@ -6412,28 +6586,29 @@ function markBattleProgramWin(){
   const q=state.quest;if(!q||q.type!=='program')return;
   const meta=ensureBattleProgramMeta(),found=battleProgramById(q.programId);if(!found)return;
   q.newProgramClear=!meta.cleared[q.programId];
+  if(q.newProgramClear){const r=battleProgramFirstClearRewardV113(found.program);q.firstClearReward={...r};state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+r.diamonds;state.coins=Math.max(0,Number(state.coins)||0)+r.coins;state.meta.coins=state.coins;}
   meta.cleared[q.programId]=true;
   q.pendingSeasonReward=battleProgramSeasonClear(found.season)&&!meta.seasonRewards[found.season.id];
-  q.finished=true;saveMeta();
+  q.finished=true;saveMeta();renderHome();
 }
 async function finishBattleProgramReturn(win){
   const q=state.quest,found=q?battleProgramById(q.programId):null,season=found?.season||null;
-  const pendingReward=!!q?.pendingSeasonReward,justClearedId=win&&q?.newProgramClear?q.programId:null;
+  const pendingReward=!!q?.pendingSeasonReward,justClearedId=win&&q?.newProgramClear?q.programId:null,firstReward=q?.firstClearReward||null;
   state.quest=null;
   state.training.mode='program';
   renderTraining();showScreen('training');
   const pop=$('#trainingFeaturePopup');if(pop){pop.hidden=false;pop.dataset.mode='program';}
   $('#trainingFeaturePopupTitle').textContent='バトルプログラム';
   if(season)renderBattleProgramList(season.id);else renderBattleProgramSeasonSelect();
-  if(justClearedId){requestAnimationFrame(()=>{const card=$(`[data-program-id=\"${justClearedId}\"]`);if(card){card.classList.add('just-cleared');setTimeout(()=>card.classList.remove('just-cleared'),900);}});}
+  if(justClearedId){requestAnimationFrame(()=>{const card=$(`[data-program-id="${justClearedId}"]`);if(card){card.classList.add('just-cleared');setTimeout(()=>card.classList.remove('just-cleared'),900);}});}
   if(!win){await facilityTalk('惜しかったね！\n次はクリアを目指して頑張ろう！','モブコーチ','play/003.png');return;}
+  if(firstReward)await facilityTalk(`ナイスクリア！\n初回クリア報酬だ！\nダイヤ ×${firstReward.diamonds}\n${Number(firstReward.coins).toLocaleString()}G を獲得！`,'PROGRAM REWARD','icon/22.png');
   if(pendingReward&&season){
-    const reward=itemData(season.rewardId);
-    await facilityTalk(`ナイスクリア！\nこのシーズンを全てクリアしたね！\n${reward?.name||'アイテム'}をプレゼントだ！\n受け取ってくれ！`,'モブコーチ','play/003.png');
-    if(reward){addItem(reward.id,1);ensureBattleProgramMeta().seasonRewards[season.id]=true;saveMeta();await facilityTalk(`${reward.name}を手に入れた！`,'ITEM GET',reward.image);}
-  }else await facilityTalk('ナイスクリア！\nこの調子で頑張ってくれ！','モブコーチ','play/003.png');
+    const reward=battleProgramSeasonRewardDataV113(season);
+    await facilityTalk(`このシーズンを全てクリアしたね！\nシーズンクリア報酬\n${reward?.name||'アイテム'}${reward?.qty>1?` ×${reward.qty}`:''}をプレゼントだ！`,'モブコーチ','play/003.png');
+    if(reward){grantBattleProgramSeasonRewardV113(season);ensureBattleProgramMeta().seasonRewards[season.id]=true;saveMeta();await facilityTalk(`${reward.name}${reward.qty>1?` ×${reward.qty}`:''}を手に入れた！`,'SEASON REWARD',reward.image);}
+  }else if(!firstReward)await facilityTalk('ナイスクリア！\nこの調子で頑張ってくれ！','モブコーチ','play/003.png');
 }
-
 function renderSubquestList(){
   const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();
   const areas=SUBQUEST_AREAS.filter(subquestAreaUnlocked),visible=areas.map(area=>({area,quest:subquestVisibleQuest(area)})).filter(x=>x.quest);
@@ -11556,7 +11731,10 @@ applyEnemyDamageTo=function(a,e,power,type='physical',crit=0,showGenericFx=true,
 
 
 
+/* v114: Battle Program seasons require the corresponding story area clear + previous season clear; programs unlock in order. */
+window.__mobV114PatchRuntime=true;
 /* ===== MOB QUEST v112: STORY APPROPRIATE LEVEL / BATTLE PROGRAM CLEAR STAMP ===== */
+/* v113: SEASON 3-50 + selected mid-bosses + first-clear currency + season item/weapon/record rewards. */
 window.__mobV112PatchRuntime=true;
 /* Adventure departure now shows the current story area's appropriate level before confirmation. */
 /* Cleared battle-program banners are styled in CSS as red cards with a large white CLEAR stamp. */

@@ -1,0 +1,32 @@
+MOB QUEST v114 - BATTLE PROGRAM UNLOCK CONDITIONS
+
+基本ルール
+- 未遭遇エリアのモンスターをバトルプログラムで先に見せない。
+- 対応ストーリーエリアをクリアして初めて、その系統のSEASONが候補になる。
+- SEASONは1から順番にCLEARして解放。
+- 各SEASON内もPROGRAMを上から順番にCLEARして解放。
+- 未解放PROGRAMは敵名・画像を出さず「???? / LOCKED」。
+- TEST MODEでは全SEASON / PROGRAMを解放。
+- v113以前にクリア済みのSEASONは、対応ストーリー条件を満たしていれば進捗を維持。
+
+ストーリーゲート
+SEASON 1-2   : 草原クリア
+SEASON 3-5   : 砂漠クリア
+SEASON 6-8   : 田舎町クリア
+SEASON 9-11  : ネオン街クリア
+SEASON 12-15 : マグマクリア
+SEASON 16-19 : 海底クリア
+SEASON 20-23 : 草原IIクリア
+SEASON 24-26 : 部族村クリア
+SEASON 27-29 : 田舎町IIクリア
+SEASON 30-32 : ネオン街IIクリア
+SEASON 33-35 : マグマIIクリア
+SEASON 36-38 : 砂漠IIクリア
+SEASON 39-45 : 魔王城クリア
+SEASON 46-48 : 読みかけの本クリア
+SEASON 49-50 : 魔王城IIクリア
+
+例
+- 砂漠を未クリア: SEASON 3以降の砂漠系は出現しない。
+- 砂漠クリア済みでもSEASON 2未CLEAR: SEASON 3はまだ出現しない。
+- SEASON 3出現後: PROGRAM 8のみ挑戦可。PROGRAM 9はPROGRAM 8 CLEAR後に解放。

@@ -1,0 +1,21 @@
+MOB QUEST v113 REGRESSION REPORT
+
+[BASE]
+v112 STORY LEVEL / BATTLE PROGRAM CLEAR STAMP STABLE
+
+[CHANGES]
+- Battle Program SEASON 3-50 added (PROGRAM 8-247).
+- Story mid-bosses added at selected season finales; no subquest-only enemies are used.
+- First-clear diamond/coin rewards added to every PROGRAM.
+- PROGRAM 247 reward fixed to 100 diamonds + 100,000G.
+- Season-clear rewards expanded to implemented items, weapons and EXP/GOLD/BOSS records.
+- Existing red clear banner / large white CLEAR stamp retained.
+- v113 title and GAME_ASSET_VERSION updated.
+
+[VALIDATION]
+- SEASON 3-50 count: 48 new seasons.
+- Final PROGRAM number: 247.
+- All selected mid-boss IDs exist in the current enemy catalog.
+- All season reward item IDs and weapon IDs exist in the current game data.
+- Inline CSS/data/game are synchronized with css/style.css, js/data.js and js/game.js.
+- node --check passed for js/data.js and js/game.js.

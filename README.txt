@@ -255,3 +255,11 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - Cleared Battle Program cards become red and receive a large white CLEAR stamp; newly cleared cards use a short stamp animation.
 - Fully cleared season banners also become red with a large white CLEAR stamp.
 - GAME_ASSET_VERSION and title updated to v112.
+
+[v113]
+- Expanded Battle Program through SEASON 50 / PROGRAM 247 using main-story enemy pools.
+- Selected main-story mid-bosses now appear at milestone season finales; subquest-only monsters are excluded.
+- Added one-time PROGRAM clear currency rewards: minimum 1 diamond + 1,000G, scaling upward; PROGRAM 247 grants 100 diamonds + 100,000G.
+- Added one-time SEASON clear rewards chosen from implemented items, weapons, and EXP/GOLD/BOSS records.
+- Existing v112 red completed banners and large white CLEAR stamps remain active.
+- GAME_ASSET_VERSION and title updated to v113.

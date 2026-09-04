@@ -1,0 +1,106 @@
+MOB QUEST v113 BATTLE PROGRAM 拡張仕様
+
+■ PROGRAM構成
+SEASON 1～2：既存を維持
+SEASON 3～50：追加
+最終PROGRAM：247
+通常モンスター中心。ストーリー本編の中ボスを節目に配置。サブクエスト専用敵は使用しない。
+
+■ PROGRAM初回クリア報酬
+各PROGRAMは初回クリア時のみ、ダイヤ＋コインを獲得。
+最低：ダイヤ1＋1,000G
+最終PROGRAM 247：ダイヤ100＋100,000G
+途中は段階的に上昇。
+
+PROGRAM 1: ダイヤ1 / 1,000G
+PROGRAM 8: ダイヤ1 / 2,000G
+PROGRAM 25: ダイヤ3 / 5,000G
+PROGRAM 50: ダイヤ5 / 10,000G
+PROGRAM 75: ダイヤ8 / 15,000G
+PROGRAM 100: ダイヤ10 / 20,000G
+PROGRAM 125: ダイヤ13 / 25,000G
+PROGRAM 150: ダイヤ15 / 30,000G
+PROGRAM 175: ダイヤ18 / 35,000G
+PROGRAM 200: ダイヤ20 / 40,000G
+PROGRAM 225: ダイヤ23 / 45,000G
+PROGRAM 246: ダイヤ25 / 50,000G
+PROGRAM 247: ダイヤ100 / 100,000G
+
+■ 中ボス配置
+SEASON 4: d-sharty
+SEASON 7: r-scouter
+SEASON 10: n-golem
+SEASON 14: m-golem
+SEASON 17: s-abyssknight
+SEASON 21: g2-tsuru
+SEASON 25: t-kukuri
+SEASON 28: r2-violin
+SEASON 31: n2-tiger
+SEASON 34: m2-yogan
+SEASON 37: モブミラバスター
+SEASON 40: モブキラウィッチ
+SEASON 42: モブキラウィッチ ＋ モブサキュバス
+SEASON 45: モブミラアース ＋ モブミラカラミ
+SEASON 48: n2-palette ＋ m2-buster ＋ モブミラバスター
+SEASON 50: n2-palette ＋ m2-buster ＋ モブミラバスター ＋ モブキラウィッチ
+SEASON 50 FINAL: モブパレットレオン ＋ モブマグバスター ＋ モブミラバスター ＋ モブキラウィッチ（Lv99）
+
+■ SEASON CLEAR REWARD
+実装済みアイテム／武器／レコードのみを使用。
+
+SEASON 01: ITEM / ライフゼリー
+SEASON 02: ITEM / スーパーライフゼリー
+SEASON 03: WEAPON / モブファイアソード
+SEASON 04: ITEM / 解毒カプセル ×3
+SEASON 05: RECORD / 経験値レコード ×2
+SEASON 06: WEAPON / モブウォータースティック
+SEASON 07: RECORD / ゴールドレコード ×2
+SEASON 08: WEAPON / モブバブルガン
+SEASON 09: ITEM / 激辛カプセル ×2
+SEASON 10: RECORD / ボスレコード ×2
+SEASON 11: WEAPON / モブネオンブラスター
+SEASON 12: ITEM / スーパーマジックラムネ ×3
+SEASON 13: WEAPON / モブサンドスピア
+SEASON 14: RECORD / 経験値レコード ×3
+SEASON 15: WEAPON / モブ炎の太刀
+SEASON 16: WEAPON / モブスライムソード
+SEASON 17: RECORD / ゴールドレコード ×3
+SEASON 18: WEAPON / モブスライムスティック
+SEASON 19: RECORD / ボスレコード ×3
+SEASON 20: WEAPON / モブホークガン
+SEASON 21: ITEM / 万能カプセル ×2
+SEASON 22: WEAPON / モブライトスピア
+SEASON 23: RECORD / 経験値レコード ×4
+SEASON 24: WEAPON / モブティラスピア
+SEASON 25: RECORD / ゴールドレコード ×4
+SEASON 26: WEAPON / モブ海駅守護
+SEASON 27: WEAPON / モブパーティー青刀
+SEASON 28: RECORD / ボスレコード ×4
+SEASON 29: WEAPON / モブテツソード
+SEASON 30: ITEM / グロウアップカプセル ×2
+SEASON 31: WEAPON / モブPB2デュアルソード
+SEASON 32: RECORD / 経験値レコード ×5
+SEASON 33: WEAPON / モブピンクスティック
+SEASON 34: RECORD / ゴールドレコード ×5
+SEASON 35: WEAPON / モブ闇の宝石
+SEASON 36: WEAPON / モブスミスリボルバー
+SEASON 37: RECORD / ボスレコード ×5
+SEASON 38: WEAPON / モブ憤怒の槍
+SEASON 39: ITEM / キングカプセル
+SEASON 40: WEAPON / モブテツ一文字
+SEASON 41: RECORD / 経験値レコード ×6
+SEASON 42: WEAPON / モブ魔女の大剣
+SEASON 43: RECORD / ゴールドレコード ×6
+SEASON 44: WEAPON / モブニョロの大剣
+SEASON 45: WEAPON / モブリリススティック
+SEASON 46: RECORD / ボスレコード ×6
+SEASON 47: WEAPON / モブテツの杖
+SEASON 48: WEAPON / モブネオンパルスショット
+SEASON 49: WEAPON / モブネオン妖刀の一
+SEASON 50: WEAPON / モブ海王の太刀
+
+■ 既存仕様維持
+・クリア済みPROGRAM：赤バナー＋大きな白CLEARスタンプ
+・SEASON全クリア：SEASONバナーも赤＋白CLEAR
+・報酬は既存セーブへ追加保存
+・再クリアで初回ダイヤ／コイン、SEASON報酬を重複取得しない
