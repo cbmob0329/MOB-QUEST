@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=117;
+const GAME_ASSET_VERSION=118;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -841,7 +841,7 @@ async function runOpeningV74(){
   openingSequenceBusy=true;document.body.classList.add('opening-sequence-v78');
   const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
   await openingNarrationSequenceV78(prologue);
-  const curtain=document.createElement('div');curtain.className='opening-black-curtain-v76';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await fixedDelay(520);curtain.classList.add('fade');await fixedDelay(900);curtain.remove();
+  const curtain=document.createElement('div');curtain.className='opening-black-curtain-v76 opening-castle-loader-v118';curtain.innerHTML='<div><small>NOW LOADING</small><b>MOB KINGDOM</b></div>';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await waitForOpeningCastleV118();curtain.classList.add('fade');await fixedDelay(760);curtain.remove();
   const king=()=>document.querySelector('[data-castle-actor="king"]');
   await openingCastleSay('モブスライムキング','勇者よ、世界を救ってくれ！',king(),'center');
   await openingSceneCaption('勇者は深く頷いた');
@@ -1042,7 +1042,7 @@ const TRAINING_MODES=[
 ];
 const BATTLE_PROGRAM_SEASONS=[
   {id:1,name:'シーズン1',unlock:()=>true,bg:'back/sougen.png',fallback:'back2/02.png',rewardId:'01',programs:[
-    {id:'s1-1',no:1,label:'スライム Lv.3',enemies:[{id:'g-slime',level:3}]},
+    {id:'s1-1',no:1,label:'スライム Lv.3',enemies:[{id:'g-slime',level:3,rewardExp:59}]},
     {id:'s1-2',no:2,label:'スライム ×2 Lv.3',enemies:[{id:'g-slime',level:3},{id:'g-slime',level:3}]}
   ]},
   {id:2,name:'シーズン2',unlock:()=>worldCleared('grassland'),bg:'back/sougen.png',fallback:'back2/02.png',rewardId:'02',programs:[
@@ -1342,7 +1342,7 @@ async function finishBattleProgramReturn(win){
 function renderSubquestList(){
   const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();
   const areas=SUBQUEST_AREAS.filter(subquestAreaUnlocked),visible=areas.map(area=>({area,quest:subquestVisibleQuest(area)})).filter(x=>x.quest);
-  root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${visible.map(({area:a,quest:q})=>{const requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;}).join('')||'<div class="camp-empty-note">現在挑戦できるサブクエストはありません。</div>'}</div></section>`;
+  root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${visible.map(({area:a,quest:q})=>{const requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;}).join('')||'<div class="camp-empty-note subquest-empty-v118">現在挑戦できるサブクエストはありません。</div>'}</div></section>`;
   bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));
 }
 async function confirmSubquest(id){const found=subquestById(id);if(!found||found.quest.pending||subquestCleared(id))return;const {area,quest}=found;if(subquestVisibleQuest(area)?.id!==quest.id)return renderSubquestList();if(!subquestAreaUnlocked(area))return;if(!subquestRequiredReady(area)){await facilityTalk(`このクエストには ${(area.required||[]).map(x=>player(x)?.name||x).join('・')} が必要だ！\n酒場で編成してから挑戦しよう！`,'モブコーチ','play/003.png');return;}await facilityTalk('このクエストでいいかな？','モブコーチ','play/003.png');const ans=await dialog(quest.name,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(ans!=='yes')return;await facilityTalk('レッツトレーニング！','モブコーチ','play/003.png');await startSubquest(area,quest);}
@@ -1387,7 +1387,7 @@ function renderTrainingFeature(mode){
     const worlds=clearedJournalWorlds();root.innerHTML=`<section class="panel"><div class="section-title"><div><small>ADVENTURE JOURNAL</small><h2>クリア済みストーリーを再体験</h2></div><span class="pill">イベントなし</span></div><p class="panel-note">探索とバトルで経験値・コインを獲得できます。中ボスは出現しますがAREA4のボスは出現せず、エリアモンスター4体が出現します。</p><div class="training-feature-grid">${worlds.length?worlds.map((w,i)=>`<article class="training-feature-card"><div class="feature-head"><img src="icon/14.png" alt=""><div><h3>${w.name}</h3><p>4 AREA / 探索あり / セリフ・イベントなし</p></div></div><button data-start-journal="${(MOB_DATA.adventureWorlds||[]).indexOf(w)}" type="button">冒険日記を開始</button></article>`).join(''):'<div class="camp-empty-note">まだクリア済みのエリアがありません。</div>'}</div></section>`;$$('[data-start-journal]',root).forEach(b=>b.onclick=()=>startTrainingQuest('journal',{worldIndex:Number(b.dataset.startJournal)}));bindImages(root);return;
   }
   const isBoss=mode==='boss',recordId=mode==='exp'?'36':mode==='gold'?'37':'38',recordName=itemData(recordId)?.name||'レコード',defs=isBoss?BOSS_DIFFICULTIES:TURNTABLE_DIFFICULTIES,count=itemCount(recordId);
-  const discovered=(state.meta.defeatedBosses||[]).length+(state.meta.defeatedElites||[]).length;
+  const discovered=(state.meta.defeatedBosses||[]).length;
   root.innerHTML=`<section class="panel"><div class="section-title"><div><small>${mode.toUpperCase()} TURNTABLE</small><h2>${TRAINING_MODES.find(x=>x.id===mode)?.name||''}</h2></div><span class="pill">${recordName} ×${count}</span></div><div class="record-count-line"><span>経験値 ×${itemCount('36')}</span><span>ゴールド ×${itemCount('37')}</span><span>ボス ×${itemCount('38')}</span>${testFree?'<span>TEST MODE</span>':''}</div><div class="training-feature-grid">${Object.values(defs).map(d=>{const hasBoss=!isBoss||discovered>0,hasRecord=count>=d.cost;return`<article class="training-feature-card ${hasBoss&&hasRecord?'':'locked'}"><div class="feature-head"><img src="${mode==='exp'?'icon/15.png':mode==='gold'?'icon/16.png':'icon/17.png'}" alt=""><div><h3>${d.name}</h3><p>推奨 Lv${d.recommended}${isBoss?` / 限定アイテム率 ${Math.round(d.itemRate*100)}%`:''}</p></div></div><div class="feature-meta"><span>${recordName} ${d.cost}枚</span><span>4 AREA</span><span>1 AREA 1戦</span></div><button data-start-turntable="${mode}" data-difficulty="${d.id}" type="button" ${hasBoss?'':'disabled'}>${isBoss&&!hasBoss?'撃破済みボスがいません':'参加する'}</button></article>`;}).join('')}</div></section>`;
   $$('[data-start-turntable]',root).forEach(b=>b.onclick=()=>startTrainingQuest(b.dataset.startTurntable,{difficulty:b.dataset.difficulty}));bindImages(root);
 }
@@ -3060,6 +3060,9 @@ function calcDamage(attacker,type,power,crit=0,e=targetEnemy()){
     if(ignores.length&&Math.random()<1-miss)def*=1-maxIgnore;
   }
   let d=Math.max(1,source*power-def*.45)*(.91+Math.random()*.18);
+  /* v118: normal attacks stay the baseline; MP-consuming magic/techniques should feel worthwhile from the opening hours. */
+  if(state.battle?.currentActionKind==='magic')d*=1.12;
+  else if(state.battle?.currentActionKind==='special')d*=1.10;
   d*=elementDamageMultiplier(element,e?.attribute||'無');
   d*=weaponOutgoingMultiplier(attacker,e,type,normal,element);
   const fe=attacker?.figureEffects||figureEffectsFor(attacker?.id),el=normalizeElement(element),areaKey=currentBattleFigureAreaKey(),bonus=weaponConditionalCritBonus(attacker,e,type,normal,element)+Number(fe?.crit||0)+(type==='magic'?(Number(fe?.magicCrit||0)+Number(attacker?.moneyFriendsMagicCrit||0)):0)+Number(fe?.areaCrit?.[areaKey]||0);
@@ -4745,7 +4748,7 @@ function globalVisibleSubquestV93(){
 }
 renderSubquestList=function(){
   const root=$('#trainingFeaturePanel');if(!root)return;ensureSubquestMeta();const found=globalVisibleSubquestV93();
-  const body=found?(()=>{const a=found.area,q=found.quest,requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;})():'<div class="camp-empty-note">現在挑戦できるサブクエストはありません。</div>';
+  const body=found?(()=>{const a=found.area,q=found.quest,requiredReady=subquestRequiredReady(a);return`<section class="subquest-area-block"><header><b>${a.name}</b><small>NEXT QUEST</small></header><div><button class="subquest-card" data-subquest-id="${q.id}" type="button"><img src="icon/24.png" alt=""><span><small>QUEST ${q.no}</small><b>${q.name}</b><em>${requiredReady?'挑戦可能':`必須：${(a.required||[]).map(id=>player(id)?.name||id).join('・')}`}</em></span></button></div></section>`;})():'<div class="camp-empty-note subquest-empty-v118">現在挑戦できるサブクエストはありません。</div>';
   root.innerHTML=`<section class="panel subquest-panel"><div class="section-title"><div><small>SUB QUEST</small><h2>サブクエスト</h2></div><span class="pill">一度限り</span></div><div class="subquest-area-list">${body}</div></section>`;
   bindImages(root);$$('[data-subquest-id]',root).forEach(b=>b.onclick=()=>confirmSubquest(b.dataset.subquestId));
 };
@@ -6359,7 +6362,7 @@ function subquestShowRowV111(ids){return ['show',ids];}
 patchSubquestV111('grass-1',{
   reward:{diamonds:10,coins:10000,weapons:['01','02'],armor:'01'},
   intro:[['pink','勇者様！\nモンスターには亜種が存在します！\nもちろん全員にではありませんが\n強力なモンスターが\n存在するのであります！'],subquestShowRowV111(['g-savanna','sq-savanna-variant','g-savanna']),['pink','やや！\nこれはモブサバンナの亜種です！\n通常のモブサバンナより\n素早く強いであります！\n回避率も高いので\n注意して戦いましょう！']],
-  waves:[[{id:'g-savanna',level:4},{id:'sq-savanna-variant',level:7,evasion:.30},{id:'g-savanna',level:4}]],
+  waves:[[{id:'g-savanna',level:4,escort:true,mods:{hp:.82,atk:.78,mag:.78,def:.92,res:.92,spd:.94}},{id:'sq-savanna-variant',level:7,evasion:.30},{id:'g-savanna',level:4,escort:true,mods:{hp:.82,atk:.78,mag:.78,def:.92,res:.92,spd:.94}}]],
   post:[['pink','他にも亜種がたくさん存在するのですが\nそのほとんどが発見されていません\nどこからやってくるのやら・・']]
 });
 patchSubquestV111('grass-2',{
@@ -6604,7 +6607,7 @@ function makeTurntableConfigs(mode,difficulty,areaIndex){
 }
 
 /* Boss roster is locked when the run begins so AREA changes do not reroll the opponent. */
-function bossTurntablePoolV116(){const raw=[...(state.meta?.defeatedBosses||[]),...(state.meta?.defeatedElites||[])],out=[];for(const id of raw){const t=trainingEnemyTemplate(id);if(t&&!out.includes(id)&&(t.category==='boss'||t.category==='elite'))out.push(id);}return out;}
+function bossTurntablePoolV116(){const raw=[...(state.meta?.defeatedBosses||[])],out=[];for(const id of raw){const t=trainingEnemyTemplate(id);if(t&&!out.includes(id)&&t.category==='boss')out.push(id);}return out;}
 function buildBossRunIdsV116(){const pool=bossTurntablePoolV116().sort(()=>Math.random()-.5);if(!pool.length)return[];return Array.from({length:4},(_,i)=>pool[i%pool.length]);}
 function bossQuestConfigs(){const q=state.quest;if(!q||q.type!=='boss')return[];if(!Array.isArray(q.bossRunIds)||!q.bossRunIds.length)q.bossRunIds=buildBossRunIdsV116();const id=q.bossRunIds[Math.max(0,Math.min(3,Number(q.areaIndex)||0))];if(!id)return[];const d=BOSS_DIFFICULTIES[q.difficulty]||BOSS_DIFFICULTIES.normal,lv=Math.min(120,Number(d.recommended||25)+(Number(q.areaIndex)||0)*2);return[{id,level:lv}];}
 
@@ -6646,7 +6649,7 @@ async function showTurntableStartV116(q){const ov=ensureTurntableOverlayV116(),m
 async function showTurntableAreaIntroV116(q){const ov=ensureTurntableOverlayV116(),mode=q.type,n=(Number(q.areaIndex)||0)+1,label=mode==='boss'?`BOSS ${n} / 4`:`AREA ${n} / 4`,sub=mode==='exp'?'EXPERIENCE TRAINING':mode==='gold'?'GOLD TRAINING':'BOSS CHALLENGE';ov.className=`turntable-overlay-v116 area mode-${mode}`;ov.innerHTML=`<div class="turntable-area-banner-v116"><small>${sub}</small><h2>${label}</h2><b>${String(q.difficulty||'').toUpperCase()}</b></div>`;ov.hidden=false;requestAnimationFrame(()=>ov.classList.add('show'));await fixedDelay(760);ov.classList.remove('show');await fixedDelay(130);ov.hidden=true;}
 
 const _startTrainingQuestV116Base=startTrainingQuest;
-startTrainingQuest=async function(type,opt={}){if(type==='boss'&&!bossTurntablePoolV116().length)return facilityTalk('まだボスターンテーブルに登録された強敵がいないよ！','モブコーチ','play/003.png');await _startTrainingQuestV116Base(type,opt);if(!['exp','gold','boss'].includes(type)||state.quest?.type!==type)return;const q=state.quest;q.turntableEarnedExpV116=0;q.turntableEarnedCoinV116=0;if(type==='boss')q.bossRunIds=buildBossRunIdsV116();await showTurntableStartV116(q);};
+startTrainingQuest=async function(type,opt={}){if(type==='boss'&&!bossTurntablePoolV116().length)return facilityTalk('まだボスターンテーブルに登録されたボスがいないよ！','モブコーチ','play/003.png');await _startTrainingQuestV116Base(type,opt);if(!['exp','gold','boss'].includes(type)||state.quest?.type!==type)return;const q=state.quest;q.turntableEarnedExpV116=0;q.turntableEarnedCoinV116=0;if(type==='boss')q.bossRunIds=buildBossRunIdsV116();await showTurntableStartV116(q);};
 const _startQuestBattleV116Base=startQuestBattle;
 startQuestBattle=async function(){const q=state.quest;if(q&&['exp','gold','boss'].includes(q.type)&&!q.areaIntroBusyV116&&!q.finished){q.areaIntroBusyV116=true;try{await showTurntableAreaIntroV116(q);}finally{q.areaIntroBusyV116=false;}}return _startQuestBattleV116Base();};
 
@@ -6734,6 +6737,55 @@ window.__mobV112PatchRuntime=true;
 /* Adventure departure now shows the current story area's appropriate level before confirmation. */
 /* Cleared battle-program banners are styled in CSS as red cards with a large white CLEAR stamp. */
 /* ===== END MOB QUEST v112 ===== */
+
+
+/* ===== MOB QUEST v118: OPENING / EARLY TRAINING / JOURNAL / COMMAND TUNE ===== */
+window.__mobV118Runtime=true;
+
+async function waitForOpeningCastleV118(){
+  const stage=document.querySelector('.throne-stage');
+  const imgs=stage?[...stage.querySelectorAll('img')]:[];
+  const waits=imgs.map(img=>new Promise(resolve=>{
+    if(img.complete){if(typeof img.decode==='function')img.decode().catch(()=>{}).finally(resolve);else resolve();return;}
+    const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});
+  }));
+  await Promise.race([Promise.all(waits),fixedDelay(1600)]);
+  await nextPaint();await nextPaint();await fixedDelay(260);
+}
+
+/* Season 1 is the tutorial training: it must be available before the first adventure. */
+const _battleProgramStoryGateMetV118Base=battleProgramStoryGateMetV114;
+battleProgramStoryGateMetV114=function(seasonId){if(Number(seasonId)===1)return true;return _battleProgramStoryGateMetV118Base(seasonId);};
+
+/* Opening dialogue remains anchored to the actor but is intentionally lower than the old top-edge placement. */
+const _showCastleSpeechV118Base=showCastleSpeech;
+showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
+  _showCastleSpeechV118Base(speaker,text,actorEl,side);
+  if(!document.body.classList.contains('opening-sequence-v78'))return;
+  const box=$('#castleSpeech'),stage=box?.parentElement;if(!box||!stage||box.hidden)return;
+  const top=parseFloat(box.style.top);if(!Number.isFinite(top))return;
+  const max=Math.max(8,(stage.clientHeight||520)-(box.offsetHeight||90)-18);
+  box.style.top=`${Math.min(max,top+44)}px`;
+};
+
+/* Adventure Journal previously called a missing journalEncounter() and could silently stall on BATTLE. */
+function journalEncounter(){
+  const q=state.quest,w=questWorld(),area=w?.areas?.[Math.max(0,Math.min(3,Number(q?.areaIndex)||0))];
+  if(!q||q.type!=='journal'||!w||!area)return[];
+  const bi=Math.max(0,Math.min(2,Number(q.battleIndex)||0));
+  /* Third battle of AREA1-3 may replay the area's mid-boss formation. AREA4 never replays the story boss. */
+  if(bi===2&&Number(q.areaIndex)<3&&Array.isArray(area.boss)&&area.boss.length){
+    return arrangeBossFormation(expandEncounterEntries(area.boss)).map(r=>({...r,actionCount:r.actionCount??(r.escort?1:undefined)}));
+  }
+  const count=Number(q.areaIndex)===3?4:(w.id==='grassland'?Math.max(1,Math.min(2,weightedEnemyCount(q.areaIndex))):weightedEnemyCount(q.areaIndex));
+  const used=[],rows=[];
+  for(let i=0;i<count;i++){
+    let e=weightedNormalTemplate(w,used);if(!e)e=weightedNormalTemplate(w,[]);if(!e)break;
+    used.push(e.id);rows.push({id:e.id,level:rint(e.levelMin||1,e.levelMax||e.levelMin||1),encounterRole:'normal'});
+  }
+  return rows;
+}
+/* ===== END MOB QUEST v118 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

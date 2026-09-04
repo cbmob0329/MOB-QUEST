@@ -3813,3 +3813,47 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   font-size:10px!important;font-weight:1000!important;
 }
 /* ===== END MOB QUEST v117 ===== */
+
+
+/* ===== MOB QUEST v118: OPENING / TRAINING READABILITY / BATTLE COMMAND SIZE ===== */
+.opening-castle-loader-v118{display:flex!important;align-items:center!important;justify-content:center!important;color:#fff!important;text-align:center!important;pointer-events:none!important}
+.opening-castle-loader-v118>div{display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center}
+.opening-castle-loader-v118 small{font-size:9px;font-weight:1000;letter-spacing:.28em;color:#9fc9e9;-webkit-text-fill-color:#9fc9e9}
+.opening-castle-loader-v118 b{font-size:19px;font-weight:1000;letter-spacing:.12em;color:#fff;-webkit-text-fill-color:#fff}
+
+/* Empty sub-quest state must remain readable even inside the dark training popup. */
+#trainingFeaturePopup[data-mode="subquest"] .subquest-empty-v118,
+.subquest-panel .subquest-empty-v118{
+  background:#bfeafa!important;color:#101820!important;-webkit-text-fill-color:#101820!important;
+  border:2px solid #66bad9!important;box-shadow:0 5px 0 rgba(16,55,76,.18)!important;
+  font-size:11px!important;line-height:1.55!important;font-weight:1000!important;text-align:center!important;
+  padding:17px 12px!important;
+}
+
+/* A cleared PROGRAM is unmistakably red; keep the white CLEAR stamp from v112. */
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.cleared{
+  background:linear-gradient(145deg,#c43143,#7e1425)!important;border:2px solid #ff9ba8!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+}
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.cleared b,
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.cleared small,
+#trainingFeaturePopup[data-mode="program"] .battle-program-card.cleared span{color:#fff!important;-webkit-text-fill-color:#fff!important}
+
+/* All eight battle commands use the same larger frameless icon box. 特技 no longer has a one-off frame. */
+.command-panel{height:calc(157px + var(--safe-bottom))!important;padding:5px 7px calc(6px + var(--safe-bottom))!important}
+.party-hud{bottom:calc(163px + var(--safe-bottom))!important}
+.command-grid{gap:6px!important}
+.command-grid .command-btn,.command-grid .command-btn.special{
+  height:48px!important;border:0!important;border-radius:12px!important;padding:0!important;
+  box-shadow:none!important;outline:none!important;overflow:hidden!important;
+}
+.command-grid .command-btn.special{background:#4a5a36!important}
+.command-grid .command-btn .battle-command-icon,.command-grid .command-btn.special .battle-command-icon{
+  width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;transform:none!important;
+}
+@media(max-height:720px){
+  .command-panel{height:calc(149px + var(--safe-bottom))!important}
+  .party-hud{bottom:calc(155px + var(--safe-bottom))!important}
+  .command-grid .command-btn,.command-grid .command-btn.special{height:44px!important}
+}
+/* ===== END MOB QUEST v118 ===== */

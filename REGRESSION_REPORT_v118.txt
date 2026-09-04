@@ -1,0 +1,14 @@
+MOB QUEST v118 REGRESSION REPORT
+
+- Opening waits for throne-room images/paint behind a NOW LOADING curtain before the first Mob Slime King line.
+- Opening throne bubbles shift down 44px while retaining actor anchoring.
+- Battle Program SEASON 1 is available before Grassland clear.
+- PROGRAM 1 slime gives 59 EXP, enough for a fresh Lv5 character to reach Lv6.
+- Grass QUEST 1 side Savannas are modestly weakened; the Lv7 variant/evasion centerpiece is unchanged.
+- Empty Sub Quest state uses a light-blue banner with bold black text.
+- Cleared Battle Program cards are forced red while preserving CLEAR stamp.
+- Adventure Journal has a real journalEncounter() generator; BATTLE no longer calls an undefined function.
+- Battle command buttons enlarged to 48px (44px short screens); 特技 has no unique border.
+- Player magic damage +12%, technique damage +10%; ultimates unchanged. Higher-tier skill power progression remains intact.
+- Boss Turntable pool uses defeated bosses only, not elites/mid-bosses.
+- v117 status popup and magma exploration readability retained.
