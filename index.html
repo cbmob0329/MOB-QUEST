@@ -3868,6 +3868,19 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   .command-grid .command-btn,.command-grid .command-btn.special{height:44px!important}
 }
 /* ===== END MOB QUEST v118 ===== */
+
+
+/* ===== MOB QUEST v119: LEGEND RECORD ROOM / RECORD MAGIC ===== */
+.story-record-get-v119{position:fixed;inset:0;z-index:16050;display:grid;place-items:center;padding:24px;background:rgba(3,8,14,.78);opacity:0;pointer-events:none;transition:opacity .22s ease}.story-record-get-v119.show{opacity:1}.story-record-get-card-v119{width:min(88vw,380px);padding:24px 20px 22px;border-radius:28px;background:#edf8ff;border:4px solid #83d6f4;box-shadow:0 24px 65px rgba(0,0,0,.5),inset 0 0 0 3px #fff;color:#07131c;text-align:center;transform:translateY(18px) scale(.88);transition:transform .34s cubic-bezier(.2,.85,.25,1.15)}.story-record-get-v119.show .story-record-get-card-v119{transform:translateY(0) scale(1)}.story-record-get-card-v119>small{display:block;font-size:11px;font-weight:1000;letter-spacing:.22em;color:#17678c}.story-record-get-card-v119 h2{margin:6px 0 8px;font-size:22px;font-weight:1000}.story-record-get-disc-v119{width:148px;height:148px;margin:4px auto 12px;display:grid;place-items:center;animation:recordGetFloatV119 1.2s ease-in-out infinite alternate}.story-record-get-disc-v119 img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 12px 10px rgba(0,0,0,.22))}.story-record-get-card-v119>b{display:block;font-size:25px;font-weight:1000;line-height:1.25}.story-record-get-card-v119 p{margin:9px 0 0;font-size:15px;font-weight:900}@keyframes recordGetFloatV119{from{transform:translateY(4px) rotate(-2deg)}to{transform:translateY(-7px) rotate(2deg)}}
+.record-room-v119{overflow-x:hidden}.record-stage-v119{min-height:650px;padding:12px 12px 104px!important;overflow:hidden}.record-room-heading-v119{position:relative;z-index:4;width:min(94%,620px);margin:4px auto 6px;padding:12px 15px;border-radius:18px;background:#bfefff;border:3px solid #5cafd1;color:#06141c;box-shadow:0 8px 18px rgba(0,0,0,.2)}.record-room-heading-v119 small{display:block;font-size:9px;font-weight:1000;letter-spacing:.18em}.record-room-heading-v119 h2{margin:2px 0 0;font-size:21px;font-weight:1000}.record-room-heading-v119 span{position:absolute;right:14px;top:50%;transform:translateY(-50%);padding:6px 10px;border-radius:999px;background:#0d2535;color:#fff;font-size:12px;font-weight:1000}.record-orbit-v119{position:relative;width:min(92vw,500px);height:390px;margin:4px auto 8px;overflow:visible}.record-orbit-ring-v119{position:absolute;left:50%;top:50%;width:min(66vw,300px);height:min(66vw,300px);max-height:300px;transform:translate(-50%,-50%);border-radius:50%;border:2px dashed rgba(173,230,255,.4);box-shadow:0 0 28px rgba(83,194,244,.16) inset}.record-orbit-item-v119{position:absolute;left:50%;top:50%;width:0;height:0;z-index:3;animation:recordOrbitV119 24s linear infinite}.record-orbit-item-v119 button{position:absolute;left:0;top:0;width:74px;height:88px;transform:translate(-50%,-50%);padding:5px 4px 4px;border:2px solid #91dcf5;border-radius:16px;background:rgba(238,250,255,.94);box-shadow:0 9px 16px rgba(0,0,0,.34);color:#07151f}.record-orbit-item-v119 button img{display:block;width:58px;height:58px;margin:0 auto;object-fit:contain}.record-orbit-item-v119 button span{display:block;font-size:9px;font-weight:1000}.record-orbit-item-v119 button em{position:absolute;right:-6px;top:-8px;padding:3px 5px;border-radius:8px;background:#e04a50;color:#fff;font-size:8px;font-style:normal;font-weight:1000}.record-orbit-item-v119>small{position:absolute;left:0;top:49px;width:116px;transform:translateX(-50%);font-size:8px;font-weight:900;color:#e9f8ff;text-align:center;text-shadow:0 2px 3px #000;pointer-events:none}.record-orbit-item-v119.learned button{border-color:#ff8a8f;box-shadow:0 0 0 2px rgba(255,255,255,.35),0 9px 16px rgba(0,0,0,.34)}@keyframes recordOrbitV119{from{transform:rotate(0deg) translateX(min(32vw,145px)) rotate(0deg)}to{transform:rotate(360deg) translateX(min(32vw,145px)) rotate(-360deg)}}.record-orbit-center-v119,.record-center-book-v119{position:absolute;left:50%;top:50%;z-index:2;transform:translate(-50%,-50%);width:132px;min-height:132px;padding:12px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:3px solid #6bbddd;background:rgba(7,22,33,.88);color:#fff;box-shadow:0 0 24px rgba(103,206,244,.26)}.record-orbit-center-v119 img,.record-center-book-v119 img{width:66px;height:66px;object-fit:contain}.record-orbit-center-v119 b,.record-center-book-v119 b{font-size:11px;font-weight:1000}.record-orbit-center-v119 small,.record-center-book-v119 small{font-size:9px;font-weight:900;opacity:.9}.record-center-book-v119:not(.static){cursor:pointer;background:#eaf8ff;color:#06141c;border-color:#80d6f3}.record-empty-v119{position:absolute;left:50%;top:17%;transform:translateX(-50%);width:85%;text-align:center;color:#eef9ff}.record-empty-v119 b{display:block;font-size:15px}.record-empty-v119 small{display:block;margin-top:4px;font-size:10px;opacity:.8}.record-room-extra-v119{position:relative;z-index:5;width:min(92%,540px);margin:0 auto 16px;padding:12px 14px;border-radius:18px;background:#c8effd;border:3px solid #69b9d8;color:#07141c;display:flex;align-items:center;justify-content:space-between;gap:10px}.record-room-extra-v119 b{display:block;font-size:15px;font-weight:1000}.record-room-extra-v119 small{display:block;font-size:10px;font-weight:900}.record-room-extra-v119 button{min-height:42px;padding:8px 14px;border-radius:14px;background:#17364d;color:#fff;font-weight:1000}.record-room-extra-v119.book-ready{display:grid;grid-template-columns:auto 1fr}.record-room-extra-v119.book-ready button{display:flex;align-items:center;gap:8px;background:#fff;color:#08151d;border:2px solid #4e9dbf}.record-room-extra-v119.book-ready button img{width:48px;height:48px;object-fit:contain}.record-room-extra-v119.book-ready p{margin:0;font-size:11px;font-weight:900}.record-stage-v119 .record-room-home-v93{z-index:12}
+.record-party-select-v119{position:fixed;inset:0;z-index:16100;padding:18px;display:grid;place-items:center;background:rgba(3,8,14,.82);opacity:0;transition:opacity .18s ease}.record-party-select-v119.show{opacity:1}.record-party-card-v119{width:min(94vw,560px);max-height:min(84vh,720px);overflow:auto;padding:18px;border-radius:26px;background:#d2f2ff;border:4px solid #67badc;color:#07141c;box-shadow:0 24px 65px rgba(0,0,0,.52)}.record-party-card-v119 header{text-align:center;margin-bottom:12px}.record-party-card-v119 header small{font-size:10px;font-weight:1000;letter-spacing:.2em}.record-party-card-v119 header h2{margin:3px 0;font-size:21px;font-weight:1000}.record-party-card-v119 header p{margin:0;font-size:13px;font-weight:1000;color:#145d7a}.record-party-grid-v119{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.record-party-grid-v119 button{min-height:88px;padding:8px;border:2px solid #4e9dbf;border-radius:16px;background:#fff;color:#07141c;display:grid;grid-template-columns:58px 1fr;grid-template-rows:auto auto;align-items:center;text-align:left}.record-party-grid-v119 img{grid-row:1/3;width:54px;height:68px;object-fit:contain}.record-party-grid-v119 b{font-size:13px;font-weight:1000}.record-party-grid-v119 small{font-size:9px;font-weight:900}.record-party-cancel-v119{display:block;width:100%;min-height:44px;margin-top:12px;border-radius:14px;background:#17364d;color:#fff;font-weight:1000}.record-magic-learned-v119{position:fixed;inset:0;z-index:16120;display:grid;place-items:center;padding:22px;background:rgba(2,8,13,.82);opacity:0;transition:opacity .2s ease}.record-magic-learned-v119.show{opacity:1}.record-magic-learned-v119>div{width:min(88vw,390px);padding:22px;border-radius:28px;background:#d6f4ff;border:4px solid #63badd;color:#06141d;text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.5);transform:scale(.88);transition:transform .28s cubic-bezier(.2,.85,.25,1.15)}.record-magic-learned-v119.show>div{transform:scale(1)}.record-magic-learned-v119 small{font-size:10px;font-weight:1000;letter-spacing:.2em;color:#1a6f91}.record-magic-learned-v119 img{display:block;width:96px;height:116px;object-fit:contain;margin:8px auto}.record-magic-learned-v119 h2{margin:0;font-size:18px;font-weight:1000}.record-magic-learned-v119 b{display:block;margin:7px 0;font-size:25px;font-weight:1000}.record-magic-learned-v119 p{margin:0;font-size:16px;font-weight:1000}@media(max-width:390px){.record-stage-v119{min-height:590px}.record-orbit-v119{height:350px}.record-orbit-item-v119 button{width:66px;height:80px}.record-orbit-item-v119 button img{width:51px;height:51px}.record-orbit-item-v119>small{top:44px;width:104px}.record-orbit-center-v119,.record-center-book-v119{width:116px;min-height:116px}.record-party-grid-v119 button{min-height:80px;grid-template-columns:50px 1fr}.record-party-grid-v119 img{width:46px;height:58px}}
+/* ===== END MOB QUEST v119 ===== */
+
+
+/* ===== MOB QUEST v120: DESERT AWAKENING / MIRA CHARGE ===== */
+.mira-charge-v120{position:absolute;z-index:260;transform:translate(-50%,-50%) scale(.32);opacity:.2;pointer-events:none;transition:transform 1s cubic-bezier(.2,.85,.22,1),opacity .25s ease;filter:drop-shadow(0 4px 0 rgba(0,0,0,.28))}.mira-charge-v120 img{width:82px;height:82px;object-fit:contain}.mira-charge-v120.charge{transform:translate(-50%,-50%) scale(1.55);opacity:1}.mira-charge-v120.release{transform:translate(-50%,-50%) scale(2.05);opacity:0;transition-duration:.2s}
+.desert-awaken-v120{position:fixed;inset:0;z-index:10060;display:grid;place-items:center;background:rgba(5,10,18,.78);opacity:0;transition:opacity .18s ease}.desert-awaken-v120.show{opacity:1}.desert-awaken-v120>div{width:min(84vw,360px);padding:22px 18px;border:4px solid #101820;border-radius:24px;background:#bdefff;color:#071018;text-align:center;box-shadow:0 16px 0 rgba(0,0,0,.25)}.desert-awaken-v120 small{display:block;font-weight:1000;letter-spacing:.16em}.desert-awaken-v120 img{display:block;width:120px;height:120px;object-fit:contain;margin:8px auto}.desert-awaken-v120 h2{margin:2px 0 8px;font-size:25px}.desert-awaken-v120 b{display:block;font-size:24px;font-weight:1000}.desert-awaken-v120 p{margin:6px 0 0;font-weight:1000;font-size:18px}
+/* ===== END MOB QUEST v120 CSS ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3887,7 +3900,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v118</div>
+      <div class="title-version">v121</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4292,7 +4305,8 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="toast" class="toast"></div>
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
-<script id="mobQuestInlineData">// MOB QUEST v118
+<script id="mobQuestInlineData">
+// MOB QUEST v121
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -4989,7 +5003,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',110,113)},
     {id:'kizutsukukitsutsuki',name:'キズツクキツツキ',element:'雷',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',201,202)},
     {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',114,117)},
-    {id:'watashinomirai',name:'ワタシのミライ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',125,128)}
+    {id:'watashinomirai',name:'ワタシノミライ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',125,128)}
   ];
 
   MOB_DATA.techniqueCatalog=[
@@ -5451,6 +5465,162 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(const [id,skills] of Object.entries(enemySupport)){const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.supportSkillsV109=[...skills];}
 }
 /* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
+
+
+
+/* ===== MOB QUEST v120: SKILL EXPANSION / STATUS SPLIT / DESERT AWAKENING DATA ===== */
+{
+  MOB_DATA.skillBalanceVersion=120;
+  const F=(folder,a,b)=>Array.from({length:b-a+1},(_,i)=>`${folder}/${String(a+i).padStart(2,'0')}.png`);
+  const upsert=(arr,row)=>{const i=arr.findIndex(x=>x.id===row.id);if(i>=0)arr[i]={...arr[i],...row};else arr.push(row);};
+  const mag=MOB_DATA.magicCatalog||[],tech=MOB_DATA.techniqueCatalog||[];
+
+  /* 状態異常魔法：ダメージ無し。 */
+  const statusMagic=[
+    {id:'noise-scratch',name:'ノイズスクラッチ',element:'無',kind:'statusMagic',status:'confuse',cost:12,power:0,chance:.60,target:'single',tier:'status',frames:['skill/46.png'],mode:'statusNoiseV79',effectText:'敵単体を混乱にする'},
+    {id:'chill-lofi',name:'チルローファイ',element:'無',kind:'statusMagic',status:'sleep',cost:13,power:0,chance:.60,target:'single',tier:'status',frames:['skill/48.png'],mode:'statusChillV79',effectText:'敵単体を眠りにする'},
+    {id:'fast-beat',name:'ファストビート',element:'火',kind:'statusMagic',status:'burn',cost:12,power:0,chance:.65,target:'single',tier:'status',frames:['skill/76.png'],mode:'statusFastV79',effectText:'敵単体をやけど状態にする'},
+    {id:'repeat-intro',name:'リピートイントロ',element:'闇',kind:'statusMagic',status:'poison',cost:13,power:0,chance:.65,target:'single',tier:'status',frames:[...F('skill',103,106),'skill/103.png'],mode:'statusRepeatV79',effectText:'敵単体を毒状態にする'},
+    {id:'long-scratch',name:'ロングスクラッチ',element:'雷',kind:'statusMagic',status:'paralyze',cost:16,power:0,chance:.45,target:'single',tier:'status',frames:['skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],mode:'statusLongV79',effectText:'敵単体をマヒにする'}
+  ];
+  for(const s of statusMagic)upsert(mag,s);
+  /* 旧仕様では同名状態異常技が特技欄に存在したため、特技側から除去する。 */
+  const oldStatusIds=new Set(statusMagic.map(x=>x.id));
+  MOB_DATA.techniqueCatalog=(MOB_DATA.techniqueCatalog||[]).filter(x=>!oldStatusIds.has(x.id));
+
+  /* レコード全体魔法：中威力だが全体攻撃のため消費MPは高め。 */
+  const recordMagic=[
+    {id:'garagaranotabi',name:'ガラガラノタビ',element:'地',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',193,196),recordMagic:true},
+    {id:'kumanokomiteitanoaberto',name:'クマノコ・ミテイタ・アノベルト',element:'闇',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',133,136),recordMagic:true},
+    {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',110,113),recordMagic:true},
+    {id:'kizutsukukitsutsuki',name:'キズツクキツツキ',element:'雷',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',201,202),recordMagic:true},
+    {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',114,117),recordMagic:true},
+    {id:'watashinomirai',name:'ワタシノミライ',element:'光',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',125,128),recordMagic:true}
+  ];
+  for(const s of recordMagic)upsert(mag,s);
+
+  const extraMagic=[
+    {id:'crash-bomb',name:'クラッシュボム',element:'無',tier:'medium',cost:24,power:1.38,target:'all',frames:F('skill2',243,246),effectText:'敵全体に無属性小～中ダメージ'},
+    {id:'rainbow1990',name:'レインボー1990',element:'光',tier:'medium',cost:32,power:1.58,target:'all',kind:'aoeStatusMagic',status:'stun',chance:.10,frames:['skill2/247.png','skill2/248.png','skill2/249.png','skill2/249-1.png'],effectText:'敵全体に光属性中ダメージ＋10%でひるみ'},
+    {id:'neo-meteor-power',name:'ネオメテオパワー',element:'無',tier:'large',cost:44,power:1.95,target:'all',frames:F('skill2',268,271),effectText:'敵全体に無属性中～大ダメージ'},
+    {id:'soul-energy',name:'ソウルエネルギー',element:'無',tier:'large',cost:25,power:1.95,target:'single',frames:F('skill2',273,276),effectText:'敵単体に無属性中～大ダメージ'},
+    {id:'mira-mob-poison',name:'ミラモブポイズン',element:'闇',tier:'medium',cost:26,power:1.70,target:'single',kind:'damageStatusMagic',status:'poison',chance:.70,crit:.10,exclusive:'desert',eventOnly:true,chargeImage:'icon/68.png',frames:F('skill',66,69),effectText:'敵単体に闇属性中ダメージ＋会心率10%＋70%で毒'}
+  ];
+  for(const s of extraMagic)upsert(mag,s);
+
+  const advancedTech=[
+    {id:'scratch-sword',name:'スクラッチソード',element:'光',kind:'statusTechnique',status:'confuse',cost:14,power:1.38,chance:.45,tier:'medium',attackFrames:F('skill',112,115),statusFrames:['skill/76.png'],statusMode:'statusFastV79',frames:[...F('skill',112,115),'skill/76.png'],effectText:'敵単体に小～中ダメージ＋混乱'},
+    {id:'lofi-splash',name:'ローファイスプラッシュ',element:'水',kind:'statusTechnique',status:'sleep',cost:14,power:1.38,chance:.45,tier:'medium',attackFrames:F('skill',81,84),statusFrames:['skill/48.png'],statusMode:'statusChillV79',frames:[...F('skill',81,84),'skill/48.png'],effectText:'敵単体に小～中ダメージ＋眠り'},
+    {id:'fast-beat-slash',name:'ファストビートスラッシュ',element:'火',kind:'statusTechnique',status:'burn',cost:14,power:1.40,chance:.55,tier:'medium',attackFrames:F('skill',73,76),statusFrames:['skill/46.png'],statusMode:'statusNoiseV79',frames:[...F('skill',73,76),'skill/46.png'],effectText:'敵単体に小～中ダメージ＋やけど'},
+    {id:'intro-cross',name:'イントロクロス',element:'雷',kind:'statusTechnique',status:'poison',cost:15,power:1.42,chance:.50,tier:'medium',attackFrames:F('skill',87,90),statusFrames:['skill/103.png'],statusMode:'statusRepeatV79',frames:[...F('skill',87,90),'skill/103.png'],effectText:'敵単体に小～中ダメージ＋毒'},
+    {id:'long-scratch-cut',name:'ロングスクラッチカット',element:'無',kind:'statusTechnique',status:'paralyze',cost:17,power:1.42,chance:.35,tier:'medium',attackFrames:['skill/95.png','skill/96.png'],statusFrames:['skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],statusMode:'statusLongV79',frames:['skill/95.png','skill/96.png','skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],effectText:'敵単体に小～中ダメージ＋マヒ'},
+    {id:'best-selection',name:'ベストセレクション',element:'光・水',elements:['光','水'],kind:'advanced',cost:16,power:1.60,tier:'large',frames:F('skill2',121,124),effectText:'敵単体に光・水属性中ダメージ'},
+    {id:'dorayaki-dance',name:'どら焼きの舞',element:'風・無',elements:['風','無'],kind:'advanced',cost:17,power:1.58,tier:'large',crit:.10,metalCrit:.30,frames:F('skill2',129,132),effectText:'敵単体に風・無属性中ダメージ / 会心10% / メタル系30%'},
+    {id:'mob-windmill',name:'MOBウィンドミル',element:'風・無',elements:['風','無'],kind:'advanced',cost:30,power:1.62,tier:'large',target:'all',frames:F('skill2',260,263),effectText:'敵全体に風・無属性物理中ダメージ'},
+    {id:'mob-hero-star',name:'MOBヒーロースター',element:'光',kind:'advanced',cost:38,power:2.10,tier:'large',target:'all',heroOnly:true,frames:F('skill2',264,267),effectText:'あのヒーロー変身時専用 / 敵全体に光属性大ダメージ'}
+  ];
+  for(const s of advancedTech)upsert(MOB_DATA.techniqueCatalog,s);
+  const mg=MOB_DATA.techniqueCatalog.find(x=>x.id==='mobgiri');if(mg){mg.elements=['地','風'];mg.element='地・風';mg.v120Advanced=true;mg.effectText='敵単体に地・風属性中ダメージ';}
+
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const add=(pid,type,id,level)=>{const p=P(pid);if(!p)return;p.learnset=p.learnset||{magic:[],technique:[]};const rows=p.learnset[type]||(p.learnset[type]=[]);const ex=rows.find(x=>x.id===id);if(ex)ex.level=Math.min(Number(ex.level)||level,level);else rows.push({id,level});rows.sort((a,b)=>(a.level||1)-(b.level||1));};
+  /* 旧状態異常特技を同レベルの状態異常魔法へ移動。 */
+  for(const p of MOB_DATA.players||[]){const rows=p.learnset?.technique||[];for(const row of [...rows])if(oldStatusIds.has(row.id)){add(p.id,'magic',row.id,row.level||18);p.learnset.technique=p.learnset.technique.filter(x=>x.id!==row.id);}}
+
+  /* 役割・装備・成長帯に合わせた追加習得。 */
+  add('yusha','magic','crash-bomb',22);add('yusha','magic','rainbow1990',36);add('yusha','magic','soul-energy',52);add('yusha','technique','scratch-sword',26);add('yusha','technique','mob-windmill',40);
+  add('pink','magic','crash-bomb',24);add('pink','technique','scratch-sword',28);add('pink','technique','mob-windmill',42);
+  add('desert','magic','repeat-intro',20);add('desert','technique','dorayaki-dance',26);add('desert','technique','intro-cross',38);add('desert','technique','mob-windmill',44);
+  add('nyoro','technique','best-selection',28);add('nyoro','magic','crash-bomb',36);
+  add('nekoku','technique','dorayaki-dance',28);add('nekoku','technique','lofi-splash',36);add('nekoku','technique','mob-windmill',44);
+  add('jessie','technique','best-selection',28);add('jessie','technique','long-scratch-cut',36);add('jessie','technique','mob-windmill',44);
+  add('denden','technique','best-selection',26);add('denden','technique','long-scratch-cut',34);add('denden','magic','crash-bomb',38);
+  add('money','technique','best-selection',26);add('money','magic','rainbow1990',34);add('money','magic','soul-energy',44);add('money','magic','neo-meteor-power',56);
+  add('riro','magic','repeat-intro',22);add('riro','technique','dorayaki-dance',26);add('riro','technique','lofi-splash',34);add('riro','technique','mob-windmill',42);
+  add('tetsu','technique','dorayaki-dance',24);add('tetsu','technique','scratch-sword',30);add('tetsu','technique','mob-windmill',36);add('tetsu','technique','fast-beat-slash',44);
+  add('kaijin','technique','intro-cross',28);add('kaijin','technique','mob-windmill',38);add('kaijin','magic','soul-energy',50);
+  add('lilith','technique','best-selection',26);add('lilith','magic','rainbow1990',34);add('lilith','magic','neo-meteor-power',54);
+  add('naraku','technique','intro-cross',28);add('naraku','technique','mob-windmill',38);add('naraku','magic','soul-energy',50);
+
+  /* 雑魚の既存状態異常攻撃名を、ダメージ付き特技名へ正式分離。 */
+  const statusEnemyMap={
+    'ノイズスクラッチ':['スクラッチソード','confuseSingle'],
+    'チルローファイ':['ローファイスプラッシュ','sleepSingle'],
+    'ファストビート':['ファストビートスラッシュ','burnSingle'],
+    'リピートイントロ':['イントロクロス','poisonSingle'],
+    'ロングスクラッチ':['ロングスクラッチカット','paralyzeSingle']
+  };
+  for(const e of MOB_DATA.enemyCatalog||[])for(const s of e.enemySkills||[]){const m=statusEnemyMap[s.special];if(m){s.special=m[0];s.kind=m[1];s.skillType='physical';s.power=Math.max(Number(s.power)||0,.78);}}
+
+  /* 中ボス・ボスは元の固有技を主役にしつつ、低確率で基本魔法/特技も使う。 */
+  const magNames={火:['ホノ','ホノマ','ホノマグマ'],水:['ネプ','ネプマ','ネプマチューン'],雷:['トル','トルマ','トルマデン'],地:['ゴレ','ゴレマ','ゴレマガーディ'],風:['ホク','ホクマ','ホクマウィング'],光:['ネオ','ネオマ','ネオマニプール'],闇:['ミラ','ミラマ','ミラマゾーン'],無:['アノマ','アノマウン','アノマウン']};
+  const swordNames={火:['マグソード','マグマソード'],水:['ネプソード','ネプマソード'],雷:['トルソード','トルマソード'],地:['ゴレソード','ゴレマソード'],風:['疾風斬り','疾風斬り'],光:['ネオソード','ネオマソード'],闇:['ミラソード','ミラマソード'],無:['アノソード','アノマソード']};
+  const statusExtra={火:['ファストビートスラッシュ','burnSingle'],水:['ローファイスプラッシュ','sleepSingle'],雷:['ロングスクラッチカット','paralyzeSingle'],地:['スクラッチソード','confuseSingle'],風:['スクラッチソード','confuseSingle'],光:['スクラッチソード','confuseSingle'],闇:['イントロクロス','poisonSingle'],無:['スクラッチソード','confuseSingle']};
+  const elems=['火','水','雷','地','風','光','闇'];
+  for(const e of MOB_DATA.enemyCatalog||[]){if(!(e.category==='elite'||e.category==='boss'||e.isElite||e.isBoss))continue;const lv=Number(e.levelMax||e.levelMin||1),attr=elems.find(x=>String(e.attribute||'').includes(x))||'無',tier=lv>=46?2:lv>=22?1:0,looksMagic=(e.normalAttackType==='magic')||/魔|ウィッチ|ソーサラー|エナジー|ミスト|ブック|ナーガ|デビ|ドクター|マニー|リリス|ナビ/.test(String(e.name||'')),extras=[];
+    extras.push({special:looksMagic?magNames[attr][tier]:swordNames[attr][tier?1:0],kind:'single',power:e.category==='boss'?1.18:1.02,skillElement:attr,skillType:looksMagic?'magic':'physical',v120Supplement:true});
+    if(lv>=28){const st=statusExtra[attr];extras.push({special:st[0],kind:st[1],power:e.category==='boss'?.96:.86,chance:e.category==='boss'?.22:.28,skillElement:attr,skillType:'physical',v120Supplement:true});}
+    e.v120ExtraSkills=extras;
+  }
+}
+/* ===== END MOB QUEST v120 DATA ===== */
+
+/* ===== MOB QUEST v121: PLAYER SKILL SPECIALIZATION / DESERT II SUB QUEST BOSS ===== */
+{
+  MOB_DATA.skillBalanceVersion=121;
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const specializedIds=new Set([
+    'noise-scratch','chill-lofi','fast-beat','repeat-intro','long-scratch',
+    'crash-bomb','rainbow1990','neo-meteor-power','soul-energy',
+    'scratch-sword','lofi-splash','fast-beat-slash','intro-cross','long-scratch-cut',
+    'best-selection','dorayaki-dance','mob-windmill'
+  ]);
+  /* v120で追加/移動した汎用技を一度整理し、担当をほぼ一人ずつに固定する。既存の属性魔法・回復・バフは維持。 */
+  for(const p of MOB_DATA.players||[]){
+    p.learnset=p.learnset||{magic:[],technique:[]};
+    p.learnset.magic=(p.learnset.magic||[]).filter(x=>!specializedIds.has(x.id));
+    p.learnset.technique=(p.learnset.technique||[]).filter(x=>!specializedIds.has(x.id));
+  }
+  const add=(pid,type,id,level)=>{const p=P(pid);if(!p)return;const rows=p.learnset[type]||(p.learnset[type]=[]);if(!rows.some(x=>x.id===id))rows.push({id,level});rows.sort((a,b)=>(a.level||1)-(b.level||1));};
+
+  /* 状態異常魔法：役割ごとに担当を分離。 */
+  add('money','magic','noise-scratch',18);       // 混乱
+  add('nekoku','magic','chill-lofi',18);        // 眠り
+  add('nyoro','magic','fast-beat',18);          // やけど
+  add('lilith','magic','repeat-intro',16);      // 毒
+  add('denden','magic','long-scratch',18);      // マヒ
+
+  /* v120追加技：同じ技を多数が覚えないよう、個性に合わせて専任化。 */
+  add('pink','magic','crash-bomb',24);
+  add('yusha','magic','rainbow1990',36);
+  add('money','magic','neo-meteor-power',56);
+  add('naraku','magic','soul-energy',50);
+
+  add('yusha','technique','scratch-sword',26);
+  add('riro','technique','lofi-splash',34);
+  add('tetsu','technique','fast-beat-slash',44);
+  add('desert','technique','intro-cross',38);
+  add('jessie','technique','long-scratch-cut',36);
+  add('jessie','technique','best-selection',28);
+  add('riro','technique','dorayaki-dance',26);
+  add('tetsu','technique','mob-windmill',36);
+
+  /* 砂漠Ⅱサブクエスト5の「心に侵入する悪魔」。覚醒前のモブデザートの姿を使う。 */
+  const fakeDesert={
+    id:'sq-desert-shadow-v121',name:'モブデザート',stage:'砂漠Ⅱ',category:'boss',attribute:'地・闇',image:'play/03.png',symbol:'砂',
+    levelMin:78,levelMax:78,bossId:'sqDesertShadowV121',normalAttackType:'physical',
+    firstTurnDamageReductionV121:.20,specialEvery:2,
+    special:'ゴールドフィッシュ',kind:'v121Goldfish',power:1.45,critChance:.20,skillElement:'地',skillType:'physical',
+    specialOptions:[
+      {special:'ゴールドフィッシュ',kind:'v121Goldfish',power:1.45,critChance:.20,skillElement:'地',skillType:'physical'},
+      {special:'スナノサバキ',kind:'v121Sunanosabaki',power:1.05,skillElement:'地',skillType:'physical'}
+    ]
+  };
+  const ei=(MOB_DATA.enemyCatalog||[]).findIndex(x=>x.id===fakeDesert.id);
+  if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
+}
+/* ===== END MOB QUEST v121 DATA ===== */
+
 (() => {
 'use strict';
 
@@ -5461,7 +5631,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=118;
+const GAME_ASSET_VERSION=121;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -6259,10 +6429,10 @@ function openingTapAllowed(minGap=220){const now=performance.now();if(now-openin
 async function openingNarrationSequenceV78(messages){
   const rows=(messages||[]).filter(Boolean);if(!rows.length)return;
   const el=document.createElement('div');el.className='opening-narration-v76 opening-narration-sequence-v78';el.innerHTML='<div><p></p></div>';document.body.appendChild(el);
-  const p=el.querySelector('p');let index=0,readyAt=performance.now()+220,done=false;
+  const p=el.querySelector('p');let index=0,readyAt=performance.now()+1000,done=false;
   const render=()=>{const max=window.innerWidth<=380?13:14;p.textContent=balancedJapaneseText(rows[index],max,7);el.classList.toggle('grand',index===0);};
   render();el.classList.add('show');await nextPaint();document.documentElement.classList.remove('opening-boot-v77','opening-boot-v78');
-  await new Promise(resolve=>{const next=e=>{e.preventDefault();e.stopPropagation();if(done||performance.now()<readyAt||!openingTapAllowed())return;index++;if(index>=rows.length){done=true;el.removeEventListener('pointerup',next,true);resolve();return;}render();readyAt=performance.now()+110;};el.addEventListener('pointerup',next,{capture:true,passive:false});});
+  await new Promise(resolve=>{const next=e=>{e.preventDefault();e.stopPropagation();if(done||performance.now()<readyAt||!openingTapAllowed())return;index++;if(index>=rows.length){done=true;el.removeEventListener('pointerup',next,true);resolve();return;}render();readyAt=performance.now()+1000;};el.addEventListener('pointerup',next,{capture:true,passive:false});});
   el.remove();
 }
 async function openingNarrateV74(text,{grand=false}={}){await openingNarrationSequenceV78([text]);}
@@ -6292,7 +6462,7 @@ async function grantOpeningStarterSupplies({silent=false}={}){
 }
 async function runOpeningV74(){
   openingSequenceBusy=true;document.body.classList.add('opening-sequence-v78');
-  const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
+  const prologue=['とある世界のお話','様々な種族が','様々なエリアに','平和に暮らしていた','そんなある日','ある町が魔王軍に襲撃され','姿を消した','モブキングダムの王様','モブスライムキングは','この事態を受け','勇者に魔王討伐を依頼することを決意する','全て揃えると世界が救えるという','伝説のレコード','勇者は集めることが出来るのか','これは','勇者と仲間たち','魔王軍','光と闇','冒険と戦いのお話―'];
   await openingNarrationSequenceV78(prologue);
   const curtain=document.createElement('div');curtain.className='opening-black-curtain-v76 opening-castle-loader-v118';curtain.innerHTML='<div><small>NOW LOADING</small><b>MOB KINGDOM</b></div>';document.body.appendChild(curtain);showScreen('castle');renderThroneRoom();await waitForOpeningCastleV118();curtain.classList.add('fade');await fixedDelay(760);curtain.remove();
   const king=()=>document.querySelector('[data-castle-actor="king"]');
@@ -7395,7 +7565,7 @@ const STORY_EVENTS={
     ['guest','dragon'],['say','dragon','私に何か用か？'],['say','money','想像以上にドラゴンね・・！'],['say','denden','かっけえでやんす！'],['say','pink','これは手ごわいですよ・・！'],['say','dragon','目障りなやつらだ\n命惜しくば立ち去れ'],['say','desert','風格もさすがだな\nだが、去るわけにはいかん'],['say','nyoro','やるしかないニョロね！'],['say','dragon','手加減はせぬぞ！！']
   ]},
   'post:magma':{worldId:'magma',area:3,steps:[
-    ['say','desert','はあ、はあ、'],['say','money','み、みんな無事？'],['say','denden','暑いでやんす・・'],['say','pink','強敵でありましたね'],['say','nyoro','でも、勝ったニョロ！\n信じられないニョロ！'],['narrate','5つ目のレコードを手に入れた！']
+    ['say','desert','はあ、はあ、'],['say','money','み、みんな無事？'],['say','denden','暑いでやんす・・'],['say','pink','強敵でありましたね'],['say','nyoro','でも、勝ったニョロ！\n信じられないニョロ！'],['narrate','5つ目のレコード「傷つくキツツキ」を手に入れた！']
   ]},
   'arrival:sea':{worldId:'sea',area:0,steps:[
     ['say','nyoro','うわー空が海ニョロ！'],['say','money','海底だからね'],['say','denden','おっかないお魚がたくさんでやんす！'],['say','desert','とにかく進んでみよう'],['say','pink','みなさん、警戒を怠らず！']
@@ -7404,7 +7574,7 @@ const STORY_EVENTS={
     ['guest','nepu'],['say','nepu','待っていたぞ勇者よ'],['say','denden','でっかいお魚でやんす！'],['say','pink','し、失礼ですよ！'],['say','nepu','構わぬ\n王を前にしてその陽気さ\nお主のような戦士はきっと強くなる'],['say','denden','えへへ・・でやんす！'],['say','desert','敵意を感じないな\nお前は魔王の手下ではないのか？'],['say','nepu','海底の歴史は地上を遥かに凌駕する\n魔王軍とて簡単に手は出せん'],['say','desert','では全ての事情も知っているのか？'],['say','nepu','もちろんだ\nお前たちがレコードを求めていることもな'],['say','pink','では、是非お譲りいただけませんか？'],['say','nepu','それは構わぬ\nだが、\nその前にお前たちの力を見せてくれ'],['say','desert','当然の展開だな'],['say','nyoro','勝負だニョロー！']
   ]},
   'post:sea':{worldId:'sea',area:3,keepGuest:'nepu',steps:[
-    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinKeepGuest','nekoku','6枚目のレコード「ケロの衣装」を手に入れた！']
+    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinKeepGuest','nekoku','6枚目のレコード「くまのこ見ていたあのベルト」を手に入れた！']
   ]}
  };
 
@@ -7429,7 +7599,7 @@ Object.assign(STORY_EVENTS,{
     ['guest','boss-hawk'],['say','boss-hawk','来客とは珍しいな\n何者だ？'],['say','pink','我々は勇者パーティー！\nここにあるレコードを譲ってもらいたい！'],['say','boss-hawk','戯言を\n現代に勇者の名など通用しない\n早々に立ち去るがよい'],['say','pink','ぐぬぬ・・\nここまで来たら引けません！\n戦いましょう！'],['say','boss-hawk','覚悟だけは認めてやる\n来い！']
   ]},
   'post:grassland:3':{worldId:'grassland',area:3,steps:[
-    ['say','pink','やはりボスは強いですね・・\nでもこれでレコード入手です！'],['narrate','1枚目のレコード「」を手に入れた！'],['say','pink','まずは王様に報告に行きましょう！']
+    ['say','pink','やはりボスは強いですね・・\nでもこれでレコード入手です！'],['narrate','1枚目のレコード「けろの衣装」を手に入れた！'],['say','pink','まずは王様に報告に行きましょう！']
   ]},
 
   'arrival:grassland2':{worldId:'grassland2',area:0,steps:[
@@ -7626,7 +7796,7 @@ Object.assign(STORY_EVENTS,{
     ['guest','s-jones'],['say','s-jones','強力な覇気を感じる\nやはり、本物の勇者か\nそして・・'],['say','nyoro','すごい迫力ニョロ・・！'],['say','desert','これは骨が折れそうだ'],['say','s-jones','私も本気で挑ませてもらう\nさあ、力を示せ！']
   ]},
   'post:sea':{worldId:'sea',area:3,steps:[
-    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinSilent','nekoku'],['say','nepu','モブマニー\nこれを'],['say','money','ん？'],['rewardDrink','19','モブトマトジュースセットを1つ手に入れた！'],['say','money','なんで私に？'],['say','nepu','道中、皆と飲むがいい'],['say','money','ありがとう・・？'],['narrate','6枚目のレコード「ケロの衣装」を手に入れた！']
+    ['guest','nepu'],['say','nepu','素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ'],['say','pink','はい！'],['say','nepu','モブネコクー！\nこちらへ来るのだ！'],['sayOff','モブネコクー','はいはい！'],['tempActor','nekoku'],['say','nekoku','お呼びでしょうか国王様！'],['say','nepu','お前も彼らと旅をするのだ\nきっとお互いのためになる'],['say','nekoku','オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！'],['say','nyoro','ヘンテコな戦士だニョロ'],['say','nekoku','オラが言えたもんじゃねえが\nおめえも大概変だぞ'],['say','money','勇者パーティーとは思えないわね\nでもそれもいいんじゃない？'],['say','denden','仲間が増えたでやんす！'],['joinSilent','nekoku'],['say','nepu','モブマニー\nこれを'],['say','money','ん？'],['rewardDrink','19','モブトマトジュースセットを1つ手に入れた！'],['say','money','なんで私に？'],['say','nepu','道中、皆と飲むがいい'],['say','money','ありがとう・・？'],['narrate','6枚目のレコード「くまのこ見ていたあのベルト」を手に入れた！']
   ]},
 
   'arrival:neon2':{worldId:'neon2',area:0,steps:[
@@ -7960,7 +8130,7 @@ async function runNeonPostStory(){
   await storySay('ace','我は\n魔王様の側近の1人\nモブエース');await storySay('money','モブエース！？');await storySay('desert','知っているのか？');await storySay('money','以前の王、モブネオンキングの息子・・');await storySay('ace','ほう、我を知る者もいるのか');await storySay('money','気を付けて！\nあいつは次の王と言われていた戦士よ！');await storySay('ace','魔王様のため、ここで消えてもらう！');
   $('#storyScene').hidden=true;await startAceStoryBattle();
   await openStoryScene('neon',3);await storyShowGuest('ace',{slow:true});
-  await storySay('ace','見事だ\nここまでとは思わなかったぞ');await storySay('pink','なんて強さでありますか・・');await storySay('ace','一先ずは引いてやろう\n次に会う時が楽しみだ');await storyHideGuest();await storySay('desert','もっと強さが必要だな');await storySay('money','強力な武器も必要ね');await storyNarrate('4つ目のレコードを手に入れた！');
+  await storySay('ace','見事だ\nここまでとは思わなかったぞ');await storySay('pink','なんて強さでありますか・・');await storySay('ace','一先ずは引いてやろう\n次に会う時が楽しみだ');await storyHideGuest();await storySay('desert','もっと強さが必要だな');await storySay('money','強力な武器も必要ね');await storyNarrate('4つ目のレコード「私の未来」を手に入れた！');
 }
 async function runStoryEvent(key,forceHomeOverride=false){
   const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;
@@ -8843,7 +9013,8 @@ async function bossSpecial(spec){
     case'reviveMummy':{const dead=(state.battle.enemies||[]).find(x=>x.hp<=0&&String(x.name).includes('ミイラ'));if(dead){dead.hp=Math.max(1,Math.round(dead.maxHp*.45));dead.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};notice(`${dead.name}が復活！`,'heal',800);floatNumber(dead.hp,'heal',`enemy:${dead.uid}`);}else{t=pick(livingMain());if(t)await hit(t,.72,'magic');}break;}
     case'enemyHeal':{const target=[...livingEnemies()].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0]||e;if(target){const h=Math.round(target.maxHp*(spec.power||.18));target.hp=Math.min(target.maxHp,target.hp+h);floatNumber(h,'heal',`enemy:${target.uid}`);notice(`${target.name} HP回復`,'heal');}break;}
     case'poisonSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(Math.random()<(spec.chance??.10)&&await inflictAllyStatus(t,'poison',3))notice(`${t.name}は毒になった！`,'status');}break;
-    case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,null,'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
+    case'burnSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??.5)&&await inflictAllyStatus(t,'burn',3))notice(`${t.name}はやけど状態！`,'status');}break;
+    case'paralyzeSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'physical');if(Math.random()<(spec.chance??.25)&&await inflictAllyStatus(t,'paralyze',2))notice(`${t.name}はマヒした！`,'status');}break;
     case'stunSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??1)){await inflictAllyStatus(t,'stun',1);notice(`${t.name}はひるんだ！`,'status');}}break;
     case'confuseSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??.30)){await inflictAllyStatus(t,'confuse',2);notice(`${t.name}は混乱した！`,'status');}}break;
     case'sleepSingle':t=pick(livingMain());if(t){d=await hit(t,null,spec.skillType||'magic');if(Math.random()<(spec.chance??.30)){await inflictAllyStatus(t,'sleep',2);notice(`${t.name}は眠った！`,'status');}}break;
@@ -12239,6 +12410,326 @@ function journalEncounter(){
   return rows;
 }
 /* ===== END MOB QUEST v118 ===== */
+
+
+/* ===== MOB QUEST v119: LEGEND RECORDS / RECORD ROOM MAGIC ===== */
+window.__mobV119Runtime=true;
+
+const STORY_RECORDS_V119=[
+  {no:1,name:'けろの衣装',image:'icon/26.png',spellId:'keronoishou',worldId:'grassland'},
+  {no:2,name:'ガラガラの旅',image:'icon/30.png',spellId:'garagaranotabi',worldId:'desert'},
+  {no:3,name:'案山子と小麦',image:'icon/29.png',spellId:'kakashitokomugi',worldId:'rural'},
+  {no:4,name:'私の未来',image:'icon/28.png',spellId:'watashinomirai',worldId:'neon'},
+  {no:5,name:'傷つくキツツキ',image:'icon/27.png',spellId:'kizutsukukitsutsuki',worldId:'magma'},
+  {no:6,name:'くまのこ見ていたあのベルト',image:'icon/31.png',spellId:'kumanokomiteitanoaberto',worldId:'sea'},
+  {no:7,name:'読みかけの本',image:'icon/25.png',spellId:null,worldId:'demonCastle'}
+];
+function storyRecordV119(no){return STORY_RECORDS_V119.find(r=>r.no===Number(no))||null;}
+function ensureStoryRecordContainersV119(){
+  if(!state.meta.storyRecordsV119||typeof state.meta.storyRecordsV119!=='object')state.meta.storyRecordsV119={};
+  if(!state.meta.recordMagicLearnedV119||typeof state.meta.recordMagicLearnedV119!=='object')state.meta.recordMagicLearnedV119={};
+  if(!state.meta.recordMagicByPlayerV119||typeof state.meta.recordMagicByPlayerV119!=='object')state.meta.recordMagicByPlayerV119={};
+}
+function migrateStoryRecordsV119(){
+  ensureStoryRecordContainersV119();let changed=false;
+  for(const rec of STORY_RECORDS_V119){
+    if(state.meta.storyRecordsV119[rec.no])continue;
+    const legacy=rec.no===7&&!!(state.meta.record7Obtained||state.meta.bookPortalReady||state.meta.bookCompleted||state.meta.gameCleared);
+    if(legacy||worldCleared(rec.worldId)){state.meta.storyRecordsV119[rec.no]=true;changed=true;}
+  }
+  if(changed)saveMeta();
+}
+function storyRecordOwnedV119(no){ensureStoryRecordContainersV119();return !!state.meta.storyRecordsV119[Number(no)];}
+function recordLearnInfoV119(no){ensureStoryRecordContainersV119();return state.meta.recordMagicLearnedV119?.[Number(no)]||null;}
+function recordSpellV119(rec){return rec?.spellId?(MOB_DATA.magicCatalog||[]).find(s=>s.id===rec.spellId)||null:null;}
+function recordMagicDescriptionV119(rec){
+  const sk=recordSpellV119(rec);if(!sk)return'このレコードには習得できる魔法は記されていません。';
+  const target=sk.target==='all'?'敵全体':'敵単体',tier=sk.tier==='large'?'大':sk.tier==='small'?'小':sk.tier==='all'?'中':'中';
+  return `${sk.name}\n${sk.element}属性 / ${target}\n消費MP ${sk.cost}\n${target}に${sk.element}属性${tier}ダメージ`;
+}
+async function showStoryRecordGetV119(rec){
+  if(!rec)return;const el=document.createElement('div');el.className='story-record-get-v119';
+  el.innerHTML=`<div class="story-record-get-card-v119"><small>LEGEND RECORD / GET!</small><h2>No.${rec.no}</h2><div class="story-record-get-disc-v119"><img src="${rec.image}" alt="${rec.name}"></div><b>${rec.name}</b><p>伝説のレコードを手に入れた！</p></div>`;
+  document.body.appendChild(el);bindImages(el);await nextPaint();el.classList.add('show');await fixedDelay(2250);el.classList.remove('show');await fixedDelay(260);el.remove();
+}
+async function grantStoryRecordV119(no,{animate=true}={}){
+  ensureStoryRecordContainersV119();const rec=storyRecordV119(no);if(!rec)return false;
+  const fresh=!state.meta.storyRecordsV119[rec.no];state.meta.storyRecordsV119[rec.no]=true;if(rec.no===7)state.meta.record7Obtained=true;saveMeta();
+  if(animate)await showStoryRecordGetV119(rec);return fresh;
+}
+function recordNoFromNarrationV119(text){
+  const t=String(text||'');if(!/レコード/.test(t)||!/手に入れた/.test(t))return 0;
+  if(/7枚目/.test(t))return 7;if(/6枚目/.test(t))return 6;if(/5つ目|5枚目/.test(t))return 5;if(/4つ目|4枚目/.test(t))return 4;if(/3つめ|3つ目|3枚目/.test(t))return 3;if(/ガラガラの旅/.test(t)||/2枚目/.test(t))return 2;if(/1枚目/.test(t))return 1;return 0;
+}
+const _storyNarrateV119Base=storyNarrate;
+storyNarrate=async function(text){const no=recordNoFromNarrationV119(text);if(no)return grantStoryRecordV119(no,{animate:true});return _storyNarrateV119Base(text);};
+
+/* Record magic is persistent per character and is the intended source of the all-target record spells. */
+const _availableMagicSkillsV119Base=availableMagicSkillsV104;
+availableMagicSkillsV104=function(a){
+  const base=_availableMagicSkillsV119Base(a)||[];ensureStoryRecordContainersV119();const pid=canonicalPlayerId(a?.id||''),ids=new Set(state.meta.recordMagicByPlayerV119?.[pid]||[]),all=MOB_DATA.magicCatalog||[];
+  const extra=all.filter(sk=>ids.has(sk.id)),seen=new Set(),out=[];for(const sk of [...base,...extra])if(sk&&!seen.has(sk.id)){seen.add(sk.id);out.push(sk);}return out;
+};
+const _openSkillMenuV119Base=openSkillMenu;
+openSkillMenu=function(type){const r=_openSkillMenuV119Base(type);if(type==='magic'){const a=activeAlly(),pid=canonicalPlayerId(a?.id||''),ids=new Set(state.meta.recordMagicByPlayerV119?.[pid]||[]);for(const b of $$('[data-magic-id]',$('#skillMenuList'))){if(!ids.has(b.dataset.magicId))continue;const s=$('small',b);if(s)s.textContent=s.textContent.replace(/^Lv-\s*\/\s*/,'RECORD / ');}}return r;};
+
+function recordOrbitMarkupV119(){
+  migrateStoryRecordsV119();const owned=STORY_RECORDS_V119.filter(r=>storyRecordOwnedV119(r.no)),count=owned.length,duration=24;
+  const items=owned.map((rec,i)=>{const used=recordLearnInfoV119(rec.no),who=used?player(used.playerId)?.name||used.playerId:'';return `<div class="record-orbit-item-v119 ${used?'learned':''}" style="animation-delay:${count?(-duration*i/count).toFixed(2):0}s"><button data-story-record-v119="${rec.no}" type="button"><img src="${rec.image}" alt="${rec.name}"><span>No.${rec.no}</span>${used?`<em>習得済</em>`:''}</button><small>${rec.name}${who?` / ${who}`:''}</small></div>`;}).join('');
+  let center='';
+  if(state.meta?.bookPortalReady&&!state.meta?.bookCompleted)center=`<button class="record-center-book-v119" data-enter-book-v119 type="button"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>本の世界へ</small></button>`;
+  else if(state.meta?.bookCompleted)center=`<div class="record-center-book-v119 static"><img src="item/39.png" alt="読みかけの本"><b>読みかけの本</b><small>CLEAR</small></div>`;
+  else center=`<div class="record-orbit-center-v119"><img src="icon/21.png" alt="RECORD ROOM"><b>LEGEND RECORD</b><small>${count} / 7</small></div>`;
+  return `<div class="record-orbit-v119"><div class="record-orbit-ring-v119"></div>${items||'<div class="record-empty-v119"><b>まだレコードはありません</b><small>冒険でボスを倒して集めよう</small></div>'}${center}</div>`;
+}
+let recordRoomGuideQueuedV119=false;
+async function showRecordRoomGuideV119(){
+  if(state.meta?.recordRoomGuideV119||recordRoomGuideQueuedV119)return;recordRoomGuideQueuedV119=true;
+  try{await narrationDialog('ここはレコードの間');await narrationDialog('集めたレコードが展示されている');await narrationDialog('レコードをタップすると');await narrationDialog('秘められた魔法を習得できる');state.meta.recordRoomGuideV119=true;saveMeta();}finally{recordRoomGuideQueuedV119=false;}
+}
+function showRecordPartySelectV119(rec,sk){
+  return new Promise(resolve=>{const ov=document.createElement('div');ov.className='record-party-select-v119';
+    ov.innerHTML=`<div class="record-party-card-v119"><header><small>RECORD MAGIC</small><h2>覚えるキャラクターを選択</h2><p>${sk.name}</p></header><div class="record-party-grid-v119">${state.party.map(([pid,lv],i)=>{const p=player(pid);if(!p)return'';const z=zoneForIndex(i);return `<button data-record-magic-player-v119="${p.id}" type="button"><img src="${versionedPlay(p.image)}" alt="${p.name}"><b>${p.name}</b><small>${z.key} / Lv${lv}</small></button>`;}).join('')}</div><button class="record-party-cancel-v119" data-record-party-cancel-v119 type="button">閉じる</button></div>`;
+    document.body.appendChild(ov);bindImages(ov);nextPaint().then(()=>ov.classList.add('show'));
+    const close=v=>{ov.classList.remove('show');setTimeout(()=>ov.remove(),160);resolve(v);};
+    $$('[data-record-magic-player-v119]',ov).forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();close(b.dataset.recordMagicPlayerV119);});
+    $('[data-record-party-cancel-v119]',ov).onclick=e=>{e.preventDefault();e.stopPropagation();close(null);};
+  });
+}
+async function showRecordMagicLearnedV119(p,sk){
+  const el=document.createElement('div');el.className='record-magic-learned-v119';el.innerHTML=`<div><small>MAGIC LEARNED!</small><img src="${versionedPlay(p.image)}" alt="${p.name}"><h2>${p.name}は</h2><b>${sk.name}</b><p>を習得した！</p></div>`;document.body.appendChild(el);bindImages(el);await nextPaint();el.classList.add('show');await fixedDelay(2100);el.classList.remove('show');await fixedDelay(240);el.remove();
+}
+async function openStoryRecordV119(no){
+  migrateStoryRecordsV119();const rec=storyRecordV119(no);if(!rec||!storyRecordOwnedV119(no))return;const learned=recordLearnInfoV119(no),sk=recordSpellV119(rec);
+  if(learned){const who=player(learned.playerId)?.name||'キャラクター';await narrationDialog(`No.${rec.no} ${rec.name}\n\n${who}が「${sk?.name||learned.spellId}」を習得済みです。`);return;}
+  if(!sk){await narrationDialog(`No.${rec.no} ${rec.name}\n\nこのレコードには習得できる魔法は記されていません。`);return;}
+  const first=await narrationDialog(`No.${rec.no} ${rec.name}\n\nこのレコードに秘められている魔法を習得しますか？\n\n${recordMagicDescriptionV119(rec)}`,[['はい','yes','primary'],['いいえ','no']]);if(first!=='yes')return;
+  const pid=await showRecordPartySelectV119(rec,sk);if(!pid)return;const p=player(pid);if(!p)return;
+  const second=await narrationDialog(`${p.name}が「${sk.name}」を覚えますか？`,[['はい','yes','primary'],['いいえ','no']]);if(second!=='yes')return;
+  ensureStoryRecordContainersV119();state.meta.recordMagicLearnedV119[rec.no]={playerId:p.id,spellId:sk.id};if(!Array.isArray(state.meta.recordMagicByPlayerV119[p.id]))state.meta.recordMagicByPlayerV119[p.id]=[];if(!state.meta.recordMagicByPlayerV119[p.id].includes(sk.id))state.meta.recordMagicByPlayerV119[p.id].push(sk.id);saveMeta();await showRecordMagicLearnedV119(p,sk);renderRecordRoom();
+}
+function bindRecordRoomV119(root){
+  bindRecordRoomHomeV93(root);$$('[data-story-record-v119]',root).forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();openStoryRecordV119(Number(b.dataset.storyRecordV119));});
+  const king=$('[data-book-king-v119]',root);if(king)king.onclick=()=>facilityTalk('急いで準備するのじゃ！','モブスライムキング','play/007.png');
+  const book=$('[data-enter-book-v119]',root);if(book)book.onclick=async e=>{e.preventDefault();e.stopPropagation();const a=await dialog('本の世界へ入りますか？',[['はい','yes','primary'],['いいえ','no']],'読みかけの本');if(a!=='yes')return;state.meta.bookEntered=true;saveMeta();ensureAdventureRunSnapshot();const flash=document.createElement('div');flash.className='book-enter-flash-v92';document.body.appendChild(flash);await nextPaint();flash.classList.add('show');await fixedDelay(520);flash.remove();await travelTo('adventure','読みかけの本へ…',renderAdventure);await handleAdventureEntry();};
+  const ow=$('[data-v119-enter-otherworld]',root);if(ow)ow.onclick=e=>{e.preventDefault();e.stopPropagation();state.meta.postgamePortalVisited=true;saveMeta();renderOtherWorldHubV91();};
+}
+
+/* Latest Record Room: acquired records are always displayed and orbit on a circular track. */
+renderRecordRoom=function(){
+  migrateStoryRecordsV119();const castleBack=$('#castleBackBtn');if(castleBack)castleBack.hidden=true;castleView='records';setCastleBackground('back/king4.png','back2/003.png');
+  const count=STORY_RECORDS_V119.filter(r=>storyRecordOwnedV119(r.no)).length,post=postgameUnlockedV91();setCastleHeader('RECORD ROOM','レコードルーム',post?'OTHER WORLD':state.meta?.bookCompleted?'BOOK CLEAR':state.meta?.bookPortalReady?'BOOK':`${count}/7`);
+  const root=$('#castleContent');root.className='page-scroll nav-spacer castle-content castle-room-view record-room-view record-room-v119';let extra='';
+  if(post)extra=`<div class="record-room-extra-v119"><div><b>読みかけの本</b><small>CLEAR / あのヒーロー</small></div><button data-v119-enter-otherworld type="button">異世界へ</button></div>`;
+  else if(state.meta?.bookCompleted)extra=`<div class="record-room-extra-v119"><div><b>読みかけの本 CLEAR</b><small>次の目的地：魔王城Ⅱ</small></div></div>`;
+  else if(state.meta?.bookPortalReady)extra=`<div class="record-room-extra-v119 book-ready"><button data-book-king-v119 type="button"><img src="play/007.png" alt="モブスライムキング"><span>モブスライムキング</span></button><p>準備完了後、中央の本をタップしてください</p></div>`;
+  root.innerHTML=`<section class="castle-room-stage record-stage record-stage-v119"><div class="record-room-heading-v119"><small>LEGEND RECORD COLLECTION</small><h2>集めたレコード</h2><span>${count} / 7</span></div>${recordOrbitMarkupV119()}${extra}${recordRoomHomeButtonV93()}</section>`;
+  bindImages(root);bindRecordRoomV119(root);preloadAssetsSafe(STORY_RECORDS_V119.map(r=>r.image),800).catch(()=>{});
+  if(!state.meta?.recordRoomGuideV119&&!recordRoomGuideQueuedV119){const tryGuide=()=>{if(castleView!=='records'||!screens.castle.classList.contains('active'))return;if(!$('#dialogOverlay')?.hidden){setTimeout(tryGuide,450);return;}showRecordRoomGuideV119();};setTimeout(tryGuide,420);}
+};
+
+/* Old saves receive their already-earned records silently. */
+setTimeout(()=>{try{migrateStoryRecordsV119();}catch(e){console.warn('[v119 record migration]',e);}},0);
+/* ===== END MOB QUEST v119 ===== */
+
+
+
+
+/* ===== MOB QUEST v120: STATUS MAGIC / ADVANCED TECHNIQUES / DESERT AWAKENING ===== */
+window.__mobV120Runtime=true;
+
+function desertAwakenedV120(){try{return !!state.meta?.desertMiraPowerV120||!!worldCleared('desert2');}catch(_){return !!state.meta?.desertMiraPowerV120;}}
+const _playerV120Base=player;
+player=function(id){const p=_playerV120Base(id);if(p?.id==='desert')p.image=desertAwakenedV120()?'play/15.png':'play/03.png';return p;};
+function applyDesertAwakeningVisualV120(){const p=_playerV120Base('desert');if(!p)return;p.image=desertAwakenedV120()?'play/15.png':'play/03.png';}
+
+function uniqueSkillsV120(list=[]){const seen=new Set(),out=[];for(const s of list)if(s&&!seen.has(s.id)){seen.add(s.id);out.push(s);}return out;}
+/* v104 intentionally hid all-target level magic. v120 now permits authored level-learned all-target magic while preserving record magic. */
+availableMagicSkillsV104=function(a){
+  const all=MOB_DATA.magicCatalog||[],ids=new Set(learnedRowsV104(a,'magic').map(x=>x.id)),base=all.filter(x=>ids.has(x.id));
+  ensureStoryRecordContainersV119?.();const pid=canonicalPlayerId(a?.id||''),recordIds=new Set(state.meta?.recordMagicByPlayerV119?.[pid]||[]),extra=all.filter(x=>recordIds.has(x.id));
+  if(pid==='desert'&&desertAwakenedV120()){const m=all.find(x=>x.id==='mira-mob-poison');if(m)extra.push(m);}
+  return uniqueSkillsV120([...base,...extra]);
+};
+const _availableTechniqueSkillsV120Base=availableTechniqueSkillsV104;
+availableTechniqueSkillsV104=function(a){const base=_availableTechniqueSkillsV120Base(a)||[],all=MOB_DATA.techniqueCatalog||[];if(canonicalPlayerId(a?.id||'')==='yusha'&&a?.transformed){const hero=all.find(x=>x.id==='mob-hero-star');if(hero)return uniqueSkillsV120([...base,hero]);}return base;};
+
+function statusNameV120(k){return{confuse:'混乱',sleep:'眠り',burn:'やけど',poison:'毒',paralyze:'マヒ',stun:'ひるみ'}[k]||'状態異常';}
+function v120MagicCost(a,chosen){const element=normalizeElement(chosen.element||a.attribute),cut=clamp(weaponMagicMpCut(a,element)+Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8);return{element,cost:Math.max(0,Math.ceil((chosen.cost||0)*(1-cut)))};}
+async function performStatusMagicV120(a,chosen){const c=v120MagicCost(a,chosen);if(a.mpNow<c.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=c.cost;await actionCutin(`${a.name}の${chosen.name}！`,'system',620);const e=targetEnemy();if(!e)return false;await skillSprite(chosen.frames||[],'enemy',chosen.mode);const ok=e.hp>0&&applyEnemyStatusTo(e,chosen.status,chosen.chance||.60,chosen.status==='stun'?1:3);notice(ok?`${e.name}は${statusNameV120(chosen.status)}になった！`:'状態異常は効かなかった！',ok?'status':'system',700);renderBattle();await delay(330);return true;}
+async function miraChargeFxV120(a){const layer=$('#battleFxLayer');if(!layer)return;const el=document.createElement('div');el.className='mira-charge-v120';el.innerHTML='<img src="icon/68.png" alt="">';positionEffect(el,a.id);layer.appendChild(el);bindImages(el);await nextPaint();el.classList.add('charge');await fixedDelay(1000);el.classList.add('release');await fixedDelay(220);el.remove();}
+async function performMiraMobPoisonV120(a,chosen){if(a.id!=='desert'||!desertAwakenedV120()){notice('この魔法はまだ習得していません','danger');return false;}const c=v120MagicCost(a,chosen);if(a.mpNow<c.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=c.cost;await actionCutin(`${a.name}の${chosen.name}！`,'system',650);const e=targetEnemy();if(!e)return false;await miraChargeFxV120(a);await skillSprite(chosen.frames||[],'enemy');const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:'闇'};try{const r=applyEnemyDamageTo(a,e,chosen.power||1.70,'magic',chosen.crit||.10,false);if(e.hp>0){const ok=applyEnemyStatusTo(e,'poison',chosen.chance||.70,3);notice(ok?`${e.name}は毒になった！`:'毒は効かなかった！',ok?'status':'system',650);}return !!r;}finally{state.battle.weaponAttackContext=prev;renderBattle();await delay(380);}}
+async function performAoeStatusMagicV120(a,chosen){const c=v120MagicCost(a,chosen);if(a.mpNow<c.cost){notice('MPが足りない！','danger');return false;}a.mpNow-=c.cost;await actionCutin(`${a.name}の${chosen.name}！`,'system',620);const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:chosen.element||'無'};try{await skillSprite(chosen.frames||[],'enemy-all',chosen.mode);await playerAoeDamage(a,chosen.power||1.55,'magic',0,chosen.status,chosen.chance||.10,chosen.status==='stun'?1:3);}finally{state.battle.weaponAttackContext=prev;}await delay(360);return true;}
+const _performMagicV120Base=performMagic;
+performMagic=async function(a,skill=null,auto=false){const chosen=skill?.id?skill:defaultMagicFor(a);if(chosen?.kind==='statusMagic')return performStatusMagicV120(a,chosen);if(chosen?.kind==='aoeStatusMagic')return performAoeStatusMagicV120(a,chosen);if(chosen?.kind==='damageStatusMagic')return performMiraMobPoisonV120(a,chosen);return _performMagicV120Base(a,skill,auto);};
+
+async function performAdvancedTechniqueV120(a,t){if(t.heroOnly&&!a.transformed){notice('あのヒーロー変身時のみ使用できます','danger');return false;}const cut=clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8),cost=Math.max(0,Math.ceil((t.cost||0)*(1-cut)));if(a.mpNow<cost){notice('MPが足りない！','danger');return false;}a.mpNow-=cost;await actionCutin(`${a.name}の${t.name}！`,'system',600);const element=(t.elements?.length?t.elements.join('・'):t.element)||'無',prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element};try{
+  if(t.kind==='statusTechnique'){
+    const e=targetEnemy();if(!e)return false;await skillSprite(t.attackFrames||t.frames||[],'enemy');if(e.hp>0&&t.statusFrames?.length)await skillSprite(t.statusFrames,'enemy',t.statusMode);const crit=e?.metalBody?Math.max(t.metalCrit||0,t.crit||0):t.crit||TEMP_BALANCE.critRate;applyEnemyDamageTo(a,e,t.power||1.38,'physical',crit,false);if(e.hp>0){const ok=applyEnemyStatusTo(e,t.status,t.chance||.45,t.status==='stun'?1:3);notice(ok?`${e.name}は${statusNameV120(t.status)}になった！`:'状態異常は効かなかった！',ok?'status':'system',650);}
+  }else if(t.target==='all'){await skillSprite(t.frames||[],'enemy-all',t.mode);await playerAoeDamage(a,t.power||1.6,'physical',t.crit||TEMP_BALANCE.critRate);}
+  else{const e=targetEnemy();if(!e)return false;await skillSprite(t.frames||[],'enemy',t.mode);const crit=e.metalBody?Math.max(t.metalCrit||0,t.crit||0):t.crit||TEMP_BALANCE.critRate;applyEnemyDamageTo(a,e,t.power||1.6,'physical',crit,false);}
+ }finally{state.battle.weaponAttackContext=prev;}await delay(350);return true;}
+const _performSpecialV120Base=performSpecial;
+performSpecial=async function(a,tech=null){const t=tech?.id?tech:null;if(t&&(t.kind==='statusTechnique'||t.kind==='advanced'||t.v120Advanced))return performAdvancedTechniqueV120(a,t);return _performSpecialV120Base(a,tech);};
+
+/* Newly learned ordinary magic / techniques are now announced on level-up, not only ultimates. */
+const _learnedBetweenV120Base=learnedBetween;
+learnedBetween=function(p,oldLv,newLv){const out=[...(_learnedBetweenV120Base(p,oldLv,newLv)||[])],allM=MOB_DATA.magicCatalog||[],allT=MOB_DATA.techniqueCatalog||[];for(const r of p.learnset?.magic||[])if(oldLv<r.level&&newLv>=r.level){const s=allM.find(x=>x.id===r.id);if(s)out.push(s.name);}for(const r of p.learnset?.technique||[])if(oldLv<r.level&&newLv>=r.level){const s=allT.find(x=>x.id===r.id);if(s)out.push(s.name);}return [...new Set(out)];};
+
+const _battleEffectSummaryV120Base=battleEffectSummary;
+battleEffectSummary=function(kind,item){if(kind==='magic'&&item?.kind==='statusMagic')return item.effectText||`敵単体を${statusNameV120(item.status)}にする（ダメージなし）`;if(kind==='magic'&&(item?.kind==='aoeStatusMagic'||item?.kind==='damageStatusMagic'))return item.effectText||_battleEffectSummaryV120Base(kind,item);if(kind==='special'&&(item?.kind==='statusTechnique'||item?.kind==='advanced'||item?.v120Advanced))return item.effectText||`${item.element||'無'}属性ダメージ`;return _battleEffectSummaryV120Base(kind,item);};
+
+const _openSkillMenuV120Base=openSkillMenu;
+openSkillMenu=function(type){const r=_openSkillMenuV120Base(type),list=$('#skillMenuList'),a=activeAlly();if(!list||!a)return r;if(type==='magic'){const all=MOB_DATA.magicCatalog||[];for(const b of $$('[data-magic-id]',list)){const s=all.find(x=>x.id===b.dataset.magicId),small=$('small',b);if(!s||!small)continue;const lv=(a.learnset?.magic||[]).find(x=>x.id===s.id)?.level,label=s.recordMagic?'RECORD':s.eventOnly?'EVENT':lv?`Lv${lv}`:'SPECIAL';if(s.kind==='statusMagic')small.textContent=`${label} / ${s.effectText} / ダメージなし`;else if(s.effectText)small.textContent=`${label} / ${s.effectText}`;}}
+ else if(type==='special'){const all=MOB_DATA.techniqueCatalog||[];for(const b of $$('[data-tech-id]',list)){const s=all.find(x=>x.id===b.dataset.techId),small=$('small',b);if(!s||!small)continue;const lv=(a.learnset?.technique||[]).find(x=>x.id===s.id)?.level,label=s.heroOnly?'TRANSFORM':lv?`Lv${lv}`:'SPECIAL';if(s.effectText)small.textContent=`${label} / ${s.effectText}`;}}return r;};
+
+/* Authored mid-boss/boss specials remain primary. Supplemental source skills appear occasionally. */
+const _enemySpecialSpecV120Base=enemySpecialSpec;
+enemySpecialSpec=function(e){const scripted=!!e?.alwaysSpecial||/^(book-|dc2-)/.test(String(e?.id||''))||['boss-lilith-castle','boss-maou-castle','boss-ace'].includes(String(e?.id||''));if(!scripted&&e?.v120ExtraSkills?.length){const chance=(e.isBoss||e.category==='boss')?.20:.28;if(Math.random()<chance)return pick(e.v120ExtraSkills);}return _enemySpecialSpecV120Base(e);};
+
+async function showDesertAwakeningV120(){const p=player('desert'),el=document.createElement('div');el.className='desert-awaken-v120';el.innerHTML=`<div><small>POWER AWAKENED</small><img src="${versionedPlay('play/15.png')}" alt="モブデザート"><h2>モブデザート</h2><b>ミラモブポイズン</b><p>を習得した！</p></div>`;document.body.appendChild(el);bindImages(el);await nextPaint();el.classList.add('show');await fixedDelay(2200);el.classList.remove('show');await fixedDelay(250);el.remove();}
+async function awakenDesertV120(){state.meta=state.meta||{};const fresh=!state.meta.desertMiraPowerV120;state.meta.desertMiraPowerV120=true;applyDesertAwakeningVisualV120();saveMeta();const holder=storyAnchor('desert'),img=holder?.querySelector('img');if(img){await readyStoryImage(img,versionedPlay('play/15.png'));await sizeStoryPartyImages($('#storyPartyLine'));}if(fresh)await showDesertAwakeningV120();}
+const _storyDarkEnergyTransferV120Base=storyDarkEnergyTransfer;
+storyDarkEnergyTransfer=async function(fromKey,toKey){await _storyDarkEnergyTransferV120Base(fromKey,toKey);if(fromKey==='boss-mira-d2'&&canonicalPlayerId(toKey)==='desert')await awakenDesertV120();};
+
+/* Old clears migrate to the awakened appearance without replaying the event. */
+setTimeout(()=>{try{if(worldCleared('desert2')){state.meta.desertMiraPowerV120=true;applyDesertAwakeningVisualV120();saveMeta();}}catch(e){console.warn('[v120 desert migration]',e);}},0);
+/* ===== END MOB QUEST v120 ===== */
+
+/* ===== MOB QUEST v121: SKILL SPECIALIZATION / DESERT II SUB QUEST ===== */
+window.__mobV121Runtime=true;
+
+/* 砂漠Ⅱサブクエスト：モブデザート / モブリーロ / モブテツ必須。 */
+{
+  const area=SUBQUEST_AREAS.find(a=>a.worldId==='desert2');
+  if(area){
+    area.name='砂漠Ⅱ';
+    area.required=['desert','riro','tetsu'];
+    area.quests=[
+      {
+        id:'desert2-1',no:1,name:'砂漠の歴史',
+        reward:{diamonds:30,coins:80000,weapons:['51'],armor:'55'},
+        intro:[
+          ['tetsu','2人はなにやら\n奇妙な気を持っているでござるな'],
+          ['desert','特殊な一族だからだろう'],
+          ['riro','使命のある一族ネ'],
+          ['show',['d2-deathhead','d2-deathhead','d2-deathhead']],
+          ['tetsu','正直に申すと\n拙者、苦手な気でござった']
+        ],
+        waves:[[{id:'d2-deathhead',level:68},{id:'d2-deathhead',level:68},{id:'d2-deathhead',level:68}]],
+        post:[
+          ['tetsu','しかし\n今は温かく安心するでござる'],
+          ['riro','あなたからも\n特別な気を感じまス\nきっと重要な使命がありますネ']
+        ]
+      },
+      {
+        id:'desert2-2',no:2,name:'ソウルフュージョン実験体',
+        reward:{diamonds:30,coins:80000,weapons:['52'],armor:'56'},
+        intro:[
+          ['tetsu','ソウルフュージョンとは\n恐ろしいが\nあっぱれな力でござるな'],
+          ['desert','使い方を間違えなければ\n世界を変える力になり得る'],
+          ['riro','使おうと思えば\nあなたたちにも使えますヨ'],
+          ['tetsu','そうなのでござるか？'],
+          ['show',['d2-slamummy','d2-twinsoul','d2-mirabuster']],
+          ['desert','使いたいとは思わないがな']
+        ],
+        waves:[[{id:'d2-slamummy',level:70},{id:'d2-twinsoul',level:70},{id:'d2-mirabuster',level:70}]],
+        post:[
+          ['riro','何かを守りたい時\n強い力になってくれまス'],
+          ['tetsu','オトナシの国は\n常に狙われているでござる\nその力があれば\n守れるかもしれないでござる']
+        ]
+      },
+      {
+        id:'desert2-3',no:3,name:'大地と業火',
+        reward:{diamonds:30,coins:80000,weapons:['53'],armor:'57'},
+        intro:[
+          ['desert','オトナシの国には\nサムライがたくさんいるのだろう？'],
+          ['tetsu','いや、\n今はほんの数人でござる'],
+          ['riro','魔王軍の刀狩り\nですネ？'],
+          ['tetsu','如何にも\nサムライは強い故\n恐れられているでござる'],
+          ['desert','戦わないのか？'],
+          ['show',['d2-miraearth','d2-mirakarami']],
+          ['tetsu','皆それぞれ戦っているでござる']
+        ],
+        waves:[[{id:'d2-miraearth',level:70},{id:'d2-mirakarami',level:70}]],
+        post:[['tetsu','平和のため\n拙者も戦い続けるでござる！']]
+      },
+      {
+        id:'desert2-4',no:4,name:'夜の時間',
+        reward:{diamonds:30,coins:80000,weapons:['54'],armor:'58'},
+        intro:[
+          ['riro','私、砂漠の秘宝を知っていまス\nミラモブは使いませんでしたが\nとてつもない力を秘めていまス'],
+          ['tetsu','魔王との戦いに\n必要かもしれないでござるな'],
+          ['desert','いや\n砂漠の秘宝は闇の力\nそんなものに頼ってはならない'],
+          ['show',['d2-miranight','d2-miratime']],
+          ['riro','全てがそうではないですヨ']
+        ],
+        waves:[[{id:'d2-miranight',level:72},{id:'d2-miratime',level:72}]],
+        post:[
+          ['riro','秘宝の1つ\nヌイ・ハリネズミは\n大地の力を操れまス\n大地とは生命\n大地とは光でス'],
+          ['tetsu','壮大な話でござるな'],
+          ['desert','だが\nやはり使う気にはなれんな']
+        ]
+      },
+      {
+        id:'desert2-5',no:5,name:'砂漠の王',
+        reward:{diamonds:300,coins:100000,weapons:['55'],armor:'59'},
+        intro:[
+          ['riro','砂漠には悪魔が棲んでいまス'],
+          ['tetsu','悪魔でござるか？'],
+          ['riro','ええ\n心に侵入する悪魔でス'],
+          ['desert','ミラモブが生み出した闇\nあの闇は幻影を生み\n人の心の弱さを狙う悪魔だ'],
+          ['show',['sq-desert-shadow-v121']],
+          ['tetsu','モブデザートが2人!?'],
+          ['desert','俺たちの心を試しているんだ'],
+          ['riro','闇に打ち勝つのでス！']
+        ],
+        waves:[[{id:'sq-desert-shadow-v121',level:78}]],
+        post:[
+          ['tetsu','偽物は偽物\n闇は所詮闇でござる'],
+          ['riro','私たちは普通ではありませン\nでも\n勇者様のおかげで\n光の道を歩いていまス'],
+          ['desert','闇の一族が光の道か'],
+          ['tetsu','それはサムライも同じでござる']
+        ]
+      }
+    ];
+  }
+}
+
+/* 砂漠の王：最初の1ターンだけ20%ダメージ軽減。SHIELD表示は出さず内部軽減だけ適用する。 */
+const _applyEnemyDamageToV121Base=applyEnemyDamageTo;
+applyEnemyDamageTo=function(a,e,power,type='physical',crit=TEMP_BALANCE.critRate,normal=false){
+  if(e?.id==='sq-desert-shadow-v121'&&Number(state.battle?.turn||1)===1){
+    const dr=e.damageReduction,perm=e.permanentDamageReduction;
+    e.damageReduction=.20;e.permanentDamageReduction=true;
+    try{return _applyEnemyDamageToV121Base(a,e,power,type,crit,normal);}finally{e.damageReduction=dr;e.permanentDamageReduction=perm;}
+  }
+  return _applyEnemyDamageToV121Base(a,e,power,type,crit,normal);
+};
+
+/* 砂漠の王専用技。通常攻撃も混ざるため2～3回行動の圧は保ちつつ、専用技は2ターンに1度。 */
+const _bossSpecialV121Base=bossSpecial;
+bossSpecial=async function(spec){
+  const e=actingEnemy()||state.battle?.enemy;
+  if(e?.id==='sq-desert-shadow-v121'&&spec?.kind==='v121Goldfish'){
+    const t=pick(livingMain());if(!t)return;
+    await actionCutin(`${e.name}のゴールドフィッシュ！`,'danger',700);await beginEnemyLunge(e.uid);
+    try{const critical=Math.random()<(Number(spec.critChance)||.20),pow=(Number(spec.power)||1.45)*(critical?1.5:1);if(critical)notice('会心の一撃！','danger',650);await damageAlly(t,pow,'physical',false,'地');await delay(300);}finally{endEnemyLunge();}
+    return;
+  }
+  if(e?.id==='sq-desert-shadow-v121'&&spec?.kind==='v121Sunanosabaki'){
+    await actionCutin(`${e.name}のスナノサバキ！`,'danger',700);await beginEnemyLunge(e.uid);
+    try{await aoeHit(Number(spec.power)||1.05,'physical','地');await delay(300);}finally{endEnemyLunge();}
+    return;
+  }
+  return _bossSpecialV121Base(spec);
+};
+
+/* 砂漠Ⅱのサブクエストは全5話が正式実装済み。旧pendingを残さない。 */
+for(const q of (SUBQUEST_AREAS.find(a=>a.worldId==='desert2')?.quests||[])){delete q.pending;delete q.note;}
+/* ===== END MOB QUEST v121 ===== */
+
+
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

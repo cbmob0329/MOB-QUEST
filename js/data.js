@@ -1,4 +1,4 @@
-// MOB QUEST v118
+// MOB QUEST v121
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -695,7 +695,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',110,113)},
     {id:'kizutsukukitsutsuki',name:'キズツクキツツキ',element:'雷',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',201,202)},
     {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:18,power:1.20,target:'all',frames:seq('skill2',114,117)},
-    {id:'watashinomirai',name:'ワタシのミライ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',125,128)}
+    {id:'watashinomirai',name:'ワタシノミライ',element:'光',tier:'all',cost:19,power:1.22,target:'all',frames:seq('skill2',125,128)}
   ];
 
   MOB_DATA.techniqueCatalog=[
@@ -1157,4 +1157,159 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(const [id,skills] of Object.entries(enemySupport)){const e=(MOB_DATA.enemyCatalog||[]).find(x=>x.id===id);if(e)e.supportSkillsV109=[...skills];}
 }
 /* ===== END MOB QUEST v109 SUPPORT MAGIC DATA ===== */
+
+
+
+/* ===== MOB QUEST v120: SKILL EXPANSION / STATUS SPLIT / DESERT AWAKENING DATA ===== */
+{
+  MOB_DATA.skillBalanceVersion=120;
+  const F=(folder,a,b)=>Array.from({length:b-a+1},(_,i)=>`${folder}/${String(a+i).padStart(2,'0')}.png`);
+  const upsert=(arr,row)=>{const i=arr.findIndex(x=>x.id===row.id);if(i>=0)arr[i]={...arr[i],...row};else arr.push(row);};
+  const mag=MOB_DATA.magicCatalog||[],tech=MOB_DATA.techniqueCatalog||[];
+
+  /* 状態異常魔法：ダメージ無し。 */
+  const statusMagic=[
+    {id:'noise-scratch',name:'ノイズスクラッチ',element:'無',kind:'statusMagic',status:'confuse',cost:12,power:0,chance:.60,target:'single',tier:'status',frames:['skill/46.png'],mode:'statusNoiseV79',effectText:'敵単体を混乱にする'},
+    {id:'chill-lofi',name:'チルローファイ',element:'無',kind:'statusMagic',status:'sleep',cost:13,power:0,chance:.60,target:'single',tier:'status',frames:['skill/48.png'],mode:'statusChillV79',effectText:'敵単体を眠りにする'},
+    {id:'fast-beat',name:'ファストビート',element:'火',kind:'statusMagic',status:'burn',cost:12,power:0,chance:.65,target:'single',tier:'status',frames:['skill/76.png'],mode:'statusFastV79',effectText:'敵単体をやけど状態にする'},
+    {id:'repeat-intro',name:'リピートイントロ',element:'闇',kind:'statusMagic',status:'poison',cost:13,power:0,chance:.65,target:'single',tier:'status',frames:[...F('skill',103,106),'skill/103.png'],mode:'statusRepeatV79',effectText:'敵単体を毒状態にする'},
+    {id:'long-scratch',name:'ロングスクラッチ',element:'雷',kind:'statusMagic',status:'paralyze',cost:16,power:0,chance:.45,target:'single',tier:'status',frames:['skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],mode:'statusLongV79',effectText:'敵単体をマヒにする'}
+  ];
+  for(const s of statusMagic)upsert(mag,s);
+  /* 旧仕様では同名状態異常技が特技欄に存在したため、特技側から除去する。 */
+  const oldStatusIds=new Set(statusMagic.map(x=>x.id));
+  MOB_DATA.techniqueCatalog=(MOB_DATA.techniqueCatalog||[]).filter(x=>!oldStatusIds.has(x.id));
+
+  /* レコード全体魔法：中威力だが全体攻撃のため消費MPは高め。 */
+  const recordMagic=[
+    {id:'garagaranotabi',name:'ガラガラノタビ',element:'地',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',193,196),recordMagic:true},
+    {id:'kumanokomiteitanoaberto',name:'クマノコ・ミテイタ・アノベルト',element:'闇',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',133,136),recordMagic:true},
+    {id:'keronoishou',name:'ケロノイショウ',element:'水',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',110,113),recordMagic:true},
+    {id:'kizutsukukitsutsuki',name:'キズツクキツツキ',element:'雷',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',201,202),recordMagic:true},
+    {id:'kakashitokomugi',name:'カカシトコムギ',element:'風',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',114,117),recordMagic:true},
+    {id:'watashinomirai',name:'ワタシノミライ',element:'光',tier:'all',cost:30,power:1.60,target:'all',frames:F('skill2',125,128),recordMagic:true}
+  ];
+  for(const s of recordMagic)upsert(mag,s);
+
+  const extraMagic=[
+    {id:'crash-bomb',name:'クラッシュボム',element:'無',tier:'medium',cost:24,power:1.38,target:'all',frames:F('skill2',243,246),effectText:'敵全体に無属性小～中ダメージ'},
+    {id:'rainbow1990',name:'レインボー1990',element:'光',tier:'medium',cost:32,power:1.58,target:'all',kind:'aoeStatusMagic',status:'stun',chance:.10,frames:['skill2/247.png','skill2/248.png','skill2/249.png','skill2/249-1.png'],effectText:'敵全体に光属性中ダメージ＋10%でひるみ'},
+    {id:'neo-meteor-power',name:'ネオメテオパワー',element:'無',tier:'large',cost:44,power:1.95,target:'all',frames:F('skill2',268,271),effectText:'敵全体に無属性中～大ダメージ'},
+    {id:'soul-energy',name:'ソウルエネルギー',element:'無',tier:'large',cost:25,power:1.95,target:'single',frames:F('skill2',273,276),effectText:'敵単体に無属性中～大ダメージ'},
+    {id:'mira-mob-poison',name:'ミラモブポイズン',element:'闇',tier:'medium',cost:26,power:1.70,target:'single',kind:'damageStatusMagic',status:'poison',chance:.70,crit:.10,exclusive:'desert',eventOnly:true,chargeImage:'icon/68.png',frames:F('skill',66,69),effectText:'敵単体に闇属性中ダメージ＋会心率10%＋70%で毒'}
+  ];
+  for(const s of extraMagic)upsert(mag,s);
+
+  const advancedTech=[
+    {id:'scratch-sword',name:'スクラッチソード',element:'光',kind:'statusTechnique',status:'confuse',cost:14,power:1.38,chance:.45,tier:'medium',attackFrames:F('skill',112,115),statusFrames:['skill/76.png'],statusMode:'statusFastV79',frames:[...F('skill',112,115),'skill/76.png'],effectText:'敵単体に小～中ダメージ＋混乱'},
+    {id:'lofi-splash',name:'ローファイスプラッシュ',element:'水',kind:'statusTechnique',status:'sleep',cost:14,power:1.38,chance:.45,tier:'medium',attackFrames:F('skill',81,84),statusFrames:['skill/48.png'],statusMode:'statusChillV79',frames:[...F('skill',81,84),'skill/48.png'],effectText:'敵単体に小～中ダメージ＋眠り'},
+    {id:'fast-beat-slash',name:'ファストビートスラッシュ',element:'火',kind:'statusTechnique',status:'burn',cost:14,power:1.40,chance:.55,tier:'medium',attackFrames:F('skill',73,76),statusFrames:['skill/46.png'],statusMode:'statusNoiseV79',frames:[...F('skill',73,76),'skill/46.png'],effectText:'敵単体に小～中ダメージ＋やけど'},
+    {id:'intro-cross',name:'イントロクロス',element:'雷',kind:'statusTechnique',status:'poison',cost:15,power:1.42,chance:.50,tier:'medium',attackFrames:F('skill',87,90),statusFrames:['skill/103.png'],statusMode:'statusRepeatV79',frames:[...F('skill',87,90),'skill/103.png'],effectText:'敵単体に小～中ダメージ＋毒'},
+    {id:'long-scratch-cut',name:'ロングスクラッチカット',element:'無',kind:'statusTechnique',status:'paralyze',cost:17,power:1.42,chance:.35,tier:'medium',attackFrames:['skill/95.png','skill/96.png'],statusFrames:['skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],statusMode:'statusLongV79',frames:['skill/95.png','skill/96.png','skill/27.png','skill/28.png','skill/27.png','skill/28.png','skill/27.png'],effectText:'敵単体に小～中ダメージ＋マヒ'},
+    {id:'best-selection',name:'ベストセレクション',element:'光・水',elements:['光','水'],kind:'advanced',cost:16,power:1.60,tier:'large',frames:F('skill2',121,124),effectText:'敵単体に光・水属性中ダメージ'},
+    {id:'dorayaki-dance',name:'どら焼きの舞',element:'風・無',elements:['風','無'],kind:'advanced',cost:17,power:1.58,tier:'large',crit:.10,metalCrit:.30,frames:F('skill2',129,132),effectText:'敵単体に風・無属性中ダメージ / 会心10% / メタル系30%'},
+    {id:'mob-windmill',name:'MOBウィンドミル',element:'風・無',elements:['風','無'],kind:'advanced',cost:30,power:1.62,tier:'large',target:'all',frames:F('skill2',260,263),effectText:'敵全体に風・無属性物理中ダメージ'},
+    {id:'mob-hero-star',name:'MOBヒーロースター',element:'光',kind:'advanced',cost:38,power:2.10,tier:'large',target:'all',heroOnly:true,frames:F('skill2',264,267),effectText:'あのヒーロー変身時専用 / 敵全体に光属性大ダメージ'}
+  ];
+  for(const s of advancedTech)upsert(MOB_DATA.techniqueCatalog,s);
+  const mg=MOB_DATA.techniqueCatalog.find(x=>x.id==='mobgiri');if(mg){mg.elements=['地','風'];mg.element='地・風';mg.v120Advanced=true;mg.effectText='敵単体に地・風属性中ダメージ';}
+
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const add=(pid,type,id,level)=>{const p=P(pid);if(!p)return;p.learnset=p.learnset||{magic:[],technique:[]};const rows=p.learnset[type]||(p.learnset[type]=[]);const ex=rows.find(x=>x.id===id);if(ex)ex.level=Math.min(Number(ex.level)||level,level);else rows.push({id,level});rows.sort((a,b)=>(a.level||1)-(b.level||1));};
+  /* 旧状態異常特技を同レベルの状態異常魔法へ移動。 */
+  for(const p of MOB_DATA.players||[]){const rows=p.learnset?.technique||[];for(const row of [...rows])if(oldStatusIds.has(row.id)){add(p.id,'magic',row.id,row.level||18);p.learnset.technique=p.learnset.technique.filter(x=>x.id!==row.id);}}
+
+  /* 役割・装備・成長帯に合わせた追加習得。 */
+  add('yusha','magic','crash-bomb',22);add('yusha','magic','rainbow1990',36);add('yusha','magic','soul-energy',52);add('yusha','technique','scratch-sword',26);add('yusha','technique','mob-windmill',40);
+  add('pink','magic','crash-bomb',24);add('pink','technique','scratch-sword',28);add('pink','technique','mob-windmill',42);
+  add('desert','magic','repeat-intro',20);add('desert','technique','dorayaki-dance',26);add('desert','technique','intro-cross',38);add('desert','technique','mob-windmill',44);
+  add('nyoro','technique','best-selection',28);add('nyoro','magic','crash-bomb',36);
+  add('nekoku','technique','dorayaki-dance',28);add('nekoku','technique','lofi-splash',36);add('nekoku','technique','mob-windmill',44);
+  add('jessie','technique','best-selection',28);add('jessie','technique','long-scratch-cut',36);add('jessie','technique','mob-windmill',44);
+  add('denden','technique','best-selection',26);add('denden','technique','long-scratch-cut',34);add('denden','magic','crash-bomb',38);
+  add('money','technique','best-selection',26);add('money','magic','rainbow1990',34);add('money','magic','soul-energy',44);add('money','magic','neo-meteor-power',56);
+  add('riro','magic','repeat-intro',22);add('riro','technique','dorayaki-dance',26);add('riro','technique','lofi-splash',34);add('riro','technique','mob-windmill',42);
+  add('tetsu','technique','dorayaki-dance',24);add('tetsu','technique','scratch-sword',30);add('tetsu','technique','mob-windmill',36);add('tetsu','technique','fast-beat-slash',44);
+  add('kaijin','technique','intro-cross',28);add('kaijin','technique','mob-windmill',38);add('kaijin','magic','soul-energy',50);
+  add('lilith','technique','best-selection',26);add('lilith','magic','rainbow1990',34);add('lilith','magic','neo-meteor-power',54);
+  add('naraku','technique','intro-cross',28);add('naraku','technique','mob-windmill',38);add('naraku','magic','soul-energy',50);
+
+  /* 雑魚の既存状態異常攻撃名を、ダメージ付き特技名へ正式分離。 */
+  const statusEnemyMap={
+    'ノイズスクラッチ':['スクラッチソード','confuseSingle'],
+    'チルローファイ':['ローファイスプラッシュ','sleepSingle'],
+    'ファストビート':['ファストビートスラッシュ','burnSingle'],
+    'リピートイントロ':['イントロクロス','poisonSingle'],
+    'ロングスクラッチ':['ロングスクラッチカット','paralyzeSingle']
+  };
+  for(const e of MOB_DATA.enemyCatalog||[])for(const s of e.enemySkills||[]){const m=statusEnemyMap[s.special];if(m){s.special=m[0];s.kind=m[1];s.skillType='physical';s.power=Math.max(Number(s.power)||0,.78);}}
+
+  /* 中ボス・ボスは元の固有技を主役にしつつ、低確率で基本魔法/特技も使う。 */
+  const magNames={火:['ホノ','ホノマ','ホノマグマ'],水:['ネプ','ネプマ','ネプマチューン'],雷:['トル','トルマ','トルマデン'],地:['ゴレ','ゴレマ','ゴレマガーディ'],風:['ホク','ホクマ','ホクマウィング'],光:['ネオ','ネオマ','ネオマニプール'],闇:['ミラ','ミラマ','ミラマゾーン'],無:['アノマ','アノマウン','アノマウン']};
+  const swordNames={火:['マグソード','マグマソード'],水:['ネプソード','ネプマソード'],雷:['トルソード','トルマソード'],地:['ゴレソード','ゴレマソード'],風:['疾風斬り','疾風斬り'],光:['ネオソード','ネオマソード'],闇:['ミラソード','ミラマソード'],無:['アノソード','アノマソード']};
+  const statusExtra={火:['ファストビートスラッシュ','burnSingle'],水:['ローファイスプラッシュ','sleepSingle'],雷:['ロングスクラッチカット','paralyzeSingle'],地:['スクラッチソード','confuseSingle'],風:['スクラッチソード','confuseSingle'],光:['スクラッチソード','confuseSingle'],闇:['イントロクロス','poisonSingle'],無:['スクラッチソード','confuseSingle']};
+  const elems=['火','水','雷','地','風','光','闇'];
+  for(const e of MOB_DATA.enemyCatalog||[]){if(!(e.category==='elite'||e.category==='boss'||e.isElite||e.isBoss))continue;const lv=Number(e.levelMax||e.levelMin||1),attr=elems.find(x=>String(e.attribute||'').includes(x))||'無',tier=lv>=46?2:lv>=22?1:0,looksMagic=(e.normalAttackType==='magic')||/魔|ウィッチ|ソーサラー|エナジー|ミスト|ブック|ナーガ|デビ|ドクター|マニー|リリス|ナビ/.test(String(e.name||'')),extras=[];
+    extras.push({special:looksMagic?magNames[attr][tier]:swordNames[attr][tier?1:0],kind:'single',power:e.category==='boss'?1.18:1.02,skillElement:attr,skillType:looksMagic?'magic':'physical',v120Supplement:true});
+    if(lv>=28){const st=statusExtra[attr];extras.push({special:st[0],kind:st[1],power:e.category==='boss'?.96:.86,chance:e.category==='boss'?.22:.28,skillElement:attr,skillType:'physical',v120Supplement:true});}
+    e.v120ExtraSkills=extras;
+  }
+}
+/* ===== END MOB QUEST v120 DATA ===== */
+
+/* ===== MOB QUEST v121: PLAYER SKILL SPECIALIZATION / DESERT II SUB QUEST BOSS ===== */
+{
+  MOB_DATA.skillBalanceVersion=121;
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const specializedIds=new Set([
+    'noise-scratch','chill-lofi','fast-beat','repeat-intro','long-scratch',
+    'crash-bomb','rainbow1990','neo-meteor-power','soul-energy',
+    'scratch-sword','lofi-splash','fast-beat-slash','intro-cross','long-scratch-cut',
+    'best-selection','dorayaki-dance','mob-windmill'
+  ]);
+  /* v120で追加/移動した汎用技を一度整理し、担当をほぼ一人ずつに固定する。既存の属性魔法・回復・バフは維持。 */
+  for(const p of MOB_DATA.players||[]){
+    p.learnset=p.learnset||{magic:[],technique:[]};
+    p.learnset.magic=(p.learnset.magic||[]).filter(x=>!specializedIds.has(x.id));
+    p.learnset.technique=(p.learnset.technique||[]).filter(x=>!specializedIds.has(x.id));
+  }
+  const add=(pid,type,id,level)=>{const p=P(pid);if(!p)return;const rows=p.learnset[type]||(p.learnset[type]=[]);if(!rows.some(x=>x.id===id))rows.push({id,level});rows.sort((a,b)=>(a.level||1)-(b.level||1));};
+
+  /* 状態異常魔法：役割ごとに担当を分離。 */
+  add('money','magic','noise-scratch',18);       // 混乱
+  add('nekoku','magic','chill-lofi',18);        // 眠り
+  add('nyoro','magic','fast-beat',18);          // やけど
+  add('lilith','magic','repeat-intro',16);      // 毒
+  add('denden','magic','long-scratch',18);      // マヒ
+
+  /* v120追加技：同じ技を多数が覚えないよう、個性に合わせて専任化。 */
+  add('pink','magic','crash-bomb',24);
+  add('yusha','magic','rainbow1990',36);
+  add('money','magic','neo-meteor-power',56);
+  add('naraku','magic','soul-energy',50);
+
+  add('yusha','technique','scratch-sword',26);
+  add('riro','technique','lofi-splash',34);
+  add('tetsu','technique','fast-beat-slash',44);
+  add('desert','technique','intro-cross',38);
+  add('jessie','technique','long-scratch-cut',36);
+  add('jessie','technique','best-selection',28);
+  add('riro','technique','dorayaki-dance',26);
+  add('tetsu','technique','mob-windmill',36);
+
+  /* 砂漠Ⅱサブクエスト5の「心に侵入する悪魔」。覚醒前のモブデザートの姿を使う。 */
+  const fakeDesert={
+    id:'sq-desert-shadow-v121',name:'モブデザート',stage:'砂漠Ⅱ',category:'boss',attribute:'地・闇',image:'play/03.png',symbol:'砂',
+    levelMin:78,levelMax:78,bossId:'sqDesertShadowV121',normalAttackType:'physical',
+    firstTurnDamageReductionV121:.20,specialEvery:2,
+    special:'ゴールドフィッシュ',kind:'v121Goldfish',power:1.45,critChance:.20,skillElement:'地',skillType:'physical',
+    specialOptions:[
+      {special:'ゴールドフィッシュ',kind:'v121Goldfish',power:1.45,critChance:.20,skillElement:'地',skillType:'physical'},
+      {special:'スナノサバキ',kind:'v121Sunanosabaki',power:1.05,skillElement:'地',skillType:'physical'}
+    ]
+  };
+  const ei=(MOB_DATA.enemyCatalog||[]).findIndex(x=>x.id===fakeDesert.id);
+  if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
+}
+/* ===== END MOB QUEST v121 DATA ===== */
 

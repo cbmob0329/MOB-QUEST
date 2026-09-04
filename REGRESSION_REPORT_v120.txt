@@ -1,0 +1,19 @@
+MOB QUEST v120 regression report
+
+- Base: v119 LEGEND RECORD / RECORD ROOM MAGIC
+- Version title: v120
+- GAME_ASSET_VERSION: 120
+- data.js first marker: v120
+- v119 record-room acquisition/magic system retained
+- v118 opening/training/journal/battle tuning retained
+- v117 magma explore/status popup retained
+- v116 turntable rewards/limited figures retained
+- v115 Mob Piece/Ruby systems retained
+- v109 support/heal magic retained unchanged
+- v105 boss paralysis immunity retained
+- Status attacks split: magic=no damage / technique=damage+status
+- Record AoE magic costs raised to MP30
+- New level-learned AoE/special skills added with explicit levels
+- Enemy normal/elite/boss skill supplements added without replacing scripted boss sequences
+- Desert II awakening: play/15.png + Mira Mob Poison persistent event unlock
+- node --check data.js/game.js/standalone inline: PASS (run during build)
