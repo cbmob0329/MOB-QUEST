@@ -3997,7 +3997,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v123</div>
+      <div class="title-version">v124</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4407,7 +4407,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v123
+// MOB QUEST v124
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5721,7 +5721,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
 }
 /* ===== END MOB QUEST v121 DATA ===== */
-
 (() => {
 'use strict';
 
@@ -5732,7 +5731,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=123;
+const GAME_ASSET_VERSION=124;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -13016,14 +13015,37 @@ async function preloadRowsWithProgressV123(rows,progress){
 async function loadingRowsV123(text,rows,opts={}){return runGuideLoadingJobV123(text,p=>preloadRowsWithProgressV123(rows,p),opts);}
 
 const _loadingWithAssetsV123Base=loadingWithAssets;
-loadingWithAssets=async function(text,assets){
+loadingWithAssets=async function(text,assets,opts={}){
   const list=[...new Set(['back2/01.png',...(assets||[])].filter(Boolean))];
-  return runGuideLoadingJobV123(text,p=>preloadAssets(list,p),{minMs:760,timeoutMs:12000,detail:'ASSET'});
+  const minMs=Number.isFinite(opts?.minMs)?Math.max(0,Number(opts.minMs)):760;
+  const timeoutMs=Number.isFinite(opts?.timeoutMs)?Math.max(1500,Number(opts.timeoutMs)):12000;
+  const detail=opts?.detail||'ASSET';
+  return runGuideLoadingJobV123(text,p=>preloadAssets(list,p),{minMs,timeoutMs,detail});
 };
+
+/* v124: adventure departure intentionally keeps the guide on screen for 2.5 seconds and warms
+   the whole current area's visual set. Actual asset loading is still awaited; 2.5s is only a floor. */
+function adventureDepartureAssetsV124(){
+  const w=currentWorld(),assets=[...pageAssets('adventure')];
+  if(!w)return [...new Set(assets.filter(Boolean))];
+  assets.push(w.fieldFallback);
+  for(const area of (w.areas||[])){
+    assets.push(area?.bg);
+    for(const cfg of [...(area?.boss||[]),...(area?.nextWave||[])]){
+      const e=trainingEnemyTemplate(cfg?.id);if(e?.image)assets.push(e.image);
+    }
+  }
+  for(const id of (w.normalIds||[])){const e=trainingEnemyTemplate(id);if(e?.image)assets.push(e.image);}
+  return [...new Set(assets.filter(Boolean))];
+}
 
 /* Every normal room transition uses the guide loader. The opening's dedicated black curtain stays
    separate so the prologue is not interrupted by tutorial tips. */
-travelTo=async function(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);};
+travelTo=async function(target,text,after){
+  if(target==='adventure')await loadingWithAssets(text,adventureDepartureAssetsV124(),{minMs:2500,timeoutMs:16000,detail:'ADVENTURE'});
+  else await loadingWithAssets(text,pageAssets(target));
+  if(after)after();showScreen(target);
+};
 goHome=async function(){await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','icon/01.png']);await renderHome();showScreen('home');if(window.__mobBootGuard){clearTimeout(window.__mobBootGuard);window.__mobBootGuard=null;}};
 const _openCastleRoomV123Base=openCastleRoom;
 openCastleRoom=async function(room){
@@ -13090,7 +13112,8 @@ openMobPieceMenuV96=function(){
 const guideTapV123=$('#loadingGuideTapV123');if(guideTapV123)guideTapV123.onclick=e=>{e.preventDefault();e.stopPropagation();nextLoadingGuideV123();};
 try{preloadAssets(['back2/01.png']).catch(()=>{});}catch(_){ }
 window.__mobV123PatchRuntime=true;
-/* ===== END MOB QUEST v123 ===== */
+window.__mobV124PatchRuntime=true;
+/* ===== END MOB QUEST v123 / v124 ADVENTURE LOAD TUNE ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
