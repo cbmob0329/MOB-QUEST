@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=121;
+const GAME_ASSET_VERSION=122;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -1293,7 +1293,7 @@ function renderBattleProgramList(seasonId){
   const root=$('#trainingFeaturePanel'),season=battleProgramSeason(seasonId);if(!root||!season||!battleProgramSeasonUnlockedV114(season.id))return renderBattleProgramSeasonSelect();
   state.training.programSeason=season.id;
   const reward=battleProgramSeasonRewardDataV113(season),clearedCount=season.programs.filter(p=>battleProgramCleared(p.id)).length;
-  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>SEASON CLEAR REWARD</small><b>${reward?.name||'ITEM'}${reward?.qty>1?` ×${reward.qty}`:''}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map((program,index)=>{const done=battleProgramCleared(program.id),open=battleProgramProgramUnlockedV114(season,index),first=battleProgramFirstClearRewardV113(program);if(!open)return`<button class="battle-program-card program-locked-v114" type="button" disabled><span class="program-number">PROGRAM ${program.no} / LOCKED</span><div><b>？？？？</b><small>前のPROGRAMをCLEARで解放</small><small class="program-first-reward-v113">初回報酬　？？？</small></div><em>LOCK</em></button>`;const enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''} ${program.midBoss?'mid-boss-program-v113':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}${program.midBoss?' / MID BOSS':''}</span><div><b>${program.label}</b><small>${enemyText}</small><small class="program-first-reward-v113">初回報酬　💎${first.diamonds}　${Number(first.coins).toLocaleString()}G</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>SEASON CLEAR REWARD</small><b>${reward?.name||'ITEM'}${reward?.qty>1?` ×${reward.qty}`:''}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map((program,index)=>{const done=battleProgramCleared(program.id),open=battleProgramProgramUnlockedV114(season,index),first=battleProgramFirstClearRewardV113(program);if(!open)return`<button class="battle-program-card program-locked-v114" type="button" disabled><span class="program-number">PROGRAM ${program.no} / LOCKED</span><div><b>？？？？</b><small>前のPROGRAMをCLEARで解放</small><small class="program-first-reward-v113">初回報酬　？？？</small></div><em>LOCK</em></button>`;const enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''} ${program.midBoss?'mid-boss-program-v113':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}${program.midBoss?' / MID BOSS':''}</span><div><b>${program.label}</b><small>${enemyText}</small><small class="program-first-reward-v113">初回報酬　ダイヤ${first.diamonds} と ${Number(first.coins).toLocaleString()}G</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
   bindImages(root);
   $('[data-program-back]',root).onclick=renderBattleProgramSeasonSelect;
   $$('[data-program-id]',root).forEach(btn=>btn.onclick=()=>confirmBattleProgram(btn.dataset.programId));
@@ -1332,7 +1332,7 @@ async function finishBattleProgramReturn(win){
   if(season)renderBattleProgramList(season.id);else renderBattleProgramSeasonSelect();
   if(justClearedId){requestAnimationFrame(()=>{const card=$(`[data-program-id="${justClearedId}"]`);if(card){card.classList.add('just-cleared');setTimeout(()=>card.classList.remove('just-cleared'),900);}});}
   if(!win){await facilityTalk('惜しかったね！\n次はクリアを目指して頑張ろう！','モブコーチ','play/003.png');return;}
-  if(firstReward)await facilityTalk(`ナイスクリア！\n初回クリア報酬だ！\nダイヤ ×${firstReward.diamonds}\n${Number(firstReward.coins).toLocaleString()}G を獲得！`,'PROGRAM REWARD','icon/22.png');
+  if(firstReward)await facilityTalk(`ナイスクリア！\n初回クリア報酬だ！\nダイヤ${firstReward.diamonds} と ${Number(firstReward.coins).toLocaleString()}G を獲得！`,'PROGRAM REWARD','icon/22.png');
   if(pendingReward&&season){
     const reward=battleProgramSeasonRewardDataV113(season);
     await facilityTalk(`このシーズンを全てクリアしたね！\nシーズンクリア報酬\n${reward?.name||'アイテム'}${reward?.qty>1?` ×${reward.qty}`:''}をプレゼントだ！`,'モブコーチ','play/003.png');
@@ -7107,6 +7107,33 @@ for(const q of (SUBQUEST_AREAS.find(a=>a.worldId==='desert2')?.quests||[])){dele
 /* ===== END MOB QUEST v121 ===== */
 
 
+
+
+/* ===== MOB QUEST v122: OPENING SPEECH / PROGRAM REWARD TEXT / COMMAND BUTTON FIX ===== */
+/* Opening throne bubbles: PNG boxes contain transparent headroom, so anchor the tail well inside
+   the actor box instead of above its CSS rectangle. This keeps King/Pink speech close to the
+   visible character on every phone aspect ratio. */
+const _showCastleSpeechV122Base=showCastleSpeech;
+showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
+  _showCastleSpeechV122Base(speaker,text,actorEl,side);
+  if(!document.body.classList.contains('opening-sequence-v78'))return;
+  if(speaker!=='モブスライムキング'&&speaker!=='モブピンク')return;
+  const box=$('#castleSpeech'),stage=box?.parentElement,anchor=actorEl?.querySelector?.('img')||actorEl;
+  if(!box||!stage||!anchor||box.hidden)return;
+  const sr=stage.getBoundingClientRect(),ar=anchor.getBoundingClientRect();
+  if(!sr.height||!ar.height)return;
+  const bh=box.offsetHeight||92;
+  /* Aim the speech-tail at the upper-middle of the rendered actor box. This deliberately moves
+     the bubble much lower than the old "above image top" calculation. */
+  const anchorRatio=speaker==='モブピンク'?.44:.42;
+  const tailY=(ar.top-sr.top)+(ar.height*anchorRatio);
+  let top=tailY-bh-7;
+  top=Math.max(18,Math.min(top,(stage.clientHeight||sr.height)-bh-20));
+  box.style.top=`${Math.round(top)}px`;
+  box.style.zIndex='28';
+};
+window.__mobV122PatchRuntime=true;
+/* ===== END MOB QUEST v122 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

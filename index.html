@@ -3881,6 +3881,65 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .mira-charge-v120{position:absolute;z-index:260;transform:translate(-50%,-50%) scale(.32);opacity:.2;pointer-events:none;transition:transform 1s cubic-bezier(.2,.85,.22,1),opacity .25s ease;filter:drop-shadow(0 4px 0 rgba(0,0,0,.28))}.mira-charge-v120 img{width:82px;height:82px;object-fit:contain}.mira-charge-v120.charge{transform:translate(-50%,-50%) scale(1.55);opacity:1}.mira-charge-v120.release{transform:translate(-50%,-50%) scale(2.05);opacity:0;transition-duration:.2s}
 .desert-awaken-v120{position:fixed;inset:0;z-index:10060;display:grid;place-items:center;background:rgba(5,10,18,.78);opacity:0;transition:opacity .18s ease}.desert-awaken-v120.show{opacity:1}.desert-awaken-v120>div{width:min(84vw,360px);padding:22px 18px;border:4px solid #101820;border-radius:24px;background:#bdefff;color:#071018;text-align:center;box-shadow:0 16px 0 rgba(0,0,0,.25)}.desert-awaken-v120 small{display:block;font-weight:1000;letter-spacing:.16em}.desert-awaken-v120 img{display:block;width:120px;height:120px;object-fit:contain;margin:8px auto}.desert-awaken-v120 h2{margin:2px 0 8px;font-size:25px}.desert-awaken-v120 b{display:block;font-size:24px;font-weight:1000}.desert-awaken-v120 p{margin:6px 0 0;font-weight:1000;font-size:18px}
 /* ===== END MOB QUEST v120 CSS ===== */
+
+/* ===== MOB QUEST v122: OPENING / BATTLE COMMAND VISUAL FIX ===== */
+/* Keep all eight commands comfortably tappable again. */
+.command-panel{
+  height:calc(180px + var(--safe-bottom))!important;
+  padding:6px 8px calc(7px + var(--safe-bottom))!important;
+}
+.party-hud{bottom:calc(186px + var(--safe-bottom))!important}
+.command-grid{gap:7px!important}
+.command-grid .command-btn,.command-grid .command-btn.special{
+  height:58px!important;
+  min-height:58px!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-box-shadow:none!important;
+  padding:0!important;
+  overflow:visible!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+}
+.command-grid .command-btn .battle-command-icon,.command-grid .command-btn.special .battle-command-icon{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  filter:none!important;
+  transform:none!important;
+}
+/* icon/09.png already contains the intended 特技 artwork. The green backing was the long
+   rectangle the user was seeing, so 特技 alone must not paint any extra button rectangle. */
+.command-grid .command-btn.special,
+.command-grid .command-btn.special:hover,
+.command-grid .command-btn.special:focus,
+.command-grid .command-btn.special:active{
+  background:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-box-shadow:none!important;
+  filter:none!important;
+}
+.command-grid .command-btn.special::before,.command-grid .command-btn.special::after{content:none!important;display:none!important}
+@media(max-height:720px){
+  .command-panel{height:calc(168px + var(--safe-bottom))!important}
+  .party-hud{bottom:calc(174px + var(--safe-bottom))!important}
+  .command-grid .command-btn,.command-grid .command-btn.special{height:52px!important;min-height:52px!important}
+}
+@media(max-height:620px){
+  .command-panel{height:calc(162px + var(--safe-bottom))!important}
+  .party-hud{bottom:calc(168px + var(--safe-bottom))!important}
+  .command-grid .command-btn,.command-grid .command-btn.special{height:50px!important;min-height:50px!important}
+}
+/* ===== END MOB QUEST v122 ===== */
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3900,7 +3959,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v121</div>
+      <div class="title-version">v122</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4306,7 +4365,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v121
+// MOB QUEST v122
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5620,7 +5679,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
 }
 /* ===== END MOB QUEST v121 DATA ===== */
-
 (() => {
 'use strict';
 
@@ -5631,7 +5689,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=121;
+const GAME_ASSET_VERSION=122;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -6916,7 +6974,7 @@ function renderBattleProgramList(seasonId){
   const root=$('#trainingFeaturePanel'),season=battleProgramSeason(seasonId);if(!root||!season||!battleProgramSeasonUnlockedV114(season.id))return renderBattleProgramSeasonSelect();
   state.training.programSeason=season.id;
   const reward=battleProgramSeasonRewardDataV113(season),clearedCount=season.programs.filter(p=>battleProgramCleared(p.id)).length;
-  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>SEASON CLEAR REWARD</small><b>${reward?.name||'ITEM'}${reward?.qty>1?` ×${reward.qty}`:''}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map((program,index)=>{const done=battleProgramCleared(program.id),open=battleProgramProgramUnlockedV114(season,index),first=battleProgramFirstClearRewardV113(program);if(!open)return`<button class="battle-program-card program-locked-v114" type="button" disabled><span class="program-number">PROGRAM ${program.no} / LOCKED</span><div><b>？？？？</b><small>前のPROGRAMをCLEARで解放</small><small class="program-first-reward-v113">初回報酬　？？？</small></div><em>LOCK</em></button>`;const enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''} ${program.midBoss?'mid-boss-program-v113':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}${program.midBoss?' / MID BOSS':''}</span><div><b>${program.label}</b><small>${enemyText}</small><small class="program-first-reward-v113">初回報酬　💎${first.diamonds}　${Number(first.coins).toLocaleString()}G</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
+  root.innerHTML=`<section class="panel battle-program-panel"><div class="section-title"><div><small>BATTLE PROGRAM / SEASON ${season.id}</small><h2>${season.name}</h2></div><button class="battle-program-back" data-program-back type="button">シーズン選択へ</button></div><div class="battle-program-reward"><div><small>SEASON CLEAR REWARD</small><b>${reward?.name||'ITEM'}${reward?.qty>1?` ×${reward.qty}`:''}</b></div><img src="${reward?.image||''}" alt="${reward?.name||''}"><span>${clearedCount}/${season.programs.length}</span></div><div class="battle-program-list">${season.programs.map((program,index)=>{const done=battleProgramCleared(program.id),open=battleProgramProgramUnlockedV114(season,index),first=battleProgramFirstClearRewardV113(program);if(!open)return`<button class="battle-program-card program-locked-v114" type="button" disabled><span class="program-number">PROGRAM ${program.no} / LOCKED</span><div><b>？？？？</b><small>前のPROGRAMをCLEARで解放</small><small class="program-first-reward-v113">初回報酬　？？？</small></div><em>LOCK</em></button>`;const enemyText=program.enemies.map(c=>`${trainingEnemyTemplate(c.id)?.name||c.id} Lv.${c.level}`).join(' / ');return`<button class="battle-program-card ${done?'cleared':''} ${program.midBoss?'mid-boss-program-v113':''}" data-program-id="${program.id}" type="button"><span class="program-number">PROGRAM ${program.no}${program.midBoss?' / MID BOSS':''}</span><div><b>${program.label}</b><small>${enemyText}</small><small class="program-first-reward-v113">初回報酬　ダイヤ${first.diamonds} と ${Number(first.coins).toLocaleString()}G</small></div><em>${done?'CLEAR':'挑戦'}</em></button>`;}).join('')}</div></section>`;
   bindImages(root);
   $('[data-program-back]',root).onclick=renderBattleProgramSeasonSelect;
   $$('[data-program-id]',root).forEach(btn=>btn.onclick=()=>confirmBattleProgram(btn.dataset.programId));
@@ -6955,7 +7013,7 @@ async function finishBattleProgramReturn(win){
   if(season)renderBattleProgramList(season.id);else renderBattleProgramSeasonSelect();
   if(justClearedId){requestAnimationFrame(()=>{const card=$(`[data-program-id="${justClearedId}"]`);if(card){card.classList.add('just-cleared');setTimeout(()=>card.classList.remove('just-cleared'),900);}});}
   if(!win){await facilityTalk('惜しかったね！\n次はクリアを目指して頑張ろう！','モブコーチ','play/003.png');return;}
-  if(firstReward)await facilityTalk(`ナイスクリア！\n初回クリア報酬だ！\nダイヤ ×${firstReward.diamonds}\n${Number(firstReward.coins).toLocaleString()}G を獲得！`,'PROGRAM REWARD','icon/22.png');
+  if(firstReward)await facilityTalk(`ナイスクリア！\n初回クリア報酬だ！\nダイヤ${firstReward.diamonds} と ${Number(firstReward.coins).toLocaleString()}G を獲得！`,'PROGRAM REWARD','icon/22.png');
   if(pendingReward&&season){
     const reward=battleProgramSeasonRewardDataV113(season);
     await facilityTalk(`このシーズンを全てクリアしたね！\nシーズンクリア報酬\n${reward?.name||'アイテム'}${reward?.qty>1?` ×${reward.qty}`:''}をプレゼントだ！`,'モブコーチ','play/003.png');
@@ -12731,6 +12789,33 @@ for(const q of (SUBQUEST_AREAS.find(a=>a.worldId==='desert2')?.quests||[])){dele
 
 
 
+
+/* ===== MOB QUEST v122: OPENING SPEECH / PROGRAM REWARD TEXT / COMMAND BUTTON FIX ===== */
+/* Opening throne bubbles: PNG boxes contain transparent headroom, so anchor the tail well inside
+   the actor box instead of above its CSS rectangle. This keeps King/Pink speech close to the
+   visible character on every phone aspect ratio. */
+const _showCastleSpeechV122Base=showCastleSpeech;
+showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
+  _showCastleSpeechV122Base(speaker,text,actorEl,side);
+  if(!document.body.classList.contains('opening-sequence-v78'))return;
+  if(speaker!=='モブスライムキング'&&speaker!=='モブピンク')return;
+  const box=$('#castleSpeech'),stage=box?.parentElement,anchor=actorEl?.querySelector?.('img')||actorEl;
+  if(!box||!stage||!anchor||box.hidden)return;
+  const sr=stage.getBoundingClientRect(),ar=anchor.getBoundingClientRect();
+  if(!sr.height||!ar.height)return;
+  const bh=box.offsetHeight||92;
+  /* Aim the speech-tail at the upper-middle of the rendered actor box. This deliberately moves
+     the bubble much lower than the old "above image top" calculation. */
+  const anchorRatio=speaker==='モブピンク'?.44:.42;
+  const tailY=(ar.top-sr.top)+(ar.height*anchorRatio);
+  let top=tailY-bh-7;
+  top=Math.max(18,Math.min(top,(stage.clientHeight||sr.height)-bh-20));
+  box.style.top=`${Math.round(top)}px`;
+  box.style.zIndex='28';
+};
+window.__mobV122PatchRuntime=true;
+/* ===== END MOB QUEST v122 ===== */
+
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
 /* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
@@ -12753,6 +12838,14 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

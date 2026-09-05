@@ -1,0 +1,13 @@
+MOB QUEST v122 regression report
+
+Implemented:
+1. Opening: King/Pink speech bubbles are re-anchored lower to the visible actor region.
+2. Battle Program: first-clear reward text now reads "ダイヤ1 と 1,000G" style.
+3. Battle commands: enlarged to 58px (52px on short screens); 特技 extra green rectangular backing/shadow removed.
+4. v121 systems preserved.
+
+Validation targets:
+- title v122 / GAME_ASSET_VERSION 122 / data comment v122
+- external CSS == inline CSS
+- inline JS == data.js + game.js (one separator newline, plus inline leading newline)
+- v122 runtime patch executes before v99 boot marker
