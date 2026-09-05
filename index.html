@@ -9,7 +9,8 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
 
-  <style id="mobQuestInlineStyle">:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
+  <style id="mobQuestInlineStyle">
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05080d;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;overscroll-behavior:none;touch-action:manipulation}button,input,select{font:inherit;color:inherit}button{border:0;cursor:pointer}button:disabled{opacity:.42;cursor:default}img{pointer-events:none;-webkit-user-drag:none;user-drag:none}#app{position:relative;width:100%;max-width:480px;height:100dvh;min-height:100svh;margin:0 auto;overflow:hidden;background:#0a1018;box-shadow:0 0 45px rgba(0,0,0,.6)}.screen{position:absolute;inset:0;display:none;overflow:hidden}.screen.active{display:block}.screen-bg,.battle-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}.bg-cover{object-fit:cover}.bg-home{object-position:50% 50%}.bg-interior{object-position:50% 48%}.bg-adventure{object-position:50% 48%;transform:scale(1.015)}.battle-bg{object-position:50% 45%;transform:scale(1.02)}.bg-overlay{position:absolute;inset:0;z-index:1;pointer-events:none}.home-overlay{background:linear-gradient(to bottom,rgba(5,10,16,.20),rgba(5,10,16,.02) 42%,rgba(5,10,16,.58) 74%,rgba(5,10,16,.92))}.interior-overlay{background:linear-gradient(to bottom,rgba(5,9,14,.42),rgba(5,9,14,.19) 35%,rgba(5,9,14,.72))}.adventure-overlay{background:linear-gradient(to bottom,rgba(7,11,17,.38),rgba(7,11,17,.06) 45%,rgba(7,11,17,.78) 90%)}.loading-overlay{background:rgba(5,9,14,.36)}.glass{background:linear-gradient(180deg,rgba(22,31,44,.92),rgba(10,16,25,.92));backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}.safe-top{padding-top:var(--safe-top)}.safe-bottom{padding-bottom:var(--safe-bottom)}
 
 /* HOME */
@@ -3940,6 +3941,43 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 }
 /* ===== END MOB QUEST v122 ===== */
 
+
+/* ===== MOB QUEST v123: LOADING GUIDE CARDS ===== */
+.loading-screen{background:#07101a}
+.loading-guide-box-v123{
+  left:0!important;right:0!important;top:0!important;bottom:0!important;
+  transform:none!important;margin:0!important;padding:calc(18px + var(--safe-top)) 16px calc(14px + var(--safe-bottom))!important;
+  border:0!important;border-radius:0!important;background:rgba(4,9,15,.38)!important;
+  box-shadow:none!important;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;overflow:hidden;
+}
+.loading-guide-head-v123{width:min(82vw,42vh,330px);display:flex;align-items:center;justify-content:space-between;color:#fff;text-shadow:0 2px 4px #000;font-weight:1000}
+.loading-guide-head-v123 small{font-size:8px;letter-spacing:.17em}.loading-guide-head-v123 b{font-size:9px;letter-spacing:.1em}
+.loading-guide-card-v123{
+  width:min(82vw,42vh,330px);aspect-ratio:1/1;flex:0 0 auto;
+  padding:20px 18px 17px;border-radius:22px;overflow:hidden;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  background:#eaf7ff;border:3px solid #0d2234;box-shadow:0 12px 30px rgba(0,0,0,.42),inset 0 0 0 3px rgba(255,255,255,.7);
+  color:#111820;-webkit-text-fill-color:#111820;text-align:left;
+}
+.loading-guide-card-v123.swap{animation:loadingGuideSwapV123 .22s ease both}
+.loading-guide-card-v123 h1{margin:0 0 11px;padding:0 0 9px;border-bottom:3px solid #111820;font-size:clamp(16px,4.3vw,21px);line-height:1.15;font-weight:1000;letter-spacing:.02em;color:#111820!important;-webkit-text-fill-color:#111820!important;text-align:center;flex:0 0 auto}
+.loading-guide-body-v123{white-space:pre-line;overflow:hidden;font-size:clamp(9px,2.55vw,12px);line-height:1.55;font-weight:900;letter-spacing:.01em;color:#111820!important;-webkit-text-fill-color:#111820!important;text-align:left;flex:1 1 auto;min-height:0}
+.loading-guide-tap-v123{width:min(48vw,190px);min-height:38px;padding:7px 20px;border-radius:999px;background:#8fdcff;color:#0b1720!important;-webkit-text-fill-color:#0b1720!important;border:3px solid #0c1d2b;font-size:15px;font-weight:1000;letter-spacing:.12em;box-shadow:0 5px 0 #07121c}
+.loading-guide-tap-v123:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #07121c}.loading-guide-tap-v123:disabled{opacity:.5;filter:saturate(.5)}
+.loading-guide-box-v123>#loadingText{font-size:9px!important;font-weight:1000!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 2px 4px #000;margin:2px 0 0!important;min-height:14px;max-width:min(84vw,350px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loading-guide-box-v123>.loading-track{width:min(82vw,330px);height:8px!important;flex:0 0 auto}.loading-guide-box-v123>.loading-detail{margin-top:0!important;min-height:11px;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 2px 4px #000}
+@keyframes loadingGuideSwapV123{0%{opacity:.35;transform:scale(.985)}100%{opacity:1;transform:scale(1)}}
+@media (max-height:620px){
+  .loading-guide-box-v123{gap:5px;padding-top:calc(8px + var(--safe-top))!important;padding-bottom:calc(7px + var(--safe-bottom))!important}
+  .loading-guide-card-v123{width:min(74vw,40vh,270px);padding:14px 14px 12px;border-radius:17px}
+  .loading-guide-head-v123{width:min(74vw,40vh,270px)}
+  .loading-guide-card-v123 h1{font-size:15px;margin-bottom:7px;padding-bottom:6px}
+  .loading-guide-body-v123{font-size:8.5px;line-height:1.42}
+  .loading-guide-tap-v123{min-height:32px;font-size:12px;padding:4px 15px}
+}
+/* ===== END MOB QUEST v123 ===== */
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -3959,7 +3997,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v122</div>
+      <div class="title-version">v123</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -3998,9 +4036,13 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <section id="loadingScreen" class="screen loading-screen">
     <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay loading-overlay"></div>
-    <div class="loading-box">
-      <img src="play/02.png" alt="" class="loading-pink">
-      <h1>NOW LOADING</h1>
+    <div class="loading-box loading-guide-box-v123">
+      <div class="loading-guide-head-v123"><small>MOB QUEST GUIDE</small><b id="loadingGuideCountV123">1 / 4</b></div>
+      <article id="loadingGuideCardV123" class="loading-guide-card-v123" aria-live="polite">
+        <h1 id="loadingGuideTitleV123">スーパーサブ</h1>
+        <div id="loadingGuideBodyV123" class="loading-guide-body-v123"></div>
+      </article>
+      <button id="loadingGuideTapV123" class="loading-guide-tap-v123" type="button">TAP！</button>
       <p id="loadingText">冒険の準備をしています…</p>
       <div class="loading-track"><i id="loadingBar"></i></div><small id="loadingDetail" class="loading-detail">0%</small>
     </div>
@@ -4365,7 +4407,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v122
+// MOB QUEST v123
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5679,6 +5721,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
 }
 /* ===== END MOB QUEST v121 DATA ===== */
+
 (() => {
 'use strict';
 
@@ -5689,7 +5732,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=122;
+const GAME_ASSET_VERSION=123;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -12816,6 +12859,239 @@ showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
 window.__mobV122PatchRuntime=true;
 /* ===== END MOB QUEST v122 ===== */
 
+
+
+/* ===== MOB QUEST v123: LOADING GUIDE / ASSET-SAFE TRANSITIONS ===== */
+const LOADING_GUIDES_V123=[
+  {title:'スーパーサブ',body:`スーパーサブは
+戦闘中、一定ターンごとに
+自動で行動してくれる仲間。
+
+メインメンバーが倒れた時は
+交代メンバーとしても活躍する。
+
+強敵との戦いでは
+スーパーサブの存在が
+勝敗を分けることも。 `},
+  {title:'メダル',body:`武器には
+メダルを装着できる。
+
+メダルによって
+武器の能力や特徴が変化する。
+
+お気に入りの武器を
+自分好みに強化しよう。 `},
+  {title:'フィギュア',body:`集めたフィギュアは
+装備することで
+様々な効果を発揮する。
+
+同じフィギュアでも
+レア度やタグによって
+活躍する場面は変わる。
+
+モブピースバトルでは
+フィギュアそのものが戦う。 `},
+  {title:'レコードの間',body:`冒険で手に入れた
+伝説のレコードが展示される場所。
+
+浮遊するレコードをタップすると
+秘められた魔法を
+仲間1人に習得させることができる。
+
+1枚につき習得は1度だけ。 `},
+  {title:'バトルプログラム',body:`モンスターとの戦いを
+繰り返し練習できる
+トレーニングプログラム。
+
+PROGRAMをクリアすると
+次の戦いが解放されていく。
+
+初回クリア報酬も忘れずに。
+
+冒険を進めることで
+新しいSEASONが解放される。 `},
+  {title:'属性と状態異常',body:`敵には
+得意な属性と苦手な属性がある。
+
+毒・やけど・眠り・混乱・マヒなど
+状態異常も戦いを有利にする。
+
+ただし、
+強敵ほど効きにくいこともある。 `},
+  {title:'サブクエスト',body:`冒険を進めると
+各エリアの
+サブクエストが追加される。
+
+特別なストーリーや強敵との戦い、
+貴重な報酬が待っている。
+
+チェックしてみよう。 `},
+  {title:'必殺技',body:`必殺技には
+それぞれCTが設定されている。
+
+一度使用すると
+再び使えるようになるまで
+一定ターンが必要。
+
+強力な技ほど
+使うタイミングが重要。 `},
+  {title:'入替と控えメンバー',body:`戦闘中は
+メインメンバーと
+控えメンバーを入れ替えられる。
+
+苦手な敵やピンチの時は
+仲間を交代して
+戦況を立て直そう。 `},
+  {title:'トレーニング',body:`トレーニングでは
+特別なレコードを使って
+様々なステージに挑戦できる。
+
+経験値、ゴールド、
+強力なボスとの戦い。
+
+冒険の合間に
+パーティーを鍛えよう。 `},
+  {title:'冒険日記',body:`一度クリアしたエリアは
+冒険日記から
+再び探索することができる。
+
+モンスターとの再戦や
+アイテム集めにも役立つ。
+
+過去の冒険を
+もう一度振り返ってみよう。 `},
+  {title:'ルビー',body:`ルビーは
+特別な交換に使える
+貴重なアイテム。
+
+同じフィギュアを
+所持上限まで集めた後は
+超過分がルビーに変換される。
+
+大切に使おう。 `}
+];
+let loadingGuideStateV123=null,loadingGuideLastFirstV123=-1;
+function shuffledGuideIndexesV123(){
+  const a=LOADING_GUIDES_V123.map((_,i)=>i);
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  if(a.length>1&&a[0]===loadingGuideLastFirstV123)[a[0],a[1]]=[a[1],a[0]];
+  loadingGuideLastFirstV123=a[0];return a.slice(0,4);
+}
+function fitLoadingGuideTextV123(){
+  const body=$('#loadingGuideBodyV123');if(!body)return;
+  body.style.fontSize='';let px=parseFloat(getComputedStyle(body).fontSize)||10;
+  let guard=0;while(body.scrollHeight>body.clientHeight+1&&px>8&&guard++<12){px-=.3;body.style.fontSize=`${px}px`;}
+}
+function renderLoadingGuideV123(){
+  const st=loadingGuideStateV123;if(!st)return;const idx=st.order[st.pos],g=LOADING_GUIDES_V123[idx];if(!g)return;
+  const card=$('#loadingGuideCardV123'),title=$('#loadingGuideTitleV123'),body=$('#loadingGuideBodyV123'),count=$('#loadingGuideCountV123'),tap=$('#loadingGuideTapV123');
+  if(title)title.textContent=g.title;if(body)body.textContent=g.body.trim();if(count)count.textContent=`${st.pos+1} / 4`;
+  if(tap){tap.textContent='TAP！';tap.disabled=st.pos>=3;tap.setAttribute('aria-label',st.pos>=3?'このロードで表示できるガイドは4枚までです':'次のガイドを表示');}
+  if(card){card.classList.remove('swap');void card.offsetWidth;card.classList.add('swap');}
+  requestAnimationFrame(fitLoadingGuideTextV123);
+}
+function beginLoadingGuideV123(text='読み込んでいます…',detail='0%'){
+  loadingGuideStateV123={order:shuffledGuideIndexesV123(),pos:0};
+  const t=$('#loadingText'),d=$('#loadingDetail'),bar=$('#loadingBar');if(t)t.textContent=text;if(d)d.textContent=detail;if(bar)bar.style.width='0%';
+  renderLoadingGuideV123();
+}
+function nextLoadingGuideV123(){const st=loadingGuideStateV123;if(!st||st.pos>=3)return;st.pos++;renderLoadingGuideV123();}
+function waitRealV123(ms){return new Promise(r=>setTimeout(r,Math.max(0,ms)));}
+function activeScreenKeyV123(){for(const [k,v] of Object.entries(screens))if(v?.classList?.contains('active'))return k;return'home';}
+async function runGuideLoadingJobV123(text,work,{minMs=760,timeoutMs=12000,detail='ASSET'}={}){
+  showScreen('loading');beginLoadingGuideV123(text,detail);await nextPaint();
+  const started=performance.now(),bar=$('#loadingBar'),det=$('#loadingDetail');let accept=true;
+  const progress=(done,total)=>{if(!accept)return;const pct=Math.max(0,Math.min(98,Math.round((Number(done)||0)/Math.max(1,Number(total)||1)*100)));if(bar)bar.style.width=`${pct}%`;if(det)det.textContent=`${done} / ${total}　${pct}%`;};
+  const job=Promise.resolve().then(()=>work?.(progress));
+  const timedOut=await Promise.race([job.then(()=>false).catch(e=>{console.warn('[v123 loading job]',e);return false;}),waitRealV123(timeoutMs).then(()=>true)]);
+  accept=false;if(bar)bar.style.width='100%';if(det)det.textContent=timedOut?'READY / TIMEOUT':'READY';
+  const remain=Math.max(0,minMs-(performance.now()-started));if(remain)await waitRealV123(remain);await waitRealV123(100);
+}
+async function preloadRowsWithProgressV123(rows,progress){
+  const seen=new Set(),list=[];for(const x of (rows||[])){const src=typeof x==='string'?x:x?.image;if(!src||seen.has(src))continue;seen.add(src);list.push(x);}const total=list.length;if(!total){progress?.(1,1);return;}
+  let cursor=0,done=0;const workers=Math.min(10,total);
+  const one=async x=>{const src=typeof x==='string'?x:x?.image;if(!src)return;try{const isFig=typeof x==='object'&&/^(?:fig|figplay|figene|figboss)\//i.test(String(src));if(isFig&&typeof ensureFigureAssetV110==='function'){await ensureFigureAssetV110(x,2600);await preloadAsset(x.image||src,'high');}else await preloadAsset(src,'high');}catch(_){}};
+  const worker=async()=>{while(cursor<total){const i=cursor++;await one(list[i]);done++;progress?.(done,total);}};await Promise.all(Array.from({length:workers},worker));
+}
+async function loadingRowsV123(text,rows,opts={}){return runGuideLoadingJobV123(text,p=>preloadRowsWithProgressV123(rows,p),opts);}
+
+const _loadingWithAssetsV123Base=loadingWithAssets;
+loadingWithAssets=async function(text,assets){
+  const list=[...new Set(['back2/01.png',...(assets||[])].filter(Boolean))];
+  return runGuideLoadingJobV123(text,p=>preloadAssets(list,p),{minMs:760,timeoutMs:12000,detail:'ASSET'});
+};
+
+/* Every normal room transition uses the guide loader. The opening's dedicated black curtain stays
+   separate so the prologue is not interrupted by tutorial tips. */
+travelTo=async function(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);};
+goHome=async function(){await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','icon/01.png']);await renderHome();showScreen('home');if(window.__mobBootGuard){clearTimeout(window.__mobBootGuard);window.__mobBootGuard=null;}};
+const _openCastleRoomV123Base=openCastleRoom;
+openCastleRoom=async function(room){
+  const assets={throne:['back/king1.png','play/007.png','play/008.png'],inn:['back/king3.png','play/006.png'],shop:['back/king2.png','play/005.png','icon/20.png'],records:['back/king4.png','icon/21.png'],smith:['back/gonzo.png','play/002.png','icon/23.png']}[room]||['back2/003.png'];
+  await loadingWithAssets('施設へ移動しています…',assets);
+  if(room==='throne')renderThroneRoom();else if(room==='inn')renderInnRoom();else if(room==='shop')renderMobShopRoom();else if(room==='smith'){await openBlacksmithFacility();return;}else if(room==='records')renderRecordRoom();else renderCastle();
+  showScreen('castle');await nextPaint();await nextPaint();if(room==='inn')await facilityTalk('ようこそ！自由に休んでいってね！','モブミータ','play/006.png');if(room==='shop'){await facilityTalk('いらっしゃい！たくさん買って行ってくれ♪','モブマテリア','play/005.png');openCastleShopPopup();}
+};
+
+/* Heavy collection screens: decode what is about to be shown before exposing the UI. */
+const _openEquipmentScreenV123Base=openEquipmentScreen;
+openEquipmentScreen=async function(){
+  const rows=[];for(const [pid] of state.party){const p=player(pid);if(p)rows.push(versionedPlay(p.image));const eq=equipmentFor(pid);if(eq.main)rows.push(weaponById(eq.main));if(eq.sub)rows.push(weaponById(eq.sub));if(eq.armor)rows.push(armorById(eq.armor));for(const id of eq.medals||[])if(id)rows.push(weaponById(id));for(const id of figureEquipmentFor(pid))if(id)rows.push(figureById(id));}
+  rows.push(...WEAPONS,...ARMORS.filter(a=>armorOwned(a.id)>0));
+  await loadingRowsV123('装備データを読み込んでいます…',rows,{minMs:900,timeoutMs:14000,detail:'EQUIPMENT'});
+  return _openEquipmentScreenV123Base();
+};
+const _openFigurePickerV123Base=openFigurePicker;
+openFigurePicker=async function(pid,index){
+  equipmentPlayerId=canonicalPlayerId(pid);figurePickerSlot=clamp(Number(index)||0,0,3);const rows=filteredOwnedFigures();
+  await loadingRowsV123('フィギュアを読み込んでいます…',rows,{minMs:900,timeoutMs:15000,detail:'FIGURE'});showScreen('equipment');return _openFigurePickerV123Base(pid,index);
+};
+const _openWeaponPickerV123Base=openWeaponPicker;
+openWeaponPicker=async function(pid,kind,index=0,onDone=null){
+  pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid);let rows=[];
+  if(kind==='armor')rows=ARMORS.filter(a=>armorOwned(a.id)>0&&(freeArmorCount(a.id,pid)>0||eq.armor===a.id));
+  else if(kind==='medal')rows=WEAPONS.filter(w=>medalOwned(w.id)>0&&(freeMedalCount(w.id,{pid,slot:'medal',index})>0||eq.medals[index]===w.id));
+  else rows=WEAPONS.filter(w=>canEquipWeapon(p,w)&&weaponOwned(w.id)>0&&(freeWeaponCount(w.id,{pid,slot:kind})>0||eq[kind]===w.id));
+  await loadingRowsV123(kind==='armor'?'防具を読み込んでいます…':kind==='medal'?'メダルを読み込んでいます…':'武器を読み込んでいます…',rows,{minMs:720,timeoutMs:12000,detail:kind.toUpperCase()});showScreen('equipment');return _openWeaponPickerV123Base(pid,kind,index,onDone);
+};
+const _openInventoryV123Base=openInventory;
+openInventory=async function(){
+  const returnTo=activeScreenKeyV123(),rows=[...GAME_ITEMS.filter(it=>itemCount(it.id)>0),...WEAPONS.filter(w=>weaponOwned(w.id)>0),...FIGURES.filter(f=>!f.pending&&figureOwned(f.id)>0)];
+  await loadingRowsV123('所持品を読み込んでいます…',rows,{minMs:820,timeoutMs:15000,detail:'INVENTORY'});if(returnTo&&returnTo!=='loading')showScreen(returnTo);return _openInventoryV123Base();
+};
+
+/* Gacha lineup can contain dozens of figure PNGs. Hide the overlay, finish decoding on the
+   full guide loader, then let the existing lineup renderer paint only cached images. */
+const _showGachaLineupV123Base=showGachaLineupV96;
+showGachaLineupV96=async function(b){
+  if(!b||b.disabledReason)return _showGachaLineupV123Base(b);
+  const ov=ensureGachaOverlayV96(),pool=gachaPoolV96(b);ov.hidden=true;
+  await loadingRowsV123('ガチャのフィギュアを読み込んでいます…',pool,{minMs:920,timeoutMs:16000,detail:'GACHA FIGURE'});
+  showScreen('tavern');
+  return _showGachaLineupV123Base(b);
+};
+
+/* MOB PIECE deck/list entry is another figure-heavy path. Only the initial entry from the menu
+   uses the full loader; filter changes and deck edits remain instant because the images are cached. */
+async function openMobPieceCollectionV123(mode){
+  const ov=ensureMobPieceOverlayV96(),rows=FIGURES.filter(f=>figureOwned(f.id)>0&&!f.pending);ov.hidden=true;
+  await loadingRowsV123(mode==='deck'?'モブピースのデッキを読み込んでいます…':'モブピースのフィギュアを読み込んでいます…',rows,{minMs:920,timeoutMs:16000,detail:'MOB PIECE'});
+  showScreen('tavern');
+  if(mode==='deck')renderMobPieceDeckV96(true);else renderMobPieceFigureListV96(true);
+}
+openMobPieceMenuV96=function(){
+  const ov=ensureMobPieceOverlayV96();
+  ov.innerHTML=`<div class="mob-piece-card-v96 menu mob-piece-menu-card-v100"><div class="settings-head"><div><small>MOB PIECE BATTLE</small><h2>モブピースバトル</h2></div><button data-piece-close-v96 class="sheet-close" type="button">×</button></div><div class="mob-piece-menu-v96"><button data-piece-menu-v96="deck" type="button">デッキ編成<small>25体 / COST 80 / 同種はレア度別上限</small></button><button data-piece-menu-v96="list" type="button">フィギュア一覧<small>HP / ATK / DEF / SPD</small></button><button data-piece-menu-v96="battle" type="button">対戦<small>5 vs 5 CPU BATTLE</small></button><button data-piece-menu-v96="rank" type="button">ランクマッチ<small>RANK ${Number(state.meta.mobPieceRank)||0}</small></button></div></div>`;
+  ov.hidden=false;$('[data-piece-close-v96]',ov).onclick=()=>ov.hidden=true;
+  $$('[data-piece-menu-v96]',ov).forEach(btn=>btn.onclick=()=>{const a=btn.dataset.pieceMenuV96;if(a==='deck'||a==='list')openMobPieceCollectionV123(a);else startMobPieceBattleV96(a==='rank');});
+};
+
+/* The guide button is bound once here; a load may show at most four distinct cards. */
+const guideTapV123=$('#loadingGuideTapV123');if(guideTapV123)guideTapV123.onclick=e=>{e.preventDefault();e.stopPropagation();nextLoadingGuideV123();};
+try{preloadAssets(['back2/01.png']).catch(()=>{});}catch(_){ }
+window.__mobV123PatchRuntime=true;
+/* ===== END MOB QUEST v123 ===== */
+
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
 /* ===== END MOB QUEST v99 RUNTIME GUARD ===== */
@@ -12838,14 +13114,6 @@ window.__mobBootReady=true;
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
 })();
-
-
-
-
-
-
-
-
 </script>
 </body>
 </html>

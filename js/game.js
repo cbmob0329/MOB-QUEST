@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=122;
+const GAME_ASSET_VERSION=123;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7134,6 +7134,239 @@ showCastleSpeech=function(speaker,text,actorEl=null,side='center'){
 };
 window.__mobV122PatchRuntime=true;
 /* ===== END MOB QUEST v122 ===== */
+
+
+
+/* ===== MOB QUEST v123: LOADING GUIDE / ASSET-SAFE TRANSITIONS ===== */
+const LOADING_GUIDES_V123=[
+  {title:'スーパーサブ',body:`スーパーサブは
+戦闘中、一定ターンごとに
+自動で行動してくれる仲間。
+
+メインメンバーが倒れた時は
+交代メンバーとしても活躍する。
+
+強敵との戦いでは
+スーパーサブの存在が
+勝敗を分けることも。 `},
+  {title:'メダル',body:`武器には
+メダルを装着できる。
+
+メダルによって
+武器の能力や特徴が変化する。
+
+お気に入りの武器を
+自分好みに強化しよう。 `},
+  {title:'フィギュア',body:`集めたフィギュアは
+装備することで
+様々な効果を発揮する。
+
+同じフィギュアでも
+レア度やタグによって
+活躍する場面は変わる。
+
+モブピースバトルでは
+フィギュアそのものが戦う。 `},
+  {title:'レコードの間',body:`冒険で手に入れた
+伝説のレコードが展示される場所。
+
+浮遊するレコードをタップすると
+秘められた魔法を
+仲間1人に習得させることができる。
+
+1枚につき習得は1度だけ。 `},
+  {title:'バトルプログラム',body:`モンスターとの戦いを
+繰り返し練習できる
+トレーニングプログラム。
+
+PROGRAMをクリアすると
+次の戦いが解放されていく。
+
+初回クリア報酬も忘れずに。
+
+冒険を進めることで
+新しいSEASONが解放される。 `},
+  {title:'属性と状態異常',body:`敵には
+得意な属性と苦手な属性がある。
+
+毒・やけど・眠り・混乱・マヒなど
+状態異常も戦いを有利にする。
+
+ただし、
+強敵ほど効きにくいこともある。 `},
+  {title:'サブクエスト',body:`冒険を進めると
+各エリアの
+サブクエストが追加される。
+
+特別なストーリーや強敵との戦い、
+貴重な報酬が待っている。
+
+チェックしてみよう。 `},
+  {title:'必殺技',body:`必殺技には
+それぞれCTが設定されている。
+
+一度使用すると
+再び使えるようになるまで
+一定ターンが必要。
+
+強力な技ほど
+使うタイミングが重要。 `},
+  {title:'入替と控えメンバー',body:`戦闘中は
+メインメンバーと
+控えメンバーを入れ替えられる。
+
+苦手な敵やピンチの時は
+仲間を交代して
+戦況を立て直そう。 `},
+  {title:'トレーニング',body:`トレーニングでは
+特別なレコードを使って
+様々なステージに挑戦できる。
+
+経験値、ゴールド、
+強力なボスとの戦い。
+
+冒険の合間に
+パーティーを鍛えよう。 `},
+  {title:'冒険日記',body:`一度クリアしたエリアは
+冒険日記から
+再び探索することができる。
+
+モンスターとの再戦や
+アイテム集めにも役立つ。
+
+過去の冒険を
+もう一度振り返ってみよう。 `},
+  {title:'ルビー',body:`ルビーは
+特別な交換に使える
+貴重なアイテム。
+
+同じフィギュアを
+所持上限まで集めた後は
+超過分がルビーに変換される。
+
+大切に使おう。 `}
+];
+let loadingGuideStateV123=null,loadingGuideLastFirstV123=-1;
+function shuffledGuideIndexesV123(){
+  const a=LOADING_GUIDES_V123.map((_,i)=>i);
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  if(a.length>1&&a[0]===loadingGuideLastFirstV123)[a[0],a[1]]=[a[1],a[0]];
+  loadingGuideLastFirstV123=a[0];return a.slice(0,4);
+}
+function fitLoadingGuideTextV123(){
+  const body=$('#loadingGuideBodyV123');if(!body)return;
+  body.style.fontSize='';let px=parseFloat(getComputedStyle(body).fontSize)||10;
+  let guard=0;while(body.scrollHeight>body.clientHeight+1&&px>8&&guard++<12){px-=.3;body.style.fontSize=`${px}px`;}
+}
+function renderLoadingGuideV123(){
+  const st=loadingGuideStateV123;if(!st)return;const idx=st.order[st.pos],g=LOADING_GUIDES_V123[idx];if(!g)return;
+  const card=$('#loadingGuideCardV123'),title=$('#loadingGuideTitleV123'),body=$('#loadingGuideBodyV123'),count=$('#loadingGuideCountV123'),tap=$('#loadingGuideTapV123');
+  if(title)title.textContent=g.title;if(body)body.textContent=g.body.trim();if(count)count.textContent=`${st.pos+1} / 4`;
+  if(tap){tap.textContent='TAP！';tap.disabled=st.pos>=3;tap.setAttribute('aria-label',st.pos>=3?'このロードで表示できるガイドは4枚までです':'次のガイドを表示');}
+  if(card){card.classList.remove('swap');void card.offsetWidth;card.classList.add('swap');}
+  requestAnimationFrame(fitLoadingGuideTextV123);
+}
+function beginLoadingGuideV123(text='読み込んでいます…',detail='0%'){
+  loadingGuideStateV123={order:shuffledGuideIndexesV123(),pos:0};
+  const t=$('#loadingText'),d=$('#loadingDetail'),bar=$('#loadingBar');if(t)t.textContent=text;if(d)d.textContent=detail;if(bar)bar.style.width='0%';
+  renderLoadingGuideV123();
+}
+function nextLoadingGuideV123(){const st=loadingGuideStateV123;if(!st||st.pos>=3)return;st.pos++;renderLoadingGuideV123();}
+function waitRealV123(ms){return new Promise(r=>setTimeout(r,Math.max(0,ms)));}
+function activeScreenKeyV123(){for(const [k,v] of Object.entries(screens))if(v?.classList?.contains('active'))return k;return'home';}
+async function runGuideLoadingJobV123(text,work,{minMs=760,timeoutMs=12000,detail='ASSET'}={}){
+  showScreen('loading');beginLoadingGuideV123(text,detail);await nextPaint();
+  const started=performance.now(),bar=$('#loadingBar'),det=$('#loadingDetail');let accept=true;
+  const progress=(done,total)=>{if(!accept)return;const pct=Math.max(0,Math.min(98,Math.round((Number(done)||0)/Math.max(1,Number(total)||1)*100)));if(bar)bar.style.width=`${pct}%`;if(det)det.textContent=`${done} / ${total}　${pct}%`;};
+  const job=Promise.resolve().then(()=>work?.(progress));
+  const timedOut=await Promise.race([job.then(()=>false).catch(e=>{console.warn('[v123 loading job]',e);return false;}),waitRealV123(timeoutMs).then(()=>true)]);
+  accept=false;if(bar)bar.style.width='100%';if(det)det.textContent=timedOut?'READY / TIMEOUT':'READY';
+  const remain=Math.max(0,minMs-(performance.now()-started));if(remain)await waitRealV123(remain);await waitRealV123(100);
+}
+async function preloadRowsWithProgressV123(rows,progress){
+  const seen=new Set(),list=[];for(const x of (rows||[])){const src=typeof x==='string'?x:x?.image;if(!src||seen.has(src))continue;seen.add(src);list.push(x);}const total=list.length;if(!total){progress?.(1,1);return;}
+  let cursor=0,done=0;const workers=Math.min(10,total);
+  const one=async x=>{const src=typeof x==='string'?x:x?.image;if(!src)return;try{const isFig=typeof x==='object'&&/^(?:fig|figplay|figene|figboss)\//i.test(String(src));if(isFig&&typeof ensureFigureAssetV110==='function'){await ensureFigureAssetV110(x,2600);await preloadAsset(x.image||src,'high');}else await preloadAsset(src,'high');}catch(_){}};
+  const worker=async()=>{while(cursor<total){const i=cursor++;await one(list[i]);done++;progress?.(done,total);}};await Promise.all(Array.from({length:workers},worker));
+}
+async function loadingRowsV123(text,rows,opts={}){return runGuideLoadingJobV123(text,p=>preloadRowsWithProgressV123(rows,p),opts);}
+
+const _loadingWithAssetsV123Base=loadingWithAssets;
+loadingWithAssets=async function(text,assets){
+  const list=[...new Set(['back2/01.png',...(assets||[])].filter(Boolean))];
+  return runGuideLoadingJobV123(text,p=>preloadAssets(list,p),{minMs:760,timeoutMs:12000,detail:'ASSET'});
+};
+
+/* Every normal room transition uses the guide loader. The opening's dedicated black curtain stays
+   separate so the prologue is not interrupted by tutorial tips. */
+travelTo=async function(target,text,after){await loadingWithAssets(text,pageAssets(target));if(after)after();showScreen(target);};
+goHome=async function(){await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','icon/01.png']);await renderHome();showScreen('home');if(window.__mobBootGuard){clearTimeout(window.__mobBootGuard);window.__mobBootGuard=null;}};
+const _openCastleRoomV123Base=openCastleRoom;
+openCastleRoom=async function(room){
+  const assets={throne:['back/king1.png','play/007.png','play/008.png'],inn:['back/king3.png','play/006.png'],shop:['back/king2.png','play/005.png','icon/20.png'],records:['back/king4.png','icon/21.png'],smith:['back/gonzo.png','play/002.png','icon/23.png']}[room]||['back2/003.png'];
+  await loadingWithAssets('施設へ移動しています…',assets);
+  if(room==='throne')renderThroneRoom();else if(room==='inn')renderInnRoom();else if(room==='shop')renderMobShopRoom();else if(room==='smith'){await openBlacksmithFacility();return;}else if(room==='records')renderRecordRoom();else renderCastle();
+  showScreen('castle');await nextPaint();await nextPaint();if(room==='inn')await facilityTalk('ようこそ！自由に休んでいってね！','モブミータ','play/006.png');if(room==='shop'){await facilityTalk('いらっしゃい！たくさん買って行ってくれ♪','モブマテリア','play/005.png');openCastleShopPopup();}
+};
+
+/* Heavy collection screens: decode what is about to be shown before exposing the UI. */
+const _openEquipmentScreenV123Base=openEquipmentScreen;
+openEquipmentScreen=async function(){
+  const rows=[];for(const [pid] of state.party){const p=player(pid);if(p)rows.push(versionedPlay(p.image));const eq=equipmentFor(pid);if(eq.main)rows.push(weaponById(eq.main));if(eq.sub)rows.push(weaponById(eq.sub));if(eq.armor)rows.push(armorById(eq.armor));for(const id of eq.medals||[])if(id)rows.push(weaponById(id));for(const id of figureEquipmentFor(pid))if(id)rows.push(figureById(id));}
+  rows.push(...WEAPONS,...ARMORS.filter(a=>armorOwned(a.id)>0));
+  await loadingRowsV123('装備データを読み込んでいます…',rows,{minMs:900,timeoutMs:14000,detail:'EQUIPMENT'});
+  return _openEquipmentScreenV123Base();
+};
+const _openFigurePickerV123Base=openFigurePicker;
+openFigurePicker=async function(pid,index){
+  equipmentPlayerId=canonicalPlayerId(pid);figurePickerSlot=clamp(Number(index)||0,0,3);const rows=filteredOwnedFigures();
+  await loadingRowsV123('フィギュアを読み込んでいます…',rows,{minMs:900,timeoutMs:15000,detail:'FIGURE'});showScreen('equipment');return _openFigurePickerV123Base(pid,index);
+};
+const _openWeaponPickerV123Base=openWeaponPicker;
+openWeaponPicker=async function(pid,kind,index=0,onDone=null){
+  pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid);let rows=[];
+  if(kind==='armor')rows=ARMORS.filter(a=>armorOwned(a.id)>0&&(freeArmorCount(a.id,pid)>0||eq.armor===a.id));
+  else if(kind==='medal')rows=WEAPONS.filter(w=>medalOwned(w.id)>0&&(freeMedalCount(w.id,{pid,slot:'medal',index})>0||eq.medals[index]===w.id));
+  else rows=WEAPONS.filter(w=>canEquipWeapon(p,w)&&weaponOwned(w.id)>0&&(freeWeaponCount(w.id,{pid,slot:kind})>0||eq[kind]===w.id));
+  await loadingRowsV123(kind==='armor'?'防具を読み込んでいます…':kind==='medal'?'メダルを読み込んでいます…':'武器を読み込んでいます…',rows,{minMs:720,timeoutMs:12000,detail:kind.toUpperCase()});showScreen('equipment');return _openWeaponPickerV123Base(pid,kind,index,onDone);
+};
+const _openInventoryV123Base=openInventory;
+openInventory=async function(){
+  const returnTo=activeScreenKeyV123(),rows=[...GAME_ITEMS.filter(it=>itemCount(it.id)>0),...WEAPONS.filter(w=>weaponOwned(w.id)>0),...FIGURES.filter(f=>!f.pending&&figureOwned(f.id)>0)];
+  await loadingRowsV123('所持品を読み込んでいます…',rows,{minMs:820,timeoutMs:15000,detail:'INVENTORY'});if(returnTo&&returnTo!=='loading')showScreen(returnTo);return _openInventoryV123Base();
+};
+
+/* Gacha lineup can contain dozens of figure PNGs. Hide the overlay, finish decoding on the
+   full guide loader, then let the existing lineup renderer paint only cached images. */
+const _showGachaLineupV123Base=showGachaLineupV96;
+showGachaLineupV96=async function(b){
+  if(!b||b.disabledReason)return _showGachaLineupV123Base(b);
+  const ov=ensureGachaOverlayV96(),pool=gachaPoolV96(b);ov.hidden=true;
+  await loadingRowsV123('ガチャのフィギュアを読み込んでいます…',pool,{minMs:920,timeoutMs:16000,detail:'GACHA FIGURE'});
+  showScreen('tavern');
+  return _showGachaLineupV123Base(b);
+};
+
+/* MOB PIECE deck/list entry is another figure-heavy path. Only the initial entry from the menu
+   uses the full loader; filter changes and deck edits remain instant because the images are cached. */
+async function openMobPieceCollectionV123(mode){
+  const ov=ensureMobPieceOverlayV96(),rows=FIGURES.filter(f=>figureOwned(f.id)>0&&!f.pending);ov.hidden=true;
+  await loadingRowsV123(mode==='deck'?'モブピースのデッキを読み込んでいます…':'モブピースのフィギュアを読み込んでいます…',rows,{minMs:920,timeoutMs:16000,detail:'MOB PIECE'});
+  showScreen('tavern');
+  if(mode==='deck')renderMobPieceDeckV96(true);else renderMobPieceFigureListV96(true);
+}
+openMobPieceMenuV96=function(){
+  const ov=ensureMobPieceOverlayV96();
+  ov.innerHTML=`<div class="mob-piece-card-v96 menu mob-piece-menu-card-v100"><div class="settings-head"><div><small>MOB PIECE BATTLE</small><h2>モブピースバトル</h2></div><button data-piece-close-v96 class="sheet-close" type="button">×</button></div><div class="mob-piece-menu-v96"><button data-piece-menu-v96="deck" type="button">デッキ編成<small>25体 / COST 80 / 同種はレア度別上限</small></button><button data-piece-menu-v96="list" type="button">フィギュア一覧<small>HP / ATK / DEF / SPD</small></button><button data-piece-menu-v96="battle" type="button">対戦<small>5 vs 5 CPU BATTLE</small></button><button data-piece-menu-v96="rank" type="button">ランクマッチ<small>RANK ${Number(state.meta.mobPieceRank)||0}</small></button></div></div>`;
+  ov.hidden=false;$('[data-piece-close-v96]',ov).onclick=()=>ov.hidden=true;
+  $$('[data-piece-menu-v96]',ov).forEach(btn=>btn.onclick=()=>{const a=btn.dataset.pieceMenuV96;if(a==='deck'||a==='list')openMobPieceCollectionV123(a);else startMobPieceBattleV96(a==='rank');});
+};
+
+/* The guide button is bound once here; a load may show at most four distinct cards. */
+const guideTapV123=$('#loadingGuideTapV123');if(guideTapV123)guideTapV123.onclick=e=>{e.preventDefault();e.stopPropagation();nextLoadingGuideV123();};
+try{preloadAssets(['back2/01.png']).catch(()=>{});}catch(_){ }
+window.__mobV123PatchRuntime=true;
+/* ===== END MOB QUEST v123 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

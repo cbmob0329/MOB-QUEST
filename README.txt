@@ -278,3 +278,11 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - Camp formation now separates character-detail viewing from swapping: tap the character card for status, use the dedicated 「入替」 button for formation changes.
 - Character detail panel scrolls internally and remains above adventure/camp UI without leaking into battle.
 - Title and GAME_ASSET_VERSION updated to v117.
+
+[v123]
+- Added a square MOB QUEST GUIDE card to the standard loading screen.
+- Every standard load starts with one of 12 guide topics; TAP！ advances through up to four distinct cards for that load.
+- Guide text preserves authored paragraph breaks and dynamically shrinks inside the square when necessary so it never overflows.
+- Normal page transitions, HOME, battle startup, and castle room transitions use the guide loader.
+- Added stronger decode/preload gates before equipment, inventory, figure picker, weapon/armor/medal picker, gacha lineup, and MOB PIECE deck/list screens so image-heavy UI is not exposed before its art is ready.
+- GAME_ASSET_VERSION and title updated to v123.
