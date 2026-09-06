@@ -9,7 +9,8 @@
   <meta name="format-detection" content="telephone=no">
   <title>MOB QUEST</title>
 
-  <style id="mobQuestInlineStyle">:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
+  <style id="mobQuestInlineStyle">
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05080d;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;overscroll-behavior:none;touch-action:manipulation}button,input,select{font:inherit;color:inherit}button{border:0;cursor:pointer}button:disabled{opacity:.42;cursor:default}img{pointer-events:none;-webkit-user-drag:none;user-drag:none}#app{position:relative;width:100%;max-width:480px;height:100dvh;min-height:100svh;margin:0 auto;overflow:hidden;background:#0a1018;box-shadow:0 0 45px rgba(0,0,0,.6)}.screen{position:absolute;inset:0;display:none;overflow:hidden}.screen.active{display:block}.screen-bg,.battle-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}.bg-cover{object-fit:cover}.bg-home{object-position:50% 50%}.bg-interior{object-position:50% 48%}.bg-adventure{object-position:50% 48%;transform:scale(1.015)}.battle-bg{object-position:50% 45%;transform:scale(1.02)}.bg-overlay{position:absolute;inset:0;z-index:1;pointer-events:none}.home-overlay{background:linear-gradient(to bottom,rgba(5,10,16,.20),rgba(5,10,16,.02) 42%,rgba(5,10,16,.58) 74%,rgba(5,10,16,.92))}.interior-overlay{background:linear-gradient(to bottom,rgba(5,9,14,.42),rgba(5,9,14,.19) 35%,rgba(5,9,14,.72))}.adventure-overlay{background:linear-gradient(to bottom,rgba(7,11,17,.38),rgba(7,11,17,.06) 45%,rgba(7,11,17,.78) 90%)}.loading-overlay{background:rgba(5,9,14,.36)}.glass{background:linear-gradient(180deg,rgba(22,31,44,.92),rgba(10,16,25,.92));backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}.safe-top{padding-top:var(--safe-top)}.safe-bottom{padding-bottom:var(--safe-bottom)}
 
 /* HOME */
@@ -4000,6 +4001,61 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .blacksmith-wallet-v128 small{grid-column:1/-1;font-size:7px;font-weight:1000;letter-spacing:.08em;color:#6b431f;-webkit-text-fill-color:#6b431f}
 .loading-guide-tap-v123:disabled{opacity:1!important;filter:none!important}
 /* ===== END MOB QUEST v128 ===== */
+
+
+/* ===== MOB QUEST v131: RURAL / SKY THEME READABILITY ===== */
+/* Light sky-blue cards use dark ink.  Disabled one-use camp actions remain
+   visibly disabled without making their labels unreadable. */
+.camp-overlay.area-theme-sky .camp-main-menu>button,
+.explore-overlay.area-theme-sky .explore-card{
+  background:repeating-linear-gradient(0deg,#7fc0d6 0 15px,#a9d9e8 15px 30px,#6eafc8 30px 45px)!important;
+  color:#102633!important;
+  -webkit-text-fill-color:#102633!important;
+  text-shadow:none!important;
+  border-color:#27465a!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button *,
+.explore-overlay.area-theme-sky .explore-card *{
+  color:#102633!important;
+  -webkit-text-fill-color:#102633!important;
+  text-shadow:none!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button small,
+.explore-overlay.area-theme-sky .explore-card small{
+  color:#24495c!important;
+  -webkit-text-fill-color:#24495c!important;
+  opacity:1!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button:disabled{opacity:.72!important;}
+/* While a sub-quest story is active, never paint the ordinary tiny party row. */
+#adventureScreen.subquest-story-active-v131 #adventureParty{display:none!important;visibility:hidden!important;}
+/* ===== END MOB QUEST v131 ===== */
+/* ===== MOB QUEST v132: FIGURE ACE / MOB PIECE RANK UI ===== */
+.figure-auto-actions-v132{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 12px}
+.figure-auto-actions-v132 button{min-height:54px;padding:8px 10px;border-radius:13px;background:#24445f;border:1px solid rgba(139,215,255,.55);color:#fff;text-align:left;box-shadow:0 5px 12px rgba(0,0,0,.22)}
+.figure-auto-actions-v132 button b{display:block;font-size:11px;font-weight:1000}.figure-auto-actions-v132 button small{display:block;margin-top:3px;font-size:7px;line-height:1.35;color:#d8edf9;font-weight:800}
+.figure-ace-overlay-v132{position:fixed;z-index:10080;inset:0;background:rgba(2,8,15,.86);display:flex;align-items:center;justify-content:center;padding:18px}.figure-ace-overlay-v132[hidden]{display:none}
+.figure-ace-card-v132{width:min(720px,96vw);max-height:min(86vh,920px);overflow:auto;background:#f6ecd6;border:4px solid #8f7352;border-radius:26px;padding:18px;color:#20180f;box-shadow:0 22px 70px rgba(0,0,0,.5)}
+.figure-ace-card-v132 .settings-head{position:sticky;top:-18px;z-index:2;margin:-18px -18px 12px;padding:18px;background:#17304a;color:#fff}.figure-ace-card-v132>p{margin:4px 2px 12px;font-size:10px;font-weight:900;color:#5c4a36}
+.figure-ace-grid-v132{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.figure-ace-grid-v132>button{min-width:0;padding:6px 4px 7px;border-radius:13px;background:#fffdf8;border:2px solid #9a7952;color:#1d1711;display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:0 3px 0 rgba(88,56,28,.16)}
+.figure-ace-grid-v132 img{width:66px;height:66px;object-fit:contain}.figure-ace-grid-v132 b{width:100%;font-size:7px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.figure-ace-grid-v132 small{font-size:7px;font-weight:1000;color:#6a4a2d}
+.piece-ace-btn-v132{background:#315b78!important;color:#fff!important;border-color:#79c9ef!important}
+.mob-piece-deck-v115 .piece-deck-actions-v102{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.mob-piece-menu-v132 .settings-head p{margin:3px 0 0;color:#d7e9f7;font-size:9px;font-weight:1000}.battle-menu-v132{grid-column:1/-1!important}
+.piece-battle-select-v132,.free-select-v132{color:#20180f}.piece-battle-select-v132 .settings-head,.free-select-v132 .settings-head{color:#fff}
+.battle-mode-grid-v132,.free-difficulty-grid-v132{display:grid;gap:10px;margin-top:14px}.battle-mode-grid-v132{grid-template-columns:1fr 1fr}.free-difficulty-grid-v132{grid-template-columns:1fr}
+.battle-mode-grid-v132 button,.free-difficulty-grid-v132 button{min-height:92px;border-radius:17px;border:2px solid #8e704d;background:#fffaf0;color:#21180f;padding:13px;text-align:left;box-shadow:0 7px 0 rgba(87,62,35,.14)}
+.battle-mode-grid-v132 button b,.free-difficulty-grid-v132 button b{display:block;font-size:15px;font-weight:1000}.battle-mode-grid-v132 button small,.free-difficulty-grid-v132 button small{display:block;margin-top:5px;font-size:9px;color:#5c5045;font-weight:900}.battle-mode-grid-v132 button em,.free-difficulty-grid-v132 button em{display:block;margin-top:7px;font-style:normal;font-size:10px;color:#123d5d;font-weight:1000}
+.free-difficulty-grid-v132 button:disabled{opacity:.5;filter:grayscale(.55)}
+.cpu-profile-v132{display:flex;align-items:center;gap:8px;width:max-content;margin:8px auto 6px;padding:5px 10px 5px 5px;border-radius:999px;background:#f3ead6;border:2px solid #927553;color:#21180f}.cpu-profile-v132>b{font-size:10px;letter-spacing:.12em}
+.cpu-silhouette-v132{position:relative;width:42px;height:42px;border-radius:50%;background:#d8c6a8;overflow:hidden;border:2px solid #806646}.cpu-silhouette-v132:before{content:"";position:absolute;left:50%;top:7px;width:12px;height:12px;border-radius:50%;background:#080a0d;transform:translateX(-50%)}.cpu-silhouette-v132:after{content:"";position:absolute;left:50%;bottom:-6px;width:28px;height:25px;border-radius:50% 50% 35% 35%;background:#080a0d;transform:translateX(-50%)}.cpu-silhouette-v132 span{position:absolute;z-index:2;right:4px;top:2px;font-size:17px;font-weight:1000;color:#fff;text-shadow:0 1px 2px #000}
+.mob-piece-battle-v132>.cpu-profile-v132{margin:4px auto 3px;transform:scale(.82);transform-origin:center}.mob-piece-battle-v132 .piece-player-card-v103.cpu.center{outline:3px solid #efc74d!important;box-shadow:0 0 0 3px rgba(239,199,77,.25),0 5px 12px rgba(0,0,0,.2)!important}
+.piece-score-v132 span:first-child,.piece-score-v132 span:last-child{font-size:9px}.piece-score-v132 span b{font-size:16px}
+.mob-piece-big-notice-v132{position:relative;width:min(620px,92vw);min-height:290px;margin:auto;padding:48px 24px;border-radius:28px;background:#f7edd8;border:5px solid #8b704f;color:#17120d;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 22px 70px rgba(0,0,0,.55);overflow:hidden}.mob-piece-big-notice-v132 small{font-size:10px;letter-spacing:.22em;font-weight:1000;color:#66523e}.mob-piece-big-notice-v132 h2{position:relative;z-index:2;margin:14px 0 6px;font-size:34px;line-height:1.05;font-weight:1100}.mob-piece-big-notice-v132 p{position:relative;z-index:2;margin:3px 0;font-size:13px;font-weight:1000}.mob-piece-big-notice-v132.promotion-v132,.mob-piece-big-notice-v132.rank-up-v132{background:linear-gradient(180deg,#fff7d5,#f1c85a);border-color:#8f6413}.mob-piece-big-notice-v132.lose-v132,.mob-piece-big-notice-v132.rank-down-v132{background:#d9dde2;border-color:#515966;color:#15191e}
+.piece-confetti-v132{position:absolute;inset:0;pointer-events:none}.piece-confetti-v132 i{position:absolute;left:var(--left);top:-18px;width:8px;height:15px;background:hsl(var(--hue),78%,52%);animation:pieceConfettiV132 1.6s ease-in infinite;animation-delay:var(--delay);transform:rotate(var(--rot))}@keyframes pieceConfettiV132{to{top:110%;transform:translateX(var(--drift)) rotate(620deg)}}
+.rank-result-v132,.piece-reward-v132{margin:12px auto 0;width:min(420px,90%);padding:10px 12px;border-radius:13px;background:#fff9ed;border:2px solid #987651;color:#22180f}.rank-result-v132{display:flex;justify-content:space-between;align-items:center}.rank-result-v132 b{font-size:14px}.rank-result-v132 span{font-size:10px;font-weight:1000}.piece-reward-v132{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.piece-reward-v132>b{width:100%;font-size:10px}.piece-reward-v132 span{padding:5px 9px;border-radius:999px;background:#1e4869;color:#fff;font-size:9px;font-weight:1000}
+@media(max-width:520px){.figure-ace-grid-v132{grid-template-columns:repeat(4,minmax(0,1fr))}.figure-ace-grid-v132 img{width:56px;height:56px}.figure-auto-actions-v132{grid-template-columns:1fr}.battle-mode-grid-v132{grid-template-columns:1fr}.mob-piece-big-notice-v132 h2{font-size:28px}}
+/* ===== END MOB QUEST v132 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4019,7 +4075,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v130</div>
+      <div class="title-version">v132</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4430,7 +4486,7 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v130
+// MOB QUEST v132
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -5796,7 +5852,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=130;
+const GAME_ASSET_VERSION=132;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -13658,6 +13714,311 @@ for(const season of BATTLE_PROGRAM_SEASONS){season.unlock=()=>battleProgramSeaso
    Reduce only NORMAL by 20%; HARD / VERY HARD / INFERNO remain unchanged. */
 if(TURNTABLE_KILL_REWARD_V116?.exp?.normal)TURNTABLE_KILL_REWARD_V116.exp.normal['sp-metal']=1200;
 /* ===== END MOB QUEST v130 ===== */
+
+
+/* ===== MOB QUEST v131: RURAL READABILITY / SUBQUEST STORY LAYER / NEON AREA EVENTS ===== */
+/* v130 deliberately did not alter normal-enemy ATK or MAG. Keep those offensive
+   values untouched here as well; this patch is presentation/story only. */
+
+/* The authored Neon City script contains AREA 1-3 mid-boss scenes.  The old
+   runtime only had the legacy AREA 4 key, so the first three areas silently
+   skipped their events.  Register explicit per-area keys used by the current
+   adventure event dispatcher. */
+Object.assign(STORY_EVENTS,{
+  'pre:neon:0':{worldId:'neon',area:0,steps:[
+    ['guest','n-golem'],
+    ['say','denden','ゴッツイのが来たでやんす！'],
+    ['say','pink','キラキラゴツゴツでありますね！'],
+    ['say','desert','さっさと終わらせるぞ']
+  ]},
+  'post:neon:0':{worldId:'neon',area:0,steps:[
+    ['say','money','あなた達強いのねー'],
+    ['say','denden','えっへんでやんす！']
+  ]},
+  'pre:neon:1':{worldId:'neon',area:1,steps:[
+    ['guest','n-chaser'],
+    ['say','n-chaser','敵確認\n排除する'],
+    ['say','money','こんなやつ初めて見るわ'],
+    ['say','denden','危険な香りがするでやんす！'],
+    ['say','pink','構えるであります！']
+  ]},
+  'post:neon:1':{worldId:'neon',area:1,steps:[
+    ['say','desert','やはり簡単にはいかないな'],
+    ['say','pink','しっかり休んで、次に備えるであります！']
+  ]},
+  'pre:neon:2':{worldId:'neon',area:2,steps:[
+    ['guest','n-trainer'],
+    ['say','money','また知らないやつ\nしかもヘンテコね'],
+    ['say','denden','ビリビリさせてやるでやんす！']
+  ]},
+  'post:neon:2':{worldId:'neon',area:2,steps:[
+    ['say','desert','そんなに変わっているのか？'],
+    ['say','money','そうね\nタイムスリップした気分だわ'],
+    ['say','denden','羨ましいでやんす！'],
+    ['say','money','・・・・バカ']
+  ]}
+});
+
+/* Sub-quest dialogue reuses the adventure screen. Hide the ordinary small
+   adventure party while the large story actors are active so no tiny duplicate
+   sprites remain behind them. Always restore the layer even if a line fails. */
+runSubquestLines=async function(area,lines=[]){
+  if(!lines.length)return;
+  const bg=subquestBg(area),found=state.quest?.subquestId?subquestById(state.quest.subquestId):null,qid=found?.quest?.id||'';
+  const adv=$('#adventureScreen'),underParty=$('#adventureParty'),sc=$('#storyScene');
+  showScreen('adventure');setImage($('#adventureBg'),bg.bg,bg.fallback);
+  if(adv)adv.classList.add('story-event-active','subquest-story-active-v131');
+  if(underParty)underParty.hidden=true;
+  try{
+    [...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));
+    sc.classList.add(`story-world-${area.worldId}`,'subquest-story-v111');sc.dataset.subquestId=qid;storySceneExtras=[];
+    $('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;
+    sc.hidden=false;sc.style.visibility='hidden';await renderSubquestPartyV111(area.required||[]);await nextPaint();sc.style.visibility='visible';
+    for(const row of lines){
+      if(row[0]==='show'){await storyShowGuests(row[1]||[],{allowFive:true});const g=$('#storyGuestGroup');g?.classList.add('subquest-guests-v111');if(g)g.dataset.subquestId=qid;fitSubquestStoryGuestsV111();continue;}
+      await storySay(row[0],balanceSubquestDialogueV111(row[1]||''));
+    }
+    await storyHideGuests().catch(()=>{});
+  }finally{
+    sc.hidden=true;sc.style.visibility='';sc.classList.remove('subquest-story-v111');delete sc.dataset.subquestId;
+    $('#storyBubble').hidden=true;$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';storySceneExtras=[];
+    if(underParty)underParty.hidden=false;
+    if(adv)adv.classList.remove('story-event-active','subquest-story-active-v131');
+  }
+  renderQuestScreen();showScreen('quest');
+};
+/* ===== END MOB QUEST v131 ===== */
+
+/* ===== MOB QUEST v132: FIGURE AUTO/ACE + MOB PIECE FREE/RANK MATCH ===== */
+window.__mobV132PatchRuntime=true;
+
+/* The dedicated protagonist-party figure series is not released yet. Keep owned data
+   intact for the future, but remove these cards from gacha, equipment and Mob Piece. */
+function unreleasedPartyFigureV132(f){return !!(f&&/^figplay\//i.test(String(f.image||'')));}
+for(const f of FIGURES){if(unreleasedPartyFigureV132(f)){f.unreleasedPartyV132=true;f.pending=true;}}
+function migrateUnreleasedPartyFiguresV132(){
+  if(!state.meta)return;
+  let changed=false;
+  for(const [pid,raw] of Object.entries(state.meta.figureEquipment||{})){
+    const next=normalizeFigureEquipmentRecord(raw).map(id=>id&&unreleasedPartyFigureV132(figureById(id))?null:id);
+    if(JSON.stringify(next)!==JSON.stringify(normalizeFigureEquipmentRecord(raw))){state.meta.figureEquipment[pid]=next;changed=true;}
+  }
+  if(Array.isArray(state.meta.mobPieceDeck)){
+    const next=state.meta.mobPieceDeck.filter(id=>!unreleasedPartyFigureV132(figureById(id)));
+    if(next.length!==state.meta.mobPieceDeck.length){state.meta.mobPieceDeck=next;changed=true;}
+  }
+  if(changed)saveMeta();
+}
+migrateUnreleasedPartyFiguresV132();
+
+const FIGURE_RARITY_VALUE_V132={R:1,SR:2,SSR:3,UR:4,MOB:5};
+function rarityValueV132(f){return FIGURE_RARITY_VALUE_V132[f?.rarity]||0;}
+function figureStatValueV132(f){
+  const s=parseFigureStatsText(f?.statsText||'');
+  return (s.maxHp||0)*.10+(s.maxMp||0)*.08+(s.atk||0)*2.2+(s.mag||0)*2.0+(s.def||0)*1.8+(s.res||0)*1.6+(s.spd||0)*1.7;
+}
+function sharedTagsV132(a,b){if(!a||!b)return 0;const set=new Set(a.tags||[]);let n=0;for(const t of b.tags||[])if(set.has(t))n++;return n;}
+function equippedOutsideCountV132(pid,id){let n=0;for(const [other,raw] of Object.entries(state.meta.figureEquipment||{})){if(other===pid)continue;for(const x of normalizeFigureEquipmentRecord(raw))if(x===id)n++;}return n;}
+function equipmentCandidateFiguresV132(pid){return FIGURES.filter(f=>!f.pending&&!unreleasedPartyFigureV132(f)&&figureOwned(f.id)-equippedOutsideCountV132(pid,f.id)>0);}
+function equipmentSetScoreV132(set){
+  let score=0,counts={};
+  for(const f of set){score+=rarityValueV132(f)*70+figureStatValueV132(f);for(const t of f.tags||[])counts[t]=(counts[t]||0)+1;}
+  for(const n of Object.values(counts)){if(n>=2)score+=(n-1)*135;if(n>=3)score+=85;}
+  return score;
+}
+function buildFigureEquipmentSetV132(pid,aceId=null){
+  const pool=equipmentCandidateFiguresV132(pid);if(pool.length<4)return null;
+  const ace=aceId?pool.find(f=>f.id===String(aceId)):null;if(aceId&&!ace)return null;
+  const seeds=ace?[ace]:pool.slice().sort((a,b)=>rarityValueV132(b)-rarityValueV132(a)||figureStatValueV132(b)-figureStatValueV132(a)).slice(0,48);
+  let best=null,bestScore=-Infinity;
+  for(const seed of seeds){
+    const chosen=[seed];
+    while(chosen.length<4){
+      let pickF=null,pickScore=-Infinity;
+      for(const f of pool){if(chosen.includes(f))continue;let shared=0;for(const q of chosen)shared+=sharedTagsV132(f,q);const tagCounts={};for(const q of chosen)for(const t of q.tags||[])tagCounts[t]=(tagCounts[t]||0)+1;let resonance=0;for(const t of f.tags||[]){const before=tagCounts[t]||0;if(before===1)resonance+=85;else if(before===2)resonance+=65;}
+        const sc=shared*105+resonance+rarityValueV132(f)*52+figureStatValueV132(f);if(sc>pickScore){pickScore=sc;pickF=f;}}
+      if(!pickF)break;chosen.push(pickF);
+    }
+    if(chosen.length===4){const sc=equipmentSetScoreV132(chosen)+(ace?420:0);if(sc>bestScore){bestScore=sc;best=chosen;}}
+  }
+  return best;
+}
+function applyFigureEquipmentSetV132(pid,set,aceId=null){
+  if(!set||set.length<4)return false;state.meta.figureEquipment=state.meta.figureEquipment||{};state.meta.figureEquipment[pid]=set.slice(0,4).map(f=>f.id);
+  state.meta.figureAceByPlayerV132=state.meta.figureAceByPlayerV132||{};if(aceId)state.meta.figureAceByPlayerV132[pid]=String(aceId);else delete state.meta.figureAceByPlayerV132[pid];saveMeta();return true;
+}
+async function autoFigureEquipmentV132(pid){
+  if(await narrationDialog('お任せで装備しますか？',[['はい','yes','primary'],['いいえ','no']])!=='yes')return;
+  const set=buildFigureEquipmentSetV132(pid);if(!set)return narrationDialog('自動装備に必要なフィギュアが足りません。');
+  applyFigureEquipmentSetV132(pid,set);renderEquipment();
+}
+
+function ensureFigureAceOverlayV132(){let ov=$('#figureAceOverlayV132');if(ov)return ov;ov=document.createElement('div');ov.id='figureAceOverlayV132';ov.className='figure-ace-overlay-v132';ov.hidden=true;($('#app')||document.body).appendChild(ov);return ov;}
+function acePickerCandidatesV132(mode,pid){
+  let list=mode==='equip'?equipmentCandidateFiguresV132(pid):FIGURES.filter(f=>!f.pending&&!unreleasedPartyFigureV132(f)&&figureOwned(f.id)>0&&f.mobPieceV115);
+  return list.slice().sort((a,b)=>rarityValueV132(b)-rarityValueV132(a)||pieceStrengthV115(b)-pieceStrengthV115(a)||a.name.localeCompare(b.name,'ja'));
+}
+function openFigureAcePickerV132(mode,pid){
+  const ov=ensureFigureAceOverlayV132(),list=acePickerCandidatesV132(mode,pid),need=mode==='equip'?3:24;
+  ov.innerHTML=`<div class="figure-ace-card-v132"><div class="settings-head"><div><small>ACE SELECT</small><h2>エースフィギュアを選択してください</h2></div><button data-ace-close-v132 class="sheet-close" type="button">×</button></div><p>タップしてエースを決めます。レア度の高いフィギュアから表示しています。</p><div class="figure-ace-grid-v132">${list.map(f=>`<button data-ace-figure-v132="${f.id}" class="rarity-${figureRarityClass(f.rarity)}" type="button">${figureImageTagV101(f)}<b>${f.name}</b><small>${f.rarity}</small></button>`).join('')||'<div class="camp-empty-note">選択できるフィギュアがありません。</div>'}</div></div>`;
+  ov.hidden=false;bindImages(ov);$('[data-ace-close-v132]',ov).onclick=()=>ov.hidden=true;
+  $$('[data-ace-figure-v132]',ov).forEach(btn=>btn.onclick=async()=>{
+    const id=btn.dataset.aceFigureV132,f=figureById(id);ov.hidden=true;
+    const ok=await narrationDialog('このフィギュアでよろしいですか？',[['はい','yes','primary'],['いいえ','no']]);
+    if(ok!=='yes')return openFigureAcePickerV132(mode,pid);
+    await narrationDialog(`このフィギュアをエースとして、残りの${need}体を自動で装備します`,[['OK','ok','primary']]);
+    if(mode==='equip'){
+      const set=buildFigureEquipmentSetV132(pid,id);if(!set){await narrationDialog('相性を考慮した4体編成を作れませんでした。');return openFigureAcePickerV132(mode,pid);}applyFigureEquipmentSetV132(pid,set,id);renderEquipment();
+    }else{
+      const result=autoMobPieceDeckWithAceV132(id);if(!result.ok){await narrationDialog(result.msg);return openFigureAcePickerV132(mode,pid);}state.meta.mobPieceAceV132=id;saveMeta();mobPieceUiV102.deckScroll=0;renderMobPieceDeckV96(true);
+    }
+  });
+}
+async function startFigureAceEquipmentV132(pid){if(await narrationDialog('エースを決めて装備しますか？',[['はい','yes','primary'],['いいえ','no']])==='yes')openFigureAcePickerV132('equip',pid);}
+async function startMobPieceAceDeckV132(){if(await narrationDialog('エースを決めてデッキ編成しますか？',[['はい','yes','primary'],['いいえ','no']])==='yes')openFigureAcePickerV132('deck','');}
+
+const _renderFigureEquipmentV132Base=renderFigureEquipment;
+renderFigureEquipment=function(){
+  const root=$('#equipmentContent'),p=player(equipmentPlayerId),lv=currentPlayerLevel(p.id),eq=figureEquipmentFor(p.id);
+  root.innerHTML=`<section class="panel figure-equipment-panel"><div class="equipment-party-strip">${state.party.map(([id])=>{const q=player(id);return `<button class="${q.id===p.id?'active':''}" data-equip-player="${q.id}" type="button"><img src="${versionedPlay(q.image)}" alt="${q.name}"><b>${q.name}</b></button>`;}).join('')}</div><div class="figure-title-row"><div><small>FIGURE ACCESSORY / Lv${lv}</small><h2>${p.name}</h2><p>フィギュアは4体まで装備できます。</p></div><span>${eq.filter(Boolean).length} / 4</span></div><div class="figure-auto-actions-v132"><button data-figure-auto-v132 type="button"><b>お任せ</b><small>タグ一致度＋レア度で自動装備</small></button><button data-figure-ace-v132 type="button"><b>エース選択</b><small>エースと相性の良い3体を自動装備</small></button></div><div class="equipment-stat-grid figure-final-stats">${equipmentStatRows(p,lv,equipmentFor(p.id))}</div><div class="figure-popup-guide"><b>装備したい枠をタップ</b><span>フィギュア一覧はポップアップで開きます。</span></div><div class="figure-slots">${eq.map((id,i)=>figureSlotMarkup(p.id,i,id)).join('')}</div>${figureResonanceMarkup(p.id)}${figureEffectStatusMarkup(p.id)}</section>`;
+  bindImages(root);$$('[data-equip-player]',root).forEach(b=>b.onclick=()=>{equipmentPlayerId=b.dataset.equipPlayer;figurePickerSlot=0;renderEquipment();});$$('[data-figure-slot]',root).forEach(b=>b.onclick=()=>openFigurePicker(p.id,Number(b.dataset.figureSlot)||0));$('[data-figure-auto-v132]',root).onclick=()=>autoFigureEquipmentV132(p.id);$('[data-figure-ace-v132]',root).onclick=()=>startFigureAceEquipmentV132(p.id);
+};
+
+function autoMobPieceDeckWithAceV132(aceId){
+  const ace=figureById(String(aceId));if(!ace||ace.pending||figureOwned(ace.id)<1)return{ok:false,msg:'このフィギュアはエースに設定できません。'};
+  const available=FIGURES.filter(f=>!f.pending&&!unreleasedPartyFigureV132(f)&&figureOwned(f.id)>0&&f.mobPieceV115);let copies=[];
+  for(const f of available){const max=Math.min(figureOwned(f.id),mobPieceDuplicateCapV115(f));for(let i=0;i<max;i++)copies.push({f,copy:i});}
+  if(copies.length<25)return{ok:false,msg:`25体編成するにはフィギュアが足りません。現在編成可能 ${copies.length}体`};
+  const chosen=[ace.id],used={[ace.id]:1};let cost=mobPieceStatsV96(ace).cost;
+  const candidates=copies.filter(x=>!(x.f.id===ace.id&&x.copy===0));
+  while(chosen.length<25){
+    let bestIndex=-1,bestScore=-Infinity;const remain=25-(chosen.length+1);
+    for(let i=0;i<candidates.length;i++){
+      const {f,copy}=candidates[i];if((used[f.id]||0)>=Math.min(figureOwned(f.id),mobPieceDuplicateCapV115(f)))continue;const c=mobPieceStatsV96(f).cost;if(cost+c+remain>80)continue;
+      let shared=sharedTagsV132(ace,f)*230;const currentUnique=[...new Set(chosen)].map(figureById).filter(Boolean);for(const q of currentUnique)shared+=sharedTagsV132(q,f)*16;
+      const duplicatePenalty=(used[f.id]||0)*110+copy*18,score=shared+rarityValueV132(f)*58+pieceStrengthV115(f)*.55-c*4-duplicatePenalty;
+      if(score>bestScore){bestScore=score;bestIndex=i;}
+    }
+    if(bestIndex<0)break;const f=candidates[bestIndex].f;chosen.push(f.id);used[f.id]=(used[f.id]||0)+1;cost+=mobPieceStatsV96(f).cost;candidates.splice(bestIndex,1);
+  }
+  if(chosen.length<25){
+    const fallback=copies.slice().sort((a,b)=>mobPieceStatsV96(a.f).cost-mobPieceStatsV96(b.f).cost||rarityValueV132(b.f)-rarityValueV132(a.f));
+    for(const {f} of fallback){if(chosen.length>=25)break;if((used[f.id]||0)>=Math.min(figureOwned(f.id),mobPieceDuplicateCapV115(f)))continue;const c=mobPieceStatsV96(f).cost;if(cost+c>80)continue;chosen.push(f.id);used[f.id]=(used[f.id]||0)+1;cost+=c;}
+  }
+  if(chosen.length!==25)return{ok:false,msg:'エースとの相性とコスト80を両立した25体デッキを作れませんでした。'};
+  state.meta.mobPieceDeck=chosen;saveMeta();return{ok:true,cost};
+}
+
+const _renderMobPieceDeckV132Base=renderMobPieceDeckV96;
+renderMobPieceDeckV96=function(resetScroll=false){
+  _renderMobPieceDeckV132Base(resetScroll);const ov=ensureMobPieceOverlayV96(),actions=$('.piece-deck-actions-v96',ov);if(!actions||$('[data-piece-ace-v132]',actions))return;
+  const btn=document.createElement('button');btn.type='button';btn.dataset.pieceAceV132='1';btn.textContent='エース選択';btn.className='piece-ace-btn-v132';actions.insertBefore(btn,actions.children[1]||null);btn.onclick=()=>{mobPieceUiV102.deckScroll=capturePieceScrollV102('.mob-piece-deck-v102');startMobPieceAceDeckV132();};
+};
+
+/* ----- Mob Piece Battle modes / rank system ----- */
+const MOB_PIECE_RANKS_V132=['F','E','D','C','B','A','S','SS'];
+const MOB_PIECE_FREE_REWARD_V132={easy:{coins:1000,diamondChance:0},hard:{coins:3000,diamondChance:.30},inferno:{coins:5000,diamondChance:.50}};
+const MOB_PIECE_RANK_REWARD_V132={F:{coins:1000,diamondChance:0},E:{coins:1500,diamondChance:.05},D:{coins:2000,diamondChance:.10},C:{coins:3000,diamondChance:.20},B:{coins:4000,diamondChance:.30},A:{coins:5000,diamondChance:.50},S:{coins:7000,diamondChance:.70},SS:{coins:10000,diamonds:1}};
+const MOB_PIECE_THEMES_V132=[
+  {id:'grass-desert',tags:['41','42']},{id:'rural-neon',tags:['43','44']},{id:'underwater-tribe',tags:['45','46']},{id:'friends',tags:['13']},
+  {id:'magma',tags:['47']},{id:'demon',tags:['48']},{id:'tough',tags:['32','39']},{id:'power',tags:['34','35']},{id:'speed',tags:['36','50','51']},{id:'magic',tags:['37']},{id:'dragon',tags:['38']},{id:'bond',tags:['40']}
+];
+function mobPieceRankStateV132(){
+  let tier=String(state.meta.mobPieceRankTierV132||'F');if(!MOB_PIECE_RANKS_V132.includes(tier))tier='F';let points=clamp(Number(state.meta.mobPieceRankPointsV132)||0,0,5);state.meta.mobPieceRankTierV132=tier;state.meta.mobPieceRankPointsV132=points;
+  let high=String(state.meta.mobPieceHighestRankV132||tier);if(!MOB_PIECE_RANKS_V132.includes(high)||MOB_PIECE_RANKS_V132.indexOf(high)<MOB_PIECE_RANKS_V132.indexOf(tier))high=tier;state.meta.mobPieceHighestRankV132=high;return{tier,points,high,index:MOB_PIECE_RANKS_V132.indexOf(tier),highIndex:MOB_PIECE_RANKS_V132.indexOf(high)};
+}
+function saveMobPieceRankV132(tier,points){state.meta.mobPieceRankTierV132=tier;state.meta.mobPieceRankPointsV132=clamp(points,0,5);const old=mobPieceRankStateV132().high;state.meta.mobPieceHighestRankV132=MOB_PIECE_RANKS_V132.indexOf(tier)>MOB_PIECE_RANKS_V132.indexOf(old)?tier:old;saveMeta();}
+function mobPieceRankTextV132(){const r=mobPieceRankStateV132();return `RANK ${r.tier}　${r.points}/5`;}
+function cpuProfileMarkupV132(){return `<div class="cpu-profile-v132"><div class="cpu-silhouette-v132"><span>?</span></div><b>CPU</b></div>`;}
+async function mobPieceBigNoticeV132(title,sub='',cls='',ms=2000){const ov=ensureMobPieceOverlayV96();ov.innerHTML=`<div class="mob-piece-big-notice-v132 ${cls}"><small>MOB PIECE BATTLE</small><h2>${title}</h2>${sub?`<p>${sub}</p>`:''}${cls.includes('win')?'<div class="piece-confetti-v132">'+Array.from({length:24},(_,i)=>`<i style="--left:${3+i*4}%;--delay:${(-i*.07).toFixed(2)}s;--hue:${(i*47)%360};--rot:${(i*23)%360}deg;--drift:${((i-12)*1.5).toFixed(1)}px"></i>`).join('')+'</div>':''}</div>`;ov.hidden=false;await waitRealV100(ms);}
+function rankUnlockV132(rank){return mobPieceRankStateV132().highIndex>=MOB_PIECE_RANKS_V132.indexOf(rank);}
+
+openMobPieceMenuV96=function(){
+  const ov=ensureMobPieceOverlayV96(),r=mobPieceRankStateV132();ov.innerHTML=`<div class="mob-piece-card-v96 menu mob-piece-menu-card-v100 mob-piece-menu-v132"><div class="settings-head"><div><small>MOB PIECE BATTLE</small><h2>モブピースバトル</h2><p>${mobPieceRankTextV132()}</p></div><button data-piece-close-v96 class="sheet-close" type="button">×</button></div><div class="mob-piece-menu-v96"><button data-piece-menu-v96="deck" type="button">デッキ編成<small>25体 / COST 80 / エース選択対応</small></button><button data-piece-menu-v96="list" type="button">フィギュア一覧<small>HP / ATK / DEF / SPD</small></button><button data-piece-menu-v96="battle" class="battle-menu-v132" type="button">バトル<small>フリー対戦 / ランクマッチ</small></button></div></div>`;ov.hidden=false;$('[data-piece-close-v96]',ov).onclick=()=>ov.hidden=true;$$('[data-piece-menu-v96]',ov).forEach(b=>b.onclick=()=>{const a=b.dataset.pieceMenuV96;if(a==='deck')renderMobPieceDeckV96();else if(a==='list')renderMobPieceFigureListV96();else openMobPieceBattleSelectV132();});
+};
+function openMobPieceBattleSelectV132(){
+  const ov=ensureMobPieceOverlayV96(),r=mobPieceRankStateV132();ov.innerHTML=`<div class="mob-piece-card-v96 menu piece-battle-select-v132"><div class="settings-head"><div><small>BATTLE</small><h2>対戦モード</h2></div><button data-battle-select-back-v132 class="sheet-close" type="button">←</button></div>${cpuProfileMarkupV132()}<div class="battle-mode-grid-v132"><button data-free-menu-v132 type="button"><b>フリー対戦</b><small>難易度を選んでCPUと対戦</small><em>EASY / HARD / INFERNO</em></button><button data-rank-start-v132 type="button"><b>ランクマッチ</b><small>1勝 +1POINT / 1敗 -1POINT</small><em>RANK ${r.tier}　${r.points}/5 / 勝利報酬 ${rankRewardTextV132(r.tier)}</em></button></div></div>`;ov.hidden=false;$('[data-battle-select-back-v132]',ov).onclick=openMobPieceMenuV96;$('[data-free-menu-v132]',ov).onclick=openMobPieceFreeSelectV132;$('[data-rank-start-v132]',ov).onclick=()=>startMobPieceBattleV132('rank');
+}
+function freeRewardTextV132(key){const r=MOB_PIECE_FREE_REWARD_V132[key];return `${r.coins.toLocaleString()}コイン${r.diamondChance?` + ${Math.round(r.diamondChance*100)}%でダイヤ1`:''}`;}
+function rankRewardTextV132(tier){const r=MOB_PIECE_RANK_REWARD_V132[tier]||MOB_PIECE_RANK_REWARD_V132.F;return `${r.coins.toLocaleString()}コイン${r.diamonds?` + ダイヤ${r.diamonds}`:(r.diamondChance?` + ${Math.round(r.diamondChance*100)}%でダイヤ1`:'')}`;}
+function openMobPieceFreeSelectV132(){
+  const ov=ensureMobPieceOverlayV96(),hard=rankUnlockV132('C'),inf=rankUnlockV132('A');ov.innerHTML=`<div class="mob-piece-card-v96 menu free-select-v132"><div class="settings-head"><div><small>FREE BATTLE</small><h2>フリー対戦</h2></div><button data-free-back-v132 class="sheet-close" type="button">←</button></div><div class="free-difficulty-grid-v132"><button data-free-diff-v132="easy" type="button"><b>イージー</b><small>初期から挑戦可能</small><em>${freeRewardTextV132('easy')}</em></button><button data-free-diff-v132="hard" type="button" ${hard?'':'disabled'}><b>ハード</b><small>${hard?'挑戦可能':'RANK Cで解放'}</small><em>${freeRewardTextV132('hard')}</em></button><button data-free-diff-v132="inferno" type="button" ${inf?'':'disabled'}><b>インフェルノ</b><small>${inf?'挑戦可能':'RANK Aで解放'}</small><em>${freeRewardTextV132('inferno')}</em></button></div></div>`;ov.hidden=false;$('[data-free-back-v132]',ov).onclick=openMobPieceBattleSelectV132;$$('[data-free-diff-v132]',ov).forEach(b=>b.onclick=()=>startMobPieceBattleV132('free',b.dataset.freeDiffV132));
+}
+
+const CPU_CONFIG_V132={
+  free:{easy:{weights:{R:.70,SR:.25,SSR:.05},dist:{R:18,SR:6,SSR:1},theme:false,adherence:0,ai:0},hard:{dist:{R:1,SR:11,SSR:11,UR:2},theme:'hard',adherence:.68,ai:1},inferno:{dist:{SR:2,SSR:15,UR:7,MOB:1},theme:'wide',adherence:.80,ai:2}},
+  rank:{F:{dist:{R:25},theme:false,adherence:0,ai:0},E:{dist:{R:13,SR:12},theme:false,adherence:0,ai:0},D:{dist:{SR:13,SSR:12},theme:false,adherence:0,ai:0},C:{dist:{SR:10,SSR:12,UR:3},theme:false,adherence:0,ai:1},B:{dist:{SR:3,SSR:16,UR:6},theme:false,adherence:0,ai:1},A:{dist:{SR:5,SSR:17,UR:3},theme:'wide',adherence:.78,ai:2},S:{dist:{SR:1,SSR:16,UR:7,MOB:1},theme:'wide',adherence:.88,ai:3},SS:{dist:{SSR:15,UR:7,MOB:3},theme:'wide',adherence:.94,ai:3}}
+};
+function pickCpuThemeV132(cfg){if(!cfg.theme)return null;if(cfg.theme==='hard')return pick(MOB_PIECE_THEMES_V132.slice(0,4));return pick(MOB_PIECE_THEMES_V132);}
+function weightedCpuPickV132(pool,theme,chosen,adherence){
+  if(!pool.length)return null;let list=pool;if(theme&&Math.random()<adherence){const themed=pool.filter(f=>(f.tags||[]).some(t=>theme.tags.includes(t)));if(themed.length)list=themed;}
+  const uniqueChosen=[...new Set(chosen)].map(figureById).filter(Boolean);const scored=list.map(f=>{let s=pieceStrengthV115(f)*.45+rarityValueV132(f)*14;for(const q of uniqueChosen)s+=sharedTagsV132(f,q)*7;if(theme)s+=(f.tags||[]).filter(t=>theme.tags.includes(t)).length*90;s-=mobPieceStatsV96(f).cost*3;return{f,s:s+Math.random()*24};}).sort((a,b)=>b.s-a.s);return scored[Math.floor(Math.random()*Math.min(5,scored.length))]?.f||scored[0]?.f||null;
+}
+function buildCpuDeckV132(mode,difficultyOrRank){
+  const cfg=mode==='rank'?CPU_CONFIG_V132.rank[difficultyOrRank]:CPU_CONFIG_V132.free[difficultyOrRank],theme=pickCpuThemeV132(cfg),all=FIGURES.filter(f=>usableFigureV103(f)&&!unreleasedPartyFigureV132(f)&&f.mobPieceV115),wanted=[];
+  if(cfg.weights){
+    const rows=Object.entries(cfg.weights),total=rows.reduce((n,[,w])=>n+Number(w||0),0)||1;
+    for(let i=0;i<25;i++){let r=Math.random()*total,pickR=rows[0]?.[0]||'R';for(const [rarity,w] of rows){r-=Number(w||0);if(r<=0){pickR=rarity;break;}}wanted.push(pickR);}
+  }else{
+    for(const [rarity,n] of Object.entries(cfg.dist||{}))for(let i=0;i<n;i++)wanted.push(rarity);while(wanted.length<25)wanted.push(Object.keys(cfg.dist||{})[0]||'R');shuffleV96(wanted);
+  }
+  const out=[],used={};let cost=0;
+  for(let slot=0;slot<25;slot++){
+    const want=wanted[slot],remain=24-slot;let pool=all.filter(f=>f.rarity===want&&(used[f.id]||0)<mobPieceDuplicateCapV115(f)&&cost+mobPieceStatsV96(f).cost+remain<=80);
+    if(!pool.length)pool=all.filter(f=>(used[f.id]||0)<mobPieceDuplicateCapV115(f)&&cost+mobPieceStatsV96(f).cost+remain<=80).sort((a,b)=>Math.abs(rarityValueV132(b)-(FIGURE_RARITY_VALUE_V132[want]||1))-Math.abs(rarityValueV132(a)-(FIGURE_RARITY_VALUE_V132[want]||1)));
+    const f=weightedCpuPickV132(pool,theme,out,cfg.adherence);if(!f)break;out.push(f.id);used[f.id]=(used[f.id]||0)+1;cost+=mobPieceStatsV96(f).cost;
+  }
+  if(out.length<25){for(const f of all.slice().sort((a,b)=>mobPieceStatsV96(a).cost-mobPieceStatsV96(b).cost)){while(out.length<25&&(used[f.id]||0)<mobPieceDuplicateCapV115(f)&&cost+mobPieceStatsV96(f).cost<=80){out.push(f.id);used[f.id]=(used[f.id]||0)+1;cost+=mobPieceStatsV96(f).cost;}}}
+  return{deck:out.slice(0,25),theme,cfg};
+}
+function cpuHandValueV132(hand,center){const cTag=handTagEffectsV96(hand).effects,st=handBattleStatsV96(hand,center,{});return st.attack*1.0+st.defense*.62+st.hp*.14+st.speed*.34+(cTag?Object.keys(cTag).length*15:0);}
+function prepareCpuHandV132(){
+  const b=mobPieceBattleV96;if(!b)return;b.cCenter=2;const ai=Number(b.cpuAiV132)||0;if(ai<1)return;
+  if(!b.cpuExchangedV132){let weakest=0,weakVal=Infinity;for(let i=0;i<5;i++){const f=figureById(b.cHand[i]),v=pieceStrengthV115(f);if(v<weakVal){weakVal=v;weakest=i;}}const next=drawPieceCardV96('c'),nf=figureById(next);if(nf){const old=b.cHand[weakest],before=cpuHandValueV132(b.cHand,2);const trial=b.cHand.slice();trial[weakest]=next;let bestAfter=Math.max(...[0,1,2,3,4].map(i=>cpuHandValueV132(trial,i)));if(bestAfter>before*1.025||ai>=3){b.cDiscard.push(old);b.cHand[weakest]=next;b.cpuExchangedV132=true;}else b.cDiscard.push(next);}}
+  let best=2,bestV=-Infinity;for(let i=0;i<5;i++){const v=cpuHandValueV132(b.cHand,i);if(v>bestV){bestV=v;best=i;}}b.cCenter=best;
+}
+
+async function startMobPieceBattleV132(mode='free',difficulty='easy'){
+  const deck=normalizedMobPieceDeckV96(),bad=mobPieceDeckViolationV115(deck);if(deck.length!==25)return pieceOverlayNoticeV102('デッキは25体必ず編成してください。');if(bad)return pieceOverlayNoticeV102(bad);if(mobPieceDeckCostV100(deck)>80)return pieceOverlayNoticeV102('デッキコストは80までです。');
+  const r=mobPieceRankStateV132(),rankTier=r.tier,key=mode==='rank'?rankTier:difficulty,cpuPack=buildCpuDeckV132(mode,key);if(cpuPack.deck.length<25)return pieceOverlayNoticeV102('CPUデッキを準備できませんでした。');
+  if(mode==='rank'&&r.points===4&&rankTier!=='SS')await mobPieceBigNoticeV132('昇格戦！！',`勝てば RANK ${MOB_PIECE_RANKS_V132[r.index+1]} へ`,'promotion-v132',2000);
+  mobPieceBattleV96={rank:mode==='rank',matchModeV132:mode,difficultyV132:difficulty,rankAtStartV132:rankTier,pDeck:shuffleV96(deck),cDeck:shuffleV96(cpuPack.deck),pPos:0,cPos:0,pDiscard:[],cDiscard:[],pWins:0,cWins:0,round:0,center:2,cCenter:2,exchanged:false,cpuAiV132:cpuPack.cfg.ai,cpuThemeV132:cpuPack.theme,uiScrollV107:0};nextMobPieceRoundV96();
+}
+startMobPieceBattleV96=function(rank=false){return startMobPieceBattleV132(rank?'rank':'free','easy');};
+
+renderMobPieceDrawV100=async function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v100 drawing mob-piece-draw-v132">${pieceScoreV132(b)}${cpuProfileMarkupV132()}<div class="piece-field-v100 opponent-field-v100"><b>CPU</b><div id="pieceCpuDrawV100" class="piece-field-row-v100"></div></div><div class="piece-battlefield-v100"><div class="piece-deck-stack-v100">MOB<small>DECK</small></div><strong>DRAW</strong></div><div class="piece-field-v100 player-field-v100"><b>プレイヤー</b><div id="piecePlayerDrawV100" class="piece-field-row-v100"></div></div></div>`;
+  ov.hidden=false;for(let i=0;i<5;i++){const pr=$('#piecePlayerDrawV100',ov),cr=$('#pieceCpuDrawV100',ov);if(pr)pr.insertAdjacentHTML('beforeend',pieceCardMiniV100(b.pHand[i],i,i===2,false));if(cr)cr.insertAdjacentHTML('beforeend',pieceCardMiniV100(b.cHand[i],i,i===(b.cCenter??2),true));bindImages(ov);await waitRealV100(170);}await waitRealV100(420);
+};
+
+nextMobPieceRoundV96=async function(){const b=mobPieceBattleV96;if(!b)return;b.round++;b.center=2;b.cCenter=2;b.exchanged=false;b.cpuExchangedV132=false;b.exchangeRevealV103=-1;b.uiScrollV107=0;b.pHand=Array.from({length:5},()=>drawPieceCardV96('p'));b.cHand=Array.from({length:5},()=>drawPieceCardV96('c'));prepareCpuHandV132();try{await renderMobPieceDrawV100();}catch(_){}renderMobPieceRoundV96();};
+function pieceScoreV132(b){return `<div class="piece-score-v96 piece-score-v107 piece-score-v132"><span>プレイヤー <b>${b.pWins}</b></span><em>BATTLE ${b.round}<small>2勝先取</small></em><span>CPU <b>${b.cWins}</b></span></div>`;}
+function cpuCardV132(id,i,center=false){const f=figureById(id),s=mobPieceStatsV96(f);return `<article class="piece-player-card-v103 cpu ${center?'center':''}" data-piece-cpu-card-v103="${i}">${figureImageTagV101(f)}<small>${f.rarity} C${s.cost}</small></article>`;}
+renderMobPieceRoundV96=function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const cTag=handTagEffectsV96(b.cHand).effects,pTag=handTagEffectsV96(b.pHand).effects,p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,b.cCenter??2,pTag),old=b.previewBeforeV103;b.previewBeforeV103=null;b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-battle-v103 mob-piece-battle-v107 mob-piece-battle-v132">${pieceScoreV132(b)}${pieceLifeBarV103('CPU LIFE',b.cLife,b.cLifeMax,'cpu')}${cpuProfileMarkupV132()}<div class="piece-field-v103 cpu"><div>${b.cHand.map((id,i)=>cpuCardV132(id,i,i===(b.cCenter??2))).join('')}</div></div>${totalStatsV103('CPU',c,'cpu')}${activeTagsV103(b.cHand)}<div class="piece-battlefloor-v103 piece-battlefloor-ready-v107"><b>BATTLE FLOOR</b><div class="piece-floor-mark-v102">MOB</div><small>配置を変えると総合値が変化します</small></div>${totalStatsV103('プレイヤー',p,'player')}${activeTagsV103(b.pHand)}<div class="piece-field-v103 player"><div>${b.pHand.map((id,i)=>playerCardV103(id,i,i===2)).join('')}</div></div>${pieceLifeBarV103('プレイヤー LIFE',b.pLife,b.pLifeMax,'player')}<div class="piece-command-v103"><button class="primary-btn" data-piece-keep-v96 type="button">BATTLE</button><button data-piece-quit-v96 type="button">対戦をやめる</button></div></div>`;
+  ov.hidden=false;bindImages(ov);bindPlayerDragV103(ov);restorePieceBattleScrollV107();animateStatsV103(old,p,ov);$('[data-piece-keep-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('バトルしますか？',`BATTLE ${b.round} / 2勝先取`))resolveMobPieceRoundV96();else restorePieceBattleScrollV107();};$('[data-piece-quit-v96]',ov).onclick=async()=>{rememberPieceBattleScrollV107();if(await pieceOverlayConfirmV102('対戦をやめますか？','現在の対戦結果は失われます。')){mobPieceBattleV96=null;openMobPieceBattleSelectV132();}else restorePieceBattleScrollV107();};
+};
+resolveMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const cCenter=b.cCenter??2,pTag=handTagEffectsV96(b.pHand).effects,cTag=handTagEffectsV96(b.cHand).effects,p=handBattleStatsV96(b.pHand,2,cTag),c=handBattleStatsV96(b.cHand,cCenter,pTag);b.pLifeMax=pieceBattlePrepLifeV107(p);b.cLifeMax=pieceBattlePrepLifeV107(c);b.pLife=b.pLifeMax;b.cLife=b.cLifeMax;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107 mob-piece-fight-v132">${pieceScoreV132(b)}${pieceLifeBarV103('CPU LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('CPU',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107"><div class="fight-arena-v107">${fightPiecesV107(b.cHand,'cpu')}${fightPiecesV107(b.pHand,'player')}${fightArenaFxV107()}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('プレイヤー',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('プレイヤー LIFE',b.pLife,b.pLifeMax,'player')}</div>`;ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v107',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(650);if(start)start.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('brawling-v107');let pLife=b.pLife,cLife=b.cLife,turn=0;const maxTurns=30;
+  while(pLife>0&&cLife>0&&turn<maxTurns){turn++;const pChance=clamp(.48+(p.speed-c.speed)/Math.max(600,p.speed+c.speed),.26,.74),pAtk=Math.random()<pChance,skill=Math.random()<.27;if(pAtk){const dmg=calcPieceStrikeV107(p,c,b.cLifeMax,skill),before=cLife;cLife=Math.max(0,cLife-dmg);triggerFightImpactV107(arena,'cpu',skill);await animateLifeFastV107(ov,'cpu',before,cLife,b.cLifeMax);}else{const dmg=calcPieceStrikeV107(c,p,b.pLifeMax,skill),before=pLife;pLife=Math.max(0,pLife-dmg);triggerFightImpactV107(arena,'player',skill);await animateLifeFastV107(ov,'player',before,pLife,b.pLifeMax);}if(pLife<=0||cLife<=0)break;await waitRealV100(80+Math.random()*105);}
+  if(pLife>0&&cLife>0){if(pLife/b.pLifeMax>=cLife/b.cLifeMax)cLife=0;else pLife=0;}b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);await waitRealV100(520);const win=cLife<=0;if(win)b.pWins++;else b.cWins++;b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);const matchDone=b.pWins>=2||b.cWins>=2;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV132(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'プレイヤー WIN!':'CPU WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${matchDone?'MATCH RESULT':'次のバトルへ'}<span>${matchDone?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);if(matchDone)return finishMobPieceBattleV96(b.pWins>=2);ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>手札を捨てて、新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(900);nextMobPieceRoundV96();
+};
+function updateMobPieceRankV132(win){
+  const r=mobPieceRankStateV132();let idx=r.index,pts=r.points,promoted=false,demoted=false;if(win){pts++;if(pts>=5){if(idx<MOB_PIECE_RANKS_V132.length-1){idx++;pts=0;promoted=true;}else pts=5;}}else{if(pts>0)pts--;else if(idx>0){idx--;pts=3;demoted=true;}else pts=0;}const tier=MOB_PIECE_RANKS_V132[idx];saveMobPieceRankV132(tier,pts);return{tier,points:pts,promoted,demoted};
+}
+function grantMobPieceRewardV132(b,win){if(!win)return{coins:0,diamonds:0};let spec=b.matchModeV132==='rank'?MOB_PIECE_RANK_REWARD_V132[b.rankAtStartV132]||MOB_PIECE_RANK_REWARD_V132.F:MOB_PIECE_FREE_REWARD_V132[b.difficultyV132]||MOB_PIECE_FREE_REWARD_V132.easy;const coins=Number(spec.coins)||0,diamonds=Number(spec.diamonds)||((spec.diamondChance&&Math.random()<spec.diamondChance)?1:0);state.meta.coins=Math.max(0,Number(state.meta.coins)||0)+coins;state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+diamonds;saveMeta();return{coins,diamonds};}
+finishMobPieceBattleV96=async function(win){
+  const b=mobPieceBattleV96;if(!b)return;await mobPieceBigNoticeV132(win?'勝利！！':'敗北・・',win?'プレイヤーの勝利！':'CPUの勝利',''+(win?'win-v132':'lose-v132'),2000);let rankResult=null;if(b.matchModeV132==='rank'){rankResult=updateMobPieceRankV132(win);if(rankResult.promoted)await mobPieceBigNoticeV132('ランクアップ！！',`RANK ${rankResult.tier}`,'rank-up-v132 win-v132',2000);else if(rankResult.demoted)await mobPieceBigNoticeV132('ランクが下がった・・',`RANK ${rankResult.tier}　${rankResult.points}/5`,'rank-down-v132',2000);}const reward=grantMobPieceRewardV132(b,win),ov=ensureMobPieceOverlayV96(),rankNow=mobPieceRankStateV132();
+  ov.innerHTML=`<div class="mob-piece-card-v96 final piece-match-result-v107 piece-match-result-v132 ${win?'win':'lose'}"><small>${b.matchModeV132==='rank'?'RANK MATCH':'FREE BATTLE'}</small><h2>${win?'プレイヤー 勝利！':'CPU 勝利…'}</h2><div class="piece-final-score-v107"><b>${b.pWins}</b><span>−</span><b>${b.cWins}</b></div>${b.matchModeV132==='rank'?`<div class="rank-result-v132"><b>RANK ${rankNow.tier}</b><span>${rankNow.points}/5 POINT</span></div>`:''}<div class="piece-reward-v132"><b>報酬</b><span>${reward.coins?`${reward.coins.toLocaleString()} コイン`:'なし'}</span>${reward.diamonds?`<span>ダイヤ ${reward.diamonds}</span>`:''}</div><button class="primary-btn" data-piece-finish-v132 type="button">バトルメニューへ</button></div>`;ov.hidden=false;$('[data-piece-finish-v132]',ov).onclick=()=>{mobPieceBattleV96=null;openMobPieceBattleSelectV132();};
+};
+
+/* Initialize the new rank safely without inheriting the old experimental numeric rank. */
+if(!state.meta.mobPieceRankV132Initialized){state.meta.mobPieceRankTierV132='F';state.meta.mobPieceRankPointsV132=0;state.meta.mobPieceHighestRankV132='F';state.meta.mobPieceRankV132Initialized=true;saveMeta();}
+/* ===== END MOB QUEST v132 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

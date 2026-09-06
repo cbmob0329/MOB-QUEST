@@ -1,0 +1,21 @@
+MOB QUEST v131 regression report
+
+1. 田舎町（sky theme）キャンプ/探索カード
+- 明るい水色バナーに濃紺文字へ変更。
+- small text も濃色固定。使用済みボタンは判読可能なまま減光。
+
+2. サブクエスト会話の二重キャラクター
+- runSubquestLines 中は通常 adventureParty を完全に非表示。
+- story guest group を開始/終了時にクリアし、古い小キャラ残像を残さない。
+- finally で確実にレイヤー復帰。
+
+3. ネオン街 AREA 1-3 イベント
+- pre/post:neon:0, :1, :2 を正式追加。
+- AREA1 モブネオゴーレム、AREA2 モブエネチェイサー、AREA3 モブスラトレーナー。
+- 2026-09-02 冒険イベント資料の会話を復元。
+- AREA4 モブネオンバルス/モブエース既存イベントは変更なし。
+
+4. 敵ATK/MAG
+- v129→v130を比較し、通常敵 profile の atkBase/atkPerLevel/magBase/magPerLevel は同一。
+- v131でもATK/MAGは変更しない。
+- v130の変更対象（normal HP/DEF/MND低下、ガーディアンATK強化、player HP/ATK/MAG調整）は維持。

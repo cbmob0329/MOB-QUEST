@@ -3989,3 +3989,58 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .blacksmith-wallet-v128 small{grid-column:1/-1;font-size:7px;font-weight:1000;letter-spacing:.08em;color:#6b431f;-webkit-text-fill-color:#6b431f}
 .loading-guide-tap-v123:disabled{opacity:1!important;filter:none!important}
 /* ===== END MOB QUEST v128 ===== */
+
+
+/* ===== MOB QUEST v131: RURAL / SKY THEME READABILITY ===== */
+/* Light sky-blue cards use dark ink.  Disabled one-use camp actions remain
+   visibly disabled without making their labels unreadable. */
+.camp-overlay.area-theme-sky .camp-main-menu>button,
+.explore-overlay.area-theme-sky .explore-card{
+  background:repeating-linear-gradient(0deg,#7fc0d6 0 15px,#a9d9e8 15px 30px,#6eafc8 30px 45px)!important;
+  color:#102633!important;
+  -webkit-text-fill-color:#102633!important;
+  text-shadow:none!important;
+  border-color:#27465a!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button *,
+.explore-overlay.area-theme-sky .explore-card *{
+  color:#102633!important;
+  -webkit-text-fill-color:#102633!important;
+  text-shadow:none!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button small,
+.explore-overlay.area-theme-sky .explore-card small{
+  color:#24495c!important;
+  -webkit-text-fill-color:#24495c!important;
+  opacity:1!important;
+}
+.camp-overlay.area-theme-sky .camp-main-menu>button:disabled{opacity:.72!important;}
+/* While a sub-quest story is active, never paint the ordinary tiny party row. */
+#adventureScreen.subquest-story-active-v131 #adventureParty{display:none!important;visibility:hidden!important;}
+/* ===== END MOB QUEST v131 ===== */
+/* ===== MOB QUEST v132: FIGURE ACE / MOB PIECE RANK UI ===== */
+.figure-auto-actions-v132{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 12px}
+.figure-auto-actions-v132 button{min-height:54px;padding:8px 10px;border-radius:13px;background:#24445f;border:1px solid rgba(139,215,255,.55);color:#fff;text-align:left;box-shadow:0 5px 12px rgba(0,0,0,.22)}
+.figure-auto-actions-v132 button b{display:block;font-size:11px;font-weight:1000}.figure-auto-actions-v132 button small{display:block;margin-top:3px;font-size:7px;line-height:1.35;color:#d8edf9;font-weight:800}
+.figure-ace-overlay-v132{position:fixed;z-index:10080;inset:0;background:rgba(2,8,15,.86);display:flex;align-items:center;justify-content:center;padding:18px}.figure-ace-overlay-v132[hidden]{display:none}
+.figure-ace-card-v132{width:min(720px,96vw);max-height:min(86vh,920px);overflow:auto;background:#f6ecd6;border:4px solid #8f7352;border-radius:26px;padding:18px;color:#20180f;box-shadow:0 22px 70px rgba(0,0,0,.5)}
+.figure-ace-card-v132 .settings-head{position:sticky;top:-18px;z-index:2;margin:-18px -18px 12px;padding:18px;background:#17304a;color:#fff}.figure-ace-card-v132>p{margin:4px 2px 12px;font-size:10px;font-weight:900;color:#5c4a36}
+.figure-ace-grid-v132{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.figure-ace-grid-v132>button{min-width:0;padding:6px 4px 7px;border-radius:13px;background:#fffdf8;border:2px solid #9a7952;color:#1d1711;display:flex;flex-direction:column;align-items:center;gap:3px;box-shadow:0 3px 0 rgba(88,56,28,.16)}
+.figure-ace-grid-v132 img{width:66px;height:66px;object-fit:contain}.figure-ace-grid-v132 b{width:100%;font-size:7px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.figure-ace-grid-v132 small{font-size:7px;font-weight:1000;color:#6a4a2d}
+.piece-ace-btn-v132{background:#315b78!important;color:#fff!important;border-color:#79c9ef!important}
+.mob-piece-deck-v115 .piece-deck-actions-v102{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.mob-piece-menu-v132 .settings-head p{margin:3px 0 0;color:#d7e9f7;font-size:9px;font-weight:1000}.battle-menu-v132{grid-column:1/-1!important}
+.piece-battle-select-v132,.free-select-v132{color:#20180f}.piece-battle-select-v132 .settings-head,.free-select-v132 .settings-head{color:#fff}
+.battle-mode-grid-v132,.free-difficulty-grid-v132{display:grid;gap:10px;margin-top:14px}.battle-mode-grid-v132{grid-template-columns:1fr 1fr}.free-difficulty-grid-v132{grid-template-columns:1fr}
+.battle-mode-grid-v132 button,.free-difficulty-grid-v132 button{min-height:92px;border-radius:17px;border:2px solid #8e704d;background:#fffaf0;color:#21180f;padding:13px;text-align:left;box-shadow:0 7px 0 rgba(87,62,35,.14)}
+.battle-mode-grid-v132 button b,.free-difficulty-grid-v132 button b{display:block;font-size:15px;font-weight:1000}.battle-mode-grid-v132 button small,.free-difficulty-grid-v132 button small{display:block;margin-top:5px;font-size:9px;color:#5c5045;font-weight:900}.battle-mode-grid-v132 button em,.free-difficulty-grid-v132 button em{display:block;margin-top:7px;font-style:normal;font-size:10px;color:#123d5d;font-weight:1000}
+.free-difficulty-grid-v132 button:disabled{opacity:.5;filter:grayscale(.55)}
+.cpu-profile-v132{display:flex;align-items:center;gap:8px;width:max-content;margin:8px auto 6px;padding:5px 10px 5px 5px;border-radius:999px;background:#f3ead6;border:2px solid #927553;color:#21180f}.cpu-profile-v132>b{font-size:10px;letter-spacing:.12em}
+.cpu-silhouette-v132{position:relative;width:42px;height:42px;border-radius:50%;background:#d8c6a8;overflow:hidden;border:2px solid #806646}.cpu-silhouette-v132:before{content:"";position:absolute;left:50%;top:7px;width:12px;height:12px;border-radius:50%;background:#080a0d;transform:translateX(-50%)}.cpu-silhouette-v132:after{content:"";position:absolute;left:50%;bottom:-6px;width:28px;height:25px;border-radius:50% 50% 35% 35%;background:#080a0d;transform:translateX(-50%)}.cpu-silhouette-v132 span{position:absolute;z-index:2;right:4px;top:2px;font-size:17px;font-weight:1000;color:#fff;text-shadow:0 1px 2px #000}
+.mob-piece-battle-v132>.cpu-profile-v132{margin:4px auto 3px;transform:scale(.82);transform-origin:center}.mob-piece-battle-v132 .piece-player-card-v103.cpu.center{outline:3px solid #efc74d!important;box-shadow:0 0 0 3px rgba(239,199,77,.25),0 5px 12px rgba(0,0,0,.2)!important}
+.piece-score-v132 span:first-child,.piece-score-v132 span:last-child{font-size:9px}.piece-score-v132 span b{font-size:16px}
+.mob-piece-big-notice-v132{position:relative;width:min(620px,92vw);min-height:290px;margin:auto;padding:48px 24px;border-radius:28px;background:#f7edd8;border:5px solid #8b704f;color:#17120d;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 22px 70px rgba(0,0,0,.55);overflow:hidden}.mob-piece-big-notice-v132 small{font-size:10px;letter-spacing:.22em;font-weight:1000;color:#66523e}.mob-piece-big-notice-v132 h2{position:relative;z-index:2;margin:14px 0 6px;font-size:34px;line-height:1.05;font-weight:1100}.mob-piece-big-notice-v132 p{position:relative;z-index:2;margin:3px 0;font-size:13px;font-weight:1000}.mob-piece-big-notice-v132.promotion-v132,.mob-piece-big-notice-v132.rank-up-v132{background:linear-gradient(180deg,#fff7d5,#f1c85a);border-color:#8f6413}.mob-piece-big-notice-v132.lose-v132,.mob-piece-big-notice-v132.rank-down-v132{background:#d9dde2;border-color:#515966;color:#15191e}
+.piece-confetti-v132{position:absolute;inset:0;pointer-events:none}.piece-confetti-v132 i{position:absolute;left:var(--left);top:-18px;width:8px;height:15px;background:hsl(var(--hue),78%,52%);animation:pieceConfettiV132 1.6s ease-in infinite;animation-delay:var(--delay);transform:rotate(var(--rot))}@keyframes pieceConfettiV132{to{top:110%;transform:translateX(var(--drift)) rotate(620deg)}}
+.rank-result-v132,.piece-reward-v132{margin:12px auto 0;width:min(420px,90%);padding:10px 12px;border-radius:13px;background:#fff9ed;border:2px solid #987651;color:#22180f}.rank-result-v132{display:flex;justify-content:space-between;align-items:center}.rank-result-v132 b{font-size:14px}.rank-result-v132 span{font-size:10px;font-weight:1000}.piece-reward-v132{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.piece-reward-v132>b{width:100%;font-size:10px}.piece-reward-v132 span{padding:5px 9px;border-radius:999px;background:#1e4869;color:#fff;font-size:9px;font-weight:1000}
+@media(max-width:520px){.figure-ace-grid-v132{grid-template-columns:repeat(4,minmax(0,1fr))}.figure-ace-grid-v132 img{width:56px;height:56px}.figure-auto-actions-v132{grid-template-columns:1fr}.battle-mode-grid-v132{grid-template-columns:1fr}.mob-piece-big-notice-v132 h2{font-size:28px}}
+/* ===== END MOB QUEST v132 ===== */
