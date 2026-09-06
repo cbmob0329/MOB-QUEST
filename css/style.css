@@ -3974,3 +3974,18 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 /* ===== MOB QUEST v127: cleared program lock ===== */
 #trainingFeaturePopup[data-mode="program"] .battle-program-card.cleared:disabled{opacity:1!important;filter:none!important;cursor:default!important;pointer-events:none!important;}
 /* ===== END MOB QUEST v127 ===== */
+
+
+/* ===== MOB QUEST v128: LOAD STABILITY / BLACKSMITH WALLET ===== */
+.critical-bg-v128{will-change:opacity}
+.blacksmith-wallet-v128{
+  position:sticky;top:0;z-index:12;display:grid;grid-template-columns:1fr auto;gap:3px 10px;align-items:center;
+  margin:10px 0 12px;padding:10px 12px;border:2px solid #68421f;border-radius:14px;
+  background:linear-gradient(180deg,#fff7df,#f2d59f);color:#25160b;-webkit-text-fill-color:#25160b;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.blacksmith-wallet-v128 span{font-size:8px;font-weight:1000;letter-spacing:.12em}
+.blacksmith-wallet-v128 strong{font-size:15px;line-height:1;font-weight:1000;text-align:right}
+.blacksmith-wallet-v128 small{grid-column:1/-1;font-size:7px;font-weight:1000;letter-spacing:.08em;color:#6b431f;-webkit-text-fill-color:#6b431f}
+.loading-guide-tap-v123:disabled{opacity:1!important;filter:none!important}
+/* ===== END MOB QUEST v128 ===== */

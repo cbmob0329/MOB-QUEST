@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=127;
+const GAME_ASSET_VERSION=128;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7637,6 +7637,182 @@ window.__mobV127Runtime=true;
 /* Cleared Battle Program cards are intentionally disabled; EXP x3 only works while Test Mode is ON.
    Boss Record item 38 is excluded from normal adventure record drops until state.meta.gameCleared. */
 /* ===== END MOB QUEST v127 ===== */
+
+
+/* ===== MOB QUEST v128: CRITICAL BACKGROUND / LIGHTER EQUIPMENT LOAD / SHOP SEASONS ===== */
+window.__mobV128Runtime=true;
+
+/* A failed/stalled first image request must not poison the preload cache forever. */
+const _preloadAssetV128Base=preloadAsset;
+preloadAsset=async function(src,priority='auto'){
+  const ok=await _preloadAssetV128Base(src,priority);
+  if(!ok){
+    try{assetPreloadCache.delete(src);assetImageCache.delete(src);}catch(_){}
+  }
+  return ok;
+};
+
+/* Mobile Safari can become unresponsive when dozens of large images decode at once.
+   Keep row decoding deliberately narrow, and stop starting new work after a guide timeout/new load. */
+let preloadRowsEpochV128=0;
+const _runGuideLoadingJobV128Base=runGuideLoadingJobV123;
+runGuideLoadingJobV123=async function(text,work,{minMs=760,timeoutMs=12000,detail='ASSET'}={}){
+  const myEpoch=++preloadRowsEpochV128;
+  showScreen('loading');beginLoadingGuideV123(text,detail);await nextPaint();
+  const started=performance.now(),bar=$('#loadingBar'),det=$('#loadingDetail');let accept=true;
+  const progress=(done,total)=>{if(!accept||myEpoch!==preloadRowsEpochV128)return;const pct=Math.max(0,Math.min(98,Math.round((Number(done)||0)/Math.max(1,Number(total)||1)*100)));if(bar)bar.style.width=`${pct}%`;if(det)det.textContent=`${done} / ${total}　${pct}%`;};
+  const job=Promise.resolve().then(()=>work?.(progress));
+  const timedOut=await Promise.race([job.then(()=>false).catch(e=>{console.warn('[v128 loading job]',e);return false;}),waitRealV123(timeoutMs).then(()=>true)]);
+  if(timedOut&&myEpoch===preloadRowsEpochV128)preloadRowsEpochV128++;
+  accept=false;if(bar)bar.style.width='100%';if(det)det.textContent=timedOut?'READY / TIMEOUT':'READY';
+  const remain=Math.max(0,minMs-(performance.now()-started));if(remain)await waitRealV123(remain);await waitRealV123(70);
+};
+preloadRowsWithProgressV123=async function(rows,progress){
+  const myEpoch=preloadRowsEpochV128;
+  const seen=new Set(),list=[];
+  for(const x of (rows||[])){const src=typeof x==='string'?x:x?.image;if(!src||seen.has(src))continue;seen.add(src);list.push(x);}
+  const total=list.length;if(!total){progress?.(1,1);return;}
+  let cursor=0,done=0;const workers=Math.min(3,total);
+  const one=async x=>{const src=typeof x==='string'?x:x?.image;if(!src)return;try{const isFig=typeof x==='object'&&/^(?:fig|figplay|figene|figboss|spbossfig)\//i.test(String(src));if(isFig&&typeof ensureFigureAssetV110==='function'){await ensureFigureAssetV110(x,2200);await preloadAsset(x.image||src,'high');}else await preloadAsset(src,'high');}catch(_){}};
+  const worker=async()=>{while(cursor<total&&myEpoch===preloadRowsEpochV128){const i=cursor++;await one(list[i]);if(myEpoch!==preloadRowsEpochV128)break;done++;progress?.(done,total);}};
+  await Promise.all(Array.from({length:workers},worker));
+};
+
+/* The four cards selected for one loading session now loop forever: 4/4 -> 1/4. */
+renderLoadingGuideV123=function(){
+  const st=loadingGuideStateV123;if(!st||!st.order?.length)return;st.pos=((Number(st.pos)||0)%st.order.length+st.order.length)%st.order.length;
+  const idx=st.order[st.pos],guide=LOADING_GUIDES_V123[idx];if(!guide)return;
+  const card=$('#loadingGuideCardV123'),title=$('#loadingGuideTitleV123'),body=$('#loadingGuideBodyV123'),count=$('#loadingGuideCountV123'),tap=$('#loadingGuideTapV123');
+  if(title)title.textContent=guide.title;if(body)body.textContent=guide.body.trim();if(count)count.textContent=`${st.pos+1} / ${st.order.length}`;
+  if(tap){tap.textContent='TAP！';tap.disabled=false;tap.setAttribute('aria-label','次のガイドを表示');}
+  if(card){card.classList.remove('swap');void card.offsetWidth;card.classList.add('swap');}
+  requestAnimationFrame(fitLoadingGuideTextV123);
+};
+nextLoadingGuideV123=function(){const st=loadingGuideStateV123;if(!st||!st.order?.length)return;st.pos=(Number(st.pos||0)+1)%st.order.length;renderLoadingGuideV123();};
+
+/* Do not expose a progressive/half-decoded full-screen background. */
+async function waitDomImageReadyV128(img,timeoutMs=6500){
+  if(!img)return false;
+  const decoded=async()=>{if(!(img.complete&&img.naturalWidth>0&&img.naturalHeight>0))return false;if(img.decode){try{await Promise.race([img.decode(),waitRealV123(1400)]);}catch(_){}}return !!(img.naturalWidth>0&&img.naturalHeight>0);};
+  if(await decoded())return true;
+  return await new Promise(resolve=>{
+    let settled=false;const finish=async ok=>{if(settled)return;settled=true;clearTimeout(timer);img.removeEventListener('load',onLoad);img.removeEventListener('error',onErr);if(ok&&img.decode){try{await Promise.race([img.decode(),waitRealV123(1400)]);}catch(_){}}resolve(!!(ok&&img.naturalWidth>0&&img.naturalHeight>0));};
+    const onLoad=()=>finish(true),onErr=()=>finish(false);img.addEventListener('load',onLoad,{once:true});img.addEventListener('error',onErr,{once:true});const timer=setTimeout(()=>finish(false),Math.max(1800,timeoutMs));
+  });
+}
+async function ensureCriticalBackgroundV128(img,candidates){
+  if(!img)return false;
+  const prevVisibility=img.style.visibility;img.classList.add('critical-bg-v128');img.classList.remove('critical-bg-ready-v128');img.style.visibility='hidden';
+  for(const src of [...new Set((candidates||[]).filter(Boolean))]){
+    let ok=false;try{ok=await preloadAsset(src,'high');}catch(_){}
+    if(!ok)continue;
+    if((img.getAttribute('src')||'')!==src){try{img.src=src;}catch(_){continue;}}
+    if(await waitDomImageReadyV128(img,6500)){img.style.visibility=prevVisibility||'visible';img.classList.add('critical-bg-ready-v128');return true;}
+  }
+  img.style.visibility=prevVisibility||'hidden';return false;
+}
+
+/* HOME may wait a little longer, but when it appears the background is already complete. */
+goHome=async function(){
+  try{
+    await loadingWithAssets('HOMEを準備しています…',['back/rpgmain.png','back/01.png','icon/01.png'],{minMs:900,timeoutMs:10000,detail:'HOME'});
+    await renderHome();
+    const bg=$('#homeScreen .screen-bg');await ensureCriticalBackgroundV128(bg,['back/rpgmain.png','back/01.png','back2/01.png']);
+  }catch(e){console.warn('[v128 home preload]',e);}
+  showScreen('home');if(window.__mobBootGuard){clearTimeout(window.__mobBootGuard);window.__mobBootGuard=null;}
+};
+
+/* Equipment: one guided warm-up per session. Re-opening equipment/pickers stays immediate. */
+let equipmentGuideWarmV128=false;
+function equipmentWarmRowsV128(){
+  const rows=[];
+  for(const [pid] of state.party){const p=player(pid);if(p)rows.push(versionedPlay(p.image));const eq=equipmentFor(pid);if(eq.main)rows.push(weaponById(eq.main));if(eq.sub)rows.push(weaponById(eq.sub));if(eq.armor)rows.push(armorById(eq.armor));for(const id of eq.medals||[])if(id)rows.push(weaponById(id));for(const id of figureEquipmentFor(pid))if(id)rows.push(figureById(id));}
+  rows.push(...WEAPONS.filter(w=>weaponOwned(w.id)>0).slice(0,16));
+  rows.push(...ARMORS.filter(a=>armorOwned(a.id)>0).slice(0,10));
+  rows.push(...FIGURES.filter(f=>!f.pending&&figureOwned(f.id)>0).slice(0,10));
+  return rows;
+}
+openEquipmentScreen=async function(){
+  const returnTo=activeScreenKeyV123();
+  try{if(!equipmentGuideWarmV128){await loadingRowsV123('装備データを読み込んでいます…',equipmentWarmRowsV128(),{minMs:720,timeoutMs:9000,detail:'EQUIPMENT'});equipmentGuideWarmV128=true;}}
+  catch(e){console.warn('[v128 equipment warm]',e);equipmentGuideWarmV128=true;}
+  /* v100 captures the current facility/background when equipment opens. Put the original screen
+     back in front before calling it, otherwise the loading screen itself becomes the return target. */
+  if(returnTo&&returnTo!=='loading'&&screens[returnTo])showScreen(returnTo);
+  try{return _openEquipmentScreenV103Base();}catch(e){console.warn('[v128 equipment open]',e);showScreen('equipment');}
+};
+async function quietPickerWarmV128(rows){
+  const subset=(rows||[]).slice(0,18);if(!subset.length)return;
+  try{await Promise.race([preloadRowsWithProgressV123(subset,()=>{}),waitRealV123(420)]);}catch(_){}
+}
+openFigurePicker=async function(pid,index){
+  equipmentPlayerId=canonicalPlayerId(pid);figurePickerSlot=clamp(Number(index)||0,0,3);const rows=filteredOwnedFigures();await quietPickerWarmV128(rows);showScreen('equipment');return _openFigurePickerV123Base(pid,index);
+};
+openWeaponPicker=async function(pid,kind,index=0,onDone=null){
+  pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid);let rows=[];
+  if(kind==='armor')rows=ARMORS.filter(a=>armorOwned(a.id)>0&&(freeArmorCount(a.id,pid)>0||eq.armor===a.id));
+  else if(kind==='medal')rows=WEAPONS.filter(w=>medalOwned(w.id)>0&&(freeMedalCount(w.id,{pid,slot:'medal',index})>0||eq.medals[index]===w.id));
+  else rows=WEAPONS.filter(w=>canEquipWeapon(p,w)&&weaponOwned(w.id)>0&&(freeWeaponCount(w.id,{pid,slot:kind})>0||eq[kind]===w.id));
+  await quietPickerWarmV128(rows);showScreen('equipment');return _openWeaponPickerV123Base(pid,kind,index,onDone);
+};
+
+/* Weapon shop season progression. Test mode never bypasses shop progression. */
+function blacksmithWeaponSeasonV128(){
+  if(state.meta?.gameCleared||worldCleared('demonCastle2'))return 5;
+  if(worldCleared('demonCastle'))return 4;
+  if(worldCleared('rural2'))return 3;
+  if(worldCleared('neon'))return 2;
+  return 1;
+}
+blacksmithShopWeapons=function(){const unlocked=blacksmithWeaponSeasonV128();return WEAPONS.filter(w=>w.price&&Number(w.season||1)<=unlocked);};
+
+const _renderBlacksmithPopupV128Base=renderBlacksmithPopup;
+renderBlacksmithPopup=function(mode='menu'){
+  _renderBlacksmithPopupV128Base(mode);
+  if(mode!=='shop')return;
+  const body=$('#blacksmithPopupBody');if(!body)return;
+  const wallet=document.createElement('div');wallet.className='blacksmith-wallet-v128';wallet.innerHTML=`<span>所持コイン</span><strong>${Number(state.coins||0).toLocaleString()} G</strong><small>SHOP SEASON ${blacksmithWeaponSeasonV128()}</small>`;
+  const back=body.querySelector('.blacksmith-popup-back');if(back)back.insertAdjacentElement('afterend',wallet);else body.prepend(wallet);
+};
+let blacksmithShopWarmSeasonV128=0;
+async function openBlacksmithShopV128(){
+  const season=blacksmithWeaponSeasonV128(),rows=blacksmithShopWeapons(),pop=$('#blacksmithPopup');
+  if(season>blacksmithShopWarmSeasonV128){
+    if(pop)pop.hidden=true;
+    try{await loadingRowsV123('武器を読み込んでいます…',rows,{minMs:650,timeoutMs:10000,detail:`WEAPON SHOP S${season}`});blacksmithShopWarmSeasonV128=season;}catch(e){console.warn('[v128 weapon shop warm]',e);blacksmithShopWarmSeasonV128=season;}
+    showScreen('castle');
+  }
+  renderBlacksmithPopup('shop');
+}
+buyBlacksmithWeapon=async function(id){
+  const w=weaponById(id);if(!w?.price)return;
+  if(!blacksmithShopWeapons().some(x=>x.id===w.id)){await facilityTalk('その武器はまだショップに並んでいないぞ！','モブゴンゾー','play/002.png');return;}
+  if(state.coins<w.price){await facilityTalk(`ゴールドが足りないぞ！\n所持 ${Number(state.coins||0).toLocaleString()}G`,'モブゴンゾー','play/002.png');return;}
+  const after=Math.max(0,Number(state.coins||0)-Number(w.price||0));
+  const a=await narrationDialog(`${w.name}を購入しますか？\n\n価格 ${w.price.toLocaleString()}G\n所持 ${Number(state.coins||0).toLocaleString()}G\n購入後 ${after.toLocaleString()}G`,[['はい','yes','primary'],['いいえ','no']]);if(a!=='yes')return;
+  state.coins=after;state.meta.coins=state.coins;addWeapon(w.id,1);saveMeta();renderHome();renderBlacksmithPopup('shop');await facilityTalk('毎度！大事に使ってくれよな！','モブゴンゾー','play/002.png');
+};
+bindBlacksmithPopupEvents=function(){
+  const pop=$('#blacksmithPopup');if(!pop)return;pop.onclick=e=>{
+    if(e.target===pop||e.target.closest('[data-blacksmith-popup-close]'))return closeBlacksmithPopup();
+    const back=e.target.closest('[data-blacksmith-popup-back]');if(back)return renderBlacksmithPopup('menu');
+    const act=e.target.closest('[data-blacksmith-popup-action]');if(act){const mode=act.dataset.blacksmithPopupAction;if(mode==='shop')return openBlacksmithShopV128();return renderBlacksmithPopup(mode);}
+    const buy=e.target.closest('[data-buy-weapon]');if(buy)return buyBlacksmithWeapon(buy.dataset.buyWeapon);
+    const forge=e.target.closest('[data-forge-medal]');if(forge)return forgeBlacksmithMedal(forge.dataset.forgeMedal);
+    const sw=e.target.closest('[data-sell-weapon]');if(sw)return sellBlacksmithItem('weapon',sw.dataset.sellWeapon);
+    const sa=e.target.closest('[data-sell-armor]');if(sa)return sellBlacksmithItem('armor',sa.dataset.sellArmor);
+  };
+};
+openBlacksmithFacility=async function(){
+  renderBlacksmithRoom();
+  try{await ensureCriticalBackgroundV128($('#castleBg'),['back/gonzo.png','back2/003.png','back2/01.png']);}catch(e){console.warn('[v128 smith bg]',e);}
+  showScreen('castle');await nextPaint();await nextPaint();
+  if(!facilityFlag('smith:v74')){await facilityTalk('よう！よく来たな！ここでは装備の購入とメダルの錬成が出来るぞ！装備は武器と防具に分かれていて武器は2つまで、防具は1つ装備出来るぞ！武器の2つ目はサブ武器でステータスが半減する。注意して装備してくれ！同じ武器を3つ持ってきたらメダル錬成が出来るぞ！メダルはその武器のステータス10％と、なんと特性を引き継ぐことが出来るぞ！メダルにした武器は消えてしまうから注意してくれ！','モブゴンゾー','play/002.png');markFacilityFlag('smith:v74');}
+};
+
+/* Warm the two most visually important large backgrounds as soon as the game JS is ready. */
+preloadAsset('back/rpgmain.png','high').catch(()=>{});preloadAsset('back/gonzo.png','high').catch(()=>{});
+/* ===== END MOB QUEST v128 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
