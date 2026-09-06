@@ -286,3 +286,17 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - Normal page transitions, HOME, battle startup, and castle room transitions use the guide loader.
 - Added stronger decode/preload gates before equipment, inventory, figure picker, weapon/armor/medal picker, gacha lineup, and MOB PIECE deck/list screens so image-heavy UI is not exposed before its art is ready.
 - GAME_ASSET_VERSION and title updated to v123.
+
+[v125]
+- 最新の「フィギュア一覧(3) / フィギュア一覧2(3) / フィギュア一覧3(1)」を反映。
+- figene/18.png を「モブヒトデヤリ」に統合し、重複していた figene/44.png を廃止。旧セーブの所持・装備・モブピースデッキも安全に統合。
+- figboss/02.png モブホークⅡの能力表記を最新データへ更新。
+- ボスレコード限定フィギュアを spbossfig/001.png～046.png の46種へ更新。
+- NORMALの限定フィギュア抽選率を SR65% / SSR31% / UR3.9% / MOB0.1% に更新。HARD以降は高レア率を段階的に上昇。
+- ボスレコードクエストを魔王城Ⅱクリア後解放へ統一。
+- 新タグ 53「超合金」/ 54「超合金ボス」/ 55「超合金ヒーロー」を追加。
+- モブピース用に限定46種の HP / ATK / DEF / SPD / COST を設定し、新タグ3種にもモブピース専用共鳴効果を設定。
+- spbossfig 画像は専用パスのみ参照し、誤った樽画像などへの代替表示は行わない。
+- 特技会心率をフィギュア効果として処理できるよう追加。
+- GAME_ASSET_VERSION / title version を v125 に更新。
+
