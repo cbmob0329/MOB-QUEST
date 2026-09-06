@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=125;
+const GAME_ASSET_VERSION=126;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills};}catch(_){}return{enabled:false,fast5:false,allSkills:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7441,15 +7441,15 @@ rollBossLimitedFigureV116=function(difficulty){const rarity=weightedRarityV116(d
 bossRateHintV116=function(d){return d==='normal'?'UR以上 4.0%':d==='hard'?'UR以上 11.0%':d==='veryhard'?'UR以上 25.0%':'UR以上 45.0%';};
 
 function bossRecordQuestUnlockedV125(){return !!state.test?.enabled||worldCleared('demonCastle2');}
-TRAINING_GUIDE_TEXT.boss='ここでは\nボスレコードを消費して\n撃破済みのボスへ挑戦できる！\n魔王城Ⅱクリア後に解放！\n4 AREA完全クリアで\nダイヤ・ルビー・限定フィギュア！';
+TRAINING_GUIDE_TEXT.boss='ここでは\nボスレコードを消費して\n撃破済みのボスへ挑戦できる！\n4 AREA完全クリアで\nダイヤ・ルビー・限定フィギュア！';
 const _renderTrainingModeCarouselV125Base=renderTrainingModeCarousel;
-renderTrainingModeCarousel=function(){_renderTrainingModeCarouselV125Base();if(bossRecordQuestUnlockedV125())return;const b=$('[data-training-mode="boss"]',$('#trainingModeCarousel'));if(!b)return;b.classList.add('locked');let s=$('small',b);if(!s){s=document.createElement('small');b.appendChild(s);}s.textContent='魔王城Ⅱクリア後';};
+renderTrainingModeCarousel=function(){_renderTrainingModeCarouselV125Base();if(bossRecordQuestUnlockedV125())return;const b=$('[data-training-mode="boss"]',$('#trainingModeCarousel'));if(!b)return;b.classList.add('locked');let s=$('small',b);if(!s){s=document.createElement('small');b.appendChild(s);}s.textContent='？？？';};
 const _setTrainingModeV125Base=setTrainingMode;
-setTrainingMode=async function(mode){if(mode==='boss'&&!bossRecordQuestUnlockedV125())return facilityTalk('ボスレコードクエストは\n魔王城Ⅱクリア後に解放されるぞ！','モブコーチ','play/003.png');return _setTrainingModeV125Base(mode);};
+setTrainingMode=async function(mode){if(mode==='boss'&&!bossRecordQuestUnlockedV125())return facilityTalk('まだ解放されていないメニューだぞ！','モブコーチ','play/003.png');return _setTrainingModeV125Base(mode);};
 const _renderTrainingFeatureV125Base=renderTrainingFeature;
-renderTrainingFeature=function(mode){const root=$('#trainingFeaturePanel');if(mode==='boss'&&!bossRecordQuestUnlockedV125()){if(root)root.innerHTML='<section class="panel"><div class="section-title"><div><small>BOSS RECORD QUEST</small><h2>まだ解放されていません</h2></div><span class="pill">POST GAME</span></div><p class="panel-note">ボスレコードクエストは魔王城Ⅱクリア後に解放されます。</p></section>';return;}const r=_renderTrainingFeatureV125Base(mode);if(mode==='boss'&&root){const banner=$('.boss-limited-banner-v116',root);if(banner){const span=$('span',banner),small=$('small',banner);if(span)span.textContent='spbossfig/001.png ～ 046.png';if(small)small.textContent='SR 18種 / SSR 18種 / UR 9種 / MOB 1種';}}return r;};
+renderTrainingFeature=function(mode){const root=$('#trainingFeaturePanel');if(mode==='boss'&&!bossRecordQuestUnlockedV125()){if(root)root.innerHTML='<section class="panel"><div class="section-title"><div><small>BOSS RECORD QUEST</small><h2>まだ解放されていません</h2></div><span class="pill">POST GAME</span></div><p class="panel-note">まだ解放されていないメニューです。</p></section>';return;}const r=_renderTrainingFeatureV125Base(mode);if(mode==='boss'&&root){const banner=$('.boss-limited-banner-v116',root);if(banner){const span=$('span',banner),small=$('small',banner);if(span)span.textContent='spbossfig/001.png ～ 046.png';if(small)small.textContent='SR 18種 / SSR 18種 / UR 9種 / MOB 1種';}}return r;};
 const _startTrainingQuestV125Base=startTrainingQuest;
-startTrainingQuest=async function(type,opt={}){if(type==='boss'&&!bossRecordQuestUnlockedV125())return facilityTalk('ボスレコードクエストは\n魔王城Ⅱクリア後に解放されるぞ！','モブコーチ','play/003.png');return _startTrainingQuestV125Base(type,opt);};
+startTrainingQuest=async function(type,opt={}){if(type==='boss'&&!bossRecordQuestUnlockedV125())return facilityTalk('まだ解放されていないメニューだぞ！','モブコーチ','play/003.png');return _startTrainingQuestV125Base(type,opt);};
 
 /* Source-only 特技会心率 is applied only to the 特技 command. */
 const _emptyFigureEffectsV125Base=emptyFigureEffects;emptyFigureEffects=function(){const o=_emptyFigureEffectsV125Base();o.skillCrit=0;return o;};
@@ -7459,6 +7459,176 @@ const _applyEnemyDamageToV125Base=applyEnemyDamageTo;applyEnemyDamageTo=function
 
 window.__mobV125PatchRuntime=true;
 /* ===== END MOB QUEST v125 ===== */
+
+
+
+/* ===== MOB QUEST v126: REPORT FLOW / HIDDEN BOSS RECORD / RECORD GET / DEPARTURE ===== */
+window.__mobV126Runtime=true;
+
+/* Locked post-game content must not reveal its name, unlock condition, or future area. */
+/* Once unlocked the guide explains the feature, but before unlock no future-area hint exists anywhere in the visible UI. */
+TRAINING_GUIDE_TEXT.boss='ここでは\nボスレコードを消費して\n撃破済みのボスへ挑戦できる！\n4 AREA完全クリアで\nダイヤ・ルビー・限定フィギュア！';
+const _renderTrainingV126Base=renderTraining;
+renderTraining=function(){if(!bossRecordQuestUnlockedV125()&&state.training?.mode==='boss')state.training.mode='menu';return _renderTrainingV126Base();};
+const _renderTrainingModeCarouselV126Base=renderTrainingModeCarousel;
+renderTrainingModeCarousel=function(){
+  _renderTrainingModeCarouselV126Base();
+  if(!bossRecordQuestUnlockedV125()){
+    const b=$('[data-training-mode="boss"]',$('#trainingModeCarousel'));
+    if(b)b.remove();
+  }
+};
+const _setTrainingModeV126Base=setTrainingMode;
+setTrainingMode=async function(mode){
+  if(mode==='boss'&&!bossRecordQuestUnlockedV125()){
+    state.training.mode='menu';renderTraining();
+    return facilityTalk('まだ解放されていないメニューだぞ！','モブコーチ','play/003.png');
+  }
+  return _setTrainingModeV126Base(mode);
+};
+const _renderTrainingFeatureV126Base=renderTrainingFeature;
+renderTrainingFeature=function(mode){
+  if(mode==='boss'&&!bossRecordQuestUnlockedV125()){
+    const root=$('#trainingFeaturePanel');if(root){root.innerHTML='';root.hidden=true;}return;
+  }
+  return _renderTrainingFeatureV126Base(mode);
+};
+const _startTrainingQuestV126Base=startTrainingQuest;
+startTrainingQuest=async function(type,opt={}){
+  if(type==='boss'&&!bossRecordQuestUnlockedV125())return facilityTalk('まだ解放されていないメニューだぞ！','モブコーチ','play/003.png');
+  return _startTrainingQuestV126Base(type,opt);
+};
+
+/* Keep a newly obtained legend record clearly visible for about 2.5 seconds after the reveal settles. */
+showStoryRecordGetV119=async function(rec){
+  if(!rec)return;
+  const el=document.createElement('div');el.className='story-record-get-v119 story-record-get-v126';
+  el.innerHTML=`<div class="story-record-get-card-v119"><small>LEGEND RECORD / GET!</small><h2>No.${rec.no}</h2><div class="story-record-get-disc-v119"><img src="${rec.image}" alt="${rec.name}"></div><b>${rec.name}</b><p>伝説のレコードを手に入れた！</p></div>`;
+  document.body.appendChild(el);bindImages(el);await nextPaint();el.classList.add('show');
+  await fixedDelay(2500);
+  el.classList.remove('show');await fixedDelay(280);el.remove();
+};
+
+/* Dedicated departure card: destination and appropriate level are one presentation, not two dialogs. */
+function adventureDepartureCardV126(w){
+  return new Promise(resolve=>{
+    const old=document.getElementById('adventureDepartureV126');if(old)old.remove();
+    const lv=Math.max(1,Number(w?.recommendedLevel)||5),ov=document.createElement('div');
+    ov.id='adventureDepartureV126';ov.className='adventure-departure-v126';
+    ov.innerHTML=`<div class="adventure-departure-card-v126"><small>NEXT DESTINATION</small><h2>${w?.name||'草原'}</h2><div class="adventure-departure-level-v126"><span>適正レベル</span><b>Lv ${lv}</b></div><p>このエリアへ出発しますか？</p><div class="adventure-departure-actions-v126"><button data-depart-v126="no" type="button">いいえ</button><button data-depart-v126="yes" class="primary" type="button">はい</button></div></div>`;
+    document.body.appendChild(ov);requestAnimationFrame(()=>ov.classList.add('show'));
+    const done=v=>{ov.classList.remove('show');setTimeout(()=>ov.remove(),180);resolve(v);};
+    ov.addEventListener('click',e=>{const b=e.target.closest('[data-depart-v126]');if(b)done(b.dataset.departV126);else if(e.target===ov)done('no');});
+  });
+}
+const _openHomeActionV126Base=openHomeAction;
+openHomeAction=function(action){
+  if(action!=='adventure')return _openHomeActionV126Base(action);
+  if(state.adventure?.awaitingReport)return dialog('王へ報告しましょう！',[['OK','ok','primary']],'ADVENTURE');
+  if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');
+  const w=currentWorld();
+  return (async()=>{const v=await adventureDepartureCardV126(w);if(v!=='yes')return;ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();})();
+};
+
+const CASTLE_REPORT_PLAYER_KEYS_V126={pink:'pink',desert:'desert',denden:'denden',money:'money',nyoro:'nyoro',nekoku:'nekoku',jessie:'jessie',tetsu:'tetsu',riro:'riro'};
+function castleReportSpeakerV126(key){if(key==='king')return['モブスライムキング','play/007.png'];const pid=CASTLE_REPORT_PLAYER_KEYS_V126[key],p=pid?player(pid):null;return p?[p.name,p.image]:['モブスライムキング','play/007.png'];}
+function castleReportPagesV126(text,maxChars=44,maxLines=4){
+  const lines=String(text||'').split('\n'),pages=[];let buf=[],count=0;
+  const flush=()=>{if(buf.length){pages.push(buf.join('\n'));buf=[];count=0;}};
+  for(const raw of lines){const line=String(raw),n=[...line].length;if(buf.length&&(buf.length>=maxLines||count+n>maxChars))flush();buf.push(line);count+=n;}
+  flush();return pages;
+}
+async function castleReportTalkV126(key,text,impact=false){
+  const [name,image]=castleReportSpeakerV126(key);
+  if(!impact){for(const page of castleReportPagesV126(text))await facilityTalk(page,name,image);return;}
+  const el=document.createElement('div');el.className='castle-report-impact-v126';
+  el.innerHTML=`<div><img src="${versionedPlay(image)}" alt="${name}"><small>${name}</small><strong>${String(text).replace(/\n/g,'<br>')}</strong></div>`;
+  document.body.appendChild(el);bindImages(el);await nextPaint();el.classList.add('show');await fixedDelay(1050);el.classList.remove('show');await fixedDelay(220);el.remove();
+}
+async function castleReportNarrateV126(text){return narrationDialog(text,[['次へ','ok','primary']]);}
+async function castleReportArmDashV126(){
+  const arm=document.querySelector('[data-castle-actor="arm"]');
+  if(!arm){await fixedDelay(2000);return;}
+  arm.classList.remove('castle-report-arm-dash-v126');void arm.offsetWidth;arm.classList.add('castle-report-arm-dash-v126');await fixedDelay(2000);arm.classList.remove('castle-report-arm-dash-v126');
+}
+const CASTLE_REPORT_SCRIPTS_V126={
+  grassland:[
+    ['talk','king','おお！モブホークを倒したか！\nやつは草原を翔る怪鳥\nよくぞ倒してくれた！\n早速レコードを見せてくれ！'],
+    ['talk','pink','中々強敵でしたが、\n勇者様大活躍でありました！'],
+    ['narrate','レコードを王様に渡した'],
+    ['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],
+    ['talk','king','次の目的地は砂漠じゃ！\n砂漠には恐ろしいモンスター'],['talk','king','ミラモブがおる！！',true],
+    ['talk','king','やつはピラミッドを拠点に\n砂漠のモンスターを支配しておる\n十分に気を付けてくれ！'],
+    ['talk','pink','はい！\n勇者様にお任せを！']
+  ],
+  desert:[
+    ['talk','king','なんと！ミラモブを倒したか！\nさすがは勇者\nあっぱれじゃ！\nん？\nお主は何者じゃ？'],
+    ['talk','pink','こちらはモブデザート！\n砂漠で仲間になったであります！'],
+    ['talk','desert','目的が同じだったのでな\nこれから共に戦わせてもらう'],
+    ['talk','king','うむ\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],
+    ['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],
+    ['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],
+    ['talk','king','次の目的地は田舎町じゃ！\n美味しい空気\n美しい景色\nじゃが！\n決して侮るでないぞ！\n田舎町のボスは'],['talk','king','モブガーディアンじゃ！！',true],
+    ['talk','king','鉄壁を誇るやつの身体は\n簡単には倒せまい'],['talk','pink','勇者様にお任せであります！\n行ってくるでありまーす！']
+  ],
+  rural:[
+    ['talk','king','おお！戻ったか！\nさすが、さすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこの黄色いのはなんじゃ？'],
+    ['talk','pink','こちらはモブデンデン！\n田舎町で仲間になったであります！'],['talk','denden','王様！\nお会い出来て光栄でやんす！\nこれからよろしくでやんす！'],
+    ['talk','king','うむ\n黄色いが、\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],
+    ['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],
+    ['talk','king','次の目的地はネオン街じゃ！\n近未来のビル\n目を奪われるアート\nじゃが！\n決して侮るでないぞ！\nネオン街のボスは'],['talk','king','モブネオンバルスじゃ！！',true],['talk','king','高度の技をあやつる魔物\n簡単には倒せまい'],['talk','pink','我々にお任せであります！\n行ってくるでありまーーす！']
+  ],
+  neon:[
+    ['talk','king','おおー！戻ったか！\nさすがの、さすが\nさすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこのちっこいのはなんじゃ？'],['talk','money','失礼ね！まだこれから大きくなるわよ！'],['talk','pink','こちらはモブマニー！\nネオン街で仲間になったであります！'],['talk','money','仕方ないから手伝ってあげるわ\n二度とちっこいとか言わないでよね！'],['talk','king','うむ\nちょいと生意気じゃが、\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','次の目的地はマグマじゃ！\nなにを隠そう\nあの町を崩壊させた張本人がおる\nアツく\n気高く\n恐ろしい\nマグマのボスは'],['talk','king','モブドラゴンじゃ！！',true],['talk','king','魔王により力を得た魔物\n簡単には倒せまい'],['talk','pink','お、恐ろしいであります、、\n必ず\n生きて帰ってくるであります！']
+  ],
+  magma:[
+    ['talk','king','おおー！なんと、戻ったか！\nさすがのさすが\nさっすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこのカエルはなんじゃ？'],['talk','pink','こちらはモブニョロ！\nマグマで仲間になったであります！'],['talk','denden','王様！よろしくニョロ！'],['talk','king','うむ\nカエルじゃが、\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','モブドラゴンを倒したとなると\n魔王軍も黙ってはいまい\nこちらもさらなる力が必要じゃ\nということで\n次の目的地は海底じゃ！\n優雅に泳ぐ人魚\n世界を感じる広大さ\nじゃが！\n決して侮るでないぞ！\n海底は強者ばかりじゃ\n海底の王は\n会ってみれば分かる\n力を試してくるのじゃ！'],['talk','pink','力を試す・・\n了解でありまーーす！']
+  ],
+  sea:[
+    ['talk','king','おお！無事戻ったか！\nさっすが、さっすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこの丸いのはなんじゃ？'],['talk','pink','こちらはモブデンデン！\n海底で仲間になったであります！'],['talk','nekoku','よ！王様\nオラお手伝いしてやるぞ'],['talk','king','うむ\n丸いが、\n癒される\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','モブネプチューンとは古い友人でな\n黙っておって悪かったな\n次の目的地じゃが、\nもう一度草原に向かって欲しい！'],['talk','pink','草原でありますか？'],['talk','king','なんと\nモブホークが'],['talk','king','魔王の力を得て復活したのじゃ！',true],['talk','king','油断せず\nしっかり備えて挑むのじゃ！'],['talk','pink','リベンジマッチでありますね\n返り討ちにしてやるであります！\n行ってくるでありまーーす！']
+  ],
+  grassland2:[
+    ['talk','king','おお！戻ったか！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','pink','なんとか倒しましたが\nレコードはありませんでした'],['talk','king','構わぬ\nレコードを集めること\n魔王を倒すこと\n2つの目的に向けて\n確実に進むのじゃ！'],['talk','pink','はい！\n頑張るであります！'],['narrate','王様と握手を交わした'],['talk','king','次の目的地は部族村じゃ！\n謎に包まれた土地\n謎のモンスターたち\n故に！\n決して侮るでないぞ！\n部族村のボスは'],['talk','king','分かっておらん！！',true],['talk','king','レコードがある可能性は高い\n頼むぞ！'],['talk','pink','我々にお任せであります！\n行ってくるでありまーーす！']
+  ],
+  tribe:[
+    ['talk','king','おおー！無事に戻ったか！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','jessie','あなたが王様？\n私はモブジェシー\nよろしくね'],['talk','king','ネオン街の保安官ではないか！'],['talk','pink','知っているのでありますか？'],['talk','king','有名じゃからのー'],['talk','jessie','あら\n嬉しいわ'],['talk','king','お主がいれば100人力じゃ！\nところで\n部族村はどうじゃった？'],['talk','pink','なんとかボスは倒しましたが\nレコードはありませんでした'],['talk','king','うむ\nやはりそうか'],['talk','pink','でも\n諦めないであります！'],['narrate','王様と握手を交わした'],['talk','king','次の目的地は再び田舎町じゃ！\n強力な魔物が住みついたとの\n情報が入った\n名前は分からぬが\n遠い国からやって来た'],['talk','king','最強の戦士！！',true],['talk','king','レコードがある可能性は高い\n頼むぞ！'],['talk','pink','最強の戦士\nなんの！\n我々は最強のパーティー！\n行ってくるでありまーーす！']
+  ],
+  rural2:[
+    ['talk','king','おおー！\nおおー！！\n戻ったか！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','pink','なんとか倒しましたが\nやはりレコードはありませんでした'],['talk','king','そうか・・\nしかし、確実に前に進んでおる！'],['talk','pink','はい！\n頑張るであります！'],['narrate','王様と握手を交わした'],['talk','king','次の目的地は再びネオン街じゃ！\n新たなボスの名は'],['talk','king','モブネオマスター！！',true],['talk','king','ネオン街だけでなく\n各地のエリアで名を残す\n強力なモンスターじゃ！'],['talk','pink','ネオン街でありますか！'],['talk','king','うむ\nやつは各地の扉も管理しておる\nやつを倒せば\n魔王城への扉も開かれるであろう！'],['talk','pink','了解であります！\n我々にお任せであります！\n行ってくるでありまーーす！']
+  ],
+  neon2:[
+    ['talk','king','おおーー！\n戻ったかーー！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','pink','なんとかマスターを倒しましたが\nレコードはありませんでした'],['talk','king','そうか\nしかしマスターを倒すほどとは\nお主たち\n本当に強くなったな！\nこれで魔王城へは行けるはずじゃ\nじゃがしかし！\nまだまだ精進し\n力をつけるのじゃ！'],['talk','pink','はい！\nまだまだ強くなるであります！'],['narrate','王様と握手を交わした'],['talk','king','いよいよ魔王との決戦が迫って来た'],['talk','pink','覚悟はできています！\n王様！次の指示を！'],['talk','king','うむ\n次の目的地は再びマグマじゃ！\nモブドラゴンは\n本来の力で\nお前たちを'],['talk','king','待ち構えておる！！',true],['talk','king','レコードをもう1枚持っている可能性は高い\n頼むぞ！'],['talk','pink','宿敵モブドラゴン\n必ず勝つであります！\n我々にお任せであります！\n行ってくるでありまーーす！']
+  ],
+  magma2:[
+    ['talk','king','おおーー！\nなんとー！\n戻ったかーー！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','pink','なんとかモブドラゴンを倒したであります！\nしかし、レコードはありませんでした'],['talk','king','そうか\nしかし本当にあっぱれじゃ\nお主たち\nそれでこそ勇者パーティーじゃ！'],['talk','pink','ありがとうございます！！\nで\nありまーす！！！'],['narrate','王様と握手を交わした'],['talk','king','魔王城に\n各地の幹部たちが集結しておる\n決戦は近いぞ！'],['talk','pink','バシッと覚悟はできています！\n王様！次の指示を！'],['talk','king','うむ\n次の目的地は再び砂漠じゃ！\nミラモブは\n砂漠の封印を解き放ち\nお前たちを'],['talk','king','待ち構えておる！！',true],['talk','king','レコードをもう1枚持っている可能性は高い\n頼むぞ！'],['talk','pink','ミラモブ・・\n覚悟するであります！\n我々にお任せであります！\n行ってくるでありまーーす！']
+  ],
+  desert2:[
+    ['talk','king','戻ったか\n戻ったのか\n会いたかったぞお前たち！！\nさすがのさすがの\nさすがは勇者パーティーじゃ！\nあっぱれじゃ！'],['talk','riro','初めましテ\nモブリーロでス\n世界を救うたメ\n強力いたしまス'],['talk','king','おー！\nここで仲間が増えるとは\n心強いぞ！'],['talk','pink','なんとかミラモブを倒しましたが\nレコードはありませんでした'],['talk','king','そうか\nそうなると\nやはり最後の一枚は'],['talk','king','魔王が持っておる！！',true],['talk','pink','やはりそうでありますか・・'],['talk','king','遂にこの時が来た！\n覚悟は良いか！\nお主たち！'],['talk','pink','もちろんであります！！',true],['talk','king','では\n・・・・・\nでは！！\n次の目的地は魔王城じゃ！\n魔王は強い\n強く、恐ろしい\nじゃが！\nこれまで得た経験\nこれまで得た仲間\nお主たちは'],['talk','king','強い！！',true],['talk','king','最後のレコードを手にすべく\n頼むぞ！！'],['talk','pink','魔王との決戦・・\n必ず勝つであります！\n我々にお任せでありまーーす！\n行ってくるでありまーーーす！']
+  ]
+};
+async function runCastleReportScriptV126(worldId){
+  const steps=CASTLE_REPORT_SCRIPTS_V126[worldId];if(!steps)return false;
+  for(const s of steps){if(s[0]==='talk')await castleReportTalkV126(s[1],s[2],!!s[3]);else if(s[0]==='narrate')await castleReportNarrateV126(s[1]);else if(s[0]==='arm')await castleReportArmDashV126();}
+  return true;
+}
+function commitCastleReportProgressV126(r){
+  if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];
+  if(r.worldId&&!state.adventure.reportedWorlds.includes(r.worldId))state.adventure.reportedWorlds.push(r.worldId);
+  state.adventure.awaitingReport=null;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.checkpoint=null;state.adventure.runSnapshot=null;
+  if(r.nextWorldIndex==null){state.adventure.completed=true;state.adventure.areaIndex=0;}
+  else{state.adventure.worldIndex=r.nextWorldIndex;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.adventure.completed=false;}
+  saveAdventure();
+}
+const _submitAdventureReportV126Base=submitAdventureReport;
+submitAdventureReport=async function(){
+  const r=state.adventure?.awaitingReport;if(!r||!CASTLE_REPORT_SCRIPTS_V126[r.worldId])return _submitAdventureReportV126Base();
+  if(castleReportBusy||storyBusy)return;castleReportBusy=true;
+  try{await runCastleReportScriptV126(r.worldId);commitCastleReportProgressV126(r);await fixedDelay(1000);renderCastle();showScreen('castle');}
+  finally{castleReportBusy=false;}
+};
+
+window.__mobV126PatchRuntime=true;
+/* ===== END MOB QUEST v126 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;
