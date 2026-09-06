@@ -1,4 +1,4 @@
-// MOB QUEST v128
+// MOB QUEST v130
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1312,4 +1312,46 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(ei>=0)MOB_DATA.enemyCatalog[ei]={...MOB_DATA.enemyCatalog[ei],...fakeDesert};else (MOB_DATA.enemyCatalog||[]).push(fakeDesert);
 }
 /* ===== END MOB QUEST v121 DATA ===== */
+
+/* ===== MOB QUEST v130: EARLY COMBAT BALANCE / PLAYER HP NORMALIZATION ===== */
+{
+  MOB_DATA.playerBalanceVersion=130;
+
+  /*
+    v130 target:
+    - Early party HP is reduced so Lv15 sits around the mid-300s for standard roles.
+    - Tank/support identities remain distinct instead of forcing every character to exactly 350 HP.
+    - Lv99/120 HP stays healthy enough for late-game equipment and postgame progression.
+    - ATK/MAG are raised modestly to improve damage feel without touching DEF/MND/SPD.
+  */
+  Object.assign(TEMP_BALANCE.playerTargets,{
+    yusha:{...TEMP_BALANCE.playerTargets.yusha,hp:[200,1250,1500],atk:[58,480,575],mag:[55,455,550]},
+    pink:{...TEMP_BALANCE.playerTargets.pink,hp:[230,1350,1600],atk:[43,345,420],mag:[38,325,395]},
+    desert:{...TEMP_BALANCE.playerTargets.desert,hp:[220,1300,1550],atk:[68,535,645],mag:[35,345,420]},
+    nyoro:{...TEMP_BALANCE.playerTargets.nyoro,hp:[190,1200,1450],atk:[58,460,555],mag:[60,480,580]},
+    nekoku:{...TEMP_BALANCE.playerTargets.nekoku,hp:[210,1250,1500],atk:[54,385,465],mag:[62,485,590]},
+    jessie:{...TEMP_BALANCE.playerTargets.jessie,hp:[185,1200,1450],atk:[60,480,580],mag:[60,470,570]},
+    denden:{...TEMP_BALANCE.playerTargets.denden,hp:[190,1200,1450],atk:[68,535,645],mag:[45,375,455]},
+    money:{...TEMP_BALANCE.playerTargets.money,hp:[175,1100,1350],atk:[34,300,365],mag:[75,555,680]},
+    riro:{...TEMP_BALANCE.playerTargets.riro,hp:[200,1250,1500],atk:[56,450,545],mag:[64,480,580]},
+    tetsu:{...TEMP_BALANCE.playerTargets.tetsu,hp:[260,1450,1700],atk:[77,580,700],mag:[26,245,300]},
+    kaijin:{...TEMP_BALANCE.playerTargets.kaijin,hp:[240,1400,1650],atk:[77,555,675],mag:[51,420,510]},
+    lilith:{...TEMP_BALANCE.playerTargets.lilith,hp:[190,1200,1450],atk:[39,320,390],mag:[81,600,735]},
+    naraku:{...TEMP_BALANCE.playerTargets.naraku,hp:[240,1400,1650],atk:[75,535,645],mag:[68,500,605]}
+  });
+
+  /* Ordinary enemies only: HP about -8%, DEF/MND about -9 to -10%. ATK/MAG/SPD are untouched. */
+  if(TEMP_BALANCE.enemyProfiles?.normal){
+    Object.assign(TEMP_BALANCE.enemyProfiles.normal,{
+      hpBase:100,hpPerLevel:13,hpQuad:.10,
+      defBase:13,defPerLevel:1.80,defQuad:.00135,
+      resBase:13,resPerLevel:1.80,resQuad:.00135
+    });
+  }
+
+  /* Mob Guardian was under-threatening because its signature action is defensive. Strengthen only its ATK. */
+  const guardian=(MOB_DATA.enemyCatalog||[]).find(e=>e.id==='boss-guardian');
+  if(guardian)guardian.mods={...(guardian.mods||{}),atk:1.12};
+}
+/* ===== END MOB QUEST v130 DATA ===== */
 

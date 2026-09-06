@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=128;
+const GAME_ASSET_VERSION=130;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7813,6 +7813,63 @@ openBlacksmithFacility=async function(){
 /* Warm the two most visually important large backgrounds as soon as the game JS is ready. */
 preloadAsset('back/rpgmain.png','high').catch(()=>{});preloadAsset('back/gonzo.png','high').catch(()=>{});
 /* ===== END MOB QUEST v128 ===== */
+
+
+/* ===== MOB QUEST v129: BATTLE PROGRAM STRICT STORY-SEASON GATES ===== */
+/*
+   Battle Program story unlocks must follow the designated season table even
+   while TEST MODE is enabled.  TEST MODE remains useful for level/EXP testing,
+   but it no longer reveals future Battle Program seasons.
+*/
+function battleProgramWorldReportedV129(worldId){
+  const wid=String(worldId||'');
+  const reported=Array.isArray(state.adventure?.reportedWorlds)?state.adventure.reportedWorlds:[];
+  if(wid==='unfinishedBook')return !!state.meta?.bookCompleted||reported.includes('unfinishedBook');
+  if(wid==='demonCastle2')return !!state.meta?.gameCleared||!!state.adventure?.completed||reported.includes('demonCastle2');
+  return reported.includes(wid);
+}
+battleProgramStoryGateMetV114=function(seasonId){
+  const id=Number(seasonId)||1;
+  if(id===1)return true;
+  const wid=BATTLE_PROGRAM_STORY_GATES_V114[id];
+  if(!wid)return false;
+  return battleProgramWorldReportedV129(wid);
+};
+battleProgramSeasonUnlockedV114=function(seasonId){
+  const id=Number(seasonId)||1,season=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id);
+  if(!season||!battleProgramStoryGateMetV114(id))return false;
+  /* A previously-cleared program is preserved, but future story seasons stay hidden. */
+  if(battleProgramSeasonHasProgressV114(season))return true;
+  if(id===1)return true;
+  const prev=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id-1);
+  return !!prev&&battleProgramSeasonClear(prev);
+};
+battleProgramProgramUnlockedV114=function(season,index){
+  const i=Number(index)||0,p=season?.programs?.[i];
+  if(!season||!p||!battleProgramSeasonUnlockedV114(season.id))return false;
+  if(battleProgramCleared(p.id)||i===0)return true;
+  return battleProgramCleared(season.programs[i-1]?.id);
+};
+battleProgramNextUnlockHintV114=function(){
+  for(let id=1;id<=50;id++){
+    if(battleProgramSeasonUnlockedV114(id))continue;
+    const conditions=[];
+    if(!battleProgramStoryGateMetV114(id))conditions.push(`ストーリー「${battleProgramStoryGateNameV114(id)}」クリア`);
+    if(id>1){const prev=BATTLE_PROGRAM_SEASONS.find(s=>s.id===id-1);if(prev&&!battleProgramSeasonClear(prev))conditions.push(`SEASON ${id-1} CLEAR`);}
+    return conditions.length?`NEXT OPEN：${conditions.join(' ＋ ')}`:`NEXT OPEN：SEASON ${id}`;
+  }
+  return 'ALL SEASON OPEN';
+};
+for(const season of BATTLE_PROGRAM_SEASONS){season.unlock=()=>battleProgramSeasonUnlockedV114(season.id);}
+/* ===== END MOB QUEST v129 ===== */
+
+
+
+/* ===== MOB QUEST v130: EXPERIENCE TURNTABLE EARLY-GAME TUNE ===== */
+/* NORMAL was disproportionately strong against the steeply cheaper early-level EXP curve.
+   Reduce only NORMAL by 20%; HARD / VERY HARD / INFERNO remain unchanged. */
+if(TURNTABLE_KILL_REWARD_V116?.exp?.normal)TURNTABLE_KILL_REWARD_V116.exp.normal['sp-metal']=1200;
+/* ===== END MOB QUEST v130 ===== */
 
 /* ===== MOB QUEST v99: PATCHES EXECUTE INSIDE CORE SCOPE ===== */
 window.__mobV99PatchRuntime=true;

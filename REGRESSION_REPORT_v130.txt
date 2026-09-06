@@ -1,0 +1,29 @@
+MOB QUEST v130 - BALANCE PASS
+
+1. 通常モンスターのみ調整
+- HP: 約8%低下
+- DEF/MND: 約9～10%低下
+- ATK/MAG/SPD: 変更なし
+- Elite/Boss: 共通プロファイル変更なし
+
+2. モブガーディアン
+- boss-guardian の ATK のみ +12%
+- HP/DEF/MND/行動内容は変更なし
+
+3. 経験値ターンテーブル
+- NORMAL のモブメタルスライム 1体あたり 1500 EXP -> 1200 EXP
+- NORMAL最大 12,000 EXP -> 9,600 EXP
+- HARD / VERY HARD / INFERNO は変更なし
+- 低Lvは必要EXPが少ないため複数Lv上がりやすい性質自体は維持
+
+4. プレイヤー基礎ステータス
+- Lv15標準ロールHPをおおむね330～390へ
+- 勇者 Lv15 raw HP目安: 350
+- タンク系（モブテツ等）は役割上やや高め
+- ATK/MAGはおおむね5～8%強化
+- MP/DEF/MND/SPDは変更なし
+
+5. 回帰保護
+- v129 Battle Program strict season gate保持
+- v128 loader/shop season fixes保持
+- v127 test EXP x3 / boss-record gate保持
