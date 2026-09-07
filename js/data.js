@@ -1421,3 +1421,41 @@ for(const [element,id] of Object.entries(_v73Middle)){
 }
 // ===== END MOB QUEST v141 DATA =====
 
+// ===== MOB STORY v142: authored enemy ultimates / passives =====
+// Ratios are decimal multipliers: 120% = 1.20, never 120.
+const ENEMY_ABILITIES_V142 = {
+  'モブアビスナイト':{ultimate:{special:'ウォータースパイラル',power:1.20,skillType:'physical',skillElement:'水',every:2}},
+  'モブジョーンズ':{ultimate:{special:'海の戦士',power:1.50,skillType:'physical',skillElement:'水',every:3},passive:'戦士の勝負勘',lowHp:'jones'},
+  'モブウェイブ':{ultimate:{special:'ウォーターフリーズ',power:1.30,skillType:'magic',skillElement:'水',every:3,status:'sleep',chance:.50},passive:'カイテイノマモリビト',protectChance:.30,protectCut:.30},
+  'モブメラケロ':{passive:'カエルノトモシビ',lowHpCut:.30},
+  'モブホークⅡ':{evade:.10,passive:'草原の怪鳥',attackAilmentChance:.10},
+  'モブバイオリン':{deathUltimate:'ラストコール',passive:'ブラックジャイアント',counter:1},
+  'モブラプチー':{passive:'ジュラシックヤベージャンズ',protectChance:.20,protectCut:.20,protectCounter:1},
+  'モブティラ':{passive:'ジュラシックヤベージャンズ',protectChance:.20,protectCut:.20,protectCounter:1},
+  'モブクウカイ':{normalAoe:true,ultimate:{special:'ウォーターフリーズ',power:1.30,skillType:'magic',skillElement:'水',every:3,status:'sleep',chance:.50},passive:'ソウルアンダーグラウンド',allyDeath:'kuukai'},
+  'モブウミデンデン':{passive:'デンデン・ムキムキ・カナリツヨイ',normalCrit:.20},
+  'モブネオタイガー':{evade:.10,passive:'ネオンネットワーク',thirdTurnEvade:.50},
+  'モブパレットレオン':{normalAoe:true,passive:'ネオン街の実力者',lowHp:'palette'},
+  'モブネオマスター':{cut:.10,passive:'マスター・オブ・ネオン',negateChance:.10,negateCounter:1.50},
+  'モブフレザード':{cut:.10,passive:'フュージョンリフレクション',negateChance:.20,negateLimit:2},
+  'モブヨーガンスライム':{actions:2,oneNormalAoe:true,passive:'フュージョンリフレクション',negateChance:.20,negateLimit:2},
+  'モブサラマンダー':{passive:'フレイムボディ',burnAttacker:.30},
+  'モブギドラ':{actions:3,oneSpecial:true,passive:'ドラゴンソウル',lowHp:'gidora'},
+  'モブスラミイラ':{passive:'スライムソウル',transform:'g-slime'},
+  'モブミラバスター':{passive:'ミラモブソウル',lowHp:'mirabuster'},
+  'モブミラアース':{passive:'ピラミッドフォース',normalAoeChance:.20},
+  'モブミラカラミ':{passive:'ピラミッドフォース',normalAoeChance:.20},
+  'モブミラナイト':{passive:'ピラミッドフォース',normalAoeChance:.20},
+  'モブミラタイム':{passive:'ピラミッドフォース',normalAoeChance:.20},
+  'ミラモブファラオ':{actions:3,oneSpecial:true,passive:'災いのループ',survive:true},
+  'モブキラウィッチ':{passive:'リリス親衛隊',allyDeath:'witch'},
+  'モブララウィッチ':{passive:'リリス親衛隊',allyDeath:'witch'},
+  'グラディモブ':{passive:'歴戦の猛者',lowHp:'gladi'},
+  'モブ魔王':{passive:'魔王の覇気',dispelEvery:5,negateName:'魔王の鎧',negateChance:.10,negateHeal:500},
+  'ウルモブリリス':{passive:'闇の支配者',negateChance:.10,negateHeal:1000,negateCounter:1.30}
+};
+for(const e of MOB_DATA.enemyCatalog||[]){
+  const ability=ENEMY_ABILITIES_V142[e.name];
+  if(ability)e.abilitiesV142=ability;
+}
+// ===== END MOB STORY v142 DATA =====

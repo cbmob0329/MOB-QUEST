@@ -1,0 +1,51 @@
+MOB STORY v142 - ENEMY ULTIMATES AND PASSIVES
+
+IMPLEMENTED
+- Authored abilities for all 29 requested monster names. Same-name variants
+  (including the serious Wave subquest and both Maou encounters) share abilities.
+- Ultimate ratios: 120%=1.20, 130%=1.30, 150%=1.50 of the normal damage result.
+  Water magic uses MAG/RES; water physical uses ATK/DEF. Existing defenses,
+  elemental/status resistance, and super-sub damage rules remain in effect.
+- Interval abilities first activate on turn N, then 2N, etc. Multi-action enemies
+  cannot repeat the new interval ultimate within the same turn.
+- Percentage recovery and Last Call damage use maximum HP.
+- Per-battle limits, HP thresholds, damage nullification, counterattacks,
+  enemy-side protection, critical/AoE normals, transformation and survival.
+- Gidora/Pharaoh: exactly 3 queued actions, at most one special per turn.
+- Yogan Slime: exactly 2 normal attacks, one single-target and one all-target.
+- Multiple protectors roll independently and their damage reductions multiply;
+  permanent damage-cut bonuses add percentage points to existing damage cut.
+- Last Call is processed before wave-clear/victory, including poison deaths and
+  simultaneous party defeat. Survival/transformation defers defeat rewards.
+- Maou dispels temporary field-party combat buffs every fifth turn. Equipment,
+  learned skills, base stats and negative statuses are retained.
+
+BOOT CORRECTION
+- Before this change, isolated browser startup reported "STORY_EVENTS is not
+  defined": the main closure ended before the v140/v141 code that referenced
+  private game helpers. The closure now includes those existing patches and v142.
+  The existing patch contents and save keys have not been rewritten.
+
+FILES
+- js/data.js: centralized authored ability definitions.
+- js/game.js: combat integration and the minimal closure-boundary correction.
+- index.html: synchronized inline sources; title version v142.
+- scripts/sync-inline.cjs: repeatable inline synchronization (no dependencies).
+- tests/enemy-abilities-v142.*: isolated-browser regression tests.
+- Root game.js/style.css and all image assets are untouched.
+
+VALIDATION
+- 38 combat checks passed against the real game functions in isolated Edge.
+  The combat test harness replaces animations/delays; production has no test API.
+- Production HTML boot and title/settings: no uncaught runtime errors.
+- Unstubbed mobile battle start and Attack button: enemy HP decreases normally.
+- JavaScript and both inline script blocks parse successfully.
+- Inline JS/data/CSS match their external sources; git diff --check passes.
+- Existing browser profiles/save data were not opened or modified.
+- This is targeted regression coverage, not a complete playthrough of all stories.
+
+RUN
+  node scripts/sync-inline.cjs
+  node tests/enemy-abilities-v142.cjs
+Requires Playwright and a locally installed Edge (MOB_TEST_BROWSER can select
+another installed Playwright Chromium channel).
