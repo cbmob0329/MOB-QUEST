@@ -1,0 +1,13 @@
+MOB QUEST v133
+
+- Restored Mob Piece v110 individual 5v5 battle animation (movement, collisions, knockback, smoke/star impact, skill sprites, per-figure HP) while preserving v132 Free/Rank Match rules and rewards.
+- Mob Piece duplicate-limit guide changed to dark text on light background with balanced hierarchy.
+- Magma arrival: added Mob Denden “みんなせっかちでやんすね〜” before dual retort; dual bubbles are anchored to actual character art.
+- Story bubbles globally paginate/wrap naturally up to two lines instead of clipping.
+- Magma subquest Phoenix dialogue split naturally; wrong Denden-as-Nyoro speaker keys corrected in magma post-area and castle report.
+- Battle dialogue uses small speaker name instead of PASSIVE label; dialogue text wraps without clipping. Passive mechanics still show PASSIVE.
+- Castle report dialogue globally paginated to max two readable lines; Magma report sequence explicitly divided per requested example.
+- Dialog/Ace layer raised above gacha/equipment/Mob Piece sheets.
+- Smith medal forging animation blocks all navigation/input until finished.
+- Camp treated as modal; common navigation disabled while open; weapon picker stays in Adventure/Camp context instead of switching to Equipment/HOME.
+- Protagonist-party figure series remains unreleased/pending.

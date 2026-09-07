@@ -4044,3 +4044,47 @@ img[data-figure-image-v110].asset-missing{opacity:.22!important;background:repea
 .rank-result-v132,.piece-reward-v132{margin:12px auto 0;width:min(420px,90%);padding:10px 12px;border-radius:13px;background:#fff9ed;border:2px solid #987651;color:#22180f}.rank-result-v132{display:flex;justify-content:space-between;align-items:center}.rank-result-v132 b{font-size:14px}.rank-result-v132 span{font-size:10px;font-weight:1000}.piece-reward-v132{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.piece-reward-v132>b{width:100%;font-size:10px}.piece-reward-v132 span{padding:5px 9px;border-radius:999px;background:#1e4869;color:#fff;font-size:9px;font-weight:1000}
 @media(max-width:520px){.figure-ace-grid-v132{grid-template-columns:repeat(4,minmax(0,1fr))}.figure-ace-grid-v132 img{width:56px;height:56px}.figure-auto-actions-v132{grid-template-columns:1fr}.battle-mode-grid-v132{grid-template-columns:1fr}.mob-piece-big-notice-v132 h2{font-size:28px}}
 /* ===== END MOB QUEST v132 ===== */
+
+
+/* ===== MOB QUEST v133: READABILITY / LAYER / CONTEXT ===== */
+/* Deck guide: light card = dark text, balanced three-line hierarchy. */
+.mob-piece-deck-v115 .piece-deck-guide-v115{
+  display:grid!important;grid-template-columns:1fr!important;align-items:start!important;gap:6px!important;
+  padding:11px 13px!important;background:#f1dfb8!important;border:2px solid #987149!important;border-radius:14px!important;
+  color:#21170e!important;text-shadow:none!important;
+}
+.mob-piece-deck-v115 .piece-deck-guide-v115 b,
+.mob-piece-deck-v115 .piece-deck-guide-v115 span,
+.mob-piece-deck-v115 .piece-deck-guide-v115 small{display:block!important;width:100%!important;color:#21170e!important;-webkit-text-fill-color:#21170e!important;text-shadow:none!important;white-space:normal!important;word-break:keep-all!important;overflow-wrap:break-word!important;line-height:1.35!important;text-align:left!important;}
+.mob-piece-deck-v115 .piece-deck-guide-v115 b{font-size:11px!important;font-weight:1000!important;}
+.mob-piece-deck-v115 .piece-deck-guide-v115 span{font-size:10px!important;font-weight:1000!important;padding:7px 9px!important;border-radius:9px!important;background:#fff5df!important;border:1px solid #c6a775!important;}
+.mob-piece-deck-v115 .piece-deck-guide-v115 small{font-size:8px!important;font-weight:850!important;color:#56432e!important;-webkit-text-fill-color:#56432e!important;}
+
+/* Story dialogue: no one-line clipping; up to two authored/natural lines fit in the bubble. */
+.story-bubble{height:auto!important;min-height:72px!important;max-width:min(92vw,360px)!important;overflow:visible!important;padding:9px 12px 10px!important;}
+.story-bubble>b{font-size:10px!important;line-height:1.15!important;margin-bottom:4px!important;}
+.story-bubble>p{display:block!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-wrap:pretty!important;overflow:visible!important;text-overflow:clip!important;font-size:15px!important;line-height:1.34!important;max-width:100%!important;}
+.story-bubble.story-dual-v133{width:min(43vw,235px)!important;min-width:155px!important;padding:8px 10px 9px!important;}
+.story-bubble.story-dual-v133>p{font-size:13px!important;line-height:1.32!important;}
+
+/* Battle story cut-in: speaker is small; PASSIVE is hidden for dialogue; main text can wrap. */
+.passive-cutin.battle-story-dialogue-v133{height:auto!important;min-height:92px!important;grid-template-columns:82px minmax(0,1fr)!important;padding:6px 12px 7px 4px!important;overflow:visible!important;}
+.passive-cutin.battle-story-dialogue-v133 small{display:block!important;font-size:8px!important;letter-spacing:.04em!important;color:#6d4a28!important;margin-bottom:4px!important;}
+.passive-cutin.battle-story-dialogue-v133 b{display:block!important;font-size:13px!important;line-height:1.35!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;overflow:visible!important;text-overflow:clip!important;}
+
+/* Ace and confirmation dialogs always sit above gacha / Mob Piece / equipment sheets. */
+.figure-ace-overlay-v132{z-index:48000!important;}
+#dialogOverlay,.dialog-overlay{z-index:50000!important;}
+
+/* Medal forging is a true modal animation. */
+.smith-hammer-fx:not([hidden]){position:fixed!important;inset:0!important;z-index:52000!important;pointer-events:auto!important;touch-action:none!important;}
+body.smith-forging-v133 [data-common-nav],body.smith-forging-v133 [data-nav],body.smith-forging-v133 button:not(#smithHammerFx *){pointer-events:none!important;}
+
+/* Camp is modal; prevent underlying HOME/tavern/common navigation from receiving taps. */
+body.camp-modal-v133 [data-common-nav],body.camp-modal-v133 [data-nav],body.camp-modal-v133 .adventure-menu{pointer-events:none!important;}
+body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-events:auto!important;}
+
+/* Keep restored v110 battle arena visually dominant. */
+.mob-piece-fight-v133 .piece-battlefloor-fight-v110{min-height:310px!important;}
+.mob-piece-fight-v133 .fight-arena-v110{min-height:292px!important;}
+/* ===== END MOB QUEST v133 ===== */

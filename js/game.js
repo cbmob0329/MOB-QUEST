@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=132;
+const GAME_ASSET_VERSION=133;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8197,6 +8197,111 @@ window.__mobBootReady=true;
 })();
 preloadAssets(['icon/01.png','back/rpgmain.png','icon/02.png','icon/03.png','icon/04.png','icon/05.png','icon/06.png','icon/07.png','icon/08.png']).catch(()=>{});
 setTimeout(startFastBackgroundWarmup,1400);
+
+
+/* ===== MOB QUEST v133: DIALOGUE / CAMP CONTEXT / MOB PIECE PRESENTATION ===== */
+window.__mobV133Runtime=true;
+
+/* ---------- readable Japanese dialogue pages ---------- */
+function splitJapaneseLineV133(raw,maxChars=20){
+  const src=String(raw??'').trim();if(!src)return[''];const chars=[...src];if(chars.length<=maxChars)return[src];
+  const out=[];let rest=src;
+  while([...rest].length>maxChars){
+    const a=[...rest],min=Math.max(7,maxChars-8);let cut=-1;
+    for(let i=Math.min(maxChars,a.length-1);i>=min;i--){if(/[、。！？!?…]/.test(a[i-1])){cut=i;break;}}
+    if(cut<0){const probe=a.slice(0,maxChars+1).join('');const hints=['となると','ということで','だから','けれど','しかし','でも','そして','ので','から','なら','ニョロ','であります','でやんす'];let best=-1;for(const h of hints){const x=probe.lastIndexOf(h);if(x>=6)best=Math.max(best,x+(h.length<=4?h.length:0));}cut=best>0?best:maxChars;}
+    out.push(a.slice(0,cut).join('').trim());rest=a.slice(cut).join('').trim();
+  }
+  if(rest)out.push(rest);return out.filter(Boolean);
+}
+function dialoguePagesV133(text,{maxChars=20,maxLines=2,maxTotal=34}={}){
+  const logical=String(text??'').split(/\r?\n/),segments=[];
+  for(const raw of logical)segments.push(...splitJapaneseLineV133(raw,maxChars));
+  const pages=[];let lines=[],count=0;const flush=()=>{if(lines.length){pages.push(lines.join('\n'));lines=[];count=0;}};
+  for(const seg of segments){const n=[...seg].length;if(lines.length&&(lines.length>=maxLines||count+n>maxTotal))flush();lines.push(seg);count+=n;}flush();return pages.length?pages:[''];
+}
+storySay=async function(key,text,displayName=null,anchorKey=null){for(const page of dialoguePagesV133(text,{maxChars:20,maxLines:2,maxTotal:35}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* Dual dialogue must use the actual visible character art as its anchor. */
+storySayDual=async function(keyA,lineA,keyB,lineB){
+  const scene=$('#storyScene'),make=(key,line)=>{const info=storyActorInfo(key),anchor=storyAnchor(key),b=document.createElement('div');b.className='story-bubble story-bubble-temp story-dual-v133';b.innerHTML='<b></b><p></p>';b.querySelector('b').textContent=info.name;b.querySelector('p').textContent=dialoguePagesV133(line,{maxChars:16,maxLines:2,maxTotal:28})[0];scene.appendChild(b);return{b,anchor,key};};
+  const items=[make(keyA,lineA),make(keyB,lineB)];await nextPaint();const sr=scene.getBoundingClientRect();
+  for(const it of items){const br=it.b.getBoundingClientRect(),ar=storyAnchorRect(it.anchor);let left=(sr.width-br.width)/2,top=sr.height*.24;if(ar){const cx=ar.left-sr.left+ar.width/2;left=clamp(cx-br.width/2,8,sr.width-br.width-8);top=clamp(ar.top-sr.top-br.height-9,80,sr.height-br.height-28);it.b.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);}else it.b.classList.add('no-arrow');it.b.style.left=`${left}px`;it.b.style.top=`${top}px`;setStorySpeaking(it.key,true);it.b.classList.add('show');}
+  const ra=items[0].b.getBoundingClientRect(),rb=items[1].b.getBoundingClientRect();if(!(ra.right+8<rb.left||rb.right+8<ra.left)){const w0=items[0].b.offsetWidth,w1=items[1].b.offsetWidth;items[0].b.style.left='8px';items[1].b.style.left=`${Math.max(8,sr.width-w1-8)}px`;for(const it of items){const ar=storyAnchorRect(it.anchor);if(ar){const left=parseFloat(it.b.style.left)||0,cx=ar.left-sr.left+ar.width/2;it.b.style.setProperty('--arrow-x',`${clamp(cx-left,22,it.b.offsetWidth-22)}px`);}}}
+  await storyAdvanceWait();for(const it of items){it.b.classList.remove('show');setStorySpeaking(it.key,false);}await fixedDelay(420);items.forEach(it=>it.b.remove());
+};
+
+/* Magma source corrections requested in v133. */
+if(STORY_EVENTS?.['arrival:magma']?.steps){const st=STORY_EVENTS['arrival:magma'].steps,idx=st.findIndex(x=>x?.[0]==='sayDual'&&x?.[1]==='money');if(idx>=0&&!st.some(x=>x?.[1]==='denden'&&String(x?.[2]||'').includes('みんなせっかちでやんすね'))){st.splice(idx,0,['say','denden','みんなせっかちでやんすね〜']);}}
+if(STORY_EVENTS?.['post:magma:0']?.steps){for(const row of STORY_EVENTS['post:magma:0'].steps){if(row?.[0]==='say'&&row?.[1]==='denden'&&String(row?.[2]||'').includes('ニョロ'))row[1]='nyoro';}}
+const magmaSubV133=subquestById('magma-2')?.quest;if(magmaSubV133?.intro){for(const row of magmaSubV133.intro){if(row?.[0]==='nyoro'&&String(row?.[1]||'').includes('モブフェニックス様は気高く優しい'))row[1]='モブフェニックス様は\n気高く優しいモンスターだったニョロ';if(row?.[0]==='nyoro'&&String(row?.[1]||'').includes('みんなを守ろうとして'))row[1]='でも、あれはみんなを守ろうとして、\nまともに戦えなかったからニョロ';}}
+
+/* ---------- battle dialogue is dialogue, not PASSIVE ---------- */
+function battleDialogueTextV133(text){return dialoguePagesV133(text,{maxChars:21,maxLines:2,maxTotal:38}).join('\n');}
+battleStoryCutinV88=async function(a,text,speaker=''){
+  const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
+  if(!wrap||!a){notice(text,'system',600);await waitBattleStoryTapV88();return;}
+  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
+  if(small){small.textContent=speaker||a.name||'';small.hidden=!(speaker||a.name);}label.textContent=battleDialogueTextV133(text);wrap.classList.add('battle-story-dialogue-v133');wrap.hidden=false;wrap.classList.remove('play','battle-story-out-v88');wrap.classList.add('battle-story-hold-v88');await nextPaint();await waitBattleStoryTapV88();wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('battle-story-hold-v88','battle-story-out-v88','battle-story-dialogue-v133');wrap.hidden=true;
+};
+enemyStoryCutin=async function(e,text,duration=1750){if(!e)return;await battleStoryCutinV88({id:`enemy-story-${e.id}`,image:e.image,name:e.name,transformed:false},text,e.name);};
+allyStoryCutin=async function(id,text,duration=1750){const a=allyById(id)||player(id);if(!a){await battleStoryCutinV88({id:`ally-story-${id}`,image:'',name:''},text,'');return;}await battleStoryCutinV88({id:`ally-story-${a.id}`,image:a.image,name:a.name,transformed:!!a.transformed},text,a.name);};
+const _passiveCutinV133Base=passiveCutin;
+passiveCutin=async function(a,text,duration=620){const wrap=$('#passiveCutin'),small=$('small',wrap);wrap?.classList.remove('battle-story-dialogue-v133');if(small){small.hidden=false;small.textContent='PASSIVE';}return _passiveCutinV133Base(a,text,duration);};
+
+/* ---------- castle reports: maximum two readable lines per page ---------- */
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV133(text,{maxChars:18,maxLines:2,maxTotal:34});};
+if(CASTLE_REPORT_SCRIPTS_V126?.magma){const rows=CASTLE_REPORT_SCRIPTS_V126.magma;for(const r of rows){if(r?.[0]==='talk'&&r?.[1]==='denden'&&String(r?.[2]||'').includes('よろしくニョロ'))r[1]='nyoro';}
+  const i=rows.findIndex(r=>r?.[0]==='talk'&&r?.[1]==='king'&&String(r?.[2]||'').includes('モブドラゴンを倒したとなると'));if(i>=0){rows.splice(i,1,
+    ['talk','king','モブドラゴンを倒したとなると、\n魔王軍も黙ってはいまい'],
+    ['talk','king','こちらもさらなる力が必要じゃ！'],
+    ['talk','king','ということで\n次の目的地は海底じゃ！'],
+    ['talk','king','優雅に泳ぐ人魚\n世界を感じる広大さ'],
+    ['talk','king','じゃが！\n決して侮るでないぞ！'],
+    ['talk','king','海底は強者ばかりじゃ\n海底の王は会ってみれば分かる'],
+    ['talk','king','力を試してくるのじゃ！']
+  );}}
+
+/* ---------- restore the v110 individual 5v5 Mob Piece battle presentation ---------- */
+function pieceFightersV133(hand,enemyHand,side,centerIndex=2){
+  const own=handTagEffectsV96(hand).effects||{},opp=handTagEffectsV96(enemyHand).effects||{};
+  return hand.map((id,i)=>{const f=figureById(id),s=mobPieceStatsV96(f),center=i===centerIndex?1.25:1;let life=s.life*center*(1+(own.lifePct||0)),atk=s.power*center*(1+(own.attackPct||0)),def=s.defense*center*(1+(own.defensePct||0)),spd=s.speed*center;if(i===centerIndex){life*=1+(own.centerLifePct||0);atk*=1+(own.centerAttackPct||0);def*=1+(own.centerDefensePct||0);}atk*=Math.max(.2,1+(opp.enemyAttackPct||0));def*=Math.max(.2,1+(opp.enemyDefensePct||0));const maxHp=Math.max(25,Math.round(life));return{key:`${side}-${i}`,side,index:i,id,f,maxHp,hp:maxHp,atk:Math.max(1,Math.round(atk)),def:Math.max(1,Math.round(def)),spd:Math.max(1,Math.round(spd)),nextAt:Math.random()*8};});
+}
+resolveMobPieceRoundV96=async function(){
+  const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const loading=showPieceLoadingV110('バトル用フィギュアを読み込んでいます…');await preloadFigureRowsV110([...b.pHand,...b.cHand].map(figureById),3000);loading.remove();
+  const pRows=pieceFightersV133(b.pHand,b.cHand,'player',2),cRows=pieceFightersV133(b.cHand,b.pHand,'cpu',b.cCenter??2);pieceFightRowsV110=[...pRows,...cRows];const p=pieceTeamStatsFromFightersV110(pRows,b.pHand),c=pieceTeamStatsFromFightersV110(cRows,b.cHand);b.pLifeMax=p.life;b.cLifeMax=c.life;b.pLife=p.life;b.cLife=c.life;
+  ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107 mob-piece-fight-v110 mob-piece-fight-v133">${pieceScoreV132(b)}${pieceLifeBarV103('CPU LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('CPU',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107 piece-battlefloor-fight-v110"><div class="fight-arena-v107 fight-arena-v110">${fightPiecesV110(cRows)}${fightPiecesV110(pRows)}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('プレイヤー',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('プレイヤー LIFE',b.pLife,b.pLifeMax,'player')}</div>`;ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v110',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(850);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(620);start?.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('combat-v110');
+  let steps=0;while(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)&&steps<320){steps++;const actors=pieceFightRowsV110.filter(x=>x.hp>0),a=actors.reduce((best,x)=>!best||x.nextAt<best.nextAt?x:best,null);if(!a)break;const enemies=a.side==='player'?cRows:pRows,d=weightedTargetV110(enemies);if(!d)break;a.nextAt+=1000/Math.max(18,a.spd);const skill=Math.random()<raritySkillChanceV110(a.f?.rarity),crit=Math.random()<clamp(.05+a.spd/2400,.05,.16),dmg=Math.min(d.hp,pieceHitDamageV110(a,d,skill,crit)),ko=dmg>=d.hp;d.hp=Math.max(0,d.hp-dmg);await animatePieceStrikeV110(arena,a,d,{skill,crit,ko});updateFighterHpV110(arena,d);const pLife=sumAliveHpV110(pRows),cLife=sumAliveHpV110(cRows);b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);if(!pRows.some(x=>x.hp>0)||!cRows.some(x=>x.hp>0))break;await waitRealV100(35+Math.random()*65);}
+  if(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)){const pp=sumAliveHpV110(pRows)/Math.max(1,b.pLifeMax),cc=sumAliveHpV110(cRows)/Math.max(1,b.cLifeMax),losers=pp>=cc?cRows:pRows;for(const x of losers){x.hp=0;updateFighterHpV110(arena,x);}b.pLife=sumAliveHpV110(pRows);b.cLife=sumAliveHpV110(cRows);setFightLifeV107(ov,'player',b.pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',b.cLife,b.cLifeMax);}
+  await waitRealV100(620);const win=b.cLife<=0;if(win)b.pWins++;else b.cWins++;b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);const done=b.pWins>=2||b.cWins>=2;ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV132(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'プレイヤー WIN!':'CPU WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${done?'MATCH RESULT':'次のバトルへ'}<span>${done?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1500);if(done)return finishMobPieceBattleV96(b.pWins>=2);ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107 piece-between-battle-v110"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>第${b.round}バトル終了。新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(1000);nextMobPieceRoundV96();
+};
+
+/* ---------- ace confirmation and forging must always own the foreground ---------- */
+let smithForgeBusyV133=false;
+runSmithHammerFx=async function(){const fx=$('#smithHammerFx');smithForgeBusyV133=true;document.body.classList.add('smith-forging-v133');try{if(!fx){await fixedDelay(3000);return;}fx.hidden=false;await fixedDelay(3000);}finally{if(fx)fx.hidden=true;document.body.classList.remove('smith-forging-v133');smithForgeBusyV133=false;}};
+for(const evt of ['pointerdown','click','touchstart'])document.addEventListener(evt,e=>{if(!smithForgeBusyV133)return;e.preventDefault?.();e.stopImmediatePropagation?.();},{capture:true,passive:false});
+
+/* ---------- camp context is modal: never jump to tavern/HOME/equipment screen ---------- */
+function campOpenV133(){const c=$('#campOverlay');return !!(c&&!c.hidden&&screens.adventure?.classList.contains('active'));}
+function syncCampModalV133(){document.body.classList.toggle('camp-modal-v133',campOpenV133());}
+const _openCampV133Base=openCamp;openCamp=function(){const r=_openCampV133Base();syncCampModalV133();return r;};
+const _closeCampV133Base=closeCamp;closeCamp=function(){const r=_closeCampV133Base();syncCampModalV133();return r;};
+const campObsV133=$('#campOverlay');if(campObsV133)new MutationObserver(syncCampModalV133).observe(campObsV133,{attributes:true,attributeFilter:['hidden']});
+document.addEventListener('click',e=>{if(!campOpenV133())return;if(e.target.closest('[data-nav],[data-home-action],[data-main-action]')){e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
+const _openWeaponPickerV133Base=openWeaponPicker;
+openWeaponPicker=async function(pid,kind,index=0,onDone=null){
+  if(!campOpenV133())return _openWeaponPickerV133Base(pid,kind,index,onDone);
+  pid=canonicalPlayerId(pid);const p=player(pid),eq=equipmentFor(pid);let rows=[];if(kind==='armor')rows=ARMORS.filter(a=>armorOwned(a.id)>0&&(freeArmorCount(a.id,pid)>0||eq.armor===a.id));else if(kind==='medal')rows=WEAPONS.filter(w=>medalOwned(w.id)>0&&(freeMedalCount(w.id,{pid,slot:'medal',index})>0||eq.medals[index]===w.id));else rows=WEAPONS.filter(w=>canEquipWeapon(p,w)&&weaponOwned(w.id)>0&&(freeWeaponCount(w.id,{pid,slot:kind})>0||eq[kind]===w.id));
+  try{await quietPickerWarmV128(rows);}catch(_){}
+  return _openWeaponPickerV123Base(pid,kind,index,()=>{showScreen('adventure');const c=$('#campOverlay');if(c)c.hidden=false;syncCampModalV133();onDone?.();});
+};
+
+/* The protagonist-party figure series remains unreleased. v132 filtering stays authoritative. */
+for(const f of FIGURES){if(unreleasedPartyFigureV132(f)){f.pending=true;f.unreleasedPartyV132=true;}}
+window.__mobV133PatchRuntime=true;
+/* ===== END MOB QUEST v133 ===== */
+
 })();
 
 
