@@ -1,0 +1,18 @@
+MOB QUEST v140 REGRESSION REPORT
+
+ROOT CAUSE
+- v139 overrode Tribe left/right values, but an older .story-layout-party-left rule still had width:48%!important.
+- Because width remained fixed at 48%, the party row still occupied only the left half of the screen even though right:30% was removed.
+
+FIX
+- Tribe + side guest party lane is now 68% wide, leaving a protected ~30% lane for the guest.
+- Maximum six party members per row remains unchanged.
+- 7-12 members remain two rows.
+- Natural-size scaling cap was raised modestly, while widthSafe and heightSafe remain hard collision limits.
+- Tribe scenes with no side guest may use full safe width.
+
+REGRESSION SAFETY
+- Built directly from v139.
+- No existing v139 functions or data IDs removed.
+- v129-v139 features remain inherited.
+- Mob Dragon Junior remains boss/50.png.
