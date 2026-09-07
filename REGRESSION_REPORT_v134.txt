@@ -1,0 +1,30 @@
+MOB QUEST v134
+
+PLAYER TECHNIQUES
+- Added existing techniques to all protagonist-party members that had zero techniques:
+  Nyoro: マグソード Lv14 / マグマソード Lv34
+  Nekoku: ネプソード Lv16 / ネプマソード Lv38
+  Denden: トルソード Lv14 / トルマソード Lv34
+  Money: ネオソード Lv22 / ネオマソード Lv42
+  Lilith: ミラソード Lv18 / ミラマソード Lv38
+- Existing unique/specialized techniques remain unchanged.
+
+LEGEND RECORD MAGIC
+- All 6 learnable Record spells: MP 38 / power 1.85 / all-target.
+- Kept below the strongest late-game dedicated AoE while clearly stronger than ordinary mid-tier AoE.
+
+ENEMY SKILLS
+- Removed all temporary '(仮)' fallback names.
+- Enemies without authored dedicated specials now receive only existing player magic/technique names, chosen by attribute/role/level.
+- Authored dedicated special/specialOptions remain authoritative.
+- Training preview displays actual skills instead of '技は仮設定'.
+
+ENEMY PRESENTATION
+- Magic/technique/ultimate/support special: enemy image cut-in -> forward lunge -> effect.
+- Boss-heavy moves are labeled ULTIMATE, magic is MAGIC, physical techniques are TECHNIQUE.
+- Normal attacks retain the normal attack presentation.
+
+PRESERVED
+- v133 dialogue/camp/Mob Piece presentation fixes.
+- v132 Free/Rank Match rules and ace deck features.
+- v131 Neon event fixes, v130 battle balance, v129 Battle Program season gates.

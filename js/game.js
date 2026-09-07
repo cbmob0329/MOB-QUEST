@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=133;
+const GAME_ASSET_VERSION=134;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8301,6 +8301,52 @@ openWeaponPicker=async function(pid,kind,index=0,onDone=null){
 for(const f of FIGURES){if(unreleasedPartyFigureV132(f)){f.pending=true;f.unreleasedPartyV132=true;}}
 window.__mobV133PatchRuntime=true;
 /* ===== END MOB QUEST v133 ===== */
+
+/* ===== MOB QUEST v134: ENEMY SKILL CUT-IN / NO TEMP SKILL NAMES ===== */
+
+/* Fallback safety: no enemy action ever exposes '(仮)'. Normally v134 data enemySkills are used first. */
+temporaryEnemySpecial=function(e){
+  const attr=normalizeElement(e?.attribute||'無'),magic={火:'ホノ',水:'ネプ',雷:'トル',地:'ゴレ',風:'ホク',光:'ネオ',闇:'ミラ',無:'アノマ'},physical={火:'マグソード',水:'ネプソード',雷:'トルソード',地:'ゴレソード',風:'疾風斬り',光:'ネオソード',闇:'ミラソード',無:'アノソード'};
+  if(e?.tempAi==='heal')return{special:'キャンディ',kind:'enemyHeal',power:.10,skillElement:'無',skillType:'magic',v134Formal:true};
+  if(e?.tempAi==='aoe')return{special:'クラッシュボム',kind:'aoe',power:e?.category==='elite'?.76:.62,skillElement:'無',skillType:'magic',v134Formal:true};
+  if(e?.tempAi==='debuff')return{special:attr==='闇'?'リピートイントロ':attr==='雷'?'ロングスクラッチ':attr==='水'?'チルローファイ':attr==='火'?'ファストビート':'ノイズスクラッチ',kind:attr==='闇'?'poisonSingle':attr==='雷'?'paralyzeSingle':attr==='水'?'sleepSingle':attr==='火'?'burnSingle':'confuseSingle',power:.68,chance:.20,skillElement:attr,skillType:'magic',v134Formal:true};
+  const isMagic=(e?.normalAttackType==='magic')||/魔|ウィッチ|ソーサラー|エナジー|ミスト|ブック|ナーガ|デビ|ドクター|マニー|リリス|ナビ/.test(String(e?.name||''));
+  return{special:(isMagic?magic:physical)[attr]||(isMagic?'アノマ':'アノソード'),kind:'single',power:e?.category==='elite'?1.08:.94,skillElement:attr,skillType:isMagic?'magic':'physical',v134Formal:true};
+};
+
+/* Test/training preview shows the actual learned move instead of the old temporary label. */
+function enemyPreviewSkillsV134(t){const d=enemyFormalDetailV105?.(t),rows=d?.skills||[];return rows.length?rows.slice(0,2).join(' / '):'通常攻撃';}
+const _renderTrainingV134Base=renderTraining;
+renderTraining=function(){const r=_renderTrainingV134Base();if(state.training?.mode==='test'){for(const card of $$('.enemy-catalog-card','#trainingScreen')){const id=card.dataset.trainingEnemyId,t=trainingEnemyTemplate(id),em=$('em',card);if(!t||!em)continue;em.textContent=`Lv${t.levelMin}${t.levelMax!==t.levelMin?`～${t.levelMax}`:''} / ${enemyPreviewSkillsV134(t)}`;}}return r;};
+
+let enemySkillCutinSuppressV134='';
+const _actionCutinV134Base=actionCutin;
+actionCutin=async function(text,type='system',duration=600){if(enemySkillCutinSuppressV134&&String(text)===enemySkillCutinSuppressV134){enemySkillCutinSuppressV134='';return;}return _actionCutinV134Base(text,type,duration);};
+
+function enemySkillCutinLabelV134(e,spec){if((e?.isBoss||e?.category==='boss')&&Number(spec?.power||0)>=1.55)return'ULTIMATE';return spec?.skillType==='magic'?'MAGIC':'TECHNIQUE';}
+async function enemySkillImageCutinV134(e,spec){
+  if(!e||!spec?.special)return;const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);if(!wrap||!img||!label){await actionCutin(`${e.name}の${spec.special}！`,'danger',520);return;}
+  const src=e.image||'';if(src)try{await preloadAsset(src,'high');}catch(_){}if(src)setImage(img,src,e.name);else img.removeAttribute('src');
+  if(small){small.hidden=false;small.textContent=enemySkillCutinLabelV134(e,spec);}label.textContent=spec.special;
+  wrap.hidden=false;wrap.classList.remove('play','battle-story-dialogue-v133','battle-story-out-v88');wrap.classList.add('enemy-skill-cutin-v134','battle-story-hold-v88');await nextPaint();await fixedDelay((e.isBoss||e.category==='boss')?650:520);wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('enemy-skill-cutin-v134','battle-story-hold-v88','battle-story-out-v88');wrap.hidden=true;
+}
+
+/* Every offensive/special enemy action: enemy-image cut-in -> lunge -> effect. */
+const _bossSpecialV134Base=bossSpecial;
+bossSpecial=async function(spec){
+  const e=actingEnemy()||state.battle?.enemy;if(!e)return _bossSpecialV134Base(spec);const chosen=spec||enemySpecialSpec(e);await enemySkillImageCutinV134(e,chosen);enemySkillCutinSuppressV134=`${e.name}の${chosen.special}！`;
+  /* Gladi previously stayed ranged; give it a brief forward burst as well, then retain its projectile. */
+  if(e.id==='boss-gladi'){await beginEnemyLunge(e.uid);await fixedDelay(170);endEnemyLunge();}
+  try{return await _bossSpecialV134Base(chosen);}finally{enemySkillCutinSuppressV134='';}
+};
+
+/* Enemy healing/buff magic uses the same cut-in and visibly moves forward before casting. */
+const _performEnemySupportMagicV134Base=performEnemySupportMagicV109;
+performEnemySupportMagicV109=async function(e,sk){if(!e||!sk)return _performEnemySupportMagicV134Base(e,sk);const spec={special:sk.name,skillType:'magic',power:0,support:true};await enemySkillImageCutinV134(e,spec);enemySkillCutinSuppressV134=`${e.name}の${sk.name}！`;await beginEnemyLunge(e.uid);try{return await _performEnemySupportMagicV134Base(e,sk);}finally{endEnemyLunge();enemySkillCutinSuppressV134='';}};
+
+window.__mobV134PatchRuntime=true;
+/* ===== END MOB QUEST v134 ===== */
+
 
 })();
 

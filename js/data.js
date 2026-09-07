@@ -1,4 +1,4 @@
-// MOB QUEST v133
+// MOB QUEST v134
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1354,4 +1354,53 @@ for(const [element,id] of Object.entries(_v73Middle)){
   if(guardian)guardian.mods={...(guardian.mods||{}),atk:1.12};
 }
 /* ===== END MOB QUEST v130 DATA ===== */
+
+/* ===== MOB QUEST v134: PLAYER TECHNIQUES / RECORD MAGIC / FORMAL ENEMY SKILLS ===== */
+{
+  MOB_DATA.skillBalanceVersion=134;
+  const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
+  const add=(pid,id,level)=>{const p=P(pid);if(!p)return;p.learnset=p.learnset||{magic:[],technique:[]};const rows=p.learnset.technique||(p.learnset.technique=[]);const ex=rows.find(x=>x.id===id);if(ex)ex.level=Math.min(Number(ex.level)||level,level);else rows.push({id,level});rows.sort((a,b)=>(a.level||1)-(b.level||1));};
+
+  /* Characters that previously had no techniques now receive two role/attribute-appropriate existing techniques. */
+  add('nyoro','magsword',14);add('nyoro','magmasword',34);          // 火力寄り・高速型
+  add('nekoku','nepusword',16);add('nekoku','nepumasword',38);     // 水属性サポート型
+  add('denden','torusword',14);add('denden','torumasword',34);     // 雷属性アタッカー
+  add('money','neosword',22);add('money','neomasword',42);         // 光魔法型のサブ攻撃
+  add('lilith','mirasword',18);add('lilith','miramasword',38);     // 闇属性魔法型のサブ攻撃
+
+  /* Legend Record magic: deliberately expensive, but now clearly stronger than ordinary mid-tier AoE magic. */
+  const recordIds=['garagaranotabi','kumanokomiteitanoaberto','keronoishou','kizutsukukitsutsuki','kakashitokomugi','watashinomirai'];
+  for(const id of recordIds){const m=(MOB_DATA.magicCatalog||[]).find(x=>x.id===id);if(!m)continue;m.cost=38;m.power=1.85;m.tier='all';m.target='all';m.recordMagic=true;m.effectText=`敵全体に${m.element||'無'}属性中～大ダメージ`;}
+
+  /* Final pass: every non-authored enemy uses only names that already exist in the player magic/technique catalogs.
+     Dedicated specials/specialOptions are never replaced. */
+  const mag=(MOB_DATA.magicCatalog||[]),tech=(MOB_DATA.techniqueCatalog||[]);
+  const magBy=id=>mag.find(x=>x.id===id),techBy=id=>tech.find(x=>x.id===id);
+  const parts=a=>['火','水','雷','地','風','光','闇','無'].filter(x=>String(a||'').includes(x));
+  const spellIds={火:['hono','honoma','honomagma'],水:['nepu','nepuma','nepumachun'],雷:['toru','toruma','torumaden'],地:['gore','gorema','goremagardy'],風:['hoku','hokuma','hokumawing'],光:['neo','neoma','neomanipool'],闇:['mira','mirama','miramazone'],無:['anoma','anoma','anomaun']};
+  const techIds={火:['magsword','magmasword'],水:['nepusword','nepumasword'],雷:['torusword','torumasword'],地:['goresword','goremasword'],風:['shippugiri','shippugiri'],光:['neosword','neomasword'],闇:['mirasword','miramasword'],無:['anosword','anomasword']};
+  const statusIds={火:['fast-beat','burnSingle','burn'],水:['chill-lofi','sleepSingle','sleep'],雷:['long-scratch','paralyzeSingle','paralyze'],地:['noise-scratch','confuseSingle','confuse'],風:['noise-scratch','confuseSingle','confuse'],光:['noise-scratch','confuseSingle','confuse'],闇:['repeat-intro','poisonSingle','poison'],無:['noise-scratch','confuseSingle','confuse']};
+  const tierFor=lv=>lv>=46?2:lv>=22?1:0;
+  const looksMagic=e=>(e.normalAttackType==='magic')||/魔|ウィッチ|ソーサラー|エナジー|ミスト|ブック|ナーガ|デビ|ドクター|マニー|リリス|ナビ|シャーティー/.test(String(e.name||''));
+  const attackSpec=(e,lv,attr)=>{const magic=looksMagic(e),tier=tierFor(lv);if(magic){const sk=magBy((spellIds[attr]||spellIds['無'])[tier])||magBy('anoma');return{special:sk?.name||'アノマ',kind:'single',power:e.category==='elite'?1.06:lv>=46?1.02:.90,skillElement:attr,skillType:'magic',v134Formal:true};}const sk=techBy((techIds[attr]||techIds['無'])[tier?1:0])||techBy('anosword');return{special:sk?.name||'アノソード',kind:'single',power:e.category==='elite'?1.10:lv>=46?1.06:.94,skillElement:attr,skillType:'physical',v134Formal:true};};
+  const statusSpec=(e,lv,attr)=>{const st=statusIds[attr]||statusIds['無'],sk=magBy(st[0]);return{special:sk?.name||'ノイズスクラッチ',kind:st[1],power:e.category==='elite'?.78:.66,chance:e.category==='elite'?.25:.18,skillElement:attr,skillType:'magic',v134Formal:true};};
+  for(const e of MOB_DATA.enemyCatalog||[]){
+    if(e.special||e.specialOptions?.length)continue; // dedicated authored move wins
+    const lv=Number(e.levelMax||e.levelMin||1),attr=parts(e.attribute)[0]||'無',rows=[];
+    if(e.tempAi==='heal'){
+      const healId=lv>=50?'candy-neon-piece':lv>=24?'candy-neon':'candy',sk=magBy(healId);
+      rows.push({special:sk?.name||'キャンディ',kind:'enemyHeal',power:lv>=50?.16:lv>=24?.12:.09,skillElement:'無',skillType:'magic',v134Formal:true});
+      rows.push(attackSpec(e,lv,attr));
+    }else if(e.tempAi==='aoe'){
+      const sk=magBy('crash-bomb');rows.push({special:sk?.name||'クラッシュボム',kind:'aoe',power:e.category==='elite'?.76:lv>=46?.70:.62,skillElement:'無',skillType:'magic',v134Formal:true});
+      rows.push(attackSpec(e,lv,attr));
+    }else if(e.tempAi==='debuff'){
+      rows.push(statusSpec(e,lv,attr));rows.push(attackSpec(e,lv,attr));
+    }else{
+      rows.push(attackSpec(e,lv,attr));if(lv>=28&&(e.category==='elite'||lv>=55))rows.push(statusSpec(e,lv,attr));
+    }
+    e.enemySkills=rows.filter(Boolean);
+  }
+}
+/* ===== END MOB QUEST v134 DATA ===== */
 

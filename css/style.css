@@ -4088,3 +4088,11 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .mob-piece-fight-v133 .piece-battlefloor-fight-v110{min-height:310px!important;}
 .mob-piece-fight-v133 .fight-arena-v110{min-height:292px!important;}
 /* ===== END MOB QUEST v133 ===== */
+
+/* ===== MOB QUEST v134: enemy skill image cut-in ===== */
+.passive-cutin.enemy-skill-cutin-v134{z-index:94!important;top:37%!important;min-height:92px!important;height:auto!important;grid-template-columns:96px minmax(0,1fr)!important;background:linear-gradient(180deg,#30151b,#160b10)!important;border-color:#e6b55c!important;box-shadow:0 4px 0 #000,0 0 0 2px rgba(255,210,110,.22),0 14px 28px rgba(0,0,0,.58)!important;color:#fff!important;}
+.passive-cutin.enemy-skill-cutin-v134>img{width:96px!important;height:108px!important;filter:drop-shadow(0 4px 5px rgba(0,0,0,.65))!important;}
+.passive-cutin.enemy-skill-cutin-v134 small{font-size:8px!important;color:#ffd66d!important;letter-spacing:.18em!important;}
+.passive-cutin.enemy-skill-cutin-v134 b{font-size:15px!important;line-height:1.15!important;color:#fff!important;text-shadow:0 2px 2px #000!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;}
+/* ===== END MOB QUEST v134 ===== */
+
