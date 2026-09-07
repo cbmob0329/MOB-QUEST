@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=140;
+const GAME_ASSET_VERSION=141;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8785,4 +8785,173 @@ window.__mobV140RegressionAudit={
   inheritedV139:true,junior:'boss/50.png'
 };
 /* ===== END MOB QUEST v140 ===== */
+
+/* ===== MOB QUEST v141: TRIBE VILLAGE GAMEPLAY / STORY / SAFE RETURN ===== */
+window.__mobV141PatchRuntime=true;
+
+/* ---------- Exact Tribe encounter + recommended level ---------- */
+{
+  const tribe=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='tribe');
+  if(tribe){tribe.recommendedLevel=50;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
+  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=50;
+}
+
+/* ---------- Tribe arrival + dialogue: authored two-line rhythm, Jessie joins immediately ---------- */
+Object.assign(STORY_EVENTS,{
+  'arrival:tribe':{worldId:'tribe',area:0,layout:'default',steps:[
+    ['say','pink','なんだか不思議な\n雰囲気でありますね'],
+    ['say','nekoku','オラ、初めて見る景色だ'],
+    ['say','denden','ビリビリしそうな香りが\nするでやんす'],
+    ['say','desert','で、そこのお前が\n案内でもしてくれるのか？'],
+    ['say','tetsu','隠れても無駄でござる'],
+    ['sayOff','???','あら、気が付いていたの？\n中々やるわね'],
+    ['guest','jessie'],
+    ['say','jessie','私はネオン街の保安官'],
+    ['say','jessie','通報を受けて\nこの村に来たの'],
+    ['say','jessie','モブジェシーよ\nよろしくね'],
+    ['say','money','ネオン街！？\n私も、私も！'],
+    ['say','jessie','知っているわ\nモブマニーでしょ？'],
+    ['say','jessie','私を覚えてない？'],
+    ['say','money','うーん\n私、魔王に封印されてたから'],
+    ['say','jessie','そうね'],['say','money','え？'],['say','jessie','まあ、いいわ'],
+    ['say','desert','この村は\nどういう村なんだ？'],
+    ['say','jessie','魔王軍と直接は\n関係ないわ'],
+    ['say','jessie','ただ、あの町とは\n関係があるの'],
+    ['say','pink','あの町と繋がりが！？'],
+    ['say','jessie','ええ\nネオン街と部族村'],
+    ['say','jessie','この2つが、あの町と\n大きく関係しているわ'],
+    ['say','pink','詳しく知りたいであります！'],
+    ['say','jessie','それはまたいずれね'],
+    ['say','jessie','この村は危険がいっぱいよ'],
+    ['say','jessie','手を貸してあげるから\n油断しないことね'],
+    ['joinSilent','jessie'],['narrate','モブジェシーが仲間に加わった！']
+  ]},
+  'pre:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[
+    ['guest','t-kukuri'],['say','t-kukuri','タチサレ・・'],['say','pink','幹部の登場であります！'],['say','tetsu','強敵でござる！'],['say','denden','気合い入れるでやんす！']
+  ]},
+  'post:tribe:0':{worldId:'tribe',area:0,extras:['jessie'],steps:[
+    ['say','denden','不気味だったでやんす・・'],['say','jessie','あなたたちも十分不気味よ'],['say','pink','なんてこと言うでありますか！'],['say','nyoro','喧嘩はやめるニョロ～！']
+  ]},
+  'pre:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[
+    ['guest','t-tough'],
+    ['say','t-tough','全く、大変な時に\n来たね、君たち'],
+    ['say','pink','まともそうな人であります！'],
+    ['say','desert','そんなはずがないだろう'],
+    ['say','t-tough','まともかはともかく\n俺は連中とは違うよ'],
+    ['say','jessie','でも、戦うのよね？'],
+    ['say','t-tough','これはこれは、保安官'],
+    ['say','t-tough','まさか君と戦うことに\nなるとはね'],
+    ['say','nekoku','ん？'],
+    ['say','t-tough','まあ、お喋りは\nこれくらいにして'],
+    ['say','t-tough','やりますか\n他に道はないだろう？'],
+    ['say','desert','そうだな\n立ち止まるわけにはいかない！']
+  ]},
+  'post:tribe:1':{worldId:'tribe',area:1,extras:['jessie'],steps:[
+    ['say','nyoro','強かったニョロ・・'],['say','denden','この村はみんな\n強いでやんす'],['say','jessie','しっかり休んで\n先へ行きましょう'],['say','money','あの人、凄く変だったわね'],['say','money','何者なんだろう？'],['say','desert','迷いの原因になることは\n考えすぎるな'],['say','desert','戦いの基本だ']
+  ]},
+  'pre:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[
+    ['guests',['t-hisui','t-ryugo']],['say','t-hisui','天よ・・\nこやつらに災いを'],['say','t-ryugo','もてなすぞ、客人'],['say','tetsu','これは激戦の\n予感でござる'],['say','nekoku','強そうな2人だなー'],['say','money','みんな、最初から\n飛ばしていくわよ！']
+  ]},
+  'post:tribe:2':{worldId:'tribe',area:2,extras:['jessie'],steps:[
+    ['say','money','なによ、これが途中に出て来る\n敵の強さ？'],['say','tetsu','王の器でござったな'],['say','jessie','おかしい・・'],['say','desert','どうした？'],['say','jessie','この2人は\nこの村の長だったはず'],['say','money','なんで戦う前に\n言わないのよ！'],['say','jessie','腰が引けちゃうでしょ？'],['say','nyoro','それはそうだニョロ'],['say','desert','ということは\nさらに上がいるのか'],['say','jessie','そうなるわね'],['say','pink','大丈夫！\n力を合わせて進むであります！'],['say','pink','・・・・\nあります！'],['say','jessie','すっかり怖がっちゃって・・'],['say','denden','でも進むしかないでやんす！']
+  ]},
+  'pre:tribe:3':{worldId:'tribe',area:3,extras:['jessie'],steps:[
+    ['guests',['boss-debuff','boss-berserk']],['say','desert','こいつらが\nこの村を狂わせているのか'],['say','jessie','ええ\n魔王の力を感じるわ'],['say','pink','ここで止めるであります！'],['say','tetsu','全力で参るでござる！']
+  ]},
+  'post:tribe:3':{worldId:'tribe',area:3,extras:['jessie'],steps:[
+    ['say','jessie','任務完了ね'],['say','desert','魔王とは\n一体どこまで・・'],['say','pink','とりあえず\n王様に報告です！'],['say','pink','ここにレコードは\n無いようであります'],['say','jessie','私も行くわ'],['say','jessie','魔王を倒さないと\n何も進まなそうだしね'],['say','nyoro','心強いニョロ！'],['say','nyoro','モブジェシー\n強いニョロ！'],['say','tetsu','いつか手合わせ\n願いたいでござる']
+  ]}
+});
+
+/* Existing v140 saves that already watched the arrival must also receive Jessie. */
+function ensureJessieJoinedV141(){
+  const worlds=MOB_DATA.adventureWorlds||[],ti=worlds.findIndex(w=>w.id==='tribe'),wi=Number(state.adventure?.worldIndex)||0,ai=Number(state.adventure?.areaIndex)||0;
+  const should=ti>=0&&(wi>ti||(wi===ti&&(ai>0||storyDone('arrival:tribe'))));
+  if(should&&!state.party.some(([id])=>canonicalPlayerId(id)==='jessie'))storyJoin('jessie');
+}
+ensureJessieJoinedV141();
+const _renderAdventureV141Base=renderAdventure;
+renderAdventure=function(){ensureJessieJoinedV141();return _renderAdventureV141Base();};
+
+/* ---------- Tribe enemy size: +7-14%, with phone-frame collision caps. Applies to story/subquest/program battles. ---------- */
+const TRIBE_BATTLE_IDS_V141=new Set(['t-ohno','t-jukon','t-warrior','t-kiba','t-kukuri','t-tough','t-hisui','t-ryugo']);
+const _applyEnemyVisualSizesV141Base=applyEnemyVisualSizes;
+applyEnemyVisualSizes=function(root=$('#enemyArea')){
+  _applyEnemyVisualSizesV141Base(root);if(!root)return;
+  const enlarge=()=>{
+    const units=$$('[data-enemy-target]',root),count=Math.max(1,units.length),factor=count<=1?1.14:count===2?1.12:count===3?1.10:1.07;
+    const field=$('#battle-field')||$('.battle-field')||$('#battleScreen'),fr=field?.getBoundingClientRect()||{width:root.clientWidth,height:root.clientHeight};
+    for(const unit of units){const e=enemyByUid(unit.dataset.enemyTarget);if(!e||!TRIBE_BATTLE_IDS_V141.has(e.id))continue;const img=$('.enemy-sprite',unit);if(!img)continue;const w=parseFloat(img.style.width)||img.getBoundingClientRect().width,h=parseFloat(img.style.height)||img.getBoundingClientRect().height;if(!(w>0&&h>0))continue;const maxW=(fr.width||440)*(count>=4?.25:count===3?.29:count===2?.36:.48),maxH=(fr.height||520)*(count>=4?.35:count===3?.40:count===2?.48:.58),scale=Math.min(factor,maxW/w,maxH/h);img.style.setProperty('width',`${Math.max(36,Math.round(w*scale))}px`,'important');img.style.setProperty('height',`${Math.max(40,Math.round(h*scale))}px`,'important');}
+  };
+  enlarge();requestAnimationFrame(enlarge);$$('.enemy-sprite',root).forEach(img=>{if(!img.complete&&img.dataset.tribeSizeV141!=='1'){img.dataset.tribeSizeV141='1';img.addEventListener('load',()=>requestAnimationFrame(enlarge),{once:true});}});
+};
+
+/* ---------- Kukuri boomerang + normal all-target / Toughness alternate all-target ---------- */
+async function playKukuriBoomerangV141(){
+  const layer=$('#battleFxLayer');if(!layer)return;const lr=layer.getBoundingClientRect();const enemyUnit=$(`[data-enemy-target="${actingEnemy()?.uid||''}"]`),er=enemyUnit?.getBoundingClientRect(),ally=$('#allyStatus')||$('.ally-status'),ar=ally?.getBoundingClientRect();
+  const el=document.createElement('div');el.className='kukuri-boomerang-v141';el.innerHTML='<i></i><i></i>';layer.appendChild(el);
+  const sx=(er?er.left+er.width*.5:lr.left+lr.width*.5)-lr.left,sy=(er?er.top+er.height*.55:lr.top+lr.height*.35)-lr.top,tx=(ar?ar.left+ar.width*.48:lr.left+lr.width*.5)-lr.left,ty=(ar?ar.top+ar.height*.38:lr.top+lr.height*.70)-lr.top;
+  el.style.left=`${sx}px`;el.style.top=`${sy}px`;const dx=tx-sx,dy=ty-sy;
+  try{const a=el.animate([{transform:'translate(-50%,-50%) rotate(0deg) scale(.65)',opacity:.15},{transform:`translate(calc(-50% + ${dx*.72}px),calc(-50% + ${dy*.72}px)) rotate(620deg) scale(1.15)`,opacity:1,offset:.58},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) rotate(860deg) scale(1.05)`,opacity:1,offset:.76},{transform:'translate(-50%,-50%) rotate(1440deg) scale(.72)',opacity:.1}],{duration:720,easing:'cubic-bezier(.2,.75,.2,1)',fill:'forwards'});await a.finished;}catch(_){await fixedDelay(720);}finally{el.remove();}
+}
+const _bossNormalV141Base=bossNormal;
+bossNormal=async function(){
+  const e=actingEnemy()||state.battle?.enemy;if(!e)return _bossNormalV141Base();
+  if(e.id==='t-kukuri'){
+    await actionCutin(`${e.name}の攻撃！`,'danger',500);await playKukuriBoomerangV141();await aoeHit(1.00,'physical','風');notice('ブーメランが味方全体を襲った！','danger',520);await fixedDelay(230);return;
+  }
+  if(e.id==='t-tough'){
+    e.v141NormalCount=(Number(e.v141NormalCount)||0)+1;
+    if(e.v141NormalCount%2===0){await actionCutin(`${e.name}の攻撃！`,'danger',520);await beginEnemyLunge(e.uid);try{await aoeHit(1.00,'physical',e.attribute);notice('味方全体への攻撃！','danger',480);await fixedDelay(260);}finally{endEnemyLunge();}return;}
+  }
+  return _bossNormalV141Base();
+};
+
+/* ---------- Hisui special / Kukuri special ---------- */
+const _bossSpecialV141Base=bossSpecial;
+bossSpecial=async function(spec){
+  const e=actingEnemy()||state.battle?.enemy,chosen=spec||enemySpecialSpec(e);
+  if(e?.id==='t-hisui'&&chosen?.kind==='v141MinusAura'){
+    if(typeof enemySkillImageCutinV134==='function')await enemySkillImageCutinV134(e,{...chosen,special:'マイナスオーラ',skillType:'magic',power:0});
+    await beginEnemyLunge(e.uid);let hits=0;try{for(const a of [...livingMain(),...livingSuper()]){fx('magic',a.id);if(Math.random()<.70&&await inflictAllyStatus(a,'stun',1)){hits++;notice(`${a.name}はひるんだ！`,'status',420);}await fixedDelay(55);}notice(`マイナスオーラ / ひるみ ${hits}人`,'status',700);await fixedDelay(260);}finally{endEnemyLunge();}return;
+  }
+  if(e?.id==='t-kukuri'&&String(chosen?.special||'').includes('モリカリブーメラン')){
+    if(typeof enemySkillImageCutinV134==='function')await enemySkillImageCutinV134(e,chosen);await playKukuriBoomerangV141();await aoeHit(Math.max(.82,Number(chosen.power)||.82),'physical','風');notice('モリカリブーメラン！','danger',550);await fixedDelay(230);return;
+  }
+  return _bossSpecialV141Base(spec);
+};
+
+/* ---------- Toughness Body / King's Rage ---------- */
+const _applyEnemyDamageToV141Base=applyEnemyDamageTo;
+applyEnemyDamageTo=function(...args){
+  const e=args[1];
+  if(e?.id==='t-ryugo'&&e.hp>0&&Math.random()<.30){e.atkBuff=Math.max(Number(e.atkBuff)||0,.20);e.atkBuffTurns=99;renderBattle();fx('buff',`enemy:${e.uid}`);notice('王の怒り！ DAMAGE 0 / ATK ↑20%','buff',850);pulseEnemy('hit',e.uid);return{value:0,crit:false,miss:false,guarded:true,v141KingsRage:true};}
+  if(e?.id==='t-tough'&&e.hp>0&&Math.random()<.50){const dr=e.damageReduction,perm=e.permanentDamageReduction;e.damageReduction=Math.max(Number(dr)||0,.60);e.permanentDamageReduction=true;fx('buff',`enemy:${e.uid}`);notice('タフネスボディ！ DAMAGE -60%','buff',650);try{return _applyEnemyDamageToV141Base(...args);}finally{e.damageReduction=dr;e.permanentDamageReduction=perm;}}
+  return _applyEnemyDamageToV141Base(...args);
+};
+
+/* Living Dead reacts to either partner's defeat, even when Hisui itself is the dead unit. Once per battle. */
+const _recordEnemyDefeatV141Base=recordEnemyDefeat;
+recordEnemyDefeat=function(e){
+  _recordEnemyDefeatV141Base(e);const b=state.battle,hisui=(b?.enemies||[]).find(x=>x.id==='t-hisui');if(!hisui||hisui.v141LivingDeadUsed||!['t-hisui','t-ryugo'].includes(e?.id)||e.hp>0)return;
+  hisui.v141LivingDeadUsed=true;e.hp=Math.max(1,Math.round(e.maxHp*.50));e.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};renderBattle();floatNumber(e.hp,'heal',`enemy:${e.uid}`);fx('buff',`enemy:${e.uid}`);notice(`モブヒスイのリビングデッド！ ${e.name}がHP50%で復活！`,'heal',1050);
+};
+
+/* ---------- Fast large magic animation, only for the two requested spells ---------- */
+async function fastLargeSkillSpriteV141(frames,target='enemy',kind='earth'){
+  if(!frames?.length){fx('magic',target==='enemy-all'?'enemy':target);return;}const wrap=$('#skillSpriteFx');if(!wrap)return;positionEffect(wrap,target);wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.replaceChildren();wrap.dataset.mode=`${kind}LargeFastV141`;const map=new Map();for(const src of [...new Set(frames)]){const img=document.createElement('img');img.className='skill-frame';img.alt='';img.draggable=false;img.decoding='async';img.src=src;bindImage(img);wrap.appendChild(img);map.set(src,img);}const show=async(src,ms,fade=false)=>{for(const im of map.values())im.classList.remove('active','skill-fade-v79');const im=map.get(src);if(!im)return;im.classList.add('active');if(fade)im.classList.add('skill-fade-v79');await fixedDelay(ms);};try{await Promise.all([...wrap.querySelectorAll('img')].map(img=>ensureDomImageReady(img,img.src,1100)));wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.classList.add(kind==='earth'?'earth-shake':'light-shake');await nextPaint();await show(frames[0],480);wrap.classList.remove('earth-shake','light-shake');for(const src of frames.slice(1,-1))await show(src,105);await show(frames.at(-1),320,true);await fixedDelay(35);}finally{wrap.className='skill-sprite-fx';wrap.style.opacity='0';wrap.hidden=true;wrap.style.display='none';wrap.replaceChildren();delete wrap.dataset.mode;}}
+const _skillSpriteV141Base=skillSprite;
+skillSprite=async function(frames,target='enemy',mode='default'){if(mode==='earthLargeFastV141')return fastLargeSkillSpriteV141(frames,target,'earth');if(mode==='lightLargeFastV141')return fastLargeSkillSpriteV141(frames,target,'light');return _skillSpriteV141Base(frames,target,mode);};
+for(const m of (MOB_DATA.magicCatalog||[])){if(m.id==='goremagardy')m.mode='earthLargeFastV141';if(m.id==='neomanipool')m.mode='lightLargeFastV141';}
+
+/* ---------- Full wipe: stay in Adventure and step back one AREA, never expose HOME facilities ---------- */
+const _finishBattleV141Base=finishBattle;
+finishBattle=function(win){
+  const b=state.battle,lostArea=Number(b?.config?.storyAreaIndex??state.adventure?.areaIndex??0),adventureLoss=!!(!win&&b?.mode==='adventure'&&!b.config?.explorationAmbush);const out=_finishBattleV141Base(win);
+  if(adventureLoss){const prev=Math.max(0,lostArea-1);state.adventure.areaIndex=prev;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.pendingPostStory=null;state.adventure.completed=false;saveAdventure();saveCampCheckpoint();const text=$('#resultText');if(text)text.textContent=prev===lostArea?'全員がダウンしました。同じAREAの入口へ戻ります。':`全員がダウンしました。AREA ${lostArea+1} → AREA ${prev+1}へ戻ります。`;}
+  return out;
+};
+
+window.__mobV141RegressionAudit={tribeRecommended:50,kukuriEscorts:'KIBA48/KUKURI57/KIBA48',jessieJoin:'arrival',wipeReturn:'previous-area',inheritV140:true};
+/* ===== END MOB QUEST v141 ===== */
 

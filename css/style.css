@@ -4295,3 +4295,17 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v140 ===== */
 
+/* ===== MOB QUEST v141: TRIBE ARRIVAL STAGE / ENEMY FX ===== */
+/* Jessie is staged like the opposing/event character, leaving the full lower width to the party. */
+.story-scene.story-world-tribe .story-guest.story-guest-player[data-story-actor="jessie"]{
+  left:50%!important;right:auto!important;bottom:43%!important;top:auto!important;
+  width:min(31vw,145px)!important;height:min(28vh,205px)!important;max-width:145px!important;max-height:205px!important;
+  transform:translateX(-50%)!important;z-index:18!important;
+}
+.story-scene.story-world-tribe:not(.story-layout-party-left) .story-party-line{
+  left:2%!important;right:2%!important;width:auto!important;bottom:8.5%!important;height:34%!important;padding:0 1%!important;
+}
+/* Cartoon boomerang made from two flat arms; no external asset dependency. */
+.kukuri-boomerang-v141{position:absolute;z-index:120;pointer-events:none;width:54px;height:54px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.58));transform-origin:center center}.kukuri-boomerang-v141 i{position:absolute;left:23px;top:5px;width:12px;height:35px;border:3px solid #17120d;border-radius:8px;background:#e9d3a2;transform-origin:50% 100%}.kukuri-boomerang-v141 i:first-child{transform:rotate(-48deg)}.kukuri-boomerang-v141 i:last-child{transform:rotate(48deg)}
+/* ===== END MOB QUEST v141 ===== */
+
