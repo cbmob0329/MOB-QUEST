@@ -1,0 +1,9 @@
+MOB QUEST v135
+
+- Subquest story overlay header now uses the subquest region and quest name; Magma subquests never show 草原 / 草原・入口.
+- Replaced arbitrary fixed-character Japanese line splitting with authored-line + natural browser wrapping.
+- Story dialogue, dual dialogue, battle story dialogue and castle report pages no longer split endings such as でやんすね / ニョロ in the middle.
+- Magma QUEST 3 authored fixes:
+  ハチュー洞窟という / 海底近くの洞窟ニョロ
+  ・・・・ / そのうち寄ってみるニョロ！
+- v134 enemy skill cut-ins and all prior systems are preserved.

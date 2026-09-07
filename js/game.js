@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=134;
+const GAME_ASSET_VERSION=137;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -396,7 +396,7 @@ const SPECIAL_ENEMIES=[
   {id:'sq-wing-slime',name:'モブハネスライム',stage:'草原Ⅱ',category:'elite',attribute:'風',image:'enemy/01.png',symbol:'翼',levelMin:50,levelMax:50,alwaysSpecial:true,specialOptions:[{special:'ハネパニック',kind:'confuseSingle',power:.78,chance:.45,skillElement:'風',skillType:'magic'},{special:'ハネアタック',kind:'stunSingle',power:.82,chance:.35,skillElement:'風',skillType:'physical'}],mods:{spd:1.3}},
   {id:'sq-red-hawk',name:'モブレッドホーク',stage:'草原Ⅱ',category:'elite',attribute:'火',image:'boss/02.png',symbol:'炎',levelMin:60,levelMax:60,special:'レッドホークフレイム',kind:'aoe',power:.90,skillElement:'火',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
   {id:'sq-blue-hawk',name:'モブブルーホーク',stage:'草原Ⅱ',category:'elite',attribute:'水',image:'boss/02.png',symbol:'水',levelMin:60,levelMax:60,special:'ブルーホークウェイブ',kind:'aoe',power:.90,skillElement:'水',skillType:'magic',actionCount:2,forceActionCount:true,alwaysSpecial:true,mods:{spd:1.22,mag:1.15}},
-  {id:'sq-young-dragon',name:'若きモブドラゴン',stage:'マグマ',category:'elite',attribute:'火',image:'boss/09.png',symbol:'竜',levelMin:40,levelMax:40,special:'ヤングドラゴンフレイム',kind:'aoe',power:1.05,skillElement:'火',skillType:'magic',mods:{hp:.72,spd:1.35,atk:.92,mag:.95}},
+  {id:'sq-young-dragon',name:'モブドラゴンジュニア',stage:'マグマ',category:'elite',attribute:'火',image:'boss/50.png',symbol:'竜',levelMin:40,levelMax:40,special:'ドラゴンフレイム',kind:'aoe',power:1.48,skillElement:'火',skillType:'magic',actionCount:2,forceActionCount:true,mods:{hp:.72,spd:1.35,atk:.92,mag:.95}},
   {id:'sq-encore',name:'モブアンコール',stage:'田舎町Ⅱ',category:'elite',attribute:'闇',image:'spenemy/014.png',symbol:'音',levelMin:63,levelMax:63,special:'アンコール・ノイズ',kind:'single',power:1.18,skillElement:'闇',skillType:'magic',actionCount:3,forceActionCount:true,mods:{mag:1.1}},
   {id:'sq-umi-denden2',name:'モブウミデンデンⅡ',stage:'田舎町Ⅱ',category:'boss',attribute:'雷',image:'boss/51.png',symbol:'海',levelMin:70,levelMax:70,special:'マシンガングミ・オール',kind:'aoe',power:.84,skillElement:'雷',skillType:'physical',actionCount:3,forceActionCount:true,oneAoePerTurn:true,mods:{hp:1.16,atk:1.12,spd:1.08}}
 ];
@@ -3462,7 +3462,7 @@ async function act(kind,payload){
     consumed=true;
   }
   b.currentActionKind='';
-  if(!consumed){b.busy=false;renderBattle();return;}
+  if(!consumed){b.busy=false;renderBattle();if(b.auto&&!b.finished)setTimeout(autoAct,90);return;}
   const usedUltIndex=kind==='ultimate'?a.ults.indexOf(payload):-1;advanceUltimateCooldowns(a,usedUltIndex);
   await checkBattleHpDialogue();
   if(b.forcePhaseChange){b.busy=false;renderBattle();if(await handleForcedEnemyPhase())return;}
@@ -7587,7 +7587,7 @@ const CASTLE_REPORT_SCRIPTS_V126={
     ['talk','king','おおー！なんと、戻ったか！\nさすがのさすが\nさっすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこのカエルはなんじゃ？'],['talk','pink','こちらはモブニョロ！\nマグマで仲間になったであります！'],['talk','denden','王様！よろしくニョロ！'],['talk','king','うむ\nカエルじゃが、\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','モブドラゴンを倒したとなると\n魔王軍も黙ってはいまい\nこちらもさらなる力が必要じゃ\nということで\n次の目的地は海底じゃ！\n優雅に泳ぐ人魚\n世界を感じる広大さ\nじゃが！\n決して侮るでないぞ！\n海底は強者ばかりじゃ\n海底の王は\n会ってみれば分かる\n力を試してくるのじゃ！'],['talk','pink','力を試す・・\n了解でありまーーす！']
   ],
   sea:[
-    ['talk','king','おお！無事戻ったか！\nさっすが、さっすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこの丸いのはなんじゃ？'],['talk','pink','こちらはモブデンデン！\n海底で仲間になったであります！'],['talk','nekoku','よ！王様\nオラお手伝いしてやるぞ'],['talk','king','うむ\n丸いが、\n癒される\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','モブネプチューンとは古い友人でな\n黙っておって悪かったな\n次の目的地じゃが、\nもう一度草原に向かって欲しい！'],['talk','pink','草原でありますか？'],['talk','king','なんと\nモブホークが'],['talk','king','魔王の力を得て復活したのじゃ！',true],['talk','king','油断せず\nしっかり備えて挑むのじゃ！'],['talk','pink','リベンジマッチでありますね\n返り討ちにしてやるであります！\n行ってくるでありまーーす！']
+    ['talk','king','おお！無事戻ったか！\nさっすが、さっすがは勇者じゃ！\nあっぱれじゃ！\nん？\nそこの丸いのはなんじゃ？'],['talk','pink','こちらはモブネコクー！\n海底で仲間になったであります！'],['talk','nekoku','よ！王様\nオラお手伝いしてやるぞ'],['talk','king','うむ\n丸いが、\n癒される\nよい\nよいぞ！'],['talk','king','これこそが冒険じゃ！',true],['talk','king','では、\n早速レコードを見せてくれ！'],['talk','pink','はい！\nこちらであります！'],['narrate','レコードを王様に渡した'],['talk','king','うむ、確かに受け取った。\nこのレコードは\nレコードルームにて\n大切に管理しておく！'],['arm'],['talk','king','モブネプチューンとは古い友人でな\n黙っておって悪かったな\n次の目的地じゃが、\nもう一度草原に向かって欲しい！'],['talk','pink','草原でありますか？'],['talk','king','なんと\nモブホークが'],['talk','king','魔王の力を得て復活したのじゃ！',true],['talk','king','油断せず\nしっかり備えて挑むのじゃ！'],['talk','pink','リベンジマッチでありますね\n返り討ちにしてやるであります！\n行ってくるでありまーーす！']
   ],
   grassland2:[
     ['talk','king','おお！戻ったか！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],['talk','pink','なんとか倒しましたが\nレコードはありませんでした'],['talk','king','構わぬ\nレコードを集めること\n魔王を倒すこと\n2つの目的に向けて\n確実に進むのじゃ！'],['talk','pink','はい！\n頑張るであります！'],['narrate','王様と握手を交わした'],['talk','king','次の目的地は部族村じゃ！\n謎に包まれた土地\n謎のモンスターたち\n故に！\n決して侮るでないぞ！\n部族村のボスは'],['talk','king','分かっておらん！！',true],['talk','king','レコードがある可能性は高い\n頼むぞ！'],['talk','pink','我々にお任せであります！\n行ってくるでありまーーす！']
@@ -8346,6 +8346,328 @@ performEnemySupportMagicV109=async function(e,sk){if(!e||!sk)return _performEnem
 
 window.__mobV134PatchRuntime=true;
 /* ===== END MOB QUEST v134 ===== */
+
+/* ===== MOB QUEST v135: SUBQUEST WORLD HEADER / NATURAL JAPANESE DIALOGUE ===== */
+window.__mobV135PatchRuntime=true;
+
+/*
+  v133 tried to make every Japanese line fit by inserting a hard line break at a
+  fixed character count.  That can split endings and character speech patterns
+  ("でやんすね", "ニョロ") in the middle.  v135 keeps authored newlines as
+  semantic boundaries and otherwise lets the browser perform Japanese wrapping.
+  Long authored blocks are paged two logical lines at a time; words/endings are
+  never cut just because they cross an arbitrary character count.
+*/
+function dialoguePagesV135(text,{maxLines=2,maxPageChars=54}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const logical=raw.split('\n').map(s=>s.trim()).filter(Boolean);if(!logical.length)return[''];
+  const pages=[];let lines=[],count=0;
+  const flush=()=>{if(lines.length){pages.push(lines.join('\n'));lines=[];count=0;}};
+  for(const line of logical){
+    const n=[...line].length;
+    /* One authored sentence is allowed to wrap naturally inside the bubble. */
+    if(lines.length&&(lines.length>=maxLines||count+n>maxPageChars))flush();
+    lines.push(line);count+=n;
+  }
+  flush();return pages.length?pages:[''];
+}
+
+dialoguePagesV133=function(text,opt={}){return dialoguePagesV135(text,{maxLines:Number(opt.maxLines)||2,maxPageChars:Math.max(44,Number(opt.maxTotal)||54)});};
+storySay=async function(key,text,displayName=null,anchorKey=null){for(const page of dialoguePagesV135(text,{maxLines:2,maxPageChars:54}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* Dual bubbles also use natural browser wrapping; never cut a character ending. */
+storySayDual=async function(keyA,lineA,keyB,lineB){
+  const scene=$('#storyScene'),make=(key,line)=>{const info=storyActorInfo(key),anchor=storyAnchor(key),b=document.createElement('div');b.className='story-bubble story-bubble-temp story-dual-v133';b.innerHTML='<b></b><p></p>';b.querySelector('b').textContent=info.name;b.querySelector('p').textContent=String(line??'').replace(/\r/g,'').trim();scene.appendChild(b);return{b,anchor,key};};
+  const items=[make(keyA,lineA),make(keyB,lineB)];await nextPaint();const sr=scene.getBoundingClientRect();
+  for(const it of items){const br=it.b.getBoundingClientRect(),ar=storyAnchorRect(it.anchor);let left=(sr.width-br.width)/2,top=sr.height*.24;if(ar){const cx=ar.left-sr.left+ar.width/2;left=clamp(cx-br.width/2,8,sr.width-br.width-8);top=clamp(ar.top-sr.top-br.height-9,80,sr.height-br.height-28);it.b.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);}else it.b.classList.add('no-arrow');it.b.style.left=`${left}px`;it.b.style.top=`${top}px`;setStorySpeaking(it.key,true);it.b.classList.add('show');}
+  const ra=items[0].b.getBoundingClientRect(),rb=items[1].b.getBoundingClientRect();if(!(ra.right+8<rb.left||rb.right+8<ra.left)){items[0].b.style.left='8px';items[1].b.style.left=`${Math.max(8,sr.width-items[1].b.offsetWidth-8)}px`;for(const it of items){const ar=storyAnchorRect(it.anchor);if(ar){const left=parseFloat(it.b.style.left)||0,cx=ar.left-sr.left+ar.width/2;it.b.style.setProperty('--arrow-x',`${clamp(cx-left,22,it.b.offsetWidth-22)}px`);}}}
+  await storyAdvanceWait();for(const it of items){it.b.classList.remove('show');setStorySpeaking(it.key,false);}await fixedDelay(420);items.forEach(it=>it.b.remove());
+};
+
+/* Battle-story dialogue can page naturally instead of truncating or forcing a bad split. */
+battleDialogueTextV133=function(text){return String(text??'').replace(/\r/g,'').trim();};
+battleStoryCutinV88=async function(a,text,speaker=''){
+  const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
+  if(!wrap||!a){notice(text,'system',600);await waitBattleStoryTapV88();return;}
+  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
+  const pages=dialoguePagesV135(text,{maxLines:2,maxPageChars:58});
+  for(const page of pages){if(small){small.textContent=speaker||a.name||'';small.hidden=!(speaker||a.name);}label.textContent=page;wrap.classList.add('battle-story-dialogue-v133');wrap.hidden=false;wrap.classList.remove('play','battle-story-out-v88');wrap.classList.add('battle-story-hold-v88');await nextPaint();await waitBattleStoryTapV88();wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('battle-story-hold-v88','battle-story-out-v88');}
+  wrap.classList.remove('battle-story-dialogue-v133');wrap.hidden=true;
+};
+enemyStoryCutin=async function(e,text,duration=1750){if(!e)return;await battleStoryCutinV88({id:`enemy-story-${e.id}`,image:e.image,name:e.name,transformed:false},text,e.name);};
+allyStoryCutin=async function(id,text,duration=1750){const a=allyById(id)||player(id);if(!a){await battleStoryCutinV88({id:`ally-story-${id}`,image:'',name:''},text,'');return;}await battleStoryCutinV88({id:`ally-story-${a.id}`,image:a.image,name:a.name,transformed:!!a.transformed},text,a.name);};
+
+/* Castle reports retain their authored paragraphs and advance every two logical lines. */
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV135(text,{maxLines:2,maxPageChars:58});};
+
+/* Subquests are staged on the adventure canvas, but their header must describe the
+   subquest's own region instead of whatever story world the save currently points at. */
+function applySubquestAdventureHeaderV135(area){
+  const found=state.quest?.subquestId?subquestById(state.quest.subquestId):null,quest=found?.quest;
+  const worldName=area?.name||((MOB_DATA.adventureWorlds||[]).find(w=>w.id===area?.worldId)?.name)||'サブクエスト';
+  const no=Number(state.quest?.subquestQuestNo||quest?.no)||'';
+  $('#adventureStageTitle').textContent=worldName;
+  $('#adventureProgress').textContent=no?`QUEST ${no}`:'SUB QUEST';
+  $('#areaName').textContent=`${worldName}・${quest?.name||'サブクエスト'}`;
+  $('#areaDescription').textContent='サブクエストイベント';
+}
+const _runSubquestLinesV135Base=runSubquestLines;
+runSubquestLines=async function(area,lines=[]){
+  const task=_runSubquestLinesV135Base(area,lines);
+  /* Base function has already switched to the adventure screen before its first await. */
+  applySubquestAdventureHeaderV135(area);
+  try{return await task;}finally{ /* quest screen is restored by the base implementation */ }
+};
+
+/* Author these lines explicitly so Japanese speech endings never land alone. */
+const magma3V135=subquestById('magma-3')?.quest;
+if(magma3V135){
+  for(const row of magma3V135.intro||[]){
+    if(row?.[0]==='denden'&&String(row?.[1]||'').includes('事情がありそう'))row[1]='事情がありそうでやんすね';
+    if(row?.[0]==='nyoro'&&String(row?.[1]||'').includes('ハチュー洞窟'))row[1]='ハチュー洞窟という\n海底近くの洞窟ニョロ';
+    if(row?.[0]==='money'&&String(row?.[1]||'').includes('ヌメヌメ'))row[1]='なんかヌメヌメしてそうな名前ね';
+  }
+  for(const row of magma3V135.post||[]){if(row?.[0]==='nyoro'&&String(row?.[1]||'').includes('そのうち寄ってみる'))row[1]='・・・・\nそのうち寄ってみるニョロ！';}
+}
+
+/* ===== END MOB QUEST v135 ===== */
+
+/* ===== MOB QUEST v136: SEA LOAD / RECORD REVEAL / SHOP QTY / MOB PIECE TEMPO ===== */
+window.__mobV136PatchRuntime=true;
+
+/* ---------- Magma subquest 5: authored enemy is Mob Dragon Junior ---------- */
+{
+  const young=SPECIAL_ENEMIES.find(e=>e.id==='sq-young-dragon');
+  if(young){
+    young.name='モブドラゴンジュニア';
+    /* User-specified Mob Dragon Junior artwork. */
+    young.image='boss/50.png';
+    young.special='ドラゴンフレイム';young.kind='aoe';young.power=1.48;young.skillElement='火';young.skillType='magic';
+    young.actionCount=2;young.forceActionCount=true;young.mods={...(young.mods||{}),hp:.72,spd:1.35};
+  }
+  const q=subquestById('magma-5')?.quest;
+  if(q){q.intro=[['denden','モブドラゴンは本当に\nすっごく強かったでやんす'],['money','そうね\nもう会いたくないわ'],['nyoro','マグマには\nモブドラゴンが残したモンスターが\n何体かいるニョロ'],subquestShowRowV111(['sq-young-dragon']),['money','モブドラゴン！！'],['nyoro','モブドラゴンジュニアニョロ！\nスピード攻撃に注意するニョロ！']];q.waves=[[{id:'sq-young-dragon',level:40,actionCount:2,forceActionCount:true}]];}
+}
+/* Mob Dragon Junior uses boss/50.png exactly; do not substitute the adult dragon artwork. */
+const _bindImageV136Base=bindImage;
+bindImage=function(img){return _bindImageV136Base(img);};
+
+/* ---------- Adventure background: fully decode before the adventure screen is revealed ---------- */
+const _travelToV136Base=travelTo;
+travelTo=async function(target,text,after){
+  if(target!=='adventure')return _travelToV136Base(target,text,after);
+  const w0=currentWorld(),recordForWorld=(typeof STORY_RECORDS_V119!=='undefined'?STORY_RECORDS_V119.find(r=>r.worldId===w0?.id):null),assets=[...adventureDepartureAssetsV124(),recordForWorld?.image].filter(Boolean);
+  await loadingWithAssets(text,[...new Set(assets)],{minMs:2500,timeoutMs:16000,detail:'ADVENTURE'});
+  if(after)after();
+  const a=currentArea(),w=currentWorld(),bg=$('#adventureBg');
+  try{if(bg)await ensureCriticalBackgroundV128(bg,[a?.bg,w?.fieldFallback,'back/rpgmain.png']);}catch(e){console.warn('[v136 adventure bg]',e);}
+  showScreen('adventure');
+  /* The next AREA is warmed while the player is playing the current one. */
+  const next=w?.areas?.[(state.adventure?.areaIndex||0)+1];if(next?.bg)preloadAsset(next.bg,'low').catch(()=>{});
+};
+
+/* ---------- Legend Record: image first, then 2.5 s readable reveal; title never leaves one orphan kana ---------- */
+showStoryRecordGetV119=async function(rec){
+  if(!rec)return;
+  try{await Promise.race([preloadAsset(rec.image,'high'),fixedDelay(4200)]);}catch(_){}
+  const el=document.createElement('div');el.className='story-record-get-v119 story-record-get-v126 story-record-get-v136';
+  const long=[...String(rec.name||'')].length>=12?' long-v136':'';
+  el.innerHTML=`<div class="story-record-get-card-v119"><small>LEGEND RECORD / GET!</small><h2>No.${rec.no}</h2><div class="story-record-get-disc-v119"><img src="${rec.image}" alt="${rec.name}"></div><b class="record-title-v136${long}">${rec.name}</b><p>伝説のレコードを手に入れた！</p></div>`;
+  document.body.appendChild(el);bindImages(el);const im=$('img',el);if(im){try{if(im.decode)await Promise.race([im.decode(),fixedDelay(1800)]);}catch(_){}}
+  await nextPaint(2);el.classList.add('show');await fixedDelay(220);await fixedDelay(2500);el.classList.remove('show');await fixedDelay(280);el.remove();
+};
+
+/* ---------- Sea castle report: the new party member is Mob Nekoku ---------- */
+if(CASTLE_REPORT_SCRIPTS_V126?.sea){
+  for(const r of CASTLE_REPORT_SCRIPTS_V126.sea){if(r?.[0]==='talk'&&r?.[1]==='pink'&&String(r?.[2]||'').includes('海底で仲間になった'))r[2]='こちらはモブネコクー！\n海底で仲間になったであります！';}
+}
+
+/* ---------- Battle MP: remaining MP is a blue high-contrast pill ---------- */
+allyMarkup=function(a){const st=statusText(a),hpPct=pct(a.hp,a.maxHp),mpPct=pct(a.mpNow,a.maxMp);return`<button type="button" class="ally-hud-card ${a.dead?'dead':''} ${allyStatusClass(a)} ${activeAlly()===a?'active turn-active':''}" data-ally-id="${a.id}"><span class="ally-hud-art"><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i>${st?`<em class="ally-status-mark">${st}</em>`:''}</span><div class="ally-title-line"><b>${a.name}</b><em>${a.dead?'DOWN':`Lv${a.level}`}</em></div><div class="ally-hud-line"><span>HP ${Math.ceil(a.hp)}/${a.maxHp}</span><span class="battle-mp-v136">MP <b>${Math.floor(a.mpNow)}</b><i>/${a.maxMp}</i></span></div><div class="ally-hp-bar ${allyHpTone(a)}"><i style="width:${hpPct}%"></i></div><div class="ally-mp-bar"><i style="width:${mpPct}%"></i></div></button>`;};
+superMarkup=function(a){const next=Math.max(0,a.nextSupportTurn-state.battle.turn);return`<div class="super-chip ${a.dead?'dead':''} ${allyStatusClass(a)}" data-ally-id="${a.id}"><span><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / `}<span class="battle-mp-v136">${a.dead?'':'MP '}<b>${a.dead?'':Math.floor(a.mpNow)}</b>${a.dead?'':`<i>/${a.maxMp}</i>`}</span></small><div class="super-hp-bar ${allyHpTone(a)}"><i style="width:${pct(a.hp,a.maxHp)}%"></i></div></div><em>${a.dead?'—':next===0?'READY':`+${next}T`}</em></div>`;};
+benchMarkup=function(a){return`<div class="bench-chip ${a.dead?'dead':''} ${allyStatusClass(a)}" data-ally-id="${a.id}"><span><img src="${versionedPlay(a.image)}" alt="${a.name}"><i>${a.symbol}</i></span><div><b>${a.name}</b><small>${a.dead?'DOWN':`HP ${Math.ceil(a.hp)} / `}<span class="battle-mp-v136">${a.dead?'':'MP '}<b>${a.dead?'':Math.floor(a.mpNow)}</b>${a.dead?'':`<i>/${a.maxMp}</i>`}</span></small><div class="gauge tiny"><i class="hp" style="width:${pct(a.hp,a.maxHp)}%"></i></div></div></div>`;};
+
+/* ---------- Mob Piece: automatic return point is the player's hand, never the page top ---------- */
+restorePieceBattleScrollV107=function(){const b=mobPieceBattleV96;if(!b)return;requestAnimationFrame(()=>requestAnimationFrame(()=>{const card=pieceBattleCardV107();if(!card)return;const hand=card.querySelector('.piece-field-v103.player,.player-field-v100,.battle-total-bottom-v103');if(hand){const top=Math.max(0,hand.offsetTop-Math.round(card.clientHeight*.44));card.scrollTop=top;b.uiScrollV107=top;}else card.scrollTop=Math.max(0,Number(b.uiScrollV107)||0);}));};
+
+/* Speed up only Mob Piece combat timing; calculations/rules are unchanged. */
+const _animatePieceStrikeV136Base=animatePieceStrikeV110;
+animatePieceStrikeV110=async function(arena,a,d,opt={}){
+  const ae=fighterElV110(arena,a.key),de=fighterElV110(arena,d.key);if(!ae||!de)return waitRealV100(70);const ar=arena.getBoundingClientRect(),ra=ae.getBoundingClientRect(),rd=de.getBoundingClientRect(),dx=(rd.left+rd.width/2)-(ra.left+ra.width/2),dy=(rd.top+rd.height/2)-(ra.top+ra.height/2),skill=!!opt.skill,crit=!!opt.crit,ko=!!opt.ko,dur=skill?255:190;crowdJukeV110(arena,[...pieceFightRowsV110],a.key);ae.style.zIndex='70';ae.animate([{transform:'translate(0,0) rotate(0) scale(1)'},{offset:.52,transform:`translate(${dx*.72}px,${dy*.72}px) rotate(${skill?18:7}deg) scale(${skill?1.24:1.12})`},{offset:.66,transform:`translate(${dx*.78}px,${dy*.78}px) rotate(${skill?-12:-5}deg) scale(1.06)`},{transform:'translate(0,0) rotate(0) scale(1)'}],{duration:dur,easing:'cubic-bezier(.18,.84,.25,1)'});await waitRealV100(Math.round(dur*.50));if(skill)playPieceSkillFxV110(arena,de,a.index+(a.side==='cpu'?3:0));spawnImpactV110(arena,de,skill,crit);const fly=(d.side==='cpu'?1:-1)*(70+Math.random()*85),rot=(Math.random()>.5?1:-1)*(ko?720:300);de.animate([{transform:'translate(0,0) rotate(0) scale(1)'},{offset:.45,transform:`translate(${fly}px,${-28-Math.random()*65}px) rotate(${rot}deg) scale(${ko?.65:.88})`},{transform:ko?`translate(${fly*1.55}px,${-90-Math.random()*60}px) rotate(${rot*1.6}deg) scale(.35)`:'translate(0,0) rotate(0) scale(1)'}],{duration:ko?470:285,easing:'cubic-bezier(.12,.8,.25,1)',fill:ko?'forwards':'none'});await waitRealV100(Math.round(dur*.50));ae.style.zIndex='';
+};
+/* Patch only the active v133 resolver's pacing values. */
+{
+  const _resolveV136Base=resolveMobPieceRoundV96;
+  resolveMobPieceRoundV96=async function(){
+    const b=mobPieceBattleV96,ov=ensureMobPieceOverlayV96();if(!b)return;const loading=showPieceLoadingV110('バトル用フィギュアを読み込んでいます…');await preloadFigureRowsV110([...b.pHand,...b.cHand].map(figureById),3000);loading.remove();
+    const pRows=pieceFightersV133(b.pHand,b.cHand,'player',2),cRows=pieceFightersV133(b.cHand,b.pHand,'cpu',b.cCenter??2);pieceFightRowsV110=[...pRows,...cRows];const p=pieceTeamStatsFromFightersV110(pRows,b.pHand),c=pieceTeamStatsFromFightersV110(cRows,b.cHand);b.pLifeMax=p.life;b.cLifeMax=c.life;b.pLife=p.life;b.cLife=c.life;
+    ov.innerHTML=`<div class="mob-piece-card-v96 battle mob-piece-fight-v103 mob-piece-fight-v107 mob-piece-fight-v110 mob-piece-fight-v133">${pieceScoreV132(b)}${pieceLifeBarV103('CPU LIFE',b.cLife,b.cLifeMax,'cpu')}<div class="battle-total-top-v103">${totalStatsV103('CPU',c,'cpu')}${activeTagsV103(b.cHand)}</div><div class="piece-battlefloor-v103 active piece-battlefloor-fight-v107 piece-battlefloor-fight-v110"><div class="fight-arena-v107 fight-arena-v110">${fightPiecesV110(cRows)}${fightPiecesV110(pRows)}<strong class="fight-start-v107">集合中…</strong></div></div><div class="battle-total-bottom-v103">${totalStatsV103('プレイヤー',p,'player')}${activeTagsV103(b.pHand)}</div>${pieceLifeBarV103('プレイヤー LIFE',b.pLife,b.pLifeMax,'player')}</div>`;ov.hidden=false;bindImages(ov);const arena=$('.fight-arena-v110',ov),start=$('.fight-start-v107',ov);await nextPaint();arena?.classList.add('gathering-v107');await waitRealV100(600);if(start)start.textContent='START!';arena?.classList.add('start-flash-v107');await waitRealV100(420);start?.remove();arena?.classList.remove('gathering-v107','start-flash-v107');arena?.classList.add('combat-v110');
+    let steps=0;while(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)&&steps<320){steps++;const actors=pieceFightRowsV110.filter(x=>x.hp>0),a=actors.reduce((best,x)=>!best||x.nextAt<best.nextAt?x:best,null);if(!a)break;const enemies=a.side==='player'?cRows:pRows,d=weightedTargetV110(enemies);if(!d)break;a.nextAt+=1000/Math.max(18,a.spd);const skill=Math.random()<raritySkillChanceV110(a.f?.rarity),crit=Math.random()<clamp(.05+a.spd/2400,.05,.16),dmg=Math.min(d.hp,pieceHitDamageV110(a,d,skill,crit)),ko=dmg>=d.hp;d.hp=Math.max(0,d.hp-dmg);await animatePieceStrikeV110(arena,a,d,{skill,crit,ko});updateFighterHpV110(arena,d);const pLife=sumAliveHpV110(pRows),cLife=sumAliveHpV110(cRows);b.pLife=pLife;b.cLife=cLife;setFightLifeV107(ov,'player',pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',cLife,b.cLifeMax);if(!pRows.some(x=>x.hp>0)||!cRows.some(x=>x.hp>0))break;await waitRealV100(20+Math.random()*40);}
+    if(pRows.some(x=>x.hp>0)&&cRows.some(x=>x.hp>0)){const pp=sumAliveHpV110(pRows)/Math.max(1,b.pLifeMax),cc=sumAliveHpV110(cRows)/Math.max(1,b.cLifeMax),losers=pp>=cc?cRows:pRows;for(const x of losers){x.hp=0;updateFighterHpV110(arena,x);}b.pLife=sumAliveHpV110(pRows);b.cLife=sumAliveHpV110(cRows);setFightLifeV107(ov,'player',b.pLife,b.pLifeMax);setFightLifeV107(ov,'cpu',b.cLife,b.cLifeMax);}
+    await waitRealV100(420);const win=b.cLife<=0;if(win)b.pWins++;else b.cWins++;b.pDiscard.push(...b.pHand);b.cDiscard.push(...b.cHand);const done=b.pWins>=2||b.cWins>=2;ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-round-result-v107 ${win?'win':'lose'}">${pieceScoreV132(b)}<div class="piece-round-result-mark-v107"><small>BATTLE ${b.round}</small><h2>${win?'プレイヤー WIN!':'CPU WIN!'}</h2><b>${win?b.pWins:b.cWins}勝</b></div><div class="piece-round-next-v107">${done?'MATCH RESULT':'次のバトルへ'}<span>${done?'勝敗決定！':'新しい5体をドローします'}</span></div></div>`;ov.hidden=false;await waitRealV100(1050);if(done)return finishMobPieceBattleV96(b.pWins>=2);ov.innerHTML=`<div class="mob-piece-card-v96 battle piece-between-battle-v107 piece-between-battle-v110"><small>MOB PIECE BATTLE</small><h2>BATTLE ${b.round+1}</h2><strong>DRAW START!</strong><p>第${b.round}バトル終了。新しい5体をドローします。</p></div>`;ov.hidden=false;await waitRealV100(700);nextMobPieceRoundV96();
+  };
+}
+
+/* ---------- Shared coin-shop quantity popup ---------- */
+let coinShopQtyV136=null;
+function ensureCoinShopQtyV136(){let ov=$('#coinShopQtyV136');if(ov)return ov;ov=document.createElement('div');ov.id='coinShopQtyV136';ov.className='coin-shop-qty-v136';ov.hidden=true;ov.innerHTML=`<div class="coin-shop-qty-card-v136"><button data-coin-shop-close-v136 class="coin-shop-close-v136" type="button">×</button><div class="coin-shop-product-v136"><img data-coin-shop-img-v136 alt=""><div><small>SHOP</small><b data-coin-shop-name-v136></b><span data-coin-shop-unit-v136></span></div></div><div class="coin-shop-wallet-v136"><span>所持コイン</span><strong data-coin-shop-wallet-v136></strong></div><div class="coin-shop-stepper-v136"><button data-coin-shop-minus-v136 type="button">−</button><b data-coin-shop-qty-v136>1</b><button data-coin-shop-plus-v136 type="button">＋</button></div><div class="coin-shop-total-v136"><span>合計</span><b data-coin-shop-total-v136></b><small data-coin-shop-after-v136></small></div><button data-coin-shop-buy-v136 class="primary-btn" type="button">購入する</button></div>`;document.body.appendChild(ov);ov.onclick=e=>{if(e.target===ov||e.target.closest('[data-coin-shop-close-v136]'))closeCoinShopQtyV136();};$('[data-coin-shop-minus-v136]',ov).onclick=()=>changeCoinShopQtyV136(-1);$('[data-coin-shop-plus-v136]',ov).onclick=()=>changeCoinShopQtyV136(1);$('[data-coin-shop-buy-v136]',ov).onclick=buyCoinShopQtyV136;return ov;}
+function renderCoinShopQtyV136(){const s=coinShopQtyV136,ov=ensureCoinShopQtyV136();if(!s)return;const price=Math.max(0,Number(s.price)||0),max=Math.min(99,price>0?Math.floor(Math.max(0,Number(state.coins)||0)/price):99);s.max=max;s.qty=max<1?1:clamp(Number(s.qty)||1,1,max);const total=price*s.qty,can=max>=1&&total<=state.coins;$('[data-coin-shop-img-v136]',ov).src=s.image||'';$('[data-coin-shop-name-v136]',ov).textContent=s.name||'';$('[data-coin-shop-unit-v136]',ov).textContent=`1個 ${price.toLocaleString()}G / 所持 ${Number(s.owned?.()||0)}`;$('[data-coin-shop-wallet-v136]',ov).textContent=`${Number(state.coins||0).toLocaleString()} G`;$('[data-coin-shop-qty-v136]',ov).textContent=String(s.qty);$('[data-coin-shop-total-v136]',ov).textContent=`${total.toLocaleString()} G`;$('[data-coin-shop-after-v136]',ov).textContent=can?`購入後 ${(state.coins-total).toLocaleString()} G`:'所持コインが足りません';$('[data-coin-shop-minus-v136]',ov).disabled=s.qty<=1||max<1;$('[data-coin-shop-plus-v136]',ov).disabled=max<1||s.qty>=max;$('[data-coin-shop-buy-v136]',ov).disabled=!can;bindImages(ov);}
+function openCoinShopQtyV136(opt){coinShopQtyV136={...opt,qty:1,max:1};const ov=ensureCoinShopQtyV136();renderCoinShopQtyV136();ov.hidden=false;}
+function closeCoinShopQtyV136(){const ov=$('#coinShopQtyV136');if(ov)ov.hidden=true;coinShopQtyV136=null;}
+function changeCoinShopQtyV136(d){if(!coinShopQtyV136)return;const max=Math.max(0,Number(coinShopQtyV136.max)||0);if(max<1)return;coinShopQtyV136.qty=clamp((Number(coinShopQtyV136.qty)||1)+d,1,max);renderCoinShopQtyV136();}
+async function buyCoinShopQtyV136(){const s=coinShopQtyV136;if(!s)return;const qty=Number(s.qty)||1,total=(Number(s.price)||0)*qty;if(total>state.coins||qty<1)return renderCoinShopQtyV136();state.coins-=total;state.meta.coins=state.coins;await s.buy?.(qty);saveMeta();const after=s.after;closeCoinShopQtyV136();after?.();}
+
+/* Tavern drinks: wallet + bulk purchase. */
+renderTavernDrinkShop=function(){const root=$('#tavernDrinkShop');if(!root)return;const unlocked=unlockedDrinkIds();const wallet=$('#drinkShopCoin');if(wallet)wallet.textContent=`所持コイン ${state.coins.toLocaleString()} G`;root.innerHTML=DRINK_SETS.filter(d=>unlocked.has(d.id)).map(d=>`<button class="drink-shop-item ${drinkCount(d.id)>0?'owned':''}" data-buy-drink-v136="${d.id}" type="button"><img src="${d.image}" alt="${d.name}"><div><b>${d.name}</b><small>${d.desc}</small><em>${d.price.toLocaleString()}G / 所持 ${drinkCount(d.id)}</em></div></button>`).join('');bindImages(root);$$('[data-buy-drink-v136]',root).forEach(b=>b.onclick=()=>{const d=DRINK_SETS.find(x=>x.id===b.dataset.buyDrinkV136);if(!d)return;openCoinShopQtyV136({name:d.name,image:d.image,price:d.price,owned:()=>drinkCount(d.id),buy:async q=>addDrink(d.id,q),after:()=>{renderTavernDrinkShop();facilityTalk('ありがとうございます🎵','モブイルカエル','play/001.png');}});});};
+
+/* Blacksmith weapons: same quantity UI and affordability-limited + button. */
+buyBlacksmithWeapon=async function(id){const w=weaponById(id);if(!w?.price)return;if(!blacksmithShopWeapons().some(x=>x.id===w.id))return facilityTalk('その武器はまだショップに並んでいないぞ！','モブゴンゾー','play/002.png');openCoinShopQtyV136({name:w.name,image:w.image,price:w.price,owned:()=>weaponOwned(w.id),buy:async q=>addWeapon(w.id,q),after:()=>{renderHome();renderBlacksmithPopup('shop');facilityTalk('毎度！大事に使ってくれよな！','モブゴンゾー','play/002.png');}});};
+
+/* Castle item shop already has a quantity panel: make + stop exactly at the affordable amount. */
+renderCastleQtyPopup=function(){const it=itemData(castleQtyState.itemId),popup=$('#castleQtyPopup');if(!it||!popup)return;const maxAffordable=Math.max(0,Math.min(99,Math.floor(Math.max(0,state.coins)/Math.max(1,it.price))));let qty=Math.max(1,Math.min(99,Number(castleQtyState.qty)||1));if(maxAffordable>=1)qty=Math.min(qty,maxAffordable);castleQtyState.qty=qty;const total=it.price*qty,over=maxAffordable<1||total>state.coins;$('#castleQtyImage').src=it.image;$('#castleQtyImage').alt=it.name;$('#castleQtyName').textContent=it.name;$('#castleQtyUnitPrice').textContent=`1個 ${it.price.toLocaleString()} G / 所持 ${itemCount(it.id)}`;$('#castleQtyValue').textContent=String(qty);$('#castleQtyTotal').textContent=`${total.toLocaleString()} G`;$('#castleQtyTotal').classList.toggle('over-budget',over);$('#castleQtyWallet').textContent=`所持コイン ${state.coins.toLocaleString()} G`;$('#castleQtyMinusBtn').disabled=qty<=1||maxAffordable<1;$('#castleQtyPlusBtn').disabled=maxAffordable<1||qty>=maxAffordable;$('#castleQtyBuyBtn').disabled=over;$('#castleQtyBuyBtn').classList.toggle('over-budget',over);};
+changeCastleQty=function(delta){if(!castleQtyState.itemId)return;const it=itemData(castleQtyState.itemId);if(!it)return;const max=Math.max(0,Math.min(99,Math.floor(Math.max(0,state.coins)/Math.max(1,it.price))));if(max<1)return renderCastleQtyPopup();castleQtyState.qty=clamp((Number(castleQtyState.qty)||1)+delta,1,max);renderCastleQtyPopup();};
+
+/* ===== END MOB QUEST v136 ===== */
+
+
+/* ===== MOB QUEST v137: TRIBE READABILITY / REWARDS / AUTO / UNLOCK NOTICE ===== */
+window.__mobV137PatchRuntime=true;
+
+/* ---------- Grassland II final battle: exact left / center / right order ---------- */
+{
+  const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id==='grassland2');
+  if(w?.areas?.[3])w.areas[3].boss=[
+    {id:'g2-tsuru',level:56},
+    {id:'boss-hawk2',level:60},
+    {id:'g2-savanna',level:56}
+  ];
+  const ev=STORY_EVENTS?.['pre:grassland2:3'];
+  if(ev?.steps){
+    const guestRow=ev.steps.find(st=>st?.[0]==='guests');
+    if(guestRow)guestRow[1]=['g2-tsuru','boss-hawk2','g2-savanna'];
+  }
+}
+
+/* ---------- Tribe arrival: 7-8 party members use a true 4x2 arrangement ---------- */
+sizeStoryPartyImages=async function(root){
+  const imgs=$$('[data-story-party-img]',root);
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
+  const count=valid.length,tribe=$('#storyScene')?.classList.contains('story-world-tribe');
+  const cols=(tribe&&count>=7&&count<=8)?4:6,rows=Math.max(1,Math.ceil(count/cols));
+  root.dataset.storyCols=String(cols);
+  const rowSums=[];for(let i=0;i<count;i+=cols)rowSums.push(valid.slice(i,i+cols).reduce((a,img)=>a+img.naturalWidth,0));
+  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight)),rowH=Math.max(1,(root.clientHeight-4)/rows);
+  const normalCap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
+  const cap=tribe?(count<=6?.125:count<=8?.126:count<=10?.112:.104):normalCap;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);lastStoryPartyScale=sc;
+  valid.forEach(img=>{img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*sc))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*sc))}px`,'important');img.classList.add('size-ready');});
+};
+const _applyStoryGuestNaturalSizeV137Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  const tribe=$('#storyScene')?.classList.contains('story-world-tribe');
+  if(!tribe||!info?.player)return _applyStoryGuestNaturalSizeV137Base(holder,img,info,opt);
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return;
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  const sc=Math.min(.138,Math.max(.100,(lastStoryPartyScale||.118)*.96));
+  const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(opt?.multi?.22:.245),scene.height*(opt?.multi?.24:.285));
+  holder.style.setProperty('width',`${sz.w}px`,'important');holder.style.setProperty('height',`${sz.h}px`,'important');
+};
+
+/* ---------- AUTO: use real reduced MP cost, then always fall back to Attack ---------- */
+function autoMagicCostV137(a,sk){if(!a||!sk)return Infinity;const el=normalizeElement(sk.element||a.attribute),fx=a.figureEffects||figureEffectsFor(a.id),cut=clamp(weaponMagicMpCut(a,el)+Number(fx?.mpCut||0),0,.8);return Math.max(0,Math.ceil((Number(sk.cost)||0)*(1-cut)));}
+function autoUltCostV137(a,u){if(!a||!u)return Infinity;const fx=a.figureEffects||figureEffectsFor(a.id),cut=clamp(Number(fx?.mpCut||0),0,.8);return Math.max(0,Math.ceil((Number(u.cost)||0)*(1-cut)));}
+autoAct=async function(){
+  const b=state.battle,a=activeAlly();if(!b||!a||!b.auto||b.busy||b.finished)return;
+  const usable=readyUlts(a).filter(u=>Number(a.ultLockedTurns||0)<=0&&a.mpNow>=autoUltCostV137(a,u));
+  if(usable.length&&Math.random()<.32)return act('ultimate',pick(usable));
+  const magic=defaultMagicFor(a),mCost=autoMagicCostV137(a,magic);
+  if(magic&&a.mpNow>=mCost&&Math.random()<.30)return act('magic',magic);
+  return act('attack');
+};
+
+/* ---------- Camp drink selection is a real popup list ---------- */
+function ensureCampDrinkPickerV137(){
+  let ov=$('#campDrinkPickerV137');if(ov)return ov;
+  ov=document.createElement('div');ov.id='campDrinkPickerV137';ov.className='camp-drink-picker-v137';ov.hidden=true;document.body.appendChild(ov);
+  ov.addEventListener('pointerup',e=>{if(e.target===ov||e.target.closest('[data-camp-drink-close-v137]'))ov.hidden=true;});return ov;
+}
+renderCampDrinks=function(){
+  const ov=ensureCampDrinkPickerV137(),owned=DRINK_SETS.filter(d=>drinkCount(d.id)>0);
+  ov.innerHTML=`<div class="camp-drink-picker-card-v137"><div class="camp-drink-picker-head-v137"><div><small>DRINK / INVENTORY</small><h2>ドリンクを飲む</h2><p>使用するドリンクを選んでください。</p></div><button data-camp-drink-close-v137 type="button">×</button></div><div class="camp-drink-picker-list-v137">${owned.length?owned.map(d=>`<button data-camp-drink-pick-v137="${d.id}" type="button"><img src="${d.image}" alt="${d.name}"><span><b>${d.name}</b><small>${d.desc}</small></span><em>×${drinkCount(d.id)}</em></button>`).join(''):'<div class="camp-drink-empty-v137">所持しているドリンクはありません。<br>酒場で購入できます。</div>'}</div></div>`;
+  ov.hidden=false;bindImages(ov);$$('[data-camp-drink-pick-v137]',ov).forEach(btn=>btn.onclick=async e=>{e.stopPropagation();const id=btn.dataset.campDrinkPickV137;ov.hidden=true;await useCampDrink(id);if(!areaCampActionUsed('drink')&&!$('#campOverlay')?.hidden)renderCampDrinks();});
+};
+
+/* ---------- Exploration gives a guaranteed 2 diamonds ---------- */
+let exploreDiamondPendingV137=false;
+const _runExploreDotsV137Base=runExploreDots;
+runExploreDots=async function(){
+  await _runExploreDotsV137Base();
+  if(!exploreDiamondPendingV137)return;
+  const reward=$('#exploreReward'),load=$('#exploreLoading');if(load)load.hidden=true;if(reward){reward.hidden=false;$('#exploreRewardText').textContent='探索ボーナス　ダイヤ +2';$('#exploreRewardSub').textContent='1探索ごとの確定報酬';const im=$('#exploreRewardImg');if(im)im.hidden=true;await fixedDelay(520);reward.hidden=true;}
+};
+const _exploreFieldV137Base=exploreField;
+exploreField=async function(){
+  if(state.adventure.completed||state.adventure.awaitingReport||state.adventure.battleReady||storyBusy)return;
+  state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+2;saveMeta();exploreDiamondPendingV137=true;
+  try{return await _exploreFieldV137Base();}finally{exploreDiamondPendingV137=false;}
+};
+if($('#exploreBtn'))$('#exploreBtn').onclick=exploreField;
+
+/* ---------- Story Area 4 boss clear gives 50 diamonds once ---------- */
+const _finishBattleV137Base=finishBattle;
+finishBattle=function(win){
+  const b=state.battle,bossBonus=!!(win&&b&&b.mode==='adventure'&&!b.config?.explorationAmbush&&b.config?.bossBattle&&Number(b.config?.storyAreaIndex)===3&&!b.bossDiamondV137Granted);
+  if(bossBonus){b.bossDiamondV137Granted=true;state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+50;saveMeta();}
+  const out=_finishBattleV137Base(win);
+  if(bossBonus){const rw=$('#resultRewards');if(rw&&!rw.querySelector('.boss-diamond-bonus-v137')){const x=document.createElement('div');x.className='boss-diamond-bonus-v137';x.innerHTML='<b>BOSS CLEAR BONUS</b><span>ダイヤ +50</span>';rw.appendChild(x);}}
+  return out;
+};
+
+/* ---------- Mob Piece fixed diamond rewards ---------- */
+for(const spec of Object.values(MOB_PIECE_FREE_REWARD_V132)){spec.diamonds=1;spec.diamondChance=0;}
+for(const spec of Object.values(MOB_PIECE_RANK_REWARD_V132)){spec.diamonds=3;spec.diamondChance=0;}
+freeRewardTextV132=function(key){const r=MOB_PIECE_FREE_REWARD_V132[key]||MOB_PIECE_FREE_REWARD_V132.easy;return `${r.coins.toLocaleString()}コイン + ダイヤ1`;};
+rankRewardTextV132=function(tier){const r=MOB_PIECE_RANK_REWARD_V132[tier]||MOB_PIECE_RANK_REWARD_V132.F;return `${r.coins.toLocaleString()}コイン + ダイヤ3`;};
+let mobPiecePromotionBonusV137=0;
+const _updateMobPieceRankV137Base=updateMobPieceRankV132;
+updateMobPieceRankV132=function(win){const r=_updateMobPieceRankV137Base(win);mobPiecePromotionBonusV137=0;if(r?.promoted){mobPiecePromotionBonusV137=10;state.meta.diamonds=Math.max(0,Number(state.meta.diamonds)||0)+10;saveMeta();}return r;};
+const _finishMobPieceBattleV137Base=finishMobPieceBattleV96;
+finishMobPieceBattleV96=async function(win){mobPiecePromotionBonusV137=0;await _finishMobPieceBattleV137Base(win);if(mobPiecePromotionBonusV137){const box=$('.piece-reward-v132',ensureMobPieceOverlayV96());if(box&&!box.querySelector('.promotion-diamond-v137')){const s=document.createElement('span');s.className='promotion-diamond-v137';s.textContent='昇格ボーナス　ダイヤ 10';box.appendChild(s);}}};
+
+/* ---------- Main-screen progression announcements ---------- */
+function currentHomeUnlockSnapshotV137(){
+  const weaponIds=typeof blacksmithShopWeapons==='function'?blacksmithShopWeapons().map(w=>String(w.id)):[];
+  const gachaIds=typeof FIGURE_GACHAS_V96!=='undefined'?FIGURE_GACHAS_V96.filter(b=>{try{return !!b.unlock?.()&&!b.disabledReason;}catch(_){return false;}}).map(b=>String(b.id)):[];
+  const drinkIds=typeof unlockedDrinkIds==='function'?[...unlockedDrinkIds()].map(String):[];
+  return{weaponIds:[...new Set(weaponIds)].sort(),gachaIds:[...new Set(gachaIds)].sort(),drinkIds:[...new Set(drinkIds)].sort()};
+}
+function unlockDiffV137(now,old,key){const prev=new Set(old?.[key]||[]);return(now?.[key]||[]).filter(id=>!prev.has(id));}
+function ensureHomeUnlockOverlayV137(){let ov=$('#homeUnlockOverlayV137');if(ov)return ov;ov=document.createElement('div');ov.id='homeUnlockOverlayV137';ov.className='home-unlock-overlay-v137';ov.hidden=true;document.body.appendChild(ov);return ov;}
+async function showHomeUnlockAnnouncementsV137(){
+  const now=currentHomeUnlockSnapshotV137(),old=state.meta.homeUnlockSeenV137;
+  if(!old){state.meta.homeUnlockSeenV137=now;saveMeta();return;}
+  const weapons=unlockDiffV137(now,old,'weaponIds'),gachas=unlockDiffV137(now,old,'gachaIds'),drinks=unlockDiffV137(now,old,'drinkIds');state.meta.homeUnlockSeenV137=now;saveMeta();
+  if(!weapons.length&&!gachas.length&&!drinks.length)return;
+  const rows=[];
+  if(weapons.length){const names=weapons.map(id=>weaponById(id)?.name).filter(Boolean);rows.push(`<section><small>BLACKSMITH / NEW</small><b>武器ショップに新商品が追加！</b>${names.length?`<p>${names.slice(0,4).join(' / ')}${names.length>4?' ほか':''}</p>`:''}</section>`);}
+  if(gachas.length){const names=gachas.map(id=>FIGURE_GACHAS_V96.find(b=>String(b.id)===id)?.name).filter(Boolean);rows.push(`<section><small>GACHA / NEW</small><b>新しいガチャが解放！</b>${names.length?`<p>${names.slice(0,3).join(' / ')}${names.length>3?' ほか':''}</p>`:''}</section>`);}
+  if(drinks.length){const names=drinks.map(id=>DRINK_SETS.find(d=>String(d.id)===id)?.name).filter(Boolean);rows.push(`<section><small>TAVERN / NEW</small><b>ドリンクの新商品が追加！</b>${names.length?`<p>${names.slice(0,3).join(' / ')}${names.length>3?' ほか':''}</p>`:''}</section>`);}
+  const ov=ensureHomeUnlockOverlayV137();ov.innerHTML=`<div class="home-unlock-card-v137"><div class="home-unlock-burst-v137">NEW!</div><small>NEW LINEUP</small><h2>新しい要素が解放されました！</h2><div class="home-unlock-list-v137">${rows.join('')}</div><button data-home-unlock-close-v137 class="primary-btn" type="button">確認</button></div>`;ov.hidden=false;
+  await new Promise(resolve=>{const close=()=>{ov.hidden=true;resolve();};$('[data-home-unlock-close-v137]',ov).onclick=close;});
+}
+const _goHomeV137Base=goHome;
+goHome=async function(){await _goHomeV137Base();try{await showHomeUnlockAnnouncementsV137();}catch(e){console.warn('[v137 unlock notice]',e);}};
+
+/* ---------- Forward-story regression audit guard ---------- */
+window.__mobV137StoryAudit={
+  tribe:['arrival:tribe','pre:tribe:0','post:tribe:0','pre:tribe:1','post:tribe:1','pre:tribe:2','post:tribe:2','pre:tribe:3','post:tribe:3'],
+  later:['arrival:rural2','arrival:neon2','arrival:magma2','arrival:desert2','arrival:demonCastle']
+};
+for(const key of [...window.__mobV137StoryAudit.tribe,...window.__mobV137StoryAudit.later])if(!STORY_EVENTS?.[key])console.warn('[v137 story audit] missing event',key);
+
+/* ===== END MOB QUEST v137 ===== */
 
 
 })();

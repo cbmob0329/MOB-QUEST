@@ -4096,3 +4096,92 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .passive-cutin.enemy-skill-cutin-v134 b{font-size:15px!important;line-height:1.15!important;color:#fff!important;text-shadow:0 2px 2px #000!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;}
 /* ===== END MOB QUEST v134 ===== */
 
+
+
+/* ===== MOB QUEST v136: SEA READABILITY / MP / RECORD / SHOP QTY ===== */
+/* Sea is a bright blue environment: use light cards and dark navy ink. */
+.camp-overlay.area-theme-blue .camp-main-menu>button,
+.explore-overlay.area-theme-blue .explore-card{
+  background:repeating-linear-gradient(0deg,#9ed9e9 0 16px,#c4ebf4 16px 32px,#88c8dc 32px 48px)!important;
+  color:#0b2638!important;-webkit-text-fill-color:#0b2638!important;text-shadow:none!important;border-color:#315b72!important;
+}
+.camp-overlay.area-theme-blue .camp-main-menu>button *,
+.explore-overlay.area-theme-blue .explore-card *{color:#0b2638!important;-webkit-text-fill-color:#0b2638!important;text-shadow:none!important;opacity:1!important;}
+.camp-overlay.area-theme-blue .camp-main-menu>button small,
+.explore-overlay.area-theme-blue .explore-card small{color:#204b61!important;-webkit-text-fill-color:#204b61!important;font-weight:900!important;}
+
+.story-record-get-v136 .record-title-v136{display:block;width:100%;max-width:100%;margin:12px auto 4px;font-weight:1000;line-height:1.12;word-break:keep-all;overflow-wrap:normal;text-wrap:balance;}
+.story-record-get-v136 .record-title-v136.long-v136{font-size:clamp(18px,4.1vw,28px)!important;letter-spacing:-.03em;white-space:nowrap;}
+.story-record-get-v136 .story-record-get-disc-v119 img{opacity:1!important;}
+
+.battle-mp-v136{display:inline-flex!important;align-items:baseline;gap:2px;padding:1px 5px;border-radius:999px;background:#d8f3ff!important;color:#056b9f!important;-webkit-text-fill-color:#056b9f!important;font-weight:1000!important;text-shadow:none!important;white-space:nowrap;}
+.battle-mp-v136 b{color:#004f83!important;-webkit-text-fill-color:#004f83!important;font-size:1.08em!important;}
+.battle-mp-v136 i{font-style:normal!important;color:#347b9f!important;-webkit-text-fill-color:#347b9f!important;font-size:.86em!important;}
+
+.coin-shop-qty-v136{position:fixed;inset:0;z-index:22050;display:grid;place-items:center;padding:18px;background:rgba(3,8,15,.78);}
+.coin-shop-qty-v136[hidden]{display:none!important}.coin-shop-qty-card-v136{position:relative;width:min(92vw,430px);padding:18px;border:4px solid #8d6338;border-radius:24px;background:#fff4dc;color:#21170e;box-shadow:0 22px 60px rgba(0,0,0,.55),inset 0 0 0 3px #fff;display:grid;gap:12px;}
+.coin-shop-close-v136{position:absolute;right:10px;top:10px;width:44px;height:44px;border-radius:50%;border:0;background:#20354b;color:#fff;font-size:24px;font-weight:1000}.coin-shop-product-v136{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:center;padding-right:50px}.coin-shop-product-v136 img{width:82px;height:82px;object-fit:contain}.coin-shop-product-v136 small{display:block;font-size:9px;letter-spacing:.18em;color:#6e4b2b}.coin-shop-product-v136 b{display:block;font-size:19px;line-height:1.2}.coin-shop-product-v136 span{display:block;margin-top:4px;font-size:11px;font-weight:900;color:#5f4025}.coin-shop-wallet-v136{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:13px;background:#193149;color:#fff}.coin-shop-wallet-v136 span{font-size:10px;font-weight:900}.coin-shop-wallet-v136 strong{font-size:17px}.coin-shop-stepper-v136{display:grid;grid-template-columns:72px 1fr 72px;gap:10px;align-items:center}.coin-shop-stepper-v136 button{height:50px;border:0;border-radius:14px;background:#294861;color:#fff;font-size:25px;font-weight:1000}.coin-shop-stepper-v136 button:disabled{opacity:.28}.coin-shop-stepper-v136>b{text-align:center;font-size:27px}.coin-shop-total-v136{padding:11px 13px;border:2px solid #b89260;border-radius:14px;background:#f5dfb8;display:grid;grid-template-columns:1fr auto;gap:3px 10px}.coin-shop-total-v136 span{font-size:10px;font-weight:900}.coin-shop-total-v136 b{font-size:19px}.coin-shop-total-v136 small{grid-column:1/-1;font-size:10px;font-weight:900;color:#704920}.coin-shop-qty-card-v136>.primary-btn:disabled{opacity:.38;pointer-events:none}
+/* ===== END MOB QUEST v136 ===== */
+
+/* ===== MOB QUEST v137: GLOBAL AREA CONTRAST / TRIBE ARRIVAL / POPUPS ===== */
+/* Prevent another dark-banner/dark-letter regression from Tribe onward. */
+.camp-overlay.area-theme-green .camp-main-menu>button *,
+.explore-overlay.area-theme-green .explore-card *,
+.camp-overlay.area-theme-neon .camp-main-menu>button *,
+.explore-overlay.area-theme-neon .explore-card *,
+.camp-overlay.area-theme-brown .camp-main-menu>button *,
+.explore-overlay.area-theme-brown .explore-card *,
+.camp-overlay.area-theme-redblack .camp-main-menu>button *,
+.explore-overlay.area-theme-redblack .explore-card *,
+.camp-overlay.area-theme-burgundy .camp-main-menu>button *,
+.explore-overlay.area-theme-burgundy .explore-card *{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 2px 3px rgba(0,0,0,.72)!important;opacity:1!important;
+}
+.camp-overlay.area-theme-green .camp-main-menu>button small,.explore-overlay.area-theme-green .explore-card small,
+.camp-overlay.area-theme-neon .camp-main-menu>button small,.explore-overlay.area-theme-neon .explore-card small,
+.camp-overlay.area-theme-brown .camp-main-menu>button small,.explore-overlay.area-theme-brown .explore-card small,
+.camp-overlay.area-theme-redblack .camp-main-menu>button small,.explore-overlay.area-theme-redblack .explore-card small,
+.camp-overlay.area-theme-burgundy .camp-main-menu>button small,.explore-overlay.area-theme-burgundy .explore-card small{font-weight:900!important;color:#f4f7fa!important;-webkit-text-fill-color:#f4f7fa!important;}
+
+/* Light themes always use dark ink. */
+.camp-overlay.area-theme-beige .camp-main-menu>button *, .explore-overlay.area-theme-beige .explore-card *,
+.camp-overlay.area-theme-sky .camp-main-menu>button *, .explore-overlay.area-theme-sky .explore-card *,
+.camp-overlay.area-theme-red .camp-main-menu>button *, .explore-overlay.area-theme-red .explore-card *,
+.camp-overlay.area-theme-blue .camp-main-menu>button *, .explore-overlay.area-theme-blue .explore-card *,
+.camp-overlay.area-theme-white .camp-main-menu>button *, .explore-overlay.area-theme-white .explore-card *{
+  color:#17202a!important;-webkit-text-fill-color:#17202a!important;text-shadow:none!important;opacity:1!important;
+}
+.camp-overlay.area-theme-beige .camp-main-menu>button small,.explore-overlay.area-theme-beige .explore-card small,
+.camp-overlay.area-theme-sky .camp-main-menu>button small,.explore-overlay.area-theme-sky .explore-card small,
+.camp-overlay.area-theme-red .camp-main-menu>button small,.explore-overlay.area-theme-red .explore-card small,
+.camp-overlay.area-theme-blue .camp-main-menu>button small,.explore-overlay.area-theme-blue .explore-card small,
+.camp-overlay.area-theme-white .camp-main-menu>button small,.explore-overlay.area-theme-white .explore-card small{color:#354657!important;-webkit-text-fill-color:#354657!important;font-weight:900!important;}
+
+/* Tribe story: party and Jessie share the same visual baseline and comparable scale. */
+.story-scene.story-world-tribe .story-party-line,
+.story-scene.story-world-tribe.story-layout-party-left .story-party-line{
+  left:2.5%!important;right:30%!important;bottom:9.5%!important;height:39%!important;align-content:end!important;overflow:visible!important;
+}
+.story-scene.story-world-tribe .story-party-line[data-party-count="7"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="8"]{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-template-rows:repeat(2,50%)!important;gap:0!important;align-items:end!important;justify-items:center!important;
+}
+.story-scene.story-world-tribe .story-party-line[data-party-count="7"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="8"] .story-party-actor{width:100%!important;height:100%!important;min-width:0!important;align-self:end!important;}
+.story-scene.story-world-tribe .story-guest.story-guest-player,
+.story-scene.story-world-tribe .story-guest.story-guest-player.side-right,
+.story-scene.story-world-tribe .story-guest.story-guest-player.side-left{
+  bottom:10.5%!important;max-height:29%!important;
+}
+@media(max-height:720px){.story-scene.story-world-tribe .story-party-line,.story-scene.story-world-tribe.story-layout-party-left .story-party-line{bottom:8.5%!important;height:37%!important}.story-scene.story-world-tribe .story-guest.story-guest-player{bottom:9.5%!important;max-height:27%!important}}
+
+.camp-drink-picker-v137{position:fixed;inset:0;z-index:47000;display:grid;place-items:center;padding:calc(16px + var(--safe-top)) 14px calc(16px + var(--safe-bottom));background:rgba(2,8,15,.78);}
+.camp-drink-picker-v137[hidden]{display:none!important}.camp-drink-picker-card-v137{width:min(94vw,470px);max-height:86vh;overflow:auto;border:4px solid #6ca7c8;border-radius:25px;background:#eaf8ff;color:#102636;box-shadow:0 22px 60px rgba(0,0,0,.56),inset 0 0 0 3px #fff;padding:15px;}
+.camp-drink-picker-head-v137{position:sticky;top:-15px;z-index:3;display:grid;grid-template-columns:1fr 48px;gap:10px;align-items:start;background:#eaf8ff;padding:12px 2px 10px}.camp-drink-picker-head-v137 small{font-size:9px;letter-spacing:.17em;color:#39718e;font-weight:1000}.camp-drink-picker-head-v137 h2{margin:2px 0;font-size:23px}.camp-drink-picker-head-v137 p{margin:3px 0;font-size:11px;font-weight:900}.camp-drink-picker-head-v137 button{width:48px;height:48px;border:0;border-radius:50%;background:#203b55;color:#fff;font-size:25px;font-weight:1000}.camp-drink-picker-list-v137{display:grid;gap:9px}.camp-drink-picker-list-v137>button{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;padding:9px;border:2px solid #4e7892;border-radius:16px;background:#fff;color:#142330;text-align:left}.camp-drink-picker-list-v137 img{width:70px;height:70px;object-fit:contain}.camp-drink-picker-list-v137 b{display:block;font-size:14px}.camp-drink-picker-list-v137 small{display:block;margin-top:3px;font-size:10px;line-height:1.35;color:#476071}.camp-drink-picker-list-v137 em{font-style:normal;font-size:12px;font-weight:1000}.camp-drink-empty-v137{padding:24px 12px;text-align:center;font-weight:1000}
+
+.boss-diamond-bonus-v137{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;padding:9px 12px;border-radius:12px;background:#d8f3ff!important;border:2px solid #58a4cc;color:#073b5a!important}.boss-diamond-bonus-v137 b,.boss-diamond-bonus-v137 span{color:#073b5a!important;-webkit-text-fill-color:#073b5a!important;font-weight:1000!important}.boss-diamond-bonus-v137 span{font-size:16px}
+.promotion-diamond-v137{display:block!important;margin-top:4px;padding:7px 9px;border-radius:10px;background:#fff2a8!important;color:#5b3a00!important;-webkit-text-fill-color:#5b3a00!important;font-weight:1000!important}
+
+.home-unlock-overlay-v137{position:fixed;inset:0;z-index:49000;display:grid;place-items:center;padding:calc(16px + var(--safe-top)) 15px calc(16px + var(--safe-bottom));background:rgba(3,8,14,.82)}.home-unlock-overlay-v137[hidden]{display:none!important}.home-unlock-card-v137{position:relative;width:min(93vw,460px);max-height:88vh;overflow:auto;padding:22px 16px 16px;border:4px solid #65b9e5;border-radius:27px;background:#eefaff;color:#102739;box-shadow:0 0 0 4px rgba(255,255,255,.18),0 26px 70px rgba(0,0,0,.62);animation:homeUnlockPopV137 .34s cubic-bezier(.2,.9,.25,1.15)}@keyframes homeUnlockPopV137{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}.home-unlock-card-v137>small{display:block;text-align:center;font-size:10px;letter-spacing:.24em;color:#307ba3;font-weight:1000}.home-unlock-card-v137>h2{text-align:center;margin:5px 0 14px;font-size:21px;line-height:1.25}.home-unlock-burst-v137{width:78px;height:78px;margin:-8px auto 7px;display:grid;place-items:center;border-radius:50%;background:#ffdf5b;color:#192431;border:4px solid #fff;box-shadow:0 0 0 4px #ef9e2d,0 0 30px rgba(255,219,71,.75);font-size:18px;font-weight:1000;transform:rotate(-6deg)}.home-unlock-list-v137{display:grid;gap:9px;margin-bottom:13px}.home-unlock-list-v137 section{padding:11px 12px;border:2px solid #5a8099;border-radius:14px;background:#fff;color:#152a38}.home-unlock-list-v137 section small{display:block;font-size:8px;letter-spacing:.16em;color:#4f7992;font-weight:1000}.home-unlock-list-v137 section b{display:block;margin-top:2px;font-size:15px}.home-unlock-list-v137 section p{margin:4px 0 0;font-size:10px;line-height:1.4;font-weight:800;color:#526875}
+/* ===== END MOB QUEST v137 ===== */
+

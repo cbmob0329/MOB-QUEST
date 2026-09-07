@@ -1,0 +1,20 @@
+MOB QUEST v137 REGRESSION REPORT
+
+IMPLEMENTED
+- モブドラゴンジュニア image path fixed to boss/50.png exactly.
+- 部族村: dark brown Explore/Camp cards now force white high-contrast text.
+- All adventure area themes now have an explicit dark/light ink contract to prevent recurrence later in the story.
+- 部族村 arrival: 7-8 party actors use a 4x2 layout; Mob Jessie uses the same lower baseline and comparable scale.
+- 草原Ⅱ AREA4 boss order: LEFT Mob Tsurugunner / CENTER Mob Hawk II / RIGHT Mob Savanna.
+- AUTO: actual reduced MP cost is checked before Magic/Ultimate; failed AUTO action retries instead of stalling.
+- Camp Drink: opens a modal owned-drink list with image/name/effect/count.
+- Explore: guaranteed +2 diamonds per valid exploration.
+- Story final AREA4 boss: +50 diamonds once per clear.
+- Mob Piece Battle: Free win +1 diamond; Rank win +3 diamonds; promotion +10 diamonds additional.
+- HOME unlock notices: new blacksmith weapons, figure gacha banners, and tavern drinks are announced after progression.
+- Story audit keys installed for Tribe -> Rural II -> Neon II -> Magma II -> Desert II -> Demon Castle.
+
+PRESERVED
+- v136 sea preload/record/shop quantity/Mob Piece tempo changes.
+- v135 natural dialogue wrapping.
+- v134 enemy skill image cut-ins and earlier battle/content systems.
