@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=138;
+const GAME_ASSET_VERSION=139;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8670,40 +8670,32 @@ for(const key of [...window.__mobV137StoryAudit.tribe,...window.__mobV137StoryAu
 /* ===== END MOB QUEST v137 ===== */
 
 
-})();
 
-/* ===== MOB QUEST v138: TRIBE STORY CLEANUP / REGRESSION SAFETY ===== */
-window.__mobV138PatchRuntime=true;
+/* ===== MOB QUEST v139: TRIBE PARTY WIDTH / STORY LAYER SAFETY ===== */
+window.__mobV139PatchRuntime=true;
 
 /*
-  v137 changed the shared story-party scaler while trying to improve the Tribe
-  arrival composition. That global replacement could leave the Tribe event
-  party at an extremely small scale after the arrival sequence. Restore the
-  proven v136 sizing contract everywhere, and use a local 4x2 layout only for
-  the 7-8 member Tribe arrival party.
+  v137 accidentally reserved 30% of the right side of the Tribe story-party area.
+  Keep the established maximum of six actors per row, use the full safe width,
+  and scale only until the next increase would collide horizontally/vertically.
+  This function also restores the proven common 6-column sizing behavior outside Tribe.
 */
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
   await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
-  const count=valid.length,tribe=!!(root?.id==='storyPartyLine'&&$('#storyScene')?.classList.contains('story-world-tribe'));
-  root?.classList?.remove('tribe-party-grid-v138');
-  for(const img of valid){img.classList.remove('tribe-party-img-v138');img.style.removeProperty('max-width');img.style.removeProperty('max-height');}
-  if(tribe&&count>=7&&count<=8){
-    root.dataset.storyCols='4';root.classList.add('tribe-party-grid-v138');lastStoryPartyScale=.118;
-    for(const img of valid){
-      img.style.removeProperty('width');img.style.removeProperty('height');
-      img.classList.add('size-ready','tribe-party-img-v138');
-    }
-    return;
-  }
-  delete root.dataset.storyCols;
-  const rows=Math.max(1,Math.ceil(count/6));
-  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
+  const count=valid.length,cols=6,rows=Math.max(1,Math.ceil(count/cols));
+  const tribe=!!(root?.id==='storyPartyLine'&&$('#storyScene')?.classList.contains('story-world-tribe'));
+  root.dataset.storyCols=String(cols);
+  const rowSums=[];for(let i=0;i<count;i+=cols)rowSums.push(valid.slice(i,i+cols).reduce((a,img)=>a+img.naturalWidth,0));
   const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
-  const rowH=Math.max(1,(root.clientHeight-4)/rows);
-  const cap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
-  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);lastStoryPartyScale=sc;
+  const rowH=Math.max(1,(root.clientHeight-6)/rows);
+  const commonCap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
+  const tribeCap=count<=2?.165:count<=3?.158:count<=4?.152:count<=6?.145:count<=8?.136:count<=10?.126:.118;
+  const cap=tribe?tribeCap:commonCap;
+  const widthSafe=Math.max(1,root.clientWidth-16)/maxRowW;
+  const heightSafe=(rowH*.91)/maxH;
+  const sc=Math.min(cap,widthSafe,heightSafe);lastStoryPartyScale=sc;
   valid.forEach(img=>{
     img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*sc))}px`,'important');
     img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*sc))}px`,'important');
@@ -8711,14 +8703,25 @@ sizeStoryPartyImages=async function(root){
   });
 };
 
-/* Hard cleanup: a finished story event must never leave its actor layer over the normal Adventure field. */
-function cleanupFinishedStoryLayerV138(){
+/* Tribe player guests (for example a newly joining ally) stay above the party row, not inside it. */
+const _applyStoryGuestNaturalSizeV139Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return _applyStoryGuestNaturalSizeV139Base(holder,img,info,opt);
+  const tribe=$('#storyScene')?.classList.contains('story-world-tribe');
+  if(!tribe||!info?.player)return _applyStoryGuestNaturalSizeV139Base(holder,img,info,opt);
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  const sc=Math.min(.155,Math.max(.125,(lastStoryPartyScale||.13)*1.02));
+  const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(opt?.multi?.22:.27),scene.height*(opt?.multi?.23:.30));
+  holder.style.setProperty('width',`${sz.w}px`,'important');holder.style.setProperty('height',`${sz.h}px`,'important');
+};
+
+/* Hard cleanup: an ended event cannot leave tiny story actors over the normal Adventure field. */
+function cleanupFinishedStoryLayerV139(){
   if(storyBusy)return;
   const sc=$('#storyScene'),under=$('#adventureParty'),adv=$('#adventureScreen');
   if(sc){
-    sc.hidden=true;sc.style.visibility='';sc.classList.remove('closing','shake','story-layout-party-left','subquest-story-v111');
-    [...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));
-    const line=$('#storyPartyLine');if(line){line.innerHTML='';line.classList.remove('tribe-party-grid-v138');delete line.dataset.storyCols;delete line.dataset.partyCount;}
+    sc.hidden=true;sc.style.visibility='';
+    const line=$('#storyPartyLine');if(line){line.innerHTML='';delete line.dataset.storyCols;delete line.dataset.partyCount;}
     const guest=$('#storyGuest');if(guest)guest.hidden=true;
     const group=$('#storyGuestGroup');if(group){group.hidden=true;group.innerHTML='';}
     const bubble=$('#storyBubble');if(bubble)bubble.hidden=true;
@@ -8727,33 +8730,23 @@ function cleanupFinishedStoryLayerV138(){
   if(under)under.hidden=false;
   adv?.classList.remove('story-event-active');
 }
+const _renderAdventureV139Base=renderAdventure;
+renderAdventure=function(){cleanupFinishedStoryLayerV139();const out=_renderAdventureV139Base();if(!storyBusy){const under=$('#adventureParty');if(under)under.hidden=false;}return out;};
+const _closeStorySceneV139Base=closeStoryScene;
+closeStoryScene=async function(forceHome=false){const out=await _closeStorySceneV139Base(forceHome);cleanupFinishedStoryLayerV139();return out;};
 
-const _renderAdventureV138Base=renderAdventure;
-renderAdventure=function(){
-  cleanupFinishedStoryLayerV138();
-  const out=_renderAdventureV138Base();
-  if(!storyBusy){const under=$('#adventureParty');if(under)under.hidden=false;}
-  return out;
-};
+/* Mob Dragon Junior remains the exact user-specified asset. */
+{const young=SPECIAL_ENEMIES.find(e=>e.id==='sq-young-dragon');if(young)young.image='boss/50.png';}
 
-const _closeStorySceneV138Base=closeStoryScene;
-closeStoryScene=async function(forceHome=false){
-  const out=await _closeStorySceneV138Base(forceHome);
-  cleanupFinishedStoryLayerV138();
-  return out;
-};
+window.__mobV139RegressionAudit={tribeFullWidth:true,maxPartyColumns:6,storyGhostCleanup:true,junior:'boss/50.png'};
+/* ===== END MOB QUEST v139 ===== */
 
-/* v137 requirements remain active. Mob Dragon Junior stays boss/50.png exactly. */
-{
-  const young=trainingEnemyTemplate?.('sq-young-dragon');
-  if(young)young.image='boss/50.png';
-}
+})();
 
-/* Runtime audit flags used by the regression check. */
-window.__mobV138RegressionAudit={
-  inherited:['v129-season-gate','v130-balance','v131-neon-events','v132-mob-piece-rank','v133-dialogue-camp','v134-enemy-cutin','v135-dialogue-wrap','v136-shop-preload','v137-rewards-notices'],
-  tribeGhostLayerFixed:true,
-  juniorImage:'boss/50.png'
-};
-/* ===== END MOB QUEST v138 ===== */
+
+
+
+
+
+
 

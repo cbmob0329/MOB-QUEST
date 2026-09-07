@@ -4197,32 +4197,59 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .home-unlock-overlay-v137{position:fixed;inset:0;z-index:49000;display:grid;place-items:center;padding:calc(16px + var(--safe-top)) 15px calc(16px + var(--safe-bottom));background:rgba(3,8,14,.82)}.home-unlock-overlay-v137[hidden]{display:none!important}.home-unlock-card-v137{position:relative;width:min(93vw,460px);max-height:88vh;overflow:auto;padding:22px 16px 16px;border:4px solid #65b9e5;border-radius:27px;background:#eefaff;color:#102739;box-shadow:0 0 0 4px rgba(255,255,255,.18),0 26px 70px rgba(0,0,0,.62);animation:homeUnlockPopV137 .34s cubic-bezier(.2,.9,.25,1.15)}@keyframes homeUnlockPopV137{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}.home-unlock-card-v137>small{display:block;text-align:center;font-size:10px;letter-spacing:.24em;color:#307ba3;font-weight:1000}.home-unlock-card-v137>h2{text-align:center;margin:5px 0 14px;font-size:21px;line-height:1.25}.home-unlock-burst-v137{width:78px;height:78px;margin:-8px auto 7px;display:grid;place-items:center;border-radius:50%;background:#ffdf5b;color:#192431;border:4px solid #fff;box-shadow:0 0 0 4px #ef9e2d,0 0 30px rgba(255,219,71,.75);font-size:18px;font-weight:1000;transform:rotate(-6deg)}.home-unlock-list-v137{display:grid;gap:9px;margin-bottom:13px}.home-unlock-list-v137 section{padding:11px 12px;border:2px solid #5a8099;border-radius:14px;background:#fff;color:#152a38}.home-unlock-list-v137 section small{display:block;font-size:8px;letter-spacing:.16em;color:#4f7992;font-weight:1000}.home-unlock-list-v137 section b{display:block;margin-top:2px;font-size:15px}.home-unlock-list-v137 section p{margin:4px 0 0;font-size:10px;line-height:1.4;font-weight:800;color:#526875}
 /* ===== END MOB QUEST v137 ===== */
 
-/* ===== MOB QUEST v138: TRIBE STORY ISOLATION ===== */
-/* The ordinary Adventure party is never allowed to show under an active story scene. */
-.adventure-screen.story-event-active .adventure-party{display:none!important}
-
-/* Only the Tribe arrival's 7-8 member event party gets the special 4x2 composition. */
-.story-scene.story-world-tribe .story-party-line.tribe-party-grid-v138{
+/* ===== MOB QUEST v139: TRIBE PARTY FULL-WIDTH SAFE LAYOUT ===== */
+/* This exact large right gap was Tribe-only: v137 used right:30%. Override it completely. */
+.story-scene.story-world-tribe .story-party-line,
+.story-scene.story-world-tribe.story-layout-party-left .story-party-line{
+  left:2%!important;
+  right:2%!important;
+  bottom:9.5%!important;
+  height:31.5%!important;
+  padding:0 1%!important;
+  box-sizing:border-box!important;
+  align-content:end!important;
+  align-items:end!important;
+  justify-content:center!important;
+  overflow:visible!important;
+}
+/* Always max 6 across: 7-12 members become upper 6 / lower remainder. */
+.story-scene.story-world-tribe .story-party-line[data-party-count="7"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="8"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="9"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="10"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="11"],
+.story-scene.story-world-tribe .story-party-line[data-party-count="12"]{
   display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
   grid-template-rows:repeat(2,minmax(0,1fr))!important;
-  gap:0 1.5%!important;
+  gap:0 2px!important;
   align-items:end!important;
   justify-items:center!important;
+  align-content:end!important;
 }
-.story-scene.story-world-tribe .story-party-line.tribe-party-grid-v138 .story-party-actor{
-  width:100%!important;height:100%!important;min-width:0!important;
-  display:flex!important;align-items:flex-end!important;justify-content:center!important;
+.story-scene.story-world-tribe .story-party-line[data-party-count="7"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="8"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="9"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="10"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="11"] .story-party-actor,
+.story-scene.story-world-tribe .story-party-line[data-party-count="12"] .story-party-actor{
+  width:100%!important;height:100%!important;min-width:0!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;
 }
-.story-scene.story-world-tribe .story-party-line.tribe-party-grid-v138 img.tribe-party-img-v138{
-  width:auto!important;height:88%!important;max-width:96%!important;max-height:96%!important;
-  object-fit:contain!important;object-position:center bottom!important;
+/* A newly joining ally stays above the lower party band. */
+.story-scene.story-world-tribe .story-guest.story-guest-player,
+.story-scene.story-world-tribe .story-guest.story-guest-player.side-right,
+.story-scene.story-world-tribe .story-guest.story-guest-player.side-left{
+  bottom:31.5%!important;
+  max-height:30%!important;
 }
-/* Outside that one event, do not let the v137 Tribe grid selectors force actor boxes. */
-.story-scene.story-world-tribe .story-party-line:not(.tribe-party-grid-v138) .story-party-actor{
-  width:auto!important;height:100%!important;
+/* Normal Adventure party must not leak through an active story event. */
+.adventure-screen.story-event-active .adventure-party{display:none!important}
+@media(max-height:720px){
+  .story-scene.story-world-tribe .story-party-line,
+  .story-scene.story-world-tribe.story-layout-party-left .story-party-line{left:2%!important;right:2%!important;bottom:8.5%!important;height:30%!important}
+  .story-scene.story-world-tribe .story-guest.story-guest-player{bottom:30%!important;max-height:28%!important}
 }
-/* ===== END MOB QUEST v138 ===== */
+/* ===== END MOB QUEST v139 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4242,7 +4269,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v138</div>
+      <div class="title-version">v139</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4653,7 +4680,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v138
+// MOB QUEST v139
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6068,7 +6095,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=138;
+const GAME_ASSET_VERSION=139;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -14730,40 +14757,32 @@ for(const key of [...window.__mobV137StoryAudit.tribe,...window.__mobV137StoryAu
 /* ===== END MOB QUEST v137 ===== */
 
 
-})();
 
-/* ===== MOB QUEST v138: TRIBE STORY CLEANUP / REGRESSION SAFETY ===== */
-window.__mobV138PatchRuntime=true;
+/* ===== MOB QUEST v139: TRIBE PARTY WIDTH / STORY LAYER SAFETY ===== */
+window.__mobV139PatchRuntime=true;
 
 /*
-  v137 changed the shared story-party scaler while trying to improve the Tribe
-  arrival composition. That global replacement could leave the Tribe event
-  party at an extremely small scale after the arrival sequence. Restore the
-  proven v136 sizing contract everywhere, and use a local 4x2 layout only for
-  the 7-8 member Tribe arrival party.
+  v137 accidentally reserved 30% of the right side of the Tribe story-party area.
+  Keep the established maximum of six actors per row, use the full safe width,
+  and scale only until the next increase would collide horizontally/vertically.
+  This function also restores the proven common 6-column sizing behavior outside Tribe.
 */
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
   await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
-  const count=valid.length,tribe=!!(root?.id==='storyPartyLine'&&$('#storyScene')?.classList.contains('story-world-tribe'));
-  root?.classList?.remove('tribe-party-grid-v138');
-  for(const img of valid){img.classList.remove('tribe-party-img-v138');img.style.removeProperty('max-width');img.style.removeProperty('max-height');}
-  if(tribe&&count>=7&&count<=8){
-    root.dataset.storyCols='4';root.classList.add('tribe-party-grid-v138');lastStoryPartyScale=.118;
-    for(const img of valid){
-      img.style.removeProperty('width');img.style.removeProperty('height');
-      img.classList.add('size-ready','tribe-party-img-v138');
-    }
-    return;
-  }
-  delete root.dataset.storyCols;
-  const rows=Math.max(1,Math.ceil(count/6));
-  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
+  const count=valid.length,cols=6,rows=Math.max(1,Math.ceil(count/cols));
+  const tribe=!!(root?.id==='storyPartyLine'&&$('#storyScene')?.classList.contains('story-world-tribe'));
+  root.dataset.storyCols=String(cols);
+  const rowSums=[];for(let i=0;i<count;i+=cols)rowSums.push(valid.slice(i,i+cols).reduce((a,img)=>a+img.naturalWidth,0));
   const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...valid.map(i=>i.naturalHeight));
-  const rowH=Math.max(1,(root.clientHeight-4)/rows);
-  const cap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
-  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);lastStoryPartyScale=sc;
+  const rowH=Math.max(1,(root.clientHeight-6)/rows);
+  const commonCap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
+  const tribeCap=count<=2?.165:count<=3?.158:count<=4?.152:count<=6?.145:count<=8?.136:count<=10?.126:.118;
+  const cap=tribe?tribeCap:commonCap;
+  const widthSafe=Math.max(1,root.clientWidth-16)/maxRowW;
+  const heightSafe=(rowH*.91)/maxH;
+  const sc=Math.min(cap,widthSafe,heightSafe);lastStoryPartyScale=sc;
   valid.forEach(img=>{
     img.style.setProperty('width',`${Math.max(1,Math.round(img.naturalWidth*sc))}px`,'important');
     img.style.setProperty('height',`${Math.max(1,Math.round(img.naturalHeight*sc))}px`,'important');
@@ -14771,14 +14790,25 @@ sizeStoryPartyImages=async function(root){
   });
 };
 
-/* Hard cleanup: a finished story event must never leave its actor layer over the normal Adventure field. */
-function cleanupFinishedStoryLayerV138(){
+/* Tribe player guests (for example a newly joining ally) stay above the party row, not inside it. */
+const _applyStoryGuestNaturalSizeV139Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  if(!holder||!img||!(img.naturalWidth>0&&img.naturalHeight>0))return _applyStoryGuestNaturalSizeV139Base(holder,img,info,opt);
+  const tribe=$('#storyScene')?.classList.contains('story-world-tribe');
+  if(!tribe||!info?.player)return _applyStoryGuestNaturalSizeV139Base(holder,img,info,opt);
+  const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+  const sc=Math.min(.155,Math.max(.125,(lastStoryPartyScale||.13)*1.02));
+  const sz=fitNaturalSize(img.naturalWidth,img.naturalHeight,sc,scene.width*(opt?.multi?.22:.27),scene.height*(opt?.multi?.23:.30));
+  holder.style.setProperty('width',`${sz.w}px`,'important');holder.style.setProperty('height',`${sz.h}px`,'important');
+};
+
+/* Hard cleanup: an ended event cannot leave tiny story actors over the normal Adventure field. */
+function cleanupFinishedStoryLayerV139(){
   if(storyBusy)return;
   const sc=$('#storyScene'),under=$('#adventureParty'),adv=$('#adventureScreen');
   if(sc){
-    sc.hidden=true;sc.style.visibility='';sc.classList.remove('closing','shake','story-layout-party-left','subquest-story-v111');
-    [...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));
-    const line=$('#storyPartyLine');if(line){line.innerHTML='';line.classList.remove('tribe-party-grid-v138');delete line.dataset.storyCols;delete line.dataset.partyCount;}
+    sc.hidden=true;sc.style.visibility='';
+    const line=$('#storyPartyLine');if(line){line.innerHTML='';delete line.dataset.storyCols;delete line.dataset.partyCount;}
     const guest=$('#storyGuest');if(guest)guest.hidden=true;
     const group=$('#storyGuestGroup');if(group){group.hidden=true;group.innerHTML='';}
     const bubble=$('#storyBubble');if(bubble)bubble.hidden=true;
@@ -14787,35 +14817,18 @@ function cleanupFinishedStoryLayerV138(){
   if(under)under.hidden=false;
   adv?.classList.remove('story-event-active');
 }
+const _renderAdventureV139Base=renderAdventure;
+renderAdventure=function(){cleanupFinishedStoryLayerV139();const out=_renderAdventureV139Base();if(!storyBusy){const under=$('#adventureParty');if(under)under.hidden=false;}return out;};
+const _closeStorySceneV139Base=closeStoryScene;
+closeStoryScene=async function(forceHome=false){const out=await _closeStorySceneV139Base(forceHome);cleanupFinishedStoryLayerV139();return out;};
 
-const _renderAdventureV138Base=renderAdventure;
-renderAdventure=function(){
-  cleanupFinishedStoryLayerV138();
-  const out=_renderAdventureV138Base();
-  if(!storyBusy){const under=$('#adventureParty');if(under)under.hidden=false;}
-  return out;
-};
+/* Mob Dragon Junior remains the exact user-specified asset. */
+{const young=SPECIAL_ENEMIES.find(e=>e.id==='sq-young-dragon');if(young)young.image='boss/50.png';}
 
-const _closeStorySceneV138Base=closeStoryScene;
-closeStoryScene=async function(forceHome=false){
-  const out=await _closeStorySceneV138Base(forceHome);
-  cleanupFinishedStoryLayerV138();
-  return out;
-};
+window.__mobV139RegressionAudit={tribeFullWidth:true,maxPartyColumns:6,storyGhostCleanup:true,junior:'boss/50.png'};
+/* ===== END MOB QUEST v139 ===== */
 
-/* v137 requirements remain active. Mob Dragon Junior stays boss/50.png exactly. */
-{
-  const young=trainingEnemyTemplate?.('sq-young-dragon');
-  if(young)young.image='boss/50.png';
-}
-
-/* Runtime audit flags used by the regression check. */
-window.__mobV138RegressionAudit={
-  inherited:['v129-season-gate','v130-balance','v131-neon-events','v132-mob-piece-rank','v133-dialogue-camp','v134-enemy-cutin','v135-dialogue-wrap','v136-shop-preload','v137-rewards-notices'],
-  tribeGhostLayerFixed:true,
-  juniorImage:'boss/50.png'
-};
-/* ===== END MOB QUEST v138 ===== */
+})();
 </script>
 </body>
 </html>
