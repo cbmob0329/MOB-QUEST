@@ -4239,6 +4239,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v139 ===== */
 
+<<<<<<< HEAD
 /* ===== MOB QUEST v140: TRIBE PARTY WIDTH ACTUAL FIX ===== */
 /*
    Important: older partyLeftGuestRight CSS sets width:48%!important.
@@ -4295,3 +4296,5 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v140 ===== */
 
+=======
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b

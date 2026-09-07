@@ -8,7 +8,11 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
+<<<<<<< HEAD
 const GAME_ASSET_VERSION=140;
+=======
+const GAME_ASSET_VERSION=139;
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}

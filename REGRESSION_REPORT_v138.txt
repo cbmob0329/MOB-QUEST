@@ -1,0 +1,22 @@
+MOB QUEST v138 REGRESSION REPORT
+
+ROOT CAUSE
+- v137 replaced the shared sizeStoryPartyImages() function to improve the Tribe arrival.
+- The change was global instead of Tribe-arrival-only, so the story actor layer could be scaled incorrectly and remain visible as tiny sprites on the normal Adventure field.
+
+FIXED
+- Restored the v136 story-party sizing algorithm for every normal story scene.
+- Tribe 7-8 member arrival alone uses a local 4x2 grid.
+- Added a hard post-story cleanup so #storyScene / story actors / bubbles / guests cannot remain over the Adventure field after the event is finished.
+- Adventure party is forcibly hidden while story-event-active is set.
+- Mob Dragon Junior remains boss/50.png exactly.
+
+AUDIT RESULT
+- v136 -> v137 static function declarations: 0 removed.
+- v136 -> v137 rough content IDs: 0 removed / 0 added (the changes were configuration/order, not missing content).
+- All non-code/spec files from v136 are present in v137 and byte-identical; v137 only added its regression report.
+- v137 additions for Grassland II boss order, AUTO MP-cost fix, Camp drink picker, Explore +2 diamonds, Boss +50 diamonds, Mob Piece rewards and HOME unlock notices remain present.
+- Earlier patch markers v129-v137 remain present in game.js.
+
+NOTE
+- The playable ZIP intentionally contains code/spec files and references game image assets by repository-relative paths; boss/50.png must exist in the deployed repository asset tree.

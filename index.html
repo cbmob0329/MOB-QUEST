@@ -4250,6 +4250,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   .story-scene.story-world-tribe .story-guest.story-guest-player{bottom:30%!important;max-height:28%!important}
 }
 /* ===== END MOB QUEST v139 ===== */
+<<<<<<< HEAD
 
 /* ===== MOB QUEST v140: TRIBE PARTY WIDTH ACTUAL FIX ===== */
 /*
@@ -4306,6 +4307,8 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   }
 }
 /* ===== END MOB QUEST v140 ===== */
+=======
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4325,7 +4328,11 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
+<<<<<<< HEAD
       <div class="title-version">v140</div>
+=======
+      <div class="title-version">v139</div>
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4736,7 +4743,11 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
+<<<<<<< HEAD
 // MOB QUEST v140
+=======
+// MOB QUEST v139
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6151,7 +6162,11 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
+<<<<<<< HEAD
 const GAME_ASSET_VERSION=140;
+=======
+const GAME_ASSET_VERSION=139;
+>>>>>>> 2ca33767eb909f383912ae76cd6f9c137455398b
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
