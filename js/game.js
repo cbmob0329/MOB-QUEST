@@ -9233,4 +9233,134 @@ enemyFormalDetailV105=function(e){
 window.__mobV142Runtime=true;
 /* ===== END MOB STORY v142 ===== */
 
+/* ===== MOB STORY v143: equipment browsing, comparison and safe transactions ===== */
+const gearBrowseV143={shop:{query:'',type:'',sort:'price'},sell:{query:'',type:'armor',sort:'name'}};
+const gearEscapeV143=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function gearDeltaV143(current,next,scale=1){
+  const labels={maxHp:'HP',maxMp:'MP',atk:'ATK',mag:'MAG',def:'DEF',res:'MND',spd:'SPD'};
+  const parts=Object.entries(labels).flatMap(([key,label])=>{
+    const n=Number((((next?.stats?.[key]||0)-(current?.stats?.[key]||0))*scale).toFixed(1));
+    return n?[`<span class="${n>0?'up':'down'}">${label} ${n>0?'+':''}${n}</span>`]:[];
+  });
+  return `<div class="gear-delta-v143" aria-label="現在の装備との差">${parts.join('')||'<span>能力値の変化なし</span>'}</div>`;
+}
+function gearToolsV143(model,types){
+  return `<div class="gear-tools-v143"><input type="search" data-gear-search placeholder="名前・特性を検索" aria-label="名前・特性を検索" value="${gearEscapeV143(model.query)}"><select data-gear-type aria-label="種類で絞り込み"><option value="">すべての種類</option>${types.map(([value,label])=>`<option value="${gearEscapeV143(value)}" ${model.type===value?'selected':''}>${gearEscapeV143(label)}</option>`).join('')}</select><select data-gear-sort aria-label="並び順"><option value="name" ${model.sort==='name'?'selected':''}>名前順</option><option value="price" ${model.sort==='price'?'selected':''}>価格が安い順</option><option value="owned" ${model.sort==='owned'?'selected':''}>所持数が多い順</option></select></div>`;
+}
+function renderGearMarketV143(root,mode){
+  const model=gearBrowseV143[mode],buying=mode==='shop';
+  const records=buying?blacksmithShopWeapons().map(obj=>({kind:'weapon',obj})):
+    [...ARMORS.filter(a=>armorOwned(a.id)>0).map(obj=>({kind:'armor',obj})),...WEAPONS.filter(w=>weaponOwned(w.id)>0).map(obj=>({kind:'weapon',obj}))];
+  const types=buying?[...new Set(records.flatMap(r=>weaponTypeList(r.obj)))].map(t=>[t,t]):[['armor','防具'],['weapon','武器']];
+  root.innerHTML=`<section class="panel gear-market-v143"><p class="gear-summary-v143"><strong>所持金 ${state.coins.toLocaleString()} G</strong><br>${buying?'武器を選び、個数と金額を確認して購入できます。':'防具は表示価格の100%、武器は20%で売却できます。装備中の個数は保護されます。'}</p>${gearToolsV143(model,types)}<div class="gear-list-v143"></div></section>`;
+  const draw=()=>{
+    const rows=records.filter(({kind,obj})=>(!model.type||(buying?weaponTypeList(obj).includes(model.type):kind===model.type))&&`${obj.name} ${obj.traitLabel||''} ${obj.type||''}`.toLocaleLowerCase().includes(model.query.toLocaleLowerCase()));
+    const owned=r=>r.kind==='armor'?armorOwned(r.obj.id):weaponOwned(r.obj.id);
+    const price=r=>buying||r.kind==='armor'?r.obj.price:Math.floor(r.obj.price*.2);
+    rows.sort((a,b)=>model.sort==='owned'?owned(b)-owned(a):model.sort==='price'?price(a)-price(b):a.obj.name.localeCompare(b.obj.name,'ja'));
+    const list=$('.gear-list-v143',root);
+    list.innerHTML=rows.map(r=>{
+      const {obj,kind}=r,free=kind==='armor'?freeArmorCount(obj.id):freeWeaponCount(obj.id),can=buying?state.coins>=obj.price:free>0;
+      const equipped=owned(r)-free;
+      return `<article class="gear-card-v143"><img src="${obj.image}" alt="" loading="lazy"><div><h3>${gearEscapeV143(obj.name)}</h3><p>${gearEscapeV143(kind==='armor'?armorStatsText(obj):weaponStatsText(obj))}</p><p>${gearEscapeV143(kind==='armor'?obj.traitLabel:weaponTraitText(obj))}</p><p>所持 ${owned(r)} / 装備中 ${equipped}${buying?'':` / 売却可能 ${free}`}</p></div><div class="gear-card-action-v143"><strong>${Number(price(r)||0).toLocaleString()} G<span> / 個</span></strong><button type="button" data-gear-trade="${obj.id}" data-gear-kind="${kind}" ${can?'':'disabled'}>${buying?(can?'購入する':'所持金不足'):(can?'売却する':'すべて装備中')}</button></div></article>`;
+    }).join('')||`<p class="gear-empty-v143">${records.length?'条件に合う装備がありません。':'売却できる所持品がありません。防具はサブクエスト等で入手できます。'}</p>`;
+    bindImages(list);
+    $$('[data-gear-trade]',list).forEach(btn=>btn.onclick=()=>tradeEquipmentV143(buying?'buy':'sell',btn.dataset.gearKind,btn.dataset.gearTrade,()=>renderGearMarketV143(root,mode)));
+  };
+  $('[data-gear-search]',root).oninput=e=>{model.query=e.target.value;draw();};
+  $('[data-gear-type]',root).onchange=e=>{model.type=e.target.value;draw();};
+  $('[data-gear-sort]',root).onchange=e=>{model.sort=e.target.value;draw();};draw();
+}
+
+let gearTradeBusyV143=false;
+function gearTradeLimitV143(mode,kind,obj){
+  if(mode==='buy')return blacksmithShopWeapons().some(w=>w.id===obj.id)?Math.min(99,Math.floor(state.coins/obj.price)):0;
+  return Math.min(99,kind==='armor'?freeArmorCount(obj.id):freeWeaponCount(obj.id));
+}
+async function tradeEquipmentV143(mode,kind,id,onDone=null){
+  if(gearTradeBusyV143)return;
+  if(!['buy','sell'].includes(mode)||!['armor','weapon'].includes(kind)||(mode==='buy'&&kind!=='weapon'))return;
+  const obj=kind==='armor'?armorById(id):weaponById(id);if(!obj)return;
+  id=obj.id;const price=Number(mode==='buy'||kind==='armor'?obj.price:Math.floor(obj.price*.2));
+  if(!Number.isFinite(price)||price<=0)return;
+  const max=gearTradeLimitV143(mode,kind,obj);if(max<1)return toast(mode==='buy'?'購入できません。所持金と販売中の装備を確認してください。':'未装備の所持品がありません。');
+  gearTradeBusyV143=true;const lastFocus=document.activeElement;
+  const ov=document.createElement('div');ov.className='gear-transaction-v143';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','gearTradeTitleV143');
+  const verb=mode==='buy'?'購入':'売却';
+  ov.innerHTML=`<section><h2 id="gearTradeTitleV143">${gearEscapeV143(obj.name)}を${verb}</h2><p>1個 ${price.toLocaleString()} G<br>所持金 ${state.coins.toLocaleString()} G</p><label>個数（1〜${max}）<input type="number" inputmode="numeric" min="1" max="${max}" step="1" value="1" aria-label="${verb}する個数"></label><p role="status" aria-live="polite"></p><div class="actions"><button type="button" data-cancel>キャンセル</button><button type="button" data-confirm>${verb}を確定</button></div></section>`;
+  document.body.appendChild(ov);const input=$('input',ov),confirm=$('[data-confirm]',ov),status=$('[role=status]',ov);
+  const valid=()=>Number.isInteger(Number(input.value))&&Number(input.value)>=1&&Number(input.value)<=gearTradeLimitV143(mode,kind,obj);
+  const update=()=>{confirm.disabled=!valid();const total=price*Number(input.value);status.textContent=valid()?`合計 ${total.toLocaleString()} G ／ ${verb}後 ${(state.coins+(mode==='buy'?-total:total)).toLocaleString()} G`:`1〜${gearTradeLimitV143(mode,kind,obj)}個で入力してください。`;};
+  input.oninput=update;update();
+  try{
+    const quantity=await new Promise(resolve=>{
+      $('[data-cancel]',ov).onclick=()=>resolve(0);
+      confirm.onclick=()=>{if(!valid()){update();return;}confirm.disabled=true;resolve(Number(input.value));};
+      ov.onclick=e=>{if(e.target===ov)resolve(0);};
+      ov.onkeydown=e=>{if(e.key==='Escape'){e.preventDefault();resolve(0);}if(e.key==='Tab'){const controls=[input,$('[data-cancel]',ov),confirm].filter(x=>!x.disabled);if(e.shiftKey&&document.activeElement===controls[0]){e.preventDefault();controls.at(-1).focus();}else if(!e.shiftKey&&document.activeElement===controls.at(-1)){e.preventDefault();controls[0].focus();}}};
+      $('[data-cancel]',ov).focus();
+    });
+    if(!quantity)return;
+    // Recheck funds/stock after the user has confirmed, then commit once.
+    if(quantity>gearTradeLimitV143(mode,kind,obj))return toast('所持金または売却可能数が変わりました。もう一度確認してください。');
+    const inventory=kind==='armor'?'armors':'weapons';
+    if(!state.meta[inventory])state.meta[inventory]={};
+    const owned=kind==='armor'?armorOwned(id):weaponOwned(id);
+    state.meta[inventory][id]=owned+(mode==='buy'?quantity:-quantity);
+    state.coins+=(mode==='buy'?-1:1)*price*quantity;saveMeta();
+    $('#equipmentCoin').textContent=`${state.coins.toLocaleString()} G`;
+    renderHome();onDone?.();toast(`${obj.name} ×${quantity}を${verb}しました`);
+  }finally{ov.remove();gearTradeBusyV143=false;if(lastFocus?.isConnected)lastFocus.focus();}
+}
+buyWeapon=id=>tradeEquipmentV143('buy','weapon',id,renderEquipment);
+buyBlacksmithWeapon=id=>tradeEquipmentV143('buy','weapon',id,()=>renderBlacksmithPopup('shop'));
+sellBlacksmithItem=(kind,id)=>tradeEquipmentV143('sell',kind,id,()=>renderBlacksmithPopup('sell'));
+
+const _renderEquipmentV143Base=renderEquipment;
+renderEquipment=function(){
+  if(equipmentTab==='shop'||equipmentTab==='sell'){
+    $$('.equipment-tab').forEach(b=>b.classList.toggle('active',b.dataset.equipmentTab===equipmentTab));
+    $('#equipmentCoin').textContent=`${state.coins.toLocaleString()} G`;
+    return renderGearMarketV143($('#equipmentContent'),equipmentTab);
+  }
+  return _renderEquipmentV143Base();
+};
+const _renderBlacksmithV143Base=renderBlacksmithPopup;
+renderBlacksmithPopup=function(mode='menu'){
+  _renderBlacksmithV143Base(mode);
+  if(mode==='shop'||mode==='sell'){
+    const body=$('#blacksmithPopupBody');renderGearMarketV143(body,mode);
+    const back=document.createElement('button');back.className='gear-link-v143';back.textContent='← 鍛冶屋メニュー';back.dataset.blacksmithPopupBack='';body.prepend(back);
+  }
+};
+
+const _armorEquipmentV143Base=renderArmorEquipmentV95;
+renderArmorEquipmentV95=function(){
+  _armorEquipmentV143Base();const root=$('#equipmentContent'),p=player(equipmentPlayerId),eq=equipmentFor(p.id),cur=armorById(eq.armor);
+  const link=document.createElement('button');link.className='gear-link-v143';link.textContent='未装備の防具を売却';link.onclick=()=>{gearBrowseV143.sell.type='armor';equipmentTab='sell';renderEquipment();};root.prepend(link);
+  $$('[data-equip-armor-v95]',root).forEach(btn=>{const id=btn.dataset.equipArmorV95;btn.insertAdjacentHTML('beforeend',gearDeltaV143(cur,armorById(id)));});
+};
+const _openWeaponPickerV143Base=openWeaponPicker;
+openWeaponPicker=async function(pid,kind,index=0,onDone=null){
+  await _openWeaponPickerV143Base(pid,kind,index,onDone);
+  const list=$('#weaponPickerList'),overlay=$('#weaponPickerOverlay');if(!list||overlay.hidden)return;
+  const eq=equipmentFor(pid),currentId=kind==='medal'?eq.medals[index]:eq[kind],current=kind==='armor'?armorById(currentId):weaponById(currentId);
+  const scale=kind==='main'||kind==='armor'?1:kind==='sub'?.5:.1;
+  const cards=$$('.weapon-picker-item',list);
+  for(const card of cards){
+    const id=kind==='armor'?card.dataset.pickerArmor:card.dataset.pickerWeapon;
+    const obj=kind==='armor'?armorById(id):weaponById(id);
+    const body=$('div',card)||card;body.insertAdjacentHTML('beforeend',gearDeltaV143(current,obj,scale));
+    if(obj){const count=kind==='armor'?armorOwned(id):kind==='medal'?medalOwned(id):weaponOwned(id);const hint=document.createElement('p');hint.textContent=id===currentId?'現在装備中':`所持 ${count} ／ タップして装備`;body.prepend(hint);}
+  }
+  const tools=document.createElement('div');tools.className='gear-tools-v143';tools.innerHTML='<input type="search" aria-label="装備候補を検索" placeholder="名前・特性を検索">';
+  const note=document.createElement('p');note.className='gear-summary-v143';note.textContent=`現在：${current?.name||'未装備'} ／ 色付きの数値は変更後の差分`;
+  tools.appendChild(note);list.before(tools);
+  // Remove controls from the previous opening without touching the active list.
+  $$('.weapon-picker-card > .gear-tools-v143',overlay).filter(x=>x!==tools).forEach(x=>x.remove());
+  $('input',tools).oninput=e=>{const q=e.target.value.toLocaleLowerCase();cards.forEach(c=>c.hidden=!c.classList.contains('clear')&&!c.textContent.toLocaleLowerCase().includes(q));};
+};
+window.__mobV143Runtime=true;
+/* ===== END MOB STORY v143 ===== */
+
 })();
