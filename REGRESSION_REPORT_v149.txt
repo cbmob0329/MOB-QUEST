@@ -1,0 +1,14 @@
+MOB QUEST v149 REGRESSION REPORT
+
+ROOT CAUSE
+- v147 facility CSS used word-break: keep-all to stop ugly one/two-character Japanese orphans.
+- Long facility sentences without authored line breaks therefore could not wrap at all and were clipped by Safari.
+- v148 repaired story/subquest DOM lines but did not replace the facility rendering path.
+
+FIX
+- Facility/Training/Mob Pink confirmation dialogue now uses DOM-measured explicit line layout.
+- A bubble stretches first; only if the safe phone width is exceeded is a natural break chosen.
+- One-to-three-character orphan lines are rejected.
+- Each chosen line is rendered atomically; a final emergency wrap prevents silent clipping if late font metrics differ.
+- Long Training Coach speech is paged at two visible lines per tap.
+- Existing v148 story/subquest dialogue engine is unchanged and preserved.

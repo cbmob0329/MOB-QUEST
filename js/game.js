@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=148;
+const GAME_ASSET_VERSION=149;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -9672,4 +9672,102 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){return storyPagesV14
 
 window.__mobV148RegressionAudit={inheritV147:true,subquestUsesStorySay:true,domMeasured:true,nowrapChosenLines:true,stretchBeforeSplit:true,sea5SecondLine:'モブジョーンズの功績があるぞ'};
 /* ===== END MOB QUEST v148 ===== */
+
+/* ===== MOB QUEST v149: FACILITY DIALOGUE NO-CLIP / NATURAL WRAP ===== */
+window.__mobV149PatchRuntime=true;
+
+/*
+  v147 made facility Japanese use word-break:keep-all.  That prevented ugly 1-2
+  character orphans, but a long un-authored sentence could no longer wrap at all,
+  so Safari clipped the right side (for example the Training Coach line).
+  v149 uses the same policy as story/subquest: first widen this bubble, then choose
+  natural explicit lines, and finally render those lines atomically.
+*/
+function facilityMeasureLineV149(text,fontPx=16){
+  let probe=facilityMeasureLineV149.probe;
+  if(!probe){probe=document.createElement('span');facilityMeasureLineV149.probe=probe;probe.setAttribute('aria-hidden','true');Object.assign(probe.style,{position:'fixed',left:'-9999px',top:'-9999px',visibility:'hidden',pointerEvents:'none',whiteSpace:'nowrap',display:'inline-block',zIndex:'-1'});document.body.appendChild(probe);}
+  const sample=$('#dialogText');
+  if(sample){const cs=getComputedStyle(sample);probe.style.fontFamily=cs.fontFamily;probe.style.fontWeight=cs.fontWeight||'900';probe.style.fontStyle=cs.fontStyle;probe.style.letterSpacing=cs.letterSpacing;probe.style.fontKerning=cs.fontKerning;}
+  else{probe.style.fontFamily='-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif';probe.style.fontWeight='900';probe.style.letterSpacing='normal';}
+  probe.style.fontSize=`${fontPx}px`;probe.textContent=String(text??'');return probe.getBoundingClientRect().width;
+}
+function facilityMetricsV149(){
+  const vw=Math.max(300,document.documentElement?.clientWidth||window.innerWidth||390),small=vw<=360;
+  const cardMax=Math.max(320,Math.min(470,vw-12));
+  const actor=small?72:82,gap=small?5:6,cardPad=small?14:18,bodyPad=small?18:22;
+  return{vw,small,cardMax,bodyMax:Math.max(178,cardMax-actor-gap-cardPad-bodyPad),font:small?15:16,overhead:actor+gap+cardPad+bodyPad};
+}
+function facilityBreakForbiddenV149(left,right){
+  if([...right].length<=3)return true;
+  if(/^[、。！？!?ーっゃゅょッャュョァィゥェォ]/.test(right))return true;
+  const protectedTails=['でありま','であります','でやんす','でござる','ニョロ','だった','でした','ます','です','なん','なの','レッツトレーニング'];
+  return protectedTails.some(x=>left.endsWith(x));
+}
+function facilityBestBreakV149(text,maxPx,font){
+  const a=[...String(text||'')],n=a.length;if(n<=7)return Math.max(1,n-1);
+  const phrases=['ということで','というのは','それなら','だから','しかし','けれど','けど','そして','でも','なので','のなら','のに','から','なら','ので','のは','には','では','とは','まで','より','あと','また','とにかく'];
+  const particles=['は','が','を','に','へ','で','と','も','の'];let best=-1,bestScore=-1e9;
+  for(let i=4;i<=n-4;i++){
+    const left=a.slice(0,i).join('').trim(),right=a.slice(i).join('').trim();if(!left||!right||facilityBreakForbiddenV149(left,right))continue;
+    const w=facilityMeasureLineV149(left,font);if(w>maxPx)continue;let score=-Math.abs((w/maxPx)-.82)*36;
+    const prev=a[i-1]||'',next=a[i]||'';
+    if(/[。！？!?]/.test(prev))score+=52;else if(/[、，,]/.test(prev))score+=38;else if(/[・・…]/.test(prev))score+=16;
+    for(const p of phrases){if(left.endsWith(p))score+=p.length>2?20:13;if(right.startsWith(p))score+=7;}
+    if(particles.includes(prev))score+=7;if(/[っゃゅょァィゥェォャュョッー、。！？!?]/.test(next))score-=45;
+    const ll=[...left].length,rr=[...right].length;if(ll<6||rr<5)score-=70;score-=Math.abs(ll-rr)*.7;
+    if(score>bestScore){bestScore=score;best=i;}
+  }
+  if(best>=0)return best;
+  let fit=4;for(let i=4;i<=n-4;i++){if(facilityMeasureLineV149(a.slice(0,i).join(''),font)<=maxPx)fit=i;else break;}return Math.min(Math.max(4,fit),n-4);
+}
+function facilitySplitLineV149(text,maxPx,font){
+  const src=String(text??'').trim();if(!src)return[''];if(facilityMeasureLineV149(src,font)<=maxPx)return[src];
+  const out=[];let rest=src,guard=0;while(rest&&facilityMeasureLineV149(rest,font)>maxPx&&guard++<12){
+    const cut=facilityBestBreakV149(rest,maxPx,font),a=[...rest];let left=a.slice(0,cut).join('').trim(),right=a.slice(cut).join('').trim();if(!left||!right)break;
+    if([...right].length<=3&&[...left].length>7){const move=4-[...right].length,la=[...left];right=la.slice(-move).join('')+right;left=la.slice(0,-move).join('');}
+    out.push(left);rest=right;
+  }
+  if(rest)out.push(rest);return out.filter(Boolean);
+}
+function facilityExplicitLinesV149(text){
+  const m=facilityMetricsV149(),raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return{lines:[''],...m};
+  const authored=raw.split('\n').map(x=>x.trim()).filter(Boolean),lines=[];for(const line of authored)lines.push(...facilitySplitLineV149(line,m.bodyMax,m.font));return{lines,...m};
+}
+function facilityPagesV149(text,maxLines=2){
+  const info=facilityExplicitLinesV149(text),pages=[];for(let i=0;i<info.lines.length;i+=maxLines)pages.push(info.lines.slice(i,i+maxLines));return{...info,pages:pages.length?pages:[['']]};
+}
+function renderFacilityLinesV149(textEl,lines){
+  textEl.replaceChildren();textEl.classList.add('facility-explicit-v149');for(const line of lines){const span=document.createElement('span');span.className='facility-line-v149';span.textContent=line;textEl.appendChild(span);}
+}
+function facilityLayoutV149(lines,{choices=false}={}){
+  const m=facilityMetricsV149(),longest=Math.max(0,...lines.map(x=>facilityMeasureLineV149(x,m.font))),minCard=choices?Math.min(356,m.cardMax):Math.min(330,m.cardMax),card=Math.min(m.cardMax,Math.max(minCard,Math.ceil(longest+m.overhead+8)));return{...m,card};
+}
+async function facilityDomSafetyV149(textEl,overlay,lines,layout){
+  await nextPaint();let font=layout.font;
+  const maxLine=()=>Math.max(0,...$$('.facility-line-v149',textEl).map(x=>x.getBoundingClientRect().width));
+  for(let i=0;i<3&&maxLine()>textEl.clientWidth+1;i++){font=Math.max(13,font-1);textEl.style.setProperty('--facility-line-font',`${font}px`);await nextPaint();}
+  /* Never silently clip: if a font metric changed after layout, allow normal fallback wrapping rather than cutting text. */
+  if(maxLine()>textEl.clientWidth+1)textEl.classList.add('facility-emergency-wrap-v149');
+}
+
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const prep=facilityPagesV149(text,2),overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';overlay.classList.add('facility-line-talk','text-safe-v96','adaptive-facility-v147','facility-v149');overlay.hidden=false;
+  for(const lines of prep.pages){const layout=facilityLayoutV149(lines,{choices:false});renderFacilityLinesV149(textEl,lines);overlay.style.setProperty('--facility-card-width',`${layout.card}px`);textEl.style.setProperty('--facility-line-font',`${layout.font}px`);await facilityDomSafetyV149(textEl,overlay,lines,layout);
+    await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,{capture:true,passive:false});});await fixedDelay(80);
+  }
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk','text-safe-v96','adaptive-facility-v147','facility-v149');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');textEl.classList.remove('facility-explicit-v149','facility-emergency-wrap-v149');delete textEl.dataset.lineLength;
+};
+
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText');
+  $('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
+  $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
+  overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility);overlay.classList.toggle('facility-v149',facility);
+  if(facility){const prep=facilityExplicitLinesV149(text),layout=facilityLayoutV149(prep.lines,{choices:true});renderFacilityLinesV149(textEl,prep.lines);overlay.style.setProperty('--facility-card-width',`${layout.card}px`);textEl.style.setProperty('--facility-line-font',`${layout.font}px`);overlay.hidden=false;await facilityDomSafetyV149(textEl,overlay,prep.lines,layout);}else{textEl.textContent=String(text||'');overlay.hidden=false;}
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v149');overlay.style.removeProperty('--facility-card-width');textEl.style.removeProperty('--facility-line-font');textEl.classList.remove('facility-explicit-v149','facility-emergency-wrap-v149');resolve(btn.dataset.dialogValue);});});
+};
+
+window.__mobV149RegressionAudit={inheritV148:true,facilityNoClip:true,explicitFacilityLines:true,stretchBeforeSplit:true,trainingCoachExample:'難しいことは何も無いから、 / とにかくレッツトレーニングだ！'};
+/* ===== END MOB QUEST v149 ===== */
 

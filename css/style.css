@@ -4443,3 +4443,20 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .story-scene.subquest-story-v111 .story-bubble{max-width:min(96vw,382px)!important;}
 /* ===== END MOB QUEST v148 ===== */
 
+/* ===== MOB QUEST v149: FACILITY EXPLICIT LINE SAFETY ===== */
+.dialog-overlay.facility-line-talk.facility-v149 .dialog-body>p.facility-explicit-v149,
+.dialog-overlay.facility-choice-talk.facility-v149 .dialog-body>p.facility-explicit-v149{
+  display:block!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;overflow:visible!important;max-width:100%!important;
+}
+.dialog-overlay.facility-line-talk.facility-v149 .facility-line-v149,
+.dialog-overlay.facility-choice-talk.facility-v149 .facility-line-v149{
+  display:block!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;max-width:none!important;
+}
+.dialog-overlay.facility-line-talk.facility-v149 .dialog-body>p.facility-emergency-wrap-v149,
+.dialog-overlay.facility-choice-talk.facility-v149 .dialog-body>p.facility-emergency-wrap-v149{
+  white-space:pre-line!important;word-break:normal!important;overflow-wrap:break-word!important;text-wrap:wrap!important;
+}
+.dialog-overlay.facility-line-talk.facility-v149 .facility-emergency-wrap-v149 .facility-line-v149,
+.dialog-overlay.facility-choice-talk.facility-v149 .facility-emergency-wrap-v149 .facility-line-v149{white-space:normal!important;}
+/* ===== END MOB QUEST v149 ===== */
+
