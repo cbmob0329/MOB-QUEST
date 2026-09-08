@@ -1,0 +1,11 @@
+MOB QUEST v146 REGRESSION REPORT
+
+FIXED
+- Dialogue now widens only the current bubble before allowing a 1-3 character orphan line.
+- Sea Quest 5 keeps 「有名な戦いには必ず / モブジョーンズの功績があるぞ」 in the same bubble.
+- Short-overflow sentences such as 「まだまだ力を秘めていそうだったな」 may widen instead of leaving 「な」 alone.
+- One-enemy HP HUD reduced from 280px max to 220px max; remains clearly larger than multi-enemy HUD.
+- Mob Power Jones enlarged modestly by up to 14%, with field-size caps.
+
+PRESERVED
+- All v145/v144 dialogue, sea Wave, enemy HUD count logic, v142 enemy passives/ultimates, v141 Tribe changes, and prior systems remain inherited.

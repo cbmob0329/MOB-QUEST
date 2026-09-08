@@ -4400,6 +4400,26 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   overflow:visible!important;
 }
 /* ===== END MOB QUEST v145 ===== */
+
+/* ===== MOB QUEST v146: BALANCED ONE-ENEMY HUD ===== */
+/* v144 went too far at 280px. One enemy should be easy to read, not span most of the field. */
+.enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{
+  width:min(56vw,220px)!important;
+  max-width:220px!important;
+  padding:4px 6px 5px!important;
+  border-radius:9px!important;
+}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row{height:13px!important;gap:4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>b{font-size:7.4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>small{font-size:5.5px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row{height:12px!important;grid-template-columns:auto minmax(68px,1fr) auto!important;gap:3px!important;margin-top:1px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:4.9px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>.gauge{height:6px!important;min-width:68px!important;}
+@media(max-width:380px){
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{width:min(58vw,210px)!important;max-width:210px!important;}
+}
+/* ===== END MOB QUEST v146 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4419,7 +4439,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v145</div>
+      <div class="title-version">v146</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4830,7 +4850,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v145
+// MOB QUEST v146
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6293,7 +6313,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=145;
+const GAME_ASSET_VERSION=146;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -15669,6 +15689,86 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePages
 
 window.__mobV145RegressionAudit={inheritV144:true,pixelMeasuredDialogue:true,legacy72vwOverride:true,browserFallbackWrap:true,sea5DialogueAuthored:true};
 /* ===== END MOB QUEST v145 ===== */
+
+/* ===== MOB QUEST v146: ADAPTIVE BUBBLE STRETCH / BALANCED ENEMY HUD ===== */
+window.__mobV146PatchRuntime=true;
+
+/*
+  Rule: do NOT create a one/two-character orphan just because the normal bubble
+  width is a little short. First try widening only that speech bubble. Only when
+  the sentence still exceeds the safe phone width do we insert a semantic break.
+*/
+function dialogueSplitAdaptiveV146(text,basePx,hardPx){
+  const src=String(text??'').trim();if(!src)return[''];
+  const w=dialogueWidthV145(src);
+  if(w<=basePx)return[src];
+  const a=[...src],cut=bestDialogueBreakV145(src,basePx),left=a.slice(0,cut).join('').trim(),right=a.slice(cut).join('').trim();
+  /* If the normal split would leave 1-3 chars, stretch this bubble instead. */
+  if(right&&[...right].length<=3&&w<=hardPx)return[src];
+  /* Also avoid tiny first lines from unusual punctuation/source text. */
+  if(left&&[...left].length<=3&&w<=hardPx)return[src];
+  if(w<=hardPx&&right&&[...right].length<=4)return[src];
+  return fitDialogueLineV145(src,basePx);
+}
+function dialoguePagesV146(text,{maxLines=2,basePx=238,hardPx=318}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const authored=raw.split('\n').map(x=>x.trim()).filter(Boolean),lines=[];
+  for(const line of authored)lines.push(...dialogueSplitAdaptiveV146(line,basePx,hardPx));
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));
+  return pages.length?pages:[''];
+}
+
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||360);
+  const basePx=sceneW<340?194:sceneW<380?218:238;
+  /* 34px is the bubble's text-side padding allowance; never exceed safe scene width. */
+  const hardPx=Math.max(basePx,Math.min(318,sceneW-50));
+  for(const page of dialoguePagesV146(text,{maxLines:2,basePx,hardPx}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+dialoguePagesV135=function(text,opt={}){return dialoguePagesV146(text,{maxLines:Number(opt.maxLines)||2,basePx:238,hardPx:318});};
+battleDialogueTextV133=function(text){return dialoguePagesV146(text,{maxLines:2,basePx:244,hardPx:320})[0];};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV146(text,{maxLines:Math.max(1,Number(maxLines)||2),basePx:238,hardPx:318});};
+
+/* Sea quest 5: keep the sentence relation in one bubble, with the intended second line. */
+{
+  const sea=(SUBQUEST_AREAS||[]).find(a=>a.worldId==='sea'),q5=sea?.quests?.find(q=>q.id==='sea-5');
+  if(q5){
+    q5.intro=[
+      ['nekoku','モブジョーンズは海底の英雄なんだぞ'],
+      ['pink','英雄でありますか！'],
+      ['nekoku','有名な戦いには必ず\nモブジョーンズの功績があるぞ'],
+      ['desert','まだまだ力を秘めていそうだったな'],
+      ['show',['sq-power-jones']],
+      ['nekoku','ある戦いで敗れて以来'],
+      ['nekoku','さらに強さを求めているぞ'],
+      ['desert','良い志だ']
+    ];
+  }
+}
+
+/* Mob Power Jones: a modest +14%, not a dramatic size jump. */
+const _applyEnemyVisualSizesV146Base=applyEnemyVisualSizes;
+applyEnemyVisualSizes=function(root=$('#enemyArea')){
+  _applyEnemyVisualSizesV146Base(root);if(!root)return;
+  const tune=()=>{
+    const units=$$('[data-enemy-target]',root),count=Math.max(1,units.length);
+    for(const unit of units){
+      const e=enemyByUid(unit.dataset.enemyTarget);if(e?.id!=='sq-power-jones')continue;
+      const img=$('.enemy-sprite',unit);if(!img)continue;
+      const r=img.getBoundingClientRect(),field=($('#battleScreen')||root).getBoundingClientRect();
+      if(!(r.width>0&&r.height>0))continue;
+      const factor=1.14,maxW=(field.width||390)*(count===1?.48:.34),maxH=(field.height||700)*.34;
+      const sc=Math.min(factor,maxW/r.width,maxH/r.height);
+      if(sc>1.01){img.style.setProperty('width',`${Math.round(r.width*sc)}px`,'important');img.style.setProperty('height',`${Math.round(r.height*sc)}px`,'important');}
+    }
+  };
+  requestAnimationFrame(tune);
+  $$('img.enemy-sprite',root).forEach(img=>{if(!img.complete&&img.dataset.jonesLoadV146!=='1'){img.dataset.jonesLoadV146='1';img.addEventListener('load',()=>requestAnimationFrame(tune),{once:true});}});
+};
+
+window.__mobV146RegressionAudit={inheritV145:true,bubbleStretchBeforeOrphan:true,sea5SecondLine:'モブジョーンズの功績があるぞ',enemyHud:'balanced',jonesScale:1.14};
+/* ===== END MOB QUEST v146 ===== */
 </script>
 </body>
 </html>

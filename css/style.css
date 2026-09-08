@@ -4389,3 +4389,23 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v145 ===== */
 
+/* ===== MOB QUEST v146: BALANCED ONE-ENEMY HUD ===== */
+/* v144 went too far at 280px. One enemy should be easy to read, not span most of the field. */
+.enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{
+  width:min(56vw,220px)!important;
+  max-width:220px!important;
+  padding:4px 6px 5px!important;
+  border-radius:9px!important;
+}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row{height:13px!important;gap:4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>b{font-size:7.4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>small{font-size:5.5px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row{height:12px!important;grid-template-columns:auto minmax(68px,1fr) auto!important;gap:3px!important;margin-top:1px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:4.9px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>.gauge{height:6px!important;min-width:68px!important;}
+@media(max-width:380px){
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{width:min(58vw,210px)!important;max-width:210px!important;}
+}
+/* ===== END MOB QUEST v146 ===== */
+
