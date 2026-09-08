@@ -1,4 +1,4 @@
-// MOB QUEST v141
+// MOB QUEST v142
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -1421,41 +1421,34 @@ for(const [element,id] of Object.entries(_v73Middle)){
 }
 // ===== END MOB QUEST v141 DATA =====
 
-// ===== MOB STORY v142: authored enemy ultimates / passives =====
-// Ratios are decimal multipliers: 120% = 1.20, never 120.
-const ENEMY_ABILITIES_V142 = {
-  'モブアビスナイト':{ultimate:{special:'ウォータースパイラル',power:1.20,skillType:'physical',skillElement:'水',every:2}},
-  'モブジョーンズ':{ultimate:{special:'海の戦士',power:1.50,skillType:'physical',skillElement:'水',every:3},passive:'戦士の勝負勘',lowHp:'jones'},
-  'モブウェイブ':{ultimate:{special:'ウォーターフリーズ',power:1.30,skillType:'magic',skillElement:'水',every:3,status:'sleep',chance:.50},passive:'カイテイノマモリビト',protectChance:.30,protectCut:.30},
-  'モブメラケロ':{passive:'カエルノトモシビ',lowHpCut:.30},
-  'モブホークⅡ':{evade:.10,passive:'草原の怪鳥',attackAilmentChance:.10},
-  'モブバイオリン':{deathUltimate:'ラストコール',passive:'ブラックジャイアント',counter:1},
-  'モブラプチー':{passive:'ジュラシックヤベージャンズ',protectChance:.20,protectCut:.20,protectCounter:1},
-  'モブティラ':{passive:'ジュラシックヤベージャンズ',protectChance:.20,protectCut:.20,protectCounter:1},
-  'モブクウカイ':{normalAoe:true,ultimate:{special:'ウォーターフリーズ',power:1.30,skillType:'magic',skillElement:'水',every:3,status:'sleep',chance:.50},passive:'ソウルアンダーグラウンド',allyDeath:'kuukai'},
-  'モブウミデンデン':{passive:'デンデン・ムキムキ・カナリツヨイ',normalCrit:.20},
-  'モブネオタイガー':{evade:.10,passive:'ネオンネットワーク',thirdTurnEvade:.50},
-  'モブパレットレオン':{normalAoe:true,passive:'ネオン街の実力者',lowHp:'palette'},
-  'モブネオマスター':{cut:.10,passive:'マスター・オブ・ネオン',negateChance:.10,negateCounter:1.50},
-  'モブフレザード':{cut:.10,passive:'フュージョンリフレクション',negateChance:.20,negateLimit:2},
-  'モブヨーガンスライム':{actions:2,oneNormalAoe:true,passive:'フュージョンリフレクション',negateChance:.20,negateLimit:2},
-  'モブサラマンダー':{passive:'フレイムボディ',burnAttacker:.30},
-  'モブギドラ':{actions:3,oneSpecial:true,passive:'ドラゴンソウル',lowHp:'gidora'},
-  'モブスラミイラ':{passive:'スライムソウル',transform:'g-slime'},
-  'モブミラバスター':{passive:'ミラモブソウル',lowHp:'mirabuster'},
-  'モブミラアース':{passive:'ピラミッドフォース',normalAoeChance:.20},
-  'モブミラカラミ':{passive:'ピラミッドフォース',normalAoeChance:.20},
-  'モブミラナイト':{passive:'ピラミッドフォース',normalAoeChance:.20},
-  'モブミラタイム':{passive:'ピラミッドフォース',normalAoeChance:.20},
-  'ミラモブファラオ':{actions:3,oneSpecial:true,passive:'災いのループ',survive:true},
-  'モブキラウィッチ':{passive:'リリス親衛隊',allyDeath:'witch'},
-  'モブララウィッチ':{passive:'リリス親衛隊',allyDeath:'witch'},
-  'グラディモブ':{passive:'歴戦の猛者',lowHp:'gladi'},
-  'モブ魔王':{passive:'魔王の覇気',dispelEvery:5,negateName:'魔王の鎧',negateChance:.10,negateHeal:500},
-  'ウルモブリリス':{passive:'闇の支配者',negateChance:.10,negateHeal:1000,negateCounter:1.30}
-};
-for(const e of MOB_DATA.enemyCatalog||[]){
-  const ability=ENEMY_ABILITIES_V142[e.name];
-  if(ability)e.abilitiesV142=ability;
+// ===== MOB QUEST v142 : ENEMY ULTIMATE / PASSIVE AUTHORITATIVE DATA =====
+{
+  const all=[...(MOB_DATA.enemyCatalog||[]),...(MOB_DATA.bosses||[])];
+  const each=(name,fn)=>all.filter(x=>x?.name===name).forEach(fn);
+  each('モブアビスナイト',e=>Object.assign(e,{v142Ultimate:{name:'ウォータースパイラル',every:2,power:1.20,type:'physical',element:'水',kind:'aoe'}}));
+  each('モブジョーンズ',e=>Object.assign(e,{v142Ultimate:{name:'海の戦士',every:3,power:1.50,type:'physical',element:'水',kind:'aoe'},v142Passive:'戦士の勝負勘'}));
+  each('モブウェイブ',e=>Object.assign(e,{v142Ultimate:{name:'ウォーターフリーズ',every:3,power:1.30,type:'magic',element:'水',kind:'aoeSleep',chance:.50},v142Passive:'カイテイノマモリビト'}));
+  each('モブメラケロ',e=>e.v142Passive='カエルノトモシビ');
+  each('モブホークⅡ',e=>{e.evasion=Math.max(Number(e.evasion)||0,.10);e.v142Passive='草原の怪鳥';});
+  each('モブバイオリン',e=>{e.v142Passive='ブラックジャイアント';e.v142DeathUltimate='ラストコール';});
+  each('モブラプチー',e=>e.v142Passive='ジュラシックヤベージャンズ');each('モブティラ',e=>e.v142Passive='ジュラシックヤベージャンズ');
+  each('モブクウカイ',e=>Object.assign(e,{v142Ultimate:{name:'ウォーターフリーズ',every:3,power:1.30,type:'magic',element:'水',kind:'aoeSleep',chance:.50},v142Passive:'ソウルアンダーグラウンド',v142NormalAoe:true}));
+  each('モブウミデンデン',e=>e.v142Passive='デンデン・ムキムキ・カナリツヨイ');
+  each('モブネオタイガー',e=>{e.evasion=Math.max(Number(e.evasion)||0,.10);e.v142Passive='ネオンネットワーク';});
+  each('モブパレットレオン',e=>Object.assign(e,{v142Passive:'ネオン街の実力者',v142NormalAoe:true}));
+  each('モブネオマスター',e=>{e.damageReduction=Math.max(Number(e.damageReduction)||0,.10);e.permanentDamageReduction=true;e.v142Passive='マスター・オブ・ネオン';});
+  each('モブフレザード',e=>{e.damageReduction=Math.max(Number(e.damageReduction)||0,.10);e.permanentDamageReduction=true;e.v142Passive='フュージョンリフレクション';});
+  each('モブヨーガンスライム',e=>{e.actionCount=2;e.forceActionCount=true;e.v142Passive='フュージョンリフレクション';e.v142YoganTwo=true;});
+  each('モブサラマンダー',e=>e.v142Passive='フレイムボディ');
+  each('モブギドラ',e=>{e.actionCount=3;e.forceActionCount=true;e.v142Passive='ドラゴンソウル';});
+  each('モブスラミイラ',e=>e.v142Passive='スライムソウル');
+  each('モブミラバスター',e=>e.v142Passive='ミラモブソウル');
+  for(const n of ['モブミラアース','モブミラカラミ','モブミラナイト','モブミラタイム'])each(n,e=>e.v142Passive='ピラミッドフォース');
+  each('ミラモブファラオ',e=>{e.actionCount=3;e.forceActionCount=true;e.v142Passive='災いのループ';});
+  each('モブキラウィッチ',e=>e.v142Passive='リリス親衛隊');each('モブララウィッチ',e=>e.v142Passive='リリス親衛隊');
+  each('グラディモブ',e=>e.v142Passive='歴戦の猛者');
+  each('モブ魔王',e=>e.v142Passive='魔王の覇気 / 魔王の鎧');
+  each('ウルモブリリス',e=>e.v142Passive='闇の支配者');
 }
-// ===== END MOB STORY v142 DATA =====
+// ===== END MOB QUEST v142 DATA =====
+
