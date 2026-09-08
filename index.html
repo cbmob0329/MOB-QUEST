@@ -4538,11 +4538,7 @@ html,body,#app{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!imp
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-<<<<<<< HEAD
       <div class="title-version">v153</div>
-=======
-      <div class="title-version">v152</div>
->>>>>>> 7490fd8090609aeae79274b125309a646412d2d0
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -6416,11 +6412,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-<<<<<<< HEAD
 const GAME_ASSET_VERSION=153;
-=======
-const GAME_ASSET_VERSION=151;
->>>>>>> 7490fd8090609aeae79274b125309a646412d2d0
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -16455,7 +16447,6 @@ window.__mobV152RegressionAudit={inheritV151:true,iphoneTextSizeAdjust:true,cssE
 /* ===== END MOB QUEST v152 ===== */
 
 
-<<<<<<< HEAD
 /* ===== MOB QUEST v153: DEMON CASTLE BG / AWAKENED DESERT SIZE / AUTHORED DIALOGUE ===== */
 window.__mobV153PatchRuntime=true;
 
@@ -16541,8 +16532,6 @@ window.__mobV153RegressionAudit={inheritV152:true,demonCastleExactAreaBackground
 /* ===== END MOB QUEST v153 ===== */
 
 
-=======
->>>>>>> 7490fd8090609aeae79274b125309a646412d2d0
 </script>
 </body>
 </html>
