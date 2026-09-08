@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=151;
+const GAME_ASSET_VERSION=155;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -432,11 +432,11 @@ function commitAdventureRun(){if(state.adventure?.runSnapshot){state.adventure.r
 function adventureRunActive(){return!!state.adventure?.runSnapshot&&!state.adventure?.awaitingReport&&!state.adventure?.completed;}
 async function abandonAdventure(){
   if(!adventureRunActive())return;
-  const ans=await dialog('冒険を諦めますか？\nこの冒険中に獲得した経験値・G・ダイヤ・アイテム・装備・イベント進行はすべて無効になります。',[['冒険を諦める','yes','danger'],['続ける','no','primary']],'ADVENTURE');
+  const ans=await abandonBannerV155('本当に冒険を諦めますか？\n\n今回得た経験値・G・ダイヤ、\nアイテム・装備とイベント進行は\n冒険開始前の状態に戻ります。',[['冒険を続ける','no','primary'],['諦める','yes','danger']]);
   if(ans!=='yes')return;
   const snap=clone(state.adventure.runSnapshot);if(!snap)return;
   state.coins=Math.max(0,Number(snap.coins)||0);state.meta={...defaultMeta(),...clone(snap.meta||{})};state.meta.coins=state.coins;state.party=(clone(snap.party)||defaultParty.map(x=>[...x])).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);state.adventure={...defaultAdventure(),...clone(snap.adventure||{}),runSnapshot:null,checkpoint:null};state.battle=null;state.quest=null;storyBusy=false;storySceneExtras=[];
-  $('#campOverlay').hidden=true;$('#exploreOverlay').hidden=true;$('#storyScene').hidden=true;$('#resultOverlay').hidden=true;saveMeta();saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);await goHome();await narrationDialog('冒険を諦めました。\n今回の冒険で得たものとイベント進行は元に戻りました。');
+  $('#campOverlay').hidden=true;$('#exploreOverlay').hidden=true;$('#storyScene').hidden=true;$('#resultOverlay').hidden=true;saveMeta();saveParty();saveAdventure();state.training.party=state.party.map(x=>[...x]);await goHome();await abandonBannerV155('冒険を諦めました。\n冒険開始前の状態に戻りました。',[['OK','ok']]);
 }
 
 
@@ -2406,7 +2406,7 @@ async function startDemonAceStoryBattle(){
 }
 async function runDemonCastleArrivalStory(){
   await openStoryScene('demonCastle',0);await storySay('pink','ここが魔王城でありますね・・！');await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('jessie','モブエース！！');await storySay('boss-ace','久しぶりだな。このような形での再会は望んでいなかった');await storySay('desert','魔王の側近と随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ。共にネオン街を守っていた保安官仲間');await storySay('pink','なぜ魔王軍に・・！');await storySay('money','悪いやつではなかったはずよ！');await storySay('jessie','なぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない。お前と同じだモブジェシー・・！');await storySay('denden','それでも戦うでやんす！！');
+  await storySay('boss-ace','まさかここまで来るとはな');await storySay('jessie','モブエース！！');await storySay('boss-ace','久しぶりだな。このような形での再会は望んでいなかった');await storySay('desert','魔王の側近と随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ。共にネオン街を守っていた保安官仲間');await storySay('pink','なぜ魔王軍に・・！');await storySay('money','悪いやつではなかったはずよ！');await storySay('jessie','なぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない。お前と同じだモブジェシー・・！');await storySay('denden','それでも戦うでやんす！！');
   $('#storyScene').hidden=true;await startDemonAceStoryBattle();
   await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storyNarrate('？？？「情けない」');await storyShowGuests(['boss-ace','boss-maou-castle'],{slow:true});await storySay('boss-maou-castle','我の側近が無様な姿を晒すとは');await storySay('boss-ace','申し訳ありません・・');await storySay('pink','魔王であります！！');await storySay('boss-maou-castle','まあよい。一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();await storySay('boss-ace','グッ・・・！');await storySay('boss-maou-castle','随分と嫌われたようだな。行くぞ');await storyHideGuests();await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ。先へ進むぞ！');
 }
@@ -4923,7 +4923,7 @@ runDemonCastleArrivalStory=async function(){
   await openStoryScene('demonCastle',0);
   await storySay('pink','ここが魔王城でありますね・・！');
   await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');
+  await storySay('boss-ace','まさかここまで来るとはな');
   await storySay('money','！？');
   await storySay('jessie','モブエース！！');
   await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');
@@ -5902,7 +5902,7 @@ runDemonCastleArrivalStory=async function(){
   await openStoryScene('demonCastle',0);
   await storySay('pink','ここが魔王城でありますね・・！');
   await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
+  await storySay('boss-ace','まさかここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
   await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');await storySay('pink','なぜ魔王軍に！');await storySay('denden','退屈だからでやんすか！？');await storySay('boss-ace','退屈か\nそうであれば\nどれほど幸せだろな');await storySay('money','はっきりとは覚えてないけど\n悪いやつではなかったはずよ！');await storySay('boss-ace','そうか\n少しは覚えているのか');await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない\nお前と同じだモブジェシー！');await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');await storySay('denden','それでも戦うでやんす！！');
   $('#storyScene').hidden=true;await startDemonAceStoryBattle();
   await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('？？？「情けない」');
@@ -9338,7 +9338,8 @@ storySayLine=async function(key,line,displayName=null,anchorKey=null){
   bubble.style.setProperty('width',`${Math.round(desired)}px`,'important');
   bubble.style.setProperty('max-width',`${Math.round(outerMax)}px`,'important');
   bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
-  await nextPaint();const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
+  await nextPaint();fitStoryTextV155(textEl);
+  const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
   if(anchor){
     const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;left=clamp(cx-br.width/2,8,scene.width-br.width-8);top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
     if(sceneEl?.classList.contains('subquest-story-v111')&&anchor.closest?.('#storyPartyLine'))top=clamp(Math.max(top,scene.height*.555),66,scene.height-br.height-34);
@@ -9627,10 +9628,11 @@ function renderStoryLinesV148(textEl,text){
 }
 storySayLine=async function(key,line,displayName=null,anchorKey=null){
   const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),speaker=displayName||info.name||'???',text=String(line??''),textEl=$('#storyText');
+  textEl.style.removeProperty('font-size');
   $('#storySpeaker').textContent=speaker;renderStoryLinesV148(textEl,text);
   const sceneEl=$('#storyScene'),sceneWidth=Math.max(280,sceneEl?.clientWidth||document.documentElement?.clientWidth||360),outerMax=Math.max(250,Math.min(382,sceneWidth-12));
   const logical=text.split('\n'),longest=Math.max(0,...logical.map(storyMeasureLineV148)),speakerW=storyMeasureLineV148(speaker)*.72;
-  let desired=Math.min(outerMax,Math.max(230,Math.ceil(Math.max(longest,speakerW)+38)));
+  let desired=Math.min(outerMax,Math.max(140,Math.ceil(Math.max(longest,speakerW)+42)));
   bubble.style.setProperty('box-sizing','border-box','important');bubble.style.setProperty('width',`${desired}px`,'important');bubble.style.setProperty('max-width',`${outerMax}px`,'important');
   bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
   await nextPaint();
@@ -9911,8 +9913,6 @@ openCastleRoom=async function(room){const out=await _openCastleRoomV150Base(room
 window.__mobV150RegressionAudit={inheritV149:true,dialogueRules:['no-orphan','compact-bubble','no-overflow'],facilityHelp:true,squareNarration:true,mobPinkShortException:true};
 /* ===== END MOB QUEST v150 ===== */
 
-
-
 /* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
 window.__mobV151PatchRuntime=true;
 
@@ -10031,6 +10031,102 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){const w=Math.max(280
 window.__mobV151RegressionAudit={inheritV150:true,sourceOfTruth:'rendered-text-column',maxLines:2,noOverflow:true,choicePagination:true,iphoneSafe:true};
 /* ===== END MOB QUEST v151 ===== */
 
+/* ===== MOB QUEST v152: CONSERVATIVE PHONE DIALOGUE PAGINATION ===== */
+window.__mobV152PatchRuntime=true;
+function dialogueContentMetricsV152(textEl){const body=textEl?.closest?.('.dialog-body'),cs=textEl?getComputedStyle(textEl):null,bs=body?getComputedStyle(body):null,font=Math.max(12,parseFloat(cs?.fontSize)||16);let width=body?.clientWidth||textEl?.clientWidth||220;if(body&&bs){width-=parseFloat(bs.paddingLeft)||0;width-=parseFloat(bs.paddingRight)||0;width-=parseFloat(bs.borderLeftWidth)||0;width-=parseFloat(bs.borderRightWidth)||0;}const maxPx=Math.max(118,Math.floor(width-8)),maxChars=Math.max(8,Math.min(16,Math.floor(maxPx/font)));return{maxPx,maxChars,font,width};}
+function dialoguePagesV152(text,textEl,maxLines=2){const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];const m=dialogueContentMetricsV152(textEl),lines=[],authored=raw.split('\n').map(x=>x.trim()).filter(Boolean);for(const src of authored){for(const chunk of dialogueNaturalChunksV143(src,m.maxChars)){if(dialogueMeasureV150(chunk,textEl)<=m.maxPx+0.5)lines.push(chunk);else lines.push(...dialogueSplitLineV150(chunk,m.maxPx,textEl));}}for(let i=1;i<lines.length;i++){if([...lines[i]].length<=3){const joined=lines[i-1]+lines[i];if([...joined].length<=m.maxChars&&dialogueMeasureV150(joined,textEl)<=m.maxPx){lines.splice(i-1,2,joined);i--;}}}const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));return pages.length?pages:[''];}
+async function openDialogShellV152(overlay,textEl,{facility=true,choices=false}={}){overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility&&choices);overlay.classList.add('dialog-safe-v151','dialog-safe-v152');overlay.style.setProperty('--dialog-card-width-v151',`${dialogCardMaxV151()}px`);if(textEl)textEl.style.removeProperty('--facility-line-font');overlay.hidden=false;await nextPaint();await nextPaint();}
+function closeDialogShellV152(overlay,textEl){overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150','dialog-safe-v151','dialog-safe-v152','dialog-page-v151','dialog-page-v152');overlay.style.removeProperty('--facility-card-width');overlay.style.removeProperty('--dialog-card-width-v151');if(textEl){textEl.style.removeProperty('--facility-line-font');textEl.replaceChildren();}}
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';await openDialogShellV152(overlay,textEl,{facility:true,choices:false});const pages=dialoguePagesV152(text,textEl,2);for(const page of pages){renderDialogLinesV151(textEl,page);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}closeDialogShellV152(overlay,textEl);choices.innerHTML='';};
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');$('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');await openDialogShellV152(overlay,textEl,{facility,choices:true});const pages=facility?dialoguePagesV152(text,textEl,2):dialoguePagesV150(text,{sampleEl:textEl,maxPx:Math.max(160,dialogTextWidthV151(textEl)-8),maxLines:2});for(let i=0;i<pages.length-1;i++){overlay.classList.add('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages[i]);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}overlay.classList.remove('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages.at(-1)||'');await nextPaint();return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{const v=btn.dataset.dialogValue;closeDialogShellV152(overlay,textEl);choiceRoot.innerHTML='';resolve(v);});});};
+window.__mobV152RegressionAudit={inheritV151:true,iphoneTextSizeAdjust:true,cssEmergencyWrap:true,conservativeCharCap:true,maxLinesPerPage:2,noAtomicNoWrap:true};
+/* ===== END MOB QUEST v152 ===== */
+
+
+/* ===== MOB QUEST v153: DEMON CASTLE BG / AWAKENED DESERT SIZE / AUTHORED DIALOGUE ===== */
+window.__mobV153PatchRuntime=true;
+
+/* Demon Castle: never borrow another AREA's castle background while a request is late.
+   Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
+function v153RawAsset(src){return String(src||'').split('?')[0];}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=155`:src;}
+for(const wid of ['demonCastle','demonCastle2']){
+  const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
+  if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
+}
+const _setImageV153Base=setImage;
+setImage=function(img,src,fallback=''){
+  _setImageV153Base(img,src,fallback);
+  const raw=v153RawAsset(src);
+  if(img?.id==='adventureBg'&&/^back\/maoh(?:2|3|4)?\.png$/i.test(raw)){
+    img.dataset.fallbackChain=[raw].filter(x=>x&&x!==(img.getAttribute('src')||'')).join('|');
+    if(fallback)img.dataset.fallbackSrc=fallback;
+  }
+};
+const _openStorySceneV153Base=openStoryScene;
+openStoryScene=async function(worldId,areaIndex=0,layout='default',extras=[]){
+  if(worldId==='demonCastle'||worldId==='demonCastle2'){
+    const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===worldId),a=w?.areas?.[Math.max(0,Math.min(3,Number(areaIndex)||0))],src=a?.bg;
+    if(src){try{await Promise.race([preloadAsset(src,'high'),fixedDelay(2600)]);}catch(_){}}
+  }
+  return _openStorySceneV153Base(worldId,areaIndex,layout,extras);
+};
+
+/* Awakened Mob Desert (play/15.png) must occupy the same UI footprint as the original play/03.png.
+   The new artwork has a different source canvas, so raw natural-pixel scaling made only this actor huge. */
+let desertBaseNaturalV153=null;
+async function desertBaseNaturalSizeV153(){
+  if(desertBaseNaturalV153)return desertBaseNaturalV153;
+  const src=versionedPlay('play/03.png');
+  try{await preloadAsset(src,'high');}catch(_){}
+  const im=assetImageCache?.get?.(src);
+  if(im?.naturalWidth>0&&im?.naturalHeight>0)desertBaseNaturalV153={w:im.naturalWidth,h:im.naturalHeight};
+  return desertBaseNaturalV153;
+}
+async function effectivePartyNaturalV153(img){
+  const holder=img?.closest?.('[data-player-detail],.story-party-actor');
+  const desert=holder?.dataset?.playerDetail==='desert'||holder?.dataset?.storyActor==='desert';
+  const awakened=/play\/15\.png/i.test(v153RawAsset(img?.getAttribute('src')||img?.src||''));
+  const awakenedState=(typeof desertAwakenedV120==='function'&&desertAwakenedV120());
+  if(desert&&(awakened||awakenedState)){const b=await desertBaseNaturalSizeV153();if(b)return b;}
+  return {w:img.naturalWidth||1,h:img.naturalHeight||1};
+}
+applyAdventurePartyScale=async function(){
+  const root=$('#adventureParty');if(!root)return;
+  const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(imgs.map(async img=>{if(!(img.complete&&img.naturalWidth))await new Promise(resolve=>{const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});});try{if(img.decode&&img.naturalWidth)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(valid.map(img=>cleanAdventurePartyImageBackground(img)));
+  const eff=await Promise.all(valid.map(effectivePartyNaturalV153));
+  const sumW=eff.reduce((a,n)=>a+n.w,0),maxH=Math.max(...eff.map(n=>n.h));
+  const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
+  valid.forEach((img,i)=>{const n=eff[i];img.style.setProperty('width',`${Math.max(1,Math.round(n.w*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(n.h*scale))}px`,'important');img.classList.add('size-ready');});
+  await nextPaint();setAdventureVisualLoading(false);
+};
+sizeStoryPartyImages=async function(root){
+  const imgs=$$('[data-story-party-img]',root);
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
+  const eff=await Promise.all(valid.map(effectivePartyNaturalV153)),count=valid.length,rows=Math.max(1,Math.ceil(count/6));
+  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(eff.slice(i,i+6).reduce((a,n)=>a+n.w,0));
+  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...eff.map(n=>n.h)),rowH=Math.max(1,(root.clientHeight-4)/rows);
+  const cap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);lastStoryPartyScale=sc;
+  valid.forEach((img,i)=>{const n=eff[i];img.style.setProperty('width',`${Math.max(1,Math.round(n.w*sc))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(n.h*sc))}px`,'important');img.classList.add('size-ready');});
+};
+const _applyStoryGuestNaturalSizeV153Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  _applyStoryGuestNaturalSizeV153Base(holder,img,info,opt);
+  if(info?.player&&info?.key==='desert'&&/play\/15\.png/i.test(v153RawAsset(img?.getAttribute('src')||img?.src||''))&&desertBaseNaturalV153){
+    const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+    let sc=Math.min(lastStoryPartyScale||.14,.17);const n=desertBaseNaturalV153,sz=fitNaturalSize(n.w,n.h,sc,scene.width*(opt.multi?.25:.32),scene.height*(opt.multi?.22:.25));
+    holder.style.setProperty('width',`${sz.w}px`,'important');holder.style.setProperty('height',`${sz.h}px`,'important');
+  }
+};
+
+window.__mobV153RegressionAudit={inheritV152:true,demonCastleExactAreaBackground:true,demonCastleNoCrossAreaFallback:true,awakenedDesertUsesBaseFootprint:true,aceLineShortened:true};
+/* ===== END MOB QUEST v153 ===== */
+
 
 /* v154: facility help uses the same desert-clear gate as the figure shop. */
 const FACILITY_HELP_V154={
@@ -10051,5 +10147,46 @@ closeFacilityHelpV150=function(){const ov=document.getElementById('facilityHelpV
 updateFacilityHelpFabV150=function(){const b=ensureFacilityHelpFabV150();b.hidden=!helpFacilityV154();if(b.hidden&&document.getElementById('facilityHelpV154')?.hidden===false)closeFacilityHelpV150();};
 window.__mobV154RegressionAudit={inheritV153:true,facilityHelp:true,unlockGate:'mapleShopUnlocked'};
 requestAnimationFrame(updateFacilityHelpFabV150);
+
+
+/* v155: September 9 facility dialogue and visible soul transfer. */
+async function facilitySequenceV155(lines,speaker,image){for(const line of lines)await facilityTalk(line,speaker,image);}
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+ const ov=$('#dialogOverlay'),el=$('#dialogText'),img=$('#dialogCharacter');$('#dialogSpeaker').textContent=speaker;setImage(img,versionedPlay(image),'');img.hidden=false;img.alt=speaker;$('#dialogChoices').innerHTML='';ov.classList.add('facility-v155');await openDialogShellV152(ov,el,{facility:true});
+ try{el.style.setProperty('font-size','16px','important');const max=el.clientWidth-10;let lines=String(text).split('\n');const longest=Math.max(...lines.map(x=>dialogueMeasureV150(x,el)));const font=Math.max(13,Math.min(16,16*max/Math.max(1,longest)));el.style.setProperty('font-size',font+'px','important');lines=lines.flatMap(x=>dialogueSplitLineV150(x,max,el));for(let i=0;i<lines.length;i+=3){renderDialogLinesV151(el,lines.slice(i,i+3).join('\n'));await nextPaint();await waitDialogTapV151(ov);await fixedDelay(60);}}
+ finally{closeDialogShellV152(ov,el);ov.classList.remove('facility-v155');el.style.removeProperty('font-size');}
+};
+enterTavern=async function(){tavernView='menu';renderTavern();const first=!facilityFlag('tavern:v155');await facilitySequenceV155(first?['初めまして！\nモブイルカエルです♪','ここでは、\nパーティー編成と\nドリンク購入が出来ます！','分からないことがあれば\nHELPボタンを押してください♪']:['いらっしゃいませ♪'],'モブイルカエル','play/001.png');markFacilityFlag('tavern:v155');markFacilityFlag('tavern');if(mapleShopUnlocked()&&!facilityFlag('maple:v155'))await mapleGreetingV155();};
+leaveTavern=async function(){await facilityTalk('また来てください♪','モブイルカエル','play/001.png');await goHome();};
+async function mapleGreetingV155(){const first=!facilityFlag('maple:v155');await facilitySequenceV155(first?['やっほ～\nモブメープルです','フィギュアは好き？\n良かったら見て行ってね','分からないことがあれば\nHELPを見てね！']:['やっほ～\nガチャにする？\n対戦する？'],'モブメープル','play/009.png');markFacilityFlag('maple:v155');}
+openTavernFigureShopV98=async function(){if(!mapleShopUnlocked())return;$('#tavernFigurePopup').hidden=true;await mapleGreetingV155();renderFigureGachaShopV98();$('#tavernFigurePopup').hidden=false;};showTavernFigureShop=openTavernFigureShopV98;
+enterTraining=async function(){state.training.mode='menu';renderTraining();await facilitySequenceV155(!facilityFlag('training:v155')?['やあ！\n僕はモブコーチ！','トレーニングを\n担当している！','たくさん戦って\nどんどんレベルアップしよう！','レッツトレーニング！']:['やあ！\nレッツトレーニングだ！'],'モブコーチ','play/003.png');markFacilityFlag('training:v155');};
+showTrainingModeGuide=async function(){};
+leaveTraining=async function(){await facilityTalk('いつでも待ってるよ！\nレッツトレーニング！','モブコーチ','play/003.png');await goHome();};
+openBlacksmithFacility=async function(){renderBlacksmithRoom();try{await ensureCriticalBackgroundV128($('#castleBg'),['back/gonzo.png','back2/003.png','back2/01.png']);}catch(e){console.warn(e);}showScreen('castle');await facilitySequenceV155(!facilityFlag('smith:v155')?['よく来たな！\nここでは武器の購入や\nメダルの生成が出来るぞ！','メダルは同じ武器を\n3つ消費することで作れる！','なんと、その武器の\n特性を引き継げるぞ！','分からないことがあれば\nHELPを見てくれ！']:['よく来たな！'],'モブゴンゾー','play/002.png');markFacilityFlag('smith:v155');};
+leaveBlacksmith=async function(){closeBlacksmithPopup();await facilityTalk('また来てくれ！','モブゴンゾー','play/002.png');renderCastle();showScreen('castle');};
+const helpFacilityBaseV155=helpFacilityV154;helpFacilityV154=function(){return screens.training?.classList.contains('active')?'training':helpFacilityBaseV155();};
+FACILITY_HELP_V154.training={label:'TRAINING',title:'トレーニングについて',icon:'★',body:FACILITY_HELP_V150.training[0].body};
+const helpTopicsBaseV155=helpTopicsV154;helpTopicsV154=function(f){return f==='training'?['training']:helpTopicsBaseV155(f);};
+const renderHelpBaseV155=renderHelpV154;renderHelpV154=function(topic=''){renderHelpBaseV155(topic);if(helpFacilityV154()==='training'&&!helpTopicV154)$('#helpTitleV154').textContent='トレーニング HELP';};
+let smithSellKindV155='';const smithRenderBaseV155=renderBlacksmithPopup;
+renderBlacksmithPopup=function(mode='menu'){smithRenderBaseV155(mode);if(mode!=='sell'){smithSellKindV155='';return;}const body=$('#blacksmithPopupBody');const headings=[...body.querySelectorAll('h3')],lists=[...body.querySelectorAll('.blacksmith-weapon-list')];const tabs=document.createElement('div');tabs.className='smith-sell-tabs-v155';for(const [kind,label] of [['weapon','武器を売る'],['armor','防具を売る']]){const btn=document.createElement('button');btn.type='button';btn.textContent=label;btn.dataset.sellKind=kind;btn.setAttribute('aria-pressed',String(smithSellKindV155===kind));btn.onclick=()=>{smithSellKindV155=kind;renderBlacksmithPopup('sell');};tabs.appendChild(btn);}body.querySelector('[data-blacksmith-popup-back]').after(tabs);headings.forEach((h,i)=>{const visible=smithSellKindV155===(i===0?'weapon':'armor');h.hidden=!visible;if(lists[i])lists[i].hidden=!visible;});};
+/* One self-contained confirmation banner; cancellation never changes the run. */
+async function abandonBannerV155(text,choices){const ov=$('#dialogOverlay');ov.classList.add('abandon-v155');try{return await narrationDialog(text,choices);}finally{ov.classList.remove('abandon-v155');}}
+/* The original event data already includes these opcodes; connect their handlers. */
+const runStoryStepsBaseV155=runStorySteps;runStorySteps=async function(steps=[]){for(const st of steps){if(st[0]==='witchMergeLilith')await demonWitchesMergeIntoLilithV106();else if(st[0]==='lilithSummon')await demonLilithSummonV106();else await runStoryStepsBaseV155([st]);}};
+demonWitchesMergeIntoLilithV106=async function(){
+ const group=$('#storyGuestGroup'),scene=$('#storyScene');if(!group||group.hidden)return;const target=group.querySelector('[data-story-actor="boss-lilith-castle"]');if(!target)return;const targetRect=target.getBoundingClientRect(),sceneRect=scene.getBoundingClientRect(),orbs=[];const witches=['c-killwitch','c-succubus'].map(k=>group.querySelector(`[data-story-actor="${k}"]`)).filter(Boolean);
+ try{for(const [i,w] of witches.entries()){const r=w.getBoundingClientRect(),orb=document.createElement('div');orb.className='witch-soul-v155';orb.style.left=(r.left+r.width/2-sceneRect.left-14)+'px';orb.style.top=(r.top+r.height/2-sceneRect.top-14)+'px';orb.style.setProperty('--soul-color',i?'#b69aff':'#ff9ade');scene.appendChild(orb);orbs.push({orb,dx:targetRect.left+targetRect.width/2-r.left-r.width/2,dy:targetRect.top+targetRect.height*.45-r.top-r.height/2});w.style.transition='opacity 600ms ease, filter 600ms ease';w.style.filter='brightness(4)';w.style.opacity='0';}await fixedDelay(650);await Promise.all(orbs.map(({orb,dx,dy})=>orb.animate([{opacity:1,transform:'translate(0,0) scale(1)'},{offset:.45,opacity:1,transform:`translate(${dx*.4}px,${dy*.4-40}px) scale(1.15)`},{opacity:0,transform:`translate(${dx}px,${dy}px) scale(.1)`}],{duration:1500,easing:'ease-in-out',fill:'forwards'}).finished));await target.animate([{filter:'brightness(1)'},{filter:'brightness(2.5) drop-shadow(0 0 20px #d9a5ff)'},{filter:'brightness(1)'}],{duration:650}).finished;}
+ finally{for(const {orb} of orbs)orb.remove();witches.forEach(w=>w.remove());group.dataset.count='1';group.classList.add('demon-witch-merge-done-v106');target.style.setProperty('width','38%','important');target.style.setProperty('height','100%','important');}
+};
+window.__mobV155RegressionAudit={inheritV154:true,facilityDialogue:true,soulTransfer:true,summonDispatch:true};
+if($('#trainingHomeQuick'))$('#trainingHomeQuick').onclick=()=>leaveTraining();
+
+function fitStoryTextV155(el){
+ const lines=[...el.querySelectorAll('.dialogue-line-v148')];const original=parseFloat(getComputedStyle(el).fontSize)||16;const max=el.clientWidth-6;let longest=Math.max(1,...lines.map(x=>storyMeasureLineV148(x.textContent)));let font=Math.max(12,Math.min(original,original*max/longest));el.style.setProperty('font-size',font+'px','important');
+ // Re-measure after font adjustment; CSS emergency wrapping remains enabled.
+ for(let i=0;i<8&&Math.max(...lines.map(x=>storyMeasureLineV148(x.textContent)))>max&&font>12;i++){font=Math.max(12,font-.5);el.style.setProperty('font-size',font+'px','important');}
+}
 
 })();
