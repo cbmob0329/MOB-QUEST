@@ -1,0 +1,13 @@
+MOB QUEST v144 REGRESSION REPORT
+
+IMPLEMENTED
+- Sea subquest 3/4 dialogue manually re-authored so short phrases are not split by Safari.
+- Browser wrapping disabled inside story dialogue; only authored/semantic newlines may appear.
+- Sea subquest 4: Mob Wave Lv50 center, Abyss Soldier Lv48 left/right.
+- Serious Mob Wave HP x1.85 and random 2-3 actions every round.
+- 1-enemy HP HUD enlarged strongly; 2-enemy and 3-enemy HUD enlarged progressively.
+
+PRESERVED
+- Built directly from v143.
+- v142 enemy ultimates/passives and armor selling preserved.
+- v141 Tribe/Jessie/return-safe changes preserved.

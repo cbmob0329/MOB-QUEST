@@ -4337,6 +4337,51 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 /* Never allow a compact subquest bubble to squeeze Japanese into a one-character orphan line. */
 .story-scene.subquest-story-v111 .story-bubble{min-width:min(64vw,250px)!important;max-width:min(92vw,360px)!important;}
 /* ===== END MOB QUEST v143 ===== */
+
+/* ===== MOB QUEST v144: DIALOGUE + ENEMY HP HUD ===== */
+/* All line breaks are authored/semantic. The browser must never invent a one-character orphan line. */
+.story-bubble>p{
+  white-space:pre!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:wrap!important;
+  text-wrap-style:auto!important;
+}
+
+/* Fewer enemies = substantially larger, readable HP HUD. */
+.enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  width:min(72vw,280px)!important;max-width:280px!important;
+  padding:5px 7px 6px!important;border-radius:10px!important;
+}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row{height:14px!important;gap:5px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>b{font-size:8px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>small{font-size:6px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row{height:13px!important;grid-template-columns:auto minmax(90px,1fr) auto!important;gap:4px!important;margin-top:2px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:5.4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>.gauge{height:7px!important;min-width:90px!important;}
+
+.enemy-area.enemy-count-2 .enemy-unit .enemy-nameplate{left:2%!important;right:2%!important;width:auto!important;padding:4px 5px 5px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row{height:12px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row>b{font-size:7px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row>small{font-size:5.3px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row{height:11px!important;grid-template-columns:auto minmax(44px,1fr) auto!important;gap:3px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>b{font-size:4.7px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>.gauge{height:6px!important;min-width:44px!important;}
+
+.enemy-area.enemy-count-3 .enemy-unit .enemy-nameplate{left:2%!important;right:2%!important;width:auto!important;padding:3px 4px 4px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row{height:9px!important;grid-template-columns:auto minmax(25px,1fr) auto!important;gap:2px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>b{font-size:4.1px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>.gauge{height:5px!important;min-width:25px!important;}
+@media(max-width:380px){
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{width:min(76vw,260px)!important;}
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:5px!important;}
+}
+/* ===== END MOB QUEST v144 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4356,7 +4401,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v143</div>
+      <div class="title-version">v144</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4767,7 +4812,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v143
+// MOB QUEST v144
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6230,7 +6275,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=143;
+const GAME_ASSET_VERSION=144;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -15406,6 +15451,87 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePages
 
 window.__mobV143RegressionAudit={inheritV142:true,orphanLineFix:true,storyBubbleMeasured:true,semanticDialogueSplit:true};
 /* ===== END MOB QUEST v143 ===== */
+
+/* ===== MOB QUEST v144: SEA SUBQUEST / ENEMY HUD / DIALOGUE FINAL WRAP ===== */
+window.__mobV144PatchRuntime=true;
+
+/*
+  Browser-side Japanese balancing was still producing unnatural mid-phrase wraps.
+  v144 keeps each rendered dialogue line unwrapped. All wrapping now comes only
+  from authored line breaks or the semantic page splitter, never Safari/CSS.
+*/
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||360);
+  const maxChars=sceneW<340?17:sceneW<380?18:20;
+  for(const page of dialoguePagesV143(text,{maxLines:2,maxChars}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* ---------- Sea subquest 3/4 dialogue + Wave encounter ---------- */
+{
+  const sea=(SUBQUEST_AREAS||[]).find(a=>a.worldId==='sea');
+  const q3=sea?.quests?.find(q=>q.id==='sea-3');
+  if(q3){
+    q3.intro=[
+      ['nekoku','海底には\nカッコイイ騎士団がいるぞ'],
+      ['pink','騎士団でありますか～！'],
+      ['nekoku','オラもその一人だ'],
+      ['desert','だから推薦されたのか'],
+      ['show',['s-soldier','sq-high-abyss']],
+      ['nekoku','強い仲間がいっぱいいるぞ'],
+      ['pink','いずれ共闘する日が'],
+      ['pink','来るかもしれないであります！']
+    ];
+    q3.post=[['desert','魔王軍 VS 騎士団か。'],['desert','見てみたいものだな']];
+  }
+  const q4=sea?.quests?.find(q=>q.id==='sea-4');
+  if(q4){
+    q4.intro=[
+      ['nekoku','モブウェイブは\n長年国王様の側近なんだぞ'],
+      ['pink','風格がありましたからね～'],
+      ['pink','納得であります！'],
+      ['show',['s-soldier','sq-wave-serious','s-soldier']],
+      ['desert','腕試しにはもってこいだな']
+    ];
+    q4.waves=[[ 
+      {id:'s-soldier',level:48,escort:true},
+      {id:'sq-wave-serious',level:50,mods:{hp:1.85},forceActionCount:true,v144ActionMin:2,v144ActionMax:3},
+      {id:'s-soldier',level:48,escort:true}
+    ]];
+    q4.post=[
+      ['desert','学びの多い戦いだったな'],
+      ['nekoku','オラ、モブウェイブ好きだ'],
+      ['nekoku','いいやつで、強いぞ'],
+      ['pink','仲間になってほしいでありますね～']
+    ];
+  }
+}
+
+/* Mob Wave changes action count each round: 2 or 3. Side escorts remain one action. */
+const _startRoundV144Base=startRound;
+startRound=async function(){
+  const b=state.battle;
+  for(const e of (b?.enemies||[])){
+    const min=Number(e.v144ActionMin),max=Number(e.v144ActionMax);
+    if(min>0&&max>=min)e.actionCount=rint(min,max);
+  }
+  return _startRoundV144Base();
+};
+
+/* Force the serious Wave's high-HP identity even if a later generic template pass runs. */
+const _buildEnemyWaveV144Base=buildEnemyWave;
+buildEnemyWave=function(records,partySize,bg,fallbackBg){
+  const out=_buildEnemyWaveV144Base(records,partySize,bg,fallbackBg);
+  for(const e of out){
+    if(e.id==='sq-wave-serious'&&e.v144ActionMin){
+      e.v144ActionMin=2;e.v144ActionMax=3;e.actionCount=rint(2,3);e.forceActionCount=true;
+    }
+  }
+  return out;
+};
+
+window.__mobV144RegressionAudit={inheritV143:true,sea4WaveHp:1.85,sea4WaveActions:'2-3 each round',sea4Escorts:'Abyss Soldier Lv48 x2',enemyHudByCount:true,dialogueBrowserWrap:false};
+/* ===== END MOB QUEST v144 ===== */
 </script>
 </body>
 </html>

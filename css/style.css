@@ -4326,3 +4326,48 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .story-scene.subquest-story-v111 .story-bubble{min-width:min(64vw,250px)!important;max-width:min(92vw,360px)!important;}
 /* ===== END MOB QUEST v143 ===== */
 
+/* ===== MOB QUEST v144: DIALOGUE + ENEMY HP HUD ===== */
+/* All line breaks are authored/semantic. The browser must never invent a one-character orphan line. */
+.story-bubble>p{
+  white-space:pre!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:wrap!important;
+  text-wrap-style:auto!important;
+}
+
+/* Fewer enemies = substantially larger, readable HP HUD. */
+.enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  width:min(72vw,280px)!important;max-width:280px!important;
+  padding:5px 7px 6px!important;border-radius:10px!important;
+}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row{height:14px!important;gap:5px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>b{font-size:8px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-name-row>small{font-size:6px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row{height:13px!important;grid-template-columns:auto minmax(90px,1fr) auto!important;gap:4px!important;margin-top:2px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:5.4px!important;}
+.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>.gauge{height:7px!important;min-width:90px!important;}
+
+.enemy-area.enemy-count-2 .enemy-unit .enemy-nameplate{left:2%!important;right:2%!important;width:auto!important;padding:4px 5px 5px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row{height:12px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row>b{font-size:7px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-name-row>small{font-size:5.3px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row{height:11px!important;grid-template-columns:auto minmax(44px,1fr) auto!important;gap:3px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>b{font-size:4.7px!important;}
+.enemy-area.enemy-count-2 .enemy-unit .enemy-hp-row>.gauge{height:6px!important;min-width:44px!important;}
+
+.enemy-area.enemy-count-3 .enemy-unit .enemy-nameplate{left:2%!important;right:2%!important;width:auto!important;padding:3px 4px 4px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row{height:9px!important;grid-template-columns:auto minmax(25px,1fr) auto!important;gap:2px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>span,
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>b{font-size:4.1px!important;}
+.enemy-area.enemy-count-3 .enemy-unit .enemy-hp-row>.gauge{height:5px!important;min-width:25px!important;}
+@media(max-width:380px){
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-nameplate{width:min(76vw,260px)!important;}
+  .enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:5px!important;}
+}
+/* ===== END MOB QUEST v144 ===== */
+

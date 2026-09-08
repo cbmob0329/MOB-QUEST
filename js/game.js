@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=143;
+const GAME_ASSET_VERSION=144;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -9184,4 +9184,85 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePages
 
 window.__mobV143RegressionAudit={inheritV142:true,orphanLineFix:true,storyBubbleMeasured:true,semanticDialogueSplit:true};
 /* ===== END MOB QUEST v143 ===== */
+
+/* ===== MOB QUEST v144: SEA SUBQUEST / ENEMY HUD / DIALOGUE FINAL WRAP ===== */
+window.__mobV144PatchRuntime=true;
+
+/*
+  Browser-side Japanese balancing was still producing unnatural mid-phrase wraps.
+  v144 keeps each rendered dialogue line unwrapped. All wrapping now comes only
+  from authored line breaks or the semantic page splitter, never Safari/CSS.
+*/
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||360);
+  const maxChars=sceneW<340?17:sceneW<380?18:20;
+  for(const page of dialoguePagesV143(text,{maxLines:2,maxChars}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* ---------- Sea subquest 3/4 dialogue + Wave encounter ---------- */
+{
+  const sea=(SUBQUEST_AREAS||[]).find(a=>a.worldId==='sea');
+  const q3=sea?.quests?.find(q=>q.id==='sea-3');
+  if(q3){
+    q3.intro=[
+      ['nekoku','海底には\nカッコイイ騎士団がいるぞ'],
+      ['pink','騎士団でありますか～！'],
+      ['nekoku','オラもその一人だ'],
+      ['desert','だから推薦されたのか'],
+      ['show',['s-soldier','sq-high-abyss']],
+      ['nekoku','強い仲間がいっぱいいるぞ'],
+      ['pink','いずれ共闘する日が'],
+      ['pink','来るかもしれないであります！']
+    ];
+    q3.post=[['desert','魔王軍 VS 騎士団か。'],['desert','見てみたいものだな']];
+  }
+  const q4=sea?.quests?.find(q=>q.id==='sea-4');
+  if(q4){
+    q4.intro=[
+      ['nekoku','モブウェイブは\n長年国王様の側近なんだぞ'],
+      ['pink','風格がありましたからね～'],
+      ['pink','納得であります！'],
+      ['show',['s-soldier','sq-wave-serious','s-soldier']],
+      ['desert','腕試しにはもってこいだな']
+    ];
+    q4.waves=[[ 
+      {id:'s-soldier',level:48,escort:true},
+      {id:'sq-wave-serious',level:50,mods:{hp:1.85},forceActionCount:true,v144ActionMin:2,v144ActionMax:3},
+      {id:'s-soldier',level:48,escort:true}
+    ]];
+    q4.post=[
+      ['desert','学びの多い戦いだったな'],
+      ['nekoku','オラ、モブウェイブ好きだ'],
+      ['nekoku','いいやつで、強いぞ'],
+      ['pink','仲間になってほしいでありますね～']
+    ];
+  }
+}
+
+/* Mob Wave changes action count each round: 2 or 3. Side escorts remain one action. */
+const _startRoundV144Base=startRound;
+startRound=async function(){
+  const b=state.battle;
+  for(const e of (b?.enemies||[])){
+    const min=Number(e.v144ActionMin),max=Number(e.v144ActionMax);
+    if(min>0&&max>=min)e.actionCount=rint(min,max);
+  }
+  return _startRoundV144Base();
+};
+
+/* Force the serious Wave's high-HP identity even if a later generic template pass runs. */
+const _buildEnemyWaveV144Base=buildEnemyWave;
+buildEnemyWave=function(records,partySize,bg,fallbackBg){
+  const out=_buildEnemyWaveV144Base(records,partySize,bg,fallbackBg);
+  for(const e of out){
+    if(e.id==='sq-wave-serious'&&e.v144ActionMin){
+      e.v144ActionMin=2;e.v144ActionMax=3;e.actionCount=rint(2,3);e.forceActionCount=true;
+    }
+  }
+  return out;
+};
+
+window.__mobV144RegressionAudit={inheritV143:true,sea4WaveHp:1.85,sea4WaveActions:'2-3 each round',sea4Escorts:'Abyss Soldier Lv48 x2',enemyHudByCount:true,dialogueBrowserWrap:false};
+/* ===== END MOB QUEST v144 ===== */
 
