@@ -4371,3 +4371,21 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v144 ===== */
 
+/* ===== MOB QUEST v145: DIALOGUE WRAP SAFETY ===== */
+/* v144's white-space:pre made long lines clip. v145 uses explicit measured line breaks,
+   while pre-line remains a harmless fallback instead of forbidding wrapping entirely. */
+.story-bubble{
+  max-width:min(92vw,360px)!important;
+}
+.story-bubble>p{
+  white-space:pre-line!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:wrap!important;
+  text-wrap-style:auto!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+/* ===== END MOB QUEST v145 ===== */
+

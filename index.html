@@ -4382,6 +4382,24 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   .enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>span,.enemy-area.enemy-count-1 .enemy-unit .enemy-hp-row>b{font-size:5px!important;}
 }
 /* ===== END MOB QUEST v144 ===== */
+
+/* ===== MOB QUEST v145: DIALOGUE WRAP SAFETY ===== */
+/* v144's white-space:pre made long lines clip. v145 uses explicit measured line breaks,
+   while pre-line remains a harmless fallback instead of forbidding wrapping entirely. */
+.story-bubble{
+  max-width:min(92vw,360px)!important;
+}
+.story-bubble>p{
+  white-space:pre-line!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:wrap!important;
+  text-wrap-style:auto!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+/* ===== END MOB QUEST v145 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4401,7 +4419,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v144</div>
+      <div class="title-version">v145</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4812,7 +4830,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v144
+// MOB QUEST v145
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6275,7 +6293,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=144;
+const GAME_ASSET_VERSION=145;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -15532,6 +15550,125 @@ buildEnemyWave=function(records,partySize,bg,fallbackBg){
 
 window.__mobV144RegressionAudit={inheritV143:true,sea4WaveHp:1.85,sea4WaveActions:'2-3 each round',sea4Escorts:'Abyss Soldier Lv48 x2',enemyHudByCount:true,dialogueBrowserWrap:false};
 /* ===== END MOB QUEST v144 ===== */
+
+/* ===== MOB QUEST v145: PIXEL-MEASURED DIALOGUE WRAP / NO CLIPPING ===== */
+window.__mobV145DialogueRuntime=true;
+
+/*
+  v144 prevented Safari from wrapping at all. That removed one-character orphan lines,
+  but long Japanese sentences could then run outside the bubble. v145 does the opposite:
+  every visible line is explicitly fitted by measured pixel width first, then the browser
+  is allowed to render those authored lines normally. No character-count-only layout.
+*/
+function dialogueWidthV145(text,size=15,weight=800){return measureStoryTextV143(String(text||''),size,weight);}
+function dialogueProtectedBreakV145(left,right){
+  const protectedTail=['でありま','であります','ニョロ','でやんす','ござる','でござる','ですね','だぞ','だな','だろう','だった','でした','ます','です'];
+  const protectedHead=['す！','す。','すね','ね～','ぞ','な','よ','か','た','る'];
+  if(protectedTail.some(x=>left.endsWith(x)))return true;
+  if(protectedHead.some(x=>right.startsWith(x))&&[...right].length<=4)return true;
+  return false;
+}
+function bestDialogueBreakV145(text,maxPx){
+  const a=[...String(text||'')],n=a.length;if(n<=4)return Math.max(1,n-1);
+  const particles=['から','ので','けど','なら','には','では','とは','のは','ならば','そして','しかし','だから','でも','なのに','なのだ','なんだ','だった','でした','ますが','ですが','は','が','を','に','へ','で','と','も'];
+  let best=-1,bestScore=-1e9;
+  for(let i=4;i<=n-4;i++){
+    const left=a.slice(0,i).join(''),right=a.slice(i).join(''),w=dialogueWidthV145(left);
+    if(w>maxPx*1.015)continue;
+    if(dialogueProtectedBreakV145(left,right))continue;
+    let score=0;
+    const fill=w/maxPx; score-=Math.abs(.82-fill)*46;
+    const prev=a[i-1]||'',next=a[i]||'';
+    if(/[。！？!?]/.test(prev))score+=42;
+    else if(/[、，,]/.test(prev))score+=30;
+    else if(/[・・…]/.test(prev))score+=18;
+    for(const p of particles){if(left.endsWith(p))score+=p.length>1?17:8;if(right.startsWith(p)&&p.length>1)score+=7;}
+    if(/[っゃゅょァィゥェォャュョッー、。！？!?]/.test(next))score-=35;
+    if(/[（「『【(]/.test(prev))score-=30;
+    if([...right].length<=4)score-=70;
+    if([...left].length<=5)score-=35;
+    if(score>bestScore){bestScore=score;best=i;}
+  }
+  if(best>=0)return best;
+  let fit=4;
+  for(let i=4;i<n-3;i++){if(dialogueWidthV145(a.slice(0,i).join(''))<=maxPx)fit=i;else break;}
+  return Math.min(Math.max(4,fit),n-4);
+}
+function fitDialogueLineV145(text,maxPx){
+  const src=String(text??'').trim();if(!src)return[''];
+  if(dialogueWidthV145(src)<=maxPx)return[src];
+  const out=[];let rest=src,guard=0;
+  while(rest&&dialogueWidthV145(rest)>maxPx&&guard++<12){
+    const cut=bestDialogueBreakV145(rest,maxPx),a=[...rest];let left=a.slice(0,cut).join('').trim(),right=a.slice(cut).join('').trim();
+    if(!left||!right)break;
+    /* Never leave only 1-3 Japanese characters on the following line. */
+    if([...right].length<=3&&[...left].length>=8){const move=4-[...right].length,la=[...left];right=la.slice(-move).join('')+right;left=la.slice(0,-move).join('');}
+    out.push(left);rest=right;
+  }
+  if(rest)out.push(rest);return out.filter(Boolean);
+}
+function dialoguePagesV145(text,{maxLines=2,linePx=238}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const authored=raw.split('\n').map(x=>x.trim()).filter(Boolean),lines=[];
+  for(const line of authored)lines.push(...fitDialogueLineV145(line,linePx));
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));
+  return pages.length?pages:[''];
+}
+
+storySayLine=async function(key,line,displayName=null,anchorKey=null){
+  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),speaker=displayName||info.name||'???',text=String(line??'');
+  $('#storySpeaker').textContent=speaker;$('#storyText').textContent=text;
+  const sceneEl=$('#storyScene'),sceneWidth=Math.max(260,sceneEl?.clientWidth||360),outerMax=Math.min(360,Math.max(250,sceneWidth-16),sceneWidth*.92);
+  const logical=text.split('\n'),longest=Math.max(...logical.map(s=>dialogueWidthV145(s,15,800)),dialogueWidthV145(speaker,10,900));
+  const desired=Math.min(outerMax,Math.max(236,longest+34));
+  /* Inline !important defeats historical 72vw max-width rules that caused v143/v144 mismatch. */
+  bubble.style.setProperty('width',`${Math.round(desired)}px`,'important');
+  bubble.style.setProperty('max-width',`${Math.round(outerMax)}px`,'important');
+  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
+  await nextPaint();const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
+  if(anchor){
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;left=clamp(cx-br.width/2,8,scene.width-br.width-8);top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+    if(sceneEl?.classList.contains('subquest-story-v111')&&anchor.closest?.('#storyPartyLine'))top=clamp(Math.max(top,scene.height*.555),66,scene.height-br.height-34);
+  }else bubble.classList.add('no-arrow');
+  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
+  await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
+};
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||360),linePx=sceneW<340?194:sceneW<380?218:238;
+  for(const page of dialoguePagesV145(text,{maxLines:2,linePx}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* Global users of dialogue pagination use the same measured safe splitter. */
+dialoguePagesV135=function(text,opt={}){return dialoguePagesV145(text,{maxLines:Number(opt.maxLines)||2,linePx:238});};
+battleDialogueTextV133=function(text){return dialoguePagesV145(text,{maxLines:2,linePx:244})[0];};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV145(text,{maxLines:Math.max(1,Number(maxLines)||2),linePx:238});};
+
+/* Sea quest 5: authored rhythm matches the actual scene and avoids dense single-line exposition. */
+{
+  const sea=(SUBQUEST_AREAS||[]).find(a=>a.worldId==='sea'),q5=sea?.quests?.find(q=>q.id==='sea-5');
+  if(q5){
+    q5.intro=[
+      ['nekoku','モブジョーンズは\n海底の英雄なんだぞ'],
+      ['pink','英雄でありますか！'],
+      ['nekoku','有名な戦いには必ず'],
+      ['nekoku','モブジョーンズの功績があるぞ'],
+      ['desert','まだまだ力を\n秘めていそうだったな'],
+      ['show',['sq-power-jones']],
+      ['nekoku','ある戦いで敗れて以来'],
+      ['nekoku','さらに強さを求めているぞ'],
+      ['desert','良い志だ']
+    ];
+    q5.post=[
+      ['pink','これほどの力でも\n勝てなかったでありますか？'],
+      ['nekoku','一対一ではなかったと\n聞いてるぞ'],
+      ['pink','きっと卑怯な手を\n使われたであります！']
+    ];
+  }
+}
+
+window.__mobV145RegressionAudit={inheritV144:true,pixelMeasuredDialogue:true,legacy72vwOverride:true,browserFallbackWrap:true,sea5DialogueAuthored:true};
+/* ===== END MOB QUEST v145 ===== */
 </script>
 </body>
 </html>
