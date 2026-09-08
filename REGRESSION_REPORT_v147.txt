@@ -1,0 +1,17 @@
+MOB QUEST v147 REGRESSION REPORT
+
+ROOT CAUSE
+- v146 improved storySay() only.
+- HOME/facility confirmations such as 「トレーニングに向かいますか？」 still used the old dialog() / facilityTalk() layout.
+- The old facility card width was too narrow, so Safari wrapped the final 「か？」 onto a second line.
+
+FIX
+- dialog() and facilityTalk() now use measured-pixel adaptive pages.
+- If a normal split would leave 1-3 characters, that specific facility bubble widens first, up to the safe viewport width.
+- Mob Pink uses the exact same rule.
+- Facility and choice bubbles override legacy overflow-wrap:anywhere.
+- Long dialogue still uses semantic 1-2 line splitting rather than overflowing.
+
+PRESERVED
+- Built directly on v146.
+- v146 story dialogue, Jones sizing and balanced enemy HP HUD remain intact.

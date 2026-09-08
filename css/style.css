@@ -4409,3 +4409,37 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 }
 /* ===== END MOB QUEST v146 ===== */
 
+/* ===== MOB QUEST v147: FACILITY / MOB PINK ADAPTIVE BUBBLE ===== */
+/* Final override: older v96/v97 guards must not force arbitrary Japanese breaks. */
+.dialog-overlay.facility-line-talk .dialog-card{
+  width:min(var(--facility-card-width,390px),calc(100vw - 12px))!important;
+  max-width:500px!important;
+  grid-template-columns:82px minmax(0,1fr)!important;
+  gap:6px!important;
+  padding:9px!important;
+}
+.dialog-overlay.facility-line-talk .dialog-body>p,
+.dialog-overlay.facility-choice-talk .dialog-body>p{
+  white-space:pre-line!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:wrap!important;
+  font-size:var(--facility-line-font,16px)!important;
+  line-height:1.40!important;
+}
+.dialog-overlay.facility-choice-talk .dialog-choices{display:flex!important;gap:7px!important;flex-wrap:nowrap!important;justify-content:flex-end!important;}
+@media(max-width:360px){
+  .dialog-overlay.facility-line-talk .dialog-card{grid-template-columns:72px minmax(0,1fr)!important;gap:5px!important;padding:7px!important;}
+  .dialog-overlay.facility-line-talk .dialog-card>img{width:72px!important;height:116px!important;}
+}
+/* ===== END MOB QUEST v147 ===== */
+
+/* ===== MOB QUEST v148: EXPLICIT STORY LINES ===== */
+/* Every line selected by the v148 story/subquest layout engine is atomic. */
+.story-bubble>p.dialogue-explicit-v148{white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;text-wrap:nowrap!important;max-width:100%!important;overflow:visible!important;}
+.story-bubble>p.dialogue-explicit-v148>.dialogue-line-v148{display:block!important;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;line-break:strict!important;max-width:none!important;}
+/* Subquests may use the same safe phone width as normal story bubbles; inline v148 width remains authoritative. */
+.story-scene.subquest-story-v111 .story-bubble{max-width:min(96vw,382px)!important;}
+/* ===== END MOB QUEST v148 ===== */
+

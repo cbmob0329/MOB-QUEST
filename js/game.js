@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=146;
+const GAME_ASSET_VERSION=148;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -9464,4 +9464,212 @@ applyEnemyVisualSizes=function(root=$('#enemyArea')){
 
 window.__mobV146RegressionAudit={inheritV145:true,bubbleStretchBeforeOrphan:true,sea5SecondLine:'モブジョーンズの功績があるぞ',enemyHud:'balanced',jonesScale:1.14};
 /* ===== END MOB QUEST v146 ===== */
+
+/* ===== MOB QUEST v147: FACILITY / MOB PINK ADAPTIVE DIALOGUE ===== */
+window.__mobV147PatchRuntime=true;
+
+/*
+  v146 fixed storySay(), but HOME/facility confirmation used the older dialog()
+  path and therefore still wrapped "...ます / か？".  Use the same measured
+  adaptive rule for facility speech and confirmation bubbles too.
+*/
+function facilityViewportCardMaxV147(){
+  const vw=Math.max(300,document.documentElement?.clientWidth||window.innerWidth||390);
+  return Math.max(330,Math.min(500,vw-12));
+}
+function facilityBodyMaxV147(){return Math.max(196,facilityViewportCardMaxV147()-128);}
+function facilityAdaptivePagesV147(text,{maxLines=2}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const hardPx=facilityBodyMaxV147(),basePx=Math.min(238,Math.max(190,hardPx-18));
+  return dialoguePagesV146(raw,{maxLines,basePx,hardPx});
+}
+function facilityLayoutForPageV147(page,{choices=false}={}){
+  const lines=String(page??'').split('\n').filter(Boolean),hardCard=facilityViewportCardMaxV147();
+  const textPx=Math.max(0,...lines.map(x=>dialogueWidthV145(x,16,900)));
+  /* 128px ~= actor column + grid/card/body padding. Add a small Safari margin. */
+  const desired=Math.max(choices?356:338,Math.ceil(textPx+136));
+  const card=Math.min(hardCard,desired);
+  const body=Math.max(196,card-128);
+  let font=16;
+  if(textPx>body-8)font=15;
+  if(textPx>body+14)font=14;
+  return{card,font};
+}
+function facilityPrepareTextV147(text,{choices=false,maxLines=2}={}){
+  const pages=facilityAdaptivePagesV147(text,{maxLines});
+  /* choice dialogs are normally short; if a long one needs more lines, keep all
+     semantic lines in the same choice bubble rather than dropping text. */
+  const page=choices?pages.join('\n'):pages[0];
+  return{pages,page,...facilityLayoutForPageV147(page,{choices})};
+}
+
+/* HOME/castle/tavern/training confirmations, including Mob Pink. */
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker);
+  const prep=facility?facilityPrepareTextV147(text,{choices:true,maxLines:2}):null;
+  const formatted=facility?prep.page:String(text||'');
+  $('#dialogSpeaker').textContent=speaker;$('#dialogText').textContent=formatted;
+  if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
+  $('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
+  overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility);
+  if(facility){overlay.style.setProperty('--facility-card-width',`${prep.card}px`);$('#dialogText').style.setProperty('--facility-line-font',`${prep.font}px`);}
+  overlay.hidden=false;
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk');overlay.style.removeProperty('--facility-card-width');$('#dialogText').style.removeProperty('--facility-line-font');resolve(btn.dataset.dialogValue);});});
+};
+
+/* Ordinary facility Mob Pink lines use the same adaptive stretch-before-wrap rule. */
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const pages=facilityAdaptivePagesV147(text,{maxLines:2});if(!pages.length)return;
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';
+  overlay.classList.add('facility-line-talk','text-safe-v96','adaptive-facility-v147');overlay.hidden=false;
+  for(const page of pages){
+    const prep=facilityLayoutForPageV147(page,{choices:false});textEl.textContent=page;textEl.dataset.lineLength=String([...page.replace(/\n/g,'')].length);
+    overlay.style.setProperty('--facility-card-width',`${prep.card}px`);textEl.style.setProperty('--facility-line-font',`${prep.font}px`);
+    await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,{capture:true,passive:false});});await fixedDelay(80);
+  }
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk','text-safe-v96','adaptive-facility-v147');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.style.removeProperty('--facility-line-font');delete textEl.dataset.lineLength;
+};
+
+window.__mobV147RegressionAudit={inheritV146:true,facilityAdaptiveBubble:true,mobPinkAdaptive:true,confirmExample:'トレーニングに向かいますか？'};
+/* ===== END MOB QUEST v147 ===== */
+
+/* ===== MOB QUEST v148: SUBQUEST DIALOGUE DOM-MEASURED LINES ===== */
+window.__mobV148PatchRuntime=true;
+
+/*
+  v146/v147 still relied on canvas estimates and then allowed Safari to wrap the final DOM text.
+  That is why subquest lines could still become "だった / な" or "なん / だぞ".
+  v148 measures with the actual rendered story font, stretches the individual bubble first,
+  and renders every chosen line as a nowrap span. Safari is no longer allowed to invent a
+  third-party line break after the layout decision has been made.
+*/
+function storyMeasureLineV148(text){
+  const src=String(text??'');
+  let probe=storyMeasureLineV148.probe;
+  if(!probe){
+    probe=document.createElement('span');storyMeasureLineV148.probe=probe;
+    probe.setAttribute('aria-hidden','true');
+    Object.assign(probe.style,{position:'fixed',left:'-9999px',top:'-9999px',visibility:'hidden',pointerEvents:'none',whiteSpace:'nowrap',display:'inline-block',zIndex:'-1'});
+    document.body.appendChild(probe);
+  }
+  const sample=$('#storyText');
+  if(sample){
+    const cs=getComputedStyle(sample);
+    probe.style.fontFamily=cs.fontFamily;probe.style.fontSize=cs.fontSize;probe.style.fontWeight=cs.fontWeight;
+    probe.style.fontStyle=cs.fontStyle;probe.style.letterSpacing=cs.letterSpacing;probe.style.fontKerning=cs.fontKerning;
+  }else{
+    probe.style.fontFamily='-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif';
+    probe.style.fontSize='15px';probe.style.fontWeight='800';probe.style.letterSpacing='.01em';
+  }
+  probe.textContent=src;
+  return probe.getBoundingClientRect().width;
+}
+function storyBreakForbiddenV148(left,right){
+  const tiny=[...right].length<=3;
+  if(tiny)return true;
+  const badHeads=['。','、','！','？','!','?','ー','っ','ゃ','ゅ','ょ','ッ','ャ','ュ','ョ','ァ','ィ','ゥ','ェ','ォ'];
+  if(badHeads.some(x=>right.startsWith(x)))return true;
+  const protectedTails=['でありま','であります','でやんす','でござる','ニョロ','だった','でした','ます','です','なん','なの','だっ'];
+  if(protectedTails.some(x=>left.endsWith(x)))return true;
+  return false;
+}
+function bestStoryBreakV148(text,maxPx){
+  const a=[...String(text||'')],n=a.length;if(n<=7)return Math.max(1,n-1);
+  const phrases=['ということで','というのは','それなら','だから','しかし','けれど','けど','そして','でも','なので','のなら','のに','から','なら','ので','のは','には','では','とは','まで','より','あと','また'];
+  const particles=['は','が','を','に','へ','で','と','も','の'];
+  let best=-1,bestScore=-1e9;
+  for(let i=4;i<=n-4;i++){
+    const left=a.slice(0,i).join('').trim(),right=a.slice(i).join('').trim();if(!left||!right||storyBreakForbiddenV148(left,right))continue;
+    const w=storyMeasureLineV148(left);if(w>maxPx)continue;
+    let score=-Math.abs((w/maxPx)-.78)*38;
+    const prev=a[i-1]||'',next=a[i]||'';
+    if(/[。！？!?]/.test(prev))score+=50;else if(/[、，,]/.test(prev))score+=34;else if(/[・・…]/.test(prev))score+=18;
+    for(const p of phrases){if(left.endsWith(p))score+=p.length>2?22:15;if(right.startsWith(p))score+=8;}
+    if(particles.includes(prev))score+=8;
+    if(/[っゃゅょァィゥェォャュョッー、。！？!?]/.test(next))score-=40;
+    const ll=[...left].length,rr=[...right].length;if(ll<6||rr<5)score-=60;
+    score-=Math.abs(ll-rr)*.8;
+    if(score>bestScore){bestScore=score;best=i;}
+  }
+  if(best>=0)return best;
+  let fit=4;for(let i=4;i<=n-4;i++){if(storyMeasureLineV148(a.slice(0,i).join(''))<=maxPx)fit=i;else break;}
+  return Math.min(Math.max(4,fit),n-4);
+}
+function splitStoryLineV148(text,{normalPx=245,hardPx=330}={}){
+  const src=String(text??'').trim();if(!src)return[''];
+  const w=storyMeasureLineV148(src);
+  /* Main rule requested by the user: stretch THIS bubble before making a tiny orphan line. */
+  if(w<=hardPx)return[src];
+  const out=[];let rest=src,guard=0;
+  while(rest&&storyMeasureLineV148(rest)>hardPx&&guard++<12){
+    const cut=bestStoryBreakV148(rest,Math.min(hardPx,Math.max(normalPx,hardPx*.78))),a=[...rest];
+    let left=a.slice(0,cut).join('').trim(),right=a.slice(cut).join('').trim();if(!left||!right)break;
+    /* If a fallback cut somehow leaves 1-3 chars, rebalance before accepting it. */
+    if([...right].length<=3&&[...left].length>7){const move=4-[...right].length,la=[...left];right=la.slice(-move).join('')+right;left=la.slice(0,-move).join('');}
+    out.push(left);rest=right;
+  }
+  if(rest)out.push(rest);
+  return out.filter(Boolean);
+}
+function storyPagesV148(text,{maxLines=2}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360);
+  const hardPx=Math.max(226,Math.min(338,sceneW-48));
+  const normalPx=Math.min(252,Math.max(205,hardPx-70));
+  const authored=raw.split('\n').map(x=>x.trim()).filter(Boolean),lines=[];
+  /* Authored line breaks are respected. Each authored line is only split if it cannot fit the safe phone width. */
+  for(const line of authored)lines.push(...splitStoryLineV148(line,{normalPx,hardPx}));
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));
+  return pages.length?pages:[''];
+}
+function renderStoryLinesV148(textEl,text){
+  const lines=String(text??'').split('\n');textEl.replaceChildren();textEl.classList.add('dialogue-explicit-v148');
+  for(const line of lines){const span=document.createElement('span');span.className='dialogue-line-v148';span.textContent=line;textEl.appendChild(span);}
+}
+storySayLine=async function(key,line,displayName=null,anchorKey=null){
+  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),speaker=displayName||info.name||'???',text=String(line??''),textEl=$('#storyText');
+  $('#storySpeaker').textContent=speaker;renderStoryLinesV148(textEl,text);
+  const sceneEl=$('#storyScene'),sceneWidth=Math.max(280,sceneEl?.clientWidth||document.documentElement?.clientWidth||360),outerMax=Math.max(250,Math.min(382,sceneWidth-12));
+  const logical=text.split('\n'),longest=Math.max(0,...logical.map(storyMeasureLineV148)),speakerW=storyMeasureLineV148(speaker)*.72;
+  let desired=Math.min(outerMax,Math.max(230,Math.ceil(Math.max(longest,speakerW)+38)));
+  bubble.style.setProperty('box-sizing','border-box','important');bubble.style.setProperty('width',`${desired}px`,'important');bubble.style.setProperty('max-width',`${outerMax}px`,'important');
+  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
+  await nextPaint();
+  /* DOM-level safety check: if the real Safari glyphs still need more room, widen only this bubble. */
+  const overflow=Math.max(0,textEl.scrollWidth-textEl.clientWidth);if(overflow>0&&desired<outerMax){desired=Math.min(outerMax,Math.ceil(desired+overflow+10));bubble.style.setProperty('width',`${desired}px`,'important');await nextPaint();}
+  const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
+  if(anchor){
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;left=clamp(cx-br.width/2,6,scene.width-br.width-6);top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+    if(sceneEl?.classList.contains('subquest-story-v111')&&anchor.closest?.('#storyPartyLine'))top=clamp(Math.max(top,scene.height*.555),66,scene.height-br.height-34);
+  }else bubble.classList.add('no-arrow');
+  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
+  await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;textEl.classList.remove('dialogue-explicit-v148');
+};
+storySay=async function(key,text,displayName=null,anchorKey=null){for(const page of storyPagesV148(text,{maxLines:2}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+/* All story-like users now share the same page generator. */
+dialoguePagesV135=function(text,opt={}){return storyPagesV148(text,{maxLines:Number(opt.maxLines)||2});};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return storyPagesV148(text,{maxLines:Math.max(1,Number(maxLines)||2)});};
+
+/* Reassert the exact Sea quest examples that exposed the bug. */
+{
+  const sea=(SUBQUEST_AREAS||[]).find(a=>a.worldId==='sea');
+  const q3=sea?.quests?.find(q=>q.id==='sea-3');if(q3){
+    const row=q3.intro?.find(r=>r?.[0]==='nekoku'&&String(r?.[1]||'').includes('強い仲間'));if(row)row[1]='強い仲間がいっぱいいるぞ';
+  }
+  const q5=sea?.quests?.find(q=>q.id==='sea-5');if(q5){q5.intro=[
+    ['nekoku','モブジョーンズは海底の英雄なんだぞ'],
+    ['pink','英雄でありますか！'],
+    ['nekoku','有名な戦いには必ず\nモブジョーンズの功績があるぞ'],
+    ['desert','まだまだ力を秘めていそうだったな'],
+    ['show',['sq-power-jones']],
+    ['nekoku','ある戦いで敗れて以来'],
+    ['nekoku','さらに強さを求めているぞ'],
+    ['desert','良い志だ']
+  ];}
+}
+
+window.__mobV148RegressionAudit={inheritV147:true,subquestUsesStorySay:true,domMeasured:true,nowrapChosenLines:true,stretchBeforeSplit:true,sea5SecondLine:'モブジョーンズの功績があるぞ'};
+/* ===== END MOB QUEST v148 ===== */
 
