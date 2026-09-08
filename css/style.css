@@ -4460,3 +4460,43 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .dialog-overlay.facility-choice-talk.facility-v149 .facility-emergency-wrap-v149 .facility-line-v149{white-space:normal!important;}
 /* ===== END MOB QUEST v149 ===== */
 
+/* ===== MOB QUEST v150: FINAL DIALOGUE + FACILITY HELP VISUALS ===== */
+.story-bubble>p.dialogue-explicit-v148>.dialogue-line-v148,
+.story-bubble>p .dialogue-line-v150{display:block!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;max-width:none!important;}
+.dialog-overlay.facility-v150 .dialog-card{width:min(var(--facility-card-width,340px),calc(100vw - 12px))!important;max-width:470px!important;}
+.dialog-overlay.facility-v150 .dialog-body>p{display:block!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;overflow:visible!important;}
+.dialog-overlay.facility-v150 .facility-line-v150{display:block!important;width:max-content!important;max-width:none!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;}
+.facility-help-fab-v150{position:fixed;z-index:175;right:10px;top:calc(70px + var(--safe-top));min-width:56px;height:34px;padding:0 9px;border-radius:999px;background:#8fdcff;color:#0d1b26!important;border:2px solid #132633;box-shadow:0 4px 0 rgba(0,0,0,.45);font-weight:1000;display:flex;align-items:center;justify-content:center;gap:4px}.facility-help-fab-v150[hidden]{display:none!important}.facility-help-fab-v150 b{font-size:16px}.facility-help-fab-v150 span{font-size:9px;letter-spacing:.08em}
+.facility-help-overlay-v150{position:fixed;z-index:310;inset:0;background:rgba(3,8,14,.82);display:flex;align-items:center;justify-content:center;padding:calc(14px + var(--safe-top)) 12px calc(14px + var(--safe-bottom))}.facility-help-overlay-v150[hidden]{display:none!important}.facility-help-shell-v150{width:min(88vw,370px);display:flex;flex-direction:column;align-items:center;gap:9px}.facility-help-head-v150{width:100%;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:1000;text-shadow:0 2px 4px #000}.facility-help-head-v150 small{font-size:9px;letter-spacing:.16em}.facility-help-head-v150 b{font-size:10px}.facility-help-card-v150{width:100%;aspect-ratio:1/1;min-height:280px;background:#e8f6ff;color:#111820;border:4px solid #142638;border-radius:24px;padding:22px 20px;box-shadow:0 12px 0 rgba(0,0,0,.38),0 22px 48px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}.facility-help-card-v150 h1{margin:0 0 15px;padding:0 0 12px;border-bottom:4px solid #111820;text-align:center;font-size:22px;line-height:1.15;font-weight:1000}.facility-help-card-v150>div{white-space:pre-line;overflow:auto;min-height:0;font-size:14px;line-height:1.6;font-weight:900;letter-spacing:.01em;text-align:left}.facility-help-actions-v150{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;width:100%}.facility-help-actions-v150 button{height:42px;border-radius:13px;background:#26394b;color:#fff!important;border:2px solid #0e1a25;font-size:14px;font-weight:1000}.facility-help-actions-v150 #facilityHelpNextV150{background:#8fdcff;color:#0b1720!important}.facility-help-actions-v150 button:disabled{opacity:.35}
+@media(max-width:380px){.facility-help-card-v150{padding:18px 16px;border-radius:20px}.facility-help-card-v150 h1{font-size:19px;margin-bottom:11px;padding-bottom:9px}.facility-help-card-v150>div{font-size:12px;line-height:1.55}.facility-help-fab-v150{top:calc(62px + var(--safe-top));right:7px}}
+/* ===== END MOB QUEST v150 ===== */
+
+
+/* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
+/*
+  v150 estimated the text column from viewport width. On real iPhone Safari the
+  accumulated grid + body padding can make the true text column narrower than
+  that estimate, so an atomic no-wrap line could still escape the bubble.
+  v151 treats the rendered text column itself as the source of truth.
+*/
+.dialog-overlay.dialog-safe-v151 .dialog-card{
+  width:min(var(--dialog-card-width-v151,470px),calc(100vw - 12px))!important;
+  max-width:470px!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-body{min-width:0!important;overflow:hidden!important;}
+.dialog-overlay.dialog-safe-v151 .dialog-body>p{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  display:block!important;white-space:normal!important;word-break:normal!important;
+  overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;
+  overflow:hidden!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-line-v151{
+  display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;
+  white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;
+  line-break:strict!important;overflow:hidden!important;text-overflow:clip!important;
+}
+.dialog-overlay.dialog-safe-v151.dialog-page-v151 .dialog-choices{display:none!important;}
+/* Story text also gets a hard visual boundary. The layout engine still splits before this is needed. */
+.story-bubble>p{max-width:100%!important;overflow:hidden!important;}
+.story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;overflow:hidden!important;}
+/* ===== END MOB QUEST v151 ===== */

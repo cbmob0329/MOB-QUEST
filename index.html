@@ -4471,6 +4471,54 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .dialog-overlay.facility-line-talk.facility-v149 .facility-emergency-wrap-v149 .facility-line-v149,
 .dialog-overlay.facility-choice-talk.facility-v149 .facility-emergency-wrap-v149 .facility-line-v149{white-space:normal!important;}
 /* ===== END MOB QUEST v149 ===== */
+
+/* ===== MOB QUEST v150: FINAL DIALOGUE + FACILITY HELP VISUALS ===== */
+.story-bubble>p.dialogue-explicit-v148>.dialogue-line-v148,
+.story-bubble>p .dialogue-line-v150{display:block!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;max-width:none!important;}
+.dialog-overlay.facility-v150 .dialog-card{width:min(var(--facility-card-width,340px),calc(100vw - 12px))!important;max-width:470px!important;}
+.dialog-overlay.facility-v150 .dialog-body>p{display:block!important;white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;overflow:visible!important;}
+.dialog-overlay.facility-v150 .facility-line-v150{display:block!important;width:max-content!important;max-width:none!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;line-break:strict!important;}
+.facility-help-fab-v150{position:fixed;z-index:175;right:10px;top:calc(70px + var(--safe-top));min-width:56px;height:34px;padding:0 9px;border-radius:999px;background:#8fdcff;color:#0d1b26!important;border:2px solid #132633;box-shadow:0 4px 0 rgba(0,0,0,.45);font-weight:1000;display:flex;align-items:center;justify-content:center;gap:4px}.facility-help-fab-v150[hidden]{display:none!important}.facility-help-fab-v150 b{font-size:16px}.facility-help-fab-v150 span{font-size:9px;letter-spacing:.08em}
+.facility-help-overlay-v150{position:fixed;z-index:310;inset:0;background:rgba(3,8,14,.82);display:flex;align-items:center;justify-content:center;padding:calc(14px + var(--safe-top)) 12px calc(14px + var(--safe-bottom))}.facility-help-overlay-v150[hidden]{display:none!important}.facility-help-shell-v150{width:min(88vw,370px);display:flex;flex-direction:column;align-items:center;gap:9px}.facility-help-head-v150{width:100%;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:1000;text-shadow:0 2px 4px #000}.facility-help-head-v150 small{font-size:9px;letter-spacing:.16em}.facility-help-head-v150 b{font-size:10px}.facility-help-card-v150{width:100%;aspect-ratio:1/1;min-height:280px;background:#e8f6ff;color:#111820;border:4px solid #142638;border-radius:24px;padding:22px 20px;box-shadow:0 12px 0 rgba(0,0,0,.38),0 22px 48px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}.facility-help-card-v150 h1{margin:0 0 15px;padding:0 0 12px;border-bottom:4px solid #111820;text-align:center;font-size:22px;line-height:1.15;font-weight:1000}.facility-help-card-v150>div{white-space:pre-line;overflow:auto;min-height:0;font-size:14px;line-height:1.6;font-weight:900;letter-spacing:.01em;text-align:left}.facility-help-actions-v150{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;width:100%}.facility-help-actions-v150 button{height:42px;border-radius:13px;background:#26394b;color:#fff!important;border:2px solid #0e1a25;font-size:14px;font-weight:1000}.facility-help-actions-v150 #facilityHelpNextV150{background:#8fdcff;color:#0b1720!important}.facility-help-actions-v150 button:disabled{opacity:.35}
+@media(max-width:380px){.facility-help-card-v150{padding:18px 16px;border-radius:20px}.facility-help-card-v150 h1{font-size:19px;margin-bottom:11px;padding-bottom:9px}.facility-help-card-v150>div{font-size:12px;line-height:1.55}.facility-help-fab-v150{top:calc(62px + var(--safe-top));right:7px}}
+/* ===== END MOB QUEST v150 ===== */
+
+/* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
+/*
+  v150 estimated the text column from viewport width. On real iPhone Safari the
+  accumulated grid + body padding can make the true text column narrower than
+  that estimate, so an atomic no-wrap line could still escape the bubble.
+  v151 treats the rendered text column itself as the source of truth.
+*/
+.dialog-overlay.dialog-safe-v151 .dialog-card{
+  width:min(var(--dialog-card-width-v151,470px),calc(100vw - 12px))!important;
+  max-width:470px!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-body{min-width:0!important;overflow:hidden!important;}
+.dialog-overlay.dialog-safe-v151 .dialog-body>p{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  display:block!important;white-space:normal!important;word-break:normal!important;
+  overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;
+  overflow:hidden!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-line-v151{
+  display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;
+  white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;
+  line-break:strict!important;overflow:hidden!important;text-overflow:clip!important;
+}
+.dialog-overlay.dialog-safe-v151.dialog-page-v151 .dialog-choices{display:none!important;}
+/* Story text also gets a hard visual boundary. The layout engine still splits before this is needed. */
+.story-bubble>p{max-width:100%!important;overflow:hidden!important;}
+.story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;overflow:hidden!important;}
+/* ===== END MOB QUEST v151 ===== */
+/* ===== MOB QUEST v152: IPHONE DIALOGUE ABSOLUTE WRAP GUARD ===== */
+html,body,#app{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+.dialog-overlay.facility-line-talk .dialog-body,.dialog-overlay.dialog-safe-v151 .dialog-body{min-width:0!important;overflow:visible!important}
+.dialog-overlay.facility-line-talk .dialog-body>p,.dialog-overlay.dialog-safe-v151 .dialog-body>p{width:100%!important;max-width:100%!important;min-width:0!important;display:block!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-wrap:pretty!important;overflow:visible!important;text-overflow:clip!important}
+.dialog-overlay.facility-line-talk .facility-line-v150,.dialog-overlay.dialog-safe-v151 .dialog-line-v151,.dialog-overlay.facility-line-talk .dialog-line-v151{display:block!important;width:auto!important;max-width:100%!important;min-width:0!important;white-space:normal!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;overflow:visible!important;text-overflow:clip!important}
+.story-bubble>p,.story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;overflow:visible!important}
+/* ===== END MOB QUEST v152 CSS ===== */
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4490,7 +4538,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v149</div>
+      <div class="title-version">v153</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4548,7 +4596,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <header class="page-header safe-top glass"><button id="tavernBackBtn" class="back-btn" type="button">←</button><div><span>TAVERN</span><h1>酒場</h1></div><button id="tavernResetBtn" class="mini-btn" type="button" hidden>初期編成</button></header>
     <div class="page-scroll nav-spacer">
       <section id="tavernLanding" class="facility-landing">
-        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>パーティー編成とキャンプ用ドリンクの酒場です。</p></div></div>
+        <div class="facility-host-card pink-host"><img src="play/001.png" alt="モブイルカエル"><div><small>TAVERN HOST</small><h2>モブイルカエル</h2><p>分からないことがあれば HELP を確認してくださいね♪</p></div></div>
         <div class="facility-menu-grid tavern-menu-grid">
           <button data-tavern-menu="party" type="button"><img src="icon/11.png" alt=""><b>パーティー編成</b><small>仲間と隊列を編成</small></button>
           <button data-tavern-menu="drink" type="button"><img src="icon/13.png" alt=""><b>ドリンク</b><small>キャンプ用ドリンク</small></button>
@@ -4568,7 +4616,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div id="tavernFigurePopup" class="facility-popup tavern-figure-popup" hidden>
       <div class="facility-popup-card maple-shop-card">
         <div class="settings-head"><div><small>FIGURE GACHA</small><h2>フィギュアガチャ</h2></div><button id="tavernFigureCloseBtn" class="sheet-close" type="button">×</button></div>
-        <div class="maple-shop-host"><img src="play/009.png" alt="モブメープル"><div><b>モブメープル</b><p>やっほ〜！どのガチャにする？</p></div></div>
+        <div class="maple-shop-host"><img src="play/009.png" alt="モブメープル"><div><b>モブメープル</b><p>詳しいことは HELP を見てね！</p></div></div>
         <div class="panel-note maple-gacha-note">ガチャ一覧を読み込んでいます…</div>
       </div>
     </div>
@@ -4576,7 +4624,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
       <div class="facility-popup-card">
         <div class="settings-head"><div><small>DRINK SHOP</small><h2>ドリンク購入</h2></div><button id="tavernDrinkCloseBtn" class="sheet-close" type="button">×</button></div>
         <div class="section-title"><div><small>CAMP DRINK</small><h2>キャンプ用ドリンク</h2></div><span id="drinkShopCoin" class="pill">0 G</span></div>
-        <p class="panel-note">購入したドリンクセットは冒険中のキャンプで使用します。</p>
+        <p class="panel-note">詳しい使い方は HELP で確認できます。</p>
         <div id="tavernDrinkShop" class="drink-shop-grid"></div>
       </div>
     </div>
@@ -4901,7 +4949,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v149
+// MOB QUEST v152
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6364,7 +6412,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=149;
+const GAME_ASSET_VERSION=153;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8762,7 +8810,7 @@ async function startDemonAceStoryBattle(){
 }
 async function runDemonCastleArrivalStory(){
   await openStoryScene('demonCastle',0);await storySay('pink','ここが魔王城でありますね・・！');await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('jessie','モブエース！！');await storySay('boss-ace','久しぶりだな。このような形での再会は望んでいなかった');await storySay('desert','魔王の側近と随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ。共にネオン街を守っていた保安官仲間');await storySay('pink','なぜ魔王軍に・・！');await storySay('money','悪いやつではなかったはずよ！');await storySay('jessie','なぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない。お前と同じだモブジェシー・・！');await storySay('denden','それでも戦うでやんす！！');
+  await storySay('boss-ace','まさかここまで来るとはな');await storySay('jessie','モブエース！！');await storySay('boss-ace','久しぶりだな。このような形での再会は望んでいなかった');await storySay('desert','魔王の側近と随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ。共にネオン街を守っていた保安官仲間');await storySay('pink','なぜ魔王軍に・・！');await storySay('money','悪いやつではなかったはずよ！');await storySay('jessie','なぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない。お前と同じだモブジェシー・・！');await storySay('denden','それでも戦うでやんす！！');
   $('#storyScene').hidden=true;await startDemonAceStoryBattle();
   await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storyNarrate('？？？「情けない」');await storyShowGuests(['boss-ace','boss-maou-castle'],{slow:true});await storySay('boss-maou-castle','我の側近が無様な姿を晒すとは');await storySay('boss-ace','申し訳ありません・・');await storySay('pink','魔王であります！！');await storySay('boss-maou-castle','まあよい。一度引き上げるぞ');await storySay('jessie','逃がさないわよ！');await storyFlash();await storySay('boss-ace','グッ・・・！');await storySay('boss-maou-castle','随分と嫌われたようだな。行くぞ');await storyHideGuests();await storySay('denden','待つでやんす！！');await storySay('money','臆病者！');await storySay('desert','城内にいるはずだ。先へ進むぞ！');
 }
@@ -11279,7 +11327,7 @@ runDemonCastleArrivalStory=async function(){
   await openStoryScene('demonCastle',0);
   await storySay('pink','ここが魔王城でありますね・・！');
   await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');
+  await storySay('boss-ace','まさかここまで来るとはな');
   await storySay('money','！？');
   await storySay('jessie','モブエース！！');
   await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');
@@ -12258,7 +12306,7 @@ runDemonCastleArrivalStory=async function(){
   await openStoryScene('demonCastle',0);
   await storySay('pink','ここが魔王城でありますね・・！');
   await storyShowGuest('boss-ace',{slow:true});
-  await storySay('boss-ace','まさか本当にここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
+  await storySay('boss-ace','まさかここまで来るとはな');await storySay('money','！？');await storySay('jessie','モブエース！！');
   await storySay('boss-ace','久しぶりだな\nこのような形での\n再開は望んでいなかった');await storySay('desert','魔王の側近と\n随分と仲が良さそうだな');await storySay('jessie','かつての仲間よ\n共にネオン街を守っていた\n保安官仲間');await storySay('desert','通りで強いわけだ\nさらに、王の息子なのだろう？');await storySay('pink','なぜ魔王軍に！');await storySay('denden','退屈だからでやんすか！？');await storySay('boss-ace','退屈か\nそうであれば\nどれほど幸せだろな');await storySay('money','はっきりとは覚えてないけど\n悪いやつではなかったはずよ！');await storySay('boss-ace','そうか\n少しは覚えているのか');await storySay('jessie','モブエース！\n１つ答えなさい！\nなぜネオン街を捨てた！');await storySay('boss-ace','捨ててなどいない\nお前と同じだモブジェシー！');await storySay('desert','目的の相違での戦い\n俺にも経験がある\n避けては通れないぞ！');await storySay('nekoku','オラ、みんなを守るぞ');await storySay('riro','悲しい戦いネ\nいや\n戦いは悲しいネ\nでも');await storySay('denden','それでも戦うでやんす！！');
   $('#storyScene').hidden=true;await startDemonAceStoryBattle();
   await openStoryScene('demonCastle',0);await storyShowGuest('boss-ace',{slow:true});await storySay('boss-ace','俺はまだ・・\n消えるわけにはいかない・・');await storySay('denden','オイラたちの勝ちでやんす！');await storySay('nyoro','もう終わりニョロ！');await storyNarrate('？？？「情けない」');
@@ -16126,6 +16174,364 @@ dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',chara
 
 window.__mobV149RegressionAudit={inheritV148:true,facilityNoClip:true,explicitFacilityLines:true,stretchBeforeSplit:true,trainingCoachExample:'難しいことは何も無いから、 / とにかくレッツトレーニングだ！'};
 /* ===== END MOB QUEST v149 ===== */
+
+/* ===== MOB QUEST v150: DIALOGUE RULES + FACILITY HELP SYSTEM ===== */
+window.__mobV150PatchRuntime=true;
+
+/*
+  Final dialogue policy:
+  - never leave a 1-3 character orphan line when a wider bubble can solve it;
+  - keep bubbles compact (fit the longest actual line instead of using a fixed giant width);
+  - never let text clip outside the bubble;
+  - only split when the safe phone width is genuinely exceeded.
+  This engine measures the actual computed browser font, not an Excel/canvas estimate.
+*/
+function dialogueProbeV150(sampleEl){
+  let p=dialogueProbeV150.el;if(!p){p=document.createElement('span');dialogueProbeV150.el=p;p.setAttribute('aria-hidden','true');Object.assign(p.style,{position:'fixed',left:'-10000px',top:'-10000px',visibility:'hidden',pointerEvents:'none',whiteSpace:'nowrap',display:'inline-block',zIndex:'-1'});document.body.appendChild(p);}const cs=sampleEl?getComputedStyle(sampleEl):null;if(cs){p.style.fontFamily=cs.fontFamily;p.style.fontSize=cs.fontSize;p.style.fontWeight=cs.fontWeight;p.style.fontStyle=cs.fontStyle;p.style.letterSpacing=cs.letterSpacing;p.style.fontKerning=cs.fontKerning;}return p;
+}
+function dialogueMeasureV150(text,sampleEl){const p=dialogueProbeV150(sampleEl);p.textContent=String(text??'');return p.getBoundingClientRect().width;}
+function dialogueForbiddenCutV150(left,right){
+  if(!left||!right)return true;if([...left].length<=3||[...right].length<=3)return true;
+  const badHead='、。，．！？!?ーっゃゅょッャュョァィゥェォ「『【（(';
+  if(badHead.includes([...right][0]||''))return true;
+  const protectedEnd=['であります','でありま','でやんす','でござる','ニョロ','だった','でした','なんだ','なん','ます','です','だぞ','だな','だよ','か？'];
+  if(protectedEnd.some(x=>left.endsWith(x.slice(0,-1))))return true;
+  return false;
+}
+function dialogueBestCutV150(text,maxPx,sampleEl){
+  const a=[...String(text??'')],n=a.length;if(n<8)return Math.max(1,n-1);let best=-1,bestScore=1e18;
+  const particles='はがをにへでともので';
+  for(let i=4;i<=n-4;i++){
+    const l=a.slice(0,i).join('').trim(),r=a.slice(i).join('').trim();if(dialogueForbiddenCutV150(l,r))continue;
+    const wl=dialogueMeasureV150(l,sampleEl),wr=dialogueMeasureV150(r,sampleEl);if(wl>maxPx||wr>maxPx)continue;
+    let score=Math.max(wl,wr)+Math.abs(wl-wr)*.42;
+    const prev=a[i-1]||'',next=a[i]||'';
+    if(/[。！？!?]/.test(prev))score-=65;else if(/[、，,]/.test(prev))score-=42;else if(particles.includes(prev))score-=10;
+    if(/[、。！？!?ーっゃゅょッャュョ]/.test(next))score+=80;
+    if(score<bestScore){bestScore=score;best=i;}
+  }
+  if(best>=0)return best;
+  let fit=4;for(let i=4;i<=n-4;i++){if(dialogueMeasureV150(a.slice(0,i).join(''),sampleEl)<=maxPx)fit=i;else break;}return Math.max(4,Math.min(fit,n-4));
+}
+function dialogueSplitLineV150(text,maxPx,sampleEl){
+  const src=String(text??'').trim();if(!src)return[];if(dialogueMeasureV150(src,sampleEl)<=maxPx)return[src];
+  const out=[];let rest=src,guard=0;while(rest&&dialogueMeasureV150(rest,sampleEl)>maxPx&&guard++<16){const cut=dialogueBestCutV150(rest,maxPx,sampleEl),a=[...rest];let l=a.slice(0,cut).join('').trim(),r=a.slice(cut).join('').trim();if(!l||!r)break;if([...r].length<=3&&[...l].length>7){const need=4-[...r].length,la=[...l];r=la.slice(-need).join('')+r;l=la.slice(0,-need).join('');}out.push(l);rest=r;}if(rest)out.push(rest);return out;
+}
+function dialoguePagesV150(text,{sampleEl,maxPx=320,maxLines=2}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];let authored=raw.split('\n').map(x=>x.trim()).filter(Boolean);
+  /* Newlines from old data are soft. Tiny authored fragments are merged before layout. */
+  for(let i=0;i<authored.length;i++)if([...authored[i]].length<=3){if(i>0&&dialogueMeasureV150(authored[i-1]+authored[i],sampleEl)<=maxPx){authored[i-1]+=authored[i];authored.splice(i,1);i--;}else if(i+1<authored.length&&dialogueMeasureV150(authored[i]+authored[i+1],sampleEl)<=maxPx){authored[i]+=authored[i+1];authored.splice(i+1,1);}}
+  const lines=[];for(const s of authored)lines.push(...dialogueSplitLineV150(s,maxPx,sampleEl));
+  /* One final orphan repair across adjacent lines. */
+  for(let i=1;i<lines.length;i++){if([...lines[i]].length<=3){const joined=lines[i-1]+lines[i];if(dialogueMeasureV150(joined,sampleEl)<=maxPx){lines.splice(i-1,2,joined);i--;}}}
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));return pages.length?pages:[''];
+}
+
+/* Story, subquest, battle dialogue and castle report all use the same final splitter. */
+storySay=async function(key,text,displayName=null,anchorKey=null){const sceneW=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),sample=$('#storyText'),maxPx=Math.max(210,Math.min(330,sceneW-62));for(const page of dialoguePagesV150(text,{sampleEl:sample,maxPx,maxLines:2}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+dialoguePagesV135=function(text,opt={}){return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx:320,maxLines:Number(opt.maxLines)||2});};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx:320,maxLines:Math.max(1,Number(maxLines)||2)});};
+
+function renderAtomicLinesV150(el,page,cls='dialogue-line-v150'){el.replaceChildren();for(const line of String(page??'').split('\n')){const s=document.createElement('span');s.className=cls;s.textContent=line;el.appendChild(s);}}
+function facilityCardMaxV150(){const vw=Math.max(300,document.documentElement?.clientWidth||window.innerWidth||390);return Math.max(290,Math.min(470,vw-12));}
+function facilityTextMaxV150(){return Math.max(175,facilityCardMaxV150()-132);}
+async function facilityPrepareV150(text,textEl,maxLines=2){await nextPaint();const maxPx=facilityTextMaxV150();return dialoguePagesV150(text,{sampleEl:textEl,maxPx,maxLines});}
+function facilityCardWidthV150(page,textEl,choices=false){const lines=String(page||'').split('\n'),long=Math.max(0,...lines.map(x=>dialogueMeasureV150(x,textEl))),min=choices?338:250;return Math.min(facilityCardMaxV150(),Math.max(min,Math.ceil(long+126)));}
+
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';overlay.classList.add('facility-line-talk','facility-v150');overlay.hidden=false;await nextPaint();
+  const pages=await facilityPrepareV150(text,textEl,2);for(const page of pages){renderAtomicLinesV150(textEl,page,'facility-line-v150');overlay.style.setProperty('--facility-card-width',`${facilityCardWidthV150(page,textEl,false)}px`);await nextPaint();const body=textEl.parentElement;if(body&&textEl.scrollWidth>textEl.clientWidth+1){const grow=Math.min(facilityCardMaxV150(),facilityCardWidthV150(page,textEl,false)+(textEl.scrollWidth-textEl.clientWidth)+10);overlay.style.setProperty('--facility-card-width',`${Math.ceil(grow)}px`);await nextPaint();}
+    await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,{capture:true,passive:false});});await fixedDelay(70);
+  }
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-v150');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.replaceChildren();
+};
+
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText');$('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility);overlay.classList.toggle('facility-v150',facility);overlay.hidden=false;await nextPaint();
+  if(facility){const pages=await facilityPrepareV150(text,textEl,2),page=pages.join('\n');renderAtomicLinesV150(textEl,page,'facility-line-v150');overlay.style.setProperty('--facility-card-width',`${facilityCardWidthV150(page,textEl,true)}px`);}else textEl.textContent=String(text||'');await nextPaint();
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150');overlay.style.removeProperty('--facility-card-width');textEl.replaceChildren();resolve(btn.dataset.dialogValue);});});
+};
+
+/* ---------- Facility help: loading-guide-style square narration ---------- */
+const FACILITY_HELP_V150={
+  castle:[{title:'お城',body:'お城には\n王の間・宿舎・MOB SHOP・\nレコードルーム・鍛冶屋があります。\n\n目的の施設を選んでください。'}],
+  throne:[{title:'王の間',body:'冒険をクリアした後は\n王へ報告します。\n\n報告を終えると\n次の目的地へ進めます。'}],
+  inn:[{title:'宿舎',body:'休むとパーティー全員の\nHP・MP・状態異常が回復します。\n\n冒険前の準備に利用できます。'}],
+  shop:[{title:'MOB SHOP',body:'冒険で使うアイテムを\nコインで購入できます。\n\n＋ / − で個数を決めて\nまとめて購入できます。'}],
+  records:[{title:'レコードルーム',body:'冒険で手に入れた\n伝説のレコードが展示されます。\n\nレコードをタップすると\n秘められた魔法を\n仲間1人に習得させられます。'},{title:'レコードルーム',body:'1枚のレコードにつき\n魔法習得は1度だけです。\n\n集めたレコードは\nここでいつでも確認できます。'}],
+  smith:[{title:'鍛冶屋 / 武器',body:'武器の購入・売却と\nメダル錬成ができます。\n\n武器ショップの品揃えは\n冒険の進行で増えていきます。'},{title:'鍛冶屋 / メダル',body:'同じ武器を3個使うと\nその武器のメダルを錬成できます。\n\nメダルは武器に装着して\n能力や特徴を追加できます。'},{title:'鍛冶屋 / 売却',body:'装備していない武器・防具を\n売却できます。\n\n武器は購入価格の20%\n防具は価格の100%で売却します。'}],
+  tavern:[{title:'酒場',body:'酒場では\nパーティー編成・ドリンク購入・\nフィギュアガチャを利用できます。\n\n冒険前の準備に使ってください。'}],
+  party:[{title:'パーティー編成',body:'メイン4人・スーパーサブ2人・\n控え4人を編成できます。\n\n戦闘中は控えとの入れ替えも可能です。'}],
+  drink:[{title:'ドリンク',body:'購入したドリンクは\n冒険中のキャンプで使用します。\n\n効果を確認して\n必要なドリンクを準備してください。'}],
+  figure:[{title:'フィギュア',body:'ダイヤを使って\nフィギュアガチャを引けます。\n\n集めたフィギュアは装備や\nモブピースバトルで使用します。'},{title:'フィギュア / ルビー',body:'同じフィギュアが\n所持上限を超えた場合は\nルビーへ変換されます。\n\nルビー交換も利用できます。'}],
+  training:[{title:'トレーニング',body:'バトルプログラム・サブクエスト・\n冒険日記・各ターンテーブルに\n挑戦できます。\n\n目的に合ったメニューを選んでください。'}],
+  program:[{title:'バトルプログラム',body:'PROGRAMを順番にクリアして\n新しい戦いを解放します。\n\n初回クリア報酬と\nシーズンクリア報酬があります。'}],
+  subquest:[{title:'サブクエスト',body:'冒険を進めると\n各エリアのサブクエストが解放されます。\n\n1度だけ挑戦でき\n特別な報酬を獲得できます。'}],
+  journal:[{title:'冒険日記',body:'クリア済みのエリアを\n再び探索できます。\n\n経験値やアイテム集めに利用できます。'}],
+  exp:[{title:'経験値ターンテーブル',body:'経験値レコードを消費して\n経験値モンスターと戦います。\n\n倒した敵の分だけ\n大量の経験値を獲得できます。'}],
+  gold:[{title:'ゴールドターンテーブル',body:'ゴールドレコードを消費して\nゴールドモンスターと戦います。\n\n倒した敵の分だけ\n大量のコインを獲得できます。'}],
+  boss:[{title:'ボスターンテーブル',body:'ボスレコードを消費して\n撃破済みの強敵へ挑戦します。\n\n難易度が高いほど\n報酬も豪華になります。'}]
+};
+function ensureFacilityHelpV150(){let ov=$('#facilityHelpOverlayV150');if(ov)return ov;ov=document.createElement('div');ov.id='facilityHelpOverlayV150';ov.className='facility-help-overlay-v150';ov.hidden=true;ov.innerHTML=`<div class="facility-help-shell-v150"><div class="facility-help-head-v150"><small>FACILITY GUIDE</small><b id="facilityHelpCountV150">1 / 1</b></div><article class="facility-help-card-v150"><h1 id="facilityHelpTitleV150">HELP</h1><div id="facilityHelpBodyV150"></div></article><div class="facility-help-actions-v150"><button id="facilityHelpPrevV150" type="button">←</button><button id="facilityHelpNextV150" type="button">TAP！</button><button id="facilityHelpCloseV150" type="button">×</button></div></div>`;document.body.appendChild(ov);$('#facilityHelpPrevV150',ov).onclick=()=>facilityHelpMoveV150(-1);$('#facilityHelpNextV150',ov).onclick=()=>facilityHelpMoveV150(1);$('#facilityHelpCloseV150',ov).onclick=closeFacilityHelpV150;ov.addEventListener('click',e=>{if(e.target===ov)closeFacilityHelpV150();});return ov;}
+let facilityHelpStateV150={key:'',pos:0,pages:[]};
+function currentFacilityHelpKeyV150(){
+  if(screens.training?.classList.contains('active')){const mode=String(state.training?.mode||'menu');return ['program','subquest','journal','exp','gold','boss'].includes(mode)?mode:'training';}
+  if(screens.tavern?.classList.contains('active')){if(!$('#tavernFigurePopup')?.hidden)return'figure';if(!$('#tavernDrinkPopup')?.hidden)return'drink';if(!$('#tavernPartyPopup')?.hidden)return'party';return'tavern';}
+  if(screens.castle?.classList.contains('active')){if(!$('#blacksmithPopup')?.hidden)return'smith';if(!$('#castleShopPopup')?.hidden)return'shop';return ['throne','inn','shop','records','smith'].includes(castleView)?castleView:'castle';}
+  return'training';
+}
+function renderFacilityHelpV150(){const ov=ensureFacilityHelpV150(),st=facilityHelpStateV150,p=st.pages[st.pos]||st.pages[0];if(!p)return;$('#facilityHelpTitleV150',ov).textContent=p.title;$('#facilityHelpBodyV150',ov).textContent=p.body;$('#facilityHelpCountV150',ov).textContent=`${st.pos+1} / ${st.pages.length}`;$('#facilityHelpPrevV150',ov).disabled=st.pos<=0;$('#facilityHelpNextV150',ov).textContent=st.pos>=st.pages.length-1?'最初へ':'TAP！';}
+function openFacilityHelpV150(key=currentFacilityHelpKeyV150()){const pages=FACILITY_HELP_V150[key]||FACILITY_HELP_V150.training;facilityHelpStateV150={key,pos:0,pages};const ov=ensureFacilityHelpV150();renderFacilityHelpV150();ov.hidden=false;}
+function closeFacilityHelpV150(){const ov=$('#facilityHelpOverlayV150');if(ov)ov.hidden=true;}
+function facilityHelpMoveV150(d){const st=facilityHelpStateV150;if(!st.pages.length)return;st.pos=(st.pos+d+st.pages.length)%st.pages.length;renderFacilityHelpV150();}
+function ensureFacilityHelpFabV150(){let b=$('#facilityHelpFabV150');if(!b){b=document.createElement('button');b.id='facilityHelpFabV150';b.className='facility-help-fab-v150';b.type='button';b.innerHTML='<b>?</b><span>HELP</span>';b.onclick=()=>openFacilityHelpV150();document.body.appendChild(b);}return b;}
+function updateFacilityHelpFabV150(){const b=ensureFacilityHelpFabV150(),active=!!(screens.training?.classList.contains('active')||screens.tavern?.classList.contains('active')||screens.castle?.classList.contains('active'));b.hidden=!active;}
+const _showScreenV150Base=showScreen;showScreen=function(name){const out=_showScreenV150Base(name);requestAnimationFrame(updateFacilityHelpFabV150);return out;};
+document.addEventListener('click',()=>requestAnimationFrame(updateFacilityHelpFabV150),true);requestAnimationFrame(updateFacilityHelpFabV150);
+
+/* ---------- Remove long spoken facility manuals. NPCs now point to HELP in character. ---------- */
+enterTraining=async function(){state.training.mode='menu';renderTraining();if(!facilityFlag('training:v150')){await facilityTalk('難しいことは何もないよ！\n分からないことはHELPを見てくれ！','モブコーチ','play/003.png');markFacilityFlag('training');markFacilityFlag('training:v150');}};
+showTrainingModeGuide=async function(mode){const text=TRAINING_GUIDE_TEXT[mode];if(!text||facilityFlag(`training:${mode}:v150`))return;await facilityTalk('詳しいルールはHELPを見てくれ！','モブコーチ','play/003.png');markFacilityFlag(`training:${mode}`);markFacilityFlag(`training:${mode}:v150`);};
+openBlacksmithFacility=async function(){renderBlacksmithRoom();try{await ensureCriticalBackgroundV128($('#castleBg'),['back/gonzo.png','back2/003.png','back2/01.png']);}catch(e){console.warn('[v150 smith bg]',e);}showScreen('castle');await nextPaint();await nextPaint();if(!facilityFlag('smith:v150')){await facilityTalk('分からないことがあったら\nHELPを見てくれ！','モブゴンゾー','play/002.png');markFacilityFlag('smith:v74');markFacilityFlag('smith:v150');}};
+const _openTavernFigureShopV150Base=openTavernFigureShopV98;
+openTavernFigureShopV98=async function(){if(!mapleShopUnlocked())return;const popup=$('#tavernFigurePopup');if(!popup)return;popup.hidden=true;const first=!facilityFlag('tavern:maple-shop:v150');if(first){await facilityTalk('やっほ〜！\n詳しいことはHELPを見てね！','モブメープル','play/009.png');markFacilityFlag('tavern:maple-shop');markFacilityFlag('tavern:maple-shop-v98');markFacilityFlag('tavern:maple-shop:v150');}else await facilityTalk('やっほ〜！\nどのガチャにする？','モブメープル','play/009.png');renderFigureGachaShopV98();await nextPaint();popup.hidden=false;requestAnimationFrame(updateFacilityHelpFabV150);};
+showTavernFigureShop=openTavernFigureShopV98;
+const _enterTavernV150Base=enterTavern;
+enterTavern=async function(){
+  tavernView='menu';renderTavern();
+  await facilityTalk('いらっしゃいませ♪\nゆっくりしていってくださいね！','モブイルカエル','play/001.png');markFacilityFlag('tavern');
+  if(mapleShopUnlocked()&&!facilityFlag('tavern:maple-intro:v150')){
+    await facilityTalk('今日から新しい仲間が増えたの！','モブイルカエル','play/001.png');
+    await facilityTalk('やっほ〜！\nモブメープルです！','モブメープル','play/009.png');
+    await facilityTalk('フィギュアの詳しいことは\nHELPを見てね！','モブメープル','play/009.png');
+    markFacilityFlag('tavern:maple-intro');markFacilityFlag('tavern:maple-intro-v98');markFacilityFlag('tavern:maple-intro:v150');renderTavern();
+  }
+  if(!facilityFlag('tavern:help:v150')){await facilityTalk('分からないことがあれば\nHELPを見てくださいね♪','モブイルカエル','play/001.png');markFacilityFlag('tavern:help:v150');}
+};
+const _openCastleRoomV150Base=openCastleRoom;
+openCastleRoom=async function(room){const out=await _openCastleRoomV150Base(room);if(room==='inn'&&!facilityFlag('inn:help:v150')){await facilityTalk('分からないことがあったら\nHELPを見てね！','モブミータ','play/006.png');markFacilityFlag('inn:help:v150');}else if(room==='shop'&&!facilityFlag('shop:help:v150')){await facilityTalk('分からないことは\nHELPを見てね♪','モブマテリア','play/005.png');markFacilityFlag('shop:help:v150');}requestAnimationFrame(updateFacilityHelpFabV150);return out;};
+
+/* Short Mob Pink explanations/confirmations remain speech bubbles by design. */
+window.__mobV150RegressionAudit={inheritV149:true,dialogueRules:['no-orphan','compact-bubble','no-overflow'],facilityHelp:true,squareNarration:true,mobPinkShortException:true};
+/* ===== END MOB QUEST v150 ===== */
+
+/* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
+window.__mobV151PatchRuntime=true;
+
+function dialogCardMaxV151(){
+  const app=$('#app'),vw=Math.max(280,app?.clientWidth||document.documentElement?.clientWidth||window.innerWidth||390);
+  return Math.max(268,Math.min(470,vw-12));
+}
+function dialogTextWidthV151(textEl){
+  if(!textEl)return 180;
+  const r=textEl.getBoundingClientRect();
+  return Math.max(120,Math.floor((r.width||textEl.clientWidth||180)-3));
+}
+function renderDialogLinesV151(el,page){
+  el.replaceChildren();
+  for(const line of String(page??'').split('\n')){
+    const span=document.createElement('span');
+    span.className='dialog-line-v151';
+    span.textContent=line;
+    el.appendChild(span);
+  }
+}
+async function openDialogShellV151(overlay,textEl,{facility=true,choices=false}={}){
+  overlay.classList.toggle('facility-line-talk',facility);
+  overlay.classList.toggle('facility-choice-talk',facility&&choices);
+  overlay.classList.add('dialog-safe-v151');
+  overlay.style.setProperty('--dialog-card-width-v151',`${dialogCardMaxV151()}px`);
+  overlay.hidden=false;
+  await nextPaint();
+  await nextPaint();
+  return dialogTextWidthV151(textEl);
+}
+function dialogPagesForRenderedWidthV151(text,textEl,maxLines=2){
+  const maxPx=dialogTextWidthV151(textEl);
+  return dialoguePagesV150(text,{sampleEl:textEl,maxPx,maxLines});
+}
+function dialogPageFitsV151(page,textEl){
+  const maxPx=dialogTextWidthV151(textEl);
+  return String(page??'').split('\n').every(line=>dialogueMeasureV150(line,textEl)<=maxPx+0.5);
+}
+function dialogRepairPageV151(page,textEl,maxLines=2){
+  if(dialogPageFitsV151(page,textEl))return [page];
+  return dialoguePagesV150(String(page??'').replace(/\n/g,''),{sampleEl:textEl,maxPx:dialogTextWidthV151(textEl),maxLines});
+}
+async function waitDialogTapV151(overlay){
+  return new Promise(resolve=>{
+    let ready=false;const timer=setTimeout(()=>ready=true,80);
+    const next=e=>{
+      if(!ready)return;
+      if(e?.target?.closest?.('[data-dialog-value]'))return;
+      e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);
+      overlay.removeEventListener('pointerup',next,true);resolve();
+    };
+    overlay.addEventListener('pointerup',next,{capture:true,passive:false});
+  });
+}
+function closeDialogShellV151(overlay,textEl){
+  overlay.hidden=true;
+  overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150','dialog-safe-v151','dialog-page-v151');
+  overlay.style.removeProperty('--facility-card-width');
+  overlay.style.removeProperty('--dialog-card-width-v151');
+  if(textEl)textEl.replaceChildren();
+}
+
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';
+  await openDialogShellV151(overlay,textEl,{facility:true,choices:false});
+  let pages=dialogPagesForRenderedWidthV151(text,textEl,2),safe=[];
+  for(const p of pages)safe.push(...dialogRepairPageV151(p,textEl,2));
+  pages=safe.length?safe:[''];
+  for(const page of pages){
+    renderDialogLinesV151(textEl,page);
+    await nextPaint();
+    if(!dialogPageFitsV151(page,textEl)){
+      const repaired=dialogRepairPageV151(page,textEl,2);
+      if(repaired.length>1){
+        for(const sub of repaired){renderDialogLinesV151(textEl,sub);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}
+        continue;
+      }
+    }
+    await waitDialogTapV151(overlay);await fixedDelay(60);
+  }
+  closeDialogShellV151(overlay,textEl);choices.innerHTML='';
+};
+
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');
+  $('#dialogSpeaker').textContent=speaker;
+  if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
+  choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
+  await openDialogShellV151(overlay,textEl,{facility,choices:true});
+  let pages=dialogPagesForRenderedWidthV151(text,textEl,2),safe=[];
+  for(const p of pages)safe.push(...dialogRepairPageV151(p,textEl,2));
+  pages=safe.length?safe:[''];
+  for(let i=0;i<pages.length-1;i++){
+    overlay.classList.add('dialog-page-v151');
+    renderDialogLinesV151(textEl,pages[i]);
+    await nextPaint();
+    await waitDialogTapV151(overlay);await fixedDelay(60);
+  }
+  overlay.classList.remove('dialog-page-v151');
+  renderDialogLinesV151(textEl,pages.at(-1)||'');await nextPaint();
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{const v=btn.dataset.dialogValue;closeDialogShellV151(overlay,textEl);choiceRoot.innerHTML='';resolve(v);});});
+};
+
+/* Use a conservative border-box-derived text width for story/subquest/report paths. */
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),sample=$('#storyText');
+  const bubbleMax=Math.min(360,Math.max(250,sceneW-16),sceneW*.92),maxPx=Math.max(180,Math.floor(bubbleMax-34));
+  for(const page of dialoguePagesV150(text,{sampleEl:sample,maxPx,maxLines:2}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+dialoguePagesV135=function(text,opt={}){const w=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),maxPx=Math.max(180,Math.min(326,w-50));return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx,maxLines:Number(opt.maxLines)||2});};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){const w=Math.max(280,document.documentElement?.clientWidth||360),maxPx=Math.max(180,Math.min(326,w-50));return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx,maxLines:Math.max(1,Number(maxLines)||2)});};
+
+window.__mobV151RegressionAudit={inheritV150:true,sourceOfTruth:'rendered-text-column',maxLines:2,noOverflow:true,choicePagination:true,iphoneSafe:true};
+/* ===== END MOB QUEST v151 ===== */
+
+/* ===== MOB QUEST v152: CONSERVATIVE PHONE DIALOGUE PAGINATION ===== */
+window.__mobV152PatchRuntime=true;
+function dialogueContentMetricsV152(textEl){const body=textEl?.closest?.('.dialog-body'),cs=textEl?getComputedStyle(textEl):null,bs=body?getComputedStyle(body):null,font=Math.max(12,parseFloat(cs?.fontSize)||16);let width=body?.clientWidth||textEl?.clientWidth||220;if(body&&bs){width-=parseFloat(bs.paddingLeft)||0;width-=parseFloat(bs.paddingRight)||0;width-=parseFloat(bs.borderLeftWidth)||0;width-=parseFloat(bs.borderRightWidth)||0;}const maxPx=Math.max(118,Math.floor(width-8)),maxChars=Math.max(8,Math.min(16,Math.floor(maxPx/font)));return{maxPx,maxChars,font,width};}
+function dialoguePagesV152(text,textEl,maxLines=2){const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];const m=dialogueContentMetricsV152(textEl),lines=[],authored=raw.split('\n').map(x=>x.trim()).filter(Boolean);for(const src of authored){for(const chunk of dialogueNaturalChunksV143(src,m.maxChars)){if(dialogueMeasureV150(chunk,textEl)<=m.maxPx+0.5)lines.push(chunk);else lines.push(...dialogueSplitLineV150(chunk,m.maxPx,textEl));}}for(let i=1;i<lines.length;i++){if([...lines[i]].length<=3){const joined=lines[i-1]+lines[i];if([...joined].length<=m.maxChars&&dialogueMeasureV150(joined,textEl)<=m.maxPx){lines.splice(i-1,2,joined);i--;}}}const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));return pages.length?pages:[''];}
+async function openDialogShellV152(overlay,textEl,{facility=true,choices=false}={}){overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility&&choices);overlay.classList.add('dialog-safe-v151','dialog-safe-v152');overlay.style.setProperty('--dialog-card-width-v151',`${dialogCardMaxV151()}px`);if(textEl)textEl.style.removeProperty('--facility-line-font');overlay.hidden=false;await nextPaint();await nextPaint();}
+function closeDialogShellV152(overlay,textEl){overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150','dialog-safe-v151','dialog-safe-v152','dialog-page-v151','dialog-page-v152');overlay.style.removeProperty('--facility-card-width');overlay.style.removeProperty('--dialog-card-width-v151');if(textEl){textEl.style.removeProperty('--facility-line-font');textEl.replaceChildren();}}
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';await openDialogShellV152(overlay,textEl,{facility:true,choices:false});const pages=dialoguePagesV152(text,textEl,2);for(const page of pages){renderDialogLinesV151(textEl,page);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}closeDialogShellV152(overlay,textEl);choices.innerHTML='';};
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');$('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');await openDialogShellV152(overlay,textEl,{facility,choices:true});const pages=facility?dialoguePagesV152(text,textEl,2):dialoguePagesV150(text,{sampleEl:textEl,maxPx:Math.max(160,dialogTextWidthV151(textEl)-8),maxLines:2});for(let i=0;i<pages.length-1;i++){overlay.classList.add('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages[i]);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}overlay.classList.remove('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages.at(-1)||'');await nextPaint();return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{const v=btn.dataset.dialogValue;closeDialogShellV152(overlay,textEl);choiceRoot.innerHTML='';resolve(v);});});};
+window.__mobV152RegressionAudit={inheritV151:true,iphoneTextSizeAdjust:true,cssEmergencyWrap:true,conservativeCharCap:true,maxLinesPerPage:2,noAtomicNoWrap:true};
+/* ===== END MOB QUEST v152 ===== */
+
+
+/* ===== MOB QUEST v153: DEMON CASTLE BG / AWAKENED DESERT SIZE / AUTHORED DIALOGUE ===== */
+window.__mobV153PatchRuntime=true;
+
+/* Demon Castle: never borrow another AREA's castle background while a request is late.
+   Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
+function v153RawAsset(src){return String(src||'').split('?')[0];}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=153`:src;}
+for(const wid of ['demonCastle','demonCastle2']){
+  const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
+  if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
+}
+const _setImageV153Base=setImage;
+setImage=function(img,src,fallback=''){
+  _setImageV153Base(img,src,fallback);
+  const raw=v153RawAsset(src);
+  if(img?.id==='adventureBg'&&/^back\/maoh(?:2|3|4)?\.png$/i.test(raw)){
+    img.dataset.fallbackChain=[raw].filter(x=>x&&x!==(img.getAttribute('src')||'')).join('|');
+    if(fallback)img.dataset.fallbackSrc=fallback;
+  }
+};
+const _openStorySceneV153Base=openStoryScene;
+openStoryScene=async function(worldId,areaIndex=0,layout='default',extras=[]){
+  if(worldId==='demonCastle'||worldId==='demonCastle2'){
+    const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===worldId),a=w?.areas?.[Math.max(0,Math.min(3,Number(areaIndex)||0))],src=a?.bg;
+    if(src){try{await Promise.race([preloadAsset(src,'high'),fixedDelay(2600)]);}catch(_){}}
+  }
+  return _openStorySceneV153Base(worldId,areaIndex,layout,extras);
+};
+
+/* Awakened Mob Desert (play/15.png) must occupy the same UI footprint as the original play/03.png.
+   The new artwork has a different source canvas, so raw natural-pixel scaling made only this actor huge. */
+let desertBaseNaturalV153=null;
+async function desertBaseNaturalSizeV153(){
+  if(desertBaseNaturalV153)return desertBaseNaturalV153;
+  const src=versionedPlay('play/03.png');
+  try{await preloadAsset(src,'high');}catch(_){}
+  const im=assetImageCache?.get?.(src);
+  if(im?.naturalWidth>0&&im?.naturalHeight>0)desertBaseNaturalV153={w:im.naturalWidth,h:im.naturalHeight};
+  return desertBaseNaturalV153;
+}
+async function effectivePartyNaturalV153(img){
+  const holder=img?.closest?.('[data-player-detail],.story-party-actor');
+  const desert=holder?.dataset?.playerDetail==='desert'||holder?.dataset?.storyActor==='desert';
+  const awakened=/play\/15\.png/i.test(v153RawAsset(img?.getAttribute('src')||img?.src||''));
+  const awakenedState=(typeof desertAwakenedV120==='function'&&desertAwakenedV120());
+  if(desert&&(awakened||awakenedState)){const b=await desertBaseNaturalSizeV153();if(b)return b;}
+  return {w:img.naturalWidth||1,h:img.naturalHeight||1};
+}
+applyAdventurePartyScale=async function(){
+  const root=$('#adventureParty');if(!root)return;
+  const imgs=$$('[data-adventure-party-img]',root);if(!imgs.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(imgs.map(async img=>{if(!(img.complete&&img.naturalWidth))await new Promise(resolve=>{const done=()=>resolve();img.addEventListener('load',done,{once:true});img.addEventListener('error',done,{once:true});});try{if(img.decode&&img.naturalWidth)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length){setAdventureVisualLoading(false);return;}
+  await Promise.all(valid.map(img=>cleanAdventurePartyImageBackground(img)));
+  const eff=await Promise.all(valid.map(effectivePartyNaturalV153));
+  const sumW=eff.reduce((a,n)=>a+n.w,0),maxH=Math.max(...eff.map(n=>n.h));
+  const scale=Math.min(ADVENTURE_COMMON_SCALE_MAX,Math.max(.01,(root.clientWidth-8)/Math.max(1,sumW)),Math.max(.01,(root.clientHeight-8)/Math.max(1,maxH)));
+  valid.forEach((img,i)=>{const n=eff[i];img.style.setProperty('width',`${Math.max(1,Math.round(n.w*scale))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(n.h*scale))}px`,'important');img.classList.add('size-ready');});
+  await nextPaint();setAdventureVisualLoading(false);
+};
+sizeStoryPartyImages=async function(root){
+  const imgs=$$('[data-story-party-img]',root);
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
+  const eff=await Promise.all(valid.map(effectivePartyNaturalV153)),count=valid.length,rows=Math.max(1,Math.ceil(count/6));
+  const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(eff.slice(i,i+6).reduce((a,n)=>a+n.w,0));
+  const maxRowW=Math.max(...rowSums,1),maxH=Math.max(...eff.map(n=>n.h)),rowH=Math.max(1,(root.clientHeight-4)/rows);
+  const cap=count<=2?.150:count<=3?.138:count<=4?.130:count<=6?.118:count<=8?.112:count<=10?.103:.098;
+  const sc=Math.min(cap,(root.clientWidth-8)/maxRowW,(rowH*.94)/maxH);lastStoryPartyScale=sc;
+  valid.forEach((img,i)=>{const n=eff[i];img.style.setProperty('width',`${Math.max(1,Math.round(n.w*sc))}px`,'important');img.style.setProperty('height',`${Math.max(1,Math.round(n.h*sc))}px`,'important');img.classList.add('size-ready');});
+};
+const _applyStoryGuestNaturalSizeV153Base=applyStoryGuestNaturalSize;
+applyStoryGuestNaturalSize=function(holder,img,info,opt={}){
+  _applyStoryGuestNaturalSizeV153Base(holder,img,info,opt);
+  if(info?.player&&info?.key==='desert'&&/play\/15\.png/i.test(v153RawAsset(img?.getAttribute('src')||img?.src||''))&&desertBaseNaturalV153){
+    const scene=$('#storyScene')?.getBoundingClientRect();if(!scene?.width||!scene?.height)return;
+    let sc=Math.min(lastStoryPartyScale||.14,.17);const n=desertBaseNaturalV153,sz=fitNaturalSize(n.w,n.h,sc,scene.width*(opt.multi?.25:.32),scene.height*(opt.multi?.22:.25));
+    holder.style.setProperty('width',`${sz.w}px`,'important');holder.style.setProperty('height',`${sz.h}px`,'important');
+  }
+};
+
+window.__mobV153RegressionAudit={inheritV152:true,demonCastleExactAreaBackground:true,demonCastleNoCrossAreaFallback:true,awakenedDesertUsesBaseFootprint:true,aceLineShortened:true};
+/* ===== END MOB QUEST v153 ===== */
+
+
 </script>
 </body>
 </html>

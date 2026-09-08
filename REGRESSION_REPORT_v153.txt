@@ -1,0 +1,27 @@
+MOB QUEST v153 REGRESSION REPORT
+
+Base: v152 IPHONE DIALOGUE ABSOLUTE WRAP STABLE
+
+Changes
+1. Demon Castle adventure/story background
+   - Demon Castle and Demon Castle II AREA backgrounds keep their authored back/maoh*.png mapping.
+   - Cache-busts the exact AREA background with mqv=153.
+   - Removes cross-AREA maoh fallback swapping; retry is limited to the same AREA source before normal fallback.
+   - Story scene preloads the exact castle AREA background before reveal.
+
+2. Mob Desert post-awakening visual size
+   - play/15.png uses play/03.png natural dimensions as its UI footprint.
+   - Applied to Adventure party and Story party scaling.
+   - Does not change the awakened artwork or skill unlock.
+
+3. Dialogue authored fix
+   - "まさか本当にここまで来るとはな" -> "まさかここまで来るとはな"
+   - All duplicate event definitions updated to avoid an orphan final kana.
+
+4. Version
+   - title v153
+   - GAME_ASSET_VERSION 153
+
+Preserved
+- v152 iPhone dialogue wrap/pagination guards.
+- Existing story, battle, party, subquest, facility, equipment, figure, and progression systems.
