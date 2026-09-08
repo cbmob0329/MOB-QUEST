@@ -4324,6 +4324,19 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 /* ===== MOB QUEST v142: DIALOGUE / PASSIVE READABILITY ===== */
 .story-bubble p,.battle-story-dialogue-v133 #passiveCutinText{line-break:strict;word-break:normal;overflow-wrap:normal;}
 /* ===== END MOB QUEST v142 ===== */
+
+/* ===== MOB QUEST v143: DIALOGUE TYPOGRAPHY SAFETY ===== */
+.story-bubble>p{
+  white-space:pre-line!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:balance!important;
+  text-wrap-style:balance!important;
+}
+/* Never allow a compact subquest bubble to squeeze Japanese into a one-character orphan line. */
+.story-scene.subquest-story-v111 .story-bubble{min-width:min(64vw,250px)!important;max-width:min(92vw,360px)!important;}
+/* ===== END MOB QUEST v143 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4343,7 +4356,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v142</div>
+      <div class="title-version">v143</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4754,7 +4767,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v142
+// MOB QUEST v143
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -6217,7 +6230,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=142;
+const GAME_ASSET_VERSION=143;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -7158,7 +7171,7 @@ const SUBQUEST_AREAS=[
   const sea=area('sea');if(sea){sea.required=['nekoku','pink','desert'];sea.quests=[
     {id:'sea-1',no:1,name:'深海調査',reward:{diamonds:10,coins:30000,weapons:['24'],armor:'25'},intro:[['nekoku','海底は平和だ'],['nekoku','だから守らないと'],['pink','それでみんな強いのでありますね'],['nekoku','オラも修行中だ'],['show',['s-mist','s-nessie']],['nekoku','国王様の役に立つなら'],['nekoku','もっと強くなるぞ'],['desert','良い忠誠心だ']],waves:[[{id:'s-mist',level:40},{id:'s-mist',level:40},{id:'s-nessie',level:40},{id:'s-nessie',level:40}]],post:[['pink','モブネコクー、十分強いであります！'],['pink','頼もしいですね♪']]},
     {id:'sea-2',no:2,name:'海に潜むニンジャ',reward:{diamonds:10,coins:30000,weapons:['25'],armor:'26'},intro:[['desert','ここの住人は海底から外には出ないのか？'],['nekoku','むしろここにいることの方が少ないぞ。色んなエリアでみんな戦っているぞ'],['pink','凄いですね～。尊敬であります！'],['show',['s-ninja','s-ninja','s-ninja','s-ninja']],['nekoku','色んなエリアの文化で海底は毎日進化してるぞ']],waves:[[{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40}]],post:[['desert','通りで技が多様なわけだ']]},
-    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底にはカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間がいっぱいいるぞ'],['pink','いずれ共闘する日が来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
+    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底には\nカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間が\nいっぱいいるぞ'],['pink','いずれ共闘する日が\n来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
     {id:'sea-4',no:4,name:'モブウェイブの本気',reward:{diamonds:10,coins:50000,weapons:['27'],armor:'28'},intro:[['nekoku','モブウェイブは長年国王様の側近なんだぞ'],['pink','風格ありましたからね～。納得であります！'],['show',['sq-wave-serious']],['desert','腕試しにはもってこいだな']],waves:[[{id:'sq-wave-serious',level:50}]],post:[['desert','学びの多い戦いだったな'],['nekoku','オラ、モブウェイブ好きだ。いいやつで強い'],['pink','仲間になって欲しいでありますね～']]},
     {id:'sea-5',no:5,name:'ライバル再び',reward:{diamonds:50,coins:50000,weapons:['28'],armor:'29'},intro:[['nekoku','モブジョーンズは海底の英雄なんだぞ'],['pink','英雄でありますか！'],['nekoku','有名な戦いには必ずモブジョーンズの功績があるぞ'],['desert','まだまだ力を秘めていそうだったな'],['show',['sq-power-jones']],['nekoku','ある戦いで敗れて以来、強さをさらに求めているぞ'],['desert','良い志だ']],waves:[[{id:'sq-power-jones',level:55}]],post:[['pink','これほどの力でも勝てなかったでありますか？'],['nekoku','一対一ではなかったと聞いてるぞ'],['pink','きっと卑怯な手を使われたであります！']]}
   ];}
@@ -7178,7 +7191,7 @@ const SUBQUEST_AREAS=[
   const sea=area('sea');if(sea){sea.required=['nekoku','pink','desert'];sea.quests=[
     {id:'sea-1',no:1,name:'深海調査',reward:{diamonds:10,coins:30000,weapons:['24'],armor:'25'},intro:[['nekoku','海底は平和だ'],['nekoku','だから守らないと'],['pink','それでみんな強いのでありますね'],['nekoku','オラも修行中だ'],['show',['s-mist','s-nessie']],['nekoku','国王様の役に立つなら'],['nekoku','もっと強くなるぞ'],['desert','良い忠誠心だ']],waves:[[{id:'s-mist',level:40},{id:'s-mist',level:40},{id:'s-nessie',level:40},{id:'s-nessie',level:40}]],post:[['pink','モブネコクー、十分強いであります！'],['pink','頼もしいですね♪']]},
     {id:'sea-2',no:2,name:'海に潜むニンジャ',reward:{diamonds:10,coins:30000,weapons:['25'],armor:'26'},intro:[['desert','ここの住人は海底から外には出ないのか？'],['nekoku','むしろここにいることの方が少ないぞ。色んなエリアでみんな戦っているぞ'],['pink','凄いですね～。尊敬であります！'],['show',['s-ninja','s-ninja','s-ninja','s-ninja']],['nekoku','色んなエリアの文化で海底は毎日進化してるぞ']],waves:[[{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40},{id:'s-ninja',level:40}]],post:[['desert','通りで技が多様なわけだ']]},
-    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底にはカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間がいっぱいいるぞ'],['pink','いずれ共闘する日が来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
+    {id:'sea-3',no:3,name:'海底騎士団',reward:{diamonds:10,coins:30000,weapons:['26'],armor:'27'},intro:[['nekoku','海底には\nカッコイイ騎士団がいるぞ'],['pink','騎士団でありますか～！'],['nekoku','オラもその一人だ'],['desert','だから推薦されたのか'],['show',['s-soldier','sq-high-abyss']],['nekoku','強い仲間が\nいっぱいいるぞ'],['pink','いずれ共闘する日が\n来るかもしれないであります！']],waves:[[{id:'s-soldier',level:40},{id:'s-soldier',level:40},{id:'sq-high-abyss',level:48},{id:'sq-high-abyss',level:48}]],post:[['desert','魔王軍 VS 騎士団か。見てみたいものだな']]},
     {id:'sea-4',no:4,name:'モブウェイブの本気',reward:{diamonds:10,coins:50000,weapons:['27'],armor:'28'},intro:[['nekoku','モブウェイブは長年国王様の側近なんだぞ'],['pink','風格ありましたからね～。納得であります！'],['show',['sq-wave-serious']],['desert','腕試しにはもってこいだな']],waves:[[{id:'sq-wave-serious',level:50}]],post:[['desert','学びの多い戦いだったな'],['nekoku','オラ、モブウェイブ好きだ。いいやつで強い'],['pink','仲間になって欲しいでありますね～']]},
     {id:'sea-5',no:5,name:'ライバル再び',reward:{diamonds:50,coins:50000,weapons:['28'],armor:'29'},intro:[['nekoku','モブジョーンズは海底の英雄なんだぞ'],['pink','英雄でありますか！'],['nekoku','有名な戦いには必ずモブジョーンズの功績があるぞ'],['desert','まだまだ力を秘めていそうだったな'],['show',['sq-power-jones']],['nekoku','ある戦いで敗れて以来、強さをさらに求めているぞ'],['desert','良い志だ']],waves:[[{id:'sq-power-jones',level:55}]],post:[['pink','これほどの力でも勝てなかったでありますか？'],['nekoku','一対一ではなかったと聞いてるぞ'],['pink','きっと卑怯な手を使われたであります！']]}
   ];}
@@ -15315,6 +15328,84 @@ renderBlacksmithPopup=function(mode='menu'){
 
 window.__mobV142RegressionAudit={inheritV141:true,armorSell:'explicit+confirmed',sea1Dialogue:'manual-pages',enemyPassiveCount:29};
 /* ===== END MOB QUEST v142 ===== */
+
+/* ===== MOB QUEST v143: DIALOGUE LAYOUT GUARANTEE ===== */
+window.__mobV143DialogueSafe=true;
+
+/*
+  v142 fixed page splitting but the bubble itself was still made too narrow by
+  storySayLine(): a 12-character Japanese sentence could be assigned about 200px,
+  which let Safari wrap only the final character onto a new line.
+  v143 measures the actual text width, gives Japanese dialogue a safer minimum,
+  and only inserts semantic breaks at natural clause boundaries.
+*/
+function dialogueNaturalChunksV143(raw,maxChars=20){
+  const src=String(raw??'').trim();if(!src)return[''];
+  const chars=[...src];if(chars.length<=maxChars)return[src];
+  const out=[];let rest=src;
+  const phraseHints=['ということで','というのは','それなら','だから','しかし','けれど','けど','そして','でも','なので','のなら','のに','から','なら','ので','のは','には','では','とは'];
+  const particles=new Set(['は','が','を','に','へ','で','と','も','の']);
+  while([...rest].length>maxChars){
+    const a=[...rest],limit=Math.min(maxChars,a.length-1),min=Math.max(7,limit-8);let best=-1,bestScore=-999;
+    for(let i=min;i<=Math.min(a.length-1,limit+2);i++){
+      const left=a.slice(0,i).join(''),right=a.slice(i).join('');
+      if([...right].length<=3)continue;
+      let score=-Math.abs(i-limit)*2;
+      const prev=a[i-1]||'',next=a[i]||'';
+      if(/[、。！？!?…]/.test(prev))score+=18;
+      if(particles.has(prev))score+=8;
+      for(const h of phraseHints){if(left.endsWith(h))score+=12;if(right.startsWith(h))score+=7;}
+      if(/[っゃゅょァィゥェォャュョッー]/.test(next))score-=18;
+      if(/[、。！？!?]/.test(next))score-=10;
+      if(score>bestScore){bestScore=score;best=i;}
+    }
+    if(best<0)best=limit;
+    let left=a.slice(0,best).join('').trim(),right=a.slice(best).join('').trim();
+    if([...right].length<=3&&[...left].length>9){const move=4-[...right].length,aa=[...left];right=aa.slice(-move).join('')+right;left=aa.slice(0,-move).join('');}
+    if(left)out.push(left);rest=right;
+  }
+  if(rest)out.push(rest);return out.filter(Boolean);
+}
+function dialoguePagesV143(text,{maxLines=2,maxChars=20}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];
+  const authored=raw.split('\n').map(x=>x.trim()).filter(Boolean),lines=[];
+  for(const line of authored)lines.push(...dialogueNaturalChunksV143(line,maxChars));
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));
+  return pages.length?pages:[''];
+}
+function measureStoryTextV143(text,size=15,weight=800){
+  const c=measureStoryTextV143.canvas||(measureStoryTextV143.canvas=document.createElement('canvas'));
+  const ctx=c.getContext('2d');if(!ctx)return [...String(text||'')].length*size;
+  ctx.font=`${weight} ${size}px -apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif`;
+  return ctx.measureText(String(text||'')).width;
+}
+
+storySayLine=async function(key,line,displayName=null,anchorKey=null){
+  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),speaker=displayName||info.name||'???',text=String(line??'');
+  $('#storySpeaker').textContent=speaker;$('#storyText').textContent=text;
+  const logical=text.split('\n'),longest=Math.max(...logical.map(s=>measureStoryTextV143(s,15,800)),measureStoryTextV143(speaker,10,900));
+  const sceneWidth=Math.max(220,$('#storyScene')?.clientWidth||360),maxW=Math.min(360,sceneWidth-16),charCount=Math.max(...logical.map(s=>[...s].length));
+  const minW=charCount>=10?250:charCount>=6?220:176;
+  bubble.style.width=`${Math.round(clamp(longest+44,minW,maxW))}px`;
+  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
+  await nextPaint();const scene=$('#storyScene').getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
+  if(anchor){
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;left=clamp(cx-br.width/2,8,scene.width-br.width-8);top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+    if($('#storyScene')?.classList.contains('subquest-story-v111')&&anchor.closest?.('#storyPartyLine'))top=clamp(Math.max(top,scene.height*.555),66,scene.height-br.height-34);
+  }else bubble.classList.add('no-arrow');
+  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;await nextPaint();bubble.classList.add('show');
+  await storyAdvanceWait();bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);await fixedDelay(500);bubble.hidden=true;
+};
+storySay=async function(key,text,displayName=null,anchorKey=null){for(const page of dialoguePagesV143(text,{maxLines:2,maxChars:20}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+
+/* Keep the same rule for battle dialogue and castle reports. */
+dialoguePagesV135=function(text,opt={}){return dialoguePagesV143(text,{maxLines:Number(opt.maxLines)||2,maxChars:20});};
+battleDialogueTextV133=function(text){return dialoguePagesV143(text,{maxLines:2,maxChars:21})[0];};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV143(text,{maxLines:2,maxChars:20});};
+
+window.__mobV143RegressionAudit={inheritV142:true,orphanLineFix:true,storyBubbleMeasured:true,semanticDialogueSplit:true};
+/* ===== END MOB QUEST v143 ===== */
 </script>
 </body>
 </html>

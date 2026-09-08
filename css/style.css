@@ -4313,3 +4313,16 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .story-bubble p,.battle-story-dialogue-v133 #passiveCutinText{line-break:strict;word-break:normal;overflow-wrap:normal;}
 /* ===== END MOB QUEST v142 ===== */
 
+/* ===== MOB QUEST v143: DIALOGUE TYPOGRAPHY SAFETY ===== */
+.story-bubble>p{
+  white-space:pre-line!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-break:strict!important;
+  text-wrap:balance!important;
+  text-wrap-style:balance!important;
+}
+/* Never allow a compact subquest bubble to squeeze Japanese into a one-character orphan line. */
+.story-scene.subquest-story-v111 .story-bubble{min-width:min(64vw,250px)!important;max-width:min(92vw,360px)!important;}
+/* ===== END MOB QUEST v143 ===== */
+
