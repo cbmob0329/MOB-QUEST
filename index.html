@@ -4511,6 +4511,14 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .story-bubble>p{max-width:100%!important;overflow:hidden!important;}
 .story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;overflow:hidden!important;}
 /* ===== END MOB QUEST v151 ===== */
+/* ===== MOB QUEST v152: IPHONE DIALOGUE ABSOLUTE WRAP GUARD ===== */
+html,body,#app{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+.dialog-overlay.facility-line-talk .dialog-body,.dialog-overlay.dialog-safe-v151 .dialog-body{min-width:0!important;overflow:visible!important}
+.dialog-overlay.facility-line-talk .dialog-body>p,.dialog-overlay.dialog-safe-v151 .dialog-body>p{width:100%!important;max-width:100%!important;min-width:0!important;display:block!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-wrap:pretty!important;overflow:visible!important;text-overflow:clip!important}
+.dialog-overlay.facility-line-talk .facility-line-v150,.dialog-overlay.dialog-safe-v151 .dialog-line-v151,.dialog-overlay.facility-line-talk .dialog-line-v151{display:block!important;width:auto!important;max-width:100%!important;min-width:0!important;white-space:normal!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;overflow:visible!important;text-overflow:clip!important}
+.story-bubble>p,.story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;overflow:visible!important}
+/* ===== END MOB QUEST v152 CSS ===== */
+
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4530,7 +4538,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v151</div>
+      <div class="title-version">v152</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -4941,7 +4949,7 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
   <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
-// MOB QUEST v151
+// MOB QUEST v152
 // v104: 主人公パーティーの基礎ステータス・属性耐性・状態異常耐性・サブ属性・レベル習得技は正式設定。
 // 敵能力値など未確定部分のみ TEMP_BALANCE の仮設定を継続します。
 const TEMP_BALANCE = {
@@ -16426,6 +16434,18 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){const w=Math.max(280
 
 window.__mobV151RegressionAudit={inheritV150:true,sourceOfTruth:'rendered-text-column',maxLines:2,noOverflow:true,choicePagination:true,iphoneSafe:true};
 /* ===== END MOB QUEST v151 ===== */
+
+/* ===== MOB QUEST v152: CONSERVATIVE PHONE DIALOGUE PAGINATION ===== */
+window.__mobV152PatchRuntime=true;
+function dialogueContentMetricsV152(textEl){const body=textEl?.closest?.('.dialog-body'),cs=textEl?getComputedStyle(textEl):null,bs=body?getComputedStyle(body):null,font=Math.max(12,parseFloat(cs?.fontSize)||16);let width=body?.clientWidth||textEl?.clientWidth||220;if(body&&bs){width-=parseFloat(bs.paddingLeft)||0;width-=parseFloat(bs.paddingRight)||0;width-=parseFloat(bs.borderLeftWidth)||0;width-=parseFloat(bs.borderRightWidth)||0;}const maxPx=Math.max(118,Math.floor(width-8)),maxChars=Math.max(8,Math.min(16,Math.floor(maxPx/font)));return{maxPx,maxChars,font,width};}
+function dialoguePagesV152(text,textEl,maxLines=2){const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];const m=dialogueContentMetricsV152(textEl),lines=[],authored=raw.split('\n').map(x=>x.trim()).filter(Boolean);for(const src of authored){for(const chunk of dialogueNaturalChunksV143(src,m.maxChars)){if(dialogueMeasureV150(chunk,textEl)<=m.maxPx+0.5)lines.push(chunk);else lines.push(...dialogueSplitLineV150(chunk,m.maxPx,textEl));}}for(let i=1;i<lines.length;i++){if([...lines[i]].length<=3){const joined=lines[i-1]+lines[i];if([...joined].length<=m.maxChars&&dialogueMeasureV150(joined,textEl)<=m.maxPx){lines.splice(i-1,2,joined);i--;}}}const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));return pages.length?pages:[''];}
+async function openDialogShellV152(overlay,textEl,{facility=true,choices=false}={}){overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility&&choices);overlay.classList.add('dialog-safe-v151','dialog-safe-v152');overlay.style.setProperty('--dialog-card-width-v151',`${dialogCardMaxV151()}px`);if(textEl)textEl.style.removeProperty('--facility-line-font');overlay.hidden=false;await nextPaint();await nextPaint();}
+function closeDialogShellV152(overlay,textEl){overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150','dialog-safe-v151','dialog-safe-v152','dialog-page-v151','dialog-page-v152');overlay.style.removeProperty('--facility-card-width');overlay.style.removeProperty('--dialog-card-width-v151');if(textEl){textEl.style.removeProperty('--facility-line-font');textEl.replaceChildren();}}
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';await openDialogShellV152(overlay,textEl,{facility:true,choices:false});const pages=dialoguePagesV152(text,textEl,2);for(const page of pages){renderDialogLinesV151(textEl,page);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}closeDialogShellV152(overlay,textEl);choices.innerHTML='';};
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');$('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');await openDialogShellV152(overlay,textEl,{facility,choices:true});const pages=facility?dialoguePagesV152(text,textEl,2):dialoguePagesV150(text,{sampleEl:textEl,maxPx:Math.max(160,dialogTextWidthV151(textEl)-8),maxLines:2});for(let i=0;i<pages.length-1;i++){overlay.classList.add('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages[i]);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}overlay.classList.remove('dialog-page-v151','dialog-page-v152');renderDialogLinesV151(textEl,pages.at(-1)||'');await nextPaint();return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{const v=btn.dataset.dialogValue;closeDialogShellV152(overlay,textEl);choiceRoot.innerHTML='';resolve(v);});});};
+window.__mobV152RegressionAudit={inheritV151:true,iphoneTextSizeAdjust:true,cssEmergencyWrap:true,conservativeCharCap:true,maxLinesPerPage:2,noAtomicNoWrap:true};
+/* ===== END MOB QUEST v152 ===== */
+
 
 </script>
 </body>
