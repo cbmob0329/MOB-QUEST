@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=150;
+const GAME_ASSET_VERSION=151;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -9912,4 +9912,124 @@ openCastleRoom=async function(room){const out=await _openCastleRoomV150Base(room
 /* Short Mob Pink explanations/confirmations remain speech bubbles by design. */
 window.__mobV150RegressionAudit={inheritV149:true,dialogueRules:['no-orphan','compact-bubble','no-overflow'],facilityHelp:true,squareNarration:true,mobPinkShortException:true};
 /* ===== END MOB QUEST v150 ===== */
+
+
+
+/* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
+window.__mobV151PatchRuntime=true;
+
+function dialogCardMaxV151(){
+  const app=$('#app'),vw=Math.max(280,app?.clientWidth||document.documentElement?.clientWidth||window.innerWidth||390);
+  return Math.max(268,Math.min(470,vw-12));
+}
+function dialogTextWidthV151(textEl){
+  if(!textEl)return 180;
+  const r=textEl.getBoundingClientRect();
+  return Math.max(120,Math.floor((r.width||textEl.clientWidth||180)-3));
+}
+function renderDialogLinesV151(el,page){
+  el.replaceChildren();
+  for(const line of String(page??'').split('\n')){
+    const span=document.createElement('span');
+    span.className='dialog-line-v151';
+    span.textContent=line;
+    el.appendChild(span);
+  }
+}
+async function openDialogShellV151(overlay,textEl,{facility=true,choices=false}={}){
+  overlay.classList.toggle('facility-line-talk',facility);
+  overlay.classList.toggle('facility-choice-talk',facility&&choices);
+  overlay.classList.add('dialog-safe-v151');
+  overlay.style.setProperty('--dialog-card-width-v151',`${dialogCardMaxV151()}px`);
+  overlay.hidden=false;
+  await nextPaint();
+  await nextPaint();
+  return dialogTextWidthV151(textEl);
+}
+function dialogPagesForRenderedWidthV151(text,textEl,maxLines=2){
+  const maxPx=dialogTextWidthV151(textEl);
+  return dialoguePagesV150(text,{sampleEl:textEl,maxPx,maxLines});
+}
+function dialogPageFitsV151(page,textEl){
+  const maxPx=dialogTextWidthV151(textEl);
+  return String(page??'').split('\n').every(line=>dialogueMeasureV150(line,textEl)<=maxPx+0.5);
+}
+function dialogRepairPageV151(page,textEl,maxLines=2){
+  if(dialogPageFitsV151(page,textEl))return [page];
+  return dialoguePagesV150(String(page??'').replace(/\n/g,''),{sampleEl:textEl,maxPx:dialogTextWidthV151(textEl),maxLines});
+}
+async function waitDialogTapV151(overlay){
+  return new Promise(resolve=>{
+    let ready=false;const timer=setTimeout(()=>ready=true,80);
+    const next=e=>{
+      if(!ready)return;
+      if(e?.target?.closest?.('[data-dialog-value]'))return;
+      e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);
+      overlay.removeEventListener('pointerup',next,true);resolve();
+    };
+    overlay.addEventListener('pointerup',next,{capture:true,passive:false});
+  });
+}
+function closeDialogShellV151(overlay,textEl){
+  overlay.hidden=true;
+  overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150','dialog-safe-v151','dialog-page-v151');
+  overlay.style.removeProperty('--facility-card-width');
+  overlay.style.removeProperty('--dialog-card-width-v151');
+  if(textEl)textEl.replaceChildren();
+}
+
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';
+  await openDialogShellV151(overlay,textEl,{facility:true,choices:false});
+  let pages=dialogPagesForRenderedWidthV151(text,textEl,2),safe=[];
+  for(const p of pages)safe.push(...dialogRepairPageV151(p,textEl,2));
+  pages=safe.length?safe:[''];
+  for(const page of pages){
+    renderDialogLinesV151(textEl,page);
+    await nextPaint();
+    if(!dialogPageFitsV151(page,textEl)){
+      const repaired=dialogRepairPageV151(page,textEl,2);
+      if(repaired.length>1){
+        for(const sub of repaired){renderDialogLinesV151(textEl,sub);await nextPaint();await waitDialogTapV151(overlay);await fixedDelay(60);}
+        continue;
+      }
+    }
+    await waitDialogTapV151(overlay);await fixedDelay(60);
+  }
+  closeDialogShellV151(overlay,textEl);choices.innerHTML='';
+};
+
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText'),choiceRoot=$('#dialogChoices');
+  $('#dialogSpeaker').textContent=speaker;
+  if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}
+  choiceRoot.innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');
+  await openDialogShellV151(overlay,textEl,{facility,choices:true});
+  let pages=dialogPagesForRenderedWidthV151(text,textEl,2),safe=[];
+  for(const p of pages)safe.push(...dialogRepairPageV151(p,textEl,2));
+  pages=safe.length?safe:[''];
+  for(let i=0;i<pages.length-1;i++){
+    overlay.classList.add('dialog-page-v151');
+    renderDialogLinesV151(textEl,pages[i]);
+    await nextPaint();
+    await waitDialogTapV151(overlay);await fixedDelay(60);
+  }
+  overlay.classList.remove('dialog-page-v151');
+  renderDialogLinesV151(textEl,pages.at(-1)||'');await nextPaint();
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{const v=btn.dataset.dialogValue;closeDialogShellV151(overlay,textEl);choiceRoot.innerHTML='';resolve(v);});});
+};
+
+/* Use a conservative border-box-derived text width for story/subquest/report paths. */
+storySay=async function(key,text,displayName=null,anchorKey=null){
+  const sceneW=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),sample=$('#storyText');
+  const bubbleMax=Math.min(360,Math.max(250,sceneW-16),sceneW*.92),maxPx=Math.max(180,Math.floor(bubbleMax-34));
+  for(const page of dialoguePagesV150(text,{sampleEl:sample,maxPx,maxLines:2}))await storySayLine(key,page,displayName,anchorKey);
+};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+dialoguePagesV135=function(text,opt={}){const w=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),maxPx=Math.max(180,Math.min(326,w-50));return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx,maxLines:Number(opt.maxLines)||2});};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){const w=Math.max(280,document.documentElement?.clientWidth||360),maxPx=Math.max(180,Math.min(326,w-50));return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx,maxLines:Math.max(1,Number(maxLines)||2)});};
+
+window.__mobV151RegressionAudit={inheritV150:true,sourceOfTruth:'rendered-text-column',maxLines:2,noOverflow:true,choicePagination:true,iphoneSafe:true};
+/* ===== END MOB QUEST v151 ===== */
 

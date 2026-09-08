@@ -4471,3 +4471,32 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 @media(max-width:380px){.facility-help-card-v150{padding:18px 16px;border-radius:20px}.facility-help-card-v150 h1{font-size:19px;margin-bottom:11px;padding-bottom:9px}.facility-help-card-v150>div{font-size:12px;line-height:1.55}.facility-help-fab-v150{top:calc(62px + var(--safe-top));right:7px}}
 /* ===== END MOB QUEST v150 ===== */
 
+
+/* ===== MOB QUEST v151: DOM-MEASURED DIALOGUE ROOT FIX ===== */
+/*
+  v150 estimated the text column from viewport width. On real iPhone Safari the
+  accumulated grid + body padding can make the true text column narrower than
+  that estimate, so an atomic no-wrap line could still escape the bubble.
+  v151 treats the rendered text column itself as the source of truth.
+*/
+.dialog-overlay.dialog-safe-v151 .dialog-card{
+  width:min(var(--dialog-card-width-v151,470px),calc(100vw - 12px))!important;
+  max-width:470px!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-body{min-width:0!important;overflow:hidden!important;}
+.dialog-overlay.dialog-safe-v151 .dialog-body>p{
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  display:block!important;white-space:normal!important;word-break:normal!important;
+  overflow-wrap:normal!important;line-break:strict!important;text-wrap:nowrap!important;
+  overflow:hidden!important;
+}
+.dialog-overlay.dialog-safe-v151 .dialog-line-v151{
+  display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;
+  white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;
+  line-break:strict!important;overflow:hidden!important;text-overflow:clip!important;
+}
+.dialog-overlay.dialog-safe-v151.dialog-page-v151 .dialog-choices{display:none!important;}
+/* Story text also gets a hard visual boundary. The layout engine still splits before this is needed. */
+.story-bubble>p{max-width:100%!important;overflow:hidden!important;}
+.story-bubble>p .dialogue-line-v148,.story-bubble>p .dialogue-line-v150{max-width:100%!important;overflow:hidden!important;}
+/* ===== END MOB QUEST v151 ===== */

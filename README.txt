@@ -300,3 +300,13 @@ Gacha common-pool/input-lock/10-result-summary fixes, figure-image loading witho
 - 特技会心率をフィギュア効果として処理できるよう追加。
 - GAME_ASSET_VERSION / title version を v125 に更新。
 
+
+
+=== v151 DOM-MEASURED DIALOGUE ROOT FIX ===
+Base: v150 DIALOGUE RULES / FACILITY HELP STABLE.
+- Real rendered dialogue text-column width is now the final layout authority.
+- Fixes iPhone Safari overflow caused by estimating text width from viewport/card width.
+- Maximum 2 dialogue lines per page; long confirmations paginate before showing choices.
+- Story/subquest/report widths use a more conservative border-box allowance.
+- Existing v150 HELP and all prior systems are preserved.
+- GAME_ASSET_VERSION = 151.
