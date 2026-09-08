@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=155;
+const GAME_ASSET_VERSION=156;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10049,7 +10049,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=155`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=156`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -10188,5 +10188,42 @@ function fitStoryTextV155(el){
  // Re-measure after font adjustment; CSS emergency wrapping remains enabled.
  for(let i=0;i<8&&Math.max(...lines.map(x=>storyMeasureLineV148(x.textContent)))>max&&font>12;i++){font=Math.max(12,font-.5);el.style.setProperty('font-size',font+'px','important');}
 }
+
+/* v156: Lilith split progression, camp lock, protected words, awakened Desert. */
+function currentLilithSplit(){return normalizeLilithSplit();}
+function switchBattleToLilithPartyA(){
+ const b=state.battle;if(!b?.config?.lilithSplitBattle||b.lilithPartyAActive)return;
+ const split=b.config.lilithSplit||currentLilithSplit();
+ persistAdventureVitals();persistUltimateCooldownsFromBattle();
+ b.lilithPartyBAllies=b.allies;
+ const vitals=ensureAdventureVitals();b.allies=split.A.map(([id,lv])=>buildAlly(player(id),lv,vitals[id]));
+ for(const a of b.allies){initUltimateCooldowns(a);const buff=state.adventure.areaBuff||{};for(const key of ['atk','def','spd'])if(buff[key]){a[key+'Buff']=buff[key];a[key+'BuffTurns']=99;}if(buff.mag)a.mag=Math.round(a.mag*(1+buff.mag));if(buff.all)for(const key of ['atk','mag','def','res','spd'])a[key]=Math.round(a[key]*(1+buff.all));}
+ applyAreaFigureResonanceV96(b.allies,b.config);
+ b.mainIds=b.allies.slice(0,4).map(a=>a.id);b.superIds=b.allies.slice(4,6).map(a=>a.id);b.reserveIds=b.allies.slice(6,10).map(a=>a.id);
+ b.teamGuard=0;b.teamGuardTurns=0;b.yushaGuard=0;b.yushaGuardTurns=0;b.queue=[];b.queuePos=0;b.lilithPartyAActive=true;
+ saveAdventure();
+}
+/* Preserve compound words during line splitting, including fallback cuts. */
+const forbiddenCutBaseV156=dialogueForbiddenCutV150;
+dialogueForbiddenCutV150=function(left,right){const word='状態異常';for(let i=1;i<word.length;i++)if(left.endsWith(word.slice(0,i))&&right.startsWith(word.slice(i)))return true;return forbiddenCutBaseV156(left,right);};
+const splitLineBaseV156=dialogueSplitLineV150;
+dialogueSplitLineV150=function(text,maxPx,el){const lines=splitLineBaseV156(String(text).replace(/状\s*態\s*異\s*常/g,'状態異常'),maxPx,el);for(let n=0;n<lines.length-1;n++){for(let i=1;i<4;i++){const word='状態異常';if(lines[n].endsWith(word.slice(0,i))&&lines[n+1].startsWith(word.slice(i))){const prefix=lines[n].slice(0,-i),tail=word+lines[n+1].slice(4-i);lines.splice(n,2,...(prefix?[prefix]:[]),...splitLineBaseV156(tail,maxPx,el));break;}}}return lines;};
+for(const row of STORY_EVENTS['pre:demonCastle:1']?.steps||[])if(row[0]==='say'&&row[1]==='jessie'&&row[2].includes('状態異常'))row[2]='みんな気を付けて！\n通常攻撃でも\n状態異常弾丸を使ってくる！\nかかったらすぐアイテムで\n回復するのよ！';
+const renderStoryLinesBaseV156=renderStoryLinesV148;
+renderStoryLinesV148=function(el,text){renderStoryLinesBaseV156(el,text);for(const line of el.children){if(!line.textContent.includes('状態異常'))continue;const parts=line.textContent.split('状態異常');line.replaceChildren();parts.forEach((part,i)=>{if(i){const term=document.createElement('span');term.className='story-term-v156';term.textContent='状態異常';line.appendChild(term);}line.appendChild(document.createTextNode(part));});}};
+/* Lock input for the whole rest transaction, permitting only its own dialogs. */
+let campRestBusyV156=false,campTransitionBusyV156=false,campUnlockAfterV156=0;
+function blockCampInputV156(e){if(!campRestBusyV156&&!campTransitionBusyV156&&performance.now()>=campUnlockAfterV156)return;const fade=$('#campFade');if(!campTransitionBusyV156&&!fade?.hidden)return stop();const dialog=$('#dialogOverlay');if(dialog&&!dialog.hidden&&dialog.contains(e.target))return;stop();function stop(){e.preventDefault();e.stopImmediatePropagation();}}
+for(const type of ['pointerdown','pointerup','click','dblclick','touchstart','touchend','keydown'])window.addEventListener(type,blockCampInputV156,{capture:true,passive:false});
+const sleepBaseV156=campSleepTransition;
+campSleepTransition=async function(text,work){if(campTransitionBusyV156)return;campTransitionBusyV156=true;const f=$('#campFade');if(f&&f.parentElement!==document.body)document.body.appendChild(f);try{return await sleepBaseV156(text,work);}finally{if(f){f.hidden=true;f.classList.remove('dark');}campTransitionBusyV156=false;campUnlockAfterV156=performance.now()+180;}};
+const tentBaseV156=useCampTent,chairBaseV156=useCampChair;
+async function campRestV156(fn){if(campRestBusyV156||campTransitionBusyV156)return;campRestBusyV156=true;try{return await fn();}finally{campRestBusyV156=false;campUnlockAfterV156=performance.now()+180;}}
+useCampTent=()=>campRestV156(tentBaseV156);useCampChair=()=>campRestV156(chairBaseV156);
+const desertPlayerBaseV156=player;
+player=function(id){const p=desertPlayerBaseV156(id);if(p?.id!=='desert')return p;return {...p,attribute:desertAwakenedV120()?'地・闇':'地',mainAttributes:desertAwakenedV120()?['地','闇']:['地'],subAttributes:desertAwakenedV120()?(p.subAttributes||[]).filter(x=>x!=='地'&&x!=='闇'):[...(p.subAttributes||[])]};};
+const rawStatsBaseV156=rawBaseStats;
+rawBaseStats=function(p,lv){const s=rawStatsBaseV156(p,lv);if(p?.id==='desert'&&desertAwakenedV120())s.mag=Math.round(s.mag*1.35);return s;};
+window.__mobV156RegressionAudit={inheritV155:true,lilithSplit:true,campInputLock:true,desertMagMultiplier:1.35};
 
 })();
