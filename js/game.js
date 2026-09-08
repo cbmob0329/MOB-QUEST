@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=149;
+const GAME_ASSET_VERSION=150;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -9770,4 +9770,146 @@ dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',chara
 
 window.__mobV149RegressionAudit={inheritV148:true,facilityNoClip:true,explicitFacilityLines:true,stretchBeforeSplit:true,trainingCoachExample:'難しいことは何も無いから、 / とにかくレッツトレーニングだ！'};
 /* ===== END MOB QUEST v149 ===== */
+
+/* ===== MOB QUEST v150: DIALOGUE RULES + FACILITY HELP SYSTEM ===== */
+window.__mobV150PatchRuntime=true;
+
+/*
+  Final dialogue policy:
+  - never leave a 1-3 character orphan line when a wider bubble can solve it;
+  - keep bubbles compact (fit the longest actual line instead of using a fixed giant width);
+  - never let text clip outside the bubble;
+  - only split when the safe phone width is genuinely exceeded.
+  This engine measures the actual computed browser font, not an Excel/canvas estimate.
+*/
+function dialogueProbeV150(sampleEl){
+  let p=dialogueProbeV150.el;if(!p){p=document.createElement('span');dialogueProbeV150.el=p;p.setAttribute('aria-hidden','true');Object.assign(p.style,{position:'fixed',left:'-10000px',top:'-10000px',visibility:'hidden',pointerEvents:'none',whiteSpace:'nowrap',display:'inline-block',zIndex:'-1'});document.body.appendChild(p);}const cs=sampleEl?getComputedStyle(sampleEl):null;if(cs){p.style.fontFamily=cs.fontFamily;p.style.fontSize=cs.fontSize;p.style.fontWeight=cs.fontWeight;p.style.fontStyle=cs.fontStyle;p.style.letterSpacing=cs.letterSpacing;p.style.fontKerning=cs.fontKerning;}return p;
+}
+function dialogueMeasureV150(text,sampleEl){const p=dialogueProbeV150(sampleEl);p.textContent=String(text??'');return p.getBoundingClientRect().width;}
+function dialogueForbiddenCutV150(left,right){
+  if(!left||!right)return true;if([...left].length<=3||[...right].length<=3)return true;
+  const badHead='、。，．！？!?ーっゃゅょッャュョァィゥェォ「『【（(';
+  if(badHead.includes([...right][0]||''))return true;
+  const protectedEnd=['であります','でありま','でやんす','でござる','ニョロ','だった','でした','なんだ','なん','ます','です','だぞ','だな','だよ','か？'];
+  if(protectedEnd.some(x=>left.endsWith(x.slice(0,-1))))return true;
+  return false;
+}
+function dialogueBestCutV150(text,maxPx,sampleEl){
+  const a=[...String(text??'')],n=a.length;if(n<8)return Math.max(1,n-1);let best=-1,bestScore=1e18;
+  const particles='はがをにへでともので';
+  for(let i=4;i<=n-4;i++){
+    const l=a.slice(0,i).join('').trim(),r=a.slice(i).join('').trim();if(dialogueForbiddenCutV150(l,r))continue;
+    const wl=dialogueMeasureV150(l,sampleEl),wr=dialogueMeasureV150(r,sampleEl);if(wl>maxPx||wr>maxPx)continue;
+    let score=Math.max(wl,wr)+Math.abs(wl-wr)*.42;
+    const prev=a[i-1]||'',next=a[i]||'';
+    if(/[。！？!?]/.test(prev))score-=65;else if(/[、，,]/.test(prev))score-=42;else if(particles.includes(prev))score-=10;
+    if(/[、。！？!?ーっゃゅょッャュョ]/.test(next))score+=80;
+    if(score<bestScore){bestScore=score;best=i;}
+  }
+  if(best>=0)return best;
+  let fit=4;for(let i=4;i<=n-4;i++){if(dialogueMeasureV150(a.slice(0,i).join(''),sampleEl)<=maxPx)fit=i;else break;}return Math.max(4,Math.min(fit,n-4));
+}
+function dialogueSplitLineV150(text,maxPx,sampleEl){
+  const src=String(text??'').trim();if(!src)return[];if(dialogueMeasureV150(src,sampleEl)<=maxPx)return[src];
+  const out=[];let rest=src,guard=0;while(rest&&dialogueMeasureV150(rest,sampleEl)>maxPx&&guard++<16){const cut=dialogueBestCutV150(rest,maxPx,sampleEl),a=[...rest];let l=a.slice(0,cut).join('').trim(),r=a.slice(cut).join('').trim();if(!l||!r)break;if([...r].length<=3&&[...l].length>7){const need=4-[...r].length,la=[...l];r=la.slice(-need).join('')+r;l=la.slice(0,-need).join('');}out.push(l);rest=r;}if(rest)out.push(rest);return out;
+}
+function dialoguePagesV150(text,{sampleEl,maxPx=320,maxLines=2}={}){
+  const raw=String(text??'').replace(/\r/g,'').trim();if(!raw)return[''];let authored=raw.split('\n').map(x=>x.trim()).filter(Boolean);
+  /* Newlines from old data are soft. Tiny authored fragments are merged before layout. */
+  for(let i=0;i<authored.length;i++)if([...authored[i]].length<=3){if(i>0&&dialogueMeasureV150(authored[i-1]+authored[i],sampleEl)<=maxPx){authored[i-1]+=authored[i];authored.splice(i,1);i--;}else if(i+1<authored.length&&dialogueMeasureV150(authored[i]+authored[i+1],sampleEl)<=maxPx){authored[i]+=authored[i+1];authored.splice(i+1,1);}}
+  const lines=[];for(const s of authored)lines.push(...dialogueSplitLineV150(s,maxPx,sampleEl));
+  /* One final orphan repair across adjacent lines. */
+  for(let i=1;i<lines.length;i++){if([...lines[i]].length<=3){const joined=lines[i-1]+lines[i];if(dialogueMeasureV150(joined,sampleEl)<=maxPx){lines.splice(i-1,2,joined);i--;}}}
+  const pages=[];for(let i=0;i<lines.length;i+=maxLines)pages.push(lines.slice(i,i+maxLines).join('\n'));return pages.length?pages:[''];
+}
+
+/* Story, subquest, battle dialogue and castle report all use the same final splitter. */
+storySay=async function(key,text,displayName=null,anchorKey=null){const sceneW=Math.max(280,$('#storyScene')?.clientWidth||document.documentElement?.clientWidth||360),sample=$('#storyText'),maxPx=Math.max(210,Math.min(330,sceneW-62));for(const page of dialoguePagesV150(text,{sampleEl:sample,maxPx,maxLines:2}))await storySayLine(key,page,displayName,anchorKey);};
+storySayRed=async function(key,text,displayName=null,anchorKey=null){const bubble=$('#storyBubble');bubble?.classList.add('story-bubble-danger');try{await storySay(key,text,displayName,anchorKey);}finally{bubble?.classList.remove('story-bubble-danger');}};
+dialoguePagesV135=function(text,opt={}){return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx:320,maxLines:Number(opt.maxLines)||2});};
+castleReportPagesV126=function(text,maxChars=34,maxLines=2){return dialoguePagesV150(text,{sampleEl:$('#storyText'),maxPx:320,maxLines:Math.max(1,Number(maxLines)||2)});};
+
+function renderAtomicLinesV150(el,page,cls='dialogue-line-v150'){el.replaceChildren();for(const line of String(page??'').split('\n')){const s=document.createElement('span');s.className=cls;s.textContent=line;el.appendChild(s);}}
+function facilityCardMaxV150(){const vw=Math.max(300,document.documentElement?.clientWidth||window.innerWidth||390);return Math.max(290,Math.min(470,vw-12));}
+function facilityTextMaxV150(){return Math.max(175,facilityCardMaxV150()-132);}
+async function facilityPrepareV150(text,textEl,maxLines=2){await nextPaint();const maxPx=facilityTextMaxV150();return dialoguePagesV150(text,{sampleEl:textEl,maxPx,maxLines});}
+function facilityCardWidthV150(page,textEl,choices=false){const lines=String(page||'').split('\n'),long=Math.max(0,...lines.map(x=>dialogueMeasureV150(x,textEl))),min=choices?338:250;return Math.min(facilityCardMaxV150(),Math.max(min,Math.ceil(long+126)));}
+
+facilityTalk=async function(text,speaker='モブピンク',image='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),speakerEl=$('#dialogSpeaker'),textEl=$('#dialogText'),choices=$('#dialogChoices');
+  speakerEl.textContent=speaker;setImage(img,versionedPlay(image||'play/02.png'),'');img.alt=speaker||'';img.hidden=false;choices.innerHTML='';overlay.classList.add('facility-line-talk','facility-v150');overlay.hidden=false;await nextPaint();
+  const pages=await facilityPrepareV150(text,textEl,2);for(const page of pages){renderAtomicLinesV150(textEl,page,'facility-line-v150');overlay.style.setProperty('--facility-card-width',`${facilityCardWidthV150(page,textEl,false)}px`);await nextPaint();const body=textEl.parentElement;if(body&&textEl.scrollWidth>textEl.clientWidth+1){const grow=Math.min(facilityCardMaxV150(),facilityCardWidthV150(page,textEl,false)+(textEl.scrollWidth-textEl.clientWidth)+10);overlay.style.setProperty('--facility-card-width',`${Math.ceil(grow)}px`);await nextPaint();}
+    await new Promise(resolve=>{let ready=false;const timer=setTimeout(()=>ready=true,90);const next=e=>{if(!ready)return;e?.preventDefault?.();e?.stopPropagation?.();clearTimeout(timer);overlay.removeEventListener('pointerup',next,true);resolve();};overlay.addEventListener('pointerup',next,{capture:true,passive:false});});await fixedDelay(70);
+  }
+  overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-v150');overlay.style.removeProperty('--facility-card-width');choices.innerHTML='';textEl.replaceChildren();
+};
+
+dialog=async function(text,choices=[['OK','ok']],speaker='モブピンク',character='play/02.png'){
+  const overlay=$('#dialogOverlay'),img=$('#dialogCharacter'),facility=facilitySpeakerCharacter(speaker),textEl=$('#dialogText');$('#dialogSpeaker').textContent=speaker;if(img){img.hidden=false;setImage(img,versionedPlay(character||'play/02.png'),'');img.alt=speaker||'';}$('#dialogChoices').innerHTML=choices.map(([label,val,cls=''])=>`<button type="button" data-dialog-value="${val}" class="${cls}">${label}</button>`).join('');overlay.classList.toggle('facility-line-talk',facility);overlay.classList.toggle('facility-choice-talk',facility);overlay.classList.toggle('facility-v150',facility);overlay.hidden=false;await nextPaint();
+  if(facility){const pages=await facilityPrepareV150(text,textEl,2),page=pages.join('\n');renderAtomicLinesV150(textEl,page,'facility-line-v150');overlay.style.setProperty('--facility-card-width',`${facilityCardWidthV150(page,textEl,true)}px`);}else textEl.textContent=String(text||'');await nextPaint();
+  return new Promise(resolve=>{$$('[data-dialog-value]',overlay).forEach(btn=>btn.onclick=()=>{overlay.hidden=true;overlay.classList.remove('facility-line-talk','facility-choice-talk','facility-v150');overlay.style.removeProperty('--facility-card-width');textEl.replaceChildren();resolve(btn.dataset.dialogValue);});});
+};
+
+/* ---------- Facility help: loading-guide-style square narration ---------- */
+const FACILITY_HELP_V150={
+  castle:[{title:'お城',body:'お城には\n王の間・宿舎・MOB SHOP・\nレコードルーム・鍛冶屋があります。\n\n目的の施設を選んでください。'}],
+  throne:[{title:'王の間',body:'冒険をクリアした後は\n王へ報告します。\n\n報告を終えると\n次の目的地へ進めます。'}],
+  inn:[{title:'宿舎',body:'休むとパーティー全員の\nHP・MP・状態異常が回復します。\n\n冒険前の準備に利用できます。'}],
+  shop:[{title:'MOB SHOP',body:'冒険で使うアイテムを\nコインで購入できます。\n\n＋ / − で個数を決めて\nまとめて購入できます。'}],
+  records:[{title:'レコードルーム',body:'冒険で手に入れた\n伝説のレコードが展示されます。\n\nレコードをタップすると\n秘められた魔法を\n仲間1人に習得させられます。'},{title:'レコードルーム',body:'1枚のレコードにつき\n魔法習得は1度だけです。\n\n集めたレコードは\nここでいつでも確認できます。'}],
+  smith:[{title:'鍛冶屋 / 武器',body:'武器の購入・売却と\nメダル錬成ができます。\n\n武器ショップの品揃えは\n冒険の進行で増えていきます。'},{title:'鍛冶屋 / メダル',body:'同じ武器を3個使うと\nその武器のメダルを錬成できます。\n\nメダルは武器に装着して\n能力や特徴を追加できます。'},{title:'鍛冶屋 / 売却',body:'装備していない武器・防具を\n売却できます。\n\n武器は購入価格の20%\n防具は価格の100%で売却します。'}],
+  tavern:[{title:'酒場',body:'酒場では\nパーティー編成・ドリンク購入・\nフィギュアガチャを利用できます。\n\n冒険前の準備に使ってください。'}],
+  party:[{title:'パーティー編成',body:'メイン4人・スーパーサブ2人・\n控え4人を編成できます。\n\n戦闘中は控えとの入れ替えも可能です。'}],
+  drink:[{title:'ドリンク',body:'購入したドリンクは\n冒険中のキャンプで使用します。\n\n効果を確認して\n必要なドリンクを準備してください。'}],
+  figure:[{title:'フィギュア',body:'ダイヤを使って\nフィギュアガチャを引けます。\n\n集めたフィギュアは装備や\nモブピースバトルで使用します。'},{title:'フィギュア / ルビー',body:'同じフィギュアが\n所持上限を超えた場合は\nルビーへ変換されます。\n\nルビー交換も利用できます。'}],
+  training:[{title:'トレーニング',body:'バトルプログラム・サブクエスト・\n冒険日記・各ターンテーブルに\n挑戦できます。\n\n目的に合ったメニューを選んでください。'}],
+  program:[{title:'バトルプログラム',body:'PROGRAMを順番にクリアして\n新しい戦いを解放します。\n\n初回クリア報酬と\nシーズンクリア報酬があります。'}],
+  subquest:[{title:'サブクエスト',body:'冒険を進めると\n各エリアのサブクエストが解放されます。\n\n1度だけ挑戦でき\n特別な報酬を獲得できます。'}],
+  journal:[{title:'冒険日記',body:'クリア済みのエリアを\n再び探索できます。\n\n経験値やアイテム集めに利用できます。'}],
+  exp:[{title:'経験値ターンテーブル',body:'経験値レコードを消費して\n経験値モンスターと戦います。\n\n倒した敵の分だけ\n大量の経験値を獲得できます。'}],
+  gold:[{title:'ゴールドターンテーブル',body:'ゴールドレコードを消費して\nゴールドモンスターと戦います。\n\n倒した敵の分だけ\n大量のコインを獲得できます。'}],
+  boss:[{title:'ボスターンテーブル',body:'ボスレコードを消費して\n撃破済みの強敵へ挑戦します。\n\n難易度が高いほど\n報酬も豪華になります。'}]
+};
+function ensureFacilityHelpV150(){let ov=$('#facilityHelpOverlayV150');if(ov)return ov;ov=document.createElement('div');ov.id='facilityHelpOverlayV150';ov.className='facility-help-overlay-v150';ov.hidden=true;ov.innerHTML=`<div class="facility-help-shell-v150"><div class="facility-help-head-v150"><small>FACILITY GUIDE</small><b id="facilityHelpCountV150">1 / 1</b></div><article class="facility-help-card-v150"><h1 id="facilityHelpTitleV150">HELP</h1><div id="facilityHelpBodyV150"></div></article><div class="facility-help-actions-v150"><button id="facilityHelpPrevV150" type="button">←</button><button id="facilityHelpNextV150" type="button">TAP！</button><button id="facilityHelpCloseV150" type="button">×</button></div></div>`;document.body.appendChild(ov);$('#facilityHelpPrevV150',ov).onclick=()=>facilityHelpMoveV150(-1);$('#facilityHelpNextV150',ov).onclick=()=>facilityHelpMoveV150(1);$('#facilityHelpCloseV150',ov).onclick=closeFacilityHelpV150;ov.addEventListener('click',e=>{if(e.target===ov)closeFacilityHelpV150();});return ov;}
+let facilityHelpStateV150={key:'',pos:0,pages:[]};
+function currentFacilityHelpKeyV150(){
+  if(screens.training?.classList.contains('active')){const mode=String(state.training?.mode||'menu');return ['program','subquest','journal','exp','gold','boss'].includes(mode)?mode:'training';}
+  if(screens.tavern?.classList.contains('active')){if(!$('#tavernFigurePopup')?.hidden)return'figure';if(!$('#tavernDrinkPopup')?.hidden)return'drink';if(!$('#tavernPartyPopup')?.hidden)return'party';return'tavern';}
+  if(screens.castle?.classList.contains('active')){if(!$('#blacksmithPopup')?.hidden)return'smith';if(!$('#castleShopPopup')?.hidden)return'shop';return ['throne','inn','shop','records','smith'].includes(castleView)?castleView:'castle';}
+  return'training';
+}
+function renderFacilityHelpV150(){const ov=ensureFacilityHelpV150(),st=facilityHelpStateV150,p=st.pages[st.pos]||st.pages[0];if(!p)return;$('#facilityHelpTitleV150',ov).textContent=p.title;$('#facilityHelpBodyV150',ov).textContent=p.body;$('#facilityHelpCountV150',ov).textContent=`${st.pos+1} / ${st.pages.length}`;$('#facilityHelpPrevV150',ov).disabled=st.pos<=0;$('#facilityHelpNextV150',ov).textContent=st.pos>=st.pages.length-1?'最初へ':'TAP！';}
+function openFacilityHelpV150(key=currentFacilityHelpKeyV150()){const pages=FACILITY_HELP_V150[key]||FACILITY_HELP_V150.training;facilityHelpStateV150={key,pos:0,pages};const ov=ensureFacilityHelpV150();renderFacilityHelpV150();ov.hidden=false;}
+function closeFacilityHelpV150(){const ov=$('#facilityHelpOverlayV150');if(ov)ov.hidden=true;}
+function facilityHelpMoveV150(d){const st=facilityHelpStateV150;if(!st.pages.length)return;st.pos=(st.pos+d+st.pages.length)%st.pages.length;renderFacilityHelpV150();}
+function ensureFacilityHelpFabV150(){let b=$('#facilityHelpFabV150');if(!b){b=document.createElement('button');b.id='facilityHelpFabV150';b.className='facility-help-fab-v150';b.type='button';b.innerHTML='<b>?</b><span>HELP</span>';b.onclick=()=>openFacilityHelpV150();document.body.appendChild(b);}return b;}
+function updateFacilityHelpFabV150(){const b=ensureFacilityHelpFabV150(),active=!!(screens.training?.classList.contains('active')||screens.tavern?.classList.contains('active')||screens.castle?.classList.contains('active'));b.hidden=!active;}
+const _showScreenV150Base=showScreen;showScreen=function(name){const out=_showScreenV150Base(name);requestAnimationFrame(updateFacilityHelpFabV150);return out;};
+document.addEventListener('click',()=>requestAnimationFrame(updateFacilityHelpFabV150),true);requestAnimationFrame(updateFacilityHelpFabV150);
+
+/* ---------- Remove long spoken facility manuals. NPCs now point to HELP in character. ---------- */
+enterTraining=async function(){state.training.mode='menu';renderTraining();if(!facilityFlag('training:v150')){await facilityTalk('難しいことは何もないよ！\n分からないことはHELPを見てくれ！','モブコーチ','play/003.png');markFacilityFlag('training');markFacilityFlag('training:v150');}};
+showTrainingModeGuide=async function(mode){const text=TRAINING_GUIDE_TEXT[mode];if(!text||facilityFlag(`training:${mode}:v150`))return;await facilityTalk('詳しいルールはHELPを見てくれ！','モブコーチ','play/003.png');markFacilityFlag(`training:${mode}`);markFacilityFlag(`training:${mode}:v150`);};
+openBlacksmithFacility=async function(){renderBlacksmithRoom();try{await ensureCriticalBackgroundV128($('#castleBg'),['back/gonzo.png','back2/003.png','back2/01.png']);}catch(e){console.warn('[v150 smith bg]',e);}showScreen('castle');await nextPaint();await nextPaint();if(!facilityFlag('smith:v150')){await facilityTalk('分からないことがあったら\nHELPを見てくれ！','モブゴンゾー','play/002.png');markFacilityFlag('smith:v74');markFacilityFlag('smith:v150');}};
+const _openTavernFigureShopV150Base=openTavernFigureShopV98;
+openTavernFigureShopV98=async function(){if(!mapleShopUnlocked())return;const popup=$('#tavernFigurePopup');if(!popup)return;popup.hidden=true;const first=!facilityFlag('tavern:maple-shop:v150');if(first){await facilityTalk('やっほ〜！\n詳しいことはHELPを見てね！','モブメープル','play/009.png');markFacilityFlag('tavern:maple-shop');markFacilityFlag('tavern:maple-shop-v98');markFacilityFlag('tavern:maple-shop:v150');}else await facilityTalk('やっほ〜！\nどのガチャにする？','モブメープル','play/009.png');renderFigureGachaShopV98();await nextPaint();popup.hidden=false;requestAnimationFrame(updateFacilityHelpFabV150);};
+showTavernFigureShop=openTavernFigureShopV98;
+const _enterTavernV150Base=enterTavern;
+enterTavern=async function(){
+  tavernView='menu';renderTavern();
+  await facilityTalk('いらっしゃいませ♪\nゆっくりしていってくださいね！','モブイルカエル','play/001.png');markFacilityFlag('tavern');
+  if(mapleShopUnlocked()&&!facilityFlag('tavern:maple-intro:v150')){
+    await facilityTalk('今日から新しい仲間が増えたの！','モブイルカエル','play/001.png');
+    await facilityTalk('やっほ〜！\nモブメープルです！','モブメープル','play/009.png');
+    await facilityTalk('フィギュアの詳しいことは\nHELPを見てね！','モブメープル','play/009.png');
+    markFacilityFlag('tavern:maple-intro');markFacilityFlag('tavern:maple-intro-v98');markFacilityFlag('tavern:maple-intro:v150');renderTavern();
+  }
+  if(!facilityFlag('tavern:help:v150')){await facilityTalk('分からないことがあれば\nHELPを見てくださいね♪','モブイルカエル','play/001.png');markFacilityFlag('tavern:help:v150');}
+};
+const _openCastleRoomV150Base=openCastleRoom;
+openCastleRoom=async function(room){const out=await _openCastleRoomV150Base(room);if(room==='inn'&&!facilityFlag('inn:help:v150')){await facilityTalk('分からないことがあったら\nHELPを見てね！','モブミータ','play/006.png');markFacilityFlag('inn:help:v150');}else if(room==='shop'&&!facilityFlag('shop:help:v150')){await facilityTalk('分からないことは\nHELPを見てね♪','モブマテリア','play/005.png');markFacilityFlag('shop:help:v150');}requestAnimationFrame(updateFacilityHelpFabV150);return out;};
+
+/* Short Mob Pink explanations/confirmations remain speech bubbles by design. */
+window.__mobV150RegressionAudit={inheritV149:true,dialogueRules:['no-orphan','compact-bubble','no-overflow'],facilityHelp:true,squareNarration:true,mobPinkShortException:true};
+/* ===== END MOB QUEST v150 ===== */
 
