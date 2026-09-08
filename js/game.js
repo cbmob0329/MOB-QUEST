@@ -8741,8 +8741,6 @@ closeStoryScene=async function(forceHome=false){const out=await _closeStoryScene
 window.__mobV139RegressionAudit={tribeFullWidth:true,maxPartyColumns:6,storyGhostCleanup:true,junior:'boss/50.png'};
 /* ===== END MOB QUEST v139 ===== */
 
-})();
-
 /* ===== MOB QUEST v140: TRIBE PARTY WIDTH ACTUAL FIX ===== */
 window.__mobV140PatchRuntime=true;
 
@@ -10033,3 +10031,25 @@ castleReportPagesV126=function(text,maxChars=34,maxLines=2){const w=Math.max(280
 window.__mobV151RegressionAudit={inheritV150:true,sourceOfTruth:'rendered-text-column',maxLines:2,noOverflow:true,choicePagination:true,iphoneSafe:true};
 /* ===== END MOB QUEST v151 ===== */
 
+
+/* v154: facility help uses the same desert-clear gate as the figure shop. */
+const FACILITY_HELP_V154={
+ drink:{label:'DRINK',title:'ドリンクについて',icon:'♨',body:'酒場で購入したドリンクは、冒険中のキャンプで使用します。\n\n各AREAで使用できるのは1回です。効果を確認して、必要なドリンクを準備しましょう。'},
+ equipment:{label:'EQUIPMENT',title:'装備について',icon:'◇',body:'HOMEの「装備」から仲間を選び、武器・防具・メダルを装備できます。\n\n装備枠をタップして、所持している装備から選んでください。能力と特性を確認して組み合わせましょう。'},
+ party:{label:'PARTY',title:'パーティー編成について',icon:'♟',body:'メイン4人・スーパーサブ2人・控え4人の並びを変更できます。\n\n入れ替えたい仲間を1人タップし、次に入れ替え先をタップします。編成が決まったら保存してください。'},
+ figure:{label:'FIGURE',title:'フィギュアについて',icon:'★',body:'モブメープルのショップで、ダイヤを使ってフィギュアガチャを引けます。\n\n所持フィギュアは仲間に装備でき、能力や特性を追加します。モブピースバトルのデッキにも使用できます。'},
+ piece:{label:'MOB PIECE BATTLE',title:'モブピースバトルについて',icon:'⚔',body:'フィギュアショップから参加できます。所持フィギュア25体でデッキを編成します。\n\n同じフィギュアは1体まで、合計コストは80までです。デッキを準備して、CPU対戦やランクマッチに挑戦しましょう。'},
+ medal:{label:'MEDAL',title:'メダルについて',icon:'◉',body:'鍛冶屋の「メダル錬成」で、装備していない同じ武器3個を消費し、メダル1個を作れます。\n\n作ったメダルは「装備」のメダル枠に装着できます。能力と特性を確認して選びましょう。'}
+};
+function helpFacilityV154(){if(screens.tavern?.classList.contains('active'))return'tavern';if(screens.castle?.classList.contains('active')&&castleView==='smith')return'smith';return'';}
+function helpTopicsV154(facility){return facility==='smith'?['medal']:facility==='tavern'?['drink','equipment','party',...(mapleShopUnlocked()?['figure','piece']:[])]:[];}
+let helpReturnFocusV154=null,helpTopicV154='';
+function ensureHelpV154(){let ov=document.getElementById('facilityHelpV154');if(ov)return ov;ov=document.createElement('div');ov.id='facilityHelpV154';ov.hidden=true;ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-labelledby','helpTitleV154');ov.innerHTML='<section class="help-shell-v154"><header><h2 id="helpTitleV154"></h2><button type="button" data-help-close aria-label="HELPを閉じる">×</button></header><div id="helpContentV154"></div><button type="button" data-help-back></button></section>';document.body.appendChild(ov);ov.onclick=e=>{if(e.target===ov||e.target.closest('[data-help-close]'))return closeFacilityHelpV150();if(e.target.closest('[data-help-back]'))return helpTopicV154?renderHelpV154():closeFacilityHelpV150();const b=e.target.closest('[data-help-topic]');if(b)renderHelpV154(b.dataset.helpTopic);};ov.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();helpTopicV154?renderHelpV154():closeFacilityHelpV150();}if(e.key==='Tab'){const buttons=[...ov.querySelectorAll('button')];const first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});return ov;}
+function renderHelpV154(topic=''){const facility=helpFacilityV154(),keys=helpTopicsV154(facility);if(!keys.length)return closeFacilityHelpV150();const ov=ensureHelpV154();helpTopicV154=keys.includes(topic)?topic:'';const item=FACILITY_HELP_V154[helpTopicV154];ov.querySelector('h2').textContent=item?item.title:(facility==='smith'?'鍛冶屋 HELP':'酒場 HELP');const content=ov.querySelector('#helpContentV154');content.className=item?'help-copy-v154':'help-grid-v154';if(item)content.textContent=item.body;else content.innerHTML=keys.map(k=>{const x=FACILITY_HELP_V154[k];return `<button type="button" data-help-topic="${k}"><i aria-hidden="true">${x.icon}</i><b>${x.label}</b><span>${x.title}</span></button>`;}).join('');ov.querySelector('[data-help-back]').textContent=item?'← HELP一覧へ':'← 施設へ戻る';ov.hidden=false;ov.querySelector(item?'[data-help-back]':'[data-help-topic]').focus();}
+openFacilityHelpV150=function(){if(!helpFacilityV154())return;helpReturnFocusV154=document.activeElement;renderHelpV154();};
+closeFacilityHelpV150=function(){const ov=document.getElementById('facilityHelpV154');if(ov)ov.hidden=true;const old=document.getElementById('facilityHelpOverlayV150');if(old)old.hidden=true;helpTopicV154='';if(helpReturnFocusV154?.isConnected)helpReturnFocusV154.focus();};
+updateFacilityHelpFabV150=function(){const b=ensureFacilityHelpFabV150();b.hidden=!helpFacilityV154();if(b.hidden&&document.getElementById('facilityHelpV154')?.hidden===false)closeFacilityHelpV150();};
+window.__mobV154RegressionAudit={inheritV153:true,facilityHelp:true,unlockGate:'mapleShopUnlocked'};
+requestAnimationFrame(updateFacilityHelpFabV150);
+
+})();

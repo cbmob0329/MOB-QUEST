@@ -1,0 +1,11 @@
+MOB QUEST v154
+酒場HELP: DRINK / EQUIPMENT / PARTY / FIGURE / MOB PIECE BATTLE
+鍛冶屋HELP: MEDAL
+FIGURE・MOB PIECE BATTLEは既存mapleShopUnlocked（砂漠クリア）の条件で表示。
+正方形2列バナー、説明、一覧へ戻る、施設へ戻る、閉じる、Escape対応。
+表示・アセットバージョン154。
+v140以降の追加処理を既存ゲームの関数スコープに収め、STORY_EVENTS参照エラーを解消。
+v152の折返し・v153の魔王城背景と覚醒デザートサイズ処理を維持。
+検証: 全JS構文、Edgeブラウザ320/390/430px縦画面、解放前3項目/解放後5項目、全6説明、戻る、閉じる、鍛冶屋、他施設HELP非表示。実行エラーなし。
+iPhone Safari実機では未確認。
+画像・音声などの素材はv153と同じ構成です。
