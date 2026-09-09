@@ -310,3 +310,15 @@ Base: v150 DIALOGUE RULES / FACILITY HELP STABLE.
 - Story/subquest/report widths use a more conservative border-box allowance.
 - Existing v150 HELP and all prior systems are preserved.
 - GAME_ASSET_VERSION = 151.
+
+
+=== v159 TEST PLAY / BALANCE / BOOK FLOW ===
+Base: v158 VISIBILITY / TRANSFORM FIX.
+- テストプレイに「最強装備」「適正レベルでプレイ」「通常バトル無し」を追加。最強装備は武器・メダル・防具・フィギュアをまとめて適用し、通常バトル無しでは探索の通常遭遇を飛ばしてボス進行だけを残す。
+- 適正レベルを魔王城70、読みかけの本80、魔王城Ⅱ85へ更新。
+- 経験値の必要量を5%だけ増やし、レベルアップをわずかに緩やかに調整。
+- 必殺技のMP消費を0に統一。第三階層の大型魔法を8%だけ抑え、特技を4%だけ強化して極端な差を縮小。
+- 「あのヒーロー専用技」は通常の特技一覧から除外。
+- 読みかけの本 AREA3 の怪人ワープホール、仲間回復/状態異常解除、ヒーローの編成固定、AREA4 のナビ吸収変身、レコードルームの画像描画待ちと本タイトル演出を追加。
+- テント休憩でHP・MP・状態異常を全回復（本編演出中に倒れている勇者は指定どおり保持）。入れ替え画面を×/Escで閉じても候補選択を再提示。
+- GAME_ASSET_VERSION / 表示版を v159 に更新。

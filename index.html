@@ -4560,7 +4560,15 @@ html,body,#app{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!imp
 .portal-party-v157{position:fixed;inset:0;z-index:9999;background:radial-gradient(ellipse,#fff7cb66,transparent 70%);pointer-events:auto}.portal-party-v157 img{position:absolute;width:clamp(28px,8vw,64px);height:64px;object-fit:contain;filter:drop-shadow(0 0 8px #fff)}#storyBubble.shout-v157{border:3px solid #633049!important;box-shadow:0 0 0 3px #fff,0 0 18px #ff9b7c!important}#storyBubble.shout-v157 #storyText{font-weight:1000!important}
 .ending-caption-v157{position:fixed;inset:0;z-index:99999;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center;font-size:clamp(18px,5vw,28px);line-height:1.7;overflow-wrap:anywhere}.poem-v157 #storyNarration{color:#fff5d8;text-shadow:0 0 12px #ffe6a0,0 0 24px #b380db}
 </style>
-</head>
+<style>#storyScene.duel-party-v158 #storyPartyLine,#storyScene.money-away-v158 #storyPartyLine [data-story-actor="money"]{opacity:0!important;pointer-events:none!important}#storyScene.duel-party-v158 #storyPartyLine *,#storyScene.money-away-v158 #storyPartyLine [data-story-actor="money"] *{visibility:hidden!important}
+#storyScene [data-story-actor="boss-yami-money"] img{scale:.82;transform-origin:center bottom}
+#storyScene.rescue-front-v158 #storyPartyLine{z-index:12!important}#storyScene.rescue-front-v158 #storyPartyLine [data-story-actor="jessie"],#storyScene.rescue-front-v158 #storyPartyLine [data-story-actor="pink"]{z-index:20!important}#storyScene.rescue-front-v158 #storyGuest,#storyScene.rescue-front-v158 #storyGuestGroup{z-index:8!important}
+.chorus-v158{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#fff;color:#251b32;border:2px solid #553657;border-radius:10px;padding:5px 6px;font-size:clamp(10px,3vw,15px);font-weight:900;white-space:nowrap;z-index:35;box-shadow:0 2px 5px #0005;pointer-events:none}.chorus-v158:after{content:'';position:absolute;top:100%;left:45%;border:5px solid transparent;border-top-color:#553657}.transform-v158{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(circle,#cda3f688,#100b24dd);pointer-events:auto}.transform-v158 img{width:clamp(100px,42vw,230px);height:40vh;object-fit:contain}
+</style><style>.test-extra-v159{display:grid;gap:8px;margin:14px 0}.test-extra-v159 button{min-height:44px;padding:8px;border:1px solid #81746c;border-radius:10px;background:#253448;color:#fff}.camp-formation-popup-v159{position:fixed!important;inset:8vh 4vw 10vh!important;z-index:240!important;overflow:auto!important;background:#142334;border:2px solid #b7a68a;border-radius:18px;padding:16px!important;box-shadow:0 0 0 100vmax #000b;max-height:82vh!important}.hero-aura-v159{position:absolute;inset:-60% -50% -10%;border-radius:65% 65% 35% 35%;background:radial-gradient(ellipse at 50% 75%,#fff9 5%,#fff173aa 35%,#ffa700aa 55%,transparent 72%);filter:drop-shadow(0 0 14px #ffd641);pointer-events:none;z-index:25;mix-blend-mode:screen}.navi-ball-v159{position:absolute;width:45px;height:45px;border-radius:50%;left:40%;top:30%;background:radial-gradient(circle,#16021c,#572079,#040207);box-shadow:0 0 20px #ae70ff}.navi-ball-v159.light{background:radial-gradient(circle,#fff,#ffffb2,#fff5);box-shadow:0 0 20px #fff}.record-reveal-v159 [data-enter-book-v119] b,.record-reveal-v159 [data-enter-book-v119] small{visibility:hidden!important}
+.camp-formation-popup-v159{bottom:auto!important;height:auto!important}.record-reveal-v159 #castleContent{pointer-events:none}
+.test-extra-v159 [data-test-extra-v159="strongestV159"]{display:none}
+.warp-hole-v159{position:absolute;width:112px;height:62px;border:4px solid #e9d8ff;border-radius:50%;background:radial-gradient(ellipse,#090018 10%,#692a9b 46%,transparent 72%);box-shadow:0 0 18px #b96cff,0 0 40px #6c35b9;transform-origin:center;pointer-events:none;z-index:60}
+</style></head>
 <body>
 <main id="app">
   <!-- TITLE -->
@@ -4569,7 +4577,7 @@ html,body,#app{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!imp
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v157</div>
+      <div class="title-version">v159</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -5924,7 +5932,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
     [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
 
-  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:50,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:65,unfinishedBook:70,demonCastle2:80};
+  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:50,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:70,unfinishedBook:80,demonCastle2:85};
   MOB_DATA.recommendedLevels=recommended;
   for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
 }
@@ -6443,7 +6451,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=157;
+const GAME_ASSET_VERSION=159;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -8260,7 +8268,7 @@ async function waitBattleStoryTapV88(){
 async function battleStoryCutinV88(a,text){
   const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText');
   if(!wrap||!a){notice(text,'system',600);await waitBattleStoryTapV88();return;}
-  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');label.textContent=text;
+  const src=versionedPlay(transformedArtV158(a));if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');label.textContent=text;
   wrap.hidden=false;wrap.classList.remove('play','battle-story-out-v88');wrap.classList.add('battle-story-hold-v88');await nextPaint();
   await waitBattleStoryTapV88();wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('battle-story-hold-v88','battle-story-out-v88');wrap.hidden=true;
 }
@@ -9277,7 +9285,7 @@ async function actionCutin(text,tone='system',duration=500){const el=$('#actionB
 async function passiveCutin(a,text,duration=620){
   const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText');
   if(!wrap||!a){notice(text,'system',duration);await fixedDelay(duration);return;}
-  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);await preloadAsset(src);setImage(img,src,'');label.textContent=text;wrap.hidden=false;wrap.classList.remove('play');void wrap.offsetWidth;wrap.classList.add('play');await fixedDelay(duration);wrap.classList.remove('play');wrap.hidden=true;
+  const src=versionedPlay(transformedArtV158(a));await preloadAsset(src);setImage(img,src,'');label.textContent=text;wrap.hidden=false;wrap.classList.remove('play');void wrap.offsetWidth;wrap.classList.add('play');await fixedDelay(duration);wrap.classList.remove('play');wrap.hidden=true;
 }
 async function passiveBeat(a,text,duration=620,preDelay=600){await fixedDelay(preDelay);await passiveCutin(a,text,duration);}
 async function reactivePassiveBeat(a,text,duration=600){return passiveBeat(a,text,duration,140);}
@@ -9390,7 +9398,7 @@ async function ultimateCutin(a,u){
   const banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName');
   const artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter');
   const neon=$('.ult-neon-trace',wrap);
-  const charSrc=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);
+  const charSrc=versionedPlay(transformedArtV158(a));
 
   const hardHide=()=>{
     wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';
@@ -9640,8 +9648,8 @@ async function performUltimate(a,u){if(Number(a.ultLockedTurns||0)>0){notice('�
     case'selfAllBuff':a.allBuff=.20;a.allBuffTurns=rint(3,5);a.damageCut=.10;a.damageCutTurns=a.allBuffTurns;fx('buff',a.id);notice('ALL STATUS ↑↑ / DAMAGE CUT','buff');break;
     case'jumanji':{await hit();const buff=pick(['atk','def','spd']);a[`${buff}Buff`]=.15;a[`${buff}BuffTurns`]=3;const deb=pick(['defDebuff','spdDebuff']);for(const e of livingEnemies()){e[deb]=.12;e[`${deb}Turns`]=3;}notice(`${buff.toUpperCase()} ↑ / ENEMY ALL ${deb.startsWith('def')?'DEF':'SPD'} ↓`,'buff');break;}
     case'lowHpBurst':{const all=livingField(),avg=all.reduce((s,x)=>s+x.hp/x.maxHp,0)/Math.max(1,all.length);await hit(u.power*(1+(1-avg)*.65),'magic');break;}
-    case'heroTransform':heal(a,a.maxHp*.5);a.transformed=true;a.allBuff=.30;a.allBuffTurns=99;if(Array.isArray(a.ultCooldowns)){a.ultCooldowns=a.ultCooldowns.map(v=>Math.max(0,(Number(v)||0)-3));persistUltimateCooldownsFromBattle();}notice('あのヒーローに変身！ ALL STATUS ↑30% / 必殺技CT -3','buff',1100);break;
-    case'moneyFriends':a.transformedMoney=true;a.allBuff=.20;a.allBuffTurns=99;a.moneyFriendsStatusResist=.20;a.moneyFriendsMagicCrit=.10;notice('マニーフレンズ！ ALL STATUS ↑20% / 状態異常耐性 ↑20% / 魔法会心率 ↑10%','buff',1200);break;
+    case'heroTransform':await transformationFxV158(a,()=>{a.transformed=true;});heal(a,a.maxHp*.5);a.allBuff=.30;a.allBuffTurns=99;if(Array.isArray(a.ultCooldowns)){a.ultCooldowns=a.ultCooldowns.map(v=>Math.max(0,(Number(v)||0)-3));persistUltimateCooldownsFromBattle();}notice('あのヒーローに変身！ ALL STATUS ↑30% / 必殺技CT -3','buff',1100);break;
+    case'moneyFriends':await transformationFxV158(a,()=>{a.transformedMoney=true;});a.allBuff=.20;a.allBuffTurns=99;a.moneyFriendsStatusResist=.20;a.moneyFriendsMagicCrit=.10;notice('マニーフレンズ！ ALL STATUS ↑20% / 状態異常耐性 ↑20% / 魔法会心率 ↑10%','buff',1200);break;
     case'shieldAttack':await hit();a.guard=.20;a.guardTurns=1;notice('GUARD ↑','buff');break;
     case'healCleanse':healField(u.power);livingField().forEach(x=>{if(Math.random()<.5)cleanse(x);fx('heal',x.id);});notice('PARTY HP RECOVER / CLEANSE','heal');break;
     case'yushaGuardAoe':await aoe();state.battle.yushaGuard=.50;state.battle.yushaGuardTurns=1;notice('勇者 DAMAGE CUT','buff');break;
@@ -10015,7 +10023,7 @@ async function triggerFirstGrassRescue(b){
 function finishBattle(win){
   const b=state.battle;if(!b||b.finished)return;if(b.mode==='story')return finishScriptedBattle();
   if(!win&&canTriggerFirstGrassRescue(b)){void triggerFirstGrassRescue(b);return;}
-  b.finished=true;b.resultWin=!!win;b.auto=false;persistUltimateCooldownsFromBattle();persistBattlePartyOrder();$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);
+  b.finished=true;for(const a of b.allies||[]){a.transformed=false;a.transformedMoney=false;}b.resultWin=!!win;b.auto=false;persistUltimateCooldownsFromBattle();persistBattlePartyOrder();$('#autoBtn').classList.remove('active');$('#autoBtn').textContent='AUTO';setCommandDisabled(true);
   if(win)playVictoryBanner();else notice('DEFEAT...','system',900);
   let reward={exp:0,coin:0,changes:[]},drops=[];
   if(win&&b.mode==='adventure'){
@@ -11068,7 +11076,7 @@ submitAdventureReport=async function(){
   if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('demonCastle'))state.adventure.reportedWorlds.push('demonCastle');
   state.adventure.awaitingReport=null;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;const wi=(MOB_DATA.adventureWorlds||[]).findIndex(w=>w.id==='unfinishedBook');if(wi>=0)state.adventure.worldIndex=wi;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.meta.bookPortalReady=true;state.meta.bookEntered=false;saveMeta();saveAdventure();
   await facilityTalk('王様ー！！\nレコードが7枚揃ったであります！','モブピンク','play/02.png');await facilityTalk('おーーー！！','モブスライムキング','play/007.png');await animateV157(document.querySelector('[data-castle-actor="king"]'),[{translate:'0 0'},{translate:'40px 0'},{translate:'-40px 0'},{translate:'0 0'}],1500);await facilityTalk('よくぞ揃えた！\n勇者、\nモブピンク、\n皆の者！\n本当によくやった！','モブスライムキング','play/007.png');await facilityTalk('これで魔王を倒せますね！','モブピンク','play/02.png');await facilityTalk('では早速レコードルームへ向かうのじゃ！','モブスライムキング','play/007.png');
-  await travelTo('castle','レコードルームへ…',renderRecordRoom);const book=document.querySelector('[data-enter-book-v119]');if(book)book.style.visibility='hidden';for(const line of ['これで全てのレコードが揃った','さあ！','レコード達よ！','世界を救ってくれ‼︎'])await facilityTalk(line,'モブスライムキング','play/007.png');await glowV157(document.querySelector('.record-stage-v119'),2);if(book)book.style.removeProperty('visibility');await fixedDelay(2000);await facilityTalk('本・・でありますか？','モブピンク','play/02.png');await facilityTalk('本・・じゃな','モブスライムキング','play/007.png');await facilityTalk('タイトルは、\n読みかけの本？','モブピンク','play/02.png');await glowV157(book,2);await facilityTalk('これは！\n本の中に入れるであります！','モブピンク','play/02.png');await facilityTalk('きっとそこに\n最強の武器があるのじゃ！','モブスライムキング','play/007.png');await facilityTalk('準備が出来次第、\n本の世界へ行くであります！','モブピンク','play/02.png');await narrationDialog('準備完了後、本をタップしてください');renderRecordRoom();
+  document.body.classList.add('record-reveal-v159');await travelTo('castle','レコードルームへ…',renderRecordRoom);await recordsReadyV159();const book=document.querySelector('[data-enter-book-v119]');if(book)book.style.visibility='hidden';for(const line of ['これで全てのレコードが揃った','さあ！','レコード達よ！','世界を救ってくれ‼︎'])await facilityTalk(line,'モブスライムキング','play/007.png');await glowV157(document.querySelector('.record-stage-v119'),2);if(book)book.style.removeProperty('visibility');await fixedDelay(2000);await facilityTalk('本・・でありますか？','モブピンク','play/02.png');await facilityTalk('本・・じゃな','モブスライムキング','play/007.png');await facilityTalk('タイトルは、\n読みかけの本？','モブピンク','play/02.png');await glowV157(book,2);document.body.classList.remove('record-reveal-v159');await facilityTalk('これは！\n本の中に入れるであります！','モブピンク','play/02.png');await facilityTalk('きっとそこに\n最強の武器があるのじゃ！','モブスライムキング','play/007.png');await facilityTalk('準備が出来次第、\n本の世界へ行くであります！','モブピンク','play/02.png');await narrationDialog('準備完了後、本をタップしてください');renderRecordRoom();
 };
 
 const _renderRecordRoomV92Base=renderRecordRoom;
@@ -11299,8 +11307,8 @@ bookArea3PostV89Final=async function(){
   await bookBlackSphereAttackV94();setAdventureVitalV89Final('yusha',{dead:true});state.meta.bookHeroDown=true;saveMeta();const hero=$('[data-story-actor="yusha"]',$('#storyPartyLine'));hero?.classList.add('book-hero-down-v94');
   await storySay('pink','勇者様ー！！');await storySay('desert','まずいぞ・・！');await storySay('money','こうなったら私の魔力で！！');
   /* Keep the Kaijin boss continuously visible; Navi fades in at his side rather than replacing him. */
-  await storyShowSecondaryGuestsV94(['book-navi'],'book-navi-beside-v94');await storySay('book-navi','まだ早いですね');await storySay('book-kaijin-boss','モブナビ！！\n俺の邪魔をするな！');await storySay('book-navi','そうはいかない');await storySay('book-kaijin-boss','クソー！！！');
-  await storyHideGuest();await storySay('book-navi','さて\n勇者がやられたようだね\nだが私に出来るのはここまでだ\nやつを倒しに行ってくれ');await storyHideGuests();
+  await storyShowSecondaryGuestsV94(['book-navi'],'book-navi-beside-v94');await storySay('book-navi','まだ早いですね');await storySay('book-kaijin-boss','モブナビ！！\n俺の邪魔をするな！');await storySay('book-navi','そうはいかない');await warpV159('book-kaijin-boss');await storySay('book-kaijin-boss','クソー！！！');
+  await storyHideGuest();await storySay('book-navi','さて\n勇者がやられたようだね\nだが私に出来るのはここまでだ\nやつを倒しに行ってくれ');await partyHealFxV159();await storyHideGuests();
   await storySay('pink','勇者様・・');await storySay('nyoro','もうだめだニョロ・・');await storySayBigV94('money','なーに言ってるのよ！');await storySay('jessie','そうよ！きっと勇者はまだ助かる！');await storySay('tetsu','立ち上がって先へ進むでござる！');await storySay('desert','そうだな\n必ず勝機はあるはずだ');await storySay('nekoku','あいつ、嫌いだ');
 };
 
@@ -11318,7 +11326,7 @@ bookArea4PostV89Final=async function(){
   await moveBookKaijinToPartyV94();await storyImpact('ドン!!');await storySay('book-kaijin-boss','ぐは・・ッ');await storySay('desert','ここは勇者に任せるしかないな');await storySay('pink','勇者様！！');await storySay('nyoro','僕たちのヒーロー！！');
   await storyHideGuests();restoreStoryPartyHeroV94();$('#storyScene').hidden=true;await startBookNaviSoloV89Final();
   bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuests(['book-kaijin-boss','book-navi'],{slow:true});$('#storyGuestGroup')?.classList.add('book-kaijin-to-party-v94');await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');await storySay('denden','オイラたちも一緒に戦うでやんす！');await storySay('tetsu','ヒーロー殿、助太刀いたす！');await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');await storySay('money','敵の敵は味方じゃないの？');await storySay('book-kaijin-boss','ハハッ・・\nヒーローと共闘か\nおもしれえ！やってやるよ！！');await storySay('nekoku','お前、カッコイイぞ');await storySay('book-kaijin-boss','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');await storyHideGuests();$('#storyScene').hidden=true;await bookPartyFormationV92();
-  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','やれやれ、面倒だな');await sealV157('book-navi');await storyHideGuest();await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','さあ、どんなエンディングになるかな？');await storySay('book-kaijin-boss','最高の物語になりそうだな！！');await storyHideGuest();$('#storyScene').hidden=true;await bookNaviMasterBattleLoopV94();
+  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','やれやれ、面倒だな');await naviAbsorbV159();await storyHideGuest();await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','さあ、どんなエンディングになるかな？');await storySay('book-kaijin-boss','最高の物語になりそうだな！！');await storyHideGuest();$('#storyScene').hidden=true;await bookNaviMasterBattleLoopV94();
   bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','こ、の、わた、、、');await storyHideGuest();await storySay('desert','やったな');await glowV157('yusha',2);bookHeroStoryModeV94='normal';setBookStoryHeroArtV92('normal');await storyFlash();setBookStoryHeroArtV92('normal');
   await storySay('money','おかえり勇者！');await storySay('pink','勇者様、\n最高の力を手に入れたであります！');await storySay('riro','恐らく\n外の世界で同じような効果は期待できなイ\nでも\n間違いなく強くはなるはずでス');await storySay('nyoro','怪人はこれからどうするニョロ？');await storySay('book-kaijin-boss','さあな\n俺には目的も意味もねえ');await storySay('money','なら魔王を倒すの手伝ってよ！\n敵の敵は味方でしょ？');await storySay('jessie','なにそれ\n最高じゃない！');await storySay('book-kaijin-boss','ハハッ・・\n最後まで付き合ってやるよ！');
   storyJoin('kaijin');state.meta.heroPassive2Unlocked=true;state.meta.bookCompleted=true;state.meta.bookHeroDown=false;saveMeta();await renderStoryParty();await storyNarrate('モブ怪人のボスが仲間に加わった！');await storyNarrate('モブ勇者は新必殺技「読みかけの本」を習得した！');await storyNarrate('使用するとあのヒーローに変身し、全ステータス20%アップ\nさらに、必殺技の威力20%アップ');
@@ -11421,14 +11429,14 @@ Object.assign(STORY_EVENTS,{
 
 /* Full AREA4 reveal / Dark Money script from the uploaded Demon Castle source. */
 demonFinalPreV89Final=async function(){
-  await openStoryScene('demonCastle',3);$('#storyPartyLine').style.visibility='hidden';await storyShowGuests(['boss-maou-castle','boss-ace'],{slow:true});
+  await openStoryScene('demonCastle',3);duelPartyV158(true);await storyShowGuests(['boss-maou-castle','boss-ace'],{slow:true});
   await storySay('boss-maou-castle','そろそろ回復したであろう\n立て');await storySay('boss-maou-castle','モブリリスがやられた\n我が軍は私とお前だけだ');await storySay('boss-ace','なんと、、');
   await storySay('boss-maou-castle','だが、終わりでは無い\n勇者を滅ぼし\n新たな軍勢を作る');await storySay('boss-ace','では、現状援軍などは無いと？');await storySay('boss-maou-castle','不要であろう\n私とお前がいる');await storySay('boss-ace','そうか');
   await storySay('boss-ace','この日をどれほど夢見たことか\n力を得て\nお前の側近となり\n討伐する\nこの日を！！');await storySay('boss-maou-castle','・・・・');await storySay('boss-ace','俺はネオン街の戦士\nモブエース\nお前を倒すチャンスを\nずっと伺っていた');
   await storySay('boss-maou-castle','この状況がチャンスだと？');await storySay('boss-ace','長年お前を見てきた\n闘い方、癖、仲間の強さ\n1対1なら\n今の俺なら勝てる!!');await storySay('boss-maou-castle','言いたいことはそれだけか？\nならば\n早く攻め入るが良い\n先に攻撃させてやる');await storySay('boss-ace','その油断が、お前の命取りだ！');
   await aceAttackV157();await storySay('boss-maou-castle','もう終わりか？');await storySay('boss-ace','はあ、はあ、\n化け物め・・');await storySay('boss-maou-castle','化け物か\n悪くない響きだ');await storySay('boss-ace','くそ、、\nこんなはずでは');
   await storySay('boss-maou-castle','お前は最初から間違えている\nやつは\n世界を滅ぼす\nお前などが\n何をやったところで\n結果は変わらない');await storySay('boss-ace','・・意味ならあるさ\n必ず・・！！');await storySay('boss-maou-castle','お前の働きには感謝しているぞ\n安らかに眠れ');await storySay('boss-ace','あとは任せたぞ・・');
-  await storyHideGuests();await storyShowGuest('boss-maou-castle',{slow:true});$('#storyPartyLine').style.removeProperty('visibility');await storySay('money','モブエース！？');await storySay('boss-maou-castle','一足遅かったな');await storySay('jessie','モブエース・・');await storySay('desert','仲間割れか？');await storySay('tetsu','腐っているでござる・・！');await storySay('nyoro','仲間を手にかけるなんて');await storySay('denden','血も涙もないでやんす！');
+  await storyHideGuests();duelPartyV158(false);await storyShowGuest('boss-maou-castle',{slow:true});$('#storyPartyLine').style.removeProperty('visibility');await storySay('money','モブエース！？');await storySay('boss-maou-castle','一足遅かったな');await storySay('jessie','モブエース・・');await storySay('desert','仲間割れか？');await storySay('tetsu','腐っているでござる・・！');await storySay('nyoro','仲間を手にかけるなんて');await storySay('denden','血も涙もないでやんす！');
   await storySay('boss-maou-castle','仲間だと？\nハハハッ！こいつがか？\n笑わせるな');await storySay('jessie','それ以上モブエースを侮辱してみなさい\n後悔させてやるわ');await storySay('money','モブジェシー？');await storySay('boss-maou-castle','先代モブネオンキング\nモブエース\nあとは、お前達だけだな');await storySay('money','どういうこと？');await storySay('desert','何か秘密がありそうだな');await storySay('pink','僕たちを惑わそうとしているであります!!');
   await storySay('boss-maou-castle','ネオン街での戦いは\n2つの心を持つ魔女によって終結された\n王の息子と娘が魔女を封印し\n封印が解かれる日まで\n長年見守り続けてきた');await storySay('nekoku','・・思い出した\nネオン街の悪夢\n国王様から聞いたことがある');await storySay('money','私は\nあんたに封印されたはず・・！');await storySay('boss-maou-castle','私に見覚えがあるか？');await storySay('money','それは・・');await storySay('boss-maou-castle','モブジェシー、お前はどうだ？');await storySay('jessie','私は・・！');
   await storySay('boss-maou-castle','全て教えてやろう\nモブジェシー、モブエース\nお前たちはネオン街の王\nモブネオンキングの子息だ\nそして\nモブマニーは\nネオン街に突如現れ\n王に娘として育てられた魔女');await storySay('pink','2人は姉妹ということでありますか!?');await storySay('boss-maou-castle','モブジェシー、モブエースは\n命をかけてモブマニーを封印し\n記憶を改ざんしようとした\n封印はうまくいったが\n様々な記憶にノイズを入れることなったのだ');await storySay('desert','噛み合わなかったのはそのためか');
@@ -13340,7 +13348,7 @@ renderRecordRoom=function(){
   else if(state.meta?.bookPortalReady)extra=`<div class="record-room-extra-v119 book-ready"><button data-book-king-v119 type="button"><img src="play/007.png" alt="モブスライムキング"><span>モブスライムキング</span></button><p>準備完了後、中央の本をタップしてください</p></div>`;
   root.innerHTML=`<section class="castle-room-stage record-stage record-stage-v119"><div class="record-room-heading-v119"><small>LEGEND RECORD COLLECTION</small><h2>集めたレコード</h2><span>${count} / 7</span></div>${recordOrbitMarkupV119()}${extra}${recordRoomHomeButtonV93()}</section>`;
   bindImages(root);bindRecordRoomV119(root);preloadAssetsSafe(STORY_RECORDS_V119.map(r=>r.image),800).catch(()=>{});
-  if(!state.meta?.recordRoomGuideV119&&!recordRoomGuideQueuedV119){const tryGuide=()=>{if(castleView!=='records'||!screens.castle.classList.contains('active'))return;if(!$('#dialogOverlay')?.hidden){setTimeout(tryGuide,450);return;}showRecordRoomGuideV119();};setTimeout(tryGuide,420);}
+  if(!state.meta?.recordRoomGuideV119&&!recordRoomGuideQueuedV119){const tryGuide=()=>{if(document.body.classList.contains('record-reveal-v159'))return;if(castleView!=='records'||!screens.castle.classList.contains('active'))return;if(!$('#dialogOverlay')?.hidden){setTimeout(tryGuide,450);return;}showRecordRoomGuideV119();};setTimeout(tryGuide,420);}
 };
 
 /* Old saves receive their already-earned records silently. */
@@ -14678,7 +14686,7 @@ function battleDialogueTextV133(text){return dialoguePagesV133(text,{maxChars:21
 battleStoryCutinV88=async function(a,text,speaker=''){
   const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
   if(!wrap||!a){notice(text,'system',600);await waitBattleStoryTapV88();return;}
-  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
+  const src=versionedPlay(transformedArtV158(a));if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
   if(small){small.textContent=speaker||a.name||'';small.hidden=!(speaker||a.name);}label.textContent=battleDialogueTextV133(text);wrap.classList.add('battle-story-dialogue-v133');wrap.hidden=false;wrap.classList.remove('play','battle-story-out-v88');wrap.classList.add('battle-story-hold-v88');await nextPaint();await waitBattleStoryTapV88();wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('battle-story-hold-v88','battle-story-out-v88','battle-story-dialogue-v133');wrap.hidden=true;
 };
 enemyStoryCutin=async function(e,text,duration=1750){if(!e)return;await battleStoryCutinV88({id:`enemy-story-${e.id}`,image:e.image,name:e.name,transformed:false},text,e.name);};
@@ -14826,7 +14834,7 @@ battleDialogueTextV133=function(text){return String(text??'').replace(/\r/g,'').
 battleStoryCutinV88=async function(a,text,speaker=''){
   const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
   if(!wrap||!a){notice(text,'system',600);await waitBattleStoryTapV88();return;}
-  const src=versionedPlay(a.transformed&&a.id==='yusha'?'play/13.png':a.image);if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
+  const src=versionedPlay(transformedArtV158(a));if(src)await preloadAsset(src).catch(()=>{});if(src)setImage(img,src,'');else img.removeAttribute('src');
   const pages=dialoguePagesV135(text,{maxLines:2,maxPageChars:58});
   for(const page of pages){if(small){small.textContent=speaker||a.name||'';small.hidden=!(speaker||a.name);}label.textContent=page;wrap.classList.add('battle-story-dialogue-v133');wrap.hidden=false;wrap.classList.remove('play','battle-story-out-v88');wrap.classList.add('battle-story-hold-v88');await nextPaint();await waitBattleStoryTapV88();wrap.classList.add('battle-story-out-v88');await fixedDelay(140);wrap.classList.remove('battle-story-hold-v88','battle-story-out-v88');}
   wrap.classList.remove('battle-story-dialogue-v133');wrap.hidden=true;
@@ -16485,7 +16493,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=157`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=159`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -16678,7 +16686,7 @@ const renderPartyBaseV157=renderStoryParty;renderStoryParty=async function(){con
 const closeSceneBaseV157=closeStoryScene;closeStoryScene=async function(...args){for(const [el,css]of motionV157)el.style.cssText=css;motionV157.clear();$('#storyPartyLine')?.style.removeProperty('visibility');return closeSceneBaseV157(...args);};
 async function surpriseV157(){const a=actorV157('desert');if(!a)return;const e=document.createElement('b');e.className='surprise-v157';e.textContent='！';a.appendChild(e);try{await animateV157(e,[{opacity:0,translate:'0 12px'},{opacity:1,translate:'0 -12px',offset:.3},{opacity:0,translate:'0 -16px'}],850);}finally{e.remove();}}
 const blackSphereBaseV157=bookBlackSphereAttackV94;bookBlackSphereAttackV94=async function(){await orbV157('book-kaijin-boss','yusha');return blackSphereBaseV157();};
-const heroTransformBaseV157=bookHeroTransformV94;bookHeroTransformV94=async function(){await sealV157('yusha');await heroTransformBaseV157();await glowV157('yusha',2);};
+const heroTransformBaseV157=bookHeroTransformV94;bookHeroTransformV94=async function(){await auraV159('yusha');await heroTransformBaseV157();await glowV157('yusha',2);};
 const narrateBaseV157=storyNarrate;storyNarrate=async function(text,...args){const poetic=['思い出が苦しくなる時は','読みかけの本を読もう','無力で惨めなその気持ち','あのヒーローにやっつけてもらおう'].includes(text);if(!poetic)return narrateBaseV157(text,...args);document.body.classList.add('poem-v157');try{await fixedDelay(650);return await narrateBaseV157(text,...args);}finally{document.body.classList.remove('poem-v157');}};
 const stepsBaseV157=runStorySteps;runStorySteps=async function(steps=[]){for(const st of steps){if(st[0]==='summonV157'){await glowV157('boss-lilith-castle',2);await storyShowGuests(['dc2-kirin','dc2-hell','boss-lilith-castle','dc2-riva','dc2-kufu'],{allowFive:true,slow:true});}else if(st[0]==='leaveLilithV157'){await animateV157(actorV157('boss-lilith-castle'),[{opacity:1},{opacity:0}],1000);await storyShowGuests(['dc2-kirin','dc2-hell','dc2-riva','dc2-kufu'],{slow:false});}else if(st[0]==='cloneV157'){await glowV157('dc2-lilith',1);await storyShowGuests(['dc2-lilith','dc2-lilith','dc2-lilith'],{slow:true});}else if(st[0]==='fadeV157'){await animateV157(actorV157(st[1]),[{opacity:1},{opacity:0}],1000);await storyHideGuests();await storyHideGuest();}else if(st[0]==='chorusV157'){await Promise.all($$('[data-story-actor]',$('#storyPartyLine')).filter(x=>x.dataset.storyActor!=='yusha').map(x=>animateV157(x,[{translate:'0 0'},{translate:'0 -10px'},{translate:'0 0'}],450)));await storyNarrate('勝負！！');}else await stepsBaseV157([st]);}};
 {const s=STORY_EVENTS['pre:demonCastle2:0'].steps;const i=s.findIndex(x=>x[0]==='guests');s[i]=['summonV157'];s.splice(i+2,0,['leaveLilithV157']);const t=STORY_EVENTS['pre:demonCastle2:1'].steps;const j=t.findIndex(x=>x[0]==='narrate');t.splice(j,1,['say','dc2-lilith','僕舐められてるね'],['cloneV157']);const k=t.findIndex(x=>x[1]==='desert'&&x[2]?.includes('もはや'));t.splice(k,0,['say','jessie','・・・・']);for(const [area,id]of [[1,'dc2-lilith'],[2,'dc2-enma']])STORY_EVENTS[`post:demonCastle2:${area}`].steps.splice(1,0,['fadeV157',id]);const c=STORY_EVENTS['pre:demonCastle2:3'].steps;c[c.length-1]=['chorusV157'];}
@@ -16695,6 +16703,60 @@ const sayBaseV157=storySay;storySay=async function(id,text,...args){const big=(i
 const facilityBaseV157=facilityTalk;facilityTalk=async function(text,speaker,image){const r=await facilityBaseV157(text,speaker,image);if(text==='これで魔王を倒せますね！'){const pink=ensureOpeningPinkActor();await animateV157(pink,[{translate:'0 0'},{translate:'0 -18px'},{translate:'0 0'},{translate:'0 -12px'},{translate:'0 0'}],1100);}if(text.includes('王の間にて知らせを待つ！')){const king=document.querySelector('[data-book-king-v119]');await animateV157(king,[{translate:'0 0',opacity:1},{translate:'140px 0',opacity:0}],800);if(king)king.hidden=true;}return r;};
 // Block keyboard shortcuts as well as pointer input while a cinematic owns the screen.
 for(const type of ['click','pointerdown','keydown'])window.addEventListener(type,e=>{if(document.querySelector('.ending-v157,.portal-party-v157')){e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
+
+/* Hide the subtree, including size-ready images that set their own visibility. */
+function duelPartyV158(on){$('#storyScene')?.classList.toggle('duel-party-v158',on);}
+const hideMoneyBaseV158=hideMoneyV157;hideMoneyV157=function(){hideMoneyBaseV158();$('#storyScene')?.classList.add('money-away-v158');};
+const restoreMoneyBaseV158=restoreMoneyV157;restoreMoneyV157=function(){restoreMoneyBaseV158();$('#storyScene')?.classList.remove('money-away-v158');};
+const renderPartyBaseV158=renderStoryParty;renderStoryParty=async function(...args){const r=await renderPartyBaseV158(...args);$('#storyScene')?.classList.toggle('money-away-v158',!!state.meta.moneyStoryAwayV157);return r;};
+const closeSceneBaseV158=closeStoryScene;closeStoryScene=async function(...args){duelPartyV158(false);$('#storyScene')?.classList.remove('rescue-front-v158');return closeSceneBaseV158(...args);};
+const moveBaseV158=moveV157;moveV157=async function(id,...args){if(id==='jessie'||id==='pink')$('#storyScene')?.classList.add('rescue-front-v158');return moveBaseV158(id,...args);};
+function transformUnlockedV158(u){if(u?.kind==='moneyFriends')return state.meta?.moneyFriendsUnlocked===true;if(u?.kind==='heroTransform')return state.meta?.heroPassive2Unlocked===true;return true;}
+const ultsBaseV158=availableUlts;availableUlts=function(a){return ultsBaseV158(a).filter(transformUnlockedV158);};
+function transformedArtV158(a){return a.id==='money'&&a.transformedMoney?storyActorInfo('boss-yami-money').image:a.id==='yusha'&&a.transformed?'play/13.png':a.image;}
+function transformMarkupV158(base,a){const result=base(a),src=transformedArtV158(a);return src===a.image?result:result.replaceAll(versionedPlay(a.image),versionedPlay(src));}
+const allyBaseV158=allyMarkup,superBaseV158=superMarkup,benchBaseV158=benchMarkup;
+allyMarkup=a=>transformMarkupV158(allyBaseV158,a);superMarkup=a=>transformMarkupV158(superBaseV158,a);benchMarkup=a=>transformMarkupV158(benchBaseV158,a);
+async function transformationFxV158(a,change){const layer=document.createElement('div');layer.className='transform-v158';const img=document.createElement('img');img.src=versionedPlay(transformedArtV158(a));img.alt=a.name;layer.appendChild(img);document.body.appendChild(layer);try{await animateV157(img,[{filter:'brightness(1)',scale:'1'},{filter:'brightness(5) drop-shadow(0 0 35px #fff)',scale:'1.15'}],700);change();img.src=versionedPlay(transformedArtV158(a));renderBattle();await animateV157(img,[{filter:'brightness(5)',scale:'1.15'},{filter:'brightness(1)',scale:'1'}],900);}finally{layer.remove();}}
+const ultimateBaseV158=performUltimate;performUltimate=async function(a,u){if(!transformUnlockedV158(u)){notice('物語のイベントで解放される必殺技です','system');return false;}return ultimateBaseV158(a,u);};
+async function chorusV158(text,excludeHero=false){const actors=$$('[data-story-actor]',$('#storyPartyLine')).filter(el=>(!excludeHero||el.dataset.storyActor!=='yusha')&&getComputedStyle(el).opacity!=='0');const bubbles=[];try{for(const actor of actors){const b=document.createElement('div');b.className='chorus-v158';b.textContent=text;actor.appendChild(b);bubbles.push(b);}await fixedDelay(180);await storyAdvanceWait();}finally{bubbles.forEach(x=>x.remove());}}
+const narrateBaseV158=storyNarrate;storyNarrate=async function(text,...args){if(/パーティー.*[「『]/.test(text)){const m=text.match(/[「『]([^」』]+)[」』]/);if(m)return chorusV158(m[1]);}return narrateBaseV158(text,...args);};
+const stepsBaseV158=runStorySteps;runStorySteps=async function(steps=[]){for(const st of steps){if(st[0]==='chorusV157')await chorusV158('勝負！！',true);else await stepsBaseV158([st]);}};
+
+/* v159: small balance adjustments, test controls, book and camp flow fixes. */
+const expBaseV159=expToNext;expToNext=lv=>{const n=expBaseV159(lv);return Number.isFinite(n)?Math.ceil(n*1.05):n;};
+for(const [id,lv]of Object.entries({demonCastle:70,unfinishedBook:80,demonCastle2:85})){const w=MOB_DATA.adventureWorlds.find(x=>x.id===id);if(w)w.recommendedLevel=lv;if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[id]=lv;}
+for(const p of MOB_DATA.players)for(const u of p.ults||[])u.cost=0;
+for(const sk of MOB_DATA.magicCatalog||[])if(sk.tier==='large'&&!sk.support&&Number(sk.power)>0)sk.power=Number((sk.power*.92).toFixed(4));
+for(const sk of MOB_DATA.techniqueCatalog||[])if(Number(sk.power)>0)sk.power=Number((sk.power*1.04).toFixed(4));
+MOB_DATA.techniqueCatalog=(MOB_DATA.techniqueCatalog||[]).filter(x=>x.id!=='mob-hero-star');
+const techBaseV159=availableTechniqueSkillsV104;availableTechniqueSkillsV104=a=>techBaseV159(a).filter(x=>x.id!=='mob-hero-star');
+function setRecommendedV159(){if(!state.test?.enabled)return;const lv=currentWorld()?.recommendedLevel||5;state.party=state.party.map(([id])=>[id,lv]);for(const [id]of state.party){if(!state.meta.exp)state.meta.exp={};state.meta.exp[id]=0;}state.training.party=state.party.map(x=>[...x]);state.adventure.vitals=null;saveParty();saveMeta();saveAdventure();}
+function strongestV159(){if(!state.test?.enabled)return;applyTestLoadoutPreset('optimal');const armor=ARMORS.slice().sort((a,b)=>Object.values(b.stats||{}).reduce((s,n)=>s+Number(n||0),0)-Object.values(a.stats||{}).reduce((s,n)=>s+Number(n||0),0))[0];if(!state.meta.armors)state.meta.armors={};for(const [id]of state.party){if(armor){state.meta.armors[armor.id]=99;state.meta.equipment[id].armor=armor.id;}const eq=state.meta.equipment[id];for(const wid of [eq.main,eq.sub].filter(Boolean))state.meta.weapons[wid]=99;for(const wid of (eq.medals||[]).filter(Boolean))state.meta.medals[wid]=99;}saveMeta();state.adventure.vitals=null;saveAdventure();}
+try{const old=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1')||'{}');for(const key of ['strongestV159','recommendedV159','noNormalV159'])state.test[key]=!!old[key];}catch(_){}
+const settingsBaseV159=renderSettings;renderSettings=function(){settingsBaseV159();const root=$('#testModeControls');let panel=$('#testExtraV159');if(!panel){panel=document.createElement('div');panel.id='testExtraV159';panel.className='test-extra-v159';root.appendChild(panel);}panel.innerHTML=[['strongestV159','最強装備'],['recommendedV159','適正レベルでプレイ'],['noNormalV159','通常バトル無し']].map(([key,label])=>`<button type="button" data-test-extra-v159="${key}" ${state.test.enabled?'':'disabled'}>${label}：${state.test[key]?'ON':'OFF'}</button>`).join('');$$('[data-test-extra-v159]',panel).forEach(b=>b.onclick=()=>{if(!state.test.enabled)return;const key=b.dataset.testExtraV159;state.test[key]=!state.test[key];saveTestSettings();if(state.test[key]&&key==='recommendedV159')setRecommendedV159();if(state.test[key]&&key==='strongestV159')strongestV159();renderSettings();});};
+const checkpointBaseV159=applyTestChapter;applyTestChapter=function(){const r=checkpointBaseV159();if(state.test?.enabled){if(state.test.recommendedV159)setRecommendedV159();if(state.test.strongestV159)strongestV159();}return r;};
+function skipNormalV159(){return !!(state.test?.enabled&&state.test.noNormalV159);}
+const exploreBaseV159=exploreField;exploreField=async function(){if(!skipNormalV159())return exploreBaseV159();if(state.adventure.completed||state.adventure.awaitingReport||state.adventure.battleReady||storyBusy)return;$('#exploreBtn').disabled=true;try{await runExploreDots();state.adventure.battleIndex=2;await showExplorePhase('強敵の気配を感じる…','ボス戦へ進めます');completeExplorationUnlock();}finally{$('#exploreBtn').disabled=false;}};
+const encounterBaseV159=createAdventureEncounter;createAdventureEncounter=function(){if(skipNormalV159())state.adventure.battleIndex=2;return encounterBaseV159();};
+function fullPartyHealV159(){const v=ensureAdventureVitals(),healthy={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};for(const [id,lv]of state.party){if(id==='yusha'&&state.meta.bookHeroDown)continue;const st=baseStats(player(id),lv);v[id]={...(v[id]||{}),hp:st.maxHp,mp:st.maxMp,dead:false,status:{...healthy}};}saveAdventure();}
+const healBaseV159=healCampVitals;healCampVitals=function(ratio=1){if(ratio>=1)return fullPartyHealV159();return healBaseV159(ratio);};
+let replacementOpenV159=false;
+const replacementBaseV159=chooseReplacement;chooseReplacement=async function(...args){replacementOpenV159=!!args[1]?.length&&!state.battle?.auto;try{return await replacementBaseV159(...args);}finally{replacementOpenV159=false;}};
+window.addEventListener('click',e=>{if(!replacementOpenV159)return;const b=e.target.closest('button');if(!b||!$('#skillMenu').contains(b)||b.matches('[data-replace-id]'))return;if(/close|閉|×|✕/i.test(b.id+' '+b.className+' '+b.textContent)){e.preventDefault();e.stopImmediatePropagation();$('#skillMenu').hidden=false;$('#skillMenuTitle').textContent='入れ替えるメンバーを選んでください';}},{capture:true});
+window.addEventListener('keydown',e=>{if(replacementOpenV159&&e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();$('#skillMenu').hidden=false;$('#skillMenuTitle').textContent='入れ替えるメンバーを選んでください';}},{capture:true});
+window.addEventListener('click',e=>{if(!state.meta.bookHeroDown)return;const el=e.target.closest('[data-camp-swap],[data-tavern-swap]');if(!el)return;const i=Number(el.dataset.campSwap??el.dataset.tavernSwap),selected=el.hasAttribute('data-camp-swap')?campSwapIndex:state.tavernSwapIndex;if(state.party[i]?.[0]==='yusha'||(selected!==null&&state.party[selected]?.[0]==='yusha')){e.preventDefault();e.stopImmediatePropagation();campSwapIndex=null;state.tavernSwapIndex=null;toast('勇者は今、編成を移動できません');}},{capture:true});
+const campFormationBaseV159=renderCampFormation;renderCampFormation=function(){campFormationBaseV159();const p=$('#campSubPanel');p.classList.add('camp-formation-popup-v159');p.scrollTop=0;};
+const campMainBaseV159=renderCampMain;renderCampMain=function(){ $('#campSubPanel')?.classList.remove('camp-formation-popup-v159');return campMainBaseV159();};
+const campPartyBaseV159=renderCampPartyMenu;renderCampPartyMenu=function(){ $('#campSubPanel')?.classList.remove('camp-formation-popup-v159');return campPartyBaseV159();};
+async function auraV159(id){const a=actorV157(id);if(!a)return;const glow=document.createElement('div');glow.className='hero-aura-v159';a.appendChild(glow);try{await animateV157(glow,[{opacity:0,scale:'.4'},{opacity:1,scale:'1.3',offset:.65},{opacity:0,scale:'1.5'}],1800);}finally{glow.remove();}}
+async function warpV159(id){const a=actorV157(id);if(!a)return;const hole=document.createElement('i');hole.className='warp-hole-v159';a.parentElement?.appendChild(hole);const ar=a.getBoundingClientRect(),pr=a.parentElement?.getBoundingClientRect();if(pr){hole.style.left=`${ar.left-pr.left+ar.width*.12}px`;hole.style.top=`${ar.top-pr.top+ar.height*.42}px`;}try{await Promise.all([animateV157(hole,[{opacity:0,scale:'.2',rotate:'0deg'},{opacity:1,scale:'1',rotate:'240deg',offset:.42},{opacity:0,scale:'1.45',rotate:'520deg'}],1400),animateV157(a,[{filter:'hue-rotate(0deg)',scale:'1',opacity:1},{filter:'hue-rotate(180deg) blur(3px)',scale:'.1',rotate:'300deg',opacity:0}],1400)]);a.style.opacity='0';}finally{hole.remove();}}
+async function naviAbsorbV159(){const a=actorV157('book-navi');if(!a)return;const balls=[];try{await Promise.all([false,true].map(async(light)=>{const ball=document.createElement('i');ball.className='navi-ball-v159'+(light?' light':'');a.appendChild(ball);balls.push(ball);await animateV157(ball,[{translate:light?'-65px -45px':'65px -45px',scale:'1',opacity:0},{translate:light?'-45px -65px':'45px -65px',scale:'1',opacity:1,offset:.35},{translate:'0 0',scale:'0',opacity:1}],1800);}));await glowV157(a,1);}finally{balls.forEach(x=>x.remove());}}
+async function partyHealFxV159(){await Promise.all($$('[data-story-actor]',$('#storyPartyLine')).filter(a=>a.dataset.storyActor!=='yusha').map(a=>glowV157(a,2)));fullPartyHealV159();}
+async function recordsReadyV159(){const root=$('#castleContent');await Promise.all($$('img',root).map(async img=>{if(!img.complete)await new Promise(resolve=>{const finish=()=>{img.removeEventListener('load',finish);img.removeEventListener('error',finish);resolve();};img.addEventListener('load',finish);img.addEventListener('error',finish);});try{if(img.decode)await img.decode();}catch(_){} }));await nextPaint();await nextPaint();}
+const settingsFinalBaseV159=renderSettings;renderSettings=function(){settingsFinalBaseV159();$('#testChapterApplyBtn').onclick=applyTestChapter;};
+const ultimateBaseV159=performUltimate;performUltimate=async function(a,u){u.cost=0;return ultimateBaseV159(a,u);};
+const strongestButtonV159=$('#testModeControls [data-test-loadout="optimal"]');if(strongestButtonV159){strongestButtonV159.textContent='最強装備';strongestButtonV159.onclick=()=>strongestV159();}
 
 })();
 </script>

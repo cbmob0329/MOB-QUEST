@@ -1,0 +1,13 @@
+MOB QUEST v158 / visibility and transformation fixes
+Base: v157; all previous files retained.
+
+- Fixed visibility inheritance: party image .size-ready explicitly used visibility:visible. Duel now hides the whole subtree until Ace disappears. Money subtree remains hidden until Yami Money's disappearance completes.
+- Yami Money story image scale reduced to 82%. Rescue party layer is above enemy layers; dialogue layer remains separate.
+- Group dialogue now appears above individual party members. The final battle challenge excludes the hero.
+- Transform skill availability checks event flags by skill kind, including test allSkills at level 120; direct execution is also guarded.
+- Both transformations now have a light/portrait transformation animation. HUD, support/reserve and battle cutins use transformed art. Normal battle completion clears battle transformation flags; story hero mode remains independent for the book's continuing event.
+
+PASS: inline JS parsing; real CSS computed visibility with size-ready images; both event gates at level 120/allSkills; transform image selection/effect cleanup; individual overhead bubbles and tap advance.
+PASS regression: Lilith split UI -> B -> A with B HP preserved; awakened Desert MAG/dual elements; real tent lock/unlock and consumption.
+PASS ZIP CRC and unchanged original files except index.html, js/game.js, css/style.css.
+Limit: original game images/audio are not included in base ZIP. Visual checks use fixture images; physical iPhone and actual game art playback are not verified.
