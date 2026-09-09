@@ -1,10 +1,19 @@
-MOB QUEST v104 regression checklist
-- Base lineage: v103 only.
-- No enemy stats changed.
-- No story/dialogue changes.
-- No gacha/Mob Piece changes.
-- Player stat curves formalized for yusha/pink/desert/nyoro/nekoku/jessie/denden/money/riro/tetsu/kaijin/lilith/naraku.
-- Third-tier magic level 46 where assigned.
-- No level-learned all-target magic.
-- Ultimate unlock levels 1/15/30/50 preserved.
-- Recommended levels stored and displayed without changing encounter levels.
+MOB QUEST v90 SPEC REGRESSION CHECKLIST
+
+[ ] v89 stable title/boot path retained; title version only changes to v90
+[ ] battle dialogue still waits for tap
+[ ] opening caption still accepts screen-wide tap
+[ ] v88 earlier final-animation fade remains intact
+[ ] existing castle/home/subquest/equipment/weapon systems retained
+[ ] Demon Castle AREA4 uses full current reveal sequence and Dark Money battle
+[ ] Money Friends unlock remains after Demon Castle
+[ ] Unfinished Book has no random battles
+[ ] Book AREA3 forced-loss still ends at 3 turns without game over
+[ ] Hero book-world transformation still applies full authored effects
+[ ] Mob Navi solo event still ends at 3 turns
+[ ] Navi Master barrier still breaks after 4 hits and returns after 2 turns
+[ ] Mob Kaijin joins and Hero learns Reading Book
+[ ] Demon Castle II Enma forms each have both Judgment Sword + Judgment Flame
+[ ] Demon Castle II Maou -> Ul Mob Lilith transformation still advances correctly
+[ ] final report locks non-castle actions until report and ending
+[ ] final ending unlocks other world, event quest and Lv120

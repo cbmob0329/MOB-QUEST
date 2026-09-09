@@ -1,1 +1,33 @@
-MOB QUEST v103 structural checks prepared. Browser runtime is not claimed until separately verified.
+MOB QUEST v127 REGRESSION REPORT
+
+[Battle Program]
+- Cleared PROGRAM cards remain visible as CLEAR but are disabled.
+- Cleared PROGRAM cannot be opened from UI.
+- confirmBattleProgram and startBattleProgram both reject cleared PROGRAM IDs as a second guard.
+- Existing sequential season/program unlock logic remains unchanged.
+
+[Test Mode]
+- Added persistent toggle: 経験値3倍モード.
+- Effective only while Test Mode is ON.
+- Multiplies final earned battle EXP by x3 after normal area/figure EXP bonuses.
+- Turning Test Mode OFF also turns EXP x3 OFF.
+- Normal play is unaffected.
+
+[Boss Record drops]
+- Item 38 ボスレコード is excluded from normal adventure boss/mid-boss record drops until state.meta.gameCleared is true.
+- Before story clear, record drops can only select item 36 経験値レコード or item 37 ゴールドレコード.
+- After story clear, 36/37/38 are all eligible again.
+- Test-mode item MAX remains a test utility and is not treated as a normal drop.
+
+[Preserved]
+- v126 castle report flow / adventure report lock / record get timing / departure UI.
+- v125 figure source, boss-record limited figures, Mob Piece data.
+- v124 adventure preload/loading guide timing.
+- Existing Battle Program first-clear rewards and season rewards.
+
+[Validation]
+- js/data.js node --check: PASS
+- js/game.js node --check: PASS
+- standalone inline JS node --check: PASS
+- inline CSS equals css/style.css: PASS
+- inline JS equals js/data.js + js/game.js: PASS

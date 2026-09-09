@@ -1,8 +1,15 @@
-MOB QUEST v103 REGRESSION CHECKLIST
-- Base v102 retained.
-- Gacha 10-pull no pre-reveal spoiler.
-- Invalid/undefined figure entries cannot be rolled.
-- Mob Piece filter scroll stays in place.
-- Mob Piece free reorder + one exchange + detail popup.
-- Mob Piece LIFE battle / no draw.
-- Equipment/Figure/Armor asset preloading present.
+MOB QUEST v89 SPEC REGRESSION CHECKLIST
+
+[ ] Existing v87/v88 title DOM and showTitle() boot path retained
+[ ] v88 battle dialogue waits for tap
+[ ] v88 opening caption accepts screen-wide tap
+[ ] v88 skill final-frame fade timings retained
+[ ] Existing castle/home/subquest/equipment/weapon systems retained
+[ ] Demon Castle AREA4 excludes Money from battle party
+[ ] 7th record / book portal unlocks after Demon Castle report
+[ ] Unfinished Book uses one battle per AREA and no normal encounter progression
+[ ] Book AREA3 forced loss at 3 turns does not game over
+[ ] Book AREA4 Hero power applies
+[ ] Navi Master 4-hit barrier / 2-turn reset works
+[ ] Demon Castle II waves/forms advance
+[ ] Final boss report triggers ending and Lv120 unlock

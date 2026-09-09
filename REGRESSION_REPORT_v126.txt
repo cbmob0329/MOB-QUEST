@@ -1,12 +1,20 @@
-MOB QUEST v126
+MOB QUEST v151 REGRESSION REPORT
 
-- ボスレコードクエストは解放前にトレーニング画面から完全非表示。保存中の training.mode=boss も menu に戻し、解放条件・将来エリア名をUIでネタバレしない。
-- 旧v125のロック文言からも「魔王城Ⅱクリア後」を除去し、隠しコンテンツの解放条件を画面へ出さない。
-- レコード獲得演出は表示確定後2.5秒保持し、その後フェードアウト。
-- 草原を含む通常ストーリーエリアクリア後、王への報告前にHOMEの冒険を押すと「王へ報告しましょう！」で出発を遮断。
-- Libraryの「お城のイベント.txt」を再取得し、草原～砂漠Ⅱまでの王への報告イベントを正式台詞・レコード受け渡し・握手・モブライトアーム往復・迫力表示付きで復元。
-- 長い王様の台詞は原文の改行と順番を保ちつつ、吹き出しからはみ出さないよう複数ページに自動分割。
-- 魔王城以降の特殊報告・読みかけの本・エンディングは既存の専用処理を維持。
-- 冒険出発前は「次の目的地」と「適正レベル」を1枚の専用カードに統合。別々の適正Lvナレーションは廃止。
-- v124の冒険出発ロード最低2.5秒とアセット先読み、v125のフィギュア/ボスレコード/モブピース仕様を維持。
-- GAME_ASSET_VERSION=126。
+BASE
+- Built directly on v150 DIALOGUE RULES / FACILITY HELP STABLE.
+- Existing systems and v150 HELP behavior preserved.
+
+DIALOGUE ROOT FIX
+- Removed viewport-estimated facility text width as the final authority.
+- The actual rendered #dialogText width after grid/padding is now measured on-device.
+- Facility/Mob Pink dialogue is split against that exact width before rendering.
+- Every visible line is capped to the bubble text column as a final visual failsafe.
+- One speech page remains a maximum of 2 lines.
+- Long confirmation dialogue now advances through text pages first; choice buttons appear only on the final page.
+- Story/subquest/report width calculation is made more conservative from the bubble border box.
+
+TARGETED REPRO FIX
+- 「その他の機能については冒険しながら慣れていきましょう」 no longer renders as one overflowing atomic line on narrow iPhone Safari.
+
+VERSION
+- Visible title version and GAME_ASSET_VERSION updated to v151.

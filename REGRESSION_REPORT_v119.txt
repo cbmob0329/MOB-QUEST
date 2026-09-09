@@ -1,12 +1,13 @@
-MOB QUEST v119 REGRESSION REPORT
-- v118をベースに更新。
-- オープニングナレーション各ページは最低1秒表示。
-- 指定3行「全て揃えると世界が救えるという / 伝説のレコード / 勇者は集めることが出来るのか」を追加。
-- エリアボス後のレコード獲得を専用RECORD GET演出へ統一。
-- レコードの間で獲得済みレコードを円形軌道で常時展示。1枚でも軌道上を移動。
-- 初回入室説明を追加。
-- No.1～6はレコード1枚につき1回、任意のパーティーメンバーへ全体魔法を習得可能。
-- No.7は添付資料に魔法指定がないため習得魔法を捏造せず、既存の読みかけの本導線を維持。
-- レコード魔法は戦闘の魔法一覧に表示・使用可能。
-- 既存の本世界・異世界ゲート・HOME導線を維持。
-- v118以前のターンテーブル、モブピース、バトルプログラム、サブクエスト、ステータスUI等を維持。
+MOB QUEST v144 REGRESSION REPORT
+
+IMPLEMENTED
+- Sea subquest 3/4 dialogue manually re-authored so short phrases are not split by Safari.
+- Browser wrapping disabled inside story dialogue; only authored/semantic newlines may appear.
+- Sea subquest 4: Mob Wave Lv50 center, Abyss Soldier Lv48 left/right.
+- Serious Mob Wave HP x1.85 and random 2-3 actions every round.
+- 1-enemy HP HUD enlarged strongly; 2-enemy and 3-enemy HUD enlarged progressively.
+
+PRESERVED
+- Built directly from v143.
+- v142 enemy ultimates/passives and armor selling preserved.
+- v141 Tribe/Jessie/return-safe changes preserved.

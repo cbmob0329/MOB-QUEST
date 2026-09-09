@@ -1,18 +1,34 @@
-MOB QUEST v156 / 2026-09-09
+MOB QUEST v90 REGRESSION REPORT
+Date: 2026-09-02
+Base: MOB-QUEST-playable-core-v89-CLIMAX-STABLE.zip
 
-今回の修正
-- 魔王城・グラディモブ戦のモブジェシーの「状態異常」を分割させず、状態異常弾丸として保持。
-- リリス四姉妹戦でパーティー分割後にBパーティーを開始し、勝利後にAパーティーへ切り替える処理を接続。
-- テント／椅子の休憩中は画面全体のポインター・タッチ・キーボード入力をロックし、休憩完了後に解除。
-- 砂漠Ⅱクリア後のモブデザートを地・闇の複合メイン属性にし、基礎MAGを35%増加。ミラモブポイズンの闇属性攻撃へ反映。
+RESULT: STATIC / STRUCTURAL CHECKS PASSED
 
-検証
-- JS構文チェック：index.html内スクリプト、js/game.js、js/data.js。
-- Edge縦画面320/390/430pxで「状態異常」の単語保持と吹き出し横幅を確認。
-- リリス戦の分割UI → Bパーティー戦闘 → Aパーティー戦闘、B側HPの保存を確認。
-- テント休憩中のクリック・Enter入力を遮断し、休憩後の操作復帰とテント1個消費を確認。
-- 覚醒前は地属性、覚醒後は地・闇、MAGは覚醒前値の1.35倍で再計算時に重複しないことを確認。
-- ZIP CRC整合性を確認。
+PASS
+- js/data.js: node --check
+- js/game.js: node --check
+- index.html inline JS: node --check
+- index inline CSS == css/style.css
+- index inline JS == js/data.js + js/game.js
+- Title version label: v90
+- v89 stable story tap mechanism retained
+- Unfinished Book one-battle/no-random progression retained
+- AREA3 forced loss after 3 turns retained
+- Hero book-world power retained
+- Navi barrier: 4 hits -> 2-turn break retained
+- Money Friends unlock retained
+- final-boss castle lock / game-clear Lv120 condition retained
+- all three Enma forms now include Judgment Sword + Judgment Flame
+- canonical final report, Navi finale and Lilith join dialogue present
+- no BOOT-FIX / RESTORED-UI-COMPLETE old-branch marker imported
 
-確認範囲
-元ZIPの画像・音声素材構成は変更していません。実素材を配置したiPhone Safari実機での確認は未実施です。
+FILES CHANGED FROM v89
+- index.html
+- js/data.js
+- js/game.js
+- README.txt
+- SPEC_REGRESSION_CHECKLIST_v90.txt
+- REGRESSION_REPORT_v90.txt (new)
+
+BROWSER SMOKE NOTE
+- Container Chromium headless file:// smoke did not complete in this runtime (DBus/headless environment timeout), so the release decision uses successful JavaScript parse, inline-sync and structural regression checks.

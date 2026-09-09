@@ -1,27 +1,20 @@
-MOB QUEST v153 REGRESSION REPORT
+MOB QUEST v87 REGRESSION REPORT
 
-Base: v152 IPHONE DIALOGUE ABSOLUTE WRAP STABLE
-
-Changes
-1. Demon Castle adventure/story background
-   - Demon Castle and Demon Castle II AREA backgrounds keep their authored back/maoh*.png mapping.
-   - Cache-busts the exact AREA background with mqv=153.
-   - Removes cross-AREA maoh fallback swapping; retry is limited to the same AREA source before normal fallback.
-   - Story scene preloads the exact castle AREA background before reveal.
-
-2. Mob Desert post-awakening visual size
-   - play/15.png uses play/03.png natural dimensions as its UI footprint.
-   - Applied to Adventure party and Story party scaling.
-   - Does not change the awakened artwork or skill unlock.
-
-3. Dialogue authored fix
-   - "まさか本当にここまで来るとはな" -> "まさかここまで来るとはな"
-   - All duplicate event definitions updated to avoid an orphan final kana.
-
-4. Version
-   - title v153
-   - GAME_ASSET_VERSION 153
-
-Preserved
-- v152 iPhone dialogue wrap/pagination guards.
-- Existing story, battle, party, subquest, facility, equipment, figure, and progression systems.
+RESULT: PASS
+- SUBQUEST_AREAS total: 60
+- data-complete/non-pending: 58
+- pending: 2
+  - 田舎町 QUEST3 海賊が来た！
+  - 砂漠Ⅱ QUEST5 ミラモブの系譜
+- v87 new/overridden quest IDs: 35 / 35 unique
+- required party definitions: PASS
+- weapon reward ID range: PASS (<=88)
+- armor reward ID range: PASS (<=67)
+- Desert II Q1 uses boss-mira-d2: PASS
+- sequential subquest display logic retained: PASS
+- Umidenden II one-AoE-per-turn branch: PASS
+- Rural II Jurassic survivor heal/buff branch: PASS
+- external game.js syntax: PASS
+- external data.js syntax: PASS
+- index inline data/game synchronization: PASS
+- ZIP integrity: PASS

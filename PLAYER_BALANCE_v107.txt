@@ -1,12 +1,20 @@
-MOB QUEST v107 PLAYER POWER REBALANCE
+MOB QUEST v121 regression / implementation report
 
-Goal: Lv80 + strongest/endgame equipment can clear through Demon Castle II with good play.
-Compared with v104: HP/ATK/MAG/DEF/MND increased substantially; SPD increased moderately.
-Lv99 equipment-free headline examples:
-Hero HP3600 ATK450 MAG425 DEF500 MND490
-Desert HP3950 ATK500 DEF520
-Money HP3200 MAG520 MND560
-Tetsu HP4550 ATK540 DEF650
-Lilith HP3550 MAG560 MND620
-Naraku HP4400 ATK500 MAG465 DEF600 MND600
-Equipment, figures and resonance apply on top.
+1. Base: v120 SKILL / STATUS / DESERT AWAKENING.
+2. Player skill overlap:
+   - v120-added/status-special skills are re-specialized so each listed skill belongs to one character.
+   - Existing elemental magic, heal and buff learnsets are preserved.
+   - Record magic remains player-selectable and is excluded from fixed specialization.
+3. Desert II subquests:
+   - Required party: モブデザート / モブリーロ / モブテツ.
+   - QUEST 1-5 implemented in sequence; no pending placeholders remain.
+   - Rewards: W51/A55 through W55/A59, requested diamond/coin amounts.
+4. QUEST 5:
+   - Fake モブデザート uses play/03.png at Lv78.
+   - 2-3 actions/turn via boss action fallback.
+   - Turn 1 only: 20% incoming damage reduction.
+   - ゴールドフィッシュ: single medium damage, 20% critical chance.
+   - スナノサバキ: all-target medium physical damage.
+5. Real モブデザート awakening from v120 remains play/15.png after Desert II story and retains ミラモブポイズン.
+6. GAME_ASSET_VERSION=121, title v121, data header v121.
+7. data.js / game.js / standalone inline JS pass node --check.

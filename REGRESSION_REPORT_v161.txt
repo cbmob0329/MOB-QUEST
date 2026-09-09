@@ -1,18 +1,43 @@
-MOB QUEST v161 regression report
+MOB QUEST v95 REGRESSION REPORT
 
-Focused fixes
-- Record Room reveal keeps the reading-book button hidden until the scripted reveal point.
-- Reading Book AREA4 restores the Kaijin boss after AREA3's warp/fade styles.
-- The Kaijin boss is joined before the final formation dialog, and the player chooses the order manually.
-- Navi's post-solo-battle scene shows the Kaijin boss alone; the "やれやれ、面倒だな" line keeps Navi visible.
-- Navi absorption completes on the visible guest and then shows the boss/53.png master artwork.
-- Kaijin's four ultimate cooldown values start at 0 (ready) for the final battle.
+Checks: 37 / failed: 0
 
-Automated checks
-- node --check v161/js/game.js
-- node --check v161/js/data.js
-- test-v161.cjs
-- test-v161-story.cjs
-- test-v161-full.cjs (v160 regression suite)
-- regression-v161-full.cjs (v160 regression suite)
-- effects-v161-full.cjs (v160 regression suite)
+PASS title/version v95
+PASS inline CSS sync
+PASS inline JS sync
+PASS armor 01-67 complete - count=67
+PASS armor image paths complete
+PASS armor dedicated equipment tab
+PASS armor inventory list
+PASS armor reward grant
+PASS armor drop-only messaging
+PASS armor sale 100%
+PASS armor effects integrated
+PASS tavern icon only CSS
+PASS tavern figure hidden guard
+PASS demon castle explore red-purple
+PASS castle white label banner
+PASS ultimate unlocked-only
+PASS ultimate special unlock flags
+PASS demon marker まさか本当にここまで来るとはな
+PASS demon marker リリス親衛隊！
+PASS demon marker 撃ち合いなら負けないでやんす！
+PASS demon marker あれ？もしかして僕なめられてる？
+PASS demon marker 強いね\nまだまだこれからだよ
+PASS demon marker ネオン街の王はモブドラゴンと互角
+PASS demon marker モブマニーは異世界への扉を開く最後の
+PASS demon marker 私は全てを滅ぼす存在
+PASS demon marker 「読みかけの本」を手に入れた！
+PASS demon marker 新必殺技「マニーフレンズ」
+PASS Gladi battle dialogue
+PASS Lilith battle dialogue + double ultimate
+PASS retained bookBlackSphereAttackV94
+PASS retained bookNaviMasterBattleLoopV94
+PASS retained recordRoomHomeButtonV93
+PASS retained globalVisibleSubquestV93
+PASS retained showCriticalDamageV92
+PASS retained ultimateReadyTransitionsV92
+PASS v95 README
+PASS v95 checklist
+
+Runtime note: validation is static/syntax/inline-sync/structural. A complete browser playthrough was not executed.

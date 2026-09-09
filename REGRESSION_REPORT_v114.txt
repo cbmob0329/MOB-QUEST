@@ -1,6 +1,18 @@
-MOB QUEST v114 REGRESSION REPORT
-- Base: v113 BATTLEPROGRAM SEASON50 / REWARDS STABLE
-- v113 rewards, mid-bosses, CLEAR stamps preserved.
-- Story appropriate-level departure confirmation preserved.
-- Gacha / Mob Piece / support magic / subquest staging preserved.
-- Added Battle Program story gates and sequential season/program unlocks only.
+MOB QUEST v139 REGRESSION REPORT
+
+ROOT CAUSE
+- v137 Tribe-specific CSS reserved right:30% of the story party area.
+- That is the large empty space visible on the right in Tribe Village.
+- The same right:30% rule is not used by the normal story party layouts in other areas.
+
+FIX
+- Tribe party now uses left:2% / right:2% safe width.
+- Maximum remains six actors per row. 7-12 actors are laid out as upper six / lower remainder.
+- Tribe scale cap is raised only until natural-image width/row-height collision limits are reached.
+- Joining player guests are kept above the party band.
+- Added post-story hard cleanup so event actors cannot remain as tiny sprites on the normal Adventure field.
+- Mob Dragon Junior remains boss/50.png.
+
+PRESERVED
+- All v137 reward/shop/auto/contrast changes remain.
+- No v137 function declaration was removed by this patch.

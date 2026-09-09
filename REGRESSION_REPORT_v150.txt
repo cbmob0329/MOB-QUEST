@@ -1,18 +1,14 @@
-MOB QUEST v150 REGRESSION REPORT
+MOB QUEST v85 REGRESSION REPORT
 
-DIALOGUE POLICY
-- Actual browser font measurement is the source of truth; Excel line breaks are no longer assumed to match runtime.
-- A 1-3 character orphan is rejected when widening the individual bubble can solve it.
-- Bubble width fits the longest accepted line, avoiding excessive empty space.
-- Text is split before it can exceed the safe phone width; accepted lines render atomically.
-- Story/subquest/castle report and facility-character dialogue use the same core rule.
-
-FACILITY HELP
-- Added a persistent ? HELP button on Castle, Tavern and Training screens.
-- Help opens a square loading-guide-style narration card with contextual pages.
-- Contexts include Castle/Throne/Inn/Shop/Record Room/Blacksmith, Tavern/Party/Drink/Figure, Training/Program/Subquest/Journal/EXP/Gold/Boss.
-- Long spoken facility manuals were replaced by short in-character HELP guidance.
-- Short Mob Pink explanations/confirmations remain normal speech bubbles as requested.
-
-PRESERVED
-- Built on v149; earlier systems remain present.
+PASS: サブクエスト報酬で \\n を文字として表示しない
+PASS: サブクエスト専用 SUB QUEST CLEAR 演出
+PASS: 報酬はダイヤ/COIN/WEAPON/ARMOR/MEDALを独立行表示
+PASS: 報酬カードはベージュ背景＋濃い文字
+PASS: サブクエスト上部ヘッダーを横長固定
+PASS: SUB QUEST / エリア・QUEST番号のコンパクト表示
+PASS: 非ジャーナルQUESTで隠し戻るボタン列がヘッダー幅を奪わない
+PASS: v84までのサブクエスト・防具・冒険諦める・城ロード順を維持
+PASS: game.js 構文チェック
+PASS: index内蔵JS 構文チェック
+PASS: 外部CSSとindex内蔵CSS同期
+PASS: 外部data.js+game.jsとindex内蔵JS同期

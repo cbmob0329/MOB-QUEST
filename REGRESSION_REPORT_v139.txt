@@ -1,18 +1,76 @@
-MOB QUEST v139 REGRESSION REPORT
+MOB QUEST v74 STATIC REGRESSION REPORT
+PASS 73/73
 
-ROOT CAUSE
-- v137 Tribe-specific CSS reserved right:30% of the story party area.
-- That is the large empty space visible on the right in Tribe Village.
-- The same right:30% rule is not used by the normal story party layouts in other areas.
-
-FIX
-- Tribe party now uses left:2% / right:2% safe width.
-- Maximum remains six actors per row. 7-12 actors are laid out as upper six / lower remainder.
-- Tribe scale cap is raised only until natural-image width/row-height collision limits are reached.
-- Joining player guests are kept above the party band.
-- Added post-story hard cleanup so event actors cannot remain as tiny sprites on the normal Adventure field.
-- Mob Dragon Junior remains boss/50.png.
-
-PRESERVED
-- All v137 reward/shop/auto/contrast changes remain.
-- No v137 function declaration was removed by this patch.
+PASS  title screen exists
+PASS  NEW/CONTINUE/settings bind
+PASS  boot returns title
+PASS  NEW opening session v74
+PASS  test opening skip
+PASS  pink first person Boku
+PASS  correct travel narration
+PASS  adventure icon wording
+PASS  initial adventure lock
+PASS  adventure party no symbol markup
+PASS  adventure party image+lv buttons
+PASS  horizontal area woodgrain
+PASS  beige exploration text contrast
+PASS  separate camp actions
+PASS  camp party always enabled
+PASS  camp sleep ZZZ
+PASS  white narration
+PASS  battle intro 1 sec
+PASS  enemy lunge
+PASS  battle dialogue readable duration
+PASS  party order persists
+PASS  ultimate CT persists
+PASS  status colors
+PASS  DOT shake+numbers
+PASS  commands include technique
+PASS  test all skills
+PASS  Goremagardy exact frames
+PASS  Hokumawing exact frames
+PASS  Neomanipool exact frames
+PASS  sticky skill close
+PASS  inventory overlay
+PASS  five inventory categories
+PASS  item target state classes
+PASS  player detail overlay
+PASS  figure picker popup
+PASS  Maple hidden before desert
+PASS  Maple intro event
+PASS  facility speaker common set
+PASS  facility bubble adaptive width
+PASS  training exit exact phrase
+PASS  training gold beige
+PASS  training exp blue
+PASS  training boss purple
+PASS  training disabled readable
+PASS  training modes retained
+PASS  battle program seasons 1/2
+PASS  castle 2+3 and black text
+PASS  castle speech near actor logic
+PASS  report lock
+PASS  blacksmith dedicated background
+PASS  blacksmith shop+forge only
+PASS  blacksmith weapon buy works
+PASS  blacksmith forge works
+PASS  blacksmith no equipment smith route
+PASS  tribe regression CSS
+PASS  Tetsu short line
+PASS  desert2 correct line
+PASS  desert2 individual image refs
+PASS  desert2 3 waves
+PASS  desert2 revive dialogue
+PASS  demon castle events
+PASS  Lilith split
+PASS  Lilith size
+PASS  184 figures  [184]
+PASS  51 tags  [51]
+PASS  test chapter + area
+PASS  test progression reset logic
+PASS  test x5
+PASS  test figures helper
+PASS  HTML IDs unique
+PASS  cache v74
+PASS  required source files
+PASS  no conflict markers

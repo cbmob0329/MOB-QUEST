@@ -1,13 +1,36 @@
-MOB QUEST v144 REGRESSION REPORT
+MOB QUEST v79 REGRESSION REPORT
 
-IMPLEMENTED
-- Sea subquest 3/4 dialogue manually re-authored so short phrases are not split by Safari.
-- Browser wrapping disabled inside story dialogue; only authored/semantic newlines may appear.
-- Sea subquest 4: Mob Wave Lv50 center, Abyss Soldier Lv48 left/right.
-- Serious Mob Wave HP x1.85 and random 2-3 actions every round.
-- 1-enemy HP HUD enlarged strongly; 2-enemy and 3-enemy HUD enlarged progressively.
+PASS - v79 title
+PASS - v79 cache
+PASS - inline game synchronized
+PASS - inline data synchronized
+PASS - ultimate levels 1/15/30/50
+PASS - ultimate square cutin then animation
+PASS - hero skill2 47-50
+PASS - goremagardy exact frames
+PASS - hokumawing exact frames
+PASS - neomanipool exact frames
+PASS - all-target center
+PASS - skill confirmation
+PASS - technique size unified
+PASS - critical then damage
+PASS - battle dialogue >=1750
+PASS - D2 ally cutin exists
+PASS - D2 four revive dialogue
+PASS - D2 30% heal
+PASS - victory beige black
+PASS - desert passive 10%
+PASS - denden passive 10%
+PASS - jessie passive 50%
+PASS - tetsu passive 30%
+PASS - lilith 60% revive
+PASS - pink simultaneous revive selection
+PASS - hero fifth event lock
+PASS - Denden exactly 3 hits
+PASS - Lilith sisters 4 elements
+PASS - Pink team guard 2 turns
+PASS - Goldfish gold steal
+PASS - one-stage enemy dash
+PASS - v78 opening retained
 
-PRESERVED
-- Built directly from v143.
-- v142 enemy ultimates/passives and armor selling preserved.
-- v141 Tribe/Jessie/return-safe changes preserved.
+RESULT: 32/32 PASS

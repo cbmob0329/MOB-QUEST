@@ -1,8 +1,14 @@
-MOB QUEST v124
+MOB QUEST v149 REGRESSION REPORT
 
-変更:
-- 冒険出発前のロード画面を最低2.5秒表示。
-- 2.5秒は固定待機だけではなく、現在の冒険エリアの背景、パーティー画像、通常敵、各AREAの中ボス/ボス画像を先行読み込みする時間として使用。
-- 実ロードが2.5秒を超える場合は完了まで待機し、16秒で安全タイムアウト。
-- 装備/防具/フィギュア/所持品/ガチャ/モブピース等のv123先行読み込みを維持。
-- GAME_ASSET_VERSION 124。
+ROOT CAUSE
+- v147 facility CSS used word-break: keep-all to stop ugly one/two-character Japanese orphans.
+- Long facility sentences without authored line breaks therefore could not wrap at all and were clipped by Safari.
+- v148 repaired story/subquest DOM lines but did not replace the facility rendering path.
+
+FIX
+- Facility/Training/Mob Pink confirmation dialogue now uses DOM-measured explicit line layout.
+- A bubble stretches first; only if the safe phone width is exceeded is a natural break chosen.
+- One-to-three-character orphan lines are rejected.
+- Each chosen line is rendered atomically; a final emergency wrap prevents silent clipping if late font metrics differ.
+- Long Training Coach speech is paged at two visible lines per tap.
+- Existing v148 story/subquest dialogue engine is unchanged and preserved.

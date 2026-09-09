@@ -1,21 +1,27 @@
-MOB QUEST v131 regression report
+MOB QUEST v157 — STORY CINEMATICS
+Base: workspace v156 (retains v155 dialogue/soul fixes and v156 corrections).
+References: 9月9日.txt / 読みかけの本.txt / 魔王城Ⅱ.txt, read 2026-09-09.
 
-1. 田舎町（sky theme）キャンプ/探索カード
-- 明るい水色バナーに濃紺文字へ変更。
-- small text も濃色固定。使用済みボタンは判読可能なまま減光。
+Changes:
+- Ace duel hides party, 3-second repeated attack, black energy counterattack.
+- Money hexagram; temporarily hidden from story party while existing battle roster filter excludes her. Persistent roster/levels are retained so defeat/reload cannot delete the character. Normal appearance and visibility return after victory.
+- Jessie/Pink move into scene; dark orb, translucent injury, healing orb, Desert exclamation, restoration and return.
+- Book ritual reveal/2-second pause; party enters portal; enhanced hero transformation and black sphere; Navi attack and transformation; king movement.
+- Awakened Lilith sisters summon in requested order; Lilith exits; three clones; final battle group challenge; 3-second dark fusion and full pre-Ulrilis dialogue; separation after victory.
+- Ending references music/end.mp3 and poster/01.png–31.png, each 4 seconds with slow movement. Last image waits for the playing track to end. Missing/blocked audio falls back to the timed slideshow. Final black-screen captions advance automatically; CB Memory holds 3 seconds before title.
+- Display/asset version 157. Existing gameplay values and unlock conditions retained.
 
-2. サブクエスト会話の二重キャラクター
-- runSubquestLines 中は通常 adventureParty を完全に非表示。
-- story guest group を開始/終了時にクリアし、古い小キャラ残像を残さない。
-- finally で確実にレイヤー復帰。
+Validation PASS:
+- All inline scripts parsed; node --check for game.js and data.js.
+- Headless Edge, full demon pre/post choreography with image/dialogue wait fixtures: party visibility, injury/healing, motion cleanup and Money restoration.
+- Four-sister summon, three clones, fusion duration and complete final pre-battle conversation.
+- Ending fixture: all 31 poster paths ordered, 4000ms per slide, overlay/audio cleanup.
+- Real split UI -> B battle -> A wave, B HP persistence.
+- Desert awakening only: MAG 237 -> 320 at test level; no repeated stacking; main elements 地/闇.
+- Real tent confirmation/consumption: repeated pointer and keyboard input blocked during rest, unlocked afterward.
+- 320/390/430px dialogue layout: 状態異常 kept together, no line horizontal overflow.
+- ZIP CRC and preservation of all original entries; only existing index.html/js/game.js/css/style.css changed.
 
-3. ネオン街 AREA 1-3 イベント
-- pre/post:neon:0, :1, :2 を正式追加。
-- AREA1 モブネオゴーレム、AREA2 モブエネチェイサー、AREA3 モブスラトレーナー。
-- 2026-09-02 冒険イベント資料の会話を復元。
-- AREA4 モブネオンバルス/モブエース既存イベントは変更なし。
-
-4. 敵ATK/MAG
-- v129→v130を比較し、通常敵 profile の atkBase/atkPerLevel/magBase/magPerLevel は同一。
-- v131でもATK/MAGは変更しない。
-- v130の変更対象（normal HP/DEF/MND低下、ガーディアンATK強化、player HP/ATK/MAG調整）は維持。
+Limits:
+The provided base ZIP contains no game image/audio directories. No replacement assets were invented. Existing installation assets are required, including item/39.png, poster/01.png–31.png and music/end.mp3.
+Effect sequencing tests accelerate animation durations and use fixture actors/audio; actual asset appearance, full-length music synchronization, and physical iPhone behavior are not verified.

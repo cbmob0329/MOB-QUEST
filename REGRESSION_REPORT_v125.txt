@@ -1,39 +1,18 @@
-MOB QUEST v125 REGRESSION REPORT
+MOB QUEST v150 REGRESSION REPORT
 
-[Source updates]
-- Latest figure source uses figene/18.png = モブヒトデヤリ.
-- Obsolete duplicate figene/44.png is removed from the final FIGURES runtime list.
-- Old save ID 131 is migrated to the surviving starfish figure, including ownership / equipment / Mob Piece deck.
-- Overflow caused by the merge converts to Ruby using the normal SR over-cap rule.
-- Camp-checkpoint restore also re-runs the duplicate migration when an old ID is restored.
-- figboss/02.png モブホークⅡ: ATK+5 / SPD+10 / MND+2, 風属性耐性+15%.
+DIALOGUE POLICY
+- Actual browser font measurement is the source of truth; Excel line breaks are no longer assumed to match runtime.
+- A 1-3 character orphan is rejected when widening the individual bubble can solve it.
+- Bubble width fits the longest accepted line, avoiding excessive empty space.
+- Text is split before it can exceed the safe phone width; accepted lines render atomically.
+- Story/subquest/castle report and facility-character dialogue use the same core rule.
 
-[Boss record limited figures]
-- spbossfig/001.png through spbossfig/046.png: 46 definitions.
-- Rarity distribution: SR 18 / SSR 18 / UR 9 / MOB 1 / R 0.
-- NORMAL rate: SR 65% / SSR 31% / UR 3.9% / MOB 0.1%.
-- HARD: SR 50% / SSR 39% / UR 10.5% / MOB 0.5%.
-- VERY HARD: SR 32% / SSR 43% / UR 23% / MOB 2%.
-- INFERNO: SR 15% / SSR 40% / UR 40% / MOB 5%.
-- Existing boss full-clear Diamond/Ruby rewards, drop-count rules, and explicit over-cap-to-Ruby reveal are preserved.
-- Boss roulette remains boss-only; mid-bosses are not added.
-- Boss Record Quest unlock: demonCastle2 clear (test mode bypass allowed).
+FACILITY HELP
+- Added a persistent ? HELP button on Castle, Tavern and Training screens.
+- Help opens a square loading-guide-style narration card with contextual pages.
+- Contexts include Castle/Throne/Inn/Shop/Record Room/Blacksmith, Tavern/Party/Drink/Figure, Training/Program/Subquest/Journal/EXP/Gold/Boss.
+- Long spoken facility manuals were replaced by short in-character HELP guidance.
+- Short Mob Pink explanations/confirmations remain normal speech bubbles as requested.
 
-[Mob Piece]
-- All 46 spboss figures have COST / HP / ATK / DEF / SPD.
-- SR ATK+DEF+SPD budget = 64.
-- SSR ATK+DEF+SPD budget = 74.
-- UR ATK+DEF+SPD budget = 86.
-- MOB ATK+DEF+SPD budget = 100.
-- Tag 53 超合金: 2 kinds DEF15%+SPD10%; 3 kinds DEF25%+SPD18%.
-- Tag 54 超合金ボス: 2 kinds ATK12%+DEF12%; 3 kinds ATK22%+DEF18%.
-- Tag 55 超合金ヒーロー: 2 kinds SPD15%+DEF10%; 3 kinds HP15%+DEF18%+SPD25%.
-- Existing global Mob Piece effect caps and duplicate-count activation rules remain active.
-
-[Compatibility]
-- v124 adventure minimum 2.5s loading / preload patch retained.
-- v123 loading guide / figure-heavy preload retained.
-- v121 Desert II subquests retained.
-- v120 skill and Desert awakening retained.
-- v119 Record Room retained.
-- spbossfig is supported by the figure image candidate/preload chain without barrel fallback.
+PRESERVED
+- Built on v149; earlier systems remain present.

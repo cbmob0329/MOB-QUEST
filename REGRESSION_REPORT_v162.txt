@@ -1,8 +1,5 @@
-v162 NAVI FORM FIX
-PASS: inline JS syntax and standalone game/data syntax.
-PASS: actual arrival sequence uses boss/52.png for every Navi line.
-PASS: absorption/transform switches guest source from boss/52.png to boss/53.png.
-PASS: a subsequent normal Navi encounter uses boss/52.png again.
-PASS: solo battle enemy uses boss/52.png; master battle enemy uses boss/53.png.
-PASS: display version v162 and no browser JavaScript errors.
-Checks cover image references/event flow. The code ZIP retains the existing separately supplied asset-folder arrangement.
+MOB QUEST v97 release report
+
+Targeted patch only. No battle, adventure, armor, subquest, gacha probability, or MOB Piece balance changes.
+Primary defect fixed: unbounded play/009.png inside .maple-shop-host could render at native size and cover the figure-shop popup.
+The popup is now rendered while hidden and revealed only after one paint, preventing the legacy placeholder/native-image frame.

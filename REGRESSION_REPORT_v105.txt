@@ -1,11 +1,11 @@
-v105 validation targets
-- data.js / game.js syntax
-- standalone inline JS syntax
-- inline/external JS and CSS synchronization
-- 226 enemy templates formalized
-- 32 bosses paralyze immune
-- boss status cap = 2
-- no authored special removed
-- no (仮) fallback used for enemy templates lacking authored skills
-- final Demon Castle II source skills retained
-- ZIP integrity
+MOB QUEST v129
+
+Battle Program strict story-season gate fix
+- TEST MODE no longer opens all Battle Program seasons.
+- Season visibility follows the designated story gate table.
+- Season 1 is initial. Season 2 requires Grassland report. Seasons 3-5 require Desert report.
+- Later seasons remain hidden until their designated story world is reported/cleared.
+- Sequential season clear requirement remains active.
+- Cleared PROGRAM retry lock from v127 remains active.
+- Test EXP x3 from v127 remains active.
+- Existing future-season progress is preserved but not shown before its story gate.

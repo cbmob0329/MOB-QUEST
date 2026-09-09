@@ -1,16 +1,21 @@
-MOB QUEST v116 REGRESSION REPORT
-BASE: v115 MOBPIECE / RUBY / FIGURE STATS STABLE
+MOB QUEST v141 REGRESSION REPORT
 
-ADDED
-- EXP/GOLD turntable enemy-defeat reward tables and formations.
-- Boss turntable 4-clear DIAMOND/RUBY rewards.
-- 31 exclusive boss limited figure placeholder records using spbossfig/001.png-031.png.
-- Difficulty-weighted limited figure rarity/drop counts.
-- Exact-duplicate ownership overflow converts to RUBY using v115 caps/rates, with dedicated reveal text.
-- Start/area/complete/drop presentation overlays.
+IMPLEMENTED
+- Tribe recommended level 40 -> 50.
+- Tribe AREA1: Kiba Lv48 / Kukuri Lv57 / Kiba Lv48.
+- Tribe arrival party uses full lower width; Jessie is staged at the event/enemy position.
+- Jessie joins at Tribe arrival; existing saves past arrival are repaired automatically.
+- Tribe dialogue re-authored with natural one/two-line pages.
+- Tribe t-* battle sprites slightly enlarged with multi-enemy collision caps; applies in Adventure/Subquest/Battle Program.
+- Kukuri: 10% evade, normal attack is party-wide, boomerang throw animation; special also uses boomerang.
+- Toughness: Toughness Body 50% proc, damage -60%; every second normal attack is AoE.
+- Hisui: Minus Aura every ~3 turns, no damage, 70% party flinch; Living Dead once, revives self/Ryugo to 50% even if Hisui is the downed unit.
+- Ryugo: King's Rage 30%, negates hit and sets ATK +20%.
+- Neomanipool/Goremagardy large spell animations accelerated only for those spells.
+- Adventure wipe returns to previous AREA (AREA1 stays AREA1) and never routes to HOME.
 
 PRESERVED
-- v115 Mob Piece stats/tags/ruby exchange/deck duplicate rules.
-- v114 Battle Program progression gates.
-- v113 Battle Program rewards.
-- v112 story appropriate-level prompt / CLEAR stamps.
+- v140 Tribe party width fixes and v139-v129 systems.
+- v137 diamond/shop/notice systems.
+- v136 preload/shop/Mob Piece systems.
+- Mob Dragon Junior remains boss/50.png.

@@ -1,42 +1,8 @@
-MOB QUEST v136 REGRESSION REPORT
-
-[SUBQUEST / MAGMA 5]
-- Authored enemy corrected to モブドラゴンジュニア Lv40.
-- 2 actions/turn, lower HP and higher SPD retained.
-- Uses ドラゴンフレイム like the story dragon.
-- Dedicated spenemy/012.png is preferred; boss/09.png is error fallback only.
-
-[ADVENTURE / SEA]
-- Adventure departure loader now also preloads the current world's Legend Record image.
-- Current adventure background is fully decoded before the adventure screen is revealed.
-- Next AREA background is warmed in the background.
-- Sea explore/camp blue banners use light blue with dark navy copy for contrast.
-
-[LEGEND RECORD]
-- Record image is loaded before the reveal card appears.
-- Reveal is held for 2.5s after it is visibly ready.
-- Long titles use Japanese no-break sizing so a final kana does not wrap alone.
-
-[CASTLE]
-- Sea report introduces モブネコクー, not モブデンデン.
-
-[MOB PIECE]
-- Automatic scroll restore targets the player's hand/summary region instead of page top.
-- Gather/start/hit/result/inter-battle delays shortened about 25-30%.
-- Damage/rules unchanged.
-
-[NORMAL BATTLE]
-- Remaining MP is highlighted with a high-contrast blue pill for main/super/reserve allies.
-
-[SHOP]
-- Tavern drinks: owned coins + +/- bulk purchase + total + post-purchase balance.
-- Blacksmith weapons: same bulk purchase UI.
-- Castle item shop: + stops at affordable maximum; buy disabled when unaffordable.
-- Quantity controls never allow selection beyond current funds.
-
-[PRESERVED]
-- v135 natural Japanese dialogue and subquest headers.
-- v134 enemy skill cut-ins / formal skills.
-- v133 dialogue/camp/Mob Piece presentation fixes.
-- v132 Free/Rank Match systems.
-- v131 Neon event recovery.
+v162 NAVI FORM FIX
+PASS: inline JS syntax and standalone game/data syntax.
+PASS: actual arrival sequence uses boss/52.png for every Navi line.
+PASS: absorption/transform switches guest source from boss/52.png to boss/53.png.
+PASS: a subsequent normal Navi encounter uses boss/52.png again.
+PASS: solo battle enemy uses boss/52.png; master battle enemy uses boss/53.png.
+PASS: display version v162 and no browser JavaScript errors.
+Checks cover image references/event flow. The code ZIP retains the existing separately supplied asset-folder arrangement.

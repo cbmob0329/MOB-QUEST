@@ -1,9 +1,18 @@
-MOB QUEST v135
+MOB QUEST v161 regression report
 
-- Subquest story overlay header now uses the subquest region and quest name; Magma subquests never show 草原 / 草原・入口.
-- Replaced arbitrary fixed-character Japanese line splitting with authored-line + natural browser wrapping.
-- Story dialogue, dual dialogue, battle story dialogue and castle report pages no longer split endings such as でやんすね / ニョロ in the middle.
-- Magma QUEST 3 authored fixes:
-  ハチュー洞窟という / 海底近くの洞窟ニョロ
-  ・・・・ / そのうち寄ってみるニョロ！
-- v134 enemy skill cut-ins and all prior systems are preserved.
+Focused fixes
+- Record Room reveal keeps the reading-book button hidden until the scripted reveal point.
+- Reading Book AREA4 restores the Kaijin boss after AREA3's warp/fade styles.
+- The Kaijin boss is joined before the final formation dialog, and the player chooses the order manually.
+- Navi's post-solo-battle scene shows the Kaijin boss alone; the "やれやれ、面倒だな" line keeps Navi visible.
+- Navi absorption completes on the visible guest and then shows the boss/53.png master artwork.
+- Kaijin's four ultimate cooldown values start at 0 (ready) for the final battle.
+
+Automated checks
+- node --check v161/js/game.js
+- node --check v161/js/data.js
+- test-v161.cjs
+- test-v161-story.cjs
+- test-v161-full.cjs (v160 regression suite)
+- regression-v161-full.cjs (v160 regression suite)
+- effects-v161-full.cjs (v160 regression suite)

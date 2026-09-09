@@ -1,20 +1,11 @@
-MOB QUEST v121 regression / implementation report
+MOB QUEST v146 REGRESSION REPORT
 
-1. Base: v120 SKILL / STATUS / DESERT AWAKENING.
-2. Player skill overlap:
-   - v120-added/status-special skills are re-specialized so each listed skill belongs to one character.
-   - Existing elemental magic, heal and buff learnsets are preserved.
-   - Record magic remains player-selectable and is excluded from fixed specialization.
-3. Desert II subquests:
-   - Required party: モブデザート / モブリーロ / モブテツ.
-   - QUEST 1-5 implemented in sequence; no pending placeholders remain.
-   - Rewards: W51/A55 through W55/A59, requested diamond/coin amounts.
-4. QUEST 5:
-   - Fake モブデザート uses play/03.png at Lv78.
-   - 2-3 actions/turn via boss action fallback.
-   - Turn 1 only: 20% incoming damage reduction.
-   - ゴールドフィッシュ: single medium damage, 20% critical chance.
-   - スナノサバキ: all-target medium physical damage.
-5. Real モブデザート awakening from v120 remains play/15.png after Desert II story and retains ミラモブポイズン.
-6. GAME_ASSET_VERSION=121, title v121, data header v121.
-7. data.js / game.js / standalone inline JS pass node --check.
+FIXED
+- Dialogue now widens only the current bubble before allowing a 1-3 character orphan line.
+- Sea Quest 5 keeps 「有名な戦いには必ず / モブジョーンズの功績があるぞ」 in the same bubble.
+- Short-overflow sentences such as 「まだまだ力を秘めていそうだったな」 may widen instead of leaving 「な」 alone.
+- One-enemy HP HUD reduced from 280px max to 220px max; remains clearly larger than multi-enemy HUD.
+- Mob Power Jones enlarged modestly by up to 14%, with field-size caps.
+
+PRESERVED
+- All v145/v144 dialogue, sea Wave, enemy HUD count logic, v142 enemy passives/ultimates, v141 Tribe changes, and prior systems remain inherited.

@@ -1,16 +1,18 @@
-MOB QUEST v142 REGRESSION REPORT
+PASS v77_title
+PASS v77_asset
+PASS title_initial
+PASS loader_inactive
+PASS inline_css
+PASS inline_data
+PASS inline_game
+PASS no_external_js
+PASS direct_new
+PASS boot_ready
+PASS setup_recovery
+PASS opening_lock
+PASS enemy_lunge
+PASS enemy_hit
+FAIL white_frame
+PASS maple_lock
 
-IMPLEMENTED
-- Enemy ultimates/passives from パッシブ追加.txt implemented with 120%=1.20x interpretation.
-- Armor selling remains at blacksmith: armor sells at 100% listed price, equipped copies protected, yes/no confirmation preserved; menu wording made explicit.
-- Sea Subquest 1 Mob Nekoku dialogue split into authored pages to prevent bad wraps.
-- New dialogue pager never hard-splits a phrase by character count; authored newlines and sentence punctuation are used as boundaries.
-
-ENEMY FEATURES
-- Abyss Knight, Jones, Wave, Hawk II, Violin, Rapty/Tira, Kuukai, Umi Denden, Neo Tiger, Palette Leon, Neo Master, Frezard, Yogan Slime, Salamander, Gidora, Sla-Mummy, Mira Buster, Mira Earth/Karami/Night/Time, Mira Pharaoh, Killa/Lala Witch, Gladi Mob, Mob Demon King, Ul Mob Lilith.
-
-REGRESSION SAFETY
-- Built directly from user-supplied v141 ZIP.
-- v141 function/data inventory checked after patch.
-- v129-v141 patch markers preserved.
-- Mob Dragon Junior remains boss/50.png.
+PASS 15/16

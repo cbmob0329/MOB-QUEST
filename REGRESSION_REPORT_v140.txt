@@ -1,18 +1,19 @@
-MOB QUEST v140 REGRESSION REPORT
+MOB QUEST v75 REGRESSION REPORT
 
-ROOT CAUSE
-- v139 overrode Tribe left/right values, but an older .story-layout-party-left rule still had width:48%!important.
-- Because width remained fixed at 48%, the party row still occupied only the left half of the screen even though right:30% was removed.
-
-FIX
-- Tribe + side guest party lane is now 68% wide, leaving a protected ~30% lane for the guest.
-- Maximum six party members per row remains unchanged.
-- 7-12 members remain two rows.
-- Natural-size scaling cap was raised modestly, while widthSafe and heightSafe remain hard collision limits.
-- Tribe scenes with no side guest may use full safe width.
-
-REGRESSION SAFETY
-- Built directly from v139.
-- No existing v139 functions or data IDs removed.
-- v129-v139 features remain inherited.
-- Mob Dragon Junior remains boss/50.png.
+今回の修正対象
+[PASS] 敵通常攻撃: 敵ユニットが味方側へ大きく突進する
+[PASS] 敵特殊攻撃: 遠距離指定以外は同じ突進処理を使用
+[PASS] 敵被弾: 赤フラッシュ + 敵ユニット全体シェイク
+[PASS] 通常攻撃後の被弾表示時間を延長
+[PASS] 魔法/特技/必殺技でも被弾表示時間を確保
+[PASS] 全体攻撃でも敵ごとに被弾シェイクを実行
+[PASS] 冒険パーティーbutton/imgの背景・枠・box-shadowを強制透明化
+[PASS] 画像自体が白背景の場合、端から連結する白〜薄灰色のみ実行時透過
+[PASS] 元から透過PNGの場合は画像変換をスキップ
+[PASS] 冒険画面の勇・桃・砂など一文字フォールバックを非表示のまま維持
+[PASS] v74 canonical仕様を土台として維持
+[PASS] タイトル画面に v75 表示
+[PASS] css/data/game キャッシュ番号 v75
+[PASS] JavaScript構文チェック
+[PASS] HTML ID重複なし
+[PASS] CSS波括弧数一致

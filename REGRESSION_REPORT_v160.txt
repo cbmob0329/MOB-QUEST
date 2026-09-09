@@ -1,14 +1,31 @@
-MOB QUEST v160 / AREA ROUTE・EXP・ULTIMATE FEEDBACK FIX
+MOB QUEST v94 REGRESSION REPORT
 
-実装確認
-- 魔王城のAREA 1〜4定義を確認し、冒険画面にも4エリア進行レールを表示。
-- 経験値の必要量調整を敵報酬計算から分離。獲得EXPは基準値、レベルアップ必要量だけ1.05倍。
-- 必殺技はMP消費0を維持し、攻撃系威力を0.94倍に調整。回復/変身系は変更なし。
+Release: BOOK STAGING / NAVI MASTER FIX STABLE
+Base: v93 BOOK ENTRY / SUBQUEST FIX STABLE
 
-自動検証
-- `node build-v160.cjs` — inline HTML / game.js 構文 PASS。
-- v159のリリーステスト一式に加え、AREA 1〜4表示、報酬と必要量の分離、MP0/威力調整を確認。
-- ZIP CRCとv159からの未変更ファイルを `pack-v160.py` で確認。
+STATIC VALIDATION
+- js/data.js: Node syntax check PASS
+- js/game.js: Node syntax check PASS
+- index inline main JS: Node syntax check PASS
+- index inline CSS: exact external css/style.css sync PASS
+- index inline JS: exact js/data.js + js/game.js sync PASS
+- visible title version: v94 PASS
+- GAME_ASSET_VERSION: 94 PASS
+- Reading Book backgrounds yomi1-yomi4 retained PASS
+- awakened executive paths: red boss/55.png / blue boss/56.png PASS
+- story-only tighter entrance scale for Navi / Navi Master / minions / captain PASS
+- AREA3 black sphere -> impact -> Hero down/black order PASS
+- Adventure-field Hero persistent black state + level-label removal PASS
+- AREA3 Kaijin boss remains visible while Navi appears beside him PASS
+- Money emphasis bubble PASS
+- transformed Hero slow fade-in + larger scale PASS
+- Hero relocation to Navi right PASS
+- Kaijin boss movement to party side PASS
+- Navi Master permanentDamageReduction:false PASS
+- final Navi Master no scriptedImmortalParty PASS
+- barrier broken window adjusted to preserve two full subsequent player turns PASS
+- v93 Record Room / CAMP / subquest route markers retained PASS
 
-制限
-- 原版ZIPに画像・音声アセットが同梱されていないため、画像表示は代替画像で検証。
+IMPORTANT
+This package keeps the same code-only project format as prior stable releases. Image/audio folders are referenced by path and are not embedded in the ZIP.
+Validation is syntax/sync/structural. A full browser playthrough is not claimed in this asset-less build environment.

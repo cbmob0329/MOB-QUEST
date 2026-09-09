@@ -1,0 +1,24 @@
+MOB QUEST v98 REGRESSION REPORT
+Base: v97 MAPLE-DIALOG-FIGURE-SHOP-FIX-STABLE
+
+Target fixes
+- Irukaeru tavern dialogue exact authored line breaks.
+- Irukaeru speech pointer moved from lower/foot area to upper body/head area.
+- Maple self-introduction pagination corrected.
+- Maple figure-shop dialogue pagination corrected.
+- Legacy static FIGURE SHOP popup path intercepted.
+- Figure gacha popup positioned high under page header.
+- Horizontal swipe carousel uses gacha/XXX.png banners and opens existing gacha detail flow.
+
+Preserved
+- v96 figure data / gacha rates / gacha draw flow / Mob Piece Battle.
+- v95 armor and Demon Castle fidelity.
+- v94 Reading Book battle/staging fixes.
+- v93 record-room Book entry and subquest progression fixes.
+
+Validation
+- js/data.js node --check PASS
+- js/game.js node --check PASS
+- standalone inline JS node --check PASS
+- inline CSS == css/style.css PASS
+- inline JS == js/data.js + js/game.js PASS

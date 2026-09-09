@@ -1,18 +1,17 @@
-MOB QUEST v106 CHECKLIST
-[OK] Full replacement build based on v105.
-[OK] GAME_ASSET_VERSION = 106.
-[OK] Title display = v106.
-[OK] v103-v105 runtime blocks execute inside core IIFE before boot.
-[OK] Demon Castle split confirmation is visible and interactive inside z-index 180 overlay.
-[OK] Split YES resolves and permits story to continue to B-party battle.
-[OK] Split NO returns to formation editing.
-[OK] Demon King silhouette class applied before reveal.
-[OK] Castle background has fallback chain and stale fallback state reset.
-[OK] Kira/Lara simultaneous line is dialogue, not narration.
-[OK] Witch absorption is visual animation, not explanatory narration.
-[OK] Lilith + four sisters fit as a five-character group.
-[OK] v104 player balance retained.
-[OK] v105 boss paralysis immunity/status duration cap retained.
-[OK] Complete STORY_EVENTS table is present before v89+ story overrides.
-[OK] VM scope execution reaches v106, v105 and v99 runtime markers.
-[OK] Demon Castle key story actors have explicit image fallback definitions; no lookup-only '?' placeholder path.
+[v92 focused checklist]
+[x] v91からの継承
+[x] 読みかけの本：添付テキストを基準
+[x] 台詞省略の復元（AREA1-4 / 前後）
+[x] 7枚報告～本入場
+[x] 本終了～王の台詞
+[x] 勇者ダウン黒塗り
+[x] あのヒーロー画像切替
+[x] 変身数値ナレーション無し
+[x] 本世界：攻撃/魔法/特技/単体攻撃型必殺の全体化
+[x] 本世界敵画像縮小
+[x] モブリリス縮小
+[x] 特技ボタンサイズ統一
+[x] 必殺技CT ready演出
+[x] 会心文字＋ダメージ一体表示
+[x] v88タップ進行維持
+[x] v91 postgame維持

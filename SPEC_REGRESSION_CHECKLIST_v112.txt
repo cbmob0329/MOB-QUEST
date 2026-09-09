@@ -1,33 +1,16 @@
-MOB QUEST v112 CHECKLIST
+MOB QUEST v97 regression checklist
 
-[Story appropriate level]
-OK Grassland Lv5
-OK Desert Lv10
-OK Rural Lv15
-OK Neon Lv20
-OK Magma Lv25
-OK Sea Lv30
-OK Grassland II Lv35
-OK Tribe Lv40
-OK Rural II Lv45
-OK Neon II Lv50
-OK Magma II Lv55
-OK Desert II Lv60
-OK Demon Castle Lv65
-OK Unfinished Book Lv70
-OK Demon Castle II Lv80
-OK Appropriate-level notice appears BEFORE departure confirmation.
-OK No adventure run snapshot/travel begins until user presses はい.
+BASE
+- v96 is the only source branch.
+- v96 figure gacha / MOB Piece / v95 Demon Castle / v94 Book fixes retained.
 
-[Battle Program]
-OK Cleared program remains replayable.
-OK Cleared program banner turns red.
-OK Large white CLEAR stamp is visible.
-OK Newly cleared program stamp animates.
-OK Completed season banner turns red with white CLEAR stamp.
-OK Existing clear metadata and season reward logic unchanged.
+MAPLE
+- Tavern first intro: 「やっほ〜 / モブメープルです！」 then 「これからよろしくねー」.
+- Figure-shop first intro: 「やっほ〜 / 私はフィギュアを売ってるよ」 then 「色んなガチャを用意すから / 好きなガチャを選んでね」.
+- Repeat: 「やっほ〜 / どのガチャにする？」.
+- Manual line breaks are preserved.
 
-[Regression]
-OK No changes to battle balance.
-OK No changes to subquest data/formations.
-OK No changes to gacha/Mob Piece rules.
+FIGURE SHOP POPUP
+- Popup stays hidden until renderFigureGachaShopV96() completes.
+- Maple image has explicit width/height/max limits and object-fit:contain.
+- Shop card vertical scrolling enabled.

@@ -1,11 +1,32 @@
-MOB QUEST v154
-酒場HELP: DRINK / EQUIPMENT / PARTY / FIGURE / MOB PIECE BATTLE
-鍛冶屋HELP: MEDAL
-FIGURE・MOB PIECE BATTLEは既存mapleShopUnlocked（砂漠クリア）の条件で表示。
-正方形2列バナー、説明、一覧へ戻る、施設へ戻る、閉じる、Escape対応。
-表示・アセットバージョン154。
-v140以降の追加処理を既存ゲームの関数スコープに収め、STORY_EVENTS参照エラーを解消。
-v152の折返し・v153の魔王城背景と覚醒デザートサイズ処理を維持。
-検証: 全JS構文、Edgeブラウザ320/390/430px縦画面、解放前3項目/解放後5項目、全6説明、戻る、閉じる、鍛冶屋、他施設HELP非表示。実行エラーなし。
-iPhone Safari実機では未確認。
-画像・音声などの素材はv153と同じ構成です。
+MOB QUEST v88 REGRESSION REPORT
+
+BASE: MOB-QUEST-playable-core-v87-subquest2-expansion (1).zip
+POLICY: v87を正本とし、今回の3変更以外は変更しない。
+
+[PASS] GAME_ASSET_VERSION = 88
+[PASS] v87タイトル構造維持
+[PASS] v87黒背景オープニング維持
+[PASS] 王の間の吹き出し維持
+[PASS] balancedJapaneseText / 日本語改行制御維持
+[PASS] 「勇者は深く頷いた」画面外タップ進行
+[PASS] 戦闘イベント台詞は2.5秒放置しても自動で消えない
+[PASS] 戦闘イベント台詞は画面タップでのみ解除
+[PASS] 技最終フレーム 1000ms -> 700ms
+[PASS] 必殺技アニメ最終フレーム 420ms -> 320ms
+[PASS] 最終フレームは後半で実際にフェードアウト
+[PASS] サブクエスト順番制維持
+[PASS] サブクエストクリア演出維持
+[PASS] 冒険を諦める完全ロールバック維持
+[PASS] 草原全滅救済2回維持
+[PASS] 初期0G/0ダイヤ・OP支給維持
+[PASS] 5体戦闘維持
+[PASS] 城の背景描画後に会話する仕様維持
+[PASS] 防具67種維持
+[PASS] 武器88種維持
+[PASS] index内蔵JSと外部data/game一致
+[PASS] index内蔵CSSと外部CSS一致
+[PASS] CSS brace balance
+
+STATIC REGRESSION: 23/23 PASS
+BROWSER 390x844: PASS / Page Error 0
+BROWSER 1280x900: PASS / Page Error 0

@@ -1,11 +1,12 @@
-v109 REGRESSION CHECKLIST
-- Based on v108.
-- v108 normalized player HP is preserved.
-- v107 Mob Piece 2-win battle remains untouched.
-- v106 Demon Castle progression/staging remains untouched.
-- v105 enemy resistance/boss paralysis immunity remains untouched.
-- No percent-of-max-HP hard cap in enemy damage.
-- Support magic is appended to existing magic catalog and learnsets; existing attack magic/techniques are not removed.
-- Tetsu/Money exclusive support spells enforce user restriction.
-- No new sprite/image files required for support effects.
-- [x] 重い必殺後の通常攻撃化は通常ボスのみ。読みかけの本「モブ怪人のボス」の4回必殺連発イベントと魔王城リリス固有連撃は除外して既存演出を保持。
+MOB QUEST v95 REGRESSION CHECKLIST
+
+- Base is v94.
+- v94 Reading Book fixes preserved.
+- v93 Record Room / camp abandon / sequential subquest fixes preserved.
+- Armor tab visible; Armor 01-67 remain registered.
+- Armor drop/equip/effects/inventory/100% sale paths present.
+- Demon Castle final overrides are after v94, so they are the runtime definitions.
+- Tavern facilities are icon-only; existing figure unlock/hide logic unchanged.
+- Demon Castle exploration = dark red-purple / white text.
+- Ultimate battle list renders only availableUlts().
+- Castle menu labels have white banners.

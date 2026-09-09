@@ -1,21 +1,32 @@
-MOB QUEST v141 REGRESSION REPORT
+MOB QUEST v76 REGRESSION REPORT
 
-IMPLEMENTED
-- Tribe recommended level 40 -> 50.
-- Tribe AREA1: Kiba Lv48 / Kukuri Lv57 / Kiba Lv48.
-- Tribe arrival party uses full lower width; Jessie is staged at the event/enemy position.
-- Jessie joins at Tribe arrival; existing saves past arrival are repaired automatically.
-- Tribe dialogue re-authored with natural one/two-line pages.
-- Tribe t-* battle sprites slightly enlarged with multi-enemy collision caps; applies in Adventure/Subquest/Battle Program.
-- Kukuri: 10% evade, normal attack is party-wide, boomerang throw animation; special also uses boomerang.
-- Toughness: Toughness Body 50% proc, damage -60%; every second normal attack is AoE.
-- Hisui: Minus Aura every ~3 turns, no damage, 70% party flinch; Living Dead once, revives self/Ryugo to 50% even if Hisui is the downed unit.
-- Ryugo: King's Rage 30%, negates hit and sets ATK +20%.
-- Neomanipool/Goremagardy large spell animations accelerated only for those spells.
-- Adventure wipe returns to previous AREA (AREA1 stays AREA1) and never routes to HOME.
+[PASS] opening pure black
+[PASS] opening prepaint guard
+[PASS] opening no label
+[PASS] king lines are speech
+[PASS] explicit narration only
+[PASS] pink run-in
+[PASS] pink boku
+[PASS] home tutorial compact
+[PASS] canonical tutorial text
+[PASS] no orphan line helper
+[PASS] facility compact width
+[PASS] castle compact width
+[PASS] maple hidden before desert
+[PASS] training gold contrast
+[PASS] training exp contrast
+[PASS] training boss contrast
+[PASS] training program contrast
+[PASS] v75 enemy dash retained
+[PASS] v75 hit shake retained
+[PASS] v75 red flash retained
+[PASS] v75 white-frame cleanup retained
+[PASS] adventure symbol hidden
+[PASS] figure 184 retained
+[PASS] ultimate CT retained
+[PASS] test all skills retained
+[PASS] v76 version
 
-PRESERVED
-- v140 Tribe party width fixes and v139-v129 systems.
-- v137 diamond/shop/notice systems.
-- v136 preload/shop/Mob Piece systems.
-- Mob Dragon Junior remains boss/50.png.
+PASS 26/26
+HTML duplicate IDs: []
+CSS braces: 2542 / 2542

@@ -1,11 +1,29 @@
-MOB QUEST v129
+MOB QUEST v155 / 2026-09-09
 
-Battle Program strict story-season gate fix
-- TEST MODE no longer opens all Battle Program seasons.
-- Season visibility follows the designated story gate table.
-- Season 1 is initial. Season 2 requires Grassland report. Seasons 3-5 require Desert report.
-- Later seasons remain hidden until their designated story world is reported/cleared.
-- Sequential season clear requirement remains active.
-- Cleared PROGRAM retry lock from v127 remains active.
-- Test EXP x3 from v127 remains active.
-- Existing future-season progress is preserved but not shown before its story gate.
+9月9日.txtの変更を反映。
+・酒場／メープル／トレーニング／鍛冶屋の初回・再訪・退出セリフ。
+・v155の新しい初回会話は各施設で一度表示（既存セーブでも新会話を確認可能）。
+・HELPを左上へ配置。トレーニングHELPも表示。
+・冒険を諦める説明と「本当に冒険を諦めますか？」を1つの確認バナーに表示。
+・鍛冶屋の売却は武器／防具ボタンで選択。
+・施設会話は指定された最大3行を1つの吹き出しに収め、幅に応じて文字サイズを調整。
+・ストーリー吹き出しは本文に応じた幅と高さに調整。実測幅に合わせて文字サイズを補正。
+・魔王城のwitchMergeLilith／lilithSummonはイベントに存在したが、runStoryStepsに実行分岐がなかった。両方を接続。
+・キラウィッチとララウィッチの魂2つがリリスへ移動して吸収される演出。
+・v153の魔王城背景と覚醒後モブデザートサイズ修正を維持。
+・表示／アセットバージョン155。外部js/game.jsも実際のインラインゲームコードと同期。
+
+検証
+・全インラインJS、js/game.js、js/data.jsの構文チェック。
+・Edgeで320/390/430px縦画面、施設会話とストーリーの代表的な長文を確認。
+・全施設の初回／再訪／退出分岐、メープルの会話後メニュー表示。
+・武器／防具の売却カテゴリ切替。
+・冒険を諦める確認：キャンセルで状態不変、承認でスナップショット復元。
+・魂演出の実行、魂2つの生成・移動・消去、リリスのみ残ること。
+・イベントで使う30種類の命令に実行処理があること。
+・ブラウザ実行エラーなし。ZIP CRC検証済み。
+
+確認範囲
+元ZIPには画像・音声の素材フォルダが含まれていません。素材構成は変更していません。
+演出の動作確認では仮の表示枠を使いました。実際の素材を配置した環境とiPhone Safari実機では未確認です。
+会話／イベントデータの削除は行っていません。全ゲーム進行を通したプレイ確認ではありません。

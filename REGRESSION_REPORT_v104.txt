@@ -1,6 +1,18 @@
-v104 static validation target:
-- data/game/standalone JS syntax
-- inline/external synchronization
-- 13 player balance records + learnsets
-- recommended levels Grassland none, Desert 10, Demon Castle II 80
-- ZIP integrity
+MOB QUEST v128 REGRESSION REPORT
+
+Implemented:
+- HOME critical full-screen background is hidden until the image has fully loaded/decoded; startup HOME adds a short guided load.
+- Blacksmith room background is likewise fully decoded before exposure.
+- Failed image preloads are removed from cache so a transient failure can retry later.
+- Loading guide TAP loops the four selected cards: 1/4 -> 2/4 -> 3/4 -> 4/4 -> 1/4.
+- Mobile Safari row preload concurrency reduced from 10 to 3; timed-out row workers stop starting new assets.
+- Equipment shows the guide loader only on the first equipment entry per session. Re-entry and weapon/armor/medal/figure pickers no longer show the full guide every time.
+- Weapon shop follows weapon seasons: S1 01-05, S2 06-23, S3 24-46, S4 47-66, S5 67-88. Test Mode does not bypass shop progression.
+- Unlock progression: S2 after Neon clear, S3 after Rural II clear, S4 after Demon Castle clear, S5 after story clear / Demon Castle II clear.
+- Weapon purchase keeps a sticky owned-coin panel visible and confirmation shows price / owned / remaining coins.
+- Weapon shop performs a one-time per-unlocked-season image warm-up before showing cards.
+
+Preserved:
+- v127 cleared Battle Program lock, Test EXP x3, pre-clear Boss Record drop gate.
+- v126 castle report flow, adventure report lock, 2.5s Legend Record GET, combined destination/recommended-level card.
+- v125 figure/Boss Record/Mob Piece data and all earlier battle/adventure/training fixes.

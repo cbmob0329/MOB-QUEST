@@ -1,22 +1,23 @@
-MOB QUEST v148 REGRESSION REPORT
+MOB QUEST v83 REGRESSION REPORT
 
-ROOT CAUSE
-- v146 used canvas/font estimates, then the real Safari DOM was still allowed to wrap story text.
-- Subquests call storySay(), so the intended fix path was correct, but the final DOM could still create one/two-character orphan lines.
-- v147 only added a separate facility/dialog path and did not remove this subquest DOM-wrap failure.
+RESULT: PASS
 
-FIX
-- Subquest/story dialogue is measured with the actual rendered DOM font.
-- The individual bubble stretches first up to the safe phone width.
-- Chosen lines render as nowrap block spans, so Safari cannot create an extra line after the decision.
-- Only lines that truly exceed the safe phone width are semantically split.
-- 1-3 character orphan tails are rejected/rebalanced.
-- Authored two-line dialogue is preserved exactly.
-- Sea Q3/Q5 examples are reasserted, including:
-  有名な戦いには必ず
-  モブジョーンズの功績があるぞ
+- game.js Node syntax: PASS
+- index.html inline JS Node syntax: PASS
+- WEAPONS: 88/88
+- ARMORS: 67/67
+- reward-defined playable subquests: 16
+- total subquest entries: 60 (16 playable / 44 pending source completion)
+- Subquest icon/first guide/normal guide/confirmation/non-retry: PASS
+- Grass/Desert/Rural/Neon confirmed rewards: PASS
+- spenemy/007.png, 008.png, 009.png special enemies: PASS
+- 5-enemy wave generation/layout: PASS
+- Armor slot/drop-only/inventory/effects: PASS
+- Weapon sale 20% / armor sale 100%: PASS
+- index inline code synchronized to v83 external game/CSS/data: PASS
+- v82 two-rescue counter retained: PASS
 
-PRESERVED
-- v147 facility/Mob Pink adaptive dialogue.
-- v146 enemy HUD/Jones sizing.
-- v145-v141 battle, passive, shop, quest, reward and story systems.
+Source gaps intentionally NOT fabricated:
+- 田舎町 QUEST3 has battle/dialogue but no reward line. Locked until reward is specified.
+- ネオン街 QUEST3-5 lack complete dialogue/reward IDs. Locked.
+- マグマ～砂漠II currently provide quest concepts/enemy plans but no complete dialogue+reward IDs. Listed as pending and locked.

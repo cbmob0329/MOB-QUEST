@@ -1,23 +1,8 @@
-MOB QUEST v100 REGRESSION REPORT
+MOB QUEST v124
 
-BASE
-- v99 RUNTIME SCOPE / TAVERN GACHA FIX STABLE
-
-PATCH SCOPE
-- Figure gacha cinematic and result UX
-- Mob Piece Battle revised rules/UI
-- Test MAX toggles
-- Tavern/Castle facility UI
-- Equipment return/background context
-- Blacksmith exit dialogue
-- Subquest enemy visual scale
-
-PRESERVED
-- v99 runtime-scope recovery and tavern exact dialogue
-- v95 armor / Demon Castle fidelity
-- v94 Reading Book staging / Navi Master fixes
-- v93 Reading Book entry and subquest unlock progression
-- prior battle UI / critical / ultimate CT fixes
-
-VALIDATION
-See final release checks performed before ZIP creation.
+変更:
+- 冒険出発前のロード画面を最低2.5秒表示。
+- 2.5秒は固定待機だけではなく、現在の冒険エリアの背景、パーティー画像、通常敵、各AREAの中ボス/ボス画像を先行読み込みする時間として使用。
+- 実ロードが2.5秒を超える場合は完了まで待機し、16秒で安全タイムアウト。
+- 装備/防具/フィギュア/所持品/ガチャ/モブピース等のv123先行読み込みを維持。
+- GAME_ASSET_VERSION 124。

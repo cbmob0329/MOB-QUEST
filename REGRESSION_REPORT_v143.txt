@@ -1,19 +1,24 @@
-MOB QUEST v143 REGRESSION REPORT
+PASS version78
+PASS persistent_opening
+PASS opening_no_tap_label
+PASS opening_tap_gate
+PASS protected_japanese
+PASS coach_two_messages
+PASS castle_measured_position
+PASS home_tutorial_lower
+PASS program_panel_dark_text
+PASS program_cards_white_text
+PASS single_dash_keyframes
+PASS v75_hit_effect_kept
+PASS v75_white_frame_fix_kept
+PASS figure_lock_kept
+PASS battle_ct_kept
 
-ROOT CAUSE
-- storySayLine() shrank bubbles using a rough character-count formula.
-- A 12-character Japanese line could be assigned about 200px. On iOS/Safari the final character could wrap by itself.
-- CSS also still used overflow-wrap:anywhere in the last active rule.
+TOTAL 15/15 PASS
 
-FIX
-- Story bubble width now uses measured rendered text width plus safe padding.
-- Japanese lines of 10+ characters get a 250px minimum, capped by the phone viewport.
-- overflow-wrap:anywhere removed by final override; line-break:strict + balanced wrapping used.
-- Long unbroken dialogue is split only at punctuation, particles, and semantic clause hints.
-- 1-3 character orphan remainders are explicitly prevented.
-- Sea Knight Corps lines were manually authored into natural two-line phrases.
-- Same semantic paging helper is used by story dialogue, battle dialogue, and castle reports.
-
-PRESERVED
-- v142 enemy passives/ultimates and armor selling.
-- All v141-v129 patch markers and prior systems.
+BROWSER TESTS
+PASS browser_boot {'ready': True, 'active': ['titleScreen'], 'ver': 'v78'}
+PASS opening_black_sequence {'overlay': True, 'text': 'とある世界のお話', 'tap': False, 'loading': False}
+PASS rapid_tap_guard 'とある世界のお話'->'様々な種族が'
+PASS training_contrast_computed {'note': 'rgb(56, 42, 27)', 'season': 'rgb(255, 255, 255)', 'card': 'rgb(255, 255, 255)'}
+PASS single_dash_computed enemyDashTowardPartyV78

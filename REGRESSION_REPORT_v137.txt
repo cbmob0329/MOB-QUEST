@@ -1,20 +1,15 @@
-MOB QUEST v137 REGRESSION REPORT
+MOB QUEST v163 回帰テスト
 
-IMPLEMENTED
-- モブドラゴンジュニア image path fixed to boss/50.png exactly.
-- 部族村: dark brown Explore/Camp cards now force white high-contrast text.
-- All adventure area themes now have an explicit dark/light ink contract to prevent recurrence later in the story.
-- 部族村 arrival: 7-8 party actors use a 4x2 layout; Mob Jessie uses the same lower baseline and comparable scale.
-- 草原Ⅱ AREA4 boss order: LEFT Mob Tsurugunner / CENTER Mob Hawk II / RIGHT Mob Savanna.
-- AUTO: actual reduced MP cost is checked before Magic/Ultimate; failed AUTO action retries instead of stalling.
-- Camp Drink: opens a modal owned-drink list with image/name/effect/count.
-- Explore: guaranteed +2 diamonds per valid exploration.
-- Story final AREA4 boss: +50 diamonds once per clear.
-- Mob Piece Battle: Free win +1 diamond; Rank win +3 diamonds; promotion +10 diamonds additional.
-- HOME unlock notices: new blacksmith weapons, figure gacha banners, and tavern drinks are announced after progression.
-- Story audit keys installed for Tribe -> Rural II -> Neon II -> Magma II -> Desert II -> Demon Castle.
+PASS: index.html / game.js / data.js の構文検査。
+PASS: Microsoft Edge 390x844 で起動し、表示バージョン v163、ブラウザ例外なし。
+PASS: 草原クリア相当の状態でイベントクエストが表示され、STORY / BOSS の2入口を確認。
+PASS: ボス一覧は解放条件に従い、未挑戦ボスは黒塗りシルエットで表示。
+PASS: 14ボス×3難易度、ノーマルからの段階解放、クリアスタンプのデータを確認。
+PASS: イベント戦闘を実際に開始し、EVENTモード・ボス画像・敵カテゴリ・イベント状態を確認。
+PASS: 敗北/勝利後はイベント専用報酬処理に分岐し、冒険進行や通常経験値を変更しない実装を確認。
+PASS: イベント限定URフィギュア16種、figboss/35〜41の本ガチャ、89〜92の未指定入手先を確認。
+PASS: フィギュアタグ01〜63、超合金61〜63、重複共鳴の3体時置換ルールを確認。
+PASS: R/SR/SSR/UR/MOBの所持上限とルビー変換処理を確認。
+PASS: eventfig/01〜16.png と降臨ボス用 spenemy 素材を同梱。
 
-PRESERVED
-- v136 sea preload/record/shop quantity/Mob Piece tempo changes.
-- v135 natural dialogue wrapping.
-- v134 enemy skill image cut-ins and earlier battle/content systems.
+注意: ストーリー入口は用意済み。モブ怪人キング降臨は追加仕様待ちのため実装していません。
