@@ -4706,3 +4706,15 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes figure-spark-v164{0%{opacity:0;translate:0 12px;scale:.6}25%{opacity:.8}100%{opacity:0;translate:0 -130px;scale:1}}
 @media(max-width:350px){#trainingModeCarousel .training-mode-card b{font-size:11px!important}#trainingFeaturePopup[data-mode]>.training-feature-popup-card{padding:14px 8px!important}#trainingFeaturePopup #trainingFeaturePanel .battle-program-season-grid{gap:8px!important}#trainingFeaturePopup #trainingFeaturePanel .battle-program-season{padding:12px 8px!important}.gacha-forge-stage-v164 header h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){#gachaCinematicV100.gacha-forge-v164 *, .gacha-result-overlay-v100 .gacha-single-v103,.gacha-result-overlay-v100 .gacha-rarity-fx-v102 i{animation:none!important;transition:none!important}.gacha-forge-seal-v164{display:none}.gacha-result-overlay-v100 .gacha-rarity-fx-v102 i{display:none}}
+
+/* v165 battle cinematics and mobile-safe transition layers */
+.dc2-summon-leave-v165{animation:dc2-summon-leave-v165 1.05s ease-in forwards!important;}
+@keyframes dc2-summon-leave-v165{0%{opacity:1;filter:brightness(1)}35%{opacity:1;filter:brightness(2.6) drop-shadow(0 0 24px #f4b5ff)}100%{opacity:0;filter:brightness(0) drop-shadow(0 0 30px #a81fff)}}
+.dc2-absorb-v165{position:absolute;inset:0;z-index:80;display:grid;place-items:center;background:radial-gradient(circle at 50% 48%,rgba(29,4,44,.15),rgba(2,1,8,.72) 70%);opacity:0;pointer-events:none;transition:opacity .25s ease;}
+.dc2-absorb-v165.show{opacity:1;}
+.dc2-absorb-orb-v165{width:min(34vw,150px);height:min(34vw,150px);border-radius:50%;background:radial-gradient(circle at 36% 30%,#9f8aff 0 3%,#321b69 16%,#090514 58%,#000 78%);box-shadow:0 0 16px #5a27b4,0 0 42px #251050, inset 0 0 26px #c9adff;animation:dc2-orb-pulse-v165 1.25s ease-in-out infinite;}
+.dc2-absorb-v165 b,.dc2-absorb-v165 small{position:absolute;left:12px;right:12px;text-align:center;color:#fff;text-shadow:0 2px 8px #000;}
+.dc2-absorb-v165 b{top:22%;font-size:clamp(16px,4vw,25px);letter-spacing:.08em;}
+.dc2-absorb-v165 small{top:76%;font-size:clamp(11px,2.8vw,15px);color:#ded4ff;}
+@keyframes dc2-orb-pulse-v165{0%,100%{transform:scale(.82);filter:brightness(.8)}50%{transform:scale(1.05);filter:brightness(1.35)}}
+@media(prefers-reduced-motion:reduce){.dc2-summon-leave-v165{animation-duration:.12s!important}.dc2-absorb-orb-v165{animation:none}.dc2-absorb-v165{transition:none}}

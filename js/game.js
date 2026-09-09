@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=164;
+const GAME_ASSET_VERSION=165;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10050,7 +10050,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=164`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=165`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -10833,5 +10833,180 @@ runGachaCapsuleAnimationV100=async function(results){
     if(previousFocus?.isConnected&&!previousFocus.closest('[hidden]'))previousFocus.focus({preventScroll:true});
   }
 };
+
+
+/* MOB QUEST v165: 魔王城Ⅱ battle/story repair and book reward migration. */
+const DC2_V165_SPECS={
+  'dc2-hell':{image:'boss/44.png',level:85,attribute:'火',specialEvery:3,kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
+  'dc2-kirin':{image:'boss/45.png',level:85,attribute:'雷',specialEvery:3,kind:'aoeParalyzeChance',power:1.30,chance:.10,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
+  'dc2-riva':{image:'boss/46.png',level:85,attribute:'水',specialEvery:3,kind:'ctSingle',power:1.40,ctAdd:2,skillElement:'水',skillType:'physical',actionCount:2,actionCountRange:[1,2]},
+  'dc2-kufu':{image:'boss/47.png',level:85,attribute:'光',specialEvery:3,kind:'aoeSleepChance',power:1.30,chance:.10,skillElement:'光',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
+  'dc2-lilith':{image:'boss/21.png',level:85,attribute:'闇',specialEvery:3,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[2,3]},
+  'dc2-enma':{image:'boss/30.png',level:90,attribute:'火',specialEvery:3,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[1,3]},
+  'dc2-enma2':{image:'boss/31.png',level:92,attribute:'火',specialEvery:3,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[1,3]},
+  'dc2-enma3':{image:'boss/32.png',level:94,attribute:'火',specialEvery:3,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[2,3]},
+  'dc2-maou':{image:'boss/22.png',level:95,attribute:'闇',specialEvery:3,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[2,3]},
+  'dc2-ulrilis':{image:'boss/36.png',level:99,attribute:'闇',specialEvery:3,pyramidEvery:5,damageReduction:.10,permanentDamageReduction:true,critDamageReduction:.10,actionCount:3,actionCountRange:[2,3]}
+};
+for(const [id,spec] of Object.entries(DC2_V165_SPECS)){
+  const t=trainingEnemyTemplate(id);
+  if(!t)continue;
+  Object.assign(t,spec,{levelMin:spec.level,levelMax:spec.level,dc2Rule:true,dc2SpecialEvery:spec.specialEvery,dc2PyramidEvery:spec.pyramidEvery});
+  if(id==='dc2-kirin')t.special='サンダーボルト';
+  if(id==='dc2-kufu')t.special='ライトニング・エナジーキューブ';
+}
+
+/* The template is copied into battle instances, so keep the authored phases and skills
+   in the live catalog as well as the distributable data.js copy. */
+const dc2TemplateV165=id=>trainingEnemyTemplate(id);
+const dc2LilithV165=dc2TemplateV165('dc2-lilith');
+if(dc2LilithV165)dc2LilithV165.specialOptions=[
+  {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.35,heal:.06,skillElement:'闇',skillType:'magic'},
+  {special:'薔薇の鼓動',kind:'poisonSingle',power:1.60,chance:.70,skillElement:'闇',skillType:'physical'}
+];
+for(const id of ['dc2-enma','dc2-enma2','dc2-enma3']){
+  const t=dc2TemplateV165(id);if(t)t.specialOptions=[
+    {special:'ジャッジメントソード',kind:'aoeStunChance',power:id==='dc2-enma'?1.90:id==='dc2-enma2'?1.95:2.00,chance:.30,skillElement:'火',skillType:'physical'},
+    {special:'ジャッジメントフレイム',kind:'burnSingle',power:id==='dc2-enma'?2.55:id==='dc2-enma2'?2.60:2.65,chance:.70,skillElement:'火',skillType:'magic'}
+  ];
+}
+const dc2MaouV165=dc2TemplateV165('dc2-maou');
+if(dc2MaouV165)dc2MaouV165.specialOptions=[
+  {special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic'},
+  {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:1.82,chance:.30,skillElement:'闇',skillType:'magic'}
+];
+const dc2UlrilisV165=dc2TemplateV165('dc2-ulrilis');
+if(dc2UlrilisV165)dc2UlrilisV165.specialOptions=[
+  {special:'ブラックホール',kind:'v88HealAoeUltLock',power:1.48,heal:.06,skillElement:'闇',skillType:'magic'},
+  {special:'薔薇の鼓動',kind:'poisonSingle',power:1.60,chance:.70,skillElement:'闇',skillType:'physical'},
+  {special:'キング・ダーク・カノン',kind:'single',power:2.65,skillElement:'闇',skillType:'magic'},
+  {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:1.82,chance:.30,skillElement:'闇',skillType:'magic'}
+];
+const _buildEnemyFromTemplateV165=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(t,...args){const e=_buildEnemyFromTemplateV165(t,...args);if(e?.dc2Rule&&Array.isArray(t?.actionCountRange)){const lo=Math.max(1,Number(t.actionCountRange[0])||1),hi=Math.max(lo,Number(t.actionCountRange[1])||lo);e.actionCount=rint(lo,hi);}return e;};
+
+/* A party saved before v165 can have ten members, which used to discard kaijin when
+   saveParty() sliced the roster. Reserve the final slot for the book reward and make
+   both the reward and the hero ultimate self-healing for existing saves. */
+const ensureBookCompletionRewardsV165=()=>{
+  if(!(state.meta?.bookCompleted===true||worldCleared('unfinishedBook')))return false;
+  const kaijin=player('kaijin'),yusha=player('yusha');if(!kaijin||!yusha)return false;
+  if(!state.party.some(x=>canonicalPlayerId(x[0])==='kaijin')){
+    const avg=state.party.length?Math.round(state.party.reduce((sum,x)=>sum+(Number(x[1])||5),0)/state.party.length):5;
+    if(state.party.length>=10)state.party=state.party.slice(0,9);
+    state.party.push(['kaijin',clamp(avg,5,120)]);
+    state.training.party=state.party.map(x=>[...x]);
+  }
+  yusha.ults=yusha.ults||[];
+  const book={name:'読みかけの本',image:'play/13.png',cost:55,kind:'heroTransform',power:0,desc:'あのヒーローに変身。全ステータス20%アップ＋必殺技威力20%アップ。'};
+  const idx=yusha.ults.findIndex(u=>u?.name==='読みかけの本');if(idx>=0)Object.assign(yusha.ults[idx],book);else yusha.ults.push(book);
+  state.meta.heroPassive2Unlocked=true;state.meta.bookCompleted=true;saveParty();saveMeta();return true;
+};
+const _storyJoinV165=storyJoin;
+storyJoin=function(id){
+  if(id==='kaijin'&&!state.party.some(x=>canonicalPlayerId(x[0])==='kaijin')&&state.party.length>=10)state.party=state.party.slice(0,9);
+  return _storyJoinV165(id);
+};
+const _bookArea4PostV165=bookArea4PostV89Final;
+bookArea4PostV89Final=async function(...args){const r=await _bookArea4PostV165(...args);ensureBookCompletionRewardsV165();return r;};
+setTimeout(()=>{try{ensureBookCompletionRewardsV165();}catch(err){console.warn('[v165 book reward migration]',err);}},0);
+
+/* Keep the defeated enemy on screen while the post-battle dialogue is read. */
+if(STORY_EVENTS['post:demonCastle2:1'])STORY_EVENTS['post:demonCastle2:1'].steps=[
+  ['guest','dc2-lilith'],['say','dc2-lilith','僕が、負けた、、'],['say','pink','モブリリス\n好敵手でありました！'],['hideGuest']
+];
+if(STORY_EVENTS['post:demonCastle2:2'])STORY_EVENTS['post:demonCastle2:2'].steps=[
+  ['guest','dc2-enma3'],['say','pink','残るは魔王のみ！'],['say','jessie','しっかり準備して挑みましょう！'],['hideGuest']
+];
+if(STORY_EVENTS['pre:demonCastle2:0'])STORY_EVENTS['pre:demonCastle2:0'].steps=[
+  ['guest','boss-lilith-castle'],['say','boss-lilith-castle','今回は\n容赦しない'],
+  ['guests',['dc2-hell','dc2-kirin','boss-lilith-castle','dc2-riva','dc2-kufu'],{allowFive:true}],
+  ['say','kaijin','俺の初陣にはピッタリの相手だな！'],['hideGuests']
+];
+
+/* Rebuild Area1's summon as one atomic scene. The old splice-based scene faded the
+   group element while replacing it, which made Lilith blink out before the sisters
+   were laid out. */
+const _runStoryEventV165=runStoryEvent;
+runStoryEvent=async function(key,forceHomeOverride=false){
+  if(key!=='pre:demonCastle2:0')return _runStoryEventV165(key,forceHomeOverride);
+  const ev=STORY_EVENTS[key];if(!ev||storyDone(key)||storyBusy)return false;storyBusy=true;let ok=false;
+  try{
+    await openStoryScene('demonCastle2',0);
+    await storyShowGuest('boss-lilith-castle',{slow:true});
+    await storySay('boss-lilith-castle','今回は\n容赦しない');
+    await storyShowGuests(['dc2-hell','dc2-kirin','boss-lilith-castle','dc2-riva','dc2-kufu'],{allowFive:true,compactLilith:true,raised:true,summon:true,slow:true});
+    await storySay('kaijin','俺の初陣にはピッタリの相手だな！');
+    const lilith=storyAnchor('boss-lilith-castle');if(lilith){lilith.classList.add('dc2-summon-leave-v165');await fixedDelay(1050);}
+    await storyShowGuests(['dc2-hell','dc2-kirin','dc2-riva','dc2-kufu'],{compactLilith:true,raised:true});
+    await fixedDelay(260);await storyHideGuests();markStoryDone(key);ok=true;
+  }finally{storyBusy=false;}
+  if(ok)await closeStoryScene(!!(ev.forceHome||forceHomeOverride));
+  return ok;
+};
+
+/* Use the requested images and show a real two-second transition between Enma forms. */
+const _spawnNextEnemyWaveV165=spawnNextEnemyWave;
+spawnNextEnemyWave=async function(...args){
+  const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[],is2=next.some(r=>r.id==='dc2-enma2'),is3=next.some(r=>r.id==='dc2-enma3');
+  /* Area4 is the only transition that can be reached while the final player
+     command is still unwinding. Handle it atomically so the old queue cannot
+     race the new wave and leave the same command selected forever. */
+  const maouToUlrilis=next.length===1&&next[0]?.id==='dc2-ulrilis'&&(b?.enemies||[]).some(e=>e.id==='dc2-maou');
+  if(maouToUlrilis){
+    const records=b.pendingWaveConfigs.shift(),wave=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!wave.length)return false;
+    b.enemies=wave;b.targetEnemyId=wave[0].uid;b.enemy=wave[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();await actionCutin('ウルモブリリスが現れた！','danger',900);await fixedDelay(300);b.turn++;b.busy=false;if(!b.finished)startRound();return true;
+  }
+  if(is2||is3){
+    await actionCutin(is2?'見せてやろう！真の力を！':'地獄の業火に焼かれるがいい！','danger',2000);
+  }
+  const result=await _spawnNextEnemyWaveV165(...args);
+  if(is2||is3)await actionCutin(is2?'モブ閻魔 第二形態！':'モブ閻魔 最終形態！','danger',900);
+  return result;
+};
+
+/* Apply the crit cut to the damage result before the existing shield/reduction code. */
+const _calcDamageV165=calcDamage;
+calcDamage=function(...args){const r=_calcDamageV165(...args),e=args[4]||targetEnemy();const cut=clamp(Number(e?.critDamageReduction)||0,0,.90);if(r?.crit&&cut>0)r.value=Math.max(1,Math.round(r.value*(1-cut)));return r;};
+
+/* Enemy action cadence: Area1–3 specials every three turns, and Pyramid every five
+   turns for Ulrilis. Extra actions remain normal attacks instead of repeating specials. */
+const _enemyActionV165=enemyAction;
+enemyAction=async function(actionIndex=1,enemyId){
+  const b=state.battle,e=enemyByUid(enemyId)||actingEnemy()||b?.enemy;if(!e?.dc2Rule)return _enemyActionV165(actionIndex,enemyId);if(!b||b.finished||e.hp<=0)return;
+  for(const status of ['sleep','stun','paralyze'])if(e.status?.[status]>0){e.status[status]--;notice(`${e.name}は動けない！`,'status',500);return;}
+  if(actionIndex===1&&e.dc2PyramidEvery&&b.turn%e.dc2PyramidEvery===0){await bossSpecial(e.specialOptions?.find(x=>x.special==='マスター・オブ・ピラミッド'));if(!livingRoster().length)finishBattle(false);return;}
+  const every=Math.max(1,Number(e.dc2SpecialEvery)||3);
+  if(actionIndex===1&&b.turn%every===0){await _enemyActionV165(actionIndex,enemyId);return;}
+  await bossNormal();if(!livingRoster().length)finishBattle(false);
+};
+
+/* Threshold scripts for the two Area4 bosses. */
+async function darkSphereAbsorbV165(e,ratio,label){
+  const screen=$('#battleScreen')||document.body,ov=document.createElement('div');ov.className='dc2-absorb-v165';ov.innerHTML='<div class="dc2-absorb-orb-v165"></div><b></b><small></small>';ov.querySelector('b').textContent=label;ov.querySelector('small').textContent='黒い球体が生命を吸い取る…';screen.appendChild(ov);await nextPaint();ov.classList.add('show');await fixedDelay(1250);
+  for(const a of state.battle?.allies||[])if(a.id!=='yusha'&&!a.dead){a.hp=0;a.dead=true;}
+  renderBattle();await fixedDelay(260);ov.classList.remove('show');await fixedDelay(260);ov.remove();
+  const h=Math.round(e.maxHp*ratio);e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);notice(`${e.name} HPが${Math.round(ratio*100)}%回復した！`,'heal',850);renderBattle();
+}
+const _checkBattleHpDialogueV165=checkBattleHpDialogue;
+checkBattleHpDialogue=async function(...args){
+  await _checkBattleHpDialogueV165(...args);const b=state.battle;if(!b||b.finished)return;
+  const maou=(b.enemies||[]).find(e=>e.id==='dc2-maou'&&e.hp>0);
+  if(maou){const rate=maou.hp/Math.max(1,maou.maxHp);if(rate<=.70&&!maou.dc2Maou70){maou.dc2Maou70=true;maou.dc2CounterUntilTurn=b.turn+3;maou.hp=Math.min(maou.maxHp,maou.hp+Math.round(maou.maxHp*.10));await enemyStoryCutin(maou,'小賢しい!!',1400);await actionCutin('魔王の反撃！ 4ターンの間、通常攻撃に反撃する！','danger',1000);}if(rate<=.30&&!maou.dc2Maou30){maou.dc2Maou30=true;maou.hp=Math.min(maou.maxHp,maou.hp+Math.round(maou.maxHp*.30));maou.damageReduction=clamp((Number(maou.damageReduction)||0)+.10,0,.90);maou.permanentDamageReduction=true;await enemyStoryCutin(maou,'私は魔王！！全てを支配する者！！',1700);await actionCutin('魔王の防御力がさらに上がった！','buff',900);}}
+  const ul=(b.enemies||[]).find(e=>e.id==='dc2-ulrilis'&&e.hp>0);
+  if(ul){const rate=ul.hp/Math.max(1,ul.maxHp);if(rate<=.70&&!ul.dc2Ul70){ul.dc2Ul70=true;await enemyStoryCutin(ul,'君も美味しそうだ・・',1500);await darkSphereAbsorbV165(ul,1.00,'君も美味しそうだ・・');}if(rate<=.30&&!ul.dc2Ul30){ul.dc2Ul30=true;await enemyStoryCutin(ul,'誰を食べようかな・・',1500);await darkSphereAbsorbV165(ul,.30,'誰を食べようかな・・');}}
+};
+
+const _performAttackV165=performAttack;
+performAttack=async function(a,...args){const b=state.battle,target=targetEnemy();const r=await _performAttackV165(a,...args);const maou=target?.id==='dc2-maou'&&target.hp>0&&b&&!b.finished&&b.currentActionKind==='attack'&&Number(target.dc2CounterUntilTurn||0)>=Number(b.turn)&&a&&!a.dead;if(maou){await actionCutin('魔王の反撃！','danger',620);const old=b.enemy;b.enemy=target;b.actingEnemyId=target.uid;try{await damageAlly(a,1.20,'physical',false,target.attribute);}finally{b.actingEnemyId=null;b.enemy=old||target;}}return r;};
+
+/* Switching remains free, but a dead-wave check is performed after it and only one
+   switch can be selected per turn. This prevents the Area4 command loop. */
+const _performSwitchV165=performSwitch;
+performSwitch=async function(payload){const b=state.battle;if(b&&b.switchUsedTurn===b.turn)return false;const before=b?JSON.stringify([b.mainIds,b.superIds,b.reserveIds]):'';const r=await _performSwitchV165(payload);if(b&&before!==JSON.stringify([b.mainIds,b.superIds,b.reserveIds]))b.switchUsedTurn=b.turn;return r;};
+const _actV165=act;
+act=async function(kind,payload){const r=await _actV165(kind,payload);const b=state.battle;if(kind==='switch'&&b&&!b.finished&&!livingEnemies().length&&!b.busy)await handleEnemyWaveClear();return r;};
+
+window.__mobV165Runtime=true;
 
 })();

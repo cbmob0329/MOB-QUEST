@@ -1,0 +1,16 @@
+MOB QUEST v165 - verification notes (text only)
+
+PASS: v165 index boots to the MOB QUEST title and contains no old regression page
+PASS: v165 runtime patch is active and the visible page contains no old regression report
+PASS: Area1–4 enemy images, levels, reduction fields and special cadence match the supplied specs
+PASS: book clear migration keeps a ten-slot roster, adds kaijin, and teaches the hero ultimate
+PASS: Area1 summon and Area2/3 post-defeat scenes keep the enemy visible before dialogue
+PASS: Area4 zero-HP transition advances to Ulrilis without a finished/locked battle
+PASS: Ulrilis black-sphere thresholds preserve the hero and heal after each scripted absorption
+
+JavaScript runtime errors: 0
+Console error messages: 0
+Missing asset requests: 0
+
+Browser smoke tests used Edge at 390x844 with the existing local game assets.
+The QA harness exists outside the release and is not included.
