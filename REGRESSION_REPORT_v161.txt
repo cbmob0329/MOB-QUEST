@@ -1,0 +1,18 @@
+MOB QUEST v161 regression report
+
+Focused fixes
+- Record Room reveal keeps the reading-book button hidden until the scripted reveal point.
+- Reading Book AREA4 restores the Kaijin boss after AREA3's warp/fade styles.
+- The Kaijin boss is joined before the final formation dialog, and the player chooses the order manually.
+- Navi's post-solo-battle scene shows the Kaijin boss alone; the "やれやれ、面倒だな" line keeps Navi visible.
+- Navi absorption completes on the visible guest and then shows the boss/53.png master artwork.
+- Kaijin's four ultimate cooldown values start at 0 (ready) for the final battle.
+
+Automated checks
+- node --check v161/js/game.js
+- node --check v161/js/data.js
+- test-v161.cjs
+- test-v161-story.cjs
+- test-v161-full.cjs (v160 regression suite)
+- regression-v161-full.cjs (v160 regression suite)
+- effects-v161-full.cjs (v160 regression suite)
