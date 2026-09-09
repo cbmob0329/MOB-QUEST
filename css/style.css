@@ -4758,3 +4758,37 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
   .gacha-result-overlay-v100 .gacha-single-v103{width:min(100%,260px)!important}
   .gacha-result-overlay-v100 .gacha-single-v103>span{height:clamp(120px,22dvh,150px)!important}
 }
+
+/* v167 training menu scroll hardening. Keep the page and feature sheet as two
+   independent touch-scroll surfaces so lower cards remain reachable. */
+#trainingScreen.active .training-scroll{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  overscroll-behavior-y:contain!important;
+  padding-bottom:calc(190px + var(--safe-bottom))!important;
+}
+#trainingScreen.active .training-main-grid{padding-bottom:calc(44px + var(--safe-bottom))!important}
+#trainingFeaturePopup:not([hidden]){
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  align-items:flex-start!important;
+  padding-top:calc(10px + var(--safe-top))!important;
+  padding-bottom:calc(12px + var(--safe-bottom))!important;
+}
+#trainingFeaturePopup:not([hidden])>.training-feature-popup-card{
+  flex:0 0 auto!important;
+  max-height:calc(100dvh - 22px - var(--safe-top) - var(--safe-bottom))!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  touch-action:pan-y!important;
+  margin:0 0 4px!important;
+}
+#trainingFeaturePopup #trainingFeaturePanel{min-height:0!important}
+@media(max-width:390px){
+  #trainingScreen.active .training-scroll{padding-bottom:calc(208px + var(--safe-bottom))!important}
+  #trainingFeaturePopup:not([hidden])>.training-feature-popup-card{max-height:calc(100dvh - 16px - var(--safe-top) - var(--safe-bottom))!important;padding-bottom:16px!important}
+}

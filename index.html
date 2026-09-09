@@ -4797,6 +4797,42 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 }
 
 </style>
+<style>
+/* v167 training menu scroll hardening. Keep the page and feature sheet as two
+   independent touch-scroll surfaces so lower cards remain reachable. */
+#trainingScreen.active .training-scroll{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  overscroll-behavior-y:contain!important;
+  padding-bottom:calc(190px + var(--safe-bottom))!important;
+}
+#trainingScreen.active .training-main-grid{padding-bottom:calc(44px + var(--safe-bottom))!important}
+#trainingFeaturePopup:not([hidden]){
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  align-items:flex-start!important;
+  padding-top:calc(10px + var(--safe-top))!important;
+  padding-bottom:calc(12px + var(--safe-bottom))!important;
+}
+#trainingFeaturePopup:not([hidden])>.training-feature-popup-card{
+  flex:0 0 auto!important;
+  max-height:calc(100dvh - 22px - var(--safe-top) - var(--safe-bottom))!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  touch-action:pan-y!important;
+  margin:0 0 4px!important;
+}
+#trainingFeaturePopup #trainingFeaturePanel{min-height:0!important}
+@media(max-width:390px){
+  #trainingScreen.active .training-scroll{padding-bottom:calc(208px + var(--safe-bottom))!important}
+  #trainingFeaturePopup:not([hidden])>.training-feature-popup-card{max-height:calc(100dvh - 16px - var(--safe-top) - var(--safe-bottom))!important;padding-bottom:16px!important}
+}
+
+</style>
 </head>
 <body>
 <main id="app">
@@ -4806,7 +4842,7 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v166</div>
+      <div class="title-version">v168</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -6680,7 +6716,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=166;
+const GAME_ASSET_VERSION=168;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -16722,7 +16758,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=166`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=168`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -17507,7 +17543,7 @@ runGachaCapsuleAnimationV100=async function(results){
 };
 
 
-/* MOB QUEST v166: 魔王城Ⅱ battle/story repair and book reward migration. */
+/* MOB QUEST v168: 魔王城Ⅱ battle/story repair and book reward migration. */
 const DC2_V165_SPECS={
   'dc2-hell':{image:'boss/44.png',level:85,attribute:'火',specialEvery:3,kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
   'dc2-kirin':{image:'boss/45.png',level:85,attribute:'雷',specialEvery:3,kind:'aoeParalyzeChance',power:1.30,chance:.10,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
@@ -17680,6 +17716,57 @@ const _actV165=act;
 act=async function(kind,payload){const r=await _actV165(kind,payload);const b=state.battle;if(kind==='switch'&&b&&!b.finished&&!livingEnemies().length&&!b.busy)await handleEnemyWaveClear();return r;};
 
 window.__mobV165Runtime=true;
+
+
+/* v167: test checkpoints must include the book rewards, the Maou -> Ulrilis
+   transition must retain its fusion scene, and training menus need a reliable
+   vertical scroll surface on phone-sized viewports. */
+function ensureBookCompletionForTestV167(){
+  const worlds=MOB_DATA.adventureWorlds||[],wi=Number(state.adventure?.worldIndex)||0,bookIndex=worlds.findIndex(w=>w.id==='unfinishedBook');
+  if(!state.test?.enabled||bookIndex<0||wi<=bookIndex)return false;
+  const changed=typeof ensureBookCompletionRewardsV165==='function'&&ensureBookCompletionRewardsV165();
+  if(changed){saveParty();saveMeta();if(typeof renderHome==='function')renderHome();}
+  return !!changed;
+}
+const _applyTestChapterV167=applyTestChapter;
+applyTestChapter=function(...args){const r=_applyTestChapterV167(...args);ensureBookCompletionForTestV167();return r;};
+setTimeout(()=>{try{ensureBookCompletionForTestV167();}catch(err){console.warn('[v167 test checkpoint rewards]',err);}},0);
+
+/* The earlier battle-loop guard intentionally bypassed the old wave wrapper.
+   Run the existing fusion scene before installing the Ulrilis wave, then resume
+   the round from a clean queue. */
+const _spawnNextEnemyWaveV167=spawnNextEnemyWave;
+spawnNextEnemyWave=async function(...args){
+  const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[];
+  const maouToUlrilis=next.length===1&&next[0]?.id==='dc2-ulrilis'&&(b?.enemies||[]).some(e=>e.id==='dc2-maou');
+  if(maouToUlrilis){
+    if(!b.dc2FusionEventDone){b.dc2FusionEventDone=true;await fusionV157();}
+    const records=b.pendingWaveConfigs.shift(),wave=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);
+    if(!wave.length)return false;
+    b.enemies=wave;b.targetEnemyId=wave[0].uid;b.enemy=wave[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();
+    await actionCutin('ウルモブリリスが現れた！','danger',900);await fixedDelay(300);b.turn++;b.busy=false;if(!b.finished)startRound();return true;
+  }
+  return _spawnNextEnemyWaveV167(...args);
+};
+
+window.__mobV167Runtime=true;
+
+
+/* v168: Ulrilis's black-sphere instant death targets one random living ally
+   other than the hero, instead of removing the whole non-hero party. */
+const darkSphereAbsorbV168=async function(e,ratio,label){
+  const screen=$('#battleScreen')||document.body,ov=document.createElement('div');
+  ov.className='dc2-absorb-v165';ov.innerHTML='<div class="dc2-absorb-orb-v165"></div><b></b><small></small>';
+  ov.querySelector('b').textContent=label;ov.querySelector('small').textContent='黒い球体が生命を吸い取る…';screen.appendChild(ov);
+  await nextPaint();ov.classList.add('show');await fixedDelay(1250);
+  const candidates=(state.battle?.allies||[]).filter(a=>a.id!=='yusha'&&!a.dead&&a.hp>0);
+  const victim=candidates.length?candidates[Math.floor(Math.random()*candidates.length)]:null;
+  if(victim){victim.hp=0;victim.dead=true;notice(`${victim.name}は黒い球体に生命を吸い取られた！`,'danger',850);}
+  renderBattle();await fixedDelay(260);ov.classList.remove('show');await fixedDelay(260);ov.remove();
+  const h=Math.round(e.maxHp*ratio);e.hp=Math.min(e.maxHp,e.hp+h);floatNumber(h,'heal',`enemy:${e.uid}`);notice(`${e.name} HPが${Math.round(ratio*100)}%回復した！`,'heal',850);renderBattle();
+};
+darkSphereAbsorbV165=darkSphereAbsorbV168;
+window.__mobV168Runtime=true;
 
 })();
 </script>

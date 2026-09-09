@@ -1,0 +1,11 @@
+MOB QUEST v168 - verification notes (text only)
+
+PASS: v168 index boots to title screen
+PASS: Ulrilis black sphere selects one random non-hero living ally per activation
+
+JavaScript runtime errors: 0
+Console error messages: 0
+Missing asset requests: 0
+
+Browser smoke tests used Edge at 390x844 with the existing local game assets.
+The QA harness exists outside the release and is not included.
