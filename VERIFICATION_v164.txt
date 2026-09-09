@@ -1,0 +1,23 @@
+MOB QUEST v164 - verification notes (text only)
+
+PASS: Unmodified index.html boots to v164 title
+PASS: v163 figure/tag/event/world data and gacha draw/roll/award functions identical except intended asset cache version
+PASS: Training menus and close controls at 320px: no horizontal overflow
+PASS: Training menus and close controls at 390px: no horizontal overflow
+PASS: Three requested icons loaded; grassland gate, story entry, silhouette, difficulty locks and nested back controls pass
+PASS: Program and subquest selection, cancel and return preserve state
+PASS: 1-pull: exact diamond charge and rewards, duplicate lock, figure details, result close and carousel return
+PASS: 10-pull: exact diamond charge and rewards, duplicate lock, figure details, result close and carousel return
+PASS: All five rarity reveals and capped-figure ruby result fit 320px; close works
+PASS: Event bilion: starts, sprites loaded, scale 0.82, repeated render stable, back works
+PASS: Event psychic: starts, sprites loaded, scale 0.82, repeated render stable, back works
+PASS: Event leaf: starts, sprites loaded, scale none, repeated render stable, back works
+PASS: Reduced motion animation finishes and releases input lock
+
+JavaScript runtime errors: 0
+Console error messages: 0
+Missing asset requests: 0
+
+UI tests used Edge at 320x640 and 390x844 with the existing local game assets.
+The QA harness exists outside the release and is not included.
+This patch retains all prior game code; the complete story was not replayed.

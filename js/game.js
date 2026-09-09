@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=163;
+const GAME_ASSET_VERSION=164;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10050,7 +10050,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=163`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=164`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -10526,7 +10526,7 @@ function eventBossesAvailableV163(){return EVENT_BOSSES_V163.filter(q=>worldClea
 eventQuestUnlockedV91=()=>worldCleared('grassland');
 function eventDifficultyOpenV163(q,index){return !!q&&worldCleared(q.world)&&index>=0&&index<3&&(index===0||!!eventRecordsV163().cleared[`${q.key}:${index-1}`]);}
 const eventModeV163=TRAINING_MODES.find(m=>m.id==='event');
-if(eventModeV163){TRAINING_MODES.splice(TRAINING_MODES.indexOf(eventModeV163),1);TRAINING_MODES.unshift(eventModeV163);Object.assign(eventModeV163,{icon:'icon/event-boss-v163.svg',desc:'降臨ボスに挑み、限定フィギュアを獲得！'});}
+if(eventModeV163){TRAINING_MODES.splice(TRAINING_MODES.indexOf(eventModeV163),1);TRAINING_MODES.unshift(eventModeV163);Object.assign(eventModeV163,{icon:'icon/001.png',desc:'降臨ボスに挑み、限定フィギュアを獲得！'});}
 TRAINING_GUIDE_TEXT.event='このクエストは\n強力なボスとの戦いだ！\nここでしか手に入らない\nフィギュアが手に入る！\n難易度が高いほど、\nドロップ率がアップするぞ！';
 const _trainingGuideV163=showTrainingModeGuide;
 showTrainingModeGuide=async function(mode){if(mode!=='event')return _trainingGuideV163(mode);if(facilityFlag('training:event:v163'))return;await facilityTalk(TRAINING_GUIDE_TEXT.event,'モブコーチ','play/003.png');markFacilityFlag('training:event:v163');};
@@ -10538,8 +10538,8 @@ function eventPortraitV163(q,reveal){return `<img class="event-portrait-v163 ${r
 function renderEventQuestsV163(){
  const root=$('#trainingFeaturePanel');if(!root)return;root.hidden=false;
  const q=EVENT_BOSSES_V163.find(q=>q.key===eventSelectedV163),rec=eventRecordsV163();let body='';
- if(eventViewV163==='menu')body=`<p class="event-intro-v163">新たな冒険と、強敵との戦いへ。</p><div class="event-kind-grid-v163"><button data-event-view="story"><img src="icon/event-story-v163.svg" alt=""><small>STORY</small><b>ストーリー</b></button><button data-event-view="boss"><img src="icon/event-boss-v163.svg" alt=""><small>BOSS</small><b>ボス降臨</b></button></div>`;
- else if(eventViewV163==='story')body='<div class="event-story-v163"><img src="icon/event-story-v163.svg" alt=""><h3>次の物語をお楽しみに</h3><p>新しいストーリーは、今後追加されます。</p></div>';
+ if(eventViewV163==='menu')body=`<p class="event-intro-v163">新たな冒険と、強敵との戦いへ。</p><div class="event-kind-grid-v163"><button data-event-view="story"><img src="mqicon/14.png" alt=""><small>STORY</small><b>ストーリー</b></button><button data-event-view="boss"><img src="icon/002.png" alt=""><small>BOSS</small><b>ボス降臨</b></button></div>`;
+ else if(eventViewV163==='story')body='<div class="event-story-v163"><img src="mqicon/14.png" alt=""><h3>次の物語をお楽しみに</h3><p>新しいストーリーは、今後追加されます。</p></div>';
  else if(eventViewV163==='difficulty'&&q&&worldCleared(q.world))body=`<div class="event-selected-v163">${eventPortraitV163(q,!!rec.attempted[q.key])}<h3>${q.name}降臨</h3></div><div class="event-difficulties-v163">${EVENT_DIFFICULTIES_V163.map((d,i)=>{const open=eventDifficultyOpenV163(q,i),cleared=rec.cleared[`${q.key}:${i}`];return `<button data-event-start="${i}" class="event-difficulty-v163 ${d.id}" ${open?'':'disabled'}><div><small>${d.english}</small><b>${d.name}</b><strong>Lv.${q.levels[i]}</strong></div><p>${open?`初回 ${d.first}ダイヤ / クリア後 ${d.repeat}ダイヤ`:`${EVENT_DIFFICULTIES_V163[i-1].name}クリアで解放`}</p><span>フィギュア ${d.chance*100}%</span>${cleared?'<em class="event-clear-stamp-v163">CLEAR</em>':''}</button>`;}).join('')}</div>`;
  else body=`<p class="event-intro-v163">挑戦するボスを選択してください。</p><div class="event-boss-grid-v163">${eventBossesAvailableV163().map(b=>`<button class="event-boss-card-v163" data-event-boss="${b.key}">${eventPortraitV163(b,!!rec.attempted[b.key])}<strong>${b.name}<br><em>降臨</em></strong>${[0,1,2].some(i=>rec.cleared[`${b.key}:${i}`])?'<span class="event-clear-stamp-v163">CLEAR</span>':''}</button>`).join('')||'<p>草原クリア後に解放されます。</p>'}</div>`;
  root.innerHTML=`<section class="event-panel-v163"><header><div><small>EVENT QUEST</small><h2>${eventViewV163==='menu'?'イベントクエスト':eventViewV163==='story'?'ストーリー':'ボス降臨'}</h2></div>${eventViewV163!=='menu'?'<button data-event-back type="button">戻る</button>':''}</header>${body}</section>`;
@@ -10598,7 +10598,7 @@ finishBattle=function(win){
 const _homeUnlockV163=showHomeUnlockAnnouncementsV137;
 showHomeUnlockAnnouncementsV137=async function(){
  await _homeUnlockV163();const quests=eventBossesAvailableV163(),rec=eventRecordsV163(),seen=new Set(rec.unlockSeen||[]),added=quests.filter(q=>!seen.has(q.key));if(!added.length)return;
- const ov=eventOverlayV163();ov.innerHTML=`<div class="event-unlock-v163"><img src="icon/event-boss-v163.svg" alt=""><small>NEW QUEST</small><h2>${seen.size?'新しい降臨ボスが解放！':'イベントクエスト解放！'}</h2><p>トレーニングから挑戦できます。</p><ul>${added.map(q=>`<li>${q.name}降臨</li>`).join('')}</ul><button data-event-unlock-close class="primary-btn">確認</button></div>`;ov.hidden=false;
+ const ov=eventOverlayV163();ov.innerHTML=`<div class="event-unlock-v163"><img src="icon/001.png" alt=""><small>NEW QUEST</small><h2>${seen.size?'新しい降臨ボスが解放！':'イベントクエスト解放！'}</h2><p>トレーニングから挑戦できます。</p><ul>${added.map(q=>`<li>${q.name}降臨</li>`).join('')}</ul><button data-event-unlock-close class="primary-btn">確認</button></div>`;ov.hidden=false;
  await new Promise(resolve=>$('[data-event-unlock-close]',ov).onclick=()=>{rec.unlockSeen=quests.map(q=>q.key);saveMeta();ov.hidden=true;resolve();});
 };
 
@@ -10761,6 +10761,77 @@ enemyAction=async function(actionIndex=1,enemyId){
  }
  if(!skill){const all=(s.key==='demon'&&s.low)||(s.key==='bubble'&&Math.random()<(s.difficulty===2 ? .40 : .30));skill={name:all?'全体攻撃':'攻撃',normal:true,power:1,all};}
  await eventAttackV163(e,skill);await checkSpecialRevives();if(!livingRoster().length)finishBattle(false);
+};
+
+
+/* v164: presentation only. Quest, gacha and figure reward rules stay in v163. */
+const eventModeV164=TRAINING_MODES.find(m=>m.id==='event');
+if(eventModeV164)Object.assign(eventModeV164,{icon:'icon/001.png',desc:'降臨ボスと限定フィギュア'});
+
+// Check the authored path first. Probing every padding variant simultaneously
+// produced missing-file errors even when the correct figure had loaded.
+ensureFigureAssetV110=async function(f,timeout=2800){
+  if(!f||f.pending||!f.image)return false;
+  for(const src of figureCandidatesV110(f.image)){
+    if(await probeFigureImageV110(src,timeout)){
+      f.image=src;delete f.runtimeImageMissingV103;return true;
+    }
+  }
+  return false;
+};
+
+// Keep the existing visibility checks and click handlers when decorating the menu.
+const _trainingCardsV164=renderTrainingModeCarousel;
+renderTrainingModeCarousel=function(){
+  _trainingCardsV164();
+  for(const card of $$('[data-training-mode]',$('#trainingModeCarousel'))){
+    const mode=TRAINING_MODES.find(m=>m.id===card.dataset.trainingMode);
+    if(!mode||card.classList.contains('locked'))continue;
+    let note=$('.training-desc-v164',card);
+    if(!note){note=document.createElement('small');note.className='training-desc-v164';card.appendChild(note);}
+    note.textContent=mode.desc||'';
+  }
+};
+
+// Apply a visual reduction after the existing natural-size caps. A separate CSS
+// scale composes with hit/attack transforms, and never shrinks again on rerender.
+const _enemySizesV164=applyEnemyVisualSizes;
+applyEnemyVisualSizes=function(root=$('#enemyArea')){
+  _enemySizesV164(root);
+  if(!root)return;
+  for(const unit of $$('[data-enemy-target]',root)){
+    const e=enemyByUid(unit.dataset.enemyTarget);
+    const key=e?.eventV163?.key||e?.eventKeyV163||e?.enemyTemplate?.eventKeyV163;
+    if(key==='bilion'||key==='psychic')unit.dataset.eventSizeV164=key;
+    else delete unit.dataset.eventSizeV164;
+  }
+};
+
+// This animation receives already awarded results; it performs no rolls or saves.
+runGachaCapsuleAnimationV100=async function(results){
+  const ov=ensureGachaCinematicV100(),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const colors=['#f9d882','#92e9f4','#eab0ed','#b2e4a3'];
+  const motes=Array.from({length:20},(_,i)=>{
+    const angle=i*Math.PI*2/20,radius=98+(i%3)*12;
+    return `<i style="--x:${Math.round(Math.cos(angle)*radius)}px;--y:${Math.round(Math.sin(angle)*radius)}px;--delay:${(i%5)*.09}s;--spark:${colors[i%4]}">${i%4===0?'MOB':'✦'}</i>`;
+  }).join('');
+  ov.className='gacha-cinematic-v100 gacha-forge-v164';
+  ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','フィギュア錬成');
+  ov.innerHTML=`<section class="gacha-forge-stage-v164"><header><small>MOB FIGURE GACHA</small><h2>フィギュア錬成</h2><span>${results.length===10?'10連':`${results.length}体`}のフィギュア</span></header><div class="gacha-forge-core-v164" aria-hidden="true"><div class="gacha-forge-halo-v164"></div><div class="gacha-forge-motes-v164">${motes}</div><div class="gacha-forge-barrel-v164"><img src="icon/32.png" data-fallback-src="play/009.png" alt=""></div><div class="gacha-forge-wave-v164"></div><div class="gacha-forge-seal-v164">MOB</div></div><footer><div class="gacha-forge-steps-v164" aria-hidden="true"><span>集光</span><i></i><span>錬成</span><i></i><span>解放</span></div><p role="status" aria-live="polite">フィギュアの力が集まっていく…</p></footer></section>`;
+  const previousFocus=document.activeElement;
+  const shells=[...document.body.children].filter(el=>el!==ov&&el instanceof HTMLElement&&!['SCRIPT','STYLE'].includes(el.tagName));
+  const priorInert=shells.map(el=>[el,el.inert]);
+  try{
+    for(const [el] of priorInert)el.inert=true;
+    ov.hidden=false;ov.tabIndex=-1;ov.focus({preventScroll:true});bindImages(ov);await nextPaint();
+    ov.dataset.phase='gather';await waitRealV100(reduced?260:1400);
+    ov.dataset.phase='charge';$('footer p',ov).textContent='集まった力を、樽に込めて！';await waitRealV100(reduced?260:950);
+    ov.dataset.phase='release';$('footer p',ov).textContent='錬成完了！ フィギュアを受け取ろう';await waitRealV100(reduced?300:850);
+  }finally{
+    ov.hidden=true;ov.innerHTML='';ov.className='gacha-cinematic-v100';delete ov.dataset.phase;
+    for(const [el,inert] of priorInert)el.inert=inert;
+    if(previousFocus?.isConnected&&!previousFocus.closest('[hidden]'))previousFocus.focus({preventScroll:true});
+  }
 };
 
 })();
