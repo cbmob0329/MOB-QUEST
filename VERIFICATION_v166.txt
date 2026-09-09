@@ -1,0 +1,15 @@
+MOB QUEST v166 - verification notes (text only)
+
+PASS: v166 index boots to title screen without old regression report
+PASS: v165 game source and gacha functions are present in v166
+PASS: single-pull NEXT is visible and tappable without scroll at 320x640
+PASS: 10-pull result close is visible and tappable without scroll at 320x640
+PASS: single-pull NEXT is visible and tappable without scroll at 390x844
+PASS: 10-pull result close is visible and tappable without scroll at 390x844
+
+JavaScript runtime errors: 0
+Console error messages: 0
+Missing asset requests: 0
+
+Browser smoke tests used Edge at 320x640 and 390x844 with the existing local game assets.
+The QA harness exists outside the release and is not included.

@@ -4755,6 +4755,48 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @media(prefers-reduced-motion:reduce){.dc2-summon-leave-v165{animation-duration:.12s!important}.dc2-absorb-orb-v165{animation:none}.dc2-absorb-v165{transition:none}}
 
 </style>
+<style>
+/* v166 gacha result controls: keep NEXT and close inside the phone viewport. */
+.figure-gacha-overlay-v96.gacha-result-overlay-v100{
+  box-sizing:border-box!important;
+  padding:8px!important;
+  overflow:hidden!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.gacha-result-overlay-v100 .gacha-result-card-v102{
+  box-sizing:border-box!important;
+  max-height:calc(100dvh - 16px)!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+}
+.gacha-result-overlay-v100 .gacha-result-final-v110{
+  height:min(100%,calc(100dvh - 16px))!important;
+  max-height:calc(100dvh - 16px)!important;
+  min-height:0!important;
+}
+.gacha-result-overlay-v100 .gacha-result-final-v110>.gacha-result-close-v100{
+  flex-shrink:0!important;
+  margin-bottom:0!important;
+}
+@media(max-height:700px){
+  .gacha-result-overlay-v100 .gacha-result-card-v102{padding:12px 12px 10px!important}
+  .gacha-result-overlay-v100 .gacha-result-title-v100{margin:0!important;padding:0 4px!important}
+  .gacha-result-overlay-v100 .gacha-result-title-v100 h2{font-size:clamp(18px,5vw,22px)!important;line-height:1.3!important;margin:3px 0!important}
+  .gacha-result-overlay-v100 .gacha-result-title-v100 p{font-size:11px!important;line-height:1.3!important;margin:3px 0!important}
+  .gacha-result-overlay-v100 .gacha-single-v103{min-height:0!important;margin:8px auto!important;padding:8px!important}
+  .gacha-result-overlay-v100 .gacha-single-v103>span{height:clamp(140px,24dvh,175px)!important}
+  .gacha-result-overlay-v100 .gacha-single-v103>b{font-size:16px!important;line-height:1.3!important}
+  .gacha-result-overlay-v100 .gacha-single-v103>small{font-size:10px!important}
+  .gacha-result-overlay-v100 :is(.gacha-next-v102,.gacha-result-close-v100){min-height:46px!important;margin-top:6px!important}
+}
+@media(max-width:350px) and (max-height:700px){
+  .gacha-result-overlay-v100 .gacha-single-v103{width:min(100%,260px)!important}
+  .gacha-result-overlay-v100 .gacha-single-v103>span{height:clamp(120px,22dvh,150px)!important}
+}
+
+</style>
 </head>
 <body>
 <main id="app">
@@ -4764,7 +4806,7 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v165</div>
+      <div class="title-version">v166</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -6638,7 +6680,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=165;
+const GAME_ASSET_VERSION=166;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -16680,7 +16722,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=165`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=166`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -17465,7 +17507,7 @@ runGachaCapsuleAnimationV100=async function(results){
 };
 
 
-/* MOB QUEST v165: 魔王城Ⅱ battle/story repair and book reward migration. */
+/* MOB QUEST v166: 魔王城Ⅱ battle/story repair and book reward migration. */
 const DC2_V165_SPECS={
   'dc2-hell':{image:'boss/44.png',level:85,attribute:'火',specialEvery:3,kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
   'dc2-kirin':{image:'boss/45.png',level:85,attribute:'雷',specialEvery:3,kind:'aoeParalyzeChance',power:1.30,chance:.10,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]},

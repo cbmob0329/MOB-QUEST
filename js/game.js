@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=165;
+const GAME_ASSET_VERSION=166;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -10050,7 +10050,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=165`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=166`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -10835,7 +10835,7 @@ runGachaCapsuleAnimationV100=async function(results){
 };
 
 
-/* MOB QUEST v165: 魔王城Ⅱ battle/story repair and book reward migration. */
+/* MOB QUEST v166: 魔王城Ⅱ battle/story repair and book reward migration. */
 const DC2_V165_SPECS={
   'dc2-hell':{image:'boss/44.png',level:85,attribute:'火',specialEvery:3,kind:'burnSingle',power:1.62,chance:.40,skillElement:'火',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
   'dc2-kirin':{image:'boss/45.png',level:85,attribute:'雷',specialEvery:3,kind:'aoeParalyzeChance',power:1.30,chance:.10,skillElement:'雷',skillType:'magic',actionCount:2,actionCountRange:[1,2]},
