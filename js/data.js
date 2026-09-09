@@ -803,7 +803,7 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'パーフェクトスマイル',kind:'aoeSleepChance',power:1.95,chance:.30,skillElement:'闇',skillType:'physical'},
     {special:'アクノソシキ',kind:'stunSingle',power:2.65,chance:.80,skillElement:'闇',skillType:'physical'}
   ]});
-  up('book-navi',{name:'モブナビ',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/53.png',symbol:'導',levelMin:90,levelMax:90,bossId:'mobNavi',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,specialOptions:[
+  up('book-navi',{name:'モブナビ',stage:'読みかけの本',category:'boss',attribute:'光',image:'boss/52.png',symbol:'導',levelMin:90,levelMax:90,bossId:'mobNavi',special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical',actionCount:3,forceActionCount:true,damageReduction:.80,permanentDamageReduction:true,specialOptions:[
     {special:'振り回した小さな手',kind:'v88AoeSpdDown',power:1.88,debuff:.10,skillElement:'光',skillType:'physical'},
     {special:'石ころを靴に乗せたケンケンパ',kind:'v88MultiSingle',hits:3,power:1.15,skillElement:'光',skillType:'physical'}
   ]});
