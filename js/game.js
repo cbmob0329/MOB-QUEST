@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=159;
+const GAME_ASSET_VERSION=160;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -3553,7 +3553,7 @@ function enemyReward(e){
 }
 function calcBattleRewards(b){let exp=0,coin=0;for(const e of b?.defeatedEnemies||[]){const r=enemyReward(e);exp+=r.exp;coin+=r.coin;}return{exp,coin};}
 function learnedBetween(p,oldLv,newLv){const out=[],req=ULT_UNLOCK_LEVELS;for(let i=0;i<Math.min(4,p.ults?.length||0);i++)if(oldLv<req[i]&&newLv>=req[i])out.push(p.ults[i].name);return out;}
-function applyProgressRewards(b,vitalsObj=null,buff=null){let reward=calcBattleRewards(b);if(buff?.exp)reward.exp=Math.round(reward.exp*(1+buff.exp));if(buff?.gold)reward.coin=Math.round(reward.coin*(1+buff.gold));const weaponGold=Math.max(0,...(b?.allies||[]).map(a=>weaponGoldBonus(a)));if(weaponGold>0)reward.coin=Math.round(reward.coin*(1+weaponGold));const figureExp=partyFigureRewardBonus('expBonus'),figureGold=partyFigureRewardBonus('goldBonus');if(figureExp>0)reward.exp=Math.round(reward.exp*(1+figureExp));if(figureGold>0)reward.coin=Math.round(reward.coin*(1+figureGold));if(state.test?.enabled&&state.test?.exp3)reward.exp=Math.round(reward.exp*3);const changes=[];state.coins+=reward.coin;state.meta.coins=state.coins;if(!state.meta.exp)state.meta.exp={};const cap=playerLevelCap();for(const slot of state.party){const id=slot[0],p=player(id);if(!p)continue;const startLv=slot[1],oldStats=baseStats(p,startLv);let lv=startLv,xp=Math.max(0,Number(state.meta.exp[id])||0)+reward.exp;while(lv<cap&&xp>=expToNext(lv)){xp-=expToNext(lv);lv++;}state.meta.exp[id]=xp;if(lv>startLv){slot[1]=lv;const ns=baseStats(p,lv),learned=learnedBetween(p,startLv,lv);changes.push({id,name:p.name,image:p.image,oldLevel:startLv,newLevel:lv,stats:{HP:ns.maxHp-oldStats.maxHp,MP:ns.maxMp-oldStats.maxMp,ATK:ns.atk-oldStats.atk,MAG:ns.mag-oldStats.mag,DEF:ns.def-oldStats.def,MND:ns.res-oldStats.res,SPD:ns.spd-oldStats.spd},learned});const v=vitalsObj?.[id];if(v&&!v.dead){v.hp=Math.min(ns.maxHp,Math.max(0,Number(v.hp)||0)+(ns.maxHp-oldStats.maxHp));v.mp=Math.min(ns.maxMp,Math.max(0,Number(v.mp)||0)+(ns.maxMp-oldStats.maxMp));}}}saveParty();saveMeta();return{...reward,changes};}
+function applyProgressRewards(b,vitalsObj=null,buff=null){let reward=calcBattleRewards(b);if(buff?.exp)reward.exp=Math.round(reward.exp*(1+buff.exp));if(buff?.gold)reward.coin=Math.round(reward.coin*(1+buff.gold));const weaponGold=Math.max(0,...(b?.allies||[]).map(a=>weaponGoldBonus(a)));if(weaponGold>0)reward.coin=Math.round(reward.coin*(1+weaponGold));const figureExp=partyFigureRewardBonus('expBonus'),figureGold=partyFigureRewardBonus('goldBonus');if(figureExp>0)reward.exp=Math.round(reward.exp*(1+figureExp));if(figureGold>0)reward.coin=Math.round(reward.coin*(1+figureGold));if(state.test?.enabled&&state.test?.exp3)reward.exp=Math.round(reward.exp*3);const changes=[];state.coins+=reward.coin;state.meta.coins=state.coins;if(!state.meta.exp)state.meta.exp={};const cap=playerLevelCap();for(const slot of state.party){const id=slot[0],p=player(id);if(!p)continue;const startLv=slot[1],oldStats=baseStats(p,startLv);let lv=startLv,xp=Math.max(0,Number(state.meta.exp[id])||0)+reward.exp;while(lv<cap&&xp>=expToNextRequiredV159(lv)){xp-=expToNextRequiredV159(lv);lv++;}state.meta.exp[id]=xp;if(lv>startLv){slot[1]=lv;const ns=baseStats(p,lv),learned=learnedBetween(p,startLv,lv);changes.push({id,name:p.name,image:p.image,oldLevel:startLv,newLevel:lv,stats:{HP:ns.maxHp-oldStats.maxHp,MP:ns.maxMp-oldStats.maxMp,ATK:ns.atk-oldStats.atk,MAG:ns.mag-oldStats.mag,DEF:ns.def-oldStats.def,MND:ns.res-oldStats.res,SPD:ns.spd-oldStats.spd},learned});const v=vitalsObj?.[id];if(v&&!v.dead){v.hp=Math.min(ns.maxHp,Math.max(0,Number(v.hp)||0)+(ns.maxHp-oldStats.maxHp));v.mp=Math.min(ns.maxMp,Math.max(0,Number(v.mp)||0)+(ns.maxMp-oldStats.maxMp));}}}saveParty();saveMeta();return{...reward,changes};}
 function applyAdventureRewards(b){const out=applyProgressRewards(b,state.adventure.vitals,state.adventure.areaBuff);saveAdventure();return out;}
 function applyQuestRewards(b){return applyProgressRewards(b,state.quest?.vitals,null);}
 function randomRecordId(){return pick(state.meta?.gameCleared?['36','37','38']:['36','37']);}
@@ -10050,7 +10050,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=159`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maoh(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=160`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
@@ -10281,7 +10281,7 @@ const narrateBaseV158=storyNarrate;storyNarrate=async function(text,...args){if(
 const stepsBaseV158=runStorySteps;runStorySteps=async function(steps=[]){for(const st of steps){if(st[0]==='chorusV157')await chorusV158('勝負！！',true);else await stepsBaseV158([st]);}};
 
 /* v159: small balance adjustments, test controls, book and camp flow fixes. */
-const expBaseV159=expToNext;expToNext=lv=>{const n=expBaseV159(lv);return Number.isFinite(n)?Math.ceil(n*1.05):n;};
+const expBaseV159=expToNext;
 for(const [id,lv]of Object.entries({demonCastle:70,unfinishedBook:80,demonCastle2:85})){const w=MOB_DATA.adventureWorlds.find(x=>x.id===id);if(w)w.recommendedLevel=lv;if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[id]=lv;}
 for(const p of MOB_DATA.players)for(const u of p.ults||[])u.cost=0;
 for(const sk of MOB_DATA.magicCatalog||[])if(sk.tier==='large'&&!sk.support&&Number(sk.power)>0)sk.power=Number((sk.power*.92).toFixed(4));
@@ -10314,5 +10314,17 @@ async function recordsReadyV159(){const root=$('#castleContent');await Promise.a
 const settingsFinalBaseV159=renderSettings;renderSettings=function(){settingsFinalBaseV159();$('#testChapterApplyBtn').onclick=applyTestChapter;};
 const ultimateBaseV159=performUltimate;performUltimate=async function(a,u){u.cost=0;return ultimateBaseV159(a,u);};
 const strongestButtonV159=$('#testModeControls [data-test-loadout="optimal"]');if(strongestButtonV159){strongestButtonV159.textContent='最強装備';strongestButtonV159.onclick=()=>strongestV159();}
+
+/* v160: keep the four-area route visible, separate reward growth from level thresholds, and soften MP-free ultimates. */
+const dcWorldV160=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='demonCastle');
+if(dcWorldV160){
+  if(!Array.isArray(dcWorldV160.areas))dcWorldV160.areas=[];
+  for(let i=0;i<4;i++)if(!dcWorldV160.areas[i])dcWorldV160.areas[i]={name:`AREA ${i+1}`,bg:['back/maoh.png','back/maoh2.png','back/maoh3.png','back/maoh4.png'][i],boss:[]};
+}
+/* v159 multiplied expToNext globally, which also raised enemy reward EXP. Keep the base curve for rewards and apply the small slowdown only to level-up thresholds. */
+function expToNextRequiredV159(level){const n=expBaseV159(level);return Number.isFinite(n)?Math.ceil(n*1.05):n;}
+/* MP is still free as requested; a small 6% power trim offsets the much higher cast frequency. */
+for(const p of MOB_DATA.players||[])for(const u of p.ults||[])if(Number(u.power)>0)u.power=Number((Number(u.power)*.94).toFixed(4));
+const renderAdventureV160Base=renderAdventure;renderAdventure=function(){const r=renderAdventureV160Base();const card=$('#areaName')?.closest('.destination-card'),w=currentWorld();if(card&&w?.areas?.length){let route=$('#areaRouteV160');if(!route){route=document.createElement('div');route.id='areaRouteV160';route.className='area-route-v160';card.appendChild(route);}const active=clamp(Number(state.adventure.areaIndex)||0,0,Math.max(0,w.areas.length-1));route.innerHTML=w.areas.slice(0,4).map((a,i)=>`<span class="${i===active?'active':''} ${i<active?'done':''}">AREA ${i+1}</span>`).join('');route.hidden=false;}else if(card)$('#areaRouteV160')?.remove();return r;};
 
 })();

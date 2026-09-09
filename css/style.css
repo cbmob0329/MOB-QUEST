@@ -4537,3 +4537,5 @@ body.camp-modal-v133 #campOverlay,body.camp-modal-v133 #campOverlay *{pointer-ev
 .camp-formation-popup-v159{bottom:auto!important;height:auto!important}.record-reveal-v159 #castleContent{pointer-events:none}
 .test-extra-v159 [data-test-extra-v159="strongestV159"]{display:none}
 .warp-hole-v159{position:absolute;width:112px;height:62px;border:4px solid #e9d8ff;border-radius:50%;background:radial-gradient(ellipse,#090018 10%,#692a9b 46%,transparent 72%);box-shadow:0 0 18px #b96cff,0 0 40px #6c35b9;transform-origin:center;pointer-events:none;z-index:60}
+
+.area-route-v160{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:8px}.area-route-v160 span{padding:5px 2px;border-radius:7px;background:#172334;border:1px solid rgba(255,255,255,.12);color:#93a2b5;text-align:center;font-size:7px;font-weight:900;letter-spacing:.03em}.area-route-v160 span.active{background:#74413d;border-color:#e0a08a;color:#fff}.area-route-v160 span.done{background:#364153;color:#d5dce7}
