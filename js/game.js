@@ -8,7 +8,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=170;
+const GAME_ASSET_VERSION=171;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -415,7 +415,7 @@ function saveParty(){try{localStorage.setItem('mobQuestPartyV4',JSON.stringify(s
 function loadParty(){
   try{
     const raw=localStorage.getItem('mobQuestPartyV4')||localStorage.getItem('mobQuestPartyV3')||localStorage.getItem('mobQuestPartyV2');
-    const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])).map(x=>[canonicalPlayerId(x[0]),clamp(Number(x[1])||1,1,120)]).filter(x=>!seen.has(x[0])&&(seen.add(x[0])||true)).slice(0,10);if(clean.length)return clean;}
+    const v=JSON.parse(raw);if(Array.isArray(v)&&v.length){const seen=new Set();const clean=v.filter(x=>Array.isArray(x)&&player(x[0])).map(x=>[canonicalPlayerId(x[0]),clamp(Number(x[1])||1,1,200)]).filter(x=>!seen.has(x[0])&&(seen.add(x[0])||true)).slice(0,10);if(clean.length)return clean;}
   }catch(_){}
   return defaultParty.map(x=>[...x]);
 }
@@ -2631,7 +2631,7 @@ function restoreCampCheckpoint(){const cp=state.adventure.checkpoint,reviveCount
 function growthValue(lv,curve){lv=clamp(Number(lv)||1,1,120);const [v1,v99,v120=v99]=curve;if(lv<=99){const t=(lv-1)/98;return Math.round(v1+(v99-v1)*t);}const t=(lv-99)/21;return Math.round(v99+(v120-v99)*t);}
 function rawBaseStats(p,lv){const t=TEMP_BALANCE.playerTargets?.[p.id];if(!t){const old=TEMP_BALANCE.playerGrowth[p.id],b=TEMP_BALANCE.base;return{maxHp:Math.round(b.hp+old.hp*lv),maxMp:Math.round(b.mp+old.mp*lv),atk:Math.round(b.atk+old.atk*lv),mag:Math.round(b.mag+old.mag*lv),def:Math.round(b.def+old.def*lv),res:Math.round(b.res+old.res*lv),spd:Math.round(b.spd+old.spd*lv)};}return{maxHp:growthValue(lv,t.hp),maxMp:growthValue(lv,t.mp),atk:growthValue(lv,t.atk),mag:growthValue(lv,t.mag),def:growthValue(lv,t.def),res:growthValue(lv,t.res),spd:growthValue(lv,t.spd)};}
 function baseStats(p,lv){return weaponStatsForEquipment(p,lv,equipmentFor(p.id));}
-function buildAlly(p,lv,vital){lv=clamp(Number(lv)||1,1,120);const equipment=clone(equipmentFor(p.id)),figureEquipment=clone(figureEquipmentFor(p.id)),figureEffects=figureEffectsFor(p.id),s=weaponStatsForEquipment(p,lv,equipment),hp=vital?clamp(Number(vital.hp)||0,0,s.maxHp):s.maxHp,vs=vital?.status||{};return{...p,equipment,figureEquipment,figureEffects,level:lv,...s,hp,mpNow:vital?clamp(Number(vital.mp)||0,0,s.maxMp):s.maxMp,dead:vital?.dead===true||hp<=0,guard:0,guardTurns:0,barrier:0,atkBuff:0,atkBuffTurns:0,atkDebuff:0,atkDebuffTurns:0,defBuff:0,defBuffTurns:0,spdBuff:0,spdBuffTurns:0,spdDebuff:0,spdDebuffTurns:0,allBuff:0,allBuffTurns:0,damageCut:0,damageCutTurns:0,status:{poison:Number(vs.poison)||0,burn:Number(vs.burn)||0,sleep:Number(vs.sleep)||0,stun:Number(vs.stun)||0,paralyze:Number(vs.paralyze)||0,confuse:Number(vs.confuse)||0},pinkReviveUsed:false,lilithReviveUsed:false,transformed:false,narakuStacks:0,missionBuff:0,nextSupportTurn:rint(2,5)};}
+function buildAlly(p,lv,vital){lv=clamp(Number(lv)||1,1,testLevel200V171()?200:120);const equipment=clone(equipmentFor(p.id)),figureEquipment=clone(figureEquipmentFor(p.id)),figureEffects=figureEffectsFor(p.id),s=weaponStatsForEquipment(p,lv,equipment),hp=vital?clamp(Number(vital.hp)||0,0,s.maxHp):s.maxHp,vs=vital?.status||{};return{...p,equipment,figureEquipment,figureEffects,level:lv,...s,hp,mpNow:vital?clamp(Number(vital.mp)||0,0,s.maxMp):s.maxMp,dead:vital?.dead===true||hp<=0,guard:0,guardTurns:0,barrier:0,atkBuff:0,atkBuffTurns:0,atkDebuff:0,atkDebuffTurns:0,defBuff:0,defBuffTurns:0,spdBuff:0,spdBuffTurns:0,spdDebuff:0,spdDebuffTurns:0,allBuff:0,allBuffTurns:0,damageCut:0,damageCutTurns:0,status:{poison:Number(vs.poison)||0,burn:Number(vs.burn)||0,sleep:Number(vs.sleep)||0,stun:Number(vs.stun)||0,paralyze:Number(vs.paralyze)||0,confuse:Number(vs.confuse)||0},pinkReviveUsed:false,lilithReviveUsed:false,transformed:false,narakuStacks:0,missionBuff:0,nextSupportTurn:rint(2,5)};}
 function enemyStatPreview(t,lv,groupSize=1,partySize=4){
   t=t||{category:'normal'};lv=clamp(Number(lv)||1,1,120);const profile=TEMP_BALANCE.enemyProfiles?.[t.category]||TEMP_BALANCE.enemyProfiles.normal,mods=t.mods||{};
   const curve=(base,per,quad=0)=>base+lv*per+lv*lv*quad;
@@ -10547,7 +10547,7 @@ function renderEventQuestsV163(){
  const q=EVENT_BOSSES_V163.find(q=>q.key===eventSelectedV163),rec=eventRecordsV163();let body='';
  if(eventViewV163==='menu')body=`<p class="event-intro-v163">新たな冒険と、強敵との戦いへ。</p><div class="event-kind-grid-v163"><button data-event-view="story"><img src="mqicon/14.png" alt=""><small>STORY</small><b>ストーリー</b></button><button data-event-view="boss"><img src="icon/002.png" alt=""><small>BOSS</small><b>ボス降臨</b></button></div>`;
  else if(eventViewV163==='story')body='<div class="event-story-v163"><img src="mqicon/14.png" alt=""><h3>次の物語をお楽しみに</h3><p>新しいストーリーは、今後追加されます。</p></div>';
- else if(eventViewV163==='difficulty'&&q&&worldCleared(q.world))body=`<div class="event-selected-v163">${eventPortraitV163(q,!!rec.attempted[q.key])}<h3>${q.name}降臨</h3></div><div class="event-difficulties-v163">${EVENT_DIFFICULTIES_V163.map((d,i)=>{const open=eventDifficultyOpenV163(q,i),cleared=rec.cleared[`${q.key}:${i}`];return `<button data-event-start="${i}" class="event-difficulty-v163 ${d.id}" ${open?'':'disabled'}><div><small>${d.english}</small><b>${d.name}</b><strong>Lv.${q.levels[i]}</strong></div><p>${open?`初回 ${d.first}ダイヤ / クリア後 ${d.repeat}ダイヤ`:`${EVENT_DIFFICULTIES_V163[i-1].name}クリアで解放`}</p><span>フィギュア ${d.chance*100}%</span>${cleared?'<em class="event-clear-stamp-v163">CLEAR</em>':''}</button>`;}).join('')}</div>`;
+ else if(eventViewV163==='difficulty'&&q&&(worldCleared(q.world)||testAllQuestsV171()))body=`<div class="event-selected-v163">${eventPortraitV163(q,!!rec.attempted[q.key])}<h3>${q.name}降臨</h3></div><div class="event-difficulties-v163">${EVENT_DIFFICULTIES_V163.map((d,i)=>{const open=eventDifficultyOpenV163(q,i),cleared=rec.cleared[`${q.key}:${i}`];return `<button data-event-start="${i}" class="event-difficulty-v163 ${d.id}" ${open?'':'disabled'}><div><small>${d.english}</small><b>${d.name}</b><strong>Lv.${q.levels[i]}</strong></div><p>${open?`初回 ${d.first}ダイヤ / クリア後 ${d.repeat}ダイヤ`:`${EVENT_DIFFICULTIES_V163[i-1].name}クリアで解放`}</p><span>フィギュア ${d.chance*100}%</span>${cleared?'<em class="event-clear-stamp-v163">CLEAR</em>':''}</button>`;}).join('')}</div>`;
  else body=`<p class="event-intro-v163">挑戦するボスを選択してください。</p><div class="event-boss-grid-v163">${eventBossesAvailableV163().map(b=>`<button class="event-boss-card-v163" data-event-boss="${b.key}">${eventPortraitV163(b,!!rec.attempted[b.key])}<strong>${b.name}<br><em>降臨</em></strong>${[0,1,2].some(i=>rec.cleared[`${b.key}:${i}`])?'<span class="event-clear-stamp-v163">CLEAR</span>':''}</button>`).join('')||'<p>草原クリア後に解放されます。</p>'}</div>`;
  root.innerHTML=`<section class="event-panel-v163"><header><div><small>EVENT QUEST</small><h2>${eventViewV163==='menu'?'イベントクエスト':eventViewV163==='story'?'ストーリー':'ボス降臨'}</h2></div>${eventViewV163!=='menu'?'<button data-event-back type="button">戻る</button>':''}</header>${body}</section>`;
  $$('[data-event-view]',root).forEach(b=>b.onclick=()=>{eventViewV163=b.dataset.eventView;renderEventQuestsV163();});
@@ -11160,6 +11160,149 @@ endingMontageV157=async function(){
 const captionBaseV169=endingCaptionV157;endingCaptionV157=async function(text){if(text!=='CB Memory')return captionBaseV169(text);const el=document.querySelector('.ending-caption-v157');if(!el)return;el.replaceChildren();const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB QUEST';logo.className='ending-logo-v169';const label=document.createElement('b');label.textContent='CB Memory';el.append(logo,label);await animateV157(el,[{opacity:0},{opacity:1}],1000);};
 const finalEndingBaseV169=finalEndingV89Final;finalEndingV89Final=async function(){if(endingBusyV169)return;endingBusyV169=true;document.body.classList.add('ending-report-v169');try{return await finalEndingBaseV169();}finally{endingBusyV169=false;document.body.classList.remove('ending-report-v169');}};
 const facilityBaseV169=facilityTalk;facilityTalk=async function(text,...args){const shout=text.includes('ほんっっっとーに');document.body.classList.toggle('king-shout-v169',shout);try{return await facilityBaseV169(text,...args);}finally{document.body.classList.remove('king-shout-v169');}};
+
+
+/* ===== MOB QUEST v171: REQUESTED TEST / INPUT / EVENT GATES ONLY ===== */
+try{
+  const savedV171=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1')||'{}');
+  state.test.level200V171=!!savedV171.level200V171;
+  state.test.allQuestsV171=!!savedV171.allQuestsV171;
+}catch(_){state.test.level200V171=false;state.test.allQuestsV171=false;}
+
+function testLevel200V171(){return !!(state.test?.enabled&&state.test?.level200V171);}
+function testAllQuestsV171(){return !!(state.test?.enabled&&state.test?.allQuestsV171);}
+function testPlayerMaxLevelV171(){return testLevel200V171()?200:120;}
+
+/* Lv.200 test mode: normal play keeps the existing cap. Player growth simply continues without a stat ceiling. */
+const _playerLevelCapV171Base=playerLevelCap;
+playerLevelCap=function(){return testLevel200V171()?200:_playerLevelCapV171Base();};
+const _growthValueV171Base=growthValue;
+growthValue=function(lv,curve){
+  if(!testLevel200V171())return _growthValueV171Base(lv,curve);
+  lv=clamp(Number(lv)||1,1,200);const [v1,v99,v120=v99]=curve;
+  if(lv<=99){const t=(lv-1)/98;return Math.round(v1+(v99-v1)*t);}
+  const t=(lv-99)/21;return Math.round(v99+(v120-v99)*t);
+};
+function syncTestPartyLevelV171(level){
+  const lv=clamp(Number(level)||1,1,testPlayerMaxLevelV171());
+  state.party=state.party.map(([id])=>[id,lv]);
+  if(!state.meta.exp)state.meta.exp={};for(const [id] of state.party)state.meta.exp[id]=0;
+  state.adventure.vitals=null;state.training.party=state.party.map(x=>[...x]);
+  saveParty();saveMeta();saveAdventure();return lv;
+}
+function clampTestPartyBackV171(){
+  let changed=false;state.party=state.party.map(([id,lv])=>{const n=clamp(Number(lv)||1,1,120);if(n!==Number(lv))changed=true;return[id,n];});
+  if(changed){state.adventure.vitals=null;state.training.party=state.party.map(x=>[...x]);saveParty();saveAdventure();}
+}
+
+const _renderSettingsV171Base=renderSettings;
+renderSettings=function(){
+  _renderSettingsV171Base();
+  const root=$('#testModeControls');if(!root)return;
+  let panel=$('#testExtraV171');if(!panel){panel=document.createElement('div');panel.id='testExtraV171';panel.className='test-extra-v159';root.appendChild(panel);}
+  panel.innerHTML=`<button type="button" data-test-v171="level200" ${state.test.enabled?'':'disabled'}>Lv.200モード ※ステータス上限なし：${testLevel200V171()?'ON':'OFF'}</button><button type="button" data-test-v171="allQuests" ${state.test.enabled?'':'disabled'}>全クエスト開放：${testAllQuestsV171()?'ON':'OFF'}</button>`;
+  const max=testPlayerMaxLevelV171(),allInput=$('#testLevelInput');if(allInput)allInput.max=String(max);
+  $$('[data-test-level-id]',root).forEach(input=>input.max=String(max));
+  const applyAll=$('#applyTestLevelBtn');if(applyAll)applyAll.onclick=()=>{if(!state.test.enabled)return;const lv=syncTestPartyLevelV171($('#testLevelInput')?.value||5);renderSettings();toast(`現在のパーティーをLv${lv}に設定しました / HP・MP全回復`);};
+  $$('[data-test-level-apply]',root).forEach(btn=>btn.onclick=()=>{if(!state.test.enabled)return;const id=btn.dataset.testLevelApply,input=$(`[data-test-level-id="${id}"]`,root),slot=state.party.find(x=>x[0]===id);if(!slot)return;const lv=clamp(Number(input?.value)||1,1,max);slot[1]=lv;if(!state.meta.exp)state.meta.exp={};state.meta.exp[id]=0;state.adventure.vitals=null;state.training.party=state.party.map(x=>[...x]);saveParty();saveMeta();saveAdventure();renderSettings();toast(`${player(id)?.name||id}をLv${lv}に設定しました`);});
+  $('[data-test-v171="level200"]',panel)?.addEventListener('click',()=>{if(!state.test.enabled)return;state.test.level200V171=!state.test.level200V171;if(state.test.level200V171)syncTestPartyLevelV171(200);else clampTestPartyBackV171();saveTestSettings();renderSettings();toast(state.test.level200V171?'Lv.200モード ON':'Lv.200モード OFF');});
+  $('[data-test-v171="allQuests"]',panel)?.addEventListener('click',()=>{if(!state.test.enabled)return;state.test.allQuestsV171=!state.test.allQuestsV171;saveTestSettings();renderSettings();toast(state.test.allQuestsV171?'全クエスト開放 ON':'全クエスト開放 OFF');});
+};
+
+/* Test switch cleanup prevents Lv.200 values or all-open gates from leaking into normal play. */
+const testModeToggleV171=$('#testModeToggle'),_testModeToggleClickV171=testModeToggleV171?.onclick;
+if(testModeToggleV171&&_testModeToggleClickV171)testModeToggleV171.onclick=function(e){
+  const was=!!state.test.enabled,r=_testModeToggleClickV171.call(this,e);
+  if(was&&!state.test.enabled){state.test.level200V171=false;state.test.allQuestsV171=false;clampTestPartyBackV171();saveTestSettings();syncAutoAvailabilityV171();renderSettings();}
+  return r;
+};
+
+/* Full quest access is test-only and does not rewrite story clear flags or real Mob Piece rank. */
+const _eventBossesAvailableV171Base=eventBossesAvailableV163;
+eventBossesAvailableV163=function(){return testAllQuestsV171()?EVENT_BOSSES_V163.slice():_eventBossesAvailableV171Base();};
+const _eventQuestUnlockedV171Base=eventQuestUnlockedV91;
+eventQuestUnlockedV91=function(){return testAllQuestsV171()||_eventQuestUnlockedV171Base();};
+const _eventDifficultyOpenV171Base=eventDifficultyOpenV163;
+eventDifficultyOpenV163=function(q,index){return testAllQuestsV171()?!!q&&index>=0&&index<3:_eventDifficultyOpenV171Base(q,index);};
+const _mapleShopUnlockedV171Base=mapleShopUnlocked;
+mapleShopUnlocked=function(){return testAllQuestsV171()||_mapleShopUnlockedV171Base();};
+const _clearedJournalWorldsV171Base=clearedJournalWorlds;
+clearedJournalWorlds=function(){return testAllQuestsV171()?[...(MOB_DATA.adventureWorlds||[])]:_clearedJournalWorldsV171Base();};
+const _rankUnlockV171Base=rankUnlockV132;
+rankUnlockV132=function(rank){return testAllQuestsV171()||_rankUnlockV171Base(rank);};
+
+/* Event Quest always confirms immediately before the challenge begins. */
+let eventConfirmingV171=false;
+const _startEventQuestV171Base=startEventQuestV163;
+startEventQuestV163=async function(q,difficulty){
+  if(eventConfirmingV171||eventStartingV163||!eventDifficultyOpenV163(q,difficulty))return false;
+  const d=EVENT_DIFFICULTIES_V163[difficulty];eventConfirmingV171=true;
+  try{
+    const answer=await dialog(`${q?.name||'イベントクエスト'} ${d?.name||''}\n挑戦しますか？`,[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');
+    if(answer!=='yes')return false;
+    return await _startEventQuestV171Base(q,difficulty);
+  }finally{eventConfirmingV171=false;}
+};
+
+/* Mob Piece test access: free difficulty gates open, and Rank Match can select F through SS without changing the saved rank. */
+function openMobPieceRankSelectV171(){
+  if(!testAllQuestsV171())return startMobPieceBattleV132('rank');
+  const ov=ensureMobPieceOverlayV96();
+  ov.innerHTML=`<div class="mob-piece-card-v96 menu free-select-v132"><div class="settings-head"><div><small>TEST RANK MATCH</small><h2>挑戦ランクを選択</h2></div><button data-rank-test-back-v171 class="sheet-close" type="button">←</button></div>${cpuProfileMarkupV132()}<div class="free-difficulty-grid-v132">${MOB_PIECE_RANKS_V132.map(t=>`<button data-rank-test-v171="${t}" type="button"><b>RANK ${t}</b><small>テストプレイ / ランクポイント変動なし</small><em>勝利報酬 ${rankRewardTextV132(t)}</em></button>`).join('')}</div></div>`;
+  ov.hidden=false;$('[data-rank-test-back-v171]',ov).onclick=openMobPieceBattleSelectV132;$$('[data-rank-test-v171]',ov).forEach(b=>b.onclick=()=>startMobPieceTestRankV171(b.dataset.rankTestV171));
+}
+async function startMobPieceTestRankV171(tier){
+  if(!testAllQuestsV171()||!MOB_PIECE_RANKS_V132.includes(tier))return false;
+  const m=state.meta,keys=['mobPieceRankTierV132','mobPieceRankPointsV132','mobPieceHighestRankV132'],snap={};
+  for(const k of keys)snap[k]={has:Object.prototype.hasOwnProperty.call(m,k),value:m[k]};
+  m.mobPieceRankTierV132=tier;m.mobPieceRankPointsV132=0;m.mobPieceHighestRankV132=tier;
+  try{await startMobPieceBattleV132('rank','easy');if(mobPieceBattleV96){mobPieceBattleV96.testRankV171=tier;mobPieceBattleV96.rankAtStartV132=tier;}return !!mobPieceBattleV96;}
+  finally{for(const k of keys){if(snap[k].has)m[k]=snap[k].value;else delete m[k];}}
+}
+const _openMobPieceBattleSelectV171Base=openMobPieceBattleSelectV132;
+openMobPieceBattleSelectV132=function(){
+  const r=_openMobPieceBattleSelectV171Base();if(!testAllQuestsV171())return r;
+  const ov=ensureMobPieceOverlayV96(),btn=$('[data-rank-start-v132]',ov);if(btn){const small=$('small',btn),em=$('em',btn);if(small)small.textContent='テスト：好きなランクを選択';if(em)em.textContent='RANK F ～ SS';btn.onclick=openMobPieceRankSelectV171;}return r;
+};
+const _updateMobPieceRankV171Base=updateMobPieceRankV132;
+updateMobPieceRankV132=function(win){const b=mobPieceBattleV96;if(b?.testRankV171)return{tier:b.testRankV171,points:0,promoted:false,demoted:false,test:true};return _updateMobPieceRankV171Base(win);};
+const _finishMobPieceBattleV171Base=finishMobPieceBattleV96;
+finishMobPieceBattleV96=async function(win){const tier=mobPieceBattleV96?.testRankV171;await _finishMobPieceBattleV171Base(win);if(tier){const box=$('.rank-result-v132',ensureMobPieceOverlayV96());if(box)box.innerHTML=`<b>TEST RANK ${tier}</b><span>ランクポイント変動なし</span>`;}};
+
+/* AUTO is a test-play control only. Normal play keeps x1 / x1.5 / x2 speed controls unchanged. */
+function syncAutoAvailabilityV171(){
+  const btn=$('#autoBtn');if(!btn)return;const allow=!!state.test?.enabled;btn.hidden=!allow;btn.style.display=allow?'':'none';
+  if(!allow){state.autoBattle=false;if(state.battle)state.battle.auto=false;btn.classList.remove('active');btn.textContent='AUTO';}
+}
+const _beginBattleV171Base=beginBattle;
+beginBattle=async function(config){
+  const allow=!!state.test?.enabled;if(!allow)state.autoBattle=false;else state.autoBattle=loadAutoBattlePreference();
+  const r=await _beginBattleV171Base(config);if(!allow&&state.battle)state.battle.auto=false;syncAutoAvailabilityV171();return r;
+};
+const autoBtnV171=$('#autoBtn'),_autoBtnClickV171=autoBtnV171?.onclick;
+if(autoBtnV171&&_autoBtnClickV171)autoBtnV171.onclick=function(e){if(!state.test?.enabled){syncAutoAvailabilityV171();return;}return _autoBtnClickV171.call(this,e);};
+syncAutoAvailabilityV171();
+
+/* Conversation-event input lock. Dialog/story controls remain tappable; underlying facility/menu actors do not. */
+let facilityTalkDepthV171=0;
+const _facilityTalkV171Base=facilityTalk;
+facilityTalk=async function(...args){facilityTalkDepthV171++;try{return await _facilityTalkV171Base(...args);}finally{facilityTalkDepthV171=Math.max(0,facilityTalkDepthV171-1);}};
+const _submitAdventureReportV171Base=submitAdventureReport;
+submitAdventureReport=async function(){
+  const r=state.adventure?.awaitingReport;if(r?.worldId!=='demonCastle')return _submitAdventureReportV171Base();
+  if(castleReportBusy||storyBusy)return;castleReportBusy=true;try{return await _submitAdventureReportV171Base();}finally{castleReportBusy=false;}
+};
+function conversationInputLockedV171(){const liveStory=storyBusy&&!!$('#storyScene')&&!$('#storyScene').hidden;return facilityTalkDepthV171>0||castleReportBusy||liveStory||openingSequenceBusy||endingBusyV169;}
+function conversationAllowedTargetV171(target){return !!target?.closest?.('#dialogOverlay,#storyScene,.opening-scene-caption-v76,.opening-narration-v76,.home-tutorial-v76,.ending-v157,.ending-loading-v169,.farewell-v169,#eventOverlayV163');}
+for(const type of ['pointerdown','click'])window.addEventListener(type,e=>{
+  if(!conversationInputLockedV171()||conversationAllowedTargetV171(e.target))return;
+  const interactive=e.target?.closest?.('button,a,input,select,textarea,[role="button"],[data-castle-actor],[data-innkeeper]');if(!interactive)return;
+  e.preventDefault();e.stopImmediatePropagation();
+},{capture:true,passive:false});
+
+window.__mobV171Runtime=true;
+/* ===== END MOB QUEST v171 ===== */
+
 window.__mobV169Runtime=true;
 
 })();
