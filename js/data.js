@@ -169,9 +169,9 @@ const MOB_DATA = {
     {id:'dragon2',name:'モブドラゴンⅡ',stage:'マグマⅡ',attribute:'火',image:'boss/10.png',symbol:'竜',special:'ドラゴンフレイム',kind:'aoe',power:1.72,bg:'back/magma4.png',fallbackBg:'back/magma.png'},
     {id:'gidora',name:'モブギドラ',stage:'マグマⅡ',attribute:'火',image:'boss/19.png',symbol:'龍',special:'フル・ドラゴンフレイム',kind:'buffAoe',power:1.80,bg:'back/magma4.png',fallbackBg:'back/magma.png'},
     {id:'dorafara',name:'ドラファラモブ',stage:'砂漠Ⅱ',attribute:'火・闇',image:'boss/20.png',symbol:'炎',special:'フル・ドラゴンフレイム',kind:'buffAoe',power:1.90,bg:'back/sabaku4.png',fallbackBg:'back/sabaku.png'},
-    {id:'gladi',name:'グラディモブ',stage:'魔王城',attribute:'火',image:'boss/39.png',symbol:'将',special:'将軍進撃',kind:'doubleAoe',power:1.0,bg:'back/maoh4.png',fallbackBg:'back2/09.png'},
-    {id:'lilithBoss',name:'モブリリス',stage:'魔王城',attribute:'闇',image:'boss/21.png',symbol:'薔',special:'ブラックホール',kind:'aoe',power:1.85,bg:'back/maoh4.png',fallbackBg:'back2/09.png'},
-    {id:'maou',name:'モブ魔王',stage:'魔王城',attribute:'闇',image:'boss/22.png',symbol:'王',special:'マスター・オブ・ピラミッド',kind:'aoe',power:2.12,bg:'back/maoh4.png',fallbackBg:'back2/09.png'},
+    {id:'gladi',name:'グラディモブ',stage:'魔王城',attribute:'火',image:'boss/39.png',symbol:'将',special:'将軍進撃',kind:'doubleAoe',power:1.0,bg:'back/maojo4.png',fallbackBg:'back2/09.png'},
+    {id:'lilithBoss',name:'モブリリス',stage:'魔王城',attribute:'闇',image:'boss/21.png',symbol:'薔',special:'ブラックホール',kind:'aoe',power:1.85,bg:'back/maojo4.png',fallbackBg:'back2/09.png'},
+    {id:'maou',name:'モブ魔王',stage:'魔王城',attribute:'闇',image:'boss/22.png',symbol:'王',special:'マスター・オブ・ピラミッド',kind:'aoe',power:2.12,bg:'back/maojo4.png',fallbackBg:'back2/09.png'},
     {id:'natalie',name:'モブナタリー',stage:'マトリックス',attribute:'光',image:'boss/23.png',symbol:'光',special:'ダブルエナジー',kind:'burnSingle',power:1.75,bg:'back/matrix4.png',fallbackBg:'back2/10.png'},
     {id:'smith',name:'モブスミス',stage:'マトリックス',attribute:'風',image:'boss/24.png',symbol:'眼',special:'ゴールデン・アイ',kind:'multiFixed',power:1.38,hits:[3,3],bg:'back/matrix4.png',fallbackBg:'back2/10.png'},
     {id:'unlock',name:'モブアンロック',stage:'監獄',attribute:'地',image:'boss/25.png',symbol:'鎖',special:'悪意の行進',kind:'aoe',power:2.18,bg:'back/kangoku4.png',fallbackBg:'back2/11.png'},
@@ -293,10 +293,10 @@ MOB_DATA.adventureWorlds.push(
     {name:'AREA 4',bg:'back/sabaku4.png',boss:[{id:'boss-dorafara',level:78}]}
   ]},
   {id:'demonCastle',name:'魔王城',fieldFallback:'back2/09.png',normalIds:['c-picodark','c-devilslime','c-darkgob','c-punirider','c-minibook','c-loopmagic','c-hellshadow','c-metasword','c-cockpit','c-assassin','c-deathspear'],areas:[
-    {name:'AREA 1',bg:'back/maoh.png',boss:[{id:'c-killwitch',level:80},{id:'c-succubus',level:80}]},
-    {name:'AREA 2',bg:'back/maoh2.png',boss:[{id:'c-miraheld',level:75},{id:'boss-gladi',level:82},{id:'c-yamieater',level:75}]},
-    {name:'AREA 3',bg:'back/maoh3.png',boss:[{id:'c-boukun',level:75},{id:'boss-lilith-castle',level:85},{id:'c-boukun',level:75}]},
-    {name:'AREA 4',bg:'back/maoh4.png',boss:[{id:'boss-maou-castle',level:95}]}
+    {name:'AREA 1',bg:'back/maojo.png',boss:[{id:'c-killwitch',level:80},{id:'c-succubus',level:80}]},
+    {name:'AREA 2',bg:'back/maojo2.png',boss:[{id:'c-miraheld',level:75},{id:'boss-gladi',level:82},{id:'c-yamieater',level:75}]},
+    {name:'AREA 3',bg:'back/maojo3.png',boss:[{id:'c-boukun',level:75},{id:'boss-lilith-castle',level:85},{id:'c-boukun',level:75}]},
+    {name:'AREA 4',bg:'back/maojo4.png',boss:[{id:'boss-maou-castle',level:95}]}
   ]}
 );
 
@@ -856,10 +856,10 @@ for(const [element,id] of Object.entries(_v73Middle)){
     {special:'マスター・オブ・ピラミッド',kind:'v88AoeConfuseOrStun',power:2.00,chance:.30,skillElement:'闇',skillType:'magic'}
   ]});
   ensureWorld({id:'demonCastle2',name:'魔王城Ⅱ',fieldFallback:'back2/09.png',normalIds:[],oneBattlePerArea:true,noRandomEncounter:true,areas:[
-    {name:'AREA 1',bg:'back/maoh.png',boss:[{id:'dc2-hell',level:85},{id:'dc2-kirin',level:85},{id:'dc2-riva',level:85},{id:'dc2-kufu',level:85}]},
-    {name:'AREA 2',bg:'back/maoh2.png',boss:[{id:'dc2-lilith',level:85,qty:3}]},
-    {name:'AREA 3',bg:'back/maoh3.png',boss:[{id:'dc2-enma',level:90}],nextWaves:[[{id:'dc2-enma2',level:92}],[{id:'dc2-enma3',level:94}]]},
-    {name:'AREA 4',bg:'back/maoh4.png',boss:[{id:'dc2-maou',level:95}],nextWave:[{id:'dc2-ulrilis',level:99}]}
+    {name:'AREA 1',bg:'back/maojo.png',boss:[{id:'dc2-hell',level:85},{id:'dc2-kirin',level:85},{id:'dc2-riva',level:85},{id:'dc2-kufu',level:85}]},
+    {name:'AREA 2',bg:'back/maojo2.png',boss:[{id:'dc2-lilith',level:85,qty:3}]},
+    {name:'AREA 3',bg:'back/maojo3.png',boss:[{id:'dc2-enma',level:90}],nextWaves:[[{id:'dc2-enma2',level:92}],[{id:'dc2-enma3',level:94}]]},
+    {name:'AREA 4',bg:'back/maojo4.png',boss:[{id:'dc2-maou',level:95}],nextWave:[{id:'dc2-ulrilis',level:99}]}
   ]});
 
   /* v88 のクライマックス順序を固定 */

@@ -1,0 +1,19 @@
+MOB QUEST v169 検証記録（ゲーム起動用ファイルではありません）
+
+PASS: Unmodified release index boots v169 title
+PASS: Compatible starter weapons, varied types, no duplicate grants, manual unequip respected
+PASS: Castle II checkpoint still grants book and Kaijin
+PASS: Camp formation is a separate viewport-contained popup; Back works
+PASS: Actual weapon purchase immediately updates both header and shop wallet
+PASS: Mira Poison scheduled every 2–3 turns, not repeated on additional actions
+PASS: Main boss +50 exactly once; subsequent journal/program/subquest/normal result awards no boss bonus and clears banner
+PASS: Inn recovery effect visible, Mita click blocked while resting, party fully healed, input restored
+PASS: Desert report unlock snapshot shows figures on HOME
+PASS: Area1 full summons and post-victory Lilith/Enma speakers visible before disappearance
+PASS: All 31 ending posters decoded successfully
+PASS: Complete castle report reaches ending and unlocks postgame (timing/interaction accelerated)
+PASS: Real-time browser ending: king input locked, farewell, all 31 posters with music, captions, return to title
+PASS: Final dialogue full speaker visibility, five-second Maou dissolution, recruitment narration order; king large jagged speech fits; 12-character farewell
+
+Edge、390×844で確認。会話順序と報酬テストは一部待機時間を短縮。エンディング全体は実時間で再確認。
+確認範囲のJS実行エラー、コンソールエラー、素材404は0。
