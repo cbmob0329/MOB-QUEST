@@ -4849,6 +4849,11 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-caption-v157:has(.ending-logo-v169){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}.ending-logo-v169{width:min(80vw,450px);max-height:40vh;object-fit:contain}
 .king-shout-v169 #dialogOverlay .dialog-body{border:3px solid #b77d18!important;border-radius:0!important;box-shadow:0 0 22px #ffcc5b!important;clip-path:polygon(0 5%,5% 0,10% 4%,20% 0,30% 4%,40% 0,50% 4%,60% 0,70% 4%,80% 0,90% 4%,100% 0,96% 15%,100% 30%,96% 45%,100% 60%,96% 75%,100% 100%,90% 96%,80% 100%,70% 96%,60% 100%,50% 96%,40% 100%,30% 96%,20% 100%,10% 96%,0 100%,4% 80%,0 65%,4% 50%,0 35%,4% 20%);padding:18px!important}.king-shout-v169 #dialogText{font-weight:1000!important;text-shadow:1px 1px #e7bf66;line-height:1.6!important}
 
+</style><style>/* Training cards must pass vertical finger movement to the page scroller. */
+#trainingScreen.active .training-scroll{height:calc(100dvh - 64px - var(--safe-top))!important;max-height:calc(100dvh - 64px - var(--safe-top))!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;touch-action:pan-y!important;overscroll-behavior-y:contain!important;-webkit-overflow-scrolling:touch!important;}
+#trainingScreen.active #trainingModeCarousel.training-main-grid{touch-action:pan-y!important;overflow:visible!important;overscroll-behavior:contain!important;}
+#trainingScreen.active .training-mode-card{touch-action:pan-y!important;}
+#trainingScreen.active .training-scroll:after{content:'上下にスワイプして下のメニューを表示';display:block;text-align:center;padding:12px 0 28px;color:#d8e4ef;font-size:10px;font-weight:900;opacity:.8;pointer-events:none;}
 </style></head>
 <body>
 <main id="app">
@@ -4858,7 +4863,7 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v169</div>
+      <div class="title-version">v170</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -6732,7 +6737,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const rint=(a,b)=>Math.floor(a+Math.random()*(b-a+1));
 const pct=(n,max)=>max?clamp(n/max*100,0,100):0;
 const clone=v=>JSON.parse(JSON.stringify(v));
-const GAME_ASSET_VERSION=169;
+const GAME_ASSET_VERSION=170;
 function versionedPlay(src){if(!src)return'';return /^play\//.test(src)?`${src}${src.includes('?')?'&':'?'}mqv=${GAME_ASSET_VERSION}`:src;}
 function loadTestSettings(){try{const v=JSON.parse(localStorage.getItem('mobQuestTestSettingsV1'));if(v&&typeof v==='object')return{enabled:!!v.enabled,fast5:!!v.fast5,allSkills:!!v.allSkills,exp3:!!v.exp3};}catch(_){}return{enabled:false,fast5:false,allSkills:false,exp3:false};}
 function saveTestSettings(){try{localStorage.setItem('mobQuestTestSettingsV1',JSON.stringify(state.test));}catch(_){}}
@@ -16781,7 +16786,7 @@ window.__mobV153PatchRuntime=true;
 /* Demon Castle: never borrow another AREA's castle background while a request is late.
    Use a cache-busted exact AREA source first, then retry the same raw source, then the normal fallback. */
 function v153RawAsset(src){return String(src||'').split('?')[0];}
-function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maojo(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=169`:src;}
+function v153CastleBg(src){const raw=v153RawAsset(src);return /^back\/maojo(?:2|3|4)?\.png$/i.test(raw)?`${raw}?mqv=170`:src;}
 for(const wid of ['demonCastle','demonCastle2']){
   const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===wid);
   if(w) for(const a of (w.areas||[])) if(a?.bg) a.bg=v153CastleBg(a.bg);
