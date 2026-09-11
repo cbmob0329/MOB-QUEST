@@ -4834,8 +4834,9 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 </style>
 <style>
-#exploreOverlay.area-theme-beige .explore-card,#exploreOverlay.area-theme-beige .explore-card *{color:#17120d!important;text-shadow:none!important}
-#adventureScreen.grassland-v169 #exploreBtn,#adventureScreen.grassland-v169 #exploreBtn *{color:#17120d!important;text-shadow:none!important}
+#exploreOverlay:is(.area-theme-green,.area-theme-beige) .explore-card,#exploreOverlay:is(.area-theme-green,.area-theme-beige) .explore-card *{color:#17120d!important;-webkit-text-fill-color:#17120d!important;text-shadow:none!important}
+#adventureScreen #exploreBtn,#adventureScreen #exploreBtn *{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important}
+[data-home-action="adventure"].awaiting-report{filter:grayscale(1);opacity:.55}
 #abandonAdventureBtn{width:auto!important;max-width:70%;min-height:40px!important;margin:20px auto 6px!important;padding:8px 16px!important;font-size:12px!important;background:#421b24!important;color:#ffdadb!important;border:2px solid #da6572!important;border-radius:8px!important}
 #abandonAdventureBtn:before{content:'⚠ ';color:#ffb6ae}
 #campOverlay>#campSubPanel.camp-popup-v169{position:fixed!important;inset:5dvh max(12px,calc((100vw - 540px)/2)) 5dvh!important;height:90dvh!important;max-height:90dvh!important;width:auto!important;box-sizing:border-box;z-index:999;overflow:auto!important;overscroll-behavior:contain;background:#142334;color:#fff;border:2px solid #b7a68a;border-radius:16px;padding:12px!important;box-shadow:0 0 0 100vmax #000b;transform:none!important}
@@ -7456,6 +7457,7 @@ async function startNewGame(){
 async function continueGame(){if(adventureRunActive()){await travelTo('adventure','冒険を再開しています…',renderAdventure);await handleAdventureEntry();return;}await goHome();}
 
 async function renderHome(){
+  syncAdventureReportLock();
   $('#coinValue').textContent=state.coins.toLocaleString();
   const d=$('#diamondValue');if(d)d.textContent=Math.max(0,Number(state.meta?.diamonds)||0).toLocaleString();
 }
@@ -10640,7 +10642,16 @@ async function openMobShopFacility(){return enterMobShop();}
 function trainingPlayedOnce(){return !!state.meta?.trainingPlayed||Number(state.adventure?.worldIndex||0)>0||(state.adventure?.reportedWorlds||[]).length>0;}
 function markTrainingPlayed(){if(!state.meta.trainingPlayed){state.meta.trainingPlayed=true;saveMeta();}}
 function adventureEntryUnlocked(){return state.test?.enabled||trainingPlayedOnce();}
+function syncAdventureReportLock(){
+  const locked=!!state.adventure?.awaitingReport;
+  for(const button of $$('[data-home-action="adventure"]')){
+    button.classList.toggle('awaiting-report',locked);
+    button.setAttribute('aria-disabled',String(locked));
+    if(locked)button.setAttribute('title','王様へ報告に行きましょう！');else button.removeAttribute('title');
+  }
+}
 function openHomeAction(action){
+  if(action==='adventure'&&state.adventure?.awaitingReport)return dialog('王様へ報告に行きましょう！',[['OK','ok','primary']],'ADVENTURE');
   if(action==='home')return toast('ここがHOMEです');
   if(action==='equipment')return openEquipmentScreen();
   if(action==='items')return openInventory();
@@ -14259,10 +14270,10 @@ function adventureDepartureCardV126(w){
 const _openHomeActionV126Base=openHomeAction;
 openHomeAction=function(action){
   if(action!=='adventure')return _openHomeActionV126Base(action);
-  if(state.adventure?.awaitingReport)return dialog('王へ報告しましょう！',[['OK','ok','primary']],'ADVENTURE');
+  if(state.adventure?.awaitingReport){syncAdventureReportLock();return dialog('王様へ報告に行きましょう！',[['OK','ok','primary']],'ADVENTURE');}
   if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');
   const w=currentWorld();
-  return (async()=>{const v=await adventureDepartureCardV126(w);if(v!=='yes')return;ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();})();
+  return (async()=>{const v=await adventureDepartureCardV126(w);if(v!=='yes')return;if(state.adventure?.awaitingReport)return openHomeAction('adventure');ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();})();
 };
 
 const CASTLE_REPORT_PLAYER_KEYS_V126={pink:'pink',desert:'desert',denden:'denden',money:'money',nyoro:'nyoro',nekoku:'nekoku',jessie:'jessie',tetsu:'tetsu',riro:'riro'};

@@ -727,6 +727,7 @@ async function startNewGame(){
 async function continueGame(){if(adventureRunActive()){await travelTo('adventure','冒険を再開しています…',renderAdventure);await handleAdventureEntry();return;}await goHome();}
 
 async function renderHome(){
+  syncAdventureReportLock();
   $('#coinValue').textContent=state.coins.toLocaleString();
   const d=$('#diamondValue');if(d)d.textContent=Math.max(0,Number(state.meta?.diamonds)||0).toLocaleString();
 }
@@ -3911,7 +3912,16 @@ async function openMobShopFacility(){return enterMobShop();}
 function trainingPlayedOnce(){return !!state.meta?.trainingPlayed||Number(state.adventure?.worldIndex||0)>0||(state.adventure?.reportedWorlds||[]).length>0;}
 function markTrainingPlayed(){if(!state.meta.trainingPlayed){state.meta.trainingPlayed=true;saveMeta();}}
 function adventureEntryUnlocked(){return state.test?.enabled||trainingPlayedOnce();}
+function syncAdventureReportLock(){
+  const locked=!!state.adventure?.awaitingReport;
+  for(const button of $$('[data-home-action="adventure"]')){
+    button.classList.toggle('awaiting-report',locked);
+    button.setAttribute('aria-disabled',String(locked));
+    if(locked)button.setAttribute('title','王様へ報告に行きましょう！');else button.removeAttribute('title');
+  }
+}
 function openHomeAction(action){
+  if(action==='adventure'&&state.adventure?.awaitingReport)return dialog('王様へ報告に行きましょう！',[['OK','ok','primary']],'ADVENTURE');
   if(action==='home')return toast('ここがHOMEです');
   if(action==='equipment')return openEquipmentScreen();
   if(action==='items')return openInventory();
@@ -7530,10 +7540,10 @@ function adventureDepartureCardV126(w){
 const _openHomeActionV126Base=openHomeAction;
 openHomeAction=function(action){
   if(action!=='adventure')return _openHomeActionV126Base(action);
-  if(state.adventure?.awaitingReport)return dialog('王へ報告しましょう！',[['OK','ok','primary']],'ADVENTURE');
+  if(state.adventure?.awaitingReport){syncAdventureReportLock();return dialog('王様へ報告に行きましょう！',[['OK','ok','primary']],'ADVENTURE');}
   if(!adventureEntryUnlocked())return dialog('まずはトレーニングへ向かいましょう！',[['OK','ok']],'SYSTEM');
   const w=currentWorld();
-  return (async()=>{const v=await adventureDepartureCardV126(w);if(v!=='yes')return;ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();})();
+  return (async()=>{const v=await adventureDepartureCardV126(w);if(v!=='yes')return;if(state.adventure?.awaitingReport)return openHomeAction('adventure');ensureAdventureRunSnapshot();await travelTo('adventure',`${w?.name||'草原'}へ出発です！`,renderAdventure);await handleAdventureEntry();})();
 };
 
 const CASTLE_REPORT_PLAYER_KEYS_V126={pink:'pink',desert:'desert',denden:'denden',money:'money',nyoro:'nyoro',nekoku:'nekoku',jessie:'jessie',tetsu:'tetsu',riro:'riro'};
