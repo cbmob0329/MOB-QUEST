@@ -4855,7 +4855,30 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #trainingScreen.active #trainingModeCarousel.training-main-grid{touch-action:pan-y!important;overflow:visible!important;overscroll-behavior:contain!important;}
 #trainingScreen.active .training-mode-card{touch-action:pan-y!important;}
 #trainingScreen.active .training-scroll:after{content:'上下にスワイプして下のメニューを表示';display:block;text-align:center;padding:12px 0 28px;color:#d8e4ef;font-size:10px;font-weight:900;opacity:.8;pointer-events:none;}
-</style></head>
+</style><style id="storyV172Style">
+/* Readable weapon performance and character passives on portrait phones. */
+#blacksmithPopup .weapon-card[data-buy-weapon] em,
+#blacksmithPopup .weapon-card[data-buy-weapon] p{font-size:15px!important;line-height:1.65!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere}
+#blacksmithPopup .weapon-card[data-buy-weapon]{height:auto!important;min-height:120px;align-items:start}
+#playerDetailBody .player-passive-v172 p{font-size:15px!important;line-height:1.75!important;margin:8px 0;white-space:normal}
+#playerDetailBody .player-passive-v172>b{font-size:16px!important;color:#ffe2a0}
+#playerDetailBody .player-passive-v172 small{display:block;font-size:12px!important;line-height:1.6}
+.story-orb-v172{position:fixed;z-index:26000;width:58px;height:58px;margin:-29px;border-radius:50%;background:radial-gradient(circle,#fff 0%,#ffc9f8 25%,#ff63d8 60%,#bf209d 78%,transparent 80%);box-shadow:0 0 22px #ff42d4,0 0 55px #fc43c9;pointer-events:none;animation:story-orb-pulse-v172 .6s ease-in-out infinite alternate}
+@keyframes story-orb-pulse-v172{to{filter:brightness(1.4);box-shadow:0 0 32px #ff42d4,0 0 75px #fc43c9}}
+.journal-clear-v172{position:fixed;inset:0;z-index:27000;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse,#344e5eea,#070d1bf5);opacity:0;transition:opacity .35s;overflow:auto}
+.journal-clear-v172.show{opacity:1}
+.journal-clear-card-v172{box-sizing:border-box;width:min(100%,430px);padding:32px 22px;text-align:center;background:linear-gradient(145deg,#fff3d4,#ead1a1);color:#342313;border:3px double #aa803d;border-radius:18px;box-shadow:0 0 70px #ffd16b45;transform:translateY(18px) scale(.94);transition:transform .55s}
+.journal-clear-v172.show .journal-clear-card-v172{transform:translateY(0) scale(1)}
+.journal-clear-card-v172 small{letter-spacing:.15em;font-weight:800;font-size:11px}
+.journal-clear-card-v172 h2{font-size:clamp(23px,6vw,32px);margin:12px 0;color:#65400b}
+.journal-clear-card-v172 b{display:block;font-size:23px}
+.journal-clear-card-v172 p{font-size:15px;line-height:1.7}
+.journal-clear-seal-v172{font-size:72px;color:#b97c0d;line-height:1.5;text-shadow:0 0 22px #ffe5a0;animation:journal-seal-v172 .85s ease-out}
+.journal-clear-card-v172 button{display:block;width:100%;min-height:48px;margin-top:24px;border:1px solid #9c7239;border-radius:10px;background:#432e1b;color:#fff6dd;font:inherit;font-weight:800}
+@keyframes journal-seal-v172{from{transform:rotate(-100deg) scale(.2);opacity:0}to{transform:rotate(0) scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.story-orb-v172,.journal-clear-seal-v172{animation:none}.journal-clear-v172,.journal-clear-card-v172{transition:none}}
+</style>
+</head>
 <body>
 <main id="app">
   <!-- TITLE -->
@@ -10019,6 +10042,7 @@ async function spawnNextEnemyWave(){
     await fixedDelay(260);await allyStoryCutin('denden','合体した！？\nか、かっこいいでやんす・・',1800);
     await fixedDelay(260);await allyStoryCutin('money','そんなこと言ってる場合！？',1750);
     await fixedDelay(260);{const e=next.find(x=>x.id==='m-frezard');if(e)await enemyStoryCutin(e,'お前たちは危険だ\nここで確実に仕留める',1850);}
+    await fixedDelay(260);await allyStoryCutin('pink','負けないであります！',1750);
   }else if(isTribeTransform){
     await actionCutin('第二形態へ変身！','danger',720);
     await fixedDelay(260);await allyStoryCutin('money','なんてオーラなの・・',1750);
@@ -10535,7 +10559,7 @@ async function enterMobShop(){
 }
 function renderCastleShopGrid(){
   const root=$('#castleShopGrid'),coin=$('#castleShopCoins');if(!root)return;if(coin)coin.textContent=`${state.coins.toLocaleString()} G`;
-  const goods=GAME_ITEMS.filter(it=>Number(it.id)>=1&&Number(it.id)<=18);
+  const goods=[...GAME_ITEMS.filter(it=>Number(it.id)>=1&&Number(it.id)<=18),itemData('mob-tent')].filter(Boolean);
   root.innerHTML=goods.map((it,i)=>`<button class="castle-shop-item wood-${i%2?'blue':'pink'}" data-buy-castle-item="${it.id}" type="button"><img src="${it.image}" alt="${it.name}"><div><b>${it.name}</b><small>${itemEffectText(it)}</small><em>${it.price.toLocaleString()}G / 所持 ${itemCount(it.id)}</em></div></button>`).join('');
   bindImages(root);$$('[data-buy-castle-item]',root).forEach(btn=>btn.onclick=()=>openCastleQtyPopup(btn.dataset.buyCastleItem));
 }
@@ -16986,7 +17010,7 @@ async function sealV157(id){const el=actorV157(id);if(!el)return;const r=el.getB
 async function aceAttackV157(){const a=actorV157('boss-ace'),m=actorV157('boss-maou-castle');if(a&&m){const dx=(m.getBoundingClientRect().left-a.getBoundingClientRect().left)*.55;for(let i=0;i<5;i++)await Promise.all([animateV157(a,[{translate:'0 0'},{translate:`${dx}px -12px`,offset:.45},{translate:'0 0'}],600),glowV157(m,0)]);}else await fixedDelay(3000);await orbV157('boss-maou-castle','boss-ace');}
 function hideMoneyV157(){/* Keep roster/levels intact for defeat and reload; battle already excludes Money. */state.meta.moneyStoryAwayV157=true;saveMeta();const a=$('[data-story-actor="money"]',$('#storyPartyLine'));if(a)a.style.visibility='hidden';}
 function restoreMoneyV157(){state.meta.moneyStoryAwayV157=false;saveMeta();const a=$('[data-story-actor="money"]',$('#storyPartyLine'));if(a)a.style.removeProperty('visibility');}
-const renderPartyBaseV157=renderStoryParty;renderStoryParty=async function(){const r=await renderPartyBaseV157();if(state.meta.moneyStoryAwayV157){const a=$('[data-story-actor="money"]',$('#storyPartyLine'));if(a)a.style.visibility='hidden';}return r;};
+const renderPartyBaseV157=renderStoryParty;renderStoryParty=async function(...args){const r=await renderPartyBaseV157(...args);if(state.meta.moneyStoryAwayV157){const a=$('[data-story-actor="money"]',$('#storyPartyLine'));if(a)a.style.visibility='hidden';}return r;};
 const closeSceneBaseV157=closeStoryScene;closeStoryScene=async function(...args){for(const [el,css]of motionV157)el.style.cssText=css;motionV157.clear();$('#storyPartyLine')?.style.removeProperty('visibility');return closeSceneBaseV157(...args);};
 async function surpriseV157(){const a=actorV157('desert');if(!a)return;const e=document.createElement('b');e.className='surprise-v157';e.textContent='！';a.appendChild(e);try{await animateV157(e,[{opacity:0,translate:'0 12px'},{opacity:1,translate:'0 -12px',offset:.3},{opacity:0,translate:'0 -16px'}],850);}finally{e.remove();}}
 const blackSphereBaseV157=bookBlackSphereAttackV94;bookBlackSphereAttackV94=async function(){await orbV157('book-kaijin-boss','yusha');return blackSphereBaseV157();};
@@ -18045,6 +18069,132 @@ window.__mobV171Runtime=true;
 
 window.__mobV169Runtime=true;
 
+/* ===== MOB QUEST v172: authored story and adventure usability ===== */
+// STORY_V172_DATA_BEGIN
+const STORY_V172 = {events:{
+"arrival:magma":{"worldId":"magma","area":0,"steps":[["say","denden","暑いでやんすー\nオイラ暑いの嫌いでやんすー"],["say","money","うるさいわね\nこっちまで暑くなるじゃない！"],["say","desert","砂漠も暑いが、\nここはもっと過酷だな"],["say","pink","ここでも\n誰か案内してくれると良いのですが"],["say","money","そんな都合よく・・"],["guestDropDodge","nyoro","ドン！ッ"],["say","nyoro","おー・・\n痛いニョロ・・"],["say","pink","あなたさてはここに詳しいですね！"],["say","money","ボスのところに案内しなさい！"],["say","nyoro","ニョロ！？"],["say","denden","まあ待つでやんす\nみんなせっかちでやんす\nまずは、\n相手の話を聞くでやんす"],["sayDual","money","お前が言うな！！","pink","お前が言うな！！（であります）"],["doubleRushV172"],["say","denden","い、痛いでやんす"],["say","desert","俺が事情を説明しよう"],["narrate","モブニョロに事情を説明した"],["say","nyoro","お～！勇者様！\nお会いできて嬉しいニョロ！"],["say","desert","モブドラゴンとは、どんなやつだ？"],["say","nyoro","本当に、、！\n恐ろしいモンスターニョロ・・"],["say","denden","モンスター二ョロ・・\n変な名前でやんす"],["say","desert","気にせず続けてくれ"],["say","nyoro","先代の王、\nモブフェニックス様との死闘は\nそりゃ～凄かったニョロ"],["say","nyoro","でも結局最後は・・\nモブドラゴンが勝ったニョロ"],["say","nyoro","それからというもの、\n魔王軍が住みついて大変ニョロ"],["say","pink","どこも同じでありますね・・"],["say","denden","ドラゴンか\n会ってみたいでやんすね！"],["join","nyoro","モブニョロが仲間に加わった！"]]},
+"pre:magma:0":{"worldId":"magma","area":0,"steps":[["guest","m-golem"],["say","pink","でかいのが出て来たであります！"],["say","nyoro","ゴーレムは強いニョロ！\n最初に狙うニョロ！"],["say","money","私の魔法でイチコロよ！"]]},
+"post:magma:0":{"worldId":"magma","area":0,"steps":[["say","desert","タフなモンスターだったな"],["say","denden","ここは過酷な環境ニョロ\nその分みんな強いニョロ"]]},
+"pre:magma:1":{"worldId":"magma","area":1,"steps":[["guest","m-hinotabi"],["say","m-hinotabi","お前達か？\n魔王様にたてつく愚か者は"],["say","nyoro","やつは火の魔法を使うニョロ！"],["say","m-hinotabi","お前、魔物のくせに勇者側か？"],["say","nyoro","今の暗い世界は嫌ニョロ！"],["say","denden","ピッカピカにするでやんす！"]]},
+"post:magma:1":{"worldId":"magma","area":1,"steps":[["say","money","強い魔法使いだったわね\n私ほどじゃないけど"]]},
+"pre:magma:2":{"worldId":"magma","area":2,"steps":[["guests",["m-blizzard","m-flame"]],["say","desert","こいつらは・・"],["say","nyoro","そう\n砂漠出身の双子だニョロ"],["say","m-blizzard","邪魔する奴は"],["say","m-flame","全員始末する"]]},
+"post:magma:2":{"worldId":"magma","area":2,"steps":[["say","denden","強敵だったでやんす・・"],["say","desert","モブドラゴンは\nもっと強敵だ"],["say","pink","うう・・\n武者震いであります・・"]]},
+"pre:magma":{"worldId":"magma","area":3,"steps":[["guestSlow","dragon"],["say","dragon","我のエリアを荒らすとは\nそれなりの覚悟はあるのだろうな？"],["say","denden","かっけえでやんす！"],["say","pink","これは手ごわいですよ！"],["say","money","ん？あなたどこかで・・"],["say","dragon","目障りなやつらだ\n命惜しくば立ち去れ"],["say","desert","風格もさすがだな\nだが、去るわけにはいかん"],["say","nyoro","やるしかないニョロね！"],["say","dragon","愚かな\n焼きつくしてくれる！！"]]},
+"post:magma":{"worldId":"magma","area":3,"steps":[["guest","dragon"],["say","dragon","終わりではない\nここから全てが始まるのだ"],["fadeV157","dragon"],["say","desert","はあ、はあ、"],["say","money","み、みんな無事？"],["say","denden","暑いでやんす・・"],["say","pink","強敵でありましたね"],["say","nyoro","でも、勝ったニョロ！\n信じられないニョロ！"],["narrate","5つ目のレコード「傷つくキツツキ」を手に入れた！"]]},
+"arrival:sea":{"worldId":"sea","area":0,"steps":[["say","nyoro","うわー空が海ニョロ！"],["say","money","そりゃ海底だからね～\nでも\n本当に美しい景色ね"],["say","denden","おっかないお魚がたくさんでやんす！"],["say","desert","とにかく進んでみよう"],["say","pink","みなさん、警戒を怠らず！"]]},
+"pre:sea:0":{"worldId":"sea","area":0,"steps":[["guest","s-abyssknight"],["say","s-abyssknight","勇者だな？\n悪いが国王は忙しい\nお帰り願おう"],["say","pink","そうはいかないであります！"],["say","s-abyssknight","では、\n資格があるか私が試してやろう"],["say","desert","力を試す、か\n存分に見せてやる！"],["say","nyoro","戦闘開始だニョロ！"]]},
+"post:sea:0":{"worldId":"sea","area":0,"steps":[["guest","s-abyssknight"],["say","s-abyssknight","見事だ\n先へ進むがよい"],["fadeV157","s-abyssknight"],["say","pink","こんなのが続くのでありますか？"],["say","denden","元気出すでやんす！\nみんなで頑張るでやんす！"],["say","money","回復は忘れないようにね！"]]},
+"pre:sea:1":{"worldId":"sea","area":1,"steps":[["guest","s-jones"],["say","s-jones","強力な覇気を感じる\nやはり、本物の勇者か\nそして・・"],["say","nyoro","すごい迫力ニョロ！"],["say","desert","これは骨が折れそうだ"],["say","s-jones","私も本気で挑ませてもらう\nさあ、力を示せ！"],["say","pink","勝負であります！！"]]},
+"post:sea:1":{"worldId":"sea","area":1,"steps":[["guest","s-jones"],["say","s-jones","俺もまだまだ修行が足りないな"],["fadeV157","s-jones"],["say","pink","なんとか勝てましたね"],["say","money","でも、\n次の方が嫌な予感がするわ"],["say","desert","魔法使いの感か"],["say","money","ええ、\nしっかり備えて挑みましょう"]]},
+"pre:sea:2":{"worldId":"sea","area":2,"steps":[["guest","s-wave"],["say","s-wave","よくここまで来たな\n想像以上の力だ"],["say","desert","みんな気を引き締めろ\n今までとは違うぞ"],["say","s-wave","戦い慣れしているな"],["say","money","こいつ強いわよ！！"],["say","pink","みなさん、頑張りましょう！"],["say","s-wave","良い目をしているな\n楽しみだ！！"]]},
+"post:sea:2":{"worldId":"sea","area":2,"steps":[["guest","s-wave"],["say","s-wave","お見事\nお前達は王に会う資格がある\n先へ進むがよい"],["say","denden","疲れたでやんす・・"],["say","desert","人数差で勝ったようなものだな"],["say","money","勝ちは勝ち！\n国王のところへ急ぎましょう！"]]},
+"pre:sea":{"worldId":"sea","area":3,"steps":[["guest","nepu"],["say","nepu","待っていたぞ勇者よ"],["say","denden","でっかいお魚でやんす！"],["say","pink","し、失礼ですよ！"],["say","nepu","構わぬ\n王を前にしてその陽気さ\nお主のような戦士はきっと強くなる"],["say","denden","えへへ・・でやんす！"],["say","desert","敵意を感じないな\nお前は、\n魔王の手下ではないのか？"],["say","nepu","海底の歴史は地上を遥かに凌駕する\n魔王軍とて簡単に手は出せん"],["say","desert","では全ての事情も知っているのか？"],["say","nepu","もちろんだ\nお前たちがレコードを求めていることもな"],["say","pink","では、是非お譲りいただけませんか？"],["say","nepu","それは構わぬ\nだが、\nその前にお前たちの力を見せてくれ"],["say","desert","当然の展開だな"],["say","nyoro","勝負だニョロー！"]]},
+"post:sea":{"worldId":"sea","area":3,"steps":[["guest","nepu"],["say","nepu","素晴らしい強さだ\nだが、魔王には遥に及ばない\n旅を続け、力をつけるのだ"],["say","pink","はい！"],["say","nepu","モブネコクー！\nこちらへ来るのだ！"],["sayOff","モブネコクー","はいはい！"],["seaGuestV172"],["say","nekoku","お呼びでしょうか国王様！"],["say","nepu","お前も彼らと旅をするのだ\nきっとお互いのためになる"],["say","nekoku","オラがですか！？\nうーん\n分かりました！\n精一杯頑張ります！"],["say","nyoro","ヘンテコな戦士だニョロ"],["say","nekoku","オラが言えたもんじゃねえが\nおめえも大概変だぞ"],["say","money","勇者パーティーとは思えないわね\nでもそれもいいんじゃない？"],["say","denden","仲間が増えたでやんす！"],["joinSilent","nekoku"],["say","money","これを"],["say","money","ん？"],["rewardDrink","19","モブトマトジュースセットを1つ手に入れた！"],["say","money","なんで私に？"],["say","nepu","好物であろう？\n道中、皆と飲むがいい"],["say","money","ありがとう・・？"],["say","nekoku","オラもそれ好きだ"],["say","denden","オイラには無いでやんすか？"],["say","nepu","これを受け取るが良い"],["narrate","6枚目のレコード「くまのこ見ていたあのベルト」を手に入れた！"],["say","pink","やりましたね！\n王様に報告であります！"],["say","money","またね！国王様！"]]},
+"arrival:grassland2":{"worldId":"grassland2","area":0,"steps":[["say","pink","この場所ももう懐かしいですね・・\n急ぎましょう\nモブホークと再び決戦です！"],["sayOff","???","待つでござる！"],["dashGuestV172","tetsu"],["say","tetsu","勇者様でござるな？\n拙者、逃走中の囚人サムライ\nモブテツと申すでござる！"],["say","denden","わ、悪いやつでやんすね！？"],["say","tetsu","誤解しないで欲しいでござる！\n拙者、、"],["say","tetsu","可愛いという理由で捕まったでござる！"],["say","money","えー・・\nじゃあ私も捕まるじゃない"],["say","denden","(狂暴過ぎて捕まえられないでやんす)"],["sayRed","money","聴こえてるわよ！"],["chargeOrbV172"],["say","denden","ご、ごめんでやんす！"],["dismissOrbV172"],["say","nekoku","お前、オトナシの国出身だな？\nオラ、同じ匂いを知ってる"],["say","tetsu","如何にも！オトナシの国のサムライ！\n魔王を討伐すべく、\n流れるように旅をしているでござる！"],["say","desert","つまり味方だな\nどうする？"],["say","pink","もちろん大歓迎です！\nモブテツさん、よろしくお願いします！"],["say","nyoro","賑やかになるニョロ！"],["join","tetsu","モブテツが仲間に加わった！"]]},
+"pre:grassland2:0":{"worldId":"grassland2","area":0,"steps":[["guest","g2-tsuru"],["say","g2-tsuru","申し訳ないが、お帰りいただこうか\n勇者を通すわけにはいかないんだ"],["say","pink","そうはいかない！"],["say","g2-tsuru","チビ共め\n後悔するぞ"],["say","money","なに？チビって言ったの？"],["say","denden","いざ勝負でやんす！"],["say","tetsu","初陣でござる！"]]},
+"post:grassland2:0":{"worldId":"grassland2","area":0,"steps":[["guest","g2-tsuru"],["say","g2-tsuru","ク・・ここは引かせてもらおう"],["fadeV157","g2-tsuru"],["say","desert","同じ地だと思って油断しないことだな\nモブホークもきっと、\n強大な力を得ているだろう"],["say","nekoku","草原はいい匂いだ"]]},
+"pre:grassland2:1":{"worldId":"grassland2","area":1,"steps":[["guest","g2-merakero"],["say","g2-merakero","メラメラメラーーー！"],["say","nyoro","気合い入っているニョロね・・！"],["say","nekoku","オラ、カエルは苦手だ"],["say","money","ちょっと可愛いわね"],["say","g2-merakero","メラー！！"]]},
+"post:grassland2:1":{"worldId":"grassland2","area":1,"steps":[["say","money","アツいカエルだったわね"],["say","denden","漢でやんした！"],["say","tetsu","強い心を持っていたでござる！"],["say","money","なに熱くなってんのよ"]]},
+"pre:grassland2:2":{"worldId":"grassland2","area":2,"steps":[["guest","g2-keroking"],["say","g2-keroking","私はケロの王ケロキング！\nモブホーク様の命により\nお前たちをここで仕留める！"],["say","desert","受けて立つ！"],["say","pink","ここを倒せばもうすぐであります！\nみなさん頑張りましょう！"]]},
+"post:grassland2:2":{"worldId":"grassland2","area":2,"steps":[["guest","g2-keroking"],["say","g2-keroking","強い・・これが勇者か\nだが\nモブホーク様は負けない"],["fadeV157","g2-keroking"],["say","desert","さあ、先へ進もう"],["say","nyoro","ボスとの対決ニョロ！"]]},
+"pre:grassland2:3":{"worldId":"grassland2","area":3,"steps":[["guest","boss-hawk2"],["say","boss-hawk2","クククク・・・\nようやく来たな"],["say","pink","往生際が悪いであります！"],["say","money","あんた一度負けてるって聞いたよ？"],["say","nekoku","オラ焼き鳥大好きだ"],["say","boss-hawk2","勇者よ、お前を認め\n魔王様から力を得た\n新たな私の強さ\n受け止める勇気があるかな？"],["say","denden","みんな、構えるでやんす！"],["say","g2-tsuru","私も忘れてもらっては困る"],["guests",["g2-tsuru","boss-hawk2","g2-savanna"]],["say","money","一緒に片付けてあげるわ！"],["say","tetsu","いざ！勝負でござる！"]]},
+"post:grassland2:3":{"worldId":"grassland2","area":3,"steps":[["guest","boss-hawk2"],["say","boss-hawk2","貴様ら如きに・・・"],["say","boss-hawk2","だが、闇は終わらない\nお前たちも飲み込まれるであろう"],["fadeV157","boss-hawk2"],["say","pink","なんとか勝てました・・！"],["say","desert","レコードは手に入らないが、\n必要な戦いだったな"],["say","nekoku","仲間が増えたぞ"],["say","denden","モブテツ強いでやんす！"],["say","tetsu","このまま魔王まで行くでござる！"],["say","pink","まずは、王様に報告に行きましょう！"]]},
+"arrival:tribe":{"worldId":"tribe","area":0,"steps":[["say","pink","なんだか不思議な雰囲気でありますね"],["say","nekoku","オラ初めて見る景色だ"],["say","denden","ビリビリしそうな香りがするでやんす"],["say","desert","で、そこのお前が案内でもしてくれるのか？"],["say","tetsu","隠れても無駄でござる"],["sayOff","???","あら、気が付いていたの？\n中々やるわね"],["guest","jessie"],["say","jessie","私はネオン街の保安官\n通報を受けてこの村に来たの\nモブジェシーよ\nよろしくね"],["say","money","ネオン街！？\n私も、私も！"],["say","jessie","久しぶりね\n私を覚えてない？"],["say","money","うーん\n私、魔王に封印されてたから"],["say","jessie","そうね"],["say","money","え？"],["say","jessie","まあ、いいわ"],["say","desert","この村はどういう村なんだ？"],["say","jessie","魔王軍と直接は関係ないわ\nただ、あの町と関係はあるの"],["say","pink","あの町と繋がりが！？"],["say","jessie","ええ、ネオン街、部族村\nこの2つがあの町と大きく関係がある"],["say","pink","詳しく知りたいであります！"],["say","jessie","それはまたいずれね\nとにかく、\nこの村は危険がいっぱいよ"],["say","jessie","手を貸してあげるから、\n油断しないことね"],["joinSilent","jessie"]]},
+"pre:tribe:0":{"worldId":"tribe","area":0,"steps":[["guest","t-kukuri"],["say","t-kukuri","タチサレ・・"],["say","pink","幹部の登場であります！"],["say","tetsu","強敵でござる！"],["say","denden","気合い入れるでやんす！"]],"extras":["jessie"]},
+"post:tribe:0":{"worldId":"tribe","area":0,"steps":[["say","denden","不気味だったでやんす・・"],["say","jessie","あなたたちも十分不気味よ"],["say","pink","なんてこと言うでありますか！"],["say","nyoro","喧嘩はやめるニョロ～！"]],"extras":["jessie"]},
+"pre:tribe:1":{"worldId":"tribe","area":1,"steps":[["guest","t-tough"],["say","t-tough","全く、大変な時に来たね君たち"],["say","pink","まともそうな人であります！"],["say","desert","そんなはずがないだろう"],["say","t-tough","まともかはともかく\n俺は連中とは違うよ"],["say","jessie","でも戦うのよね？"],["say","t-tough","これはこれは保安官\nまさか戦うことになるとは"],["say","nekoku","ん？"],["say","t-tough","まあお喋りはこれくらいにして\nやりますか\n他に道はないだろう？"],["say","desert","そうだな\n立ち止まるわけにはいかない！"]],"extras":["jessie"]},
+"post:tribe:1":{"worldId":"tribe","area":1,"steps":[["say","nyoro","強かったニョロ・・"],["say","denden","この村はみんな強いでやんす"],["say","jessie","さあ、しっかり休んで先へ行きましょう"],["say","money","あの人凄く変だった\n何者なんだろう？"],["say","desert","迷うな\n迷いは人を弱くする\n戦いの基本だ"]],"extras":["jessie"]},
+"pre:tribe:2":{"worldId":"tribe","area":2,"steps":[["guests",["t-hisui","t-ryugo"]],["say","t-hisui","天よ・・こやつらに災いを"],["say","t-ryugo","もてなすぞ、客人"],["say","tetsu","これは激戦の予感でござる"],["say","nekoku","強そうな2人だなー"],["say","t-hisui","お前たちも災いだ"],["say","t-ryugo","命をもって償え"],["say","money","みんな最初から飛ばしていくわよ！"]],"extras":["jessie"]},
+"post:tribe:2":{"worldId":"tribe","area":2,"steps":[["say","money","なによ、これが途中に出て来る敵の強さ？"],["say","tetsu","王の器でござったな"],["say","jessie","おかしい・・"],["say","desert","どうした？"],["say","jessie","この2人はこの村の長だったはず"],["say","money","なんで戦う前に言わないのよ！"],["say","jessie","腰が引けちゃうでしょ？"],["say","nyoro","それはそうだニョロ"],["say","desert","ということは\nさらに上がいるということか"],["say","jessie","そうなるわね"],["say","pink","大丈夫！\n力を合わせて進むであります！\n・・・・\nあります！"],["say","jessie","すっかり怖がっちゃって・・"],["say","denden","でも進むしかないでやんす！"]],"extras":["jessie"]},
+"pre:tribe:3":{"worldId":"tribe","area":3,"steps":[["guests",["boss-debuff","boss-berserk"]],["say","boss-debuff","・・・・"],["say","boss-berserk","・・・・"],["say","jessie","もはや言葉すらないのね"],["say","denden","これが魔王の魔力でやんすか・・"],["say","nyoro","こ、怖いニョロ・・"],["say","money","うー・・\nさっさとやるわよ！"],["say","desert","やつらの力\n歴戦の魔王たちと近いものを感じる\n力を合わせ、全力で戦うぞ！"],["say","denden","もちろんでやんす！"]],"extras":["jessie"]},
+"post:tribe:3":{"worldId":"tribe","area":3,"steps":[["say","jessie","任務完了"],["say","desert","魔王とは、一体どこまで・・"],["say","pink","とりあえず王様に報告です！\nどうやらここにレコードは無いようです"],["say","jessie","私も行くわ\n魔王を倒さないと\n何も進まなそうだしね"],["say","nyoro","心強いニョロ！\nモブジェシー、強いニョロ！"],["say","tetsu","いつか手合わせ願いたいでござる"],["say","jessie","あんたちょっと危険ね"]],"extras":["jessie"]}
+},battle:{"battle:magma:fusion":[["say","denden","合体した！？\nか、かっこいいでやんす・・"],["say","money","そんなこと言ってる場合！？"],["say","m-frezard","お前たちは危険だ\nここで確実に仕留める"],["say","pink","負けないであります！"]],"battle:tribe:transform":[["say","money","なんてオーラなの・・"],["say","nyoro","こ、怖いニョロ・・"],["say","denden","やってやるでやんす！"]]}};
+// STORY_V172_DATA_END
+for(const [key,event] of Object.entries(STORY_V172.events)){
+  STORY_EVENTS[key]={...STORY_EVENTS[key],...event};
+}
+const magmaStartV172=MOB_DATA.adventureWorlds.findIndex(w=>w.id==='magma');
+for(const w of MOB_DATA.adventureWorlds.slice(magmaStartV172)){
+  w.recommendedLevel=(Number(w.recommendedLevel)||5)+5;
+  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[w.id]=w.recommendedLevel;
+}
+const SHOP_TENT_V172={id:'mob-tent',name:'モブテント',type:'tent',price:35000,image:'icon/10.png'};
+const itemDataBaseV172=itemData;
+itemData=function(id){return id==='mob-tent'?SHOP_TENT_V172:itemDataBaseV172(id);};
+const itemEffectBaseV172=itemEffectText;
+itemEffectText=function(it){return it?.type==='tent'?'キャンプでパーティーのHP・MPを全回復（1回使い切り）':itemEffectBaseV172(it);};
+
+let storyOrbV172=null;
+function dismissStoryOrbV172(){storyOrbV172?.remove();storyOrbV172=null;}
+async function chargeStoryOrbV172(){
+  dismissStoryOrbV172();const actor=actorV157('money');if(!actor)return;
+  const r=actor.getBoundingClientRect(),orb=document.createElement('div');orb.className='story-orb-v172';
+  orb.style.left=(r.left+r.width/2)+'px';orb.style.top=(r.top+r.height*.25)+'px';document.body.appendChild(orb);storyOrbV172=orb;
+  await animateV157(orb,[{scale:'.1',opacity:0},{scale:'1',opacity:1}],700);
+}
+async function doubleRushV172(){
+  const target=actorV157('denden');if(!target)return;const tr=target.getBoundingClientRect();
+  await Promise.all(['money','pink'].map(async id=>{const a=actorV157(id);if(!a)return;const r=a.getBoundingClientRect();const dx=(tr.left+tr.width/2-r.left-r.width/2)*.82,dy=(tr.top-r.top)*.82;await animateV157(a,[{translate:'0 0'},{translate:`${dx}px ${dy}px`,offset:.42},{translate:`${dx}px ${dy}px`,offset:.58},{translate:'0 0'}],650);}));
+  await animateV157(target,[{translate:'0 0',rotate:'0deg'},{translate:'12px -12px',rotate:'12deg'},{translate:'-9px 0',rotate:'-10deg'},{translate:'0 0',rotate:'0deg'}],380);
+}
+const stepsBaseV172=runStorySteps;
+runStorySteps=async function(steps=[]){for(const st of steps){
+  if(st[0]==='doubleRushV172')await doubleRushV172();
+  else if(st[0]==='chargeOrbV172')await chargeStoryOrbV172();
+  else if(st[0]==='dismissOrbV172')dismissStoryOrbV172();
+  else if(st[0]==='seaGuestV172')await storyTempActor('nekoku');
+  else if(st[0]==='dashGuestV172'){
+    const g=$('#storyGuest');g.style.translate='100vw 0';
+    try{await storyShowGuest(st[1]);g.style.removeProperty('translate');await animateV157(g,[{translate:'100vw 0',opacity:0},{translate:'-12px 0',opacity:1,offset:.8},{translate:'0 0',opacity:1}],260);}finally{g.style.removeProperty('translate');}
+  }else await stepsBaseV172([st]);
+}};
+const closeSceneBaseV172=closeStoryScene;
+closeStoryScene=async function(...args){dismissStoryOrbV172();return closeSceneBaseV172(...args);};
+
+const PASSIVE_DESCRIPTIONS_V172={
+  yusha:'自身以外の味方が倒れた時、自身の最大HPの30%を回復し、戦闘能力を10%強化。強化は戦闘中に累積します。',
+  pink:'戦闘中1回、倒れた味方を選んで最大HPの35%で復活。自身の現在HPを半分消費します（最低1残ります）。',
+  desert:'味方が受ける攻撃に10%の確率で発動し、そのダメージを20%軽減します。',
+  nyoro:'通常攻撃時、敵が複数いると70%の確率で全体攻撃になります。',
+  nekoku:'ターン開始時、30%の確率でHP割合が最も低い味方1人を、対象の最大HPの22%回復します。',
+  jessie:'雷属性魔法の攻撃後、対象が生きていると50%の確率で元の威力の90%の追撃魔法を放ちます。',
+  denden:'通常攻撃時、10%の確率で会心の一撃になります。',
+  money:'ターン開始時、30%の確率で自身の最大MPの12%を回復します。',
+  riro:'味方が状態異常を受けた時、50%の確率でその味方の状態異常を解除します。',
+  tetsu:'通常攻撃後、敵が残っていると30%の確率で威力85%の物理追撃を行います。',
+  lilith:'戦闘中1回、倒れると最大HPの60%で復活し、ATK・MAG・DEF・MND・SPDが20%上昇します。',
+  naraku:'ターン開始時、戦闘能力が10%ずつ上昇します。効果は戦闘中に累積します。',
+  kaijin:'現在、固有パッシブの効果は未設定です。'
+};
+const detailBaseV172=openPlayerDetail;
+openPlayerDetail=function(pid){
+  detailBaseV172(pid);const p=player(pid),body=$('#playerDetailBody');if(!p||$('#playerDetailOverlay')?.hidden||!body)return;
+  const section=document.createElement('section');section.className='player-passive-v172';
+  const h=document.createElement('h3');h.textContent='パッシブ';section.appendChild(h);
+  const name=document.createElement('b');name.textContent=p.passive||'パッシブなし';section.appendChild(name);
+  const desc=document.createElement('p');desc.textContent=PASSIVE_DESCRIPTIONS_V172[p.id]||'固有パッシブはありません。';section.appendChild(desc);
+  const note=document.createElement('small');note.textContent='戦闘に出ている間に条件を満たすと発動します。';section.appendChild(note);
+  body.querySelector('section')?.after(section);
+};
+
+async function showJournalClearV172(q){
+  const w=MOB_DATA.adventureWorlds[q.worldIndex],ov=document.createElement('div');ov.className='journal-clear-v172';
+  ov.setAttribute('role','dialog');ov.setAttribute('aria-label','冒険日記クリア');
+  ov.innerHTML='<div class="journal-clear-card-v172"><small>ADVENTURE JOURNAL</small><div class="journal-clear-seal-v172">✦</div><h2>JOURNAL CLEAR!</h2><b></b><p>すべてのAREAを踏破しました！</p><button type="button">冒険日記へ戻る</button></div>';
+  $('b',ov).textContent=w?.name||'冒険日記';document.body.appendChild(ov);
+  try{await nextPaint();ov.classList.add('show');await new Promise(resolve=>$('button',ov).onclick=resolve);}finally{ov.remove();}
+}
+const journalNextButtonV172=$('#resultSetupBtn'),journalNextBaseV172=journalNextButtonV172?.onclick;
+if(journalNextButtonV172)journalNextButtonV172.onclick=async function(...args){
+  const q=state.quest,b=state.battle;
+  if(q?.type==='journal'&&q.finished&&b?.mode==='quest'&&b.resultWin){
+    if(q.clearShowingV172)return;q.clearShowingV172=true;journalNextButtonV172.disabled=true;$('#resultOverlay').hidden=true;
+    try{await showJournalClearV172(q);endQuestToTraining();}finally{journalNextButtonV172.disabled=false;q.clearShowingV172=false;}return;
+  }
+  return journalNextBaseV172?.apply(this,args);
+};
+window.__mobV172Runtime=true;
+/* ===== END MOB QUEST v172 ===== */
 })();
 </script>
 </body>

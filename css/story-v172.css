@@ -1,0 +1,21 @@
+/* Readable weapon performance and character passives on portrait phones. */
+#blacksmithPopup .weapon-card[data-buy-weapon] em,
+#blacksmithPopup .weapon-card[data-buy-weapon] p{font-size:15px!important;line-height:1.65!important;white-space:normal!important;overflow:visible!important;overflow-wrap:anywhere}
+#blacksmithPopup .weapon-card[data-buy-weapon]{height:auto!important;min-height:120px;align-items:start}
+#playerDetailBody .player-passive-v172 p{font-size:15px!important;line-height:1.75!important;margin:8px 0;white-space:normal}
+#playerDetailBody .player-passive-v172>b{font-size:16px!important;color:#ffe2a0}
+#playerDetailBody .player-passive-v172 small{display:block;font-size:12px!important;line-height:1.6}
+.story-orb-v172{position:fixed;z-index:26000;width:58px;height:58px;margin:-29px;border-radius:50%;background:radial-gradient(circle,#fff 0%,#ffc9f8 25%,#ff63d8 60%,#bf209d 78%,transparent 80%);box-shadow:0 0 22px #ff42d4,0 0 55px #fc43c9;pointer-events:none;animation:story-orb-pulse-v172 .6s ease-in-out infinite alternate}
+@keyframes story-orb-pulse-v172{to{filter:brightness(1.4);box-shadow:0 0 32px #ff42d4,0 0 75px #fc43c9}}
+.journal-clear-v172{position:fixed;inset:0;z-index:27000;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse,#344e5eea,#070d1bf5);opacity:0;transition:opacity .35s;overflow:auto}
+.journal-clear-v172.show{opacity:1}
+.journal-clear-card-v172{box-sizing:border-box;width:min(100%,430px);padding:32px 22px;text-align:center;background:linear-gradient(145deg,#fff3d4,#ead1a1);color:#342313;border:3px double #aa803d;border-radius:18px;box-shadow:0 0 70px #ffd16b45;transform:translateY(18px) scale(.94);transition:transform .55s}
+.journal-clear-v172.show .journal-clear-card-v172{transform:translateY(0) scale(1)}
+.journal-clear-card-v172 small{letter-spacing:.15em;font-weight:800;font-size:11px}
+.journal-clear-card-v172 h2{font-size:clamp(23px,6vw,32px);margin:12px 0;color:#65400b}
+.journal-clear-card-v172 b{display:block;font-size:23px}
+.journal-clear-card-v172 p{font-size:15px;line-height:1.7}
+.journal-clear-seal-v172{font-size:72px;color:#b97c0d;line-height:1.5;text-shadow:0 0 22px #ffe5a0;animation:journal-seal-v172 .85s ease-out}
+.journal-clear-card-v172 button{display:block;width:100%;min-height:48px;margin-top:24px;border:1px solid #9c7239;border-radius:10px;background:#432e1b;color:#fff6dd;font:inherit;font-weight:800}
+@keyframes journal-seal-v172{from{transform:rotate(-100deg) scale(.2);opacity:0}to{transform:rotate(0) scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.story-orb-v172,.journal-clear-seal-v172{animation:none}.journal-clear-v172,.journal-clear-card-v172{transition:none}}
