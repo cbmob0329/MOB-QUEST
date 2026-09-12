@@ -1,0 +1,9 @@
+#skillMenu .skill-item>div{min-width:0!important}
+#skillMenu .skill-item small{font-size:14px!important;line-height:1.65!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere!important;display:block!important;-webkit-line-clamp:unset!important;max-height:none!important}
+#skillMenu .skill-item{height:auto!important;min-height:78px!important;align-items:center!important}
+#skillMenuList{overflow-y:auto!important;overscroll-behavior:contain}
+#storyScene [data-story-actor][hidden]{display:none!important}
+#storyGuestGroup.summoning-v173 .story-guest-multi{opacity:0}
+.summoning-scene-v173 #storyGuestGroup .story-guest-multi{opacity:0}
+.story-soul-v173{position:absolute;z-index:40;width:42px;height:42px;margin:-21px;border-radius:50%;background:radial-gradient(circle,#fff 0%,#fffbd4 30%,#ffe28f99 65%,transparent 75%);box-shadow:0 0 25px #ffefa9,0 0 65px #fff6c777;pointer-events:none}
+.story-soul-v173.dark{background:radial-gradient(circle,#080315 0%,#401b6a 30%,#9154c999 60%,transparent 75%);box-shadow:0 0 25px #a953f3,0 0 65px #572780aa}

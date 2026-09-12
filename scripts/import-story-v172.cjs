@@ -40,8 +40,9 @@ events['arrival:magma'].steps.push(['join','nyoro','モブニョロが仲間に�
 events['arrival:tribe'].steps.push(['joinSilent','jessie']);
 const sea=events['post:sea'].steps;sea.splice(sea.findIndex(s=>s[1]==='denden'&&s[2]==='仲間が増えたでやんす！')+1,0,['joinSilent','nekoku']);
 const result={events,battle};
-// The final reply addresses Tetsu; its speaker label in the memo repeats Tetsu.
-const last=events['post:tribe:3'].steps.at(-1);if(last?.[2]==='あんたちょっと危険ね')last[1]='jessie';
+// User corrections made after the original memo.
+const last=events['post:tribe:3'].steps.at(-1);if(last?.[2]==='あんたちょっと危険ね')last[1]='money';
+const frog=events['post:grassland2:1'].steps.find(s=>s[2]==='アツいカエルだったわね');if(frog){frog[1]='desert';frog[2]='アツいカエルだったな';}
 fs.writeFileSync(path.join(root,'js/story-v172.json'),JSON.stringify(result,null,2)+'\n');
 console.log(`${Object.keys(events).length} scenes and ${Object.keys(battle).length} battle conversations imported`);
 
