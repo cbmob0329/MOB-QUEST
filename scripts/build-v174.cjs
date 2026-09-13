@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/\r\n/g,'\n');
+let game=read('js/game.js'),patch=read('js/update-v174.js').trim();
+game=game.replace("await waitRealV100(600);if(start)start.textContent='START!';","await waitRealV100(600);await animatePieceAdjacencyV174(pRows,cRows,b);if(start)start.textContent='START!';");
+const block='// UPDATE_V174_BEGIN\n'+patch+'\n// UPDATE_V174_END';
+if(game.includes('// UPDATE_V174_BEGIN'))game=game.replace(/\/\/ UPDATE_V174_BEGIN[\s\S]*?\/\/ UPDATE_V174_END/,()=>block);
+else game=game.replace(/\}\)\(\);\s*$/,()=>block+'\n})();\n');
+fs.writeFileSync(path.join(root,'js/game.js'),game);
+cp.execFileSync(process.execPath,[path.join(__dirname,'build-v172.cjs')],{stdio:'inherit'});
+let html=read('index.html'),css='<style id="updateV174Style">\n'+read('css/update-v174.css').trim()+'\n</style>';
+html=html.includes('<style id="updateV174Style">')?html.replace(/<style id="updateV174Style">[\s\S]*?<\/style>/,()=>css):html.replace('</head>',()=>css+'\n</head>');
+fs.writeFileSync(path.join(root,'index.html'),html);
