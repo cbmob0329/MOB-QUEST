@@ -15736,7 +15736,7 @@ for(const m of (MOB_DATA.magicCatalog||[])){if(m.id==='goremagardy')m.mode='eart
 /* ---------- Full wipe: stay in Adventure and step back one AREA, never expose HOME facilities ---------- */
 const _finishBattleV141Base=finishBattle;
 finishBattle=function(win){
-  const b=state.battle,lostArea=Number(b?.config?.storyAreaIndex??state.adventure?.areaIndex??0),adventureLoss=!!(!win&&b?.mode==='adventure'&&!b.config?.explorationAmbush);const out=_finishBattleV141Base(win);
+  const b=state.battle,lostArea=Number(b?.config?.storyAreaIndex??state.adventure?.areaIndex??0),adventureLoss=!!(!win&&b&&!b.finished&&!b.firstGrassRescueInProgress&&b.mode==='adventure'&&!b.config?.explorationAmbush&&!canTriggerFirstGrassRescue(b));const out=_finishBattleV141Base(win);
   if(adventureLoss){const prev=Math.max(0,lostArea-1);state.adventure.areaIndex=prev;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.pendingPostStory=null;state.adventure.completed=false;saveAdventure();saveCampCheckpoint();const text=$('#resultText');if(text)text.textContent=prev===lostArea?'全員がダウンしました。同じAREAの入口へ戻ります。':`全員がダウンしました。AREA ${lostArea+1} → AREA ${prev+1}へ戻ります。`;}
   return out;
 };
@@ -18483,6 +18483,21 @@ renderEventQuestsV163=function(){eventRenderBaseV175();if(eventViewV163!=='story
 const savannaSceneBaseV175=savannaSceneV174;
 savannaSceneV174=async function(phase){if(eventRunV174?.area>=2){(state.meta.storyEventSeenV175??={}).savanna=true;saveMeta();}return savannaSceneBaseV175(phase);};
 window.__mobV175Runtime=true;
+
+/* v176: a scripted rescue continues the same encounter; it is not a defeat. */
+function repairGrassReportV176(){
+ const adv=state.adventure;if(!adv||Number(adv.worldIndex||0)!==0||adv.completed||adv.awaitingReport||(adv.reportedWorlds||[]).includes('grassland'))return false;
+ const post='post:grassland:3',won=!!adv.storyFlags?.[post]||adv.pendingPostStory?.key===post;
+ if(!won)return false;
+ adv.areaIndex=3;adv.battleIndex=0;adv.battleReady=false;adv.pendingEncounter=null;adv.runSnapshot=null;adv.checkpoint=null;
+ adv.awaitingReport={worldIndex:0,worldId:'grassland',worldName:MOB_DATA.adventureWorlds[0].name,nextWorldIndex:1};saveAdventure();return true;
+}
+const homeBaseV176=renderHome;
+renderHome=function(...args){repairGrassReportV176();return homeBaseV176(...args);};
+const castleBaseV176=renderCastle;
+renderCastle=function(...args){repairGrassReportV176();return castleBaseV176(...args);};
+repairGrassReportV176();
+window.__mobV176Runtime=true;
 // UPDATE_V174_END
 })();
 </script>

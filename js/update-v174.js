@@ -173,3 +173,18 @@ renderEventQuestsV163=function(){eventRenderBaseV175();if(eventViewV163!=='story
 const savannaSceneBaseV175=savannaSceneV174;
 savannaSceneV174=async function(phase){if(eventRunV174?.area>=2){(state.meta.storyEventSeenV175??={}).savanna=true;saveMeta();}return savannaSceneBaseV175(phase);};
 window.__mobV175Runtime=true;
+
+/* v176: a scripted rescue continues the same encounter; it is not a defeat. */
+function repairGrassReportV176(){
+ const adv=state.adventure;if(!adv||Number(adv.worldIndex||0)!==0||adv.completed||adv.awaitingReport||(adv.reportedWorlds||[]).includes('grassland'))return false;
+ const post='post:grassland:3',won=!!adv.storyFlags?.[post]||adv.pendingPostStory?.key===post;
+ if(!won)return false;
+ adv.areaIndex=3;adv.battleIndex=0;adv.battleReady=false;adv.pendingEncounter=null;adv.runSnapshot=null;adv.checkpoint=null;
+ adv.awaitingReport={worldIndex:0,worldId:'grassland',worldName:MOB_DATA.adventureWorlds[0].name,nextWorldIndex:1};saveAdventure();return true;
+}
+const homeBaseV176=renderHome;
+renderHome=function(...args){repairGrassReportV176();return homeBaseV176(...args);};
+const castleBaseV176=renderCastle;
+renderCastle=function(...args){repairGrassReportV176();return castleBaseV176(...args);};
+repairGrassReportV176();
+window.__mobV176Runtime=true;

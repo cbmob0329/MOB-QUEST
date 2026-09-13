@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
 const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/\r\n/g,'\n');
 let game=read('js/game.js'),patch=read('js/update-v174.js').trim();
+game=game.replace("adventureLoss=!!(!win&&b?.mode==='adventure'&&!b.config?.explorationAmbush)","adventureLoss=!!(!win&&b&&!b.finished&&!b.firstGrassRescueInProgress&&b.mode==='adventure'&&!b.config?.explorationAmbush&&!canTriggerFirstGrassRescue(b))");
 if(!game.includes("case'lowHpBurstAoe':"))game=game.replace("    case'lowHpBurst':", "    case'lowHpBurstAoe':{const all=livingField(),avg=all.reduce((s,x)=>s+x.hp/x.maxHp,0)/Math.max(1,all.length);await aoe(u.power*(1+(1-avg)*.65),'magic');for(const ally of state.battle.allies.filter(x=>!x.dead&&x.hp>0))heal(ally,ally.maxHp*.10);notice('味方全体のHPを10%回復！','heal',1200);break;}\n    case'lowHpBurst':");
 game=game.replace("await waitRealV100(600);if(start)start.textContent='START!';","await waitRealV100(600);await animatePieceAdjacencyV174(pRows,cRows,b);if(start)start.textContent='START!';");
 const block='// UPDATE_V174_BEGIN\n'+patch+'\n// UPDATE_V174_END';
