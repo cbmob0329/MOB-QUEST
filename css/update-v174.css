@@ -17,3 +17,8 @@
 .event-story-active-v174 #adventureStageTitle{font-size:15px!important}
 .event-story-rewards-v174{display:block!important;width:100%!important}.event-story-rewards-v174 img{position:static!important;float:none!important;display:inline-block!important;margin:6px 10px 0 0!important;transform:none!important}
 @keyframes savannaWindV174{to{background-position:140px -90px}}
+.event-silhouette-v175{filter:brightness(0)!important;opacity:.85!important}
+#passiveCutin.play{animation-duration:var(--passive-duration-v175,2.2s)!important}
+#passiveCutinText{white-space:pre-line!important;font-size:15px!important;line-height:1.65!important}
+#passiveCutin.passive-repeat-v175.play{animation:none!important;opacity:1!important}
+#passiveCutin.passive-repeat-v175 #passiveCutinCharacter{animation:none!important}

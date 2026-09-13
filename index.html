@@ -4909,6 +4909,11 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .event-story-active-v174 #adventureStageTitle{font-size:15px!important}
 .event-story-rewards-v174{display:block!important;width:100%!important}.event-story-rewards-v174 img{position:static!important;float:none!important;display:inline-block!important;margin:6px 10px 0 0!important;transform:none!important}
 @keyframes savannaWindV174{to{background-position:140px -90px}}
+.event-silhouette-v175{filter:brightness(0)!important;opacity:.85!important}
+#passiveCutin.play{animation-duration:var(--passive-duration-v175,2.2s)!important}
+#passiveCutinText{white-space:pre-line!important;font-size:15px!important;line-height:1.65!important}
+#passiveCutin.passive-repeat-v175.play{animation:none!important;opacity:1!important}
+#passiveCutin.passive-repeat-v175 #passiveCutinCharacter{animation:none!important}
 </style>
 </head>
 <body>
@@ -9983,6 +9988,7 @@ async function performUltimate(a,u){if(Number(a.ultLockedTurns||0)>0){notice('�
   switch(u.kind){
     case'selfAllBuff':a.allBuff=.20;a.allBuffTurns=rint(3,5);a.damageCut=.10;a.damageCutTurns=a.allBuffTurns;fx('buff',a.id);notice('ALL STATUS ↑↑ / DAMAGE CUT','buff');break;
     case'jumanji':{await hit();const buff=pick(['atk','def','spd']);a[`${buff}Buff`]=.15;a[`${buff}BuffTurns`]=3;const deb=pick(['defDebuff','spdDebuff']);for(const e of livingEnemies()){e[deb]=.12;e[`${deb}Turns`]=3;}notice(`${buff.toUpperCase()} ↑ / ENEMY ALL ${deb.startsWith('def')?'DEF':'SPD'} ↓`,'buff');break;}
+    case'lowHpBurstAoe':{const all=livingField(),avg=all.reduce((s,x)=>s+x.hp/x.maxHp,0)/Math.max(1,all.length);await aoe(u.power*(1+(1-avg)*.65),'magic');for(const ally of state.battle.allies.filter(x=>!x.dead&&x.hp>0))heal(ally,ally.maxHp*.10);notice('味方全体のHPを10%回復！','heal',1200);break;}
     case'lowHpBurst':{const all=livingField(),avg=all.reduce((s,x)=>s+x.hp/x.maxHp,0)/Math.max(1,all.length);await hit(u.power*(1+(1-avg)*.65),'magic');break;}
     case'heroTransform':await transformationFxV158(a,()=>{a.transformed=true;});heal(a,a.maxHp*.5);a.allBuff=.30;a.allBuffTurns=99;if(Array.isArray(a.ultCooldowns)){a.ultCooldowns=a.ultCooldowns.map(v=>Math.max(0,(Number(v)||0)-3));persistUltimateCooldownsFromBattle();}notice('あのヒーローに変身！ ALL STATUS ↑30% / 必殺技CT -3','buff',1100);break;
     case'moneyFriends':await transformationFxV158(a,()=>{a.transformedMoney=true;});a.allBuff=.20;a.allBuffTurns=99;a.moneyFriendsStatusResist=.20;a.moneyFriendsMagicCrit=.10;notice('マニーフレンズ！ ALL STATUS ↑20% / 状態異常耐性 ↑20% / 魔法会心率 ↑10%','buff',1200);break;
@@ -18447,6 +18453,36 @@ initiativeSpeed=function(entry){const e=entry.type==='enemy'?enemyByUid(entry.en
 const startAreaBaseV174=startSavannaAreaV174;
 startSavannaAreaV174=async function(){const previous=state.battle;try{await startAreaBaseV174();if(!state.battle?.config?.storyEventV174||state.battle===previous)throw Error('Event battle did not start');}catch(err){console.error('[v174 savanna]',err);returnSavannaV174();toast('準備に失敗しました。もう一度お試しください。');}};
 window.__mobV174Runtime=true;
+
+/* v175: concealed story rewards and readable passive activation details. */
+const PASSIVE_EFFECTS_V175={
+ yusha:'自身のHP30%回復・戦闘能力+10%（累積）',pink:'味方1人をHP35%で復活・自身の現在HPを半分消費',desert:'この攻撃の被ダメージを20%軽減',
+ denden:'この通常攻撃が会心の一撃になる',nyoro:'通常攻撃が敵全体への攻撃になる',nekoku:'HP割合が最も低い味方1人のHP22%回復',
+ money:'自身のMP12%回復',tetsu:'威力85%の物理攻撃で追撃',jessie:'威力90%の雷属性魔法で追撃',riro:'味方の状態異常を解除',
+ lilith:'HP60%で復活・ATK/MAG/DEF/MND/SPD+20%',naraku:'戦闘能力+10%（累積）'
+};
+passiveCutin=async function(a,text,duration=620){
+ const b=state.battle,desert=a?.id==='desert'&&String(text).includes('サバクノマモリビト'),repeat=desert&&b?.desertPassiveTurnV175===b.turn;
+ if(desert&&b)b.desertPassiveTurnV175=b.turn;
+ const effect=PASSIVE_EFFECTS_V175[a?.id],label=String(text)+(effect?'\n'+effect:''),ms=repeat?650:Math.max(2200,Math.min(3600,label.length*55),duration),wrap=$('#passiveCutin');
+ wrap?.style.setProperty('--passive-duration-v175',ms+'ms');wrap?.classList.toggle('passive-repeat-v175',repeat);
+ try{return await passiveBaseV174(a,label,ms);}finally{wrap?.classList.remove('passive-repeat-v175');}
+};
+const eventNoticeBaseV175=eventNoticeV163;
+eventNoticeV163=function(e,text){
+ const s=e?.eventV163,k=s?.key;
+ const threshold={bilion:'会心率・回避率+20%',kanedoll:'ダメージ軽減+20%・第二形態に変身',xenon:'ATK・SPD+15%',psychic:'SPD・DEF+15%',magrock:'DEF+20%',marine:'3回行動に変化',leaf:'ダメージ軽減+10%・全属性耐性+20%',skull:'HP40%回復・ダメージ軽減+10%',potion:'ドラゴンを召喚',bubble:'SPD+20%',bird:'DEF・MND+20%',sweets:'DEF・MND+20%',slime:'巨大化・ダメージ軽減+30%',demon:'通常攻撃が全体化'};
+ if(text==='潜在能力が発動！')text=`${e.v142Passive||'潜在能力'} / ${threshold[k]||'能力強化'}`;
+ else if(text==='ゼノンブースト！')text+=' / 魔法ダメージ軽減+10%・必殺技威力+10%（累積）';
+ return eventNoticeBaseV175(e,text);
+};
+const heroFourthV175=player('yusha')?.ults?.[3];
+if(heroFourthV175)Object.assign(heroFourthV175,{kind:'lowHpBurstAoe',desc:'敵全体に火属性魔法の極大ダメージ。味方残HPが少ないほど強化。使用時、味方全体のHPを最大HPの10%回復。'});
+const eventRenderBaseV175=renderEventQuestsV163;
+renderEventQuestsV163=function(){eventRenderBaseV175();if(eventViewV163!=='story')return;const root=$('#trainingFeaturePanel'),seen=state.meta.storyEventSeenV175?.savanna||Object.values(savannaRecordsV174()).some(Boolean),boss=$('.event-story-card-v174 img',root);if(boss&&!seen){boss.classList.add('event-silhouette-v175');boss.alt='未遭遇のボス';}$$('[data-savanna-start]',root).forEach(card=>{const d=Number(card.dataset.savannaStart);if(!savannaRecordsV174()[d])$$('.event-story-rewards-v174 img',card).forEach(img=>{img.classList.add('event-silhouette-v175');img.alt='未獲得の限定フィギュア';});});};
+const savannaSceneBaseV175=savannaSceneV174;
+savannaSceneV174=async function(phase){if(eventRunV174?.area>=2){(state.meta.storyEventSeenV175??={}).savanna=true;saveMeta();}return savannaSceneBaseV175(phase);};
+window.__mobV175Runtime=true;
 // UPDATE_V174_END
 })();
 </script>
