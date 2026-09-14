@@ -1,0 +1,13 @@
+.reaction-card-v177>div{flex:1}.reaction-card-v177 p,.reaction-card-v177 b{word-break:normal;overflow-wrap:normal;line-break:strict;text-wrap:pretty}
+.reaction-word-v178{display:inline-block;white-space:pre;max-width:100%}.reaction-word-v178.long{display:inline;white-space:normal}
+.reaction-v177.repeat-v178 .reaction-card-v177{animation-duration:.16s}
+.castle-black-v178{position:fixed;inset:0;background:#000;z-index:2147482900;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;pointer-events:none;padding:28px;text-align:center}.castle-black-v178 small{color:#aa91b3;font-size:14px}.castle-black-v178 p{font-size:24px;white-space:pre-line;line-height:1.8}
+.castle-history-v178::after{content:'';position:absolute;inset:0;z-index:7;background:linear-gradient(#000c,#05000885,#000e);pointer-events:none}.castle-history-caption-v178{position:absolute;inset:28% 7% auto;z-index:80;color:#fff;text-align:center;line-height:2;font-size:21px;pointer-events:none}.castle-history-caption-v178 small{font-size:13px;color:#d6badc}.castle-history-caption-v178 p{white-space:pre-line}.castle-horror-v178::after{background:radial-gradient(ellipse,#220519a8,#000 85%)}.castle-horror-v178 [data-story-actor="money"]{filter:brightness(.15) drop-shadow(0 0 18px #d1003d)!important}
+.projectile-thunder-v178 .orb-v157{background:radial-gradient(circle,#fff 8%,#effb7a 26%,#64caff 60%,transparent 73%);box-shadow:0 0 30px #c3f6ff;width:100px;height:100px}
+.projectile-pyramid-v178 .orb-v157{clip-path:polygon(50% 0,100% 85%,50% 100%,0 85%);background:conic-gradient(from 30deg,#040009,#35124a,#000,#712e95,#000);border-radius:0;width:160px;height:180px;box-shadow:0 0 25px #c056ff}
+.pink-charge-v178{filter:brightness(3) drop-shadow(0 0 30px #fff)!important}.pink-charge-v178.full{filter:brightness(7) drop-shadow(0 0 65px #fff)!important}
+.castle-history-v178::after{transition:opacity .9s}.castle-history-exit-v178::after{opacity:0}
+.ace-charge-v178::after{content:'⚡';position:absolute;inset:0;color:#d9ffff;font-size:80px;filter:drop-shadow(0 0 18px #89caff);animation:aceChargeV178 .2s alternate infinite;pointer-events:none}
+@keyframes aceChargeV178{to{transform:scaleX(-1) rotate(12deg);opacity:.3}}
+.projectile-thunder-v178 .orb-v157::after{content:'';position:absolute;inset:-12px;border:7px dashed #ffffb5;border-radius:50%;animation:thunderSpinV178 .35s linear infinite}
+@keyframes thunderSpinV178{to{transform:rotate(360deg)}}

@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),root=path.resolve(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/\r\n/g,'\n');let game=read('js/game.js');
+game=game.replace('a.moneyFriendsMagicCrit=.10','a.moneyFriendsMagicCrit=.20').replace('魔法会心率 ↑10%','魔法会心率 ↑20%');
+game=game.replace("{id:'boss-ace',level:73,actionCount:2}","{template:castleAceTemplateV178(),level:73}");
+game=game.replace("if(e.id==='boss-gladi'){await beginEnemyLunge(e.uid);await fixedDelay(170);endEnemyLunge();}","/* Gladi remains ranged for special attacks. */");
+game=game.replace("b.storyHpFlags.gladi70=true;await enemyStoryCutin", "b.storyHpFlags.gladi70=true;addEnemyDamageCutV142(gladi,.10);await enemyStoryCutin");
+game=game.replace("b.gladiSpecialReady=true;await enemyStoryCutin", "b.gladiSpecialReady=true;b.gladiSpecialTurnV178=b.turn+1;await enemyStoryCutin");
+game=game.replace("e.id==='boss-gladi'&&b.gladiSpecialReady)","e.id==='boss-gladi'&&b.gladiSpecialReady&&b.turn>=Number(b.gladiSpecialTurnV178||0))");
+const block='// UPDATE_V178_BEGIN\n'+read('js/update-v178.js').trim()+'\n// UPDATE_V178_END';
+game=game.includes('// UPDATE_V178_BEGIN')?game.replace(/\/\/ UPDATE_V178_BEGIN[\s\S]*?\/\/ UPDATE_V178_END/,()=>block):game.replace(/\}\)\(\);\s*$/,()=>block+'\n})();\n');fs.writeFileSync(path.join(root,'js/game.js'),game);
+cp.execFileSync(process.execPath,[path.join(__dirname,'build-v177.cjs')],{stdio:'inherit'});
+let html=read('index.html'),css='<style id="updateV178Style">\n'+read('css/update-v178.css').trim()+'\n</style>';html=html.includes('<style id="updateV178Style">')?html.replace(/<style id="updateV178Style">[\s\S]*?<\/style>/,()=>css):html.replace('</head>',()=>css+'\n</head>');fs.writeFileSync(path.join(root,'index.html'),html);
