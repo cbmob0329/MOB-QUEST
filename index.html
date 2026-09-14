@@ -4915,6 +4915,20 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #passiveCutin.passive-repeat-v175.play{animation:none!important;opacity:1!important}
 #passiveCutin.passive-repeat-v175 #passiveCutinCharacter{animation:none!important}
 </style>
+<style id="updateV177Style">
+.reaction-v177{position:fixed;z-index:2147483100;inset:0;display:grid;align-items:center;pointer-events:none;background:radial-gradient(ellipse at 50% 43%,#98733c30,transparent 67%)}
+.reaction-card-v177{display:flex;align-items:center;gap:14px;width:min(94vw,470px);margin:auto;padding:18px;border:2px solid #edc668;border-radius:18px;background:linear-gradient(125deg,#111f31f5,#3d2229f5);box-shadow:0 0 35px #edb34d80;color:#fff6d9;animation:reactionEnterV177 .28s ease-out}
+.reaction-card-v177 img{width:88px;height:110px;object-fit:contain;filter:drop-shadow(0 0 10px #ffe0a1)}.reaction-card-v177 div{min-width:0}.reaction-card-v177 small{display:block;font-size:11px;color:#ffd482}.reaction-card-v177 b{display:block;font-size:19px;line-height:1.5;margin:5px 0}.reaction-card-v177 p{font-size:14px;line-height:1.7;margin:0;white-space:pre-line}.reaction-v177.gidora .reaction-card-v177{border-width:3px;box-shadow:0 0 75px #ffc55dcc;background:linear-gradient(115deg,#1b1b38,#493113)}
+.passive-glow-v177{filter:brightness(1.6) drop-shadow(0 0 24px #ffe99b)!important;animation:passivePulseV177 .55s ease-in-out 3!important}
+@keyframes reactionEnterV177{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}@keyframes passivePulseV177{50%{filter:brightness(2.4) drop-shadow(0 0 35px #fff3a5)}}
+.hot-symbol-v177{position:absolute;z-index:12;transform:translate(-50%,-100%);font-size:36px;color:#ffe183;text-shadow:0 0 8px #fa4200;pointer-events:none;animation:hotSymbolV177 .6s ease-in-out infinite alternate}@keyframes hotSymbolV177{to{translate:0 -12px;scale:1.15}}
+.hot-fire-v177{filter:drop-shadow(0 -12px 8px #ff3b00) drop-shadow(0 4px 16px #ffb000)!important;animation:hotFlameV177 .3s ease-in-out infinite alternate}@keyframes hotFlameV177{to{filter:brightness(1.35) drop-shadow(0 -18px 10px #ff5c00)}}
+.hot-fire-v177::after{content:'🔥';position:absolute;inset:auto 0 0;text-align:center;font-size:clamp(34px,11vw,64px);opacity:.8;pointer-events:none;animation:hotSymbolV177 .35s ease-in-out infinite alternate}
+.event-story-list-v177{display:grid;gap:16px}.event-story-list-v177 button{cursor:pointer}.event-story-rewards-v174 .medal-icon-v177{width:48px;height:48px;object-fit:contain}
+/* The result detail card uses a beige surface; all information on it uses dark ink. */
+.gacha-figure-detail-v177,.gacha-figure-detail-v177 b,.gacha-figure-detail-v177 p,.gacha-figure-detail-v177 small,.gacha-figure-detail-v177 span,.gacha-figure-detail-v177 i,.gacha-figure-detail-v177 h3{color:#251b10!important;-webkit-text-fill-color:#251b10!important;text-shadow:none!important}
+.gacha-figure-detail-v177{background:#f0e3c9!important;border-radius:14px;padding:14px}.gacha-figure-detail-v177 .figure-tags i,.gacha-figure-detail-v177 .piece-mini-stats-v96 b{background:#e1cfad!important}
+</style>
 </head>
 <body>
 <main id="app">
@@ -9955,8 +9969,8 @@ async function performAttack(a,auto=false){
     else{last=applyEnemyDamage(a,1,'physical',crit,false);dealt=last.value||0;}
     const life=weaponNormalLifesteal(a);if(life>0&&dealt>0&&!a.dead){const h=heal(a,dealt*life);if(h)notice(`武器特性 / HP +${h}`,'heal',520);}
     const poison=weaponPoisonOnHitChance(a);if(poison>0&&targetBefore?.hp>0&&Math.random()<poison){applyEnemyStatusTo(targetBefore,'poison',1,3);notice(`武器特性 / ${targetBefore.name}を毒にした！`,'status',600);}
-    const f=weaponFollowupSpec(a,'normalFollowup');if(f.chance>0&&livingEnemies().length&&Math.random()<f.chance){notice('武器特性 / 追撃！','buff',480);await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,f.power||.5,'physical',TEMP_BALANCE.critRate,false);}
-    const mf=weaponFollowupSpec(a,'normalMagFollowup');if(mf.chance>0&&livingEnemies().length&&Math.random()<mf.chance){notice('武器特性 / MAG追撃！','buff',480);const old=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:false,element:weaponCombatElement(a)};applyEnemyDamage(a,mf.power||.5,'magic',0,false);state.battle.weaponAttackContext=old;}
+    const f=weaponFollowupSpec(a,'normalFollowup');if(f.chance>0&&livingEnemies().length&&Math.random()<f.chance){await weaponFollowupV177(a,f.power||.5,'physical');}
+    const mf=weaponFollowupSpec(a,'normalMagFollowup');if(mf.chance>0&&livingEnemies().length&&Math.random()<mf.chance){await weaponFollowupV177(a,mf.power||.5,'magic');}
   }finally{state.battle.weaponAttackContext=prev;}
   if(denPassive)await fixedDelay(600);
   if(a.id==='tetsu'&&livingEnemies().length&&passiveChance(.30)){await passiveBeat(a,'テツの意志！');await weaponElementAttackFx(a,{quick:true});applyEnemyDamage(a,.85,'physical',TEMP_BALANCE.critRate,false);await fixedDelay(600);}
@@ -18469,13 +18483,14 @@ passiveCutin=async function(a,text,duration=620){
  try{return await passiveBaseV174(a,label,ms);}finally{wrap?.classList.remove('passive-repeat-v175');}
 };
 const eventNoticeBaseV175=eventNoticeV163;
-eventNoticeV163=function(e,text){
+function eventPassiveTextV175(e,text){
  const s=e?.eventV163,k=s?.key;
  const threshold={bilion:'会心率・回避率+20%',kanedoll:'ダメージ軽減+20%・第二形態に変身',xenon:'ATK・SPD+15%',psychic:'SPD・DEF+15%',magrock:'DEF+20%',marine:'3回行動に変化',leaf:'ダメージ軽減+10%・全属性耐性+20%',skull:'HP40%回復・ダメージ軽減+10%',potion:'ドラゴンを召喚',bubble:'SPD+20%',bird:'DEF・MND+20%',sweets:'DEF・MND+20%',slime:'巨大化・ダメージ軽減+30%',demon:'通常攻撃が全体化'};
  if(text==='潜在能力が発動！')text=`${e.v142Passive||'潜在能力'} / ${threshold[k]||'能力強化'}`;
  else if(text==='ゼノンブースト！')text+=' / 魔法ダメージ軽減+10%・必殺技威力+10%（累積）';
- return eventNoticeBaseV175(e,text);
-};
+ return text;
+}
+eventNoticeV163=function(e,text){return eventNoticeBaseV175(e,eventPassiveTextV175(e,text));};
 const heroFourthV175=player('yusha')?.ults?.[3];
 if(heroFourthV175)Object.assign(heroFourthV175,{kind:'lowHpBurstAoe',desc:'敵全体に火属性魔法の極大ダメージ。味方残HPが少ないほど強化。使用時、味方全体のHPを最大HPの10%回復。'});
 const eventRenderBaseV175=renderEventQuestsV163;
@@ -18499,6 +18514,93 @@ renderCastle=function(...args){repairGrassReportV176();return castleBaseV176(...
 repairGrassReportV176();
 window.__mobV176Runtime=true;
 // UPDATE_V174_END
+// UPDATE_V177_BEGIN
+/* v177: combat reactions are awaited before the next actor is allowed to move. */
+async function reactionV177(actor,name,effect,{weapon=false,gidora=false,skill=false}={}){
+ const layer=document.createElement('div');layer.className='reaction-v177'+(gidora?' gidora':'');layer.innerHTML='<div class="reaction-card-v177"><img alt=""><div><small></small><b></b><p></p></div></div>';
+ $('img',layer).src=weapon?versionedPlay(actor.image):actor.image;$('small',layer).textContent=(weapon?'武器特性 / ':skill?'必殺技 / ':'敵パッシブ / ')+actor.name;$('b',layer).textContent=name;$('p',layer).textContent=effect;document.body.appendChild(layer);
+ const visual=weapon?$(`[data-ally-id="${actor.id}"]`):enemyVisual(actor.uid);visual?.classList.add('passive-glow-v177');
+ try{await waitRealV100(gidora?2300:weapon?1200:1850);}finally{visual?.classList.remove('passive-glow-v177');layer.remove();}
+}
+async function weaponFollowupV177(a,power,type){
+ const b=state.battle;if(!b||b.finished||a.dead||!livingEnemies().length)return;
+ await reactionV177(a,type==='magic'?'武器特性・魔法追撃！':'武器特性・追撃！',`${type==='magic'?'魔法':'物理'}の追加攻撃`,{weapon:true});
+ if(state.battle!==b||b.finished||a.dead||!livingEnemies().length)return;
+ const old=b.weaponAttackContext;b.weaponAttackContext={...(old||{}),normal:false,element:weaponCombatElement(a)};
+ try{if(type==='physical')await weaponElementAttackFx(a);else{fx('magic','enemy');await waitRealV100(320);}applyEnemyDamage(a,power,type,type==='physical'?TEMP_BALANCE.critRate:0,false);await waitRealV100(650);}finally{b.weaponAttackContext=old;}
+}
+function queueEnemyReactionV177(e,text,after=null){const b=state.battle;if(!b||b.finished||!e)return;(b.reactionsV177??=[]).push({e,text,after});}
+async function drainReactionsV177(){const b=state.battle;if(!b||b.drainingV177)return;b.drainingV177=true;try{while(state.battle===b&&!b.finished&&b.reactionsV177?.length){const {e,text,after}=b.reactionsV177.shift(),parts=String(text).split(' / '),name=parts.shift();await reactionV177(e,name,parts.join(' / ')||'固有能力が発動！',{gidora:e.id==='boss-gidora'||e.name==='モブギドラ'});if(after)await after();}}finally{b.drainingV177=false;}}
+enemyPassiveNoticeV142=function(e,text){queueEnemyReactionV177(e,text);};
+eventNoticeV163=function(e,text){const b=state.battle,parts=eventPassiveTextV175(e,text).split(' / '),name=parts.shift();eventQueueV163(async()=>{if(state.battle===b&&!b.finished)await reactionV177(e,name,parts.join(' / ')||'固有能力が発動！');});};
+queueEnemyCounterV142=function(source,target,power=1){const b=state.battle;if(!b||b.finished||!source||!target)return;const counter=async()=>{if(state.battle!==b||b.finished||source.hp<=0||target.dead)return;const oldId=b.actingEnemyId,oldEnemy=b.enemy;b.actingEnemyId=source.uid;b.enemy=source;try{await beginEnemyLunge(source.uid);await damageAlly(target,power,'physical',false,source.attribute||'無');await waitRealV100(500);}finally{endEnemyLunge();b.actingEnemyId=oldId;b.enemy=oldEnemy;renderBattle();}};const last=b.reactionsV177?.at(-1);if(last?.e===source&&!last.after)last.after=counter;else queueEnemyReactionV177(source,'反撃 / 物理攻撃で反撃する',counter);};
+const checkHpBaseV177=checkBattleHpDialogue;
+checkBattleHpDialogue=async function(...args){await drainReactionsV177();await checkHpBaseV177(...args);await drainReactionsV177();};
+const waveClearBaseV177=handleEnemyWaveClear;
+handleEnemyWaveClear=async function(...args){await drainReactionsV177();return waveClearBaseV177(...args);};
+const enemyActionBeforeV177=enemyAction;
+enemyAction=async function(...args){await drainReactionsV177();const r=await enemyActionBeforeV177(...args);await drainReactionsV177();return r;};
+const detailMarkupBaseV177=figureDetailMarkupV96;
+figureDetailMarkupV96=function(...args){return '<div class="gacha-figure-detail-v177">'+detailMarkupBaseV177(...args)+'</div>';};
+
+const HOT_FIGURES_V177=[
+ {id:'event021',image:'eventfig/21.png',name:'モブファイト',rarity:'SSR',statsText:'DEF +3',traitText:'全属性耐性+3%',tags:['03','04','09','17','23','34','40','41','56'],adjacencyTags:['03']},
+ {id:'event022',image:'eventfig/22.png',name:'モブパッション',rarity:'UR',statsText:'DEF +8',traitText:'物理ダメージ軽減+8%',tags:['03','04','09','17','23','32','34','40','41','47','56'],adjacencyTags:['03']}
+];
+for(const row of HOT_FIGURES_V177){const old=figureByImageV96(row.image);if(old)Object.assign(old,{...row,id:old.id});else FIGURES.push({...row,eventExclusiveV163:true});}
+ADJACENCY_TAGS_V174['03']={name:'ファイヤースピリッツ',equipment:'ATK+5 & ダメージ軽減+1% & やけど耐性+40%',piece:'ATK+40%・DEF+30% / 火炎タグ全員の全ステータス+15%',stats:{atk:.40,def:.30},auraTag:'56',aura:.15};
+const HOT_DIFFICULTIES_V177=[{name:'ノーマル',level:26,coins:5000,diamonds:10,figures:[21]},{name:'ハード',level:48,coins:10000,diamonds:30,figures:[],medal:true},{name:'インフェルノ',level:87,coins:50000,diamonds:50,figures:[22]}];
+const HOT_STORY_V177=[
+ {pre:[['hotJump','pink'],['say','pink','到着！到着！\n到着～～！であります！'],['hotJump','denden'],['say','denden','到着！到着！\n到着～～！でやんす！'],['hotSymbol','money','💢'],['say','money','うるさい'],['say','money','まあ\nはしゃぎたくなる気持ちは\n分からなくもないわ'],['hotSymbol','denden','♪'],['say','denden','モブマニーも\n一緒にやるでやんすか？'],['say','desert','そこまでだ\n来るぞ'],['hotEntrance','raikiri'],['say','pink','ビリビリしてますよ！'],['say','denden','ビリビリ勝負でやんす！']],post:[['say','money','あんたの方が\nビリビリだったわね'],['say','denden','オイラ、ビリビリでやんす！']]},
+ {pre:[['say','pink','この辺り\nなんだか暑いでありますね、、'],['say','money','言われてみれば暑いわね、、'],['say','desert','モンスターの仕業だろうな'],['sayOff','モブファイト','ファイト！ファイト！'],['hotEntrance','fight'],['say','hot177-fight','ファイト～！！'],['say','denden','あ、アツいモンスターでやんす！'],['hotFire','pink'],['say','pink','熱血対決であります！！']],post:[['say','pink','まだ暑いでありますね、、'],['say','money','ん？'],['hotFire','denden'],['say','money','ちょっと！あんた燃えてるわよ！'],['say','denden','オイラ、もっとアツくなるでやんす！！']]},
+ {pre:[['sayOff','モブファイト','ファイト！ファイトー！！'],['hotEntrance','fight',true],['say','pink','また来たであります！'],['say','money','しつこいわね！\nもう飽きたわよ！'],['say','denden','（ちょっとひどいでやんす）']],post:[['say','desert','さすがもう来ないだろう'],['say','pink','寂しくなるであります'],['say','denden','オイラ、\n走り出したい気分でやんす！']]},
+ {pre:[['hotEntrance','passion'],['say','denden','ほぉー！！'],['say','pink','アッチーであります！！'],['say','money','はぁ～・・'],['say','desert','油断禁物だ'],['say','money','分かってるわよ']],post:[['say','pink','ファイトー！\nであります！'],['say','denden','ファイトー！\nでやんす！'],['say','money','ファイトー！\nだったわね'],['say','desert','・・・・\n俺はやらないぞ']]}
+];
+function hotRecordsV177(){return (state.meta.storyEventsV174??={}).hotSlime??={};}
+function hotOpenV177(d){return d>=0&&d<3&&(worldCleared('neon')||testAllQuestsV171())&&(d===0||hotRecordsV177()[d-1]||testAllQuestsV171())&&!hotRecordsV177()[d];}
+function hotTemplateV177(kind,d=0){const catalog=trainingEnemyCatalog(),base=kind==='raikiri'?catalog.find(e=>e.name==='モブライキリ'):kind==='slime'?trainingEnemyTemplate('g-slime'):null,r={
+ raikiri:{name:'モブライキリ',levels:[23,46,85],attribute:'雷',image:base?.image,cut:.1,actions:2},fight:{name:'モブファイト',levels:[28,49,87],attribute:'水',image:'spenemy/39.png',cut:.12,actions:2},
+ passion:{name:'モブパッション',levels:[31,50,90],attribute:'火',image:'spenemy/40.png',cut:.1,actions:2},slime:{name:'モブスライム',levels:[25,25,25],attribute:'水',image:base?.image,cut:0,actions:1}}[kind];
+ return {...base,id:'hot177-'+kind,hotKindV177:kind,name:r.name,image:r.image,attribute:r.attribute,category:kind==='passion'?'boss':kind==='slime'?'normal':'elite',levelMin:r.levels[d],levelMax:r.levels[d],damageReduction:r.cut,permanentDamageReduction:true,actionCount:r.actions,forceActionCount:true,v144ActionMin:r.actions,v144ActionMax:kind==='passion'?3:r.actions,noEscape:true,...(kind==='passion'?{critDamageReduction:.5,statusResist:{poison:1,burn:1,paralyze:1,sleep:1,stun:1,confuse:1}}:{})};}
+const hotMedalV177={id:'hot-fight',name:'モブファイト',image:'spenemy/39.png',type:'メダル',types:['メダル'],rarity:'SSR',attribute:'水',stats:{atk:50,def:50},traits:[{kind:'lowHpDamageCut',threshold:.5,value:.05,label:'HP50%以下でダメージ軽減+5%'}],traitLabel:'HP50%以下でダメージ軽減+5%'};
+if(!weaponById(hotMedalV177.id))WEAPONS.push(hotMedalV177);
+const hotActorBaseV177=storyActorInfo;
+storyActorInfo=function(key){if(String(key).startsWith('hot177-')){const t=hotTemplateV177(String(key).slice(7));return {...t,enemyTemplate:t};}return hotActorBaseV177(key);};
+async function hotJumpV177(el,strong=false){await animateV157(el,[{translate:'0 0'},{translate:strong?'0 -100px':'0 -30px',offset:.2},{translate:'0 0',offset:.45},{translate:strong?'0 -75px':'0 -24px',offset:.7},{translate:'0 0'}],900);}
+async function hotEntranceV177(kind,strong=false){await storyShowGuest('hot177-'+kind);if(kind==='raikiri'){await storyFlash();await glowV157('hot177-'+kind,2);}else await hotJumpV177(storyAnchor('hot177-'+kind),strong||kind==='passion');}
+const hotStepsBaseV177=runStorySteps;
+runStorySteps=async function(steps=[]){for(const st of steps){if(skippingV174()&&String(st[0]).startsWith('hot'))continue;const el=storyAnchor(st[1]);if(st[0]==='hotJump')await hotJumpV177(el);else if(st[0]==='hotEntrance')await hotEntranceV177(st[1],st[2]);else if(st[0]==='hotFire'){el?.classList.add('hot-fire-v177');}else if(st[0]==='hotSymbol'){const scene=$('#storyScene'),r=el?.getBoundingClientRect(),sr=scene.getBoundingClientRect();if(r){const mark=document.createElement('i');mark.className='hot-symbol-v177';mark.textContent=st[2];mark.style.left=(r.left+r.width/2-sr.left)+'px';mark.style.top=(r.top-sr.top)+'px';scene.appendChild(mark);setTimeout(()=>mark.remove(),3000);}}else await hotStepsBaseV177([st]);}};
+const hotSceneBaseV177=savannaSceneV174;
+savannaSceneV174=async function(phase){const r=eventRunV174;if(!r?.hotV177)return hotSceneBaseV177(phase);showScreen('adventure');storyBusy=true;if(r.area===3){(state.meta.storyEventSeenV175??={}).hot=true;saveMeta();}try{await openStoryScene('grassland',r.area,'default',['pink','denden','money','desert']);$('#adventureStageTitle').textContent='熱血スライム';$('#adventureProgress').textContent=`AREA ${r.area+1} / ${HOT_DIFFICULTIES_V177[r.difficulty].name}`;await runStorySteps(HOT_STORY_V177[r.area][phase]);}finally{$$('.hot-symbol-v177').forEach(el=>el.remove());await closeStoryScene(false);storyBusy=false;}};
+function hotWaveV177(area,d){return (area===0?['raikiri']:area<3?['fight']:['slime','passion','slime']).map(kind=>{const template=hotTemplateV177(kind,d);return {template,level:template.levelMin};});}
+const hotStartAreaBaseV177=startSavannaAreaV174;
+startSavannaAreaV174=async function(){const r=eventRunV174;if(!r?.hotV177)return hotStartAreaBaseV177();eventOverlayV163().hidden=true;await savannaSceneV174('pre');const bg=storySceneBg('grassland',r.area);await startBattleLoaded({mode:'eventStory174',storyEventV174:true,hotV177:true,worldId:'grassland',returnScreen:'training',party:state.party,questVitals:r.vitals,enemyConfigs:hotWaveV177(r.area,r.difficulty),bg:bg.bg,fallbackBg:bg.fallback});$('#battleModeLabel').textContent=`熱血スライム / ${HOT_DIFFICULTIES_V177[r.difficulty].name} / AREA ${r.area+1}`;$('#battleBackBtn').style.display='';};
+async function startHotV177(d){if(eventRunV174||!hotOpenV177(d))return false;eventRunV174={hotV177:true,difficulty:d,area:0,vitals:{},rewarded:false};skipScopeV174='';skippedV174=false;$('#trainingFeaturePopup').hidden=true;try{await startSavannaAreaV174();return true;}catch(e){returnSavannaV174();throw e;}}
+function rewardHotV177(){const r=eventRunV174;if(!r?.hotV177||r.rewarded||hotRecordsV177()[r.difficulty])return null;const d=HOT_DIFFICULTIES_V177[r.difficulty];r.rewarded=true;hotRecordsV177()[r.difficulty]=true;state.coins+=d.coins;state.meta.coins=state.coins;state.meta.diamonds=(Number(state.meta.diamonds)||0)+d.diamonds;const awarded=d.figures.map(n=>awardGachaFigureV115(figureByImageV96(`eventfig/${n}.png`)));if(d.medal){addMedal('hot-fight',1);awarded.push({f:{name:'モブファイト メダル',image:'spenemy/39.png'},converted:false});}saveMeta();return {...d,awarded};}
+const finishStoryBaseV177=finishSavannaV174;
+finishSavannaV174=async function(b,win){if(!eventRunV174?.hotV177)return finishStoryBaseV177(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);const r=eventRunV174;let gained=null,reward=null;
+ if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};gained=applyProgressRewards(b,r.vitals);await savannaSceneV174('post');if(r.area===3)reward=rewardHotV177();}
+ const ov=eventOverlayV163();ov.innerHTML=`<div class="event-result-v163"><small>熱血スライム</small><h2>${win?(reward?'QUEST CLEAR!!':'AREA CLEAR!'):'DEFEAT'}</h2><p>${HOT_DIFFICULTIES_V177[r.difficulty].name} / AREA ${r.area+1}</p>${win?`<span class="event-clear-stamp-v163">CLEAR</span><p>獲得経験値 ${gained.exp.toLocaleString()} EXP</p>`:'<p>パーティーを整えて再挑戦しましょう。</p>'}${reward?`<h3>クリア報酬</h3><p>コイン +${reward.coins.toLocaleString()} / ◆ +${reward.diamonds}</p><div class="event-rewards-v174">${reward.awarded.map(x=>`<div>${figureImageTagV101(x.f)}<b>${x.f.name}</b><small>${x.converted?'ルビー +'+x.ruby:'GET!'}</small></div>`).join('')}</div>`:''}<button class="primary-btn" data-hot-next>${win&&r.area<3?'次のAreaへ':'クエストへ戻る'}</button></div>`;ov.hidden=false;bindImages(ov);$('[data-hot-next]',ov).onclick=async function(){this.disabled=true;if(win&&r.area<3){r.area++;await startSavannaAreaV174();}else returnSavannaV174();};
+};
+let selectedStoryV177=null;
+const storiesRenderBaseV177=renderEventQuestsV163;
+renderEventQuestsV163=function(){storiesRenderBaseV177();if(eventViewV163!=='story')return;const root=$('#trainingFeaturePanel'),panel=$('.event-panel-v163',root),header=$('header',panel);if(selectedStoryV177==='savanna'){$('[data-event-back]',panel).onclick=()=>{selectedStoryV177=null;renderEventQuestsV163();};return;}
+ [...panel.children].filter(el=>el!==header).forEach(el=>el.remove());const body=document.createElement('div');
+ if(selectedStoryV177===null){body.className='event-story-list-v177';body.innerHTML=[['savanna','サバンナスピードキング','spenemy/38.png','田舎町',worldCleared('rural')],['hot','熱血スライム','spenemy/40.png','ネオン街',worldCleared('neon')]].map(([id,name,img,world,unlocked])=>`<button class="event-story-card-v174" data-story177="${id}"><small>STORY / 全4 AREA</small><strong>${name}</strong><img src="${img}" class="${state.meta.storyEventSeenV175?.[id]||Object.values(id==='savanna'?savannaRecordsV174():hotRecordsV177()).some(Boolean)?'':'event-silhouette-v175'}" alt="イベントボス"><small>${unlocked||testAllQuestsV171()?'挑戦する':world+'クリア後に解放'}</small></button>`).join('');}
+ else{body.innerHTML=`<div class="event-story-card-v174"><small>STORY 02 / 全4 AREA</small><strong>熱血スライム</strong><img src="spenemy/40.png" class="${state.meta.storyEventSeenV175?.hot||Object.values(hotRecordsV177()).some(Boolean)?'':'event-silhouette-v175'}" alt="イベントボス"></div><div class="event-difficulties-v163">${HOT_DIFFICULTIES_V177.map((d,i)=>`<button class="event-difficulty-v163" data-hot177="${i}" ${hotOpenV177(i)?'':'disabled'}><div><b>${d.name}</b><strong>適正 Lv.${d.level}</strong></div><div class="event-story-rewards-v174">コイン ${d.coins.toLocaleString()} / ◆ ${d.diamonds}<br>${(d.medal?['spenemy/39.png']:d.figures.map(n=>'eventfig/'+n+'.png')).map(img=>`<img src="${img}" class="${hotRecordsV177()[i]?'':'event-silhouette-v175'}" alt="限定報酬">`).join('')}</div>${hotRecordsV177()[i]?'<em class="event-clear-stamp-v163">CLEAR</em>':!worldCleared('neon')&&!testAllQuestsV171()?'<p>ネオン街クリアで解放</p>':i&&!hotOpenV177(i)?'<p>前の難易度クリアで解放</p>':''}</button>`).join('')}</div>`;}
+ panel.appendChild(body);$$('[data-story177]',body).forEach(btn=>btn.onclick=()=>{selectedStoryV177=btn.dataset.story177;renderEventQuestsV163();});$$('[data-hot177]',body).forEach(btn=>btn.onclick=()=>startHotV177(Number(btn.dataset.hot177)));$('[data-event-back]',panel).onclick=()=>{if(selectedStoryV177){selectedStoryV177=null;}else eventViewV163='menu';renderEventQuestsV163();};bindImages(panel);
+};
+const hotHitBaseV177=applyEnemyDamageTo;
+applyEnemyDamageTo=function(a,e,...args){const hot=e?.hotKindV177;if(!['fight','passion'].includes(hot))return hotHitBaseV177(a,e,...args);const ready=!!e.hotShieldV177,old=e.damageReduction;if(ready)e.damageReduction=1-(1-old)*.5;let result;try{result=hotHitBaseV177(a,e,...args);}finally{e.damageReduction=old;}if(result?.value>0&&!result.miss){if(ready){e.hotShieldV177=false;queueEnemyReactionV177(e,(hot==='passion'?'ファイトイッパツ！':'ファイトー！！')+' / この攻撃を50%軽減'+(hot==='passion'?'・180%の物理攻撃で反撃':''),hot==='passion'?async()=>{if(e.hp<=0||a.dead)return;const b=state.battle,oldId=b.actingEnemyId,oldEnemy=b.enemy;b.actingEnemyId=e.uid;b.enemy=e;try{await beginEnemyLunge(e.uid);await damageAlly(a,1.8,'physical',isSuper(a),e.attribute);await waitRealV100(500);}finally{endEnemyLunge();b.actingEnemyId=oldId;b.enemy=oldEnemy;}}:null);}e.hotHitsV177=(e.hotHitsV177||0)+1;if(e.hp>0&&e.hotHitsV177%3===0){e.hotShieldV177=true;queueEnemyReactionV177(e,(hot==='passion'?'ファイトイッパツ！':'ファイトー！！')+' / 次に受ける攻撃を50%軽減'+(hot==='passion'?'し、反撃する':''));}}return result;};
+const hotEnemyActionBaseV177=enemyAction;
+enemyAction=async function(action=1,uid){const b=state.battle,e=enemyByUid(uid)||actingEnemy()||b?.enemy,k=e?.hotKindV177;if(!k)return hotEnemyActionBaseV177(action,uid);await drainReactionsV177();if(!b||b.finished||e.hp<=0)return;for(const s of ['sleep','stun','paralyze'])if(e.status[s]>0){e.status[s]--;return;}const old=b.actingEnemyId;b.actingEnemyId=e.uid;
+ try{const all=k==='raikiri'?Math.random()<.5:['fight','passion'].includes(k)&&action===1;if(all){const name=k==='passion'?'パッション・スライム':k==='fight'?'ファイト・ウェイブ':'ライキリ・サンダー';await enemySkillImageCutinV134(e,{special:name,skillType:k==='passion'?'physical':'magic',power:.95});const crit=k==='passion'&&Math.random()<.10,oldCrit=enemyCriticalV163;enemyCriticalV163=crit;try{await aoeHit(.95*(crit?TEMP_BALANCE.critPower:1),k==='passion'?'physical':'magic',e.attribute);}finally{enemyCriticalV163=oldCrit;}if(k==='passion'){for(const a of livingField())a.fireDownUntilV177=b.turn+rint(2,3)+1;await reactionV177(e,name,'味方の火属性耐性が20%ダウン / 2～3ターン',{skill:true});}}
+ else if(k==='fight')await bossSpecial({special:'ネプラ',kind:'single',power:1.1,skillType:'magic',skillElement:'水'});else{const crit=k==='passion'&&Math.random()<.10,oldCrit=enemyCriticalV163,target=pick(livingMain());if(target){enemyCriticalV163=crit;try{await actionCutin(e.name+'の攻撃！','danger',520);await beginEnemyLunge(e.uid);await damageAlly(target,crit?TEMP_BALANCE.critPower:1,'physical',false,e.attribute);await waitRealV100(320);}finally{endEnemyLunge();enemyCriticalV163=oldCrit;}}}await drainReactionsV177();await checkSpecialRevives();if(!livingRoster().length)finishBattle(false);
+ }finally{b.actingEnemyId=old;}};
+const hotResistanceBaseV177=playerBaseElementResistanceV104;
+playerBaseElementResistanceV104=function(a,el){return hotResistanceBaseV177(a,el)-(normalizeElement(el)==='火'&&Number(a?.fireDownUntilV177)>Number(state.battle?.turn||0)?.2:0);};
+window.__mobV177Runtime=true;
+// UPDATE_V177_END
 })();
 </script>
 </body>

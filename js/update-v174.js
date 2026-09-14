@@ -159,13 +159,14 @@ passiveCutin=async function(a,text,duration=620){
  try{return await passiveBaseV174(a,label,ms);}finally{wrap?.classList.remove('passive-repeat-v175');}
 };
 const eventNoticeBaseV175=eventNoticeV163;
-eventNoticeV163=function(e,text){
+function eventPassiveTextV175(e,text){
  const s=e?.eventV163,k=s?.key;
  const threshold={bilion:'会心率・回避率+20%',kanedoll:'ダメージ軽減+20%・第二形態に変身',xenon:'ATK・SPD+15%',psychic:'SPD・DEF+15%',magrock:'DEF+20%',marine:'3回行動に変化',leaf:'ダメージ軽減+10%・全属性耐性+20%',skull:'HP40%回復・ダメージ軽減+10%',potion:'ドラゴンを召喚',bubble:'SPD+20%',bird:'DEF・MND+20%',sweets:'DEF・MND+20%',slime:'巨大化・ダメージ軽減+30%',demon:'通常攻撃が全体化'};
  if(text==='潜在能力が発動！')text=`${e.v142Passive||'潜在能力'} / ${threshold[k]||'能力強化'}`;
  else if(text==='ゼノンブースト！')text+=' / 魔法ダメージ軽減+10%・必殺技威力+10%（累積）';
- return eventNoticeBaseV175(e,text);
-};
+ return text;
+}
+eventNoticeV163=function(e,text){return eventNoticeBaseV175(e,eventPassiveTextV175(e,text));};
 const heroFourthV175=player('yusha')?.ults?.[3];
 if(heroFourthV175)Object.assign(heroFourthV175,{kind:'lowHpBurstAoe',desc:'敵全体に火属性魔法の極大ダメージ。味方残HPが少ないほど強化。使用時、味方全体のHPを最大HPの10%回復。'});
 const eventRenderBaseV175=renderEventQuestsV163;
