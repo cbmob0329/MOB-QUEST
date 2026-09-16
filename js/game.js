@@ -5124,7 +5124,7 @@ const FIGURE_GACHAS_V96=[
 function gachaPoolV96(b){return [...new Set([...COMMON_GACHA_V96,...b.extra])].map(figureByImageV96).filter(Boolean);}
 function gachaPickupsV96(b){const explicit=(b.pickup||[]).map(figureByImageV96).filter(Boolean);if(explicit.length)return explicit;return [...gachaPoolV96(b)].sort((a,b)=>(FIGURE_RARITY_ORDER[b.rarity]||0)-(FIGURE_RARITY_ORDER[a.rarity]||0)).slice(0,3);}
 function gachaRollV96(b,guaranteed=false){const pool=gachaPoolV96(b),groups={};for(const f of pool)(groups[f.rarity]??=[]).push(f);let rates=guaranteed?{SR:67,SSR:25,UR:7,MOB:1}:FIGURE_GACHA_RATES_V96;const usable=Object.entries(rates).filter(([r])=>groups[r]?.length),sum=usable.reduce((s,x)=>s+x[1],0);let n=Math.random()*sum,rarity=usable.at(-1)?.[0]||'R';for(const [r,w] of usable){n-=w;if(n<=0){rarity=r;break;}}const bucket=groups[rarity]||pool,picks=gachaPickupsV96(b).filter(x=>x.rarity===rarity);if(picks.length&&Math.random()<.55)return pick(picks);return pick(bucket);}
-function ensureGachaOverlayV96(){let ov=$('#figureGachaOverlayV96');if(ov)return ov;ov=document.createElement('div');ov.id='figureGachaOverlayV96';ov.className='figure-gacha-overlay-v96';ov.hidden=true;document.body.appendChild(ov);ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-gacha-close-v96]'))ov.hidden=true;});return ov;}
+function ensureGachaOverlayV96(){let ov=$('#figureGachaOverlayV96');if(ov)return ov;ov=document.createElement('div');ov.id='figureGachaOverlayV96';ov.className='figure-gacha-overlay-v96';ov.hidden=true;document.body.appendChild(ov);ov.addEventListener('click',e=>{if(e.target.closest('[data-gacha-close-v96]'))ov.hidden=true;});return ov;}
 function figureDetailMarkupV96(f,piece=false){if(!f)return'';const ps=piece?mobPieceStatsV96(f):null;return `<div class="figure-detail-v96 rarity-${figureRarityClass(f.rarity)}"><img src="${f.image}" alt="${f.name}"><div><small>${f.rarity}</small><h3>${f.name}</h3><p>${f.statsText}</p><p>${f.traitText==='無し'?'特性なし':f.traitText}</p>${piece?`<div class="piece-mini-stats-v96"><b>COST ${ps.cost}</b><b>LIFE ${ps.life}</b><b>ATK ${ps.power}</b><b>DEF ${ps.defense}</b></div>`:''}<div class="figure-tags">${f.tags.map(t=>`<i>${figureTagLabel(t)}</i>`).join('')}</div></div></div>`;}
 function showFigureDetailV96(f,piece=false){const ov=ensureGachaOverlayV96();ov.innerHTML=`<div class="figure-gacha-card-v96 detail"><button data-gacha-close-v96 class="sheet-close" type="button">×</button>${figureDetailMarkupV96(f,piece)}</div>`;ov.hidden=false;bindImages(ov);}
 function showGachaLineupV96(b){const ov=ensureGachaOverlayV96();if(b.disabledReason){ov.innerHTML=`<div class="figure-gacha-card-v96 lineup"><div class="settings-head"><div><small>LINEUP / ${b.id}</small><h2>${b.name}</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><div class="gacha-data-wait-v96"><b>専用フィギュアデータ待ち</b><p>${b.disabledReason}</p></div></div>`;ov.hidden=false;return;}const pool=gachaPoolV96(b),picks=new Set(gachaPickupsV96(b).map(x=>x.id));ov.innerHTML=`<div class="figure-gacha-card-v96 lineup"><div class="settings-head"><div><small>LINEUP / ${b.id}</small><h2>全${pool.length}種！</h2></div><button data-gacha-close-v96 class="sheet-close" type="button">×</button></div><h3>このガチャのピックアップはこちら！</h3><div class="gacha-lineup-grid-v96">${pool.map(f=>`<button data-gacha-figure-v96="${f.id}" class="${picks.has(f.id)?'pickup':''}" type="button"><img src="${f.image}" alt="${f.name}"><b>${f.name}</b><small>${f.rarity}${picks.has(f.id)?' / PICK UP':''}</small></button>`).join('')}</div></div>`;ov.hidden=false;bindImages(ov);$$('[data-gacha-figure-v96]',ov).forEach(x=>x.onclick=e=>{e.stopPropagation();showFigureDetailV96(figureById(x.dataset.gachaFigureV96));});}
@@ -12414,6 +12414,17 @@ finalEndingV89Final=async function(){
   state.meta.gameCleared=true;state.meta.eventQuestUnlocked=true;state.meta.otherWorldUnlocked=true;state.meta.shadowWorldUnlocked=true;saveMeta();await fixedDelay(3000);document.querySelector('.ending-caption-v157')?.remove();await showTitle();
   }finally{endingBusyV169=false;document.body.classList.remove('ending-report-v169');}
 };
+
+/* ---------- Gacha v182: backdrop taps never close the gacha UI ---------- */
+for(const type of ['pointerdown','pointerup','touchstart','touchend','click']){
+  document.addEventListener(type,e=>{
+    const ov=document.getElementById('figureGachaOverlayV96');
+    if(!ov||ov.hidden||e.target!==ov)return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  },true);
+}
+window.__mobV182GachaBackdropLock=true;
 
 window.__mobV181Runtime=true;
 })();
