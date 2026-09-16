@@ -12426,6 +12426,43 @@ for(const type of ['pointerdown','pointerup','touchstart','touchend','click']){
 }
 window.__mobV182GachaBackdropLock=true;
 
+
+
+/* ---------- v183: force split-party formation even on already-viewed story saves ---------- */
+const chooseSplitV181BaseV183=chooseSplitV181;
+chooseSplitV181=async function(opt){
+  const split=await chooseSplitV181BaseV183(opt);
+  state.adventure??={};
+  if(opt?.storageKey==='lilithSplit')state.adventure.lilithSplitReadyV183=true;
+  if(opt?.storageKey==='demonCastle2SplitV181')state.adventure.demonCastle2SplitReadyV183=true;
+  saveAdventure();
+  return split;
+};
+function splitBossEncounterV183(w,areaIndex,enc){
+  return !!w&&(((state.adventure?.battleIndex||0)===2)||!!w.oneBattlePerArea)&&!!enc?.bossBattle;
+}
+const startAdventureBattleBaseV183=startAdventureBattle;
+startAdventureBattle=async function(){
+  const w=currentWorld(),areaIndex=Number(state.adventure?.areaIndex)||0;
+  if(!w)return startAdventureBattleBaseV183();
+  const enc=state.adventure?.pendingEncounter||createAdventureEncounter();
+  const bossEncounter=splitBossEncounterV183(w,areaIndex,enc);
+
+  /* Old saves may already have pre:demonCastle:2 marked complete, so the lilithSplit
+     story step never executes. In that exact case, require the formation UI here. */
+  if(w.id==='demonCastle'&&areaIndex===2&&bossEncounter&&storyDone('pre:demonCastle:2')&&!state.adventure?.lilithSplitReadyV183){
+    await chooseSplitV181({storageKey:'lilithSplit',title:'リリス四姉妹戦 パーティー編成',aEnemies:'モブリリス / モブヘルリリス / モブキリンリリス',bEnemies:'モブクフリリス / モブリヴァリリス'});
+  }
+
+  /* Same guard for Demon Castle II. Fresh saves still see the authored dialogue first;
+     migrated saves that already consumed the pre-event are sent to formation before battle. */
+  if(w.id==='demonCastle2'&&areaIndex===0&&bossEncounter&&storyDone('pre:demonCastle2:0')&&!state.adventure?.demonCastle2SplitReadyV183){
+    await chooseSplitV181({storageKey:'demonCastle2SplitV181',title:'魔王城Ⅱ A/Bグループ編成',aEnemies:'モブヘルリリス / モブリリス / モブキリンリリス',bEnemies:'モブクフリリス / モブリリス / モブリヴァリリス'});
+  }
+  return startAdventureBattleBaseV183();
+};
+window.__mobV183LilithFormationFix=true;
+
 window.__mobV181Runtime=true;
 })();
 // UPDATE_V181_END
