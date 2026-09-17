@@ -13,6 +13,6 @@ const v180=game.indexOf('// UPDATE_V180_END'),v181=game.indexOf('// UPDATE_V181_
 ok(v180>=0&&v181>v180,'update boundaries missing');
 ok(!game.slice(v180,v181).includes('})();'),'main app scope closes before v181');
 ok(game.trimEnd().endsWith('})();'),'main app scope is not closed at final end');
-ok(html.includes('<div class="title-version">v197</div>'),'title is not current v197');
+ok(html.includes('<div class="title-version">v198</div>'),'title is not current v198');
 ok(html.includes('window.__mobV196LilithInlineFormation=true'),'inline runtime not synchronized');
 console.log('update-v195 base isolation tests: OK');

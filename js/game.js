@@ -3265,7 +3265,7 @@ async function storyDarkBattlePulse(){const el=document.createElement('div');el.
 async function spawnNextEnemyWave(){
   const b=state.battle;if(!b?.pendingWaveConfigs?.length)return false;
   const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'),isGidora=records.some(r=>r.id==='boss-gidora'),isMira2=records.some(r=>r.id==='boss-mira2-d2'),isLilithPartyA=records.some(r=>r.id==='boss-lilith-castle')&&b.config?.lilithSplitBattle,isD2Pair2=records.length===2&&records.some(r=>r.id==='d2-miranight')&&records.some(r=>r.id==='d2-miratime'),isD2Revive=records.length===4&&['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'].every(id=>records.some(r=>r.id===id))&&records.some(r=>Number(r.startingHpRate)>0&&Number(r.startingHpRate)<=.31);
-  if(isLilithPartyA){await actionCutin('Bパーティー勝利！ 次はAパーティーであります！','system',1000);switchBattleToLilithPartyA();}
+  if(isLilithPartyA){await waitLilithPartyNextV198();switchBattleToLilithPartyA();}
   if(isFrezard)await playFrezardFusion();
   if(isGidora){const oldDragon=(b.enemies||[]).find(e=>e.id==='boss-dragon2');if(oldDragon)await enemyStoryCutin(oldDragon,`素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！`,1200);await storyFlashBattle();}
   if(isMira2){await playBattleSequenceV173('mira2',true);await storyDarkBattlePulse();}
@@ -3670,7 +3670,7 @@ function rebuildPartyForTestCheckpoint(worldIndex,areaIndex){
   for(const id of storyJoinsForCheckpoint(worldIndex,areaIndex))if(!rows.some(x=>x[0]===id)&&player(id))rows.push([id,levelById.get(id)||baseLv]);
   state.party=rows.slice(0,10);saveParty();state.training.party=state.party.map(x=>[...x]);
 }
-function applyTestChapter(){if(!state.test?.enabled)return;const worlds=MOB_DATA.adventureWorlds||[],wi=clamp(Number($('#testChapterSelect')?.value)||0,0,Math.max(0,worlds.length-1)),ai=clamp(Number($('#testAreaSelect')?.value)||0,0,3);const keepTest=state.test;state.adventure=defaultAdventure();state.adventure.worldIndex=wi;state.adventure.areaIndex=ai;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.completed=false;state.adventure.reportedWorlds=worlds.slice(0,wi).map(w=>w.id);state.adventure.storyFlags={};for(let i=0;i<wi;i++){const id=worlds[i]?.id;if(id)state.adventure.storyFlags[`arrive:${id}`]=true;}if(ai>0){const id=worlds[wi]?.id;if(id)state.adventure.storyFlags[`arrive:${id}`]=true;}state.adventure.vitals=null;state.meta.defeatedBosses=[];state.meta.defeatedElites=[];rebuildPartyForTestCheckpoint(wi,ai);saveAdventure();syncDefeatedHistoryFromProgress();saveMeta();toast(`${worlds[wi]?.name||'チャプター'} AREA ${ai+1} から開始します`);closeSettings();renderHome();showScreen('home');}
+function applyTestChapter(){if(!state.test?.enabled)return;const worlds=MOB_DATA.adventureWorlds||[],wi=clamp(Number($('#testChapterSelect')?.value)||0,0,Math.max(0,worlds.length-1)),ai=clamp(Number($('#testAreaSelect')?.value)||0,0,3);const keepTest=state.test;state.adventure=defaultAdventure();state.adventure.worldIndex=wi;state.adventure.areaIndex=ai;state.adventure.battleIndex=0;state.adventure.battleReady=false;state.adventure.completed=false;state.adventure.reportedWorlds=worlds.slice(0,wi).map(w=>w.id);state.adventure.storyFlags={};for(let i=0;i<wi;i++){const id=worlds[i]?.id;if(id)state.adventure.storyFlags[`arrival:${id}`]=true;}if(ai>0){const id=worlds[wi]?.id;if(id)state.adventure.storyFlags[`arrival:${id}`]=true;}state.adventure.vitals=null;state.meta.defeatedBosses=[];state.meta.defeatedElites=[];rebuildPartyForTestCheckpoint(wi,ai);saveAdventure();syncDefeatedHistoryFromProgress();saveMeta();toast(`${worlds[wi]?.name||'チャプター'} AREA ${ai+1} から開始します`);closeSettings();renderHome();showScreen('home');}
 
 function grantTestItemsMax(){
   if(!state.test?.enabled)return;
@@ -12728,7 +12728,7 @@ startAdventureBattle=async function(){
   finally{hideIsolationV195();}
 };
 
-window.__mobBuildVersion='v197';
+window.__mobBuildVersion='v198';
 window.__mobV195LilithIsolation=true;
 window.__mobV196LilithInlineFormation=true;
 window.__mobV197LilithRestoreAfterFormation=true;
@@ -12741,5 +12741,36 @@ window.__mobV195LilithDiagnostics=()=>({
 })();
 // UPDATE_V195_END
 
+
+// UPDATE_V198_BEGIN
+/* v198: deliberate B -> A intermission for the Demon Castle Lilith split battle,
+   plus Test Mode AREA jump correction.  The test checkpoint must mark the real
+   arrival:<worldId> flag, otherwise the AREA1 arrival story still runs even when
+   AREA2-4 was selected. */
+function waitLilithPartyNextV198(){
+  return new Promise(resolve=>{
+    document.getElementById('lilithPartyNextV198')?.remove();
+    const b=state.battle,split=b?.config?.lilithSplit||currentLilithSplit(),rows=Array.isArray(split?.A)?split.A:[];
+    const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]||c));
+    const portraits=rows.map(([id,lv])=>{const p=player(id);if(!p)return'';return `<div style="display:grid;justify-items:center;gap:2px;min-width:50px"><img src="${versionedPlay(p.image)}" alt="${esc(p.name)}" style="width:46px;height:52px;object-fit:contain;filter:drop-shadow(0 3px 2px rgba(0,0,0,.18))"><small style="max-width:58px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;font-weight:900;color:#444">${esc(p.name)}</small><b style="font-size:8px;color:#777">Lv${Number(lv)||1}</b></div>`;}).join('');
+    const ov=document.createElement('div');
+    ov.id='lilithPartyNextV198';
+    ov.setAttribute('role','dialog');
+    ov.setAttribute('aria-modal','true');
+    ov.setAttribute('aria-label','Bパーティー勝利 次はAパーティー');
+    Object.assign(ov.style,{position:'fixed',inset:'0',zIndex:'2147483600',display:'grid',placeItems:'center',padding:'18px',boxSizing:'border-box',background:'rgba(5,8,14,.88)',backdropFilter:'blur(3px)',WebkitBackdropFilter:'blur(3px)',touchAction:'manipulation'});
+    ov.innerHTML=`<div style="width:min(92vw,440px);max-height:92dvh;overflow:auto;padding:20px 16px 18px;border:4px solid #111;border-radius:24px;background:#fff;color:#111;box-shadow:0 18px 46px rgba(0,0,0,.48);box-sizing:border-box;text-align:center"><small style="display:block;font-size:10px;font-weight:1000;letter-spacing:.18em;color:#657080">B PARTY CLEAR!</small><h2 style="margin:5px 0 2px;font-size:25px;line-height:1.15">Bパーティー勝利！</h2><div style="margin:12px auto 10px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;width:min(100%,310px)"><div style="padding:9px 6px;border-radius:12px;background:#274d72;color:#fff;font-weight:1000;font-size:15px">B</div><strong style="font-size:24px">→</strong><div style="padding:9px 6px;border-radius:12px;background:#5a2740;color:#fff;font-weight:1000;font-size:15px">A</div></div><p style="margin:7px 0 4px;font-size:15px;font-weight:1000">次はAパーティーの出陣です！</p><p style="margin:0 0 11px;font-size:10px;line-height:1.45;color:#666">準備ができたらNEXTをタップしてください。</p>${portraits?`<div style="display:flex;justify-content:center;gap:5px;overflow-x:auto;padding:7px 3px 12px">${portraits}</div>`:''}<button type="button" data-v198-next style="width:100%;min-height:62px;border:4px solid #111;border-radius:15px;background:#111;color:#fff;font:inherit;font-size:20px;font-weight:1000;letter-spacing:.08em;touch-action:manipulation">NEXT</button></div>`;
+    document.body.appendChild(ov);bindImages(ov);
+    const btn=ov.querySelector('[data-v198-next]');
+    let done=false;
+    const finish=e=>{e?.preventDefault?.();e?.stopPropagation?.();if(done)return;done=true;btn.disabled=true;ov.style.opacity='0';ov.style.transition='opacity 120ms ease';setTimeout(()=>{ov.remove();resolve(true);},125);};
+    btn.addEventListener('click',finish,{once:true});
+    btn.addEventListener('pointerup',e=>{if(e.pointerType==='touch')e.stopPropagation();});
+    requestAnimationFrame(()=>btn.focus({preventScroll:true}));
+  });
+}
+window.__mobV198LilithNext=true;
+window.__mobV198TestAreaJump=true;
+// UPDATE_V198_END
 
 })();

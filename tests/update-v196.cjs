@@ -5,8 +5,8 @@ const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 function ok(v,m){if(!v)throw new Error(m)}
 function between(a,b){const i=game.indexOf(a),j=game.indexOf(b,i);ok(i>=0&&j>i,`missing range ${a}`);return game.slice(i,j)}
 const split=between('async function isolatedSplitV195(){','async function runDemonCastleLilithPreV195(){');
-ok(html.includes('<div class="title-version">v197</div>'),'title is not v197');
-ok(game.includes("window.__mobBuildVersion='v197'"),'runtime version is not v197');
+ok(html.includes('<div class="title-version">v198</div>'),'title is not v198');
+ok(game.includes("window.__mobBuildVersion='v198'"),'runtime version is not v198');
 ok(game.includes('window.__mobV196LilithInlineFormation=true'),'v196 marker missing');
 ok(split.includes('data-v196-formation'),'inline formation screen missing');
 ok(split.includes('data-v196-member'),'inline member controls missing');

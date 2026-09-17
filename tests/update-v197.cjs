@@ -4,9 +4,9 @@ const root=path.resolve(__dirname,'..');
 const game=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const ok=(v,m)=>{if(!v)throw new Error(m)};
-ok(html.includes('<div class="title-version">v197</div>'),'title is not v197');
-ok(game.includes("window.__mobBuildVersion='v197'"),'runtime version is not v197');
-ok(game.includes('window.__mobV197LilithRestoreAfterFormation=true'),'v197 marker missing');
+ok(html.includes('<div class="title-version">v198</div>'),'title is not v198');
+ok(game.includes("window.__mobBuildVersion='v198'"),'runtime version is not v198');
+ok(game.includes('window.__mobV197LilithRestoreAfterFormation=true'),'v198 marker missing');
 const start=game.indexOf('async function isolatedSplitV195()');
 const end=game.indexOf('async function runDemonCastleLilithPreV195()',start);
 ok(start>=0&&end>start,'isolated split function not found');
@@ -20,4 +20,4 @@ ok(nyoro>hide&&desert>nyoro,'normal dialogue must run after white layer is remov
 ok(!split.slice(done).includes("isolationMarkupV195('nyoro')"),'Nyoro dialogue still renders in white layer');
 ok(!split.slice(done).includes("isolationMarkupV195('desert')"),'Desert dialogue still renders in white layer');
 ok(!split.slice(done).includes("isolationMarkupV195('loading')"),'battle loading still renders in white layer');
-console.log('update-v197 restore-after-formation tests: OK');
+console.log('update-v198 restore-after-formation tests: OK');
