@@ -12230,6 +12230,7 @@ closeStoryScene=async function(...args){const sc=$('#storyScene');sc?.classList.
 window.__mobV180Runtime=true;
 // UPDATE_V180_END
 
+})();
 
 // UPDATE_V181_BEGIN
 (function(){
@@ -12512,700 +12513,80 @@ enemyAction=async function(actionIndex=1,enemyId){
 window.__mobV184Balance={bossHpMultiplier:BOSS_HP_MULTIPLIER_V184,umiDenden:true};
 })();
 // UPDATE_V184_END
-
-// UPDATE_V185_BEGIN
-/* v185: hard fix for Demon Castle Lilith split-party freeze.
-   The five-sister reveal now opens an independent formation UI immediately,
-   without relying on the older story-step modal chain. */
+// UPDATE_V194_BEGIN
+/* v194: clean Demon Castle AREA3 Lilith flow.
+   Built from stable v184.  No v185-v193 Lilith patches are carried forward.
+   One authored path only: sisters reveal -> dialogue -> center formation button -> split -> battle. */
 ;(()=>{
-const SPLIT_Z_V185='2147483000';
-function splitRowsV185(){
-  const seen=new Set(),out=[];
-  for(const row of (state.party||[])){
-    const id=canonicalPlayerId(row?.[0]);
-    if(!id||seen.has(id)||!player(id))continue;
-    seen.add(id);out.push([id,Number(row?.[1])||5]);
-  }
-  return out;
-}
-function normalizeSplitHardV185(storageKey){
-  const roster=splitRowsV185(),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
-  const saved=state.meta?.[storageKey];
-  const clean=list=>(Array.isArray(list)?list:[]).map(r=>canonicalPlayerId(r?.[0])).filter(id=>id&&valid.has(id)&&!used.has(id)&&used.add(id)).map(id=>[...valid.get(id)]);
-  let A=clean(saved?.A),B=clean(saved?.B);
-  for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
-  if(!A.length||!B.length){A=[];B=[];roster.forEach((r,i)=>(i%2?B:A).push([...r]));if(!B.length&&A.length>1)B.push(A.pop());}
-  return {A,B};
-}
-function ensureSplitHardOverlayV185(){
-  let ov=document.getElementById('splitPartyOverlayV185');
-  if(ov)return ov;
-  ov=document.createElement('div');ov.id='splitPartyOverlayV185';ov.hidden=true;
-  Object.assign(ov.style,{position:'fixed',inset:'0',zIndex:SPLIT_Z_V185,background:'rgba(3,4,10,.94)',display:'flex',alignItems:'flex-start',justifyContent:'center',overflow:'auto',padding:'calc(18px + env(safe-area-inset-top,0px)) 10px calc(18px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',touchAction:'pan-y'});
-  document.body.appendChild(ov);
-  for(const type of ['pointerdown','pointerup','touchstart','touchend','click'])ov.addEventListener(type,e=>{e.stopPropagation();},{passive:false});
-  return ov;
-}
-function splitNamesV185(rows){return rows.map(([id])=>player(id)?.name||id).join(' / ')}
-function renderSplitHardV185(ov,split,opt,resolve){
-  const roster=splitRowsV185(),teamOf=id=>split.A.some(r=>r[0]===id)?'A':'B';
-  ov.hidden=false;ov.style.display='flex';
-  ov.innerHTML=`<section style="width:min(96vw,520px);margin:auto 0;background:#f6eadb;color:#251b1e;border:4px solid #6d2e62;border-radius:22px;padding:14px;box-sizing:border-box;box-shadow:0 18px 55px #000;max-height:94vh;overflow:auto;font-family:inherit">
-    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.14em;color:#774c70">PARTY SPLIT / v186</small>
-    <h2 style="margin:4px 0 8px;font-size:19px">${opt.title}</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px">
-      <div style="background:#5b294b;color:white;border-radius:11px;padding:8px"><b>Aグループ</b><small style="display:block;line-height:1.45;margin-top:3px">${opt.aEnemies}</small></div>
-      <div style="background:#294c6a;color:white;border-radius:11px;padding:8px"><b>Bグループ</b><small style="display:block;line-height:1.45;margin-top:3px">${opt.bEnemies}</small></div>
-    </div>
-    <p style="font-size:10px;margin:6px 0 9px">仲間をタップするとA/Bを移動します。</p>
-    <div data-v185-roster style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px">${roster.map(([id,lv])=>{const q=player(id),team=teamOf(id);return `<button type="button" data-v185-member="${id}" style="min-height:62px;display:grid;grid-template-columns:30px 1fr auto;gap:5px;align-items:center;text-align:left;border:2px solid ${team==='A'?'#a33c60':'#3979aa'};background:${team==='A'?'#fff0f4':'#eef7ff'};color:#211921;border-radius:11px;padding:5px"><strong style="font-size:15px">${team}</strong><span><b style="display:block;font-size:10px">${q.name}</b><small>Lv${lv}</small></span><img src="${versionedPlay(q.image)}" alt="${q.name}" style="width:38px;height:48px;object-fit:contain"></button>`}).join('')}</div>
-    <div style="display:flex;gap:7px;justify-content:center;margin:10px 0"><b style="background:#5b294b;color:#fff;padding:5px 10px;border-radius:999px">A ${split.A.length}人</b><b style="background:#294c6a;color:#fff;padding:5px 10px;border-radius:999px">B ${split.B.length}人</b></div>
-    <div data-v185-confirm-area><button type="button" data-v185-confirm style="width:100%;height:44px;border:0;border-radius:11px;background:#74345f;color:#fff;font-weight:900;font-size:12px">編成を決定</button></div>
-  </section>`;
-  bindImages(ov);
-  ov.querySelectorAll('[data-v185-member]').forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v185Member),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1){toast('A/Bどちらにも1人以上必要です');return;}const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitHardV185(ov,split,opt,resolve);});
-  ov.querySelector('[data-v185-confirm]').onclick=e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length){toast('A/Bどちらにもメンバーが必要です');return;}const area=ov.querySelector('[data-v185-confirm-area]');area.innerHTML=`<div style="background:#fff;border:2px solid #7c536f;border-radius:12px;padding:10px"><b style="display:block;font-size:12px;margin-bottom:5px">このパーティーで挑みますか？</b><small style="display:block;line-height:1.55;margin-bottom:9px">A：${splitNamesV185(split.A)}<br>B：${splitNamesV185(split.B)}</small><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><button type="button" data-v185-yes style="height:42px;border:0;border-radius:10px;background:#74345f;color:#fff;font-weight:900">はい</button><button type="button" data-v185-no style="height:42px;border:1px solid #866b7e;border-radius:10px;background:#eee3e9;color:#2a2027;font-weight:900">いいえ</button></div></div>`;
-    area.querySelector('[data-v185-no]').onclick=ev=>{ev.preventDefault();ev.stopPropagation();renderSplitHardV185(ov,split,opt,resolve);};
-    area.querySelector('[data-v185-yes]').onclick=ev=>{ev.preventDefault();ev.stopPropagation();state.meta??={};state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();state.adventure??={};if(opt.storageKey==='lilithSplit'){state.adventure.lilithSplitReadyV183=true;state.adventure.lilithSplitReadyV185=true;}if(opt.storageKey==='demonCastle2SplitV181'){state.adventure.demonCastle2SplitReadyV183=true;state.adventure.demonCastle2SplitReadyV185=true;}saveAdventure();ov.hidden=true;ov.style.display='none';ov.innerHTML='';resolve(clone(state.meta[opt.storageKey]));};
-  };
-}
-async function chooseSplitHardV185(opt){
-  const roster=splitRowsV185();
-  if(roster.length<2){toast('2パーティー戦には2人以上の仲間が必要です');throw new Error('v185 split requires at least two party members');}
-  const ov=ensureSplitHardOverlayV185(),split=normalizeSplitHardV185(opt.storageKey);
-  return await new Promise(resolve=>renderSplitHardV185(ov,split,opt,resolve));
-}
-const LILITH_OPT_V185={storageKey:'lilithSplit',title:'リリス四姉妹戦 パーティー編成',aEnemies:'モブリリス / モブヘルリリス / モブキリンリリス',bEnemies:'モブクフリリス / モブリヴァリリス'};
-const DC2_OPT_V185={storageKey:'demonCastle2SplitV181',title:'魔王城Ⅱ A/Bグループ編成',aEnemies:'モブヘルリリス / モブリリス / モブキリンリリス',bEnemies:'モブクフリリス / モブリリス / モブリヴァリリス'};
-
-/* Conversation lock must explicitly allow this modal because it appears while storyBusy=true. */
-const conversationAllowedTargetBaseV185=conversationAllowedTargetV171;
-conversationAllowedTargetV171=target=>!!target?.closest?.('#splitPartyOverlayV185')||conversationAllowedTargetBaseV185(target);
-
-/* Crucial fix: the user's freeze is at the five-sister reveal, BEFORE the old
-   lilithSplit step. Open formation right there, then let the authored dialogue continue. */
-const lilithFamilyRoseSummonBaseV185=lilithFamilyRoseSummonV180;
-lilithFamilyRoseSummonV180=async function(){
-  await lilithFamilyRoseSummonBaseV185();
-  if(!state.adventure?.lilithSplitReadyV185)await chooseSplitHardV185(LILITH_OPT_V185);
+const LILITH_PRE_KEY_V194='pre:demonCastle:2';
+const LILITH_SPLIT_OPT_V194={
+  storageKey:'lilithSplit',
+  title:'リリス四姉妹戦 パーティー編成',
+  aEnemies:'モブリリス / モブヘルリリス / モブキリンリリス',
+  bEnemies:'モブクフリリス / モブリヴァリリス'
 };
 
-/* If execution reaches the authored split opcode later, do not ask twice. */
-chooseLilithSplit=async function(){
-  if(state.adventure?.lilithSplitReadyV185&&state.meta?.lilithSplit)return clone(state.meta.lilithSplit);
-  return chooseSplitHardV185(LILITH_OPT_V185);
-};
-
-/* Replace the v181 split entry point too, so Demon Castle II uses the same hard modal. */
-const chooseSplitV181BaseV185=chooseSplitV181;
-chooseSplitV181=async function(opt){
-  if(opt?.storageKey==='lilithSplit')return chooseLilithSplit();
-  if(opt?.storageKey==='demonCastle2SplitV181'){
-    if(state.adventure?.demonCastle2SplitReadyV185&&state.meta?.demonCastle2SplitV181)return clone(state.meta.demonCastle2SplitV181);
-    return chooseSplitHardV185(DC2_OPT_V185);
-  }
-  return chooseSplitV181BaseV185(opt);
-};
-
-/* Fresh explicit opcode guard at the top of the story-step chain. */
-const runStoryStepsBaseV185=runStorySteps;
-runStorySteps=async function(steps=[]){
-  for(const st of steps){
-    if(st?.[0]==='lilithSplit')await chooseLilithSplit();
-    else if(st?.[0]==='dc2Split181')await chooseSplitV181(DC2_OPT_V185);
-    else await runStoryStepsBaseV185([st]);
-  }
-};
-
-window.__mobV185LilithSplitHardFix=true;
-})();
-// UPDATE_V185_END
-
-// UPDATE_V186_BEGIN
-/* v186: Demon Castle Area 3 split formation is shown at the authored point:
-   AFTER all dialogue + the party-split narration. No early popup at the five-Lilith reveal.
-   Persisted ready flags from older builds are deliberately ignored for this scene. */
-;(()=>{
-let lilithSplitConfirmedThisSessionV186=false;
-
-/* Undo v185's early popup hook. Keep only the original rose summon visual here. */
-lilithFamilyRoseSummonV180=async function(){
-  const fx=castleFxV180('rose-ultimate-v180');
-  try{await demonLilithSummonV106();await fixedDelay(650);}finally{fx?.remove();}
-};
-
-function splitRowsV186(){
-  const seen=new Set(),rows=[];
-  for(const row of (state.party||[])){
-    const id=canonicalPlayerId(row?.[0]);
-    if(!id||seen.has(id)||!player(id))continue;
-    seen.add(id);rows.push([id,Number(row?.[1])||5]);
-  }
-  return rows;
-}
-function normalizedLilithSplitV186(){
-  const roster=splitRowsV186(),byId=new Map(roster.map(r=>[r[0],r])),used=new Set();
-  const saved=state.meta?.lilithSplit;
-  const take=list=>(Array.isArray(list)?list:[]).map(r=>canonicalPlayerId(r?.[0])).filter(id=>id&&byId.has(id)&&!used.has(id)&&used.add(id)).map(id=>[...byId.get(id)]);
-  let A=take(saved?.A),B=take(saved?.B);
-  for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
-  if(!A.length||!B.length){A=[];B=[];roster.forEach((r,i)=>(i%2?B:A).push([...r]));if(!B.length&&A.length>1)B.push(A.pop());}
-  return {A,B};
-}
-function ensureLilithOverlayV186(){
-  let ov=document.getElementById('lilithSplitOverlayV186');
-  if(!ov){
-    ov=document.createElement('div');ov.id='lilithSplitOverlayV186';ov.hidden=true;
-    Object.assign(ov.style,{position:'fixed',inset:'0',zIndex:'2147483600',background:'rgba(4,4,10,.96)',display:'none',alignItems:'flex-start',justifyContent:'center',overflowY:'auto',padding:'calc(18px + env(safe-area-inset-top,0px)) 10px calc(18px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',touchAction:'pan-y'});
-    document.body.appendChild(ov);
-    for(const type of ['pointerdown','pointerup','touchstart','touchend','click'])ov.addEventListener(type,e=>{e.stopPropagation();},{passive:false});
-  }
-  return ov;
-}
-function namesV186(rows){return rows.map(([id])=>player(id)?.name||id).join(' / ');}
-function renderLilithFormationV186(ov,split,resolve){
-  const roster=splitRowsV186(),team=id=>split.A.some(r=>r[0]===id)?'A':'B';
-  ov.hidden=false;ov.style.display='flex';
-  ov.innerHTML=`<section style="width:min(96vw,540px);margin:auto 0;background:#f8eee2;color:#241b20;border:4px solid #7b315f;border-radius:22px;padding:14px;box-sizing:border-box;box-shadow:0 20px 60px #000;max-height:94vh;overflow:auto;font-family:inherit">
-    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.16em;color:#78516f">PARTY SPLIT / v186</small>
-    <h2 style="margin:4px 0 7px;font-size:19px">リリス四姉妹戦 パーティー編成</h2>
-    <p style="font-size:10px;line-height:1.55;margin:0 0 9px">A/Bの2パーティーを作ってください。仲間をタップすると移動します。</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px">
-      <div style="background:#64284f;color:#fff;border-radius:11px;padding:8px"><b>Aパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブリリス<br>モブヘルリリス<br>モブキリンリリス</small></div>
-      <div style="background:#28536d;color:#fff;border-radius:11px;padding:8px"><b>Bパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブクフリリス<br>モブリヴァリリス</small></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px">${roster.map(([id,lv])=>{const q=player(id),t=team(id);return `<button type="button" data-v186-member="${id}" style="min-height:64px;display:grid;grid-template-columns:28px 1fr 40px;gap:5px;align-items:center;text-align:left;border:2px solid ${t==='A'?'#a33e61':'#3979aa'};background:${t==='A'?'#fff1f5':'#eef8ff'};color:#211921;border-radius:11px;padding:5px"><strong style="font-size:15px">${t}</strong><span><b style="display:block;font-size:10px">${q.name}</b><small>Lv${lv}</small></span><img src="${versionedPlay(q.image)}" alt="${q.name}" style="width:38px;height:48px;object-fit:contain"></button>`}).join('')}</div>
-    <div style="display:flex;gap:7px;justify-content:center;margin:10px 0"><b style="background:#64284f;color:#fff;padding:5px 10px;border-radius:999px">A ${split.A.length}人</b><b style="background:#28536d;color:#fff;padding:5px 10px;border-radius:999px">B ${split.B.length}人</b></div>
-    <div data-v186-confirm><button type="button" data-v186-decide style="width:100%;height:44px;border:0;border-radius:11px;background:#79355f;color:#fff;font-weight:900;font-size:12px">編成を決定</button></div>
-  </section>`;
-  bindImages(ov);
-  ov.querySelectorAll('[data-v186-member]').forEach(btn=>btn.onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    const id=canonicalPlayerId(btn.dataset.v186Member),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;
-    if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');
-    const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderLilithFormationV186(ov,split,resolve);
-  });
-  ov.querySelector('[data-v186-decide]').onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');
-    const box=ov.querySelector('[data-v186-confirm]');
-    box.innerHTML=`<div style="background:#fff;border:2px solid #80536f;border-radius:12px;padding:10px"><b style="display:block;font-size:12px;margin-bottom:6px">このパーティーで挑みますか？</b><small style="display:block;line-height:1.55;margin-bottom:9px">A：${namesV186(split.A)}<br>B：${namesV186(split.B)}</small><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><button type="button" data-v186-yes style="height:42px;border:0;border-radius:10px;background:#79355f;color:#fff;font-weight:900">はい</button><button type="button" data-v186-no style="height:42px;border:1px solid #866b7e;border-radius:10px;background:#eee3e9;color:#2a2027;font-weight:900">いいえ</button></div></div>`;
-    box.querySelector('[data-v186-no]').onclick=ev=>{ev.preventDefault();ev.stopPropagation();renderLilithFormationV186(ov,split,resolve);};
-    box.querySelector('[data-v186-yes]').onclick=ev=>{
-      ev.preventDefault();ev.stopPropagation();
-      state.meta??={};state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();
-      state.adventure??={};state.adventure.lilithSplitReadyV183=true;state.adventure.lilithSplitReadyV185=true;state.adventure.lilithSplitReadyV186=true;saveAdventure();
-      lilithSplitConfirmedThisSessionV186=true;
-      ov.hidden=true;ov.style.display='none';ov.innerHTML='';
-      resolve(clone(state.meta.lilithSplit));
-    };
-  };
-}
-async function chooseLilithSplitV186(){
-  const roster=splitRowsV186();
-  if(roster.length<2){toast('2パーティー戦には2人以上の仲間が必要です');throw new Error('v186 lilith split requires two members');}
-  const ov=ensureLilithOverlayV186(),split=normalizedLilithSplitV186();
-  return await new Promise(resolve=>renderLilithFormationV186(ov,split,resolve));
-}
-
-/* Allow only the dedicated formation UI through the conversation input lock. */
-const conversationAllowedBaseV186=conversationAllowedTargetV171;
-conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithSplitOverlayV186')||conversationAllowedBaseV186(target);
-
-/* Replace only the authored opcode, which sits AFTER Money's line + narrator. */
-const evV186=STORY_EVENTS['pre:demonCastle:2'];
-if(evV186?.steps)evV186.steps=evV186.steps.map(st=>st?.[0]==='lilithSplit'?['lilithSplitV186']:st);
-const runStoryStepsBaseV186=runStorySteps;
-runStorySteps=async function(steps=[]){
-  for(const st of steps){
-    if(st?.[0]==='lilithSplitV186')await chooseLilithSplitV186();
-    else await runStoryStepsBaseV186([st]);
-  }
-};
-
-/* If an old save already consumed the pre-event, force formation immediately before battle.
-   This ignores stale persisted ready flags; only a confirmation in THIS page session counts. */
-const startAdventureBattleBaseV186=startAdventureBattle;
-startAdventureBattle=async function(){
-  const w=currentWorld(),areaIndex=Number(state.adventure?.areaIndex)||0;
-  if(w?.id==='demonCastle'&&areaIndex===2&&storyDone('pre:demonCastle:2')&&!lilithSplitConfirmedThisSessionV186){
-    await chooseLilithSplitV186();
-  }
-  return startAdventureBattleBaseV186();
-};
-
-/* Build marker visible from title/version areas that use runtime build text. */
-window.__mobBuildVersion='v187';
-window.__mobV186LilithFormationPointFix=true;
-window.__mobOpenLilithFormationV186=chooseLilithSplitV186;
-})();
-// UPDATE_V186_END
-
-// UPDATE_V187_BEGIN
-/* v187: v181-v186 must execute inside the core game closure.
-   Previous builds placed them after the core closure, so strict-mode patch code
-   could not see state / chooseLilithSplit and stopped at runtime. */
-window.__mobBuildVersion='v187';
-window.__mobV187RuntimeScopeFix=true;
-window.__mobV187Diagnostics=()=>({
-  partyCount:Array.isArray(state.party)?state.party.length:0,
-  world:currentWorld()?.id||'',
-  area:Number(state.adventure?.areaIndex)||0,
-  lilithStepTypes:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).map(st=>st?.[0]),
-  lilithHasV186:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).some(st=>st?.[0]==='lilithSplitV186')
-});
-// UPDATE_V187_END
-
-// UPDATE_V188_BEGIN
-/* v188: Demon Castle Lilith split-flow repair.
-   - No formation popup at the five-Lilith reveal.
-   - One formation point only: after Money's line + split narration.
-   - Demon Castle AREA 3 battle starts through a dedicated continuation path,
-     bypassing stale v183-v186 startAdventureBattle guards. */
-;(()=>{
-let lilithSplitConfirmedSessionV188=false;
-
-/* Permanently neutralize the old v185 early-popup hook. This function is visual only. */
-lilithFamilyRoseSummonV180=async function(){
-  const fx=castleFxV180('rose-ultimate-v180');
-  try{await demonLilithSummonV106();await fixedDelay(650);}finally{fx?.remove();}
-};
-
-function splitRowsV188(){
-  const seen=new Set(),rows=[];
-  for(const row of (state.party||[])){
-    const id=canonicalPlayerId(row?.[0]);
-    if(!id||seen.has(id)||!player(id))continue;
-    seen.add(id);rows.push([id,Number(row?.[1])||5]);
-  }
-  return rows;
-}
-function normalizeLilithSplitV188(){
-  const roster=splitRowsV188(),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
-  const saved=state.meta?.lilithSplit;
-  const clean=list=>(Array.isArray(list)?list:[])
-    .map(r=>canonicalPlayerId(r?.[0]))
-    .filter(id=>id&&valid.has(id)&&!used.has(id)&&used.add(id))
-    .map(id=>[...valid.get(id)]);
-  let A=clean(saved?.A),B=clean(saved?.B);
-  for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
-  if(!A.length||!B.length){
-    A=[];B=[];roster.forEach((r,i)=>(i%2?B:A).push([...r]));
-    if(!B.length&&A.length>1)B.push(A.pop());
-  }
-  return {A,B};
-}
-function validLilithSplitV188(){
-  const rosterIds=new Set(splitRowsV188().map(r=>r[0])),s=state.meta?.lilithSplit;
-  if(!Array.isArray(s?.A)||!Array.isArray(s?.B)||!s.A.length||!s.B.length)return false;
-  const ids=[...s.A,...s.B].map(r=>canonicalPlayerId(r?.[0]));
-  return ids.length>=2&&ids.every(id=>rosterIds.has(id))&&new Set(ids).size===ids.length;
-}
-function ensureLilithOverlayV188(){
-  let ov=document.getElementById('lilithSplitOverlayV188');
-  if(ov)return ov;
-  ov=document.createElement('div');ov.id='lilithSplitOverlayV188';ov.hidden=true;
-  Object.assign(ov.style,{position:'fixed',inset:'0',zIndex:'2147483640',background:'rgba(4,4,10,.96)',display:'none',alignItems:'flex-start',justifyContent:'center',overflowY:'auto',padding:'calc(18px + env(safe-area-inset-top,0px)) 10px calc(18px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',touchAction:'pan-y'});
-  document.body.appendChild(ov);
-  for(const type of ['pointerdown','pointerup','touchstart','touchend','click'])ov.addEventListener(type,e=>e.stopPropagation(),{passive:false});
-  return ov;
-}
-function splitNamesV188(rows){return rows.map(([id])=>player(id)?.name||id).join(' / ');}
-function renderLilithSplitV188(ov,split,resolve){
-  const roster=splitRowsV188(),team=id=>split.A.some(r=>r[0]===id)?'A':'B';
-  ov.hidden=false;ov.style.display='flex';
-  ov.innerHTML=`<section style="width:min(96vw,540px);margin:auto 0;background:#f8eee2;color:#241b20;border:4px solid #7b315f;border-radius:22px;padding:14px;box-sizing:border-box;box-shadow:0 20px 60px #000;max-height:94vh;overflow:auto;font-family:inherit">
-    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.16em;color:#78516f">PARTY SPLIT / v188</small>
-    <h2 style="margin:4px 0 7px;font-size:19px">リリス四姉妹戦 パーティー編成</h2>
-    <p style="font-size:10px;line-height:1.55;margin:0 0 9px">仲間をタップしてA/Bの2パーティーに分けてください。</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px">
-      <div style="background:#64284f;color:#fff;border-radius:11px;padding:8px"><b>Aパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブリリス<br>モブヘルリリス<br>モブキリンリリス</small></div>
-      <div style="background:#28536d;color:#fff;border-radius:11px;padding:8px"><b>Bパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブクフリリス<br>モブリヴァリリス</small></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px">${roster.map(([id,lv])=>{const q=player(id),t=team(id);return `<button type="button" data-v188-member="${id}" style="min-height:64px;display:grid;grid-template-columns:28px 1fr 40px;gap:5px;align-items:center;text-align:left;border:2px solid ${t==='A'?'#a33e61':'#3979aa'};background:${t==='A'?'#fff1f5':'#eef8ff'};color:#211921;border-radius:11px;padding:5px"><strong style="font-size:15px">${t}</strong><span><b style="display:block;font-size:10px">${q.name}</b><small>Lv${lv}</small></span><img src="${versionedPlay(q.image)}" alt="${q.name}" style="width:38px;height:48px;object-fit:contain"></button>`}).join('')}</div>
-    <div style="display:flex;gap:7px;justify-content:center;margin:10px 0"><b style="background:#64284f;color:#fff;padding:5px 10px;border-radius:999px">A ${split.A.length}人</b><b style="background:#28536d;color:#fff;padding:5px 10px;border-radius:999px">B ${split.B.length}人</b></div>
-    <div data-v188-confirm><button type="button" data-v188-decide style="width:100%;height:44px;border:0;border-radius:11px;background:#79355f;color:#fff;font-weight:900;font-size:12px">編成を決定</button></div>
-  </section>`;
-  bindImages(ov);
-  ov.querySelectorAll('[data-v188-member]').forEach(btn=>btn.onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    const id=canonicalPlayerId(btn.dataset.v188Member),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;
-    if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');
-    const i=from.findIndex(r=>r[0]===id);if(i<0)return;
-    to.push(from.splice(i,1)[0]);renderLilithSplitV188(ov,split,resolve);
-  });
-  ov.querySelector('[data-v188-decide]').onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');
-    const box=ov.querySelector('[data-v188-confirm]');
-    box.innerHTML=`<div style="background:#fff;border:2px solid #80536f;border-radius:12px;padding:10px"><b style="display:block;font-size:12px;margin-bottom:6px">このパーティーで挑みますか？</b><small style="display:block;line-height:1.55;margin-bottom:9px">A：${splitNamesV188(split.A)}<br>B：${splitNamesV188(split.B)}</small><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><button type="button" data-v188-yes style="height:42px;border:0;border-radius:10px;background:#79355f;color:#fff;font-weight:900">はい</button><button type="button" data-v188-no style="height:42px;border:1px solid #866b7e;border-radius:10px;background:#eee3e9;color:#2a2027;font-weight:900">いいえ</button></div></div>`;
-    box.querySelector('[data-v188-no]').onclick=ev=>{ev.preventDefault();ev.stopPropagation();renderLilithSplitV188(ov,split,resolve);};
-    box.querySelector('[data-v188-yes]').onclick=ev=>{
-      ev.preventDefault();ev.stopPropagation();
-      state.meta??={};state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();
-      state.adventure??={};
-      state.adventure.lilithSplitReadyV183=true;
-      state.adventure.lilithSplitReadyV185=true;
-      state.adventure.lilithSplitReadyV186=true;
-      state.adventure.lilithSplitReadyV188=true;
-      saveAdventure();
-      lilithSplitConfirmedSessionV188=true;
-      ov.hidden=true;ov.style.display='none';ov.innerHTML='';
-      resolve(clone(state.meta.lilithSplit));
-    };
-  };
-}
-async function chooseLilithSplitV188(){
-  const roster=splitRowsV188();
-  if(roster.length<2){toast('2パーティー戦には2人以上の仲間が必要です');throw new Error('v188 lilith split requires two members');}
-  const ov=ensureLilithOverlayV188(),split=normalizeLilithSplitV188();
-  return await new Promise(resolve=>renderLilithSplitV188(ov,split,resolve));
-}
-
-/* Conversation lock: permit only the v188 formation while storyBusy is true. */
-const conversationAllowedTargetBaseV188=conversationAllowedTargetV171;
-conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithSplitOverlayV188')||conversationAllowedTargetBaseV188(target);
-
-/* Guarantee exactly one split opcode, placed immediately after the authored narration. */
-const lilithEventV188=STORY_EVENTS['pre:demonCastle:2'];
-if(lilithEventV188?.steps){
-  const cleaned=lilithEventV188.steps.filter(st=>!['lilithSplit','lilithSplitV186','lilithSplitV188'].includes(st?.[0]));
-  const i=cleaned.findIndex(st=>st?.[0]==='narrate'&&String(st?.[1]||'').includes('パーティーを2つ作ってください'));
-  cleaned.splice(i>=0?i+1:cleaned.length,0,['lilithSplitV188']);
-  lilithEventV188.steps=cleaned;
-}
-
-const runStoryStepsBaseV188=runStorySteps;
-runStorySteps=async function(steps=[]){
-  for(const st of steps){
-    if(st?.[0]==='lilithSplitV188')await chooseLilithSplitV188();
-    else await runStoryStepsBaseV188([st]);
-  }
-};
-
-/* Dedicated AREA 3 continuation. Do not call the stale v183-v186 wrappers here. */
-const startAdventureBattleBaseV188=startAdventureBattle;
-startAdventureBattle=async function(){
-  const w=currentWorld(),areaIndex=Number(state.adventure?.areaIndex)||0;
-  if(w?.id!=='demonCastle'||areaIndex!==2)return startAdventureBattleBaseV188();
-  if(!state.adventure.battleReady||state.adventure.completed||state.adventure.awaitingReport||storyBusy)return;
-
-  const enc=state.adventure.pendingEncounter||createAdventureEncounter();
-  const area=currentArea();
-  const bossEncounter=(((state.adventure.battleIndex||0)===2)||!!w.oneBattlePerArea)&&!!enc?.bossBattle;
-  if(!bossEncounter)return startAdventureBattleBaseV188();
-
-  const preKey='pre:demonCastle:2';
-  if(!storyDone(preKey)){
-    const ran=await runStoryEvent(preKey);
-    if(!ran&&!storyDone(preKey))return;
-  }else if(!validLilithSplitV188()){
-    await chooseLilithSplitV188();
-  }
-
-  /* If a migrated save already has a valid split, use it without an extra popup. */
-  if(!validLilithSplitV188())await chooseLilithSplitV188();
-  lilithSplitConfirmedSessionV188=true;
-
-  const split=currentLilithSplit();
-  state.adventure.pendingEncounter=enc;saveAdventure();
-  const postKey=STORY_EVENTS['post:demonCastle:2']?'post:demonCastle:2':'';
-  await startBattleLoaded({
-    mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:split.B,
-    useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,
-    bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,
-    storyWorldId:w.id,storyAreaIndex:areaIndex,worldId:w.id,
-    returnHomeAfterAreaClear:false,lilithSplitBattle:true,lilithSplit:split
-  });
-};
-
-window.__mobBuildVersion='v188';
-window.__mobV188LilithFlowFix=true;
-window.__mobV188Diagnostics=()=>({
-  world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
-  splitValid:validLilithSplitV188(),confirmed:lilithSplitConfirmedSessionV188,
-  stepTypes:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).map(st=>st?.[0]),
-  splitIndex:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).findIndex(st=>st?.[0]==='lilithSplitV188')
-});
-})();
-// UPDATE_V188_END
-
-
-// UPDATE_V189_BEGIN
-/* ===== MOB STORY v189: Lilith split bridge hard repair ===== */
-/* The authored Demon Castle flow must be:
-   Money's final line -> automatic party-split notice -> A/B formation -> Nyoro/Desert lines -> B battle.
-   Do not insert another tap-waiting narration between Money and the formation UI. */
-
-function hideLegacyLilithSplitOverlaysV189(){
-  for(const sel of ['#splitPartyOverlayV185','#lilithSplitOverlayV186','#lilithSplitOverlay']){
-    const el=document.querySelector(sel);if(!el)continue;
-    el.hidden=true;el.style.display='none';
-  }
-}
-
-async function lilithSplitBridgeV189(){
-  hideLegacyLilithSplitOverlaysV189();
-  const box=$('#storyNarration'),text=$('#storyNarrationText');
-  if(box&&text){
-    text.textContent='パーティーを2つ作ってください\nAパーティー：モブリリス、モブヘルリリス、モブキリンリリス\nBパーティー：モブクフリリス、モブリヴァリリス';
-    box.hidden=false;
-    await nextPaint();
-    box.classList.add('show');
-    await fixedDelay(900);
-    box.classList.remove('show');
-    await fixedDelay(180);
-    box.hidden=true;
-  }
-  const pending=chooseLilithSplitV188();
-  await nextPaint();
-  const badge=document.querySelector('#lilithSplitOverlayV188 small');
-  if(badge)badge.textContent='PARTY SPLIT / v189';
-  return await pending;
-}
-
-/* Replace the fragile narration + split pair with one bridge immediately after Money's final line. */
-const lilithEventV189=STORY_EVENTS['pre:demonCastle:2'];
-if(lilithEventV189?.steps){
-  const steps=lilithEventV189.steps;
-  const moneyIndex=steps.findIndex(st=>st?.[0]==='say'&&st?.[1]==='money'&&String(st?.[2]||'').includes('リリスがいる方は3体'));
-  if(moneyIndex>=0){
-    const head=steps.slice(0,moneyIndex+1);
-    const tail=steps.slice(moneyIndex+1).filter(st=>{
-      const type=st?.[0],text=String(st?.[1]||'');
-      if(['lilithSplit','lilithSplitV186','lilithSplitV188','lilithSplitBridgeV189'].includes(type))return false;
-      if(type==='narrate'&&text.includes('パーティーを2つ作ってください'))return false;
-      return true;
-    });
-    lilithEventV189.steps=[...head,['lilithSplitBridgeV189'],...tail];
-  }
-}
-
-const runStoryStepsBaseV189=runStorySteps;
-runStorySteps=async function(steps=[]){
-  for(const st of steps){
-    if(st?.[0]==='lilithSplitBridgeV189')await lilithSplitBridgeV189();
-    else await runStoryStepsBaseV189([st]);
-  }
-};
-
-window.__mobBuildVersion='v189';
-window.__mobV189LilithBridgeFix=true;
-window.__mobV189Diagnostics=()=>{
-  const steps=STORY_EVENTS['pre:demonCastle:2']?.steps||[];
-  const money=steps.findIndex(st=>st?.[0]==='say'&&st?.[1]==='money'&&String(st?.[2]||'').includes('リリスがいる方は3体'));
-  return {
-    moneyIndex:money,
-    nextType:steps[money+1]?.[0]||'',
-    bridgeCount:steps.filter(st=>st?.[0]==='lilithSplitBridgeV189').length,
-    staleSplitCount:steps.filter(st=>['lilithSplit','lilithSplitV186','lilithSplitV188'].includes(st?.[0])).length,
-    staleNarrationCount:steps.filter(st=>st?.[0]==='narrate'&&String(st?.[1]||'').includes('パーティーを2つ作ってください')).length
-  };
-};
-/* ===== END MOB STORY v189 ===== */
-// UPDATE_V189_END
-
-
-
-// UPDATE_V190_BEGIN
-/* v190: Demon Castle AREA 3 Lilith flow is now one dedicated transaction.
-   Do not use the v185-v189 split hooks for this scene.
-   Canonical order:
-   sisters reveal -> all authored dialogue -> Money's final line -> split narration
-   -> A/B formation -> Nyoro/Desert lines -> B battle -> A battle. */
-;(()=>{
-const LILITH_PRE_KEY_V190='pre:demonCastle:2';
-
-function hideLegacyLilithOverlaysV190(){
-  for(const sel of ['#splitPartyOverlayV185','#lilithSplitOverlayV186','#lilithSplitOverlayV188','#lilithSplitOverlay']){
-    const el=document.querySelector(sel);if(!el)continue;
-    el.hidden=true;el.style.display='none';
-  }
-}
-
-function splitRowsV190(){
-  const seen=new Set(),rows=[];
-  for(const row of (state.party||[])){
-    const id=canonicalPlayerId(row?.[0]);
-    if(!id||seen.has(id)||!player(id))continue;
-    seen.add(id);rows.push([id,Number(row?.[1])||5]);
-  }
-  return rows;
-}
-function normalizeLilithSplitV190(){
-  const roster=splitRowsV190(),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
-  const saved=state.meta?.lilithSplit;
-  const take=list=>(Array.isArray(list)?list:[])
-    .map(r=>canonicalPlayerId(r?.[0]))
-    .filter(id=>id&&valid.has(id)&&!used.has(id)&&used.add(id))
-    .map(id=>[...valid.get(id)]);
-  let A=take(saved?.A),B=take(saved?.B);
-  for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
-  if(!A.length||!B.length){
-    A=[];B=[];roster.forEach((row,i)=>(i%2?B:A).push([...row]));
-    if(!B.length&&A.length>1)B.push(A.pop());
-  }
-  return {A,B};
-}
-function validLilithSplitV190(){
-  const roster=splitRowsV190(),ids=new Set(roster.map(r=>r[0])),s=state.meta?.lilithSplit;
-  if(!s||!Array.isArray(s.A)||!Array.isArray(s.B)||!s.A.length||!s.B.length)return false;
-  const all=[...s.A,...s.B].map(r=>canonicalPlayerId(r?.[0]));
-  if(all.length!==ids.size||new Set(all).size!==all.length)return false;
-  return all.every(id=>ids.has(id));
-}
-function currentLilithSplitV190(){return normalizeLilithSplitV190();}
-function namesV190(rows){return rows.map(([id])=>player(id)?.name||id).join(' / ');}
-
-function ensureLilithOverlayV190(){
-  let ov=document.getElementById('lilithSplitOverlayV190');
-  if(ov)return ov;
-  ov=document.createElement('div');ov.id='lilithSplitOverlayV190';ov.hidden=true;
-  Object.assign(ov.style,{position:'fixed',inset:'0',zIndex:'2147483640',background:'rgba(4,4,10,.96)',display:'none',alignItems:'flex-start',justifyContent:'center',overflowY:'auto',padding:'calc(18px + env(safe-area-inset-top,0px)) 10px calc(18px + env(safe-area-inset-bottom,0px))',boxSizing:'border-box',touchAction:'pan-y'});
-  document.body.appendChild(ov);
-  for(const type of ['pointerdown','pointerup','touchstart','touchend','click'])ov.addEventListener(type,e=>{e.stopPropagation();},{passive:false});
-  return ov;
-}
-function renderLilithFormationV190(ov,split,resolve){
-  const roster=splitRowsV190(),team=id=>split.A.some(r=>r[0]===id)?'A':'B';
-  ov.hidden=false;ov.style.display='flex';
-  ov.innerHTML=`<section style="width:min(96vw,540px);margin:auto 0;background:#f8eee2;color:#241b20;border:4px solid #7b315f;border-radius:22px;padding:14px;box-sizing:border-box;box-shadow:0 20px 60px #000;max-height:94vh;overflow:auto;font-family:inherit">
-    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.16em;color:#78516f">PARTY SPLIT / v192</small>
-    <h2 style="margin:4px 0 7px;font-size:19px">リリス四姉妹戦 パーティー編成</h2>
-    <p style="font-size:10px;line-height:1.55;margin:0 0 9px">仲間をタップするとA/Bを移動します。</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px">
-      <div style="background:#64284f;color:#fff;border-radius:11px;padding:8px"><b>Aパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブリリス<br>モブヘルリリス<br>モブキリンリリス</small></div>
-      <div style="background:#28536d;color:#fff;border-radius:11px;padding:8px"><b>Bパーティー</b><small style="display:block;line-height:1.45;margin-top:3px">モブクフリリス<br>モブリヴァリリス</small></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px">${roster.map(([id,lv])=>{const q=player(id),t=team(id);return `<button type="button" data-v190-member="${id}" style="min-height:64px;display:grid;grid-template-columns:28px 1fr 40px;gap:5px;align-items:center;text-align:left;border:2px solid ${t==='A'?'#a33e61':'#3979aa'};background:${t==='A'?'#fff1f5':'#eef8ff'};color:#211921;border-radius:11px;padding:5px"><strong style="font-size:15px">${t}</strong><span><b style="display:block;font-size:10px">${q.name}</b><small>Lv${lv}</small></span><img src="${versionedPlay(q.image)}" alt="${q.name}" style="width:38px;height:48px;object-fit:contain"></button>`}).join('')}</div>
-    <div style="display:flex;gap:7px;justify-content:center;margin:10px 0"><b style="background:#64284f;color:#fff;padding:5px 10px;border-radius:999px">A ${split.A.length}人</b><b style="background:#28536d;color:#fff;padding:5px 10px;border-radius:999px">B ${split.B.length}人</b></div>
-    <div data-v190-confirm><button type="button" data-v190-decide style="width:100%;height:44px;border:0;border-radius:11px;background:#79355f;color:#fff;font-weight:900;font-size:12px">編成を決定</button></div>
-  </section>`;
-  bindImages(ov);
-  ov.querySelectorAll('[data-v190-member]').forEach(btn=>btn.onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    const id=canonicalPlayerId(btn.dataset.v190Member),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;
-    if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');
-    const i=from.findIndex(r=>r[0]===id);if(i<0)return;
-    to.push(from.splice(i,1)[0]);renderLilithFormationV190(ov,split,resolve);
-  });
-  ov.querySelector('[data-v190-decide]').onclick=e=>{
-    e.preventDefault();e.stopPropagation();
-    if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');
-    const box=ov.querySelector('[data-v190-confirm]');
-    box.innerHTML=`<div style="background:#fff;border:2px solid #80536f;border-radius:12px;padding:10px"><b style="display:block;font-size:12px;margin-bottom:6px">このパーティーで挑みますか？</b><small style="display:block;line-height:1.55;margin-bottom:9px">A：${namesV190(split.A)}<br>B：${namesV190(split.B)}</small><div style="display:grid;grid-template-columns:1fr 1fr;gap:7px"><button type="button" data-v190-yes style="height:42px;border:0;border-radius:10px;background:#79355f;color:#fff;font-weight:900">はい</button><button type="button" data-v190-no style="height:42px;border:1px solid #866b7e;border-radius:10px;background:#eee3e9;color:#2a2027;font-weight:900">いいえ</button></div></div>`;
-    box.querySelector('[data-v190-no]').onclick=ev=>{ev.preventDefault();ev.stopPropagation();renderLilithFormationV190(ov,split,resolve);};
-    box.querySelector('[data-v190-yes]').onclick=ev=>{
-      ev.preventDefault();ev.stopPropagation();
-      state.meta??={};state.meta.lilithSplit={A:clone(split.A),B:clone(split.B)};saveMeta();
-      state.adventure??={};state.adventure.lilithSplitReadyV190=true;saveAdventure();
-      ov.hidden=true;ov.style.display='none';ov.innerHTML='';
-      resolve(clone(state.meta.lilithSplit));
-    };
-  };
-}
-async function chooseLilithSplitV190(){
-  hideLegacyLilithOverlaysV190();
-  const roster=splitRowsV190();
-  if(roster.length<2){toast('2パーティー戦には2人以上の仲間が必要です');throw new Error('v190 lilith split requires two members');}
-  const ov=ensureLilithOverlayV190(),split=normalizeLilithSplitV190();
-  return await new Promise(resolve=>renderLilithFormationV190(ov,split,resolve));
-}
-
-
-function ensureLilithFormationButtonV192(){
-  const scene=$('#storyScene');
-  let gate=document.getElementById('lilithFormationGateV192');
-  if(gate&&gate.parentElement!==scene){gate.remove();gate=null;}
+function ensureLilithFormationGateV194(){
+  let gate=document.getElementById('lilithFormationGateV194');
   if(!gate){
-    gate=document.createElement('div');gate.id='lilithFormationGateV192';gate.hidden=true;
-    Object.assign(gate.style,{position:'absolute',inset:'0',zIndex:'2147483635',display:'none',alignItems:'center',justifyContent:'center',pointerEvents:'none',padding:'18px',boxSizing:'border-box'});
-    gate.innerHTML=`<button type="button" data-lilith-formation-v192 style="pointer-events:auto;width:min(84vw,330px);min-height:86px;border:4px solid #f4cce4;border-radius:18px;background:#6f2d59;color:#fff;box-shadow:0 12px 34px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,255,255,.18);font-family:inherit;font-weight:900;letter-spacing:.04em;padding:10px 14px;touch-action:manipulation;-webkit-tap-highlight-color:transparent"><span style="display:block;font-size:20px;line-height:1.25">パーティー編成</span><small style="display:block;margin-top:5px;font-size:10px;line-height:1.35;opacity:.92">A / B パーティーを決める</small></button>`;
-    scene.appendChild(gate);
+    gate=document.createElement('div');
+    gate.id='lilithFormationGateV194';
+    gate.hidden=true;
+    Object.assign(gate.style,{
+      position:'fixed',inset:'0',zIndex:'2147483640',display:'none',
+      alignItems:'center',justifyContent:'center',padding:'20px',boxSizing:'border-box',
+      background:'rgba(0,0,0,.18)',pointerEvents:'auto'
+    });
+    gate.innerHTML=`<button type="button" data-lilith-formation-v194 style="width:min(86vw,350px);min-height:92px;border:4px solid #f4cce4;border-radius:20px;background:#6f2d59;color:#fff;box-shadow:0 14px 36px rgba(0,0,0,.58),inset 0 0 0 2px rgba(255,255,255,.18);font-family:inherit;font-weight:900;letter-spacing:.04em;padding:12px 16px;touch-action:manipulation;-webkit-tap-highlight-color:transparent"><span style="display:block;font-size:21px;line-height:1.2">パーティー編成</span><small style="display:block;margin-top:6px;font-size:11px;line-height:1.35;opacity:.94">A / B パーティーを決める</small></button>`;
+    document.body.appendChild(gate);
   }
   return gate;
 }
-async function waitLilithFormationButtonV192(){
-  const gate=ensureLilithFormationButtonV192(),btn=gate.querySelector('[data-lilith-formation-v192]');
-  $('#storyBubble').hidden=true;
+
+async function waitLilithFormationGateV194(){
+  const gate=ensureLilithFormationGateV194();
+  const btn=gate.querySelector('[data-lilith-formation-v194]');
+  const bubble=$('#storyBubble');
+  if(bubble)bubble.hidden=true;
+  const narration=$('#storyNarration');
+  if(narration){narration.hidden=true;narration.classList.remove('show');}
   gate.hidden=false;gate.style.display='flex';
   await nextPaint();
   return await new Promise(resolve=>{
     let done=false;
     const finish=e=>{
       e?.preventDefault?.();e?.stopPropagation?.();
-      if(done)return;done=true;
+      if(done)return;
+      done=true;
       gate.hidden=true;gate.style.display='none';
       btn.onclick=null;
       resolve(true);
     };
     btn.onclick=finish;
-    btn.onpointerup=e=>{e.stopPropagation();};
-    btn.ontouchend=e=>{e.stopPropagation();};
   });
 }
 
-/* Conversation input stays locked except for the dedicated v190 formation overlay. */
-const conversationAllowedTargetBaseV190=conversationAllowedTargetV171;
-conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithSplitOverlayV190')||conversationAllowedTargetBaseV190(target);
+/* The formation button and split UI are intentionally outside #storyScene.
+   Permit only these two controls while storyBusy is true. */
+const conversationAllowedTargetBaseV194=conversationAllowedTargetV171;
+conversationAllowedTargetV171=target=>
+  !!target?.closest?.('#lilithFormationGateV194,#lilithSplitOverlay') ||
+  conversationAllowedTargetBaseV194(target);
 
-/* v193: the final Money dialogue uses its own local pointer waiter.
-   It does not use storyTapResolve, so the formation gate cannot be stranded
-   behind the shared story dialogue promise. Test mode is intentionally irrelevant. */
-async function storyLineLocalV193(key,line,displayName=null,anchorKey=null){
-  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),sceneEl=$('#storyScene');
-  $('#storySpeaker').textContent=displayName||info.name||'???';
-  $('#storyText').textContent=String(line??'');
-  const visualChars=Math.max(String(line||'').length,String(displayName||info.name||'').length);
-  bubble.style.width=`${clamp(132+Math.max(0,visualChars-5)*10,156,300)}px`;
-  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
-  await nextPaint();
-  const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
-  if(anchor){
-    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;
-    left=clamp(cx-br.width/2,8,scene.width-br.width-8);
-    top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);
-    bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
-  }else bubble.classList.add('no-arrow');
-  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;
-  await nextPaint();bubble.classList.add('show');
-
-  /* Critical difference from storySayLine(): this wait is local to this scene.
-     The global storyTapResolve is cleared so no older story wrapper can steal it. */
-  storyTapResolve=null;storyTapReadyAt=0;
-  await new Promise(resolve=>{
-    let done=false;const readyAt=performance.now()+90;
-    const advance=e=>{
-      if(done||performance.now()<readyAt)return;
-      done=true;e?.preventDefault?.();e?.stopPropagation?.();e?.stopImmediatePropagation?.();
-      sceneEl.removeEventListener('pointerup',advance,true);
-      resolve();
-    };
-    sceneEl.addEventListener('pointerup',advance,true);
-  });
-  bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);
-  await fixedDelay(180);bubble.hidden=true;
-}
-async function moneyLilithFormationBridgeV193(){
-  await storyLineLocalV193('money','リリスがいる方は3体');
-  await storyLineLocalV193('money','戦力の分け方が大事ね！');
-  const staleNarration=$('#storyNarration');
-  if(staleNarration){staleNarration.classList.remove('show');staleNarration.hidden=true;}
-  storyTapResolve=null;storyTapReadyAt=0;
-  const gate=ensureLilithFormationButtonV192();
-  gate.hidden=false;gate.style.display='flex';
-  await nextPaint();
-  await waitLilithFormationButtonV192();
+function hideLilithGateV194(){
+  const gate=document.getElementById('lilithFormationGateV194');
+  if(gate){gate.hidden=true;gate.style.display='none';}
 }
 
-async function runDemonCastleLilithPreV190(){
+async function runDemonCastleLilithPreV194(){
   if(storyBusy)return false;
-  storyBusy=true;let ok=false;
-  hideLegacyLilithOverlaysV190();
+  storyBusy=true;
+  let ok=false;
+  hideLilithGateV194();
   try{
     await openStoryScene('demonCastle',2);
 
-    /* Lilith appears alone. This is visual-only: never call old split hooks here. */
+    /* Lilith appears alone. */
     {const fx=castleFxV180('rose-summon-v180');try{await storyShowGuest('boss-lilith-castle',{slow:true});await fixedDelay(450);}finally{fx?.remove();}}
     await storySay('boss-lilith-castle','凄いね君たち');
     await storySay('boss-lilith-castle','グラディモブ\n強かったでしょ');
@@ -13220,7 +12601,7 @@ async function runDemonCastleLilithPreV190(){
     await storySay('boss-lilith-castle','行ってみないと分からないよね\nまあ');
     await storySay('boss-lilith-castle','行けないんだけどね');
 
-    /* Four sisters appear. Again visual-only. Formation must NOT open here. */
+    /* Four sisters appear. No formation logic is attached to this summon. */
     {const fx=castleFxV180('rose-ultimate-v180');try{await demonLilithSummonV106();await fixedDelay(650);}finally{fx?.remove();}}
     await storySay('boss-lilith-castle','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん');
     await storySay('pink','あれを全部相手は大変であります・・');
@@ -13229,19 +12610,24 @@ async function runDemonCastleLilithPreV190(){
     await storySay('jessie','どう分かれるの？');
     await storySay('riro','勇者様が\n決めればいいでス');
     await storySay('denden','そうでやんすね！');
+    await storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！');
 
-    /* v193: Money's final two lines and the center formation button are one
-       dedicated bridge with a local pointer waiter. No shared story promise. */
-    await moneyLilithFormationBridgeV193();
-    await chooseLilithSplitV190();
+    /* No narration Promise, no local pointer bridge, no automatic modal.
+       The user explicitly presses the center button. */
+    await waitLilithFormationGateV194();
+    await chooseSplitV181(LILITH_SPLIT_OPT_V194);
 
     await storySay('nyoro','素晴らしい采配ニョロ！');
     await storySay('desert','では、まずBパーティーの出陣だ！');
 
-    markStoryDone(LILITH_PRE_KEY_V190);
-    state.adventure??={};state.adventure.lilithFlowV190Done=true;saveAdventure();
+    markStoryDone(LILITH_PRE_KEY_V194);
+    state.adventure??={};
+    state.adventure.lilithFlowV194Done=true;
+    state.adventure.lilithSplitReadyV183=true;
+    saveAdventure();
     ok=true;
   }finally{
+    hideLilithGateV194();
     storyBusy=false;
   }
   if(!ok)return false;
@@ -13250,66 +12636,40 @@ async function runDemonCastleLilithPreV190(){
   return true;
 }
 
-/* Bypass every historical pre:demonCastle:2 runStorySteps patch. */
-const runStoryEventBaseV190=runStoryEvent;
+/* Replace only this one pre-boss story. All other stories use the v184 path. */
+const runStoryEventBaseV194=runStoryEvent;
 runStoryEvent=async function(key,forceHomeOverride=false){
-  if(key!==LILITH_PRE_KEY_V190)return runStoryEventBaseV190(key,forceHomeOverride);
-  if(state.adventure?.lilithFlowV190Done)return false;
-  return runDemonCastleLilithPreV190();
+  if(key!==LILITH_PRE_KEY_V194)return runStoryEventBaseV194(key,forceHomeOverride);
+  if(state.adventure?.lilithFlowV194Done)return false;
+  return runDemonCastleLilithPreV194();
 };
 
-/* Bypass all v183-v189 battle-start wrappers for this one boss encounter. */
-const startAdventureBattleBaseV190=startAdventureBattle;
+/* For AREA3 boss only, run the clean v194 story even if an older build already
+   marked pre:demonCastle:2 as viewed. Then fall back to the stable v184 battle path. */
+const startAdventureBattleBaseV194=startAdventureBattle;
 startAdventureBattle=async function(){
   const w=currentWorld(),areaIndex=Number(state.adventure?.areaIndex)||0;
-  if(w?.id!=='demonCastle'||areaIndex!==2)return startAdventureBattleBaseV190();
-  if(!state.adventure.battleReady||state.adventure.completed||state.adventure.awaitingReport||storyBusy)return;
-
-  const enc=state.adventure.pendingEncounter||createAdventureEncounter(),area=currentArea();
+  if(w?.id!=='demonCastle'||areaIndex!==2)return startAdventureBattleBaseV194();
+  if(!state.adventure?.battleReady||state.adventure.completed||state.adventure.awaitingReport||storyBusy)return;
+  const enc=state.adventure.pendingEncounter||createAdventureEncounter();
   const bossEncounter=(((state.adventure.battleIndex||0)===2)||!!w.oneBattlePerArea)&&!!enc?.bossBattle;
-  if(!bossEncounter)return startAdventureBattleBaseV190();
+  if(!bossEncounter)return startAdventureBattleBaseV194();
 
-  /* Old broken builds may have marked the story flag. v190 uses its own completion marker. */
-  if(!state.adventure?.lilithFlowV190Done){
-    const ran=await runDemonCastleLilithPreV190();
-    if(!ran&&!state.adventure?.lilithFlowV190Done)return;
+  if(!state.adventure?.lilithFlowV194Done){
+    const ran=await runDemonCastleLilithPreV194();
+    if(!ran&&!state.adventure?.lilithFlowV194Done)return;
   }
-  if(!validLilithSplitV190())await chooseLilithSplitV190();
-
-  const split=currentLilithSplitV190();
-  state.adventure.pendingEncounter=enc;saveAdventure();
-  const postKey=STORY_EVENTS['post:demonCastle:2']?'post:demonCastle:2':'';
-  await startBattleLoaded({
-    mode:'adventure',returnScreen:'adventure',waves:enc.waves,party:split.B,
-    useAdventureVitals:true,bg:area.bg,fallbackBg:w.fieldFallback,
-    bossBattle:!!enc.bossBattle,adventureLabel:enc.label,storyPostKey:postKey,
-    storyWorldId:w.id,storyAreaIndex:areaIndex,worldId:w.id,
-    returnHomeAfterAreaClear:false,lilithSplitBattle:true,lilithSplit:split
-  });
+  return startAdventureBattleBaseV194();
 };
 
-window.__mobBuildVersion='v193';
-window.__mobV190LilithSingleFlow=true;
-window.__mobV190Diagnostics=()=>({
-  world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
-  flowDone:!!state.adventure?.lilithFlowV190Done,splitValid:validLilithSplitV190(),
-  legacy185HookStillDefined:typeof lilithFamilyRoseSummonBaseV185!=='undefined'
+window.__mobBuildVersion='v194';
+window.__mobV194LilithCleanFlow=true;
+window.__mobV194LilithDiagnostics=()=>({
+  world:currentWorld()?.id||'',
+  area:Number(state.adventure?.areaIndex)||0,
+  flowDone:!!state.adventure?.lilithFlowV194Done,
+  splitReady:!!state.adventure?.lilithSplitReadyV183,
+  gateVisible:document.getElementById('lilithFormationGateV194')?.style.display==='flex'
 });
 })();
-// UPDATE_V190_END
-
-// UPDATE_V192_BEGIN
-/* v192: Demon Castle Lilith split uses an explicit center-screen formation button.
-   No automatic dialogue-to-formation transition is used. */
-window.__mobBuildVersion='v192';
-window.__mobV192LilithFormationButton=true;
-// UPDATE_V192_END
-
-// UPDATE_V193_BEGIN
-/* v193: final Money line -> formation button uses a local pointer bridge.
-   It is independent of Test Mode and of the shared storyTapResolve waiter. */
-window.__mobBuildVersion='v193';
-window.__mobV193LilithLocalBridge=true;
-// UPDATE_V193_END
-
-})();
+// UPDATE_V194_END
