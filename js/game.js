@@ -12230,7 +12230,7 @@ closeStoryScene=async function(...args){const sc=$('#storyScene');sc?.classList.
 window.__mobV180Runtime=true;
 // UPDATE_V180_END
 
-})();
+// v195: keep later update modules inside the main application scope.
 
 // UPDATE_V181_BEGIN
 (function(){
@@ -12513,80 +12513,116 @@ enemyAction=async function(actionIndex=1,enemyId){
 window.__mobV184Balance={bossHpMultiplier:BOSS_HP_MULTIPLIER_V184,umiDenden:true};
 })();
 // UPDATE_V184_END
-// UPDATE_V194_BEGIN
-/* v194: clean Demon Castle AREA3 Lilith flow.
-   Built from stable v184.  No v185-v193 Lilith patches are carried forward.
-   One authored path only: sisters reveal -> dialogue -> center formation button -> split -> battle. */
+
+// UPDATE_V195_BEGIN
+/* v195: isolated Lilith formation transition.
+   The final Money line has its own bridge, then all existing game/story UI is covered
+   by a white top-level layer. Formation runs only from the explicit button. */
 ;(()=>{
-const LILITH_PRE_KEY_V194='pre:demonCastle:2';
-const LILITH_SPLIT_OPT_V194={
+const LILITH_KEY_V195='pre:demonCastle:2';
+const LILITH_OPT_V195={
   storageKey:'lilithSplit',
   title:'リリス四姉妹戦 パーティー編成',
   aEnemies:'モブリリス / モブヘルリリス / モブキリンリリス',
   bEnemies:'モブクフリリス / モブリヴァリリス'
 };
+const realWaitV195=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
-function ensureLilithFormationGateV194(){
-  let gate=document.getElementById('lilithFormationGateV194');
-  if(!gate){
-    gate=document.createElement('div');
-    gate.id='lilithFormationGateV194';
-    gate.hidden=true;
-    Object.assign(gate.style,{
-      position:'fixed',inset:'0',zIndex:'2147483640',display:'none',
-      alignItems:'center',justifyContent:'center',padding:'20px',boxSizing:'border-box',
-      background:'rgba(0,0,0,.18)',pointerEvents:'auto'
+function ensureLilithIsolationV195(){
+  let ov=document.getElementById('lilithIsolationV195');
+  if(!ov){
+    ov=document.createElement('div');
+    ov.id='lilithIsolationV195';
+    ov.hidden=true;
+    Object.assign(ov.style,{
+      position:'fixed',inset:'0',zIndex:'2147482000',background:'#fff',color:'#111',
+      display:'none',alignItems:'center',justifyContent:'center',padding:'24px',
+      boxSizing:'border-box',fontFamily:'inherit',textAlign:'center',pointerEvents:'auto'
     });
-    gate.innerHTML=`<button type="button" data-lilith-formation-v194 style="width:min(86vw,350px);min-height:92px;border:4px solid #f4cce4;border-radius:20px;background:#6f2d59;color:#fff;box-shadow:0 14px 36px rgba(0,0,0,.58),inset 0 0 0 2px rgba(255,255,255,.18);font-family:inherit;font-weight:900;letter-spacing:.04em;padding:12px 16px;touch-action:manipulation;-webkit-tap-highlight-color:transparent"><span style="display:block;font-size:21px;line-height:1.2">パーティー編成</span><small style="display:block;margin-top:6px;font-size:11px;line-height:1.35;opacity:.94">A / B パーティーを決める</small></button>`;
-    document.body.appendChild(gate);
+    document.body.appendChild(ov);
   }
-  return gate;
+  return ov;
+}
+function isolationMarkupV195(mode='narration'){
+  const ov=ensureLilithIsolationV195();
+  if(mode==='narration'){
+    ov.innerHTML='<div style="width:min(86vw,360px)"><small style="display:block;font-size:11px;font-weight:900;letter-spacing:.18em;color:#777;margin-bottom:12px">NARRATION</small><div style="font-size:22px;line-height:1.5;font-weight:1000">パーティーを編成してください</div></div>';
+  }else if(mode==='button'){
+    ov.innerHTML='<button type="button" data-lilith-isolation-start-v195 style="position:relative;z-index:2147482500;width:min(84vw,360px);min-height:96px;border:4px solid #111;border-radius:20px;background:#fff;color:#111;box-shadow:0 12px 30px rgba(0,0,0,.18);font:inherit;font-weight:1000;font-size:22px;letter-spacing:.04em;touch-action:manipulation">パーティー編成<span style="display:block;margin-top:7px;font-size:11px;font-weight:800;color:#666">A / B パーティーを決める</span></button>';
+  }else if(mode==='nyoro'){
+    ov.innerHTML='<div style="width:min(86vw,360px)"><small style="display:block;font-size:11px;font-weight:900;color:#777;margin-bottom:10px">モブニョロ</small><div style="font-size:20px;line-height:1.5;font-weight:1000">素晴らしい采配ニョロ！</div></div>';
+  }else if(mode==='desert'){
+    ov.innerHTML='<div style="width:min(86vw,360px)"><small style="display:block;font-size:11px;font-weight:900;color:#777;margin-bottom:10px">モブデザート</small><div style="font-size:20px;line-height:1.5;font-weight:1000">では、まずBパーティーの出陣だ！</div></div>';
+  }else{
+    ov.innerHTML='<div style="font-size:18px;font-weight:1000">戦闘準備中…</div>';
+  }
+}
+function showIsolationV195(){const ov=ensureLilithIsolationV195();ov.hidden=false;ov.style.display='flex';}
+function hideIsolationV195(){const ov=document.getElementById('lilithIsolationV195');if(ov){ov.hidden=true;ov.style.display='none';ov.innerHTML='';}}
+
+/* storyBusy blocks controls outside #storyScene. Explicitly allow only the isolated flow,
+   split overlay and the confirmation dialog while this transition is active. */
+const allowedTargetBaseV195=conversationAllowedTargetV171;
+conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithIsolationV195,#lilithSplitOverlay,#dialogOverlay')||allowedTargetBaseV195(target);
+
+/* The historical final-line Promise has been the unstable bridge. Resolve the scene tap
+   ourselves as a fallback, so reaching the white isolation layer does not depend on it. */
+async function moneyFinalBridgeV195(){
+  const scene=$('#storyScene');
+  let finished=false,finishBridge;
+  const bridge=new Promise(resolve=>finishBridge=resolve);
+  const finish=()=>{if(finished)return;finished=true;scene?.removeEventListener('pointerup',tap,true);finishBridge(true);};
+  const ready=performance.now()+100;
+  const tap=e=>{
+    if(performance.now()<ready)return;
+    const text=String($('#storyText')?.textContent||'');
+    if(!text.includes('戦力の分け方が大事ね'))return;
+    /* Let the normal speech Promise continue if it is alive, but never depend on it. */
+    if(storyTapResolve){const r=storyTapResolve;storyTapResolve=null;storyTapReadyAt=0;try{r();}catch(_){}}
+    finish();
+  };
+  scene?.addEventListener('pointerup',tap,true);
+  Promise.resolve(storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！')).then(finish).catch(err=>{console.warn('[v195] Money bridge recovered',err);finish();});
+  await bridge;
+  await realWaitV195(100);
+  const bubble=$('#storyBubble');if(bubble){bubble.classList.remove('show');bubble.hidden=true;}
+  setStorySpeaking('money',false);
 }
 
-async function waitLilithFormationGateV194(){
-  const gate=ensureLilithFormationGateV194();
-  const btn=gate.querySelector('[data-lilith-formation-v194]');
-  const bubble=$('#storyBubble');
-  if(bubble)bubble.hidden=true;
-  const narration=$('#storyNarration');
-  if(narration){narration.hidden=true;narration.classList.remove('show');}
-  gate.hidden=false;gate.style.display='flex';
-  await nextPaint();
-  return await new Promise(resolve=>{
-    let done=false;
-    const finish=e=>{
-      e?.preventDefault?.();e?.stopPropagation?.();
-      if(done)return;
-      done=true;
-      gate.hidden=true;gate.style.display='none';
-      btn.onclick=null;
-      resolve(true);
-    };
-    btn.onclick=finish;
+async function isolatedSplitV195(){
+  const shell=ensureLilithIsolationV195();
+  isolationMarkupV195('narration');showIsolationV195();
+  const skip=document.getElementById('storySkipV174');if(skip)skip.hidden=true;
+  await realWaitV195(900);
+  isolationMarkupV195('button');
+  await new Promise(resolve=>{
+    const btn=shell.querySelector('[data-lilith-isolation-start-v195]');
+    const go=e=>{e?.preventDefault?.();e?.stopPropagation?.();btn.onclick=null;resolve(true);};
+    btn.onclick=go;
   });
+
+  /* Keep the entire old scene covered. The split UI and its yes/no dialog alone sit above it. */
+  let splitOv=document.getElementById('lilithSplitOverlay');
+  if(!splitOv){splitOv=document.createElement('div');splitOv.id='lilithSplitOverlay';splitOv.className='lilith-split-overlay';splitOv.hidden=true;document.body.appendChild(splitOv);}
+  const oldSplitZ=splitOv.style.zIndex,dialog=$('#dialogOverlay'),oldDialogZ=dialog?.style.zIndex||'';
+  splitOv.style.zIndex='2147483500';
+  if(dialog)dialog.style.zIndex='2147483600';
+  try{await chooseSplitV181(LILITH_OPT_V195);}finally{
+    splitOv.style.zIndex=oldSplitZ;
+    if(dialog)dialog.style.zIndex=oldDialogZ;
+  }
+  isolationMarkupV195('nyoro');await realWaitV195(650);
+  isolationMarkupV195('desert');await realWaitV195(750);
+  isolationMarkupV195('loading');
+  return true;
 }
 
-/* The formation button and split UI are intentionally outside #storyScene.
-   Permit only these two controls while storyBusy is true. */
-const conversationAllowedTargetBaseV194=conversationAllowedTargetV171;
-conversationAllowedTargetV171=target=>
-  !!target?.closest?.('#lilithFormationGateV194,#lilithSplitOverlay') ||
-  conversationAllowedTargetBaseV194(target);
-
-function hideLilithGateV194(){
-  const gate=document.getElementById('lilithFormationGateV194');
-  if(gate){gate.hidden=true;gate.style.display='none';}
-}
-
-async function runDemonCastleLilithPreV194(){
+async function runDemonCastleLilithPreV195(){
   if(storyBusy)return false;
-  storyBusy=true;
-  let ok=false;
-  hideLilithGateV194();
+  storyBusy=true;let ok=false;
+  hideIsolationV195();
   try{
     await openStoryScene('demonCastle',2);
-
-    /* Lilith appears alone. */
     {const fx=castleFxV180('rose-summon-v180');try{await storyShowGuest('boss-lilith-castle',{slow:true});await fixedDelay(450);}finally{fx?.remove();}}
     await storySay('boss-lilith-castle','凄いね君たち');
     await storySay('boss-lilith-castle','グラディモブ\n強かったでしょ');
@@ -12600,8 +12636,6 @@ async function runDemonCastleLilithPreV194(){
     await storySay('boss-lilith-castle','うーん\nそれはどうだろう');
     await storySay('boss-lilith-castle','行ってみないと分からないよね\nまあ');
     await storySay('boss-lilith-castle','行けないんだけどね');
-
-    /* Four sisters appear. No formation logic is attached to this summon. */
     {const fx=castleFxV180('rose-ultimate-v180');try{await demonLilithSummonV106();await fixedDelay(650);}finally{fx?.remove();}}
     await storySay('boss-lilith-castle','君たちは\nこのリリス四姉妹が遊んでくれるよ\nあ、僕も入れたら五姉妹か？\nいや僕は親？うーん');
     await storySay('pink','あれを全部相手は大変であります・・');
@@ -12610,66 +12644,61 @@ async function runDemonCastleLilithPreV194(){
     await storySay('jessie','どう分かれるの？');
     await storySay('riro','勇者様が\n決めればいいでス');
     await storySay('denden','そうでやんすね！');
-    await storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！');
+    await moneyFinalBridgeV195();
+    await isolatedSplitV195();
 
-    /* No narration Promise, no local pointer bridge, no automatic modal.
-       The user explicitly presses the center button. */
-    await waitLilithFormationGateV194();
-    await chooseSplitV181(LILITH_SPLIT_OPT_V194);
-
-    await storySay('nyoro','素晴らしい采配ニョロ！');
-    await storySay('desert','では、まずBパーティーの出陣だ！');
-
-    markStoryDone(LILITH_PRE_KEY_V194);
+    markStoryDone(LILITH_KEY_V195);
     state.adventure??={};
-    state.adventure.lilithFlowV194Done=true;
+    state.adventure.lilithFlowV195Done=true;
+    state.adventure.lilithFlowV194Done=true; /* bypass obsolete v194 route if present in an old save/build */
     state.adventure.lilithSplitReadyV183=true;
     saveAdventure();
     ok=true;
+  }catch(err){
+    console.error('[v195] Lilith isolated formation failed',err);
+    hideIsolationV195();
+    throw err;
   }finally{
-    hideLilithGateV194();
     storyBusy=false;
   }
   if(!ok)return false;
   await closeStoryScene(false);
-  if(screens.adventure?.classList?.contains('active'))renderAdventure();
   return true;
 }
 
-/* Replace only this one pre-boss story. All other stories use the v184 path. */
-const runStoryEventBaseV194=runStoryEvent;
+const runStoryEventBaseV195=runStoryEvent;
 runStoryEvent=async function(key,forceHomeOverride=false){
-  if(key!==LILITH_PRE_KEY_V194)return runStoryEventBaseV194(key,forceHomeOverride);
-  if(state.adventure?.lilithFlowV194Done)return false;
-  return runDemonCastleLilithPreV194();
+  if(key!==LILITH_KEY_V195)return runStoryEventBaseV195(key,forceHomeOverride);
+  if(state.adventure?.lilithFlowV195Done)return false;
+  return runDemonCastleLilithPreV195();
 };
 
-/* For AREA3 boss only, run the clean v194 story even if an older build already
-   marked pre:demonCastle:2 as viewed. Then fall back to the stable v184 battle path. */
-const startAdventureBattleBaseV194=startAdventureBattle;
+const startAdventureBattleBaseV195=startAdventureBattle;
 startAdventureBattle=async function(){
   const w=currentWorld(),areaIndex=Number(state.adventure?.areaIndex)||0;
-  if(w?.id!=='demonCastle'||areaIndex!==2)return startAdventureBattleBaseV194();
+  if(w?.id!=='demonCastle'||areaIndex!==2)return startAdventureBattleBaseV195();
   if(!state.adventure?.battleReady||state.adventure.completed||state.adventure.awaitingReport||storyBusy)return;
   const enc=state.adventure.pendingEncounter||createAdventureEncounter();
   const bossEncounter=(((state.adventure.battleIndex||0)===2)||!!w.oneBattlePerArea)&&!!enc?.bossBattle;
-  if(!bossEncounter)return startAdventureBattleBaseV194();
-
-  if(!state.adventure?.lilithFlowV194Done){
-    const ran=await runDemonCastleLilithPreV194();
-    if(!ran&&!state.adventure?.lilithFlowV194Done)return;
+  if(!bossEncounter)return startAdventureBattleBaseV195();
+  if(!state.adventure?.lilithFlowV195Done){
+    const ran=await runDemonCastleLilithPreV195();
+    if(!ran&&!state.adventure?.lilithFlowV195Done)return;
   }
-  return startAdventureBattleBaseV194();
+  try{return await startAdventureBattleBaseV195();}
+  finally{hideIsolationV195();}
 };
 
-window.__mobBuildVersion='v194';
-window.__mobV194LilithCleanFlow=true;
-window.__mobV194LilithDiagnostics=()=>({
-  world:currentWorld()?.id||'',
-  area:Number(state.adventure?.areaIndex)||0,
-  flowDone:!!state.adventure?.lilithFlowV194Done,
-  splitReady:!!state.adventure?.lilithSplitReadyV183,
-  gateVisible:document.getElementById('lilithFormationGateV194')?.style.display==='flex'
+window.__mobBuildVersion='v195';
+window.__mobV195LilithIsolation=true;
+window.__mobV195LilithDiagnostics=()=>({
+  world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
+  flowDone:!!state.adventure?.lilithFlowV195Done,splitReady:!!state.adventure?.lilithSplitReadyV183,
+  isolationVisible:document.getElementById('lilithIsolationV195')?.style.display==='flex',
+  splitVisible:!document.getElementById('lilithSplitOverlay')?.hidden
 });
 })();
-// UPDATE_V194_END
+// UPDATE_V195_END
+
+
+})();
