@@ -1,0 +1,28 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const game=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+function assert(ok,msg){if(!ok)throw new Error(msg);}
+const localStart=game.indexOf('async function storyLineLocalV193(');
+const bridgeStart=game.indexOf('async function moneyLilithFormationBridgeV193()');
+const flowStart=game.indexOf('async function runDemonCastleLilithPreV190()');
+assert(localStart>=0,'v193 local story waiter missing');
+assert(bridgeStart>localStart,'v193 bridge missing');
+assert(flowStart>bridgeStart,'v193 bridge must be defined before Lilith flow');
+const bridge=game.slice(localStart,flowStart);
+assert(bridge.includes("storyLineLocalV193('money','リリスがいる方は3体')"),'Money line 1 not local');
+assert(bridge.includes("storyLineLocalV193('money','戦力の分け方が大事ね！')"),'Money line 2 not local');
+assert(bridge.includes("sceneEl.addEventListener('pointerup',advance,true)"),'local pointer waiter missing');
+assert(bridge.includes('storyTapResolve=null;storyTapReadyAt=0;'),'shared story waiter not cleared');
+assert(bridge.includes('await waitLilithFormationButtonV192();'),'formation gate not connected');
+assert(!bridge.includes('state.test'),'test mode must not affect v193 bridge');
+const flowEnd=game.indexOf('/* Bypass every historical pre:demonCastle:2',flowStart);
+const flow=game.slice(flowStart,flowEnd);
+assert(flow.includes('await moneyLilithFormationBridgeV193();'),'Lilith flow does not call v193 bridge');
+assert(flow.includes('await chooseLilithSplitV190();'),'formation UI not called after gate');
+assert(!flow.includes("await storySay('money','リリスがいる方は3体\\n戦力の分け方が大事ね！')"),'old shared Money dialogue still in dedicated flow');
+assert(!flow.includes('state.test'),'test mode must not branch dedicated Lilith flow');
+assert(html.includes('<div class="title-version">v193</div>'),'title version is not v193');
+assert(game.includes("window.__mobBuildVersion='v193'"),'runtime version is not v193');
+console.log('v193 Lilith local bridge static test: PASS');

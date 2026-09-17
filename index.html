@@ -5337,7 +5337,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v192</div>
+      <div class="title-version">v193</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -20352,6 +20352,55 @@ async function waitLilithFormationButtonV192(){
 const conversationAllowedTargetBaseV190=conversationAllowedTargetV171;
 conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithSplitOverlayV190')||conversationAllowedTargetBaseV190(target);
 
+/* v193: the final Money dialogue uses its own local pointer waiter.
+   It does not use storyTapResolve, so the formation gate cannot be stranded
+   behind the shared story dialogue promise. Test mode is intentionally irrelevant. */
+async function storyLineLocalV193(key,line,displayName=null,anchorKey=null){
+  const info=storyActorInfo(key),bubble=$('#storyBubble'),anchor=storyAnchor(anchorKey||key),sceneEl=$('#storyScene');
+  $('#storySpeaker').textContent=displayName||info.name||'???';
+  $('#storyText').textContent=String(line??'');
+  const visualChars=Math.max(String(line||'').length,String(displayName||info.name||'').length);
+  bubble.style.width=`${clamp(132+Math.max(0,visualChars-5)*10,156,300)}px`;
+  bubble.hidden=false;bubble.classList.remove('show','no-arrow');setStorySpeaking(anchorKey||key,true);
+  await nextPaint();
+  const scene=sceneEl.getBoundingClientRect(),br=bubble.getBoundingClientRect();let left=(scene.width-br.width)/2,top=scene.height*.18;
+  if(anchor){
+    const ar=storyAnchorRect(anchor),cx=ar.left-scene.left+ar.width/2;
+    left=clamp(cx-br.width/2,8,scene.width-br.width-8);
+    top=clamp(ar.top-scene.top-br.height-10,66,scene.height-br.height-34);
+    bubble.style.setProperty('--arrow-x',`${clamp(cx-left,22,br.width-22)}px`);
+  }else bubble.classList.add('no-arrow');
+  bubble.style.left=`${left}px`;bubble.style.top=`${top}px`;
+  await nextPaint();bubble.classList.add('show');
+
+  /* Critical difference from storySayLine(): this wait is local to this scene.
+     The global storyTapResolve is cleared so no older story wrapper can steal it. */
+  storyTapResolve=null;storyTapReadyAt=0;
+  await new Promise(resolve=>{
+    let done=false;const readyAt=performance.now()+90;
+    const advance=e=>{
+      if(done||performance.now()<readyAt)return;
+      done=true;e?.preventDefault?.();e?.stopPropagation?.();e?.stopImmediatePropagation?.();
+      sceneEl.removeEventListener('pointerup',advance,true);
+      resolve();
+    };
+    sceneEl.addEventListener('pointerup',advance,true);
+  });
+  bubble.classList.remove('show');setStorySpeaking(anchorKey||key,false);
+  await fixedDelay(180);bubble.hidden=true;
+}
+async function moneyLilithFormationBridgeV193(){
+  await storyLineLocalV193('money','リリスがいる方は3体');
+  await storyLineLocalV193('money','戦力の分け方が大事ね！');
+  const staleNarration=$('#storyNarration');
+  if(staleNarration){staleNarration.classList.remove('show');staleNarration.hidden=true;}
+  storyTapResolve=null;storyTapReadyAt=0;
+  const gate=ensureLilithFormationButtonV192();
+  gate.hidden=false;gate.style.display='flex';
+  await nextPaint();
+  await waitLilithFormationButtonV192();
+}
+
 async function runDemonCastleLilithPreV190(){
   if(storyBusy)return false;
   storyBusy=true;let ok=false;
@@ -20383,16 +20432,10 @@ async function runDemonCastleLilithPreV190(){
     await storySay('jessie','どう分かれるの？');
     await storySay('riro','勇者様が\n決めればいいでス');
     await storySay('denden','そうでやんすね！');
-    await storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！');
 
-    /* v192: do not auto-open formation.  After Money's final line, present a
-       deliberate center-screen PARTY FORMATION button.  This removes the fragile
-       dialogue -> overlay automatic bridge entirely. */
-    const staleNarrationV192=$('#storyNarration');
-    if(staleNarrationV192){staleNarrationV192.classList.remove('show');staleNarrationV192.hidden=true;}
-    storyTapResolve=null;storyTapReadyAt=0;
-    await nextPaint();
-    await waitLilithFormationButtonV192();
+    /* v193: Money's final two lines and the center formation button are one
+       dedicated bridge with a local pointer waiter. No shared story promise. */
+    await moneyLilithFormationBridgeV193();
     await chooseLilithSplitV190();
 
     await storySay('nyoro','素晴らしい采配ニョロ！');
@@ -20448,7 +20491,7 @@ startAdventureBattle=async function(){
   });
 };
 
-window.__mobBuildVersion='v192';
+window.__mobBuildVersion='v193';
 window.__mobV190LilithSingleFlow=true;
 window.__mobV190Diagnostics=()=>({
   world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
@@ -20464,6 +20507,13 @@ window.__mobV190Diagnostics=()=>({
 window.__mobBuildVersion='v192';
 window.__mobV192LilithFormationButton=true;
 // UPDATE_V192_END
+
+// UPDATE_V193_BEGIN
+/* v193: final Money line -> formation button uses a local pointer bridge.
+   It is independent of Test Mode and of the shared storyTapResolve waiter. */
+window.__mobBuildVersion='v193';
+window.__mobV193LilithLocalBridge=true;
+// UPDATE_V193_END
 
 })();
 </script>
