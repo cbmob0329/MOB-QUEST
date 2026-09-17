@@ -1,0 +1,14 @@
+/* UPDATE_V181_BEGIN */
+.lilith-split-overlay.split-overlay-v181{z-index:9999!important;background:rgba(5,6,15,.88)!important;overflow:auto!important;padding:14px!important;align-items:flex-start!important}
+.split-card-v181{width:min(92vw,720px)!important;max-height:none!important;margin:5vh auto!important;overflow:visible!important;position:relative!important}
+.split-card-v181 .lilith-split-roster{max-height:50vh!important;overflow:auto!important;overscroll-behavior:contain}
+.split-card-v181 [data-v181-split-member]{min-height:92px!important}
+#figureGachaOverlayV96[data-result-locked-v181="1"]{cursor:default}
+.dc2-battle-fire-v181{position:absolute;inset:0;z-index:45;pointer-events:none;background:radial-gradient(circle at 50% 46%,rgba(255,246,160,.9) 0 5%,rgba(255,86,0,.55) 18%,rgba(80,0,0,0) 55%);animation:dc2FireV181 2s ease both}
+@keyframes dc2FireV181{0%{opacity:0;filter:brightness(1)}30%{opacity:1;filter:brightness(1.8)}100%{opacity:0;filter:brightness(2.5)}}
+.castle-fx-v180.dc2-fire-summon-v181{background:radial-gradient(ellipse at 50% 42%,rgba(255,235,120,.8),rgba(255,55,0,.45) 24%,transparent 58%);animation:dc2FxPulse181 1.5s ease both}
+.castle-fx-v180.dc2-hex-summon-v181{background:radial-gradient(circle at 50% 42%,rgba(145,70,255,.58),rgba(30,0,60,.15) 35%,transparent 66%);box-shadow:inset 0 0 90px rgba(110,35,255,.35);animation:dc2FxPulse181 1.8s ease both}
+.castle-fx-v180.dc2-maou-explosion-v181{background:radial-gradient(circle at 50% 42%,#fff 0 5%,#d38aff 12%,rgba(102,0,150,.88) 27%,rgba(0,0,0,.92) 58%,transparent 75%);animation:dc2Explosion181 5s ease both;z-index:80!important}
+@keyframes dc2FxPulse181{0%{opacity:0;transform:scale(.7)}45%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(1.25)}}
+@keyframes dc2Explosion181{0%{opacity:0;transform:scale(.2)}20%{opacity:1}62%{opacity:1;transform:scale(1.15);filter:brightness(2)}100%{opacity:0;transform:scale(1.5);filter:brightness(4)}}
+/* UPDATE_V181_END */
