@@ -12592,7 +12592,9 @@ async function moneyFinalBridgeV195(){
 async function isolatedSplitV195(){
   const shell=ensureLilithIsolationV195();
   isolationMarkupV195('narration');showIsolationV195();
-  const skip=document.getElementById('storySkipV174');if(skip)skip.hidden=true;
+  const skip=document.getElementById('storySkipV174');
+  const skipWasHidden=!!skip?.hidden;
+  if(skip)skip.hidden=true;
   await realWaitV195(900);
   isolationMarkupV195('button');
   await new Promise(resolve=>{
@@ -12639,9 +12641,15 @@ async function isolatedSplitV195(){
   };
   render();
   await new Promise(resolve=>shell.addEventListener('mob-v196-split-done',resolve,{once:true}));
-  isolationMarkupV195('nyoro');await realWaitV195(650);
-  isolationMarkupV195('desert');await realWaitV195(750);
-  isolationMarkupV195('loading');
+
+  /* v197: the white isolation layer ends the instant formation is confirmed.
+     All following dialogue and battle preparation must be rendered by the normal
+     story/battle UI, never inside the white formation layer. */
+  hideIsolationV195();
+  if(skip)skip.hidden=skipWasHidden;
+  await realWaitV195(80);
+  await storySay('nyoro','素晴らしい采配ニョロ！');
+  await storySay('desert','では、まずBパーティーの出陣だ！');
   return true;
 }
 
@@ -12713,13 +12721,17 @@ startAdventureBattle=async function(){
     const ran=await runDemonCastleLilithPreV195();
     if(!ran&&!state.adventure?.lilithFlowV195Done)return;
   }
+  /* v197: hard guarantee that the formation-only white layer can never cover
+     normal battle loading or the battle screen. */
+  hideIsolationV195();
   try{return await startAdventureBattleBaseV195();}
   finally{hideIsolationV195();}
 };
 
-window.__mobBuildVersion='v196';
+window.__mobBuildVersion='v197';
 window.__mobV195LilithIsolation=true;
 window.__mobV196LilithInlineFormation=true;
+window.__mobV197LilithRestoreAfterFormation=true;
 window.__mobV195LilithDiagnostics=()=>({
   world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
   flowDone:!!state.adventure?.lilithFlowV195Done,splitReady:!!state.adventure?.lilithSplitReadyV183,
