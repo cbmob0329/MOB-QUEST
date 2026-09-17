@@ -13070,7 +13070,7 @@ function renderLilithFormationV190(ov,split,resolve){
   const roster=splitRowsV190(),team=id=>split.A.some(r=>r[0]===id)?'A':'B';
   ov.hidden=false;ov.style.display='flex';
   ov.innerHTML=`<section style="width:min(96vw,540px);margin:auto 0;background:#f8eee2;color:#241b20;border:4px solid #7b315f;border-radius:22px;padding:14px;box-sizing:border-box;box-shadow:0 20px 60px #000;max-height:94vh;overflow:auto;font-family:inherit">
-    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.16em;color:#78516f">PARTY SPLIT / v191</small>
+    <small style="display:block;font-size:9px;font-weight:900;letter-spacing:.16em;color:#78516f">PARTY SPLIT / v192</small>
     <h2 style="margin:4px 0 7px;font-size:19px">リリス四姉妹戦 パーティー編成</h2>
     <p style="font-size:10px;line-height:1.55;margin:0 0 9px">仲間をタップするとA/Bを移動します。</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px">
@@ -13112,6 +13112,39 @@ async function chooseLilithSplitV190(){
   return await new Promise(resolve=>renderLilithFormationV190(ov,split,resolve));
 }
 
+
+function ensureLilithFormationButtonV192(){
+  const scene=$('#storyScene');
+  let gate=document.getElementById('lilithFormationGateV192');
+  if(gate&&gate.parentElement!==scene){gate.remove();gate=null;}
+  if(!gate){
+    gate=document.createElement('div');gate.id='lilithFormationGateV192';gate.hidden=true;
+    Object.assign(gate.style,{position:'absolute',inset:'0',zIndex:'2147483635',display:'none',alignItems:'center',justifyContent:'center',pointerEvents:'none',padding:'18px',boxSizing:'border-box'});
+    gate.innerHTML=`<button type="button" data-lilith-formation-v192 style="pointer-events:auto;width:min(84vw,330px);min-height:86px;border:4px solid #f4cce4;border-radius:18px;background:#6f2d59;color:#fff;box-shadow:0 12px 34px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,255,255,.18);font-family:inherit;font-weight:900;letter-spacing:.04em;padding:10px 14px;touch-action:manipulation;-webkit-tap-highlight-color:transparent"><span style="display:block;font-size:20px;line-height:1.25">パーティー編成</span><small style="display:block;margin-top:5px;font-size:10px;line-height:1.35;opacity:.92">A / B パーティーを決める</small></button>`;
+    scene.appendChild(gate);
+  }
+  return gate;
+}
+async function waitLilithFormationButtonV192(){
+  const gate=ensureLilithFormationButtonV192(),btn=gate.querySelector('[data-lilith-formation-v192]');
+  $('#storyBubble').hidden=true;
+  gate.hidden=false;gate.style.display='flex';
+  await nextPaint();
+  return await new Promise(resolve=>{
+    let done=false;
+    const finish=e=>{
+      e?.preventDefault?.();e?.stopPropagation?.();
+      if(done)return;done=true;
+      gate.hidden=true;gate.style.display='none';
+      btn.onclick=null;
+      resolve(true);
+    };
+    btn.onclick=finish;
+    btn.onpointerup=e=>{e.stopPropagation();};
+    btn.ontouchend=e=>{e.stopPropagation();};
+  });
+}
+
 /* Conversation input stays locked except for the dedicated v190 formation overlay. */
 const conversationAllowedTargetBaseV190=conversationAllowedTargetV171;
 conversationAllowedTargetV171=target=>!!target?.closest?.('#lilithSplitOverlayV190')||conversationAllowedTargetBaseV190(target);
@@ -13149,13 +13182,14 @@ async function runDemonCastleLilithPreV190(){
     await storySay('denden','そうでやんすね！');
     await storySay('money','リリスがいる方は3体\n戦力の分け方が大事ね！');
 
-    /* v191: the narration wait here was the actual freeze point on phones.
-       The formation overlay already contains the A/B opponent guide, so go
-       directly from Money's final bubble to formation with no extra tap wait. */
-    const staleNarrationV191=$('#storyNarration');
-    if(staleNarrationV191){staleNarrationV191.classList.remove('show');staleNarrationV191.hidden=true;}
+    /* v192: do not auto-open formation.  After Money's final line, present a
+       deliberate center-screen PARTY FORMATION button.  This removes the fragile
+       dialogue -> overlay automatic bridge entirely. */
+    const staleNarrationV192=$('#storyNarration');
+    if(staleNarrationV192){staleNarrationV192.classList.remove('show');staleNarrationV192.hidden=true;}
     storyTapResolve=null;storyTapReadyAt=0;
     await nextPaint();
+    await waitLilithFormationButtonV192();
     await chooseLilithSplitV190();
 
     await storySay('nyoro','素晴らしい采配ニョロ！');
@@ -13211,7 +13245,7 @@ startAdventureBattle=async function(){
   });
 };
 
-window.__mobBuildVersion='v191';
+window.__mobBuildVersion='v192';
 window.__mobV190LilithSingleFlow=true;
 window.__mobV190Diagnostics=()=>({
   world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
@@ -13220,5 +13254,12 @@ window.__mobV190Diagnostics=()=>({
 });
 })();
 // UPDATE_V190_END
+
+// UPDATE_V192_BEGIN
+/* v192: Demon Castle Lilith split uses an explicit center-screen formation button.
+   No automatic dialogue-to-formation transition is used. */
+window.__mobBuildVersion='v192';
+window.__mobV192LilithFormationButton=true;
+// UPDATE_V192_END
 
 })();
