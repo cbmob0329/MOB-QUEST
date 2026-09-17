@@ -12230,7 +12230,6 @@ closeStoryScene=async function(...args){const sc=$('#storyScene');sc?.classList.
 window.__mobV180Runtime=true;
 // UPDATE_V180_END
 
-})();
 
 // UPDATE_V181_BEGIN
 (function(){
@@ -12736,7 +12735,25 @@ startAdventureBattle=async function(){
 };
 
 /* Build marker visible from title/version areas that use runtime build text. */
-window.__mobBuildVersion='v186';
+window.__mobBuildVersion='v187';
 window.__mobV186LilithFormationPointFix=true;
+window.__mobOpenLilithFormationV186=chooseLilithSplitV186;
 })();
 // UPDATE_V186_END
+
+// UPDATE_V187_BEGIN
+/* v187: v181-v186 must execute inside the core game closure.
+   Previous builds placed them after the core closure, so strict-mode patch code
+   could not see state / chooseLilithSplit and stopped at runtime. */
+window.__mobBuildVersion='v187';
+window.__mobV187RuntimeScopeFix=true;
+window.__mobV187Diagnostics=()=>({
+  partyCount:Array.isArray(state.party)?state.party.length:0,
+  world:currentWorld()?.id||'',
+  area:Number(state.adventure?.areaIndex)||0,
+  lilithStepTypes:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).map(st=>st?.[0]),
+  lilithHasV186:(STORY_EVENTS['pre:demonCastle:2']?.steps||[]).some(st=>st?.[0]==='lilithSplitV186')
+});
+// UPDATE_V187_END
+
+})();
