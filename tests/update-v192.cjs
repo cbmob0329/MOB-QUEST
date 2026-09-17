@@ -1,0 +1,20 @@
+const fs=require('fs');
+const path=require('path');
+const root=path.resolve(__dirname,'..');
+const g=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
+function ok(cond,msg){if(!cond)throw new Error(msg);}
+ok(g.includes("window.__mobBuildVersion='v192'"),'build v192 missing');
+ok(g.includes("id='lilithFormationGateV192'")||g.includes("gate.id='lilithFormationGateV192'"),'v192 gate missing');
+ok(g.includes('data-lilith-formation-v192'),'formation button missing');
+const money=g.indexOf("await storySay('money','リリスがいる方は3体\\n戦力の分け方が大事ね！');");
+const gate=g.indexOf('await waitLilithFormationButtonV192();',money);
+const choose=g.indexOf('await chooseLilithSplitV190();',gate);
+const nyoro=g.indexOf("await storySay('nyoro','素晴らしい采配ニョロ！');",choose);
+ok(money>=0,'Money final line missing');
+ok(gate>money,'formation gate must follow Money line');
+ok(choose>gate,'formation overlay must open only after button tap');
+ok(nyoro>choose,'post-formation dialogue order wrong');
+const between=g.slice(money,choose);
+ok(!between.includes('storyNarrate('),'narration wait remains between Money and formation');
+ok(between.includes('waitLilithFormationButtonV192'),'explicit gate not in bridge');
+console.log('update-v192 PASS');

@@ -1,0 +1,17 @@
+const fs=require('node:fs');
+const s=fs.readFileSync('js/game.js','utf8');
+const start=s.indexOf('async function runDemonCastleLilithPreV190()');
+if(start<0)throw new Error('Lilith dedicated flow missing');
+const end=s.indexOf('/* Bypass every historical',start);
+const body=s.slice(start,end);
+const money=body.indexOf("await storySay('money','リリスがいる方は3体\\n戦力の分け方が大事ね！');");
+const choose=body.indexOf('await chooseLilithSplitV190();',money);
+if(money<0||choose<0)throw new Error('Money -> formation path missing');
+const between=body.slice(money,choose);
+if(/storyNarrate\s*\(/.test(between))throw new Error('blocking storyNarrate remains between Money and formation');
+if(!between.includes('storyTapResolve=null'))throw new Error('stale story tap guard missing');
+const after=body.slice(choose);
+if(!after.includes("await storySay('nyoro','素晴らしい采配ニョロ！');"))throw new Error('post-formation Nyoro line missing');
+if(!after.includes("await storySay('desert','では、まずBパーティーの出陣だ！');"))throw new Error('post-formation Desert line missing');
+if(!s.includes("window.__mobBuildVersion='v191'"))throw new Error('build marker not v191');
+console.log('v191 lilith direct formation test PASS');

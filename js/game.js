@@ -12601,6 +12601,7 @@ async function isolatedSplitV195(){
     btn.onclick=go;
   });
 
+<<<<<<< HEAD
   /* v196: the formation UI lives INSIDE the white isolation layer itself.
      Do not call chooseSplitV181 here: that helper is private to the v181 IIFE.
      Keeping the roster, confirmation, and buttons in this one layer also avoids
@@ -12639,6 +12640,18 @@ async function isolatedSplitV195(){
   };
   render();
   await new Promise(resolve=>shell.addEventListener('mob-v196-split-done',resolve,{once:true}));
+=======
+  /* Keep the entire old scene covered. The split UI and its yes/no dialog alone sit above it. */
+  let splitOv=document.getElementById('lilithSplitOverlay');
+  if(!splitOv){splitOv=document.createElement('div');splitOv.id='lilithSplitOverlay';splitOv.className='lilith-split-overlay';splitOv.hidden=true;document.body.appendChild(splitOv);}
+  const oldSplitZ=splitOv.style.zIndex,dialog=$('#dialogOverlay'),oldDialogZ=dialog?.style.zIndex||'';
+  splitOv.style.zIndex='2147483500';
+  if(dialog)dialog.style.zIndex='2147483600';
+  try{await chooseSplitV181(LILITH_OPT_V195);}finally{
+    splitOv.style.zIndex=oldSplitZ;
+    if(dialog)dialog.style.zIndex=oldDialogZ;
+  }
+>>>>>>> f51610d398df883925bdcd39b25a90c025784fd4
   isolationMarkupV195('nyoro');await realWaitV195(650);
   isolationMarkupV195('desert');await realWaitV195(750);
   isolationMarkupV195('loading');
@@ -12717,9 +12730,14 @@ startAdventureBattle=async function(){
   finally{hideIsolationV195();}
 };
 
+<<<<<<< HEAD
 window.__mobBuildVersion='v196';
 window.__mobV195LilithIsolation=true;
 window.__mobV196LilithInlineFormation=true;
+=======
+window.__mobBuildVersion='v195';
+window.__mobV195LilithIsolation=true;
+>>>>>>> f51610d398df883925bdcd39b25a90c025784fd4
 window.__mobV195LilithDiagnostics=()=>({
   world:currentWorld()?.id||'',area:Number(state.adventure?.areaIndex)||0,
   flowDone:!!state.adventure?.lilithFlowV195Done,splitReady:!!state.adventure?.lilithSplitReadyV183,

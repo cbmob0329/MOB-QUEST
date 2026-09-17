@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert');
+const src=fs.readFileSync(require('node:path').join(__dirname,'../js/update-v189.js'),'utf8');
+const calls=[];
+const ctx={console,window:{},document:{querySelector:()=>null},$:()=>null,nextPaint:async()=>{},fixedDelay:async()=>{},chooseLilithSplitV188:async()=>{calls.push('choose')},STORY_EVENTS:{'pre:demonCastle:2':{steps:[['say','money','リリスがいる方は3体\n戦力の分け方が大事ね！'],['narrate','パーティーを2つ作ってください\nA/B'],['lilithSplitV188'],['say','nyoro','素晴らしい采配ニョロ！'],['say','desert','では、まずBパーティーの出陣だ！']] }},runStorySteps:async steps=>{for(const s of steps)calls.push(s[0])}};
+vm.createContext(ctx);vm.runInContext(src,ctx);
+const steps=ctx.STORY_EVENTS['pre:demonCastle:2'].steps;
+const money=steps.findIndex(s=>s[0]==='say'&&s[1]==='money');
+assert.equal(steps[money+1][0],'lilithSplitBridgeV189');
+assert.equal(steps.filter(s=>s[0]==='lilithSplitBridgeV189').length,1);
+assert.equal(steps.filter(s=>['lilithSplit','lilithSplitV186','lilithSplitV188'].includes(s[0])).length,0);
+assert.equal(steps.filter(s=>s[0]==='narrate'&&String(s[1]).includes('パーティーを2つ作ってください')).length,0);
+(async()=>{await ctx.runStorySteps(steps);assert.deepEqual(calls,['say','choose','say','say']);console.log('v189 lilith bridge: OK')})().catch(e=>{console.error(e);process.exit(1)});
