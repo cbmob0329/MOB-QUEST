@@ -17,7 +17,6 @@ const TEMP_BALANCE = {
     riro:{hp:50,mp:2.7,atk:7.0,mag:6.6,def:3.5,res:4.1,spd:3.1},
     tetsu:{hp:57,mp:2.0,atk:8.4,mag:4.8,def:4.3,res:3.2,spd:2.7},
     lilith:{hp:49,mp:3.1,atk:5.9,mag:8.3,def:3.4,res:4.6,spd:3.0},
-    naraku:{hp:58,mp:2.7,atk:7.9,mag:7.8,def:4.0,res:4.0,spd:2.7},
   },
   bossSpecialEvery:3, critRate:.03, critPower:1.5, evadeMin:.02, evadeMax:.05,
   damageScale:{small:.78,medium:1.6,large:2.1,extra:2.45,extreme:2.72},
@@ -138,15 +137,6 @@ const MOB_DATA = {
         {name:'ローズ・ウォール・ストリート',image:'ult/44.png',cost:44,kind:'healAoeStun',power:2.25,type:'magic',heal:.25,chance:.30,desc:'味方全体HP/MP中回復＋敵全体大ダメージ＋30%でひるみ。'}
       ]
     },
-    {
-      id:'naraku', name:'モブナラク', image:'play/12.png', symbol:'魔', attribute:'闇', weapon:'太刀・大剣', role:'魔王系', passive:'魔王の系譜',
-      ults:[
-        {name:'ミラモブポイズン',image:'ult/45.png',cost:22,kind:'aoePoison',power:1.90,type:'physical',chance:.30,desc:'敵全体中ダメージ＋30%で毒。'},
-        {name:'ガーディアンシールド',image:'ult/46.png',cost:25,kind:'narakuShield',power:0,desc:'自身20%軽減＋味方全体10%軽減。'},
-        {name:'フル・ドラゴンフレイム',image:'ult/47.png',cost:34,kind:'selfAtkAoe',power:2.30,type:'magic',desc:'自身ATK小UP＋敵全体に火・闇の大ダメージ。'},
-        {name:'マスター・オブ・ピラミッド',image:'ult/48.png',cost:44,kind:'aoeDamage',power:2.78,type:'magic',desc:'敵全体極大ダメージ。'}
-      ]
-    }
   ],
 
   bosses: [
@@ -223,7 +213,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[175,1160,1430],mp:[55,290,350],atk:[67,900,970],mag:[65,900,970],def:[50,590,680],res:[60,670,760],spd:[54,420,480]},
   tetsu:{hp:[195,1300,1500],mp:[44,230,280],atk:[78,999,999],mag:[45,760,850],def:[64,710,800],res:[45,560,650],spd:[46,360,415]},
   lilith:{hp:[165,1100,1380],mp:[66,325,390],atk:[58,850,930],mag:[80,999,999],def:[46,570,660],res:[68,750,840],spd:[50,400,455]},
-  naraku:{hp:[200,1320,1500],mp:[58,295,355],atk:[76,980,999],mag:[76,980,999],def:[60,690,780],res:[60,690,780],spd:[46,360,415]}
 };
 // Fixed enemy stats: no weakening and no HP scaling based on enemy count or party size.
 TEMP_BALANCE.enemyProfiles={
@@ -315,7 +304,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[40,540,640],mag:[39,520,620],def:[38,490,590],res:[43,570,670],spd:[45,600,700]},
   tetsu:{hp:[130,1200,1500],mp:[90,1080,1380],atk:[45,600,700],mag:[35,460,560],def:[42,550,650],res:[35,450,550],spd:[40,540,640]},
   lilith:{hp:[110,1080,1380],mp:[110,1200,1500],atk:[35,480,580],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]},
-  naraku:{hp:[130,1200,1500],mp:[100,1140,1440],atk:[45,600,700],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]}
 };
 TEMP_BALANCE.enemyProfiles={
   normal:{hpBase:80,hpPerLevel:9,hpQuad:.10,atkBase:18,atkPerLevel:3.3,atkQuad:.002,magBase:18,magPerLevel:3.25,magQuad:.002,defBase:15,defPerLevel:2.6,defQuad:.002,resBase:15,resPerLevel:2.6,resQuad:.002,spdBase:16,spdPerLevel:3.2,spdQuad:.001},
@@ -405,7 +393,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[122,1150,1380],mp:[115,1230,1480],atk:[30,400,500],mag:[44,610,760],def:[36,470,580],res:[50,680,820],spd:[42,560,690]},
   tetsu:{hp:[155,1320,1580],mp:[72,820,980],atk:[46,620,760],mag:[18,220,280],def:[56,720,880],res:[34,450,560],spd:[20,260,320]},
   lilith:{hp:[105,980,1180],mp:[120,1300,1560],atk:[28,360,440],mag:[52,720,880],def:[28,360,440],res:[46,620,760],spd:[44,590,720]},
-  naraku:{hp:[135,1260,1520],mp:[110,1210,1460],atk:[52,700,860],mag:[46,640,790],def:[42,560,690],res:[42,560,690],spd:[34,450,550]}
 };
 
 {
@@ -663,7 +650,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(let i=0;i<4;i++)u('riro',i,{attackElement:'風'});
   for(let i=0;i<4;i++)u('tetsu',i,{attackElement:'地'});
   u('lilith',0,{attackElement:'闇'});u('lilith',1,{kind:'lilithSisters',power:1.30,type:'magic',attackElement:'闇',desc:'火・雷・光・水の中ダメージをランダムな敵へ各1回。'});u('lilith',2,{attackElement:'闇'});
-  u('naraku',0,{attackElement:'闇'});u('naraku',2,{attackElement:'闇・火'});u('naraku',3,{attackElement:'闇'});
 
   // Canonical magic sprite sequences.
   MOB_DATA.magicCatalog=[
@@ -894,7 +880,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[320,3650,4200],mp:[55,300,360],atk:[62,420,510],mag:[20,180,220],def:[64,520,635],res:[42,400,490],spd:[30,205,250]},
     kaijin:{hp:[300,3400,3950],mp:[75,420,510],atk:[62,405,495],mag:[42,300,365],def:[50,470,575],res:[48,430,525],spd:[50,260,315]},
     lilith:{hp:[230,2850,3350],mp:[120,680,820],atk:[32,230,280],mag:[65,430,525],def:[38,360,440],res:[62,500,610],spd:[52,265,320]},
-    naraku:{hp:[300,3500,4050],mp:[95,560,680],atk:[60,390,475],mag:[55,355,435],def:[58,480,585],res:[58,480,585],spd:[42,240,295]}
   };
 
   const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
@@ -938,11 +923,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
   setup('lilith',['風','火'],{無:0,火:.10,水:-.08,雷:0,地:-.05,風:.10,光:-.15,闇:.25},{poison:.60,paralyze:.50,burn:.55,sleep:.60,confuse:.60,stun:.50},
     [['mira',1],['hoku',1],['hono',1],['mirama',18],['hokuma',24],['honoma',28],['miramazone',46]],
     [['repeat-intro',16],['noise-scratch',20],['chill-lofi',38]]);
-  setup('naraku',['地','水'],{無:0,火:-.05,水:.10,雷:-.05,地:.12,風:-.08,光:-.12,闇:.22},{poison:.60,paralyze:.50,burn:.50,sleep:.55,confuse:.55,stun:.60},
-    [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
-    [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
 
-  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:50,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:70,unfinishedBook:80,demonCastle2:85};
+  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:30,sea:40,grassland2:45,tribe:55,rural2:55,neon2:60,magma2:65,desert2:70,demonCastle:75,unfinishedBook:80,demonCastle2:85};
   MOB_DATA.recommendedLevels=recommended;
   for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
 }
@@ -1057,7 +1039,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[360,4550,5300],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[74,650,795],res:[50,500,610],spd:[34,225,275]},
     kaijin:{hp:[340,4250,5000],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[60,580,710],res:[58,540,660],spd:[57,290,355]},
     lilith:{hp:[260,3550,4200],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[44,450,550],res:[72,620,760],spd:[60,295,360]},
-    naraku:{hp:[340,4400,5150],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[68,600,735],res:[68,600,735],spd:[48,265,325]}
   });
 }
 /* ===== END MOB QUEST v107 PLAYER POWER REBALANCE ===== */
@@ -1085,7 +1066,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[320,1700,1950],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[64,520,635],res:[42,400,490],spd:[34,225,275]},
     kaijin:{hp:[300,1550,1800],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[50,470,575],res:[48,430,525],spd:[57,290,355]},
     lilith:{hp:[230,1250,1450],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[38,360,440],res:[62,500,610],spd:[60,295,360]},
-    naraku:{hp:[300,1650,1900],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[58,480,585],res:[58,480,585],spd:[48,265,325]}
   });
 
   /* Keep enemy HP/DEF/RES identity from v105, but lower only raw offensive growth slightly. */
@@ -1134,7 +1114,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   addLearn('tetsu', [['sugar-chair',8],['party-backspin',18],['caramel-hello-back',28],['mob-tetsu-walk',32]]);
   addLearn('kaijin', [['shoga-entry',1],['wasabi-stomach',22],['shichimi-suicide',42]]);
   addLearn('lilith', [['candy-neon',1],['caramel-hello-back',18],['maple-air-chair',30],['gold-routine',36],['shichimi-suicide',42]]);
-  addLearn('naraku', [['sugar-chair',1],['shoga-entry',12],['caramel-hello-back',22],['wasabi-stomach',30],['maple-air-chair',42]]);
 
   /* Selected monsters learn support magic too. Authored boss specials remain untouched. */
   const enemySupport={
@@ -1232,7 +1211,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   add('tetsu','technique','dorayaki-dance',24);add('tetsu','technique','scratch-sword',30);add('tetsu','technique','mob-windmill',36);add('tetsu','technique','fast-beat-slash',44);
   add('kaijin','technique','intro-cross',28);add('kaijin','technique','mob-windmill',38);add('kaijin','magic','soul-energy',50);
   add('lilith','technique','best-selection',26);add('lilith','magic','rainbow1990',34);add('lilith','magic','neo-meteor-power',54);
-  add('naraku','technique','intro-cross',28);add('naraku','technique','mob-windmill',38);add('naraku','magic','soul-energy',50);
 
   /* 雑魚の既存状態異常攻撃名を、ダメージ付き特技名へ正式分離。 */
   const statusEnemyMap={
@@ -1286,7 +1264,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   add('pink','magic','crash-bomb',24);
   add('yusha','magic','rainbow1990',36);
   add('money','magic','neo-meteor-power',56);
-  add('naraku','magic','soul-energy',50);
 
   add('yusha','technique','scratch-sword',26);
   add('riro','technique','lofi-splash',34);
@@ -1337,7 +1314,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{...TEMP_BALANCE.playerTargets.tetsu,hp:[260,1450,1700],atk:[77,580,700],mag:[26,245,300]},
     kaijin:{...TEMP_BALANCE.playerTargets.kaijin,hp:[240,1400,1650],atk:[77,555,675],mag:[51,420,510]},
     lilith:{...TEMP_BALANCE.playerTargets.lilith,hp:[190,1200,1450],atk:[39,320,390],mag:[81,600,735]},
-    naraku:{...TEMP_BALANCE.playerTargets.naraku,hp:[240,1400,1650],atk:[75,535,645],mag:[68,500,605]}
   });
 
   /* Ordinary enemies only: HP about -8%, DEF/MND about -9 to -10%. ATK/MAG/SPD are untouched. */
@@ -1408,8 +1384,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
 {
   const byId=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
   const tribe=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='tribe');
-  if(tribe){tribe.recommendedLevel=50;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
-  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=50;
+  if(tribe){tribe.recommendedLevel=55;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
+  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=55;
   const kukuri=byId('t-kukuri');if(kukuri){kukuri.evasion=.10;kukuri.special='モリカリブーメラン';kukuri.kind='aoe';kukuri.skillElement='風';kukuri.skillType='physical';}
   const tough=byId('t-tough');if(tough){tough.v141ToughnessBody=true;tough.v141AlternateAoe=true;}
   const hisui=byId('t-hisui');if(hisui){hisui.special='マイナスオーラ';hisui.kind='v141MinusAura';hisui.power=0;hisui.chance=.70;hisui.skillElement='闇';hisui.skillType='magic';hisui.specialEvery=3;hisui.v141LivingDead=true;}
@@ -1452,3 +1428,43 @@ for(const [element,id] of Object.entries(_v73Middle)){
 }
 // ===== END MOB QUEST v142 DATA =====
 
+/* ===== MOB QUEST v199: PLAYER MP / HERO / NEKOKU BALANCE ===== */
+{
+  MOB_DATA.playerBalanceVersion=199;
+  MOB_DATA.maxPlayerMp=999;
+
+  /* MP growth: Lv60 sits roughly 350-500 for every playable character,
+     while Mob Money remains the highest core value at about 700 on Lv99. */
+  const mpTargetsV199={
+    yusha:[90,550,660], pink:[85,530,640], desert:[75,535,645], nyoro:[90,530,640],
+    nekoku:[100,600,720], jessie:[96,550,665], denden:[85,530,640], money:[125,700,850],
+    riro:[105,620,750], tetsu:[70,535,640], kaijin:[90,540,650], lilith:[120,680,820]
+  };
+  for(const [id,curve] of Object.entries(mpTargetsV199)){
+    if(TEMP_BALANCE.playerTargets?.[id])TEMP_BALANCE.playerTargets[id].mp=[...curve];
+  }
+
+  /* Mob Hero: every base stat +5%, including the newly balanced MP curve. */
+  const heroTargetV199=TEMP_BALANCE.playerTargets?.yusha;
+  if(heroTargetV199){
+    for(const key of ['hp','mp','atk','mag','def','res','spd']){
+      if(Array.isArray(heroTargetV199[key]))heroTargetV199[key]=heroTargetV199[key].map(v=>Math.round(Number(v||0)*1.05));
+    }
+  }
+
+  /* Mob Hero: offensive ultimate coefficients +10%.
+     The common v160 ultimate trim still applies later, so this is exactly +10%
+     relative to the current in-battle coefficients. */
+  const heroV199=(MOB_DATA.players||[]).find(p=>p.id==='yusha');
+  if(heroV199){
+    for(const u of heroV199.ults||[]){
+      if(Number(u.power)>0)u.power=Number((Number(u.power)*1.10).toFixed(4));
+    }
+  }
+}
+/* ===== END MOB QUEST v199 ===== */
+
+
+/* ===== MOB STORY v200: REMOVED PLAYER DATA =====
+   Removed-player records are intentionally absent from all playable balance and learnset tables.
+   ===== END MOB STORY v200 ===== */

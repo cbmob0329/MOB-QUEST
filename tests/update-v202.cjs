@@ -1,0 +1,18 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const data=fs.readFileSync('js/data.js','utf8');
+const patch=fs.readFileSync('js/update-v202.js','utf8');
+const ctx={window:{}};vm.createContext(ctx);vm.runInContext(data+'\n'+patch+'\n;globalThis.__d=MOB_DATA;',ctx);
+const d=ctx.__d, enemy=id=>d.enemyCatalog.find(e=>e.id===id), world=id=>d.adventureWorlds.find(w=>w.id===id);
+assert.equal(world('rural2').recommendedLevel,58);
+assert.deepEqual([enemy('r2-hitode').levelMin,enemy('r2-hitode').levelMax],[58,60]);
+assert.deepEqual([enemy('m2-honoslime').levelMin,enemy('m2-honoslime').levelMax],[64,66]);
+assert.deepEqual([enemy('d2-mummy').levelMin,enemy('d2-mummy').levelMax],[67,70]);
+assert.equal(enemy('book-minion').levelMin,75);
+assert.equal(world('tribe').areas[0].boss[0].level,55);
+assert.equal(world('magma2').areas[3].boss[0].level,72);
+assert.equal(world('desert2').areas[2].boss[0].level,72);
+assert.equal(ctx.window.__mobBuildVersion,'v202');
+const html=fs.readFileSync('index.html','utf8');
+assert(html.includes('<div class="title-version">v202</div>'));
+assert(html.includes('// UPDATE_V202_BEGIN'));
+console.log('v202 enemy level retune: PASS');

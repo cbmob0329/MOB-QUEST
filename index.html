@@ -5337,7 +5337,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v198</div>
+      <div class="title-version">v202</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -5767,7 +5767,6 @@ const TEMP_BALANCE = {
     riro:{hp:50,mp:2.7,atk:7.0,mag:6.6,def:3.5,res:4.1,spd:3.1},
     tetsu:{hp:57,mp:2.0,atk:8.4,mag:4.8,def:4.3,res:3.2,spd:2.7},
     lilith:{hp:49,mp:3.1,atk:5.9,mag:8.3,def:3.4,res:4.6,spd:3.0},
-    naraku:{hp:58,mp:2.7,atk:7.9,mag:7.8,def:4.0,res:4.0,spd:2.7},
   },
   bossSpecialEvery:3, critRate:.03, critPower:1.5, evadeMin:.02, evadeMax:.05,
   damageScale:{small:.78,medium:1.6,large:2.1,extra:2.45,extreme:2.72},
@@ -5888,15 +5887,6 @@ const MOB_DATA = {
         {name:'ローズ・ウォール・ストリート',image:'ult/44.png',cost:44,kind:'healAoeStun',power:2.25,type:'magic',heal:.25,chance:.30,desc:'味方全体HP/MP中回復＋敵全体大ダメージ＋30%でひるみ。'}
       ]
     },
-    {
-      id:'naraku', name:'モブナラク', image:'play/12.png', symbol:'魔', attribute:'闇', weapon:'太刀・大剣', role:'魔王系', passive:'魔王の系譜',
-      ults:[
-        {name:'ミラモブポイズン',image:'ult/45.png',cost:22,kind:'aoePoison',power:1.90,type:'physical',chance:.30,desc:'敵全体中ダメージ＋30%で毒。'},
-        {name:'ガーディアンシールド',image:'ult/46.png',cost:25,kind:'narakuShield',power:0,desc:'自身20%軽減＋味方全体10%軽減。'},
-        {name:'フル・ドラゴンフレイム',image:'ult/47.png',cost:34,kind:'selfAtkAoe',power:2.30,type:'magic',desc:'自身ATK小UP＋敵全体に火・闇の大ダメージ。'},
-        {name:'マスター・オブ・ピラミッド',image:'ult/48.png',cost:44,kind:'aoeDamage',power:2.78,type:'magic',desc:'敵全体極大ダメージ。'}
-      ]
-    }
   ],
 
   bosses: [
@@ -5973,7 +5963,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[175,1160,1430],mp:[55,290,350],atk:[67,900,970],mag:[65,900,970],def:[50,590,680],res:[60,670,760],spd:[54,420,480]},
   tetsu:{hp:[195,1300,1500],mp:[44,230,280],atk:[78,999,999],mag:[45,760,850],def:[64,710,800],res:[45,560,650],spd:[46,360,415]},
   lilith:{hp:[165,1100,1380],mp:[66,325,390],atk:[58,850,930],mag:[80,999,999],def:[46,570,660],res:[68,750,840],spd:[50,400,455]},
-  naraku:{hp:[200,1320,1500],mp:[58,295,355],atk:[76,980,999],mag:[76,980,999],def:[60,690,780],res:[60,690,780],spd:[46,360,415]}
 };
 // Fixed enemy stats: no weakening and no HP scaling based on enemy count or party size.
 TEMP_BALANCE.enemyProfiles={
@@ -6065,7 +6054,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[120,1140,1440],mp:[100,1140,1440],atk:[40,540,640],mag:[39,520,620],def:[38,490,590],res:[43,570,670],spd:[45,600,700]},
   tetsu:{hp:[130,1200,1500],mp:[90,1080,1380],atk:[45,600,700],mag:[35,460,560],def:[42,550,650],res:[35,450,550],spd:[40,540,640]},
   lilith:{hp:[110,1080,1380],mp:[110,1200,1500],atk:[35,480,580],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]},
-  naraku:{hp:[130,1200,1500],mp:[100,1140,1440],atk:[45,600,700],mag:[43,580,680],def:[38,490,590],res:[43,570,670],spd:[40,540,640]}
 };
 TEMP_BALANCE.enemyProfiles={
   normal:{hpBase:80,hpPerLevel:9,hpQuad:.10,atkBase:18,atkPerLevel:3.3,atkQuad:.002,magBase:18,magPerLevel:3.25,magQuad:.002,defBase:15,defPerLevel:2.6,defQuad:.002,resBase:15,resPerLevel:2.6,resQuad:.002,spdBase:16,spdPerLevel:3.2,spdQuad:.001},
@@ -6155,7 +6143,6 @@ TEMP_BALANCE.playerTargets={
   riro:{hp:[122,1150,1380],mp:[115,1230,1480],atk:[30,400,500],mag:[44,610,760],def:[36,470,580],res:[50,680,820],spd:[42,560,690]},
   tetsu:{hp:[155,1320,1580],mp:[72,820,980],atk:[46,620,760],mag:[18,220,280],def:[56,720,880],res:[34,450,560],spd:[20,260,320]},
   lilith:{hp:[105,980,1180],mp:[120,1300,1560],atk:[28,360,440],mag:[52,720,880],def:[28,360,440],res:[46,620,760],spd:[44,590,720]},
-  naraku:{hp:[135,1260,1520],mp:[110,1210,1460],atk:[52,700,860],mag:[46,640,790],def:[42,560,690],res:[42,560,690],spd:[34,450,550]}
 };
 
 {
@@ -6413,7 +6400,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   for(let i=0;i<4;i++)u('riro',i,{attackElement:'風'});
   for(let i=0;i<4;i++)u('tetsu',i,{attackElement:'地'});
   u('lilith',0,{attackElement:'闇'});u('lilith',1,{kind:'lilithSisters',power:1.30,type:'magic',attackElement:'闇',desc:'火・雷・光・水の中ダメージをランダムな敵へ各1回。'});u('lilith',2,{attackElement:'闇'});
-  u('naraku',0,{attackElement:'闇'});u('naraku',2,{attackElement:'闇・火'});u('naraku',3,{attackElement:'闇'});
 
   // Canonical magic sprite sequences.
   MOB_DATA.magicCatalog=[
@@ -6644,7 +6630,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[320,3650,4200],mp:[55,300,360],atk:[62,420,510],mag:[20,180,220],def:[64,520,635],res:[42,400,490],spd:[30,205,250]},
     kaijin:{hp:[300,3400,3950],mp:[75,420,510],atk:[62,405,495],mag:[42,300,365],def:[50,470,575],res:[48,430,525],spd:[50,260,315]},
     lilith:{hp:[230,2850,3350],mp:[120,680,820],atk:[32,230,280],mag:[65,430,525],def:[38,360,440],res:[62,500,610],spd:[52,265,320]},
-    naraku:{hp:[300,3500,4050],mp:[95,560,680],atk:[60,390,475],mag:[55,355,435],def:[58,480,585],res:[58,480,585],spd:[42,240,295]}
   };
 
   const P=id=>(MOB_DATA.players||[]).find(x=>x.id===id);
@@ -6688,11 +6673,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
   setup('lilith',['風','火'],{無:0,火:.10,水:-.08,雷:0,地:-.05,風:.10,光:-.15,闇:.25},{poison:.60,paralyze:.50,burn:.55,sleep:.60,confuse:.60,stun:.50},
     [['mira',1],['hoku',1],['hono',1],['mirama',18],['hokuma',24],['honoma',28],['miramazone',46]],
     [['repeat-intro',16],['noise-scratch',20],['chill-lofi',38]]);
-  setup('naraku',['地','水'],{無:0,火:-.05,水:.10,雷:-.05,地:.12,風:-.08,光:-.12,闇:.22},{poison:.60,paralyze:.50,burn:.50,sleep:.55,confuse:.55,stun:.60},
-    [['mira',12],['mirama',24],['gore',28],['nepu',30],['miramazone',46]],
-    [['mirasword',1],['goresword',1],['nepusword',1],['repeat-intro',18],['miramasword',34],['goremasword',38],['nepumasword',42]]);
 
-  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:25,sea:30,grassland2:35,tribe:50,rural2:45,neon2:50,magma2:55,desert2:60,demonCastle:70,unfinishedBook:80,demonCastle2:85};
+  const recommended={grassland:5,desert:10,rural:15,neon:20,magma:30,sea:40,grassland2:45,tribe:55,rural2:55,neon2:60,magma2:65,desert2:70,demonCastle:75,unfinishedBook:80,demonCastle2:85};
   MOB_DATA.recommendedLevels=recommended;
   for(const w of MOB_DATA.adventureWorlds||[])if(Object.prototype.hasOwnProperty.call(recommended,w.id))w.recommendedLevel=recommended[w.id];
 }
@@ -6807,7 +6789,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[360,4550,5300],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[74,650,795],res:[50,500,610],spd:[34,225,275]},
     kaijin:{hp:[340,4250,5000],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[60,580,710],res:[58,540,660],spd:[57,290,355]},
     lilith:{hp:[260,3550,4200],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[44,450,550],res:[72,620,760],spd:[60,295,360]},
-    naraku:{hp:[340,4400,5150],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[68,600,735],res:[68,600,735],spd:[48,265,325]}
   });
 }
 /* ===== END MOB QUEST v107 PLAYER POWER REBALANCE ===== */
@@ -6835,7 +6816,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{hp:[320,1700,1950],mp:[62,330,400],atk:[72,540,655],mag:[24,230,280],def:[64,520,635],res:[42,400,490],spd:[34,225,275]},
     kaijin:{hp:[300,1550,1800],mp:[84,470,570],atk:[72,520,630],mag:[48,390,475],def:[50,470,575],res:[48,430,525],spd:[57,290,355]},
     lilith:{hp:[230,1250,1450],mp:[135,760,920],atk:[36,300,365],mag:[76,560,685],def:[38,360,440],res:[62,500,610],spd:[60,295,360]},
-    naraku:{hp:[300,1650,1900],mp:[108,620,750],atk:[70,500,605],mag:[64,465,565],def:[58,480,585],res:[58,480,585],spd:[48,265,325]}
   });
 
   /* Keep enemy HP/DEF/RES identity from v105, but lower only raw offensive growth slightly. */
@@ -6884,7 +6864,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   addLearn('tetsu', [['sugar-chair',8],['party-backspin',18],['caramel-hello-back',28],['mob-tetsu-walk',32]]);
   addLearn('kaijin', [['shoga-entry',1],['wasabi-stomach',22],['shichimi-suicide',42]]);
   addLearn('lilith', [['candy-neon',1],['caramel-hello-back',18],['maple-air-chair',30],['gold-routine',36],['shichimi-suicide',42]]);
-  addLearn('naraku', [['sugar-chair',1],['shoga-entry',12],['caramel-hello-back',22],['wasabi-stomach',30],['maple-air-chair',42]]);
 
   /* Selected monsters learn support magic too. Authored boss specials remain untouched. */
   const enemySupport={
@@ -6982,7 +6961,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   add('tetsu','technique','dorayaki-dance',24);add('tetsu','technique','scratch-sword',30);add('tetsu','technique','mob-windmill',36);add('tetsu','technique','fast-beat-slash',44);
   add('kaijin','technique','intro-cross',28);add('kaijin','technique','mob-windmill',38);add('kaijin','magic','soul-energy',50);
   add('lilith','technique','best-selection',26);add('lilith','magic','rainbow1990',34);add('lilith','magic','neo-meteor-power',54);
-  add('naraku','technique','intro-cross',28);add('naraku','technique','mob-windmill',38);add('naraku','magic','soul-energy',50);
 
   /* 雑魚の既存状態異常攻撃名を、ダメージ付き特技名へ正式分離。 */
   const statusEnemyMap={
@@ -7036,7 +7014,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
   add('pink','magic','crash-bomb',24);
   add('yusha','magic','rainbow1990',36);
   add('money','magic','neo-meteor-power',56);
-  add('naraku','magic','soul-energy',50);
 
   add('yusha','technique','scratch-sword',26);
   add('riro','technique','lofi-splash',34);
@@ -7087,7 +7064,6 @@ for(const [element,id] of Object.entries(_v73Middle)){
     tetsu:{...TEMP_BALANCE.playerTargets.tetsu,hp:[260,1450,1700],atk:[77,580,700],mag:[26,245,300]},
     kaijin:{...TEMP_BALANCE.playerTargets.kaijin,hp:[240,1400,1650],atk:[77,555,675],mag:[51,420,510]},
     lilith:{...TEMP_BALANCE.playerTargets.lilith,hp:[190,1200,1450],atk:[39,320,390],mag:[81,600,735]},
-    naraku:{...TEMP_BALANCE.playerTargets.naraku,hp:[240,1400,1650],atk:[75,535,645],mag:[68,500,605]}
   });
 
   /* Ordinary enemies only: HP about -8%, DEF/MND about -9 to -10%. ATK/MAG/SPD are untouched. */
@@ -7158,8 +7134,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
 {
   const byId=id=>(MOB_DATA.enemyCatalog||[]).find(e=>e.id===id);
   const tribe=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='tribe');
-  if(tribe){tribe.recommendedLevel=50;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
-  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=50;
+  if(tribe){tribe.recommendedLevel=55;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
+  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=55;
   const kukuri=byId('t-kukuri');if(kukuri){kukuri.evasion=.10;kukuri.special='モリカリブーメラン';kukuri.kind='aoe';kukuri.skillElement='風';kukuri.skillType='physical';}
   const tough=byId('t-tough');if(tough){tough.v141ToughnessBody=true;tough.v141AlternateAoe=true;}
   const hisui=byId('t-hisui');if(hisui){hisui.special='マイナスオーラ';hisui.kind='v141MinusAura';hisui.power=0;hisui.chance=.70;hisui.skillElement='闇';hisui.skillType='magic';hisui.specialEvery=3;hisui.v141LivingDead=true;}
@@ -7201,6 +7177,47 @@ for(const [element,id] of Object.entries(_v73Middle)){
   each('ウルモブリリス',e=>e.v142Passive='闇の支配者');
 }
 // ===== END MOB QUEST v142 DATA =====
+
+/* ===== MOB QUEST v199: PLAYER MP / HERO / NEKOKU BALANCE ===== */
+{
+  MOB_DATA.playerBalanceVersion=199;
+  MOB_DATA.maxPlayerMp=999;
+
+  /* MP growth: Lv60 sits roughly 350-500 for every playable character,
+     while Mob Money remains the highest core value at about 700 on Lv99. */
+  const mpTargetsV199={
+    yusha:[90,550,660], pink:[85,530,640], desert:[75,535,645], nyoro:[90,530,640],
+    nekoku:[100,600,720], jessie:[96,550,665], denden:[85,530,640], money:[125,700,850],
+    riro:[105,620,750], tetsu:[70,535,640], kaijin:[90,540,650], lilith:[120,680,820]
+  };
+  for(const [id,curve] of Object.entries(mpTargetsV199)){
+    if(TEMP_BALANCE.playerTargets?.[id])TEMP_BALANCE.playerTargets[id].mp=[...curve];
+  }
+
+  /* Mob Hero: every base stat +5%, including the newly balanced MP curve. */
+  const heroTargetV199=TEMP_BALANCE.playerTargets?.yusha;
+  if(heroTargetV199){
+    for(const key of ['hp','mp','atk','mag','def','res','spd']){
+      if(Array.isArray(heroTargetV199[key]))heroTargetV199[key]=heroTargetV199[key].map(v=>Math.round(Number(v||0)*1.05));
+    }
+  }
+
+  /* Mob Hero: offensive ultimate coefficients +10%.
+     The common v160 ultimate trim still applies later, so this is exactly +10%
+     relative to the current in-battle coefficients. */
+  const heroV199=(MOB_DATA.players||[]).find(p=>p.id==='yusha');
+  if(heroV199){
+    for(const u of heroV199.ults||[]){
+      if(Number(u.power)>0)u.power=Number((Number(u.power)*1.10).toFixed(4));
+    }
+  }
+}
+/* ===== END MOB QUEST v199 ===== */
+
+
+/* ===== MOB STORY v200: REMOVED PLAYER DATA =====
+   Removed-player records are intentionally absent from all playable balance and learnset tables.
+   ===== END MOB STORY v200 ===== */
 (() => {
 'use strict';
 
@@ -7427,7 +7444,7 @@ function weaponStatsText(w,scale=1){if(!w)return'なし';const arr=Object.entrie
 function weaponTraitText(w){return w?.traitLabel||weaponTraits(w).map(t=>t.label).filter(Boolean).join(' / ')||'特性なし';}
 function weaponAllowedText(p){return playerWeaponTypes(p).join(' / ');}
 function currentPlayerLevel(pid){return state.party.find(x=>canonicalPlayerId(x[0])===canonicalPlayerId(pid))?.[1]||5;}
-function weaponStatsForEquipment(p,lv,eq){const raw=rawBaseStats(p,lv),b=weaponStatBonus(eq),ab=armorStatBonus(p.id),fb=figureStatBonus(p.id),out={...raw};for(const k of WEAPON_STAT_KEYS)if(k in out)out[k]=Math.round((out[k]||0)+(b[k]||0)+(ab[k]||0)+(fb[k]||0));return out;}
+function weaponStatsForEquipment(p,lv,eq){const raw=rawBaseStats(p,lv),b=weaponStatBonus(eq),ab=armorStatBonus(p.id),fb=figureStatBonus(p.id),out={...raw};for(const k of WEAPON_STAT_KEYS)if(k in out)out[k]=Math.round((out[k]||0)+(b[k]||0)+(ab[k]||0)+(fb[k]||0));out.maxMp=Math.min(999,Math.max(0,Math.round(out.maxMp||0)));return out;}
 function equipmentStatRows(p,lv,eq){const raw=rawBaseStats(p,lv),st=weaponStatsForEquipment(p,lv,eq),keyMap={HP:'maxHp',MP:'maxMp',ATK:'atk',MAG:'mag',DEF:'def',MND:'res',SPD:'spd'};return Object.entries(keyMap).map(([k,key])=>`<span class="${st[key]>raw[key]?'boosted':''}"><small>${k}</small><b>${st[key]}</b>${st[key]>raw[key]?`<em>+${st[key]-raw[key]}</em>`:''}</span>`).join('');}
 function equipmentDetailMarkup(pid){const p=player(pid),lv=currentPlayerLevel(pid),eq=equipmentFor(pid),raw=rawBaseStats(p,lv),st=weaponStatsForEquipment(p,lv,eq),fake={...p,id:p.id,equipment:eq,maxHp:st.maxHp,hp:st.maxHp,figureEffects:figureEffectsFor(pid)},labels={maxHp:'HP',maxMp:'MP',atk:'ATK',mag:'MAG',def:'DEF',res:'MND',spd:'SPD'};const statRows=Object.entries(labels).map(([k,n])=>{const d=st[k]-raw[k];return`<div><span>${n}</span><b>${st[k]}</b><small>基礎 ${raw[k]}${d?` / 装備 +${d}`:''}</small></div>`;}).join('');const elems=['火','水','雷','風','地','光','闇','無'].map(el=>{const wr=weaponResistance(fake,el)+(el==='闇'?weaponDarkResist(fake):0),fr=figureResistanceTotal(pid,el),effectiveCut=1-(1-clamp(wr,0,.95))*(1-clamp(fr,0,.95));return`<div><span>${el}耐性</span><b>${figurePercentText(effectiveCut)}</b><small>武器 ${figurePercentText(wr)} / FIG ${figurePercentText(fr)}</small></div>`;}).join('');const fe=figureEffectsFor(pid),status=[['poison','毒'],['burn','やけど'],['paralyze','マヒ'],['sleep','眠り'],['stun','ひるみ']].map(([k,n])=>`<div><span>${n}耐性</span><b>${figurePercentText(.20+Number(fe.statusResist?.[k]||0))}</b><small>基礎20% + FIG/共鳴 ${figurePercentText(Number(fe.statusResist?.[k]||0))}</small></div>`).join(''),crit=TEMP_BALANCE.critRate+weaponCritBonus(fake)+Number(fe.crit||0),evade=weaponEvasion(fake)+Number(fe.evade||0),acc=1+weaponTraitSum(fake,'accuracy')+Number(fe.accuracy||0),misc=[`会心率 ${figurePercentText(crit)}`,`基本命中 100% / 補正 ${Math.round((acc-1)*100)>=0?'+':''}${Math.round((acc-1)*100)}%`,`回避率 ${figurePercentText(evade)}`,`物理軽減 ${figurePercentText(weaponPhysicalCut(fake)+Number(fe.physicalCut||0))}`,`ダメージ軽減 ${figurePercentText(Number(fe.damageCut||0))}`,`回復量 +${figurePercentText(Number(fe.healBoost||0))}`,`EXP +${figurePercentText(Number(fe.expBonus||0))}`,`コイン +${figurePercentText(Number(fe.goldBonus||0))}`,`必殺CT -${Number(fe.ultimateCtCut||0)}ターン`];return`<div class="status-detail-grid">${statRows}</div><h3>属性耐性</h3><div class="status-detail-grid resist">${elems}</div><h3>状態異常耐性</h3><div class="status-detail-grid resist">${status}</div><h3>戦闘特性</h3><div class="status-detail-misc">${misc.map(x=>`<span>${x}</span>`).join('')}</div>${figureResonanceMarkup(pid,true)}`;}
 function openEquipmentDetail(pid){let ov=$('#statusDetailOverlay');if(!ov){ov=document.createElement('div');ov.id='statusDetailOverlay';ov.className='status-detail-overlay';ov.innerHTML='<div class="status-detail-card"><div class="settings-head"><div><small>STATUS DETAIL</small><h2 id="statusDetailTitle">詳細ステータス</h2></div><button class="sheet-close" data-close-status-detail type="button">×</button></div><div id="statusDetailBody"></div></div>';document.body.appendChild(ov);ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-close-status-detail]'))ov.hidden=true;});}$('#statusDetailTitle').textContent=`${player(pid)?.name||''} / Lv${currentPlayerLevel(pid)}`;$('#statusDetailBody').innerHTML=equipmentDetailMarkup(pid);ov.hidden=false;}
@@ -9825,9 +9842,9 @@ function saveCampCheckpoint(){const cp={worldIndex:state.adventure.worldIndex,ar
 function restoreCampCheckpoint(){const cp=state.adventure.checkpoint,reviveCount=Math.max(Number(state.meta?.firstGrassReviveCount)||0,state.meta?.firstGrassReviveUsed?1:0),starterGrant=!!state.meta?.starterGrantReceived,diamonds=Math.max(0,Number(state.meta?.diamonds)||0);if(cp){state.adventure={...state.adventure,...clone(cp),checkpoint:clone(cp)};state.coins=Number(cp.coins)||0;if(cp.meta){state.meta={...defaultMeta(),...clone(cp.meta)};const restoredReviveCount=Math.max(reviveCount,Number(state.meta?.firstGrassReviveCount)||0,state.meta?.firstGrassReviveUsed?1:0);state.meta.firstGrassReviveCount=Math.min(2,restoredReviveCount);state.meta.firstGrassReviveUsed=state.meta.firstGrassReviveCount>0;if(starterGrant)state.meta.starterGrantReceived=true;state.meta.diamonds=Math.max(diamonds,Number(state.meta.diamonds)||0);state.meta.coins=state.coins;saveMeta();}if(Array.isArray(cp.party)){state.party=clone(cp.party).map(x=>Array.isArray(x)?[canonicalPlayerId(x[0]),x[1]]:x);saveParty();}}else state.adventure=defaultAdventure();saveAdventure();}
 
 function growthValue(lv,curve){lv=clamp(Number(lv)||1,1,120);const [v1,v99,v120=v99]=curve;if(lv<=99){const t=(lv-1)/98;return Math.round(v1+(v99-v1)*t);}const t=(lv-99)/21;return Math.round(v99+(v120-v99)*t);}
-function rawBaseStats(p,lv){const t=TEMP_BALANCE.playerTargets?.[p.id];if(!t){const old=TEMP_BALANCE.playerGrowth[p.id],b=TEMP_BALANCE.base;return{maxHp:Math.round(b.hp+old.hp*lv),maxMp:Math.round(b.mp+old.mp*lv),atk:Math.round(b.atk+old.atk*lv),mag:Math.round(b.mag+old.mag*lv),def:Math.round(b.def+old.def*lv),res:Math.round(b.res+old.res*lv),spd:Math.round(b.spd+old.spd*lv)};}return{maxHp:growthValue(lv,t.hp),maxMp:growthValue(lv,t.mp),atk:growthValue(lv,t.atk),mag:growthValue(lv,t.mag),def:growthValue(lv,t.def),res:growthValue(lv,t.res),spd:growthValue(lv,t.spd)};}
+function rawBaseStats(p,lv){const t=TEMP_BALANCE.playerTargets?.[p.id];if(!t){const old=TEMP_BALANCE.playerGrowth[p.id],b=TEMP_BALANCE.base;return{maxHp:Math.round(b.hp+old.hp*lv),maxMp:Math.min(999,Math.round(b.mp+old.mp*lv)),atk:Math.round(b.atk+old.atk*lv),mag:Math.round(b.mag+old.mag*lv),def:Math.round(b.def+old.def*lv),res:Math.round(b.res+old.res*lv),spd:Math.round(b.spd+old.spd*lv)};}return{maxHp:growthValue(lv,t.hp),maxMp:Math.min(999,growthValue(lv,t.mp)),atk:growthValue(lv,t.atk),mag:growthValue(lv,t.mag),def:growthValue(lv,t.def),res:growthValue(lv,t.res),spd:growthValue(lv,t.spd)};}
 function baseStats(p,lv){return weaponStatsForEquipment(p,lv,equipmentFor(p.id));}
-function buildAlly(p,lv,vital){lv=clamp(Number(lv)||1,1,testLevel200V171()?200:120);const equipment=clone(equipmentFor(p.id)),figureEquipment=clone(figureEquipmentFor(p.id)),figureEffects=figureEffectsFor(p.id),s=weaponStatsForEquipment(p,lv,equipment),hp=vital?clamp(Number(vital.hp)||0,0,s.maxHp):s.maxHp,vs=vital?.status||{};return{...p,equipment,figureEquipment,figureEffects,level:lv,...s,hp,mpNow:vital?clamp(Number(vital.mp)||0,0,s.maxMp):s.maxMp,dead:vital?.dead===true||hp<=0,guard:0,guardTurns:0,barrier:0,atkBuff:0,atkBuffTurns:0,atkDebuff:0,atkDebuffTurns:0,defBuff:0,defBuffTurns:0,spdBuff:0,spdBuffTurns:0,spdDebuff:0,spdDebuffTurns:0,allBuff:0,allBuffTurns:0,damageCut:0,damageCutTurns:0,status:{poison:Number(vs.poison)||0,burn:Number(vs.burn)||0,sleep:Number(vs.sleep)||0,stun:Number(vs.stun)||0,paralyze:Number(vs.paralyze)||0,confuse:Number(vs.confuse)||0},pinkReviveUsed:false,lilithReviveUsed:false,transformed:false,narakuStacks:0,missionBuff:0,nextSupportTurn:rint(2,5)};}
+function buildAlly(p,lv,vital){lv=clamp(Number(lv)||1,1,testLevel200V171()?200:120);const equipment=clone(equipmentFor(p.id)),figureEquipment=clone(figureEquipmentFor(p.id)),figureEffects=figureEffectsFor(p.id),s=weaponStatsForEquipment(p,lv,equipment),hp=vital?clamp(Number(vital.hp)||0,0,s.maxHp):s.maxHp,vs=vital?.status||{};return{...p,equipment,figureEquipment,figureEffects,level:lv,...s,hp,mpNow:vital?clamp(Number(vital.mp)||0,0,s.maxMp):s.maxMp,dead:vital?.dead===true||hp<=0,guard:0,guardTurns:0,barrier:0,atkBuff:0,atkBuffTurns:0,atkDebuff:0,atkDebuffTurns:0,defBuff:0,defBuffTurns:0,spdBuff:0,spdBuffTurns:0,spdDebuff:0,spdDebuffTurns:0,allBuff:0,allBuffTurns:0,damageCut:0,damageCutTurns:0,status:{poison:Number(vs.poison)||0,burn:Number(vs.burn)||0,sleep:Number(vs.sleep)||0,stun:Number(vs.stun)||0,paralyze:Number(vs.paralyze)||0,confuse:Number(vs.confuse)||0},pinkReviveUsed:false,lilithReviveUsed:false,transformed:false,missionBuff:0,nextSupportTurn:rint(2,5)};}
 function enemyStatPreview(t,lv,groupSize=1,partySize=4){
   t=t||{category:'normal'};lv=clamp(Number(lv)||1,1,120);const profile=TEMP_BALANCE.enemyProfiles?.[t.category]||TEMP_BALANCE.enemyProfiles.normal,mods=t.mods||{};
   const curve=(base,per,quad=0)=>base+lv*per+lv*lv*quad;
@@ -10055,7 +10072,7 @@ function fx(type='slash',target){if(target==null)target=(type==='buff'||type==='
    Weapon determines motion/shape; attribute determines the secondary impact animation. */
 const NORMAL_ATTACK_WEAPON={
   yusha:'greatsword',pink:'greatsword',desert:'katana',nyoro:'gun',nekoku:'spear',
-  jessie:'spear',denden:'gun',money:'staff',riro:'spear',tetsu:'katana',lilith:'staff',naraku:'katana'
+  jessie:'spear',denden:'gun',money:'staff',riro:'spear',tetsu:'katana',lilith:'staff'
 };
 function weaponKind(a){
   const t=normalizeWeaponType(weaponCombatType(a));
@@ -10145,7 +10162,7 @@ async function ultimateImpactFx(){
     el.remove();
   }
 }
-const SUPPORT_ONLY_ULTS=new Set(['selfAllBuff','heroTransform','healCleanse','teamRecovery','teamHealGuard','fullHealBarrier','narakuShield','teamHealMpGuard']);
+const SUPPORT_ONLY_ULTS=new Set(['selfAllBuff','heroTransform','healCleanse','teamRecovery','teamHealGuard','fullHealBarrier','teamHealMpGuard']);
 async function ultimateCutin(a,u){
   const wrap=$('#ultimateCutin');
   if(!wrap)return;
@@ -10439,7 +10456,6 @@ async function performUltimate(a,u){if(Number(a.ultLockedTurns||0)>0){notice('�
     case'healStunAttack':healField(u.heal||.25);restoreMpField(.10);await hit();if(lastHitEnemy&&applyEnemyStatusTo(lastHitEnemy,'stun',u.chance||.3,1))notice('ひるみ！','status');else notice('PARTY RECOVER','heal');break;
     case'poisonAttack':await hit();if(lastHitEnemy&&applyEnemyStatusTo(lastHitEnemy,'poison',u.chance||.3))notice(`${lastHitEnemy.name}は毒になった！`,'status');break;
     case'aoePoison':await aoe(u.power,u.type||'physical',0,'poison',u.chance||.3,3);notice('敵全体に毒判定！','status');break;
-    case'narakuShield':a.damageCut=.20;a.damageCutTurns=3;state.battle.teamGuard=.10;state.battle.teamGuardTurns=3;notice('GUARD ↑↑ / PARTY GUARD ↑','buff');break;
     case'selfAtkAoe':a.atkBuff=.18;a.atkBuffTurns=3;await aoe();notice('ATK ↑ / ENEMY ALL DAMAGE','buff');break;
     case'selfAtkAttack':a.atkBuff=.18;a.atkBuffTurns=3;await hit();notice('ATK ↑','buff');break;
     case'aoeCrit':{for(const e of [...livingEnemies()]){const extra=Math.random()<(u.crit||.10)?1:0;await hitEnemy(e,u.power,u.type||'magic',extra);}break;}
@@ -10523,9 +10539,8 @@ async function handleEnemyWaveClear(){if(livingEnemies().length)return false;if(
 async function startRound(){
   const b=state.battle;if(!b||b.finished)return;b.busy=true;b.queuePos=0;await applyRoundDots();await checkBattleHpDialogue();if(b.forcePhaseChange){b.busy=false;return handleForcedEnemyPhase();}if(!livingEnemies().length){b.busy=false;return handleEnemyWaveClear();}if(!livingRoster().length)return finishBattle(false);await resolveRequiredReplacements();if(!livingRoster().length)return finishBattle(false);
   for(const a of fieldAllies().filter(x=>!x.dead)){
-    if(a.id==='nekoku'&&passiveChance(.30)){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){await passiveBeat(a,'癒しのプニプニ！');const h=heal(target,target.maxHp*.22);if(h)notice(`${target.name} HP +${h}`,'heal');await fixedDelay(600);}}
+    if(a.id==='nekoku'&&passiveChance(.30)){const target=[...livingField()].sort((x,y)=>x.hp/x.maxHp-y.hp/y.maxHp)[0];if(target){await passiveBeat(a,'癒しのプニプニ！');const h=heal(target,target.maxHp*.15);if(h)notice(`${target.name} HP +${h}`,'heal');await fixedDelay(600);}}
     if(a.id==='money'&&passiveChance(.30)){await passiveBeat(a,'マニーは海を渡る！');const m=Math.round(a.maxMp*.12);a.mpNow=Math.min(a.maxMp,a.mpNow+m);notice(`MP +${m}`,'heal');await fixedDelay(600);}
-    if(a.id==='naraku'){await passiveBeat(a,'魔王の系譜！');a.narakuStacks++;a.allBuff=a.narakuStacks*.10;a.allBuffTurns=99;notice(`ALL STATUS ↑${a.narakuStacks*10}%`,'buff');await fixedDelay(600);}
   }
   const enemyEntries=livingEnemies().flatMap(e=>{
     const role=e.encounterRole||'';
@@ -15994,8 +16009,8 @@ window.__mobV141PatchRuntime=true;
 /* ---------- Exact Tribe encounter + recommended level ---------- */
 {
   const tribe=(MOB_DATA.adventureWorlds||[]).find(w=>w.id==='tribe');
-  if(tribe){tribe.recommendedLevel=50;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
-  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=50;
+  if(tribe){tribe.recommendedLevel=55;if(tribe.areas?.[0])tribe.areas[0].boss=[{id:'t-kiba',level:48},{id:'t-kukuri',level:57},{id:'t-kiba',level:48}];}
+  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels.tribe=55;
 }
 
 /* ---------- Tribe arrival + dialogue: authored two-line rhythm, Jessie joins immediately ---------- */
@@ -17485,7 +17500,7 @@ const stepsBaseV158=runStorySteps;runStorySteps=async function(steps=[]){for(con
 
 /* v159: small balance adjustments, test controls, book and camp flow fixes. */
 const expBaseV159=expToNext;
-for(const [id,lv]of Object.entries({demonCastle:70,unfinishedBook:80,demonCastle2:85})){const w=MOB_DATA.adventureWorlds.find(x=>x.id===id);if(w)w.recommendedLevel=lv;if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[id]=lv;}
+for(const [id,lv]of Object.entries({demonCastle:75,unfinishedBook:80,demonCastle2:85})){const w=MOB_DATA.adventureWorlds.find(x=>x.id===id);if(w)w.recommendedLevel=lv;if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[id]=lv;}
 for(const p of MOB_DATA.players)for(const u of p.ults||[])u.cost=0;
 for(const sk of MOB_DATA.magicCatalog||[])if(sk.tier==='large'&&!sk.support&&Number(sk.power)>0)sk.power=Number((sk.power*.92).toFixed(4));
 for(const sk of MOB_DATA.techniqueCatalog||[])if(Number(sk.power)>0)sk.power=Number((sk.power*1.04).toFixed(4));
@@ -18545,11 +18560,8 @@ const STORY_V172 = {events:{
 for(const [key,event] of Object.entries(STORY_V172.events)){
   STORY_EVENTS[key]={...STORY_EVENTS[key],...event};
 }
-const magmaStartV172=MOB_DATA.adventureWorlds.findIndex(w=>w.id==='magma');
-for(const w of MOB_DATA.adventureWorlds.slice(magmaStartV172)){
-  w.recommendedLevel=(Number(w.recommendedLevel)||5)+5;
-  if(MOB_DATA.recommendedLevels)MOB_DATA.recommendedLevels[w.id]=w.recommendedLevel;
-}
+// v201: recommended levels are finalized in MOB_DATA.recommendedLevels.
+// Do not apply the former blanket +5 adjustment from magma onward.
 const SHOP_TENT_V172={id:'mob-tent',name:'モブテント',type:'tent',price:35000,image:'icon/10.png'};
 const itemDataBaseV172=itemData;
 itemData=function(id){return id==='mob-tent'?SHOP_TENT_V172:itemDataBaseV172(id);};
@@ -18588,14 +18600,13 @@ const PASSIVE_DESCRIPTIONS_V172={
   pink:'戦闘中1回、倒れた味方を選んで最大HPの35%で復活。自身の現在HPを半分消費します（最低1残ります）。',
   desert:'味方が受ける攻撃に10%の確率で発動し、そのダメージを20%軽減します。',
   nyoro:'通常攻撃時、敵が複数いると70%の確率で全体攻撃になります。',
-  nekoku:'ターン開始時、30%の確率でHP割合が最も低い味方1人を、対象の最大HPの22%回復します。',
+  nekoku:'ターン開始時、30%の確率でHP割合が最も低い味方1人を、対象の最大HPの15%回復します。',
   jessie:'雷属性魔法の攻撃後、対象が生きていると50%の確率で元の威力の90%の追撃魔法を放ちます。',
   denden:'通常攻撃時、10%の確率で会心の一撃になります。',
   money:'ターン開始時、30%の確率で自身の最大MPの12%を回復します。',
   riro:'味方が状態異常を受けた時、50%の確率でその味方の状態異常を解除します。',
   tetsu:'通常攻撃後、敵が残っていると30%の確率で威力85%の物理追撃を行います。',
   lilith:'戦闘中1回、倒れると最大HPの60%で復活し、ATK・MAG・DEF・MND・SPDが20%上昇します。',
-  naraku:'ターン開始時、戦闘能力が10%ずつ上昇します。効果は戦闘中に累積します。',
   kaijin:'現在、固有パッシブの効果は未設定です。'
 };
 const detailBaseV172=openPlayerDetail;
@@ -18870,9 +18881,9 @@ window.__mobV174Runtime=true;
 /* v175: concealed story rewards and readable passive activation details. */
 const PASSIVE_EFFECTS_V175={
  yusha:'自身のHP30%回復・戦闘能力+10%（累積）',pink:'味方1人をHP35%で復活・自身の現在HPを半分消費',desert:'この攻撃の被ダメージを20%軽減',
- denden:'この通常攻撃が会心の一撃になる',nyoro:'通常攻撃が敵全体への攻撃になる',nekoku:'HP割合が最も低い味方1人のHP22%回復',
+ denden:'この通常攻撃が会心の一撃になる',nyoro:'通常攻撃が敵全体への攻撃になる',nekoku:'HP割合が最も低い味方1人のHP15%回復',
  money:'自身のMP12%回復',tetsu:'威力85%の物理攻撃で追撃',jessie:'威力90%の雷属性魔法で追撃',riro:'味方の状態異常を解除',
- lilith:'HP60%で復活・ATK/MAG/DEF/MND/SPD+20%',naraku:'戦闘能力+10%（累積）'
+ lilith:'HP60%で復活・ATK/MAG/DEF/MND/SPD+20%'
 };
 passiveCutin=async function(a,text,duration=620){
  const b=state.battle,desert=a?.id==='desert'&&String(text).includes('サバクノマモリビト'),repeat=desert&&b?.desertPassiveTurnV175===b.turn;
@@ -19931,7 +19942,7 @@ startAdventureBattle=async function(){
   finally{hideIsolationV195();}
 };
 
-window.__mobBuildVersion='v198';
+window.__mobBuildVersion='v200';
 window.__mobV195LilithIsolation=true;
 window.__mobV196LilithInlineFormation=true;
 window.__mobV197LilithRestoreAfterFormation=true;
@@ -19975,6 +19986,134 @@ function waitLilithPartyNextV198(){
 window.__mobV198LilithNext=true;
 window.__mobV198TestAreaJump=true;
 // UPDATE_V198_END
+
+
+// UPDATE_V199_BEGIN
+/* v199: player balance update.
+   - Mob Nekoku passive heal: 22% -> 15%
+   - all playable characters: Max MP hard cap 999
+   - MP growth targets rebalanced in data.js
+   - Mob Hero base stats +5% and offensive ultimate coefficients +10% */
+window.__mobV199PlayerBalance=true;
+window.__mobV199MaxMp=999;
+// UPDATE_V199_END
+
+// UPDATE_V200_BEGIN
+/* v200: Mob Naraku is not part of this game. Player data was physically removed
+   from data.js. This compatibility cleanup only strips remnants from older saves. */
+function purgeRemovedPlayerV200(){
+  const removed='naraku';
+  const cleanParty=list=>Array.isArray(list)?list.filter(row=>Array.isArray(row)&&canonicalPlayerId(row[0])!==removed):list;
+  const cleanMeta=meta=>{
+    if(!meta||typeof meta!=='object')return;
+    for(const key of ['exp','equipment','figureEquipment','ultimateCooldowns'])if(meta[key]&&typeof meta[key]==='object')delete meta[key][removed];
+  };
+  const cleanAdventure=adv=>{
+    if(!adv||typeof adv!=='object')return;
+    if(adv.vitals&&typeof adv.vitals==='object')delete adv.vitals[removed];
+    if(adv.checkpoint){adv.checkpoint.party=cleanParty(adv.checkpoint.party);cleanMeta(adv.checkpoint.meta);if(adv.checkpoint.vitals)delete adv.checkpoint.vitals[removed];}
+    if(adv.runSnapshot){adv.runSnapshot.party=cleanParty(adv.runSnapshot.party);cleanMeta(adv.runSnapshot.meta);if(adv.runSnapshot.adventure?.vitals)delete adv.runSnapshot.adventure.vitals[removed];}
+  };
+  state.party=cleanParty(state.party);
+  if(!state.party.length)state.party=defaultParty.map(x=>[...x]);
+  cleanMeta(state.meta);cleanAdventure(state.adventure);
+  if(state.training?.party)state.training.party=cleanParty(state.training.party);
+  saveParty();saveMeta();saveAdventure();
+}
+purgeRemovedPlayerV200();
+window.__mobBuildVersion='v200';
+window.__mobV200NarakuRemoved=true;
+// UPDATE_V200_END
+
+// UPDATE_V201_BEGIN
+/* v201: adventure recommended levels are based on the actual enemy level tables.
+   One canonical table; no blanket +5 post-adjustment. */
+const RECOMMENDED_LEVELS_V201={grassland:5,desert:10,rural:15,neon:20,magma:30,sea:40,grassland2:45,tribe:55,rural2:55,neon2:60,magma2:65,desert2:70,demonCastle:75,unfinishedBook:80,demonCastle2:85};
+MOB_DATA.recommendedLevels={...RECOMMENDED_LEVELS_V201};
+for(const w of MOB_DATA.adventureWorlds||[]){
+  if(Object.prototype.hasOwnProperty.call(RECOMMENDED_LEVELS_V201,w.id))w.recommendedLevel=RECOMMENDED_LEVELS_V201[w.id];
+}
+window.__mobBuildVersion='v201';
+window.__mobV201RecommendedLevels=true;
+// UPDATE_V201_END
+
+// UPDATE_V202_BEGIN
+/* v202: retune main-adventure enemy levels against the finalized recommended-level curve.
+   Only level bands are changed here; enemy skills, passives, stats, AI and rewards are preserved. */
+const ENEMY_LEVELS_V202={
+  'r2-hitode':[58,60],'r2-knife':[58,60],'r2-purufu':[59,60],'r2-nullblue':[59,61],
+  'r2-adancer':[59,62],'r2-upa':[59,62],'r2-banken':[60,62],'r2-denchi':[60,62],
+  'r2-scouter':[62,62],'r2-captain':[62,62],'r2-dean':[62,62],
+  'r2-violin':[63,63],'r2-rapty':[64,64],'r2-tira':[64,64],'r2-kuukai':[65,65],
+  'r2-akui':[64,64],'r2-shitsui':[64,64],'r2-yamai':[64,64],'boss-umidenden':[68,68],
+
+  'm2-honoslime':[64,66],'m2-magrock':[64,66],'m2-magslime':[64,67],'m2-hinodevi':[64,67],
+  'm2-lizard':[65,67],'m2-heatrock':[65,67],'m2-bombthrow':[65,67],'m2-bomber':[66,68],
+  'm2-golem':[68,68],'m2-honotail':[68,68],'m2-hinotabi':[68,68],'m2-blizzard':[67,67],'m2-flame':[67,67],
+  'm2-yogan':[70,70],'m2-salamander':[70,70],'m2-buster':[70,70],
+  'boss-dragon2':[72,72],'boss-gidora':[75,75],
+
+  'd2-mummy':[67,70],'d2-turco':[67,71],'d2-yamikamen':[67,70],'d2-gimmick':[67,70],
+  'd2-adventure':[67,71],'d2-lizard':[68,71],'d2-nekomummy':[67,69],'d2-akarock':[68,68],
+  'd2-sharty':[68,70],'d2-poison':[70,70],'d2-deathhead':[71,71],
+  'boss-mira-d2':[70,70],'boss-mira2-d2':[72,72],
+  'd2-slamummy':[70,70],'d2-mirabuster':[72,72],'d2-twinsoul':[70,70],
+  'd2-miraearth':[72,72],'d2-mirakarami':[72,72],'d2-miranight':[72,72],'d2-miratime':[72,72],
+  'boss-dorafara':[78,78],
+
+  'book-minion':[75,75]
+};
+for(const e of MOB_DATA.enemyCatalog||[]){
+  const lv=ENEMY_LEVELS_V202[e.id];
+  if(lv){e.levelMin=lv[0];e.levelMax=lv[1];}
+}
+function setAdventureRecordLevelV202(worldId,areaIndex,id,level){
+  const w=(MOB_DATA.adventureWorlds||[]).find(x=>x.id===worldId),a=w?.areas?.[areaIndex];
+  if(!a)return;
+  const walk=v=>{
+    if(Array.isArray(v)){for(const x of v)walk(x);return;}
+    if(v&&typeof v==='object'){
+      if(v.id===id)v.level=level;
+      for(const x of Object.values(v))if(x&&typeof x==='object')walk(x);
+    }
+  };
+  walk(a);
+}
+/* Tribe: remove the old Lv48 leftovers from Area1. */
+setAdventureRecordLevelV202('tribe',0,'t-kiba',55);
+/* Rural II encounter progression. */
+setAdventureRecordLevelV202('rural2',0,'r2-adancer',60);
+setAdventureRecordLevelV202('rural2',0,'r2-violin',63);
+setAdventureRecordLevelV202('rural2',1,'r2-rapty',64);
+setAdventureRecordLevelV202('rural2',1,'r2-tira',64);
+setAdventureRecordLevelV202('rural2',2,'r2-kuukai',65);
+for(const id of ['r2-akui','r2-shitsui','r2-yamai'])setAdventureRecordLevelV202('rural2',2,id,64);
+/* Magma II encounter progression. */
+setAdventureRecordLevelV202('magma2',0,'m2-heatrock',66);
+setAdventureRecordLevelV202('magma2',0,'m2-yogan',70);
+setAdventureRecordLevelV202('magma2',1,'m2-golem',68);
+setAdventureRecordLevelV202('magma2',1,'m2-salamander',70);
+setAdventureRecordLevelV202('magma2',2,'m2-bomber',68);
+setAdventureRecordLevelV202('magma2',2,'m2-buster',70);
+setAdventureRecordLevelV202('magma2',3,'boss-dragon2',72);
+/* Desert II encounter progression. */
+setAdventureRecordLevelV202('desert2',0,'boss-mira-d2',70);
+setAdventureRecordLevelV202('desert2',0,'boss-mira2-d2',72);
+setAdventureRecordLevelV202('desert2',1,'d2-slamummy',70);
+setAdventureRecordLevelV202('desert2',1,'d2-mirabuster',72);
+setAdventureRecordLevelV202('desert2',1,'d2-twinsoul',70);
+for(const id of ['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'])setAdventureRecordLevelV202('desert2',2,id,72);
+/* Unfinished Book: minions stay clearly weaker than the Lv80 captain without falling ten levels behind. */
+setAdventureRecordLevelV202('unfinishedBook',0,'book-minion',75);
+
+/* Rural II is now its own bridge tier instead of sharing Tribe's entry level. */
+MOB_DATA.recommendedLevels={...(MOB_DATA.recommendedLevels||{}),rural2:58};
+const rural2WorldV202=(MOB_DATA.adventureWorlds||[]).find(x=>x.id==='rural2');
+if(rural2WorldV202)rural2WorldV202.recommendedLevel=58;
+
+window.__mobBuildVersion='v202';
+window.__mobV202EnemyLevelRetune=true;
+// UPDATE_V202_END
 
 })();
 </script>

@@ -40,7 +40,7 @@ window.test172={
   await page.locator('[data-buy-castle-item="mob-tent"]').click();assert(await page.locator('#castleQtyBuyBtn').isDisabled());await page.evaluate(()=>test172.buy());assert.deepEqual(await page.evaluate(()=>test172.wallet()),{coins:0,tents:2});
   await page.reload();await page.waitForFunction(()=>window.test172);assert.equal((await page.evaluate(()=>test172.wallet())).tents,2);
   await page.evaluate(()=>test172.seed());
-  for(const id of ['yusha','pink','desert','nyoro','nekoku','jessie','denden','money','riro','tetsu','lilith','naraku','kaijin']){await page.evaluate(id=>test172.detail(id),id);assert.equal(await page.locator('.player-passive-v172').count(),1);assert((await page.locator('.player-passive-v172 p').innerText()).length>10);}
+  for(const id of ['yusha','pink','desert','nyoro','nekoku','jessie','denden','money','riro','tetsu','lilith','kaijin']){await page.evaluate(id=>test172.detail(id),id);assert.equal(await page.locator('.player-passive-v172').count(),1);assert((await page.locator('.player-passive-v172 p').innerText()).length>10);}
   await page.evaluate(()=>test172.smith());const perf=page.locator('#blacksmithPopup [data-buy-weapon] em').first();assert(await perf.count());assert(await perf.evaluate(el=>parseFloat(getComputedStyle(el).fontSize)>=15));
   await page.evaluate(()=>test172.seed());await page.evaluate(()=>test172.sea());const cat=page.locator('#storyPartyLine [data-story-actor="nekoku"] img');assert(await cat.isVisible());assert(await cat.evaluate(el=>el.naturalWidth>0));assert(await page.locator('#storyGuest[data-story-actor="nepu"]').isVisible());
   await page.screenshot({path:path.join(artifacts,'sea-v172.png')});

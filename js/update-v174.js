@@ -147,9 +147,9 @@ window.__mobV174Runtime=true;
 /* v175: concealed story rewards and readable passive activation details. */
 const PASSIVE_EFFECTS_V175={
  yusha:'自身のHP30%回復・戦闘能力+10%（累積）',pink:'味方1人をHP35%で復活・自身の現在HPを半分消費',desert:'この攻撃の被ダメージを20%軽減',
- denden:'この通常攻撃が会心の一撃になる',nyoro:'通常攻撃が敵全体への攻撃になる',nekoku:'HP割合が最も低い味方1人のHP22%回復',
+ denden:'この通常攻撃が会心の一撃になる',nyoro:'通常攻撃が敵全体への攻撃になる',nekoku:'HP割合が最も低い味方1人のHP15%回復',
  money:'自身のMP12%回復',tetsu:'威力85%の物理攻撃で追撃',jessie:'威力90%の雷属性魔法で追撃',riro:'味方の状態異常を解除',
- lilith:'HP60%で復活・ATK/MAG/DEF/MND/SPD+20%',naraku:'戦闘能力+10%（累積）'
+ lilith:'HP60%で復活・ATK/MAG/DEF/MND/SPD+20%'
 };
 passiveCutin=async function(a,text,duration=620){
  const b=state.battle,desert=a?.id==='desert'&&String(text).includes('サバクノマモリビト'),repeat=desert&&b?.desertPassiveTurnV175===b.turn;

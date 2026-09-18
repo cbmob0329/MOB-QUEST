@@ -1,0 +1,12 @@
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const root=path.resolve(__dirname,'..');
+const data=fs.readFileSync(path.join(root,'js/data.js'),'utf8');
+const game=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
+const ctx={console};vm.createContext(ctx);vm.runInContext(data+'\n;globalThis.OUT={MOB_DATA,TEMP_BALANCE};',ctx);
+assert(!ctx.OUT.MOB_DATA.players.some(p=>p.id==='naraku'),'Naraku must not exist in MOB_DATA.players');
+assert(!Object.prototype.hasOwnProperty.call(ctx.OUT.TEMP_BALANCE.playerGrowth||{},'naraku'),'Naraku growth data must be removed');
+assert(!Object.prototype.hasOwnProperty.call(ctx.OUT.TEMP_BALANCE.playerTargets||{},'naraku'),'Naraku stat targets must be removed');
+assert(!/addLearn\('naraku'|setup\('naraku'|u\('naraku'/.test(data),'Naraku learn/resistance/ultimate patches must be removed');
+assert(!/case'narakuShield'|a\.id==='naraku'|narakuStacks/.test(game),'Naraku active battle logic must be removed');
+assert(game.includes("const removed='naraku';"),'Old-save cleanup must remain');
+console.log('v200 Naraku removal: PASS');
