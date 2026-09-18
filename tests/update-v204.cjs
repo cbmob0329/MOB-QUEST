@@ -1,0 +1,22 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const g=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
+const c=fs.readFileSync(path.join(root,'css/style.css'),'utf8');
+const h=fs.readFileSync(path.join(root,'index.html'),'utf8');
+function ok(v,msg){if(!v)throw new Error(msg);}
+ok(h.includes('<div class="title-version">v204</div>'),'title version is not v204');
+ok(g.includes('// UPDATE_V203_BEGIN'),'v203 presentation fix missing');
+ok(g.includes('UPDATE_V204_BEGIN'),'v204 marker missing');
+ok(g.includes('passiveViewsV204'),'battle-local passive repeat tracking missing');
+ok(g.includes("repeated?480:firstMs"),'quick repeated player passive timing missing');
+ok(g.includes("repeated?480:gidora?2100"),'quick repeated enemy passive timing missing');
+ok(g.includes('enemySkillImageCutinV134=async function'),'enemy skill fitting override missing');
+ok(g.includes('ultimateCutin=async function(a,u)'),'ultimate fitting override missing');
+ok(c.includes('#passiveCutin.passive-fit-v204'),'player passive fitting CSS missing');
+ok(c.includes('.reaction-card-v177{max-height:min(44dvh,260px)!important'),'enemy passive fitting CSS missing');
+ok(c.includes('#ultimateCutin.ultimate-fit-v204 #cutinName'),'ultimate name fitting CSS missing');
+ok(c.includes('#skillMenu .skill-item{height:auto!important'),'ultimate menu growth CSS missing');
+ok(g.trim() && h.includes(g.trim()),'inline game is not synchronized');
+ok(c.trim() && h.includes(c.trim()),'inline CSS is not synchronized');
+console.log('v204 static checks: PASS');

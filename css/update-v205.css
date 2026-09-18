@@ -1,0 +1,17 @@
+/* v205: Mob Lilith narration paragraph fit */
+.castle-history-caption-v178{
+  inset:26% 6% auto!important;
+  width:88%!important;
+  margin:0 auto!important;
+  line-height:1.55!important;
+  font-size:clamp(16px,4.7vw,20px)!important;
+}
+.castle-history-caption-v178 p{
+  margin:8px auto 0!important;
+  max-width:100%!important;
+  white-space:pre-line!important;
+  line-height:1.55!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+}
+.castle-history-caption-v178 small{display:block!important;line-height:1.2!important;margin-bottom:4px!important}

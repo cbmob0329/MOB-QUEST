@@ -4852,6 +4852,54 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes dc2FxPulse181{0%{opacity:0;transform:scale(.7)}45%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(1.25)}}
 @keyframes dc2Explosion181{0%{opacity:0;transform:scale(.2)}20%{opacity:1}62%{opacity:1;transform:scale(1.15);filter:brightness(2)}100%{opacity:0;transform:scale(1.5);filter:brightness(4)}}
 /* UPDATE_V181_END */
+
+/* UPDATE_V204_BEGIN: battle passive / ultimate text fitting */
+#passiveCutin.passive-fit-v204{
+  top:39%!important;height:auto!important;min-height:88px!important;max-height:min(34dvh,220px)!important;
+  grid-template-columns:82px minmax(0,1fr)!important;align-items:center!important;
+  padding:7px 12px 7px 4px!important;overflow:hidden!important;
+}
+#passiveCutin.passive-fit-v204>img{width:82px!important;height:min(116px,18dvh)!important;align-self:center!important;object-fit:contain!important}
+#passiveCutin.passive-fit-v204>div{min-width:0!important;max-height:100%!important;overflow:hidden!important}
+#passiveCutin.passive-fit-v204 small{font-size:7px!important;line-height:1.15!important;margin-bottom:3px!important;white-space:normal!important}
+#passiveCutin.passive-fit-v204 #passiveCutinText{
+  display:block!important;white-space:pre-line!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;
+  overflow:visible!important;text-overflow:clip!important;max-width:100%!important;margin:0!important;
+}
+#passiveCutin.passive-quick-v204.play{animation:passiveQuickV204 .48s ease both!important}
+@keyframes passiveQuickV204{0%{opacity:0;transform:translateX(-8px) scale(.985)}16%,72%{opacity:1;transform:translateX(0) scale(1)}100%{opacity:0;transform:translateX(6px) scale(.995)}}
+
+.reaction-card-v177{max-height:min(44dvh,260px)!important;overflow:hidden!important}
+.reaction-card-v177>div{min-width:0!important;max-height:100%!important;overflow:hidden!important}
+.reaction-card-v177 b,.reaction-card-v177 p{white-space:normal!important;word-break:normal!important;overflow-wrap:anywhere!important;line-break:strict!important;text-overflow:clip!important;overflow:visible!important}
+.reaction-v177.passive-quick-v204 .reaction-card-v177{animation:reactionQuickV204 .18s ease-out both!important}
+@keyframes reactionQuickV204{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+
+/* Enemy skill/ultimate names share the passive frame but must never be ellipsized. */
+#passiveCutin.enemy-skill-cutin-v134 #passiveCutinText{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere!important;line-height:1.2!important}
+
+/* Player ultimate names: up to two natural lines, then JS shrinks until they fit. */
+#ultimateCutin.ultimate-fit-v204 .cutin-character{
+  top:9%!important;height:auto!important;min-height:66px!important;max-height:108px!important;
+  grid-template-columns:60px minmax(0,1fr)!important;align-items:center!important;overflow:hidden!important;
+}
+#ultimateCutin.ultimate-fit-v204 .cutin-character>div{min-width:0!important;max-height:90px!important;overflow:hidden!important}
+#ultimateCutin.ultimate-fit-v204 #cutinName{
+  display:block!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere!important;word-break:normal!important;line-break:strict!important;
+  text-align:left!important;max-width:100%!important;margin:0!important;
+}
+@media(max-height:720px){
+  #passiveCutin.passive-fit-v204{top:37%!important;grid-template-columns:70px minmax(0,1fr)!important;max-height:min(36dvh,190px)!important}
+  #passiveCutin.passive-fit-v204>img{width:70px!important;height:min(94px,17dvh)!important}
+  #ultimateCutin.ultimate-fit-v204 .cutin-character{top:8%!important;min-height:58px!important;max-height:90px!important}
+}
+/* UPDATE_V204_END */
+/* Ultimate selection list also grows with long names/descriptions instead of clipping. */
+#skillMenu .skill-item{height:auto!important;min-height:65px!important;overflow:visible!important;align-items:center!important}
+#skillMenu .skill-item>div{min-width:0!important;overflow:visible!important}
+#skillMenu .skill-item>div>b,#skillMenu .skill-item>div>small{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere!important;word-break:normal!important}
+#skillMenu .skill-item>div>b{line-height:1.25!important}
+#skillMenu .skill-item>div>small{line-height:1.35!important}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -4932,6 +4980,24 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes event-arrive-v163{from{opacity:0;transform:translateY(18px) scale(.9);filter:brightness(3)}to{opacity:1;transform:none;filter:none}}@keyframes event-stamp-v163{from{opacity:0;transform:scale(2.5) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(4deg)}}@keyframes event-get-v163{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}@keyframes event-convert-v163{to{filter:brightness(2);opacity:.35;transform:scale(.8)}}
 @media(max-width:350px){.event-panel-v163{padding:8px}.event-boss-grid-v163{gap:14px 8px}.event-portrait-v163{height:120px}.event-difficulty-v163{padding:11px!important}.event-difficulty-v163 b{font-size:18px}.event-difficulty-v163 p{font-size:11px}.event-panel-v163 header h2{font-size:19px}}
 
+
+/* v205: Mob Lilith narration paragraph fit */
+.castle-history-caption-v178{
+  inset:26% 6% auto!important;
+  width:88%!important;
+  margin:0 auto!important;
+  line-height:1.55!important;
+  font-size:clamp(16px,4.7vw,20px)!important;
+}
+.castle-history-caption-v178 p{
+  margin:8px auto 0!important;
+  max-width:100%!important;
+  white-space:pre-line!important;
+  line-height:1.55!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+}
+.castle-history-caption-v178 small{display:block!important;line-height:1.2!important;margin-bottom:4px!important}
 </style>
 <link rel="icon" href="data:,">
 <style>
@@ -5337,7 +5403,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v203</div>
+      <div class="title-version">v206</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -20228,6 +20294,181 @@ storySay=async function(key,text,...args){
 window.__mobBuildVersion='v203';
 window.__mobV203DemonCastlePresentation=true;
 // UPDATE_V203_END
+
+
+/* UPDATE_V204_BEGIN
+   Battle presentation: fit passive/ultimate text inside its frame and accelerate
+   passive notices after the first activation of the same passive in a battle. */
+
+function passiveKeyV204(actor,text){
+  const first=String(text??'').split('\n')[0].replace(/\s+/g,'').replace(/[！!。．]/g,'');
+  return `${actor?.id||actor?.name||actor?.uid||'actor'}|${first}`;
+}
+function passiveSeenCountV204(actor,text){
+  const b=state.battle;if(!b)return 0;
+  const bag=b.passiveViewsV204??={};
+  return Number(bag[passiveKeyV204(actor,text)]||0);
+}
+function markPassiveSeenV204(actor,text){
+  const b=state.battle;if(!b)return 0;
+  const bag=b.passiveViewsV204??={};const key=passiveKeyV204(actor,text);
+  bag[key]=Number(bag[key]||0)+1;return bag[key];
+}
+function fitTextHeightV204(el,{max=15,min=9,available=150,lineHeight=1.32}={}){
+  if(!el)return;
+  let size=max;el.style.setProperty('font-size',`${size}px`,'important');
+  el.style.setProperty('line-height',String(lineHeight),'important');
+  for(let i=0;i<14&&size>min;i++){
+    if(el.scrollHeight<=available+1&&el.scrollWidth<=el.clientWidth+2)break;
+    size=Math.max(min,size-.5);el.style.setProperty('font-size',`${size}px`,'important');
+  }
+}
+async function preparePassiveFrameV204(wrap,label,text){
+  if(!wrap||!label)return;
+  wrap.classList.add('passive-fit-v204');
+  const n=[...String(text||'')].length;
+  const max=n>100?11:n>72?12:n>48?13:15;
+  await nextPaint();
+  const available=Math.max(58,Math.min(176,window.innerHeight*.28)-30);
+  fitTextHeightV204(label,{max,min:8.5,available,lineHeight:1.28});
+}
+
+/* Player passives: first activation remains readable; every later activation of the
+   same passive in the same battle is deliberately short. */
+passiveCutin=async function(a,text,duration=620){
+  const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
+  if(!wrap||!a){notice(text,'system',duration);await fixedDelay(duration);return;}
+  const repeated=passiveSeenCountV204(a,text)>0;markPassiveSeenV204(a,text);
+  const effect=PASSIVE_EFFECTS_V175?.[a?.id],full=String(text)+(effect?'\n'+effect:'');
+  const src=versionedPlay(transformedArtV158(a));if(src)try{await preloadAsset(src);}catch(_){}
+  if(src)setImage(img,src,'');else img.removeAttribute('src');
+  if(small){small.hidden=false;small.textContent=repeated?'PASSIVE / QUICK':'PASSIVE';}
+  label.textContent=full;
+  wrap.hidden=false;wrap.classList.remove('play','battle-story-dialogue-v133','battle-story-hold-v88','battle-story-out-v88','enemy-skill-cutin-v134','passive-repeat-v175');
+  wrap.classList.toggle('passive-quick-v204',repeated);
+  await preparePassiveFrameV204(wrap,label,full);
+  const firstMs=Math.max(1750,Math.min(3000,900+[...full].length*28),Number(duration)||0);
+  wrap.style.setProperty('--passive-duration-v175',`${repeated?480:firstMs}ms`);
+  wrap.classList.add('play');
+  await fixedDelay(repeated?480:firstMs);
+  wrap.classList.remove('play','passive-quick-v204','passive-fit-v204');
+  label.style.removeProperty('font-size');label.style.removeProperty('line-height');
+  wrap.hidden=true;
+};
+passiveBeat=async function(a,text,duration=620,preDelay=600){
+  const repeated=passiveSeenCountV204(a,text)>0;
+  await fixedDelay(repeated?80:preDelay);
+  await passiveCutin(a,text,duration);
+};
+reactivePassiveBeat=async function(a,text,duration=600){return passiveBeat(a,text,duration,140);};
+
+/* Enemy passive/reaction card: same once-per-battle quick rule, with dynamic fitting. */
+reactionV177=async function(actor,name,effect,{weapon=false,gidora=false,skill=false}={}){
+  const b=state.battle,isPassive=!weapon&&!skill,keyText=String(name).replace(/\(\d+\/\d+\)/g,''),repeated=isPassive&&passiveSeenCountV204(actor,keyText)>0;
+  if(isPassive)markPassiveSeenV204(actor,keyText);
+  const layer=document.createElement('div');layer.className='reaction-v177'+(gidora?' gidora':'')+(repeated?' repeat-v178 passive-quick-v204':'');
+  layer.innerHTML='<div class="reaction-card-v177"><img alt=""><div><small></small><b></b><p></p></div></div>';
+  $('img',layer).src=weapon?versionedPlay(actor.image):actor.image;
+  $('small',layer).textContent=(weapon?'武器特性 / ':skill?'必殺技 / ':'敵パッシブ / ')+actor.name;
+  reactionTextV178($('b',layer),name);reactionTextV178($('p',layer),effect);document.body.appendChild(layer);
+  await nextPaint();
+  const card=$('.reaction-card-v177',layer),title=$('b',layer),body=$('p',layer),limit=Math.max(110,Math.min(250,window.innerHeight*.42));
+  fitTextHeightV204(title,{max:19,min:11,available:Math.max(36,limit*.30),lineHeight:1.22});
+  fitTextHeightV204(body,{max:14,min:9,available:Math.max(58,limit*.58),lineHeight:1.35});
+  if(card&&card.scrollHeight>limit){card.style.setProperty('padding','11px','important');const im=$('img',layer);if(im){im.style.width='72px';im.style.height='88px';}}
+  const visual=weapon?$(`[data-ally-id="${actor.id}"]`):enemyVisual(actor.uid);visual?.classList.add('passive-glow-v177');
+  try{await waitRealV100(repeated?480:gidora?2100:weapon?1100:skill?1150:1750);}finally{visual?.classList.remove('passive-glow-v177');layer.remove();}
+};
+
+/* Enemy magic/technique/ultimate name uses the same flexible frame instead of clipping. */
+enemySkillImageCutinV134=async function(e,spec){
+  if(!e||!spec?.special)return;const wrap=$('#passiveCutin'),img=$('#passiveCutinCharacter'),label=$('#passiveCutinText'),small=$('small',wrap);
+  if(!wrap||!img||!label){await actionCutin(`${e.name}の${spec.special}！`,'danger',520);return;}
+  const src=e.image||'';if(src)try{await preloadAsset(src,'high');}catch(_){}if(src)setImage(img,src,e.name);else img.removeAttribute('src');
+  if(small){small.hidden=false;small.textContent=enemySkillCutinLabelV134(e,spec);}label.textContent=spec.special;
+  wrap.hidden=false;wrap.classList.remove('play','battle-story-dialogue-v133','battle-story-out-v88','passive-quick-v204');wrap.classList.add('enemy-skill-cutin-v134','battle-story-hold-v88','passive-fit-v204');
+  await preparePassiveFrameV204(wrap,label,spec.special);await nextPaint();
+  await fixedDelay((e.isBoss||e.category==='boss')?720:580);wrap.classList.add('battle-story-out-v88');await fixedDelay(140);
+  wrap.classList.remove('enemy-skill-cutin-v134','battle-story-hold-v88','battle-story-out-v88','passive-fit-v204');
+  label.style.removeProperty('font-size');label.style.removeProperty('line-height');wrap.hidden=true;
+};
+
+/* Player ultimate banner: allow two lines and fit the actual rendered banner. */
+ultimateCutin=async function(a,u){
+  const wrap=$('#ultimateCutin');if(!wrap)return;
+  const banner=$('.cutin-character',wrap),art=$('.ult-art-wrap',wrap),name=$('#cutinName'),artImg=$('#cutinUltArt'),charImg=$('#cutinCharacter'),neon=$('.ult-neon-trace',wrap),charSrc=versionedPlay(transformedArtV158(a));
+  const hardHide=()=>{wrap.hidden=true;wrap.style.display='none';wrap.style.opacity='0';wrap.style.visibility='hidden';wrap.classList.remove('ult-v14-live');if(neon)neon.classList.remove('active');if(banner){banner.style.opacity='0';banner.style.visibility='hidden';banner.style.transform='none';}if(art){art.style.opacity='0';art.style.visibility='hidden';art.style.transform='translate(-50%,-42%) scale(1)';}};
+  try{
+    hardHide();if(name){name.textContent=u.name;name.style.removeProperty('font-size');}
+    const quote=$('#cutinQuote');if(quote)quote.textContent='';const fallback=$('#cutinUltFallback');if(fallback)fallback.textContent=u.name;
+    await Promise.all([preloadAsset(charSrc,'high'),preloadAsset(u.image,'high')]);if(charImg){charImg.classList.remove('asset-missing');charImg.src=charSrc;}if(artImg){artImg.classList.remove('asset-missing');artImg.src=u.image;}
+    await Promise.all([ensureDomImageReady(charImg,charSrc,1800),ensureDomImageReady(artImg,u.image,2200)]);await nextPaint(2);
+    wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';wrap.style.visibility='visible';if(banner){banner.style.opacity='1';banner.style.visibility='visible';}if(art){art.style.opacity='1';art.style.visibility='visible';}
+    wrap.classList.add('ult-v14-live','ultimate-fit-v204');await nextPaint();
+    if(name){const h=Math.max(42,Math.min(78,banner?.clientHeight?banner.clientHeight-12:68));fitTextHeightV204(name,{max:17,min:9.5,available:h,lineHeight:1.12});}
+    await fixedDelay(1120);if(neon){neon.classList.remove('active');void neon.offsetWidth;neon.classList.add('active');}await fixedDelay(300);hardHide();await new Promise(requestAnimationFrame);
+  }catch(err){console.error('[MOB STORY] v204 ultimateCutin recovered:',err);hardHide();}
+  finally{if(name){name.style.removeProperty('font-size');name.style.removeProperty('line-height');}wrap.classList.remove('ultimate-fit-v204');hardHide();}
+};
+
+window.__mobBuildVersion='v204';
+window.__mobV204BattleTextFit=true;
+// UPDATE_V204_END
+
+
+// UPDATE_V205_BEGIN
+/* v205: fix Mob Lilith history narration paragraphing. Keep each narration page to one or two intentional lines. */
+const LILITH_HISTORY_PAGES_V205=[
+  "モブネオンキングがネオン街を治めていた頃\n魔王様からネオン街を支配するよう命令が下った",
+  "ネオン街に隠されている「ある秘宝」を手に入れるため\nグラディモブ モブドラゴン ミラモブ",
+  "最高のメンバーでネオン街へ向かった",
+  "ネオン街の王はモブドラゴンと互角\n気高い戦士だったけど兵力が違う",
+  "魔王軍からしてみれば簡単な任務だった",
+  "でも\nそんな時1人の魔女が現れた",
+  "その魔女は数々のボスを一瞬で倒し\nグラディモブすら寄せ付けなかった",
+  "しかし\n魔女は暴走しネオン街の王を攻撃した",
+  "魔王軍は撤退し\nネオン街と魔女の戦いになる",
+  "長い長い戦いの果て\nネオン街の戦士達によって",
+  "ついに魔女は封印された",
+  "それが\nある町の消滅と共に封印が解かれた",
+  "そして今\n本来の力を失い勇者と旅をし",
+  "僕の目の前にいる"
+];
+(function patchLilithHistoryParagraphsV205(){
+  const steps=STORY_EVENTS?.['post:demonCastle:2']?.steps;
+  if(!Array.isArray(steps))return;
+  const history=steps.find(step=>Array.isArray(step)&&step[0]==='castleHistory178');
+  if(history)history[1]=LILITH_HISTORY_PAGES_V205.slice();
+})();
+window.__mobBuildVersion='v205';
+window.__mobV205LilithNarration=true;
+// UPDATE_V205_END
+
+// UPDATE_V206_BEGIN
+/* v206: clear stale story-actor animation styles before a reused single guest is shown.
+   v203 intentionally preserves final animation frames so projectiles do not snap back.
+   That also left opacity/filter/transform values on #storyGuest after an actor faded out,
+   which could make a later actor (notably Mob Demon King after the Ace sequence) invisible. */
+function resetReusableStoryGuestVisualV206(el){
+  if(!el)return;
+  for(const prop of ['opacity','filter','transform','translate','rotate','scale','visibility','display']){
+    el.style.removeProperty(prop);
+  }
+  el.hidden=false;
+}
+const storyShowGuestBaseV206=storyShowGuest;
+storyShowGuest=async function(key,opt={}){
+  const holder=$('#storyGuest');
+  resetReusableStoryGuestVisualV206(holder);
+  const result=await storyShowGuestBaseV206(key,opt);
+  /* Reassert visibility after image sizing/fade classes; never inherit a previous actor's fade-out. */
+  resetReusableStoryGuestVisualV206(holder);
+  holder.classList.add('visible');
+  return result;
+};
+window.__mobBuildVersion='v206';
+window.__mobV206ReusableGuestReset=true;
+// UPDATE_V206_END
 
 })();
 </script>
