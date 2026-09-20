@@ -1,0 +1,54 @@
+/* ===== MOB STORY v207: READING BOOK PRESENTATION ===== */
+.story-narration.book-page-narration-v207{
+  left:6%!important;right:6%!important;top:42%!important;
+  padding:22px 18px!important;border-radius:6px!important;
+  background:#f6eed9!important;border:5px double #231b16!important;
+  box-shadow:0 12px 32px #0008,inset 0 0 0 2px #cbbd9d!important;
+}
+.story-narration.book-page-narration-v207::before,.story-narration.book-page-narration-v207::after{
+  content:"";position:absolute;inset:8px;border:1px solid #74644c;pointer-events:none;
+}
+.story-narration.book-page-narration-v207::after{inset:12px;border-color:#b5a27d}
+.story-narration.book-page-narration-v207 p{
+  position:relative;z-index:2;color:#111!important;font-size:clamp(17px,4.7vw,25px)!important;
+  line-height:1.55!important;letter-spacing:.04em!important;text-shadow:0 0 7px #fff,0 0 14px #f7dfa0!important;
+}
+.story-bubble.story-bubble-jagged-v207{
+  width:min(92%,390px)!important;max-width:92%!important;background:#fff!important;color:#050505!important;
+  border:5px solid #101010!important;border-radius:2px!important;
+  clip-path:polygon(2% 11%,8% 8%,7% 2%,17% 7%,24% 1%,30% 7%,39% 2%,45% 8%,54% 1%,61% 7%,70% 2%,77% 8%,87% 3%,91% 10%,98% 9%,94% 19%,99% 27%,94% 36%,99% 45%,94% 54%,99% 63%,94% 72%,99% 82%,92% 88%,94% 98%,84% 94%,77% 99%,69% 94%,60% 99%,52% 94%,43% 99%,35% 94%,26% 99%,19% 94%,9% 98%,10% 89%,2% 87%,6% 78%,1% 69%,6% 59%,1% 49%,6% 39%,1% 29%,6% 20%);
+  padding:20px 24px!important;filter:drop-shadow(0 9px 0 #0005) drop-shadow(0 14px 22px #0008)!important;
+}
+.story-bubble.story-bubble-jagged-v207::after{display:none!important}
+.story-bubble.story-bubble-jagged-v207>b{color:#54100e!important;font-size:14px!important}
+.story-bubble.story-bubble-jagged-v207>p{font-size:clamp(19px,5.4vw,27px)!important;line-height:1.22!important;font-weight:1000!important;color:#050505!important}
+.book-scene-fx-v207{position:absolute;inset:0;z-index:28;pointer-events:none;overflow:hidden;display:grid;place-items:center}
+.book-pages-v207 .page-v207{position:absolute;width:38%;height:62%;top:17%;border:5px solid #171717;border-radius:10px;background:#f7eed4;box-shadow:0 12px 30px #0008;opacity:0;animation:bookPageOpenV207 1.55s ease forwards}
+.book-pages-v207 .page-v207.blue{left:9%;box-shadow:inset 0 0 0 8px #8fd8ff,0 12px 30px #0008;transform-origin:right center}
+.book-pages-v207 .page-v207.red{right:9%;box-shadow:inset 0 0 0 8px #ff8d82,0 12px 30px #0008;transform-origin:left center;animation-delay:.12s}
+.book-pages-v207 .smoke-v207{position:absolute;left:20%;right:20%;bottom:18%;height:30%;filter:blur(5px);opacity:0;animation:bookSmokeV207 1.8s .75s ease forwards;background:radial-gradient(circle at 20% 70%,#fff 0 13%,transparent 28%),radial-gradient(circle at 42% 52%,#ddd 0 16%,transparent 31%),radial-gradient(circle at 66% 65%,#fff 0 15%,transparent 30%),radial-gradient(circle at 82% 45%,#ddd 0 13%,transparent 28%)}
+.book-skull-v207{background:rgba(5,2,12,.20);animation:bookDarkPulseV207 3s ease both}
+.book-skull-v207::before{content:"☠";font-size:min(42vw,210px);color:#f9f5e8;text-shadow:0 0 18px #fff,0 0 34px #9255ff,0 0 55px #000;animation:bookSkullLaughV207 .42s steps(2,end) 5 alternate;opacity:0}
+.book-skull-v207::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 46%,#fff 47% 49%,#743cff 50% 51%,transparent 52%),linear-gradient(72deg,transparent 45%,#fff 46% 47%,#9d5cff 48% 49%,transparent 50%);mix-blend-mode:screen;animation:bookLightningV207 .45s 5}
+.book-matrix-v207{position:fixed!important;z-index:99998!important;background:rgba(1,4,8,.24);font-family:monospace;font-weight:1000;color:#b4fff7;text-shadow:0 0 8px #42ffe7;letter-spacing:.42em;line-height:1.7;word-break:break-all;padding:5vh 3vw;animation:bookMatrixV207 3s linear both}
+.book-matrix-v207::before{content:"MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB MOB";font-size:clamp(12px,4vw,22px)}
+.book-matrix-v207.collapse{animation:bookMatrixCollapseV207 1.35s ease both}
+.story-guest-group.book-navi-hero-duel-v207{left:31%!important;right:10%!important;bottom:23%!important;width:58%!important;height:min(35vh,240px)!important;justify-content:center!important;gap:clamp(18px,6vw,48px)!important}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="book-navi"]{transform:translateX(8px) scale(.94)!important}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="yusha"]{transform:translateY(-7vh) scale(1.08)!important;transform-origin:center bottom!important;animation:bookHeroDescendV207 1.35s ease both}
+.book-pink-jump-v207{animation:bookPinkJumpV207 .72s ease both!important}
+@keyframes bookPinkJumpV207{0%,100%{transform:translateY(0) scale(1)}42%{transform:translateY(-34px) scale(1.04)}68%{transform:translateY(3px) scale(.98)}}
+@keyframes bookPageOpenV207{0%{opacity:0;transform:perspective(500px) rotateY(76deg) scale(.75)}45%{opacity:1}100%{opacity:1;transform:perspective(500px) rotateY(0) scale(1)}}
+@keyframes bookSmokeV207{0%{opacity:0;transform:translateY(20px) scale(.7)}50%{opacity:.95}100%{opacity:0;transform:translateY(-30px) scale(1.35)}}
+@keyframes bookDarkPulseV207{0%{background:rgba(0,0,0,0)}25%,70%{background:rgba(2,0,8,.72)}100%{background:rgba(0,0,0,0)}}
+@keyframes bookSkullLaughV207{0%{opacity:0;transform:translateY(8px) rotate(-3deg) scale(.82)}100%{opacity:1;transform:translateY(-6px) rotate(3deg) scale(1.08)}}
+@keyframes bookLightningV207{0%,72%,100%{opacity:0}12%,40%{opacity:1}}
+@keyframes bookMatrixV207{0%{opacity:0;transform:scale(1.04)}18%,82%{opacity:1}100%{opacity:0;transform:scale(1)}}
+@keyframes bookMatrixCollapseV207{0%{opacity:1;filter:none;transform:scale(1)}55%{opacity:.8;filter:blur(1px) contrast(2);transform:scaleX(.93) skewX(4deg)}100%{opacity:0;filter:blur(9px);transform:scale(.05,.8) skewX(-12deg)}}
+@keyframes bookHeroDescendV207{0%{opacity:0;transform:translateY(-28vh) scale(.72)}55%{opacity:1;transform:translateY(-11vh) scale(1.05)}100%{opacity:1;transform:translateY(-7vh) scale(1.08)}}
+@media(max-height:720px){.story-narration.book-page-narration-v207 p{font-size:15px!important}.story-guest-group.book-navi-hero-duel-v207{bottom:22%!important;height:30vh!important}}
+/* ===== END MOB STORY v207 ===== */
+#dialogOverlay.book-facility-big-v207 #dialogText{font-size:clamp(21px,6vw,29px)!important;line-height:1.2!important;font-weight:1000!important;letter-spacing:.04em!important;text-shadow:0 2px 0 #fff,0 0 14px #ffd66b!important}
+#dialogOverlay.book-facility-big-v207 .dialog-card{transform:scale(1.03)}
+
+.book-skull-v207 .summon-page-v207{position:absolute;top:12%;width:42%;height:72%;background:#efe6c8;border:5px solid #171717;box-shadow:0 12px 34px #000b;opacity:0;z-index:-1;animation:bookDarkPageV207 2.8s ease both}.book-skull-v207 .summon-page-v207.left{left:7%;transform-origin:right center}.book-skull-v207 .summon-page-v207.right{right:7%;transform-origin:left center;animation-delay:.08s}@keyframes bookDarkPageV207{0%{opacity:0;transform:perspective(600px) rotateY(78deg) scale(.72)}25%{opacity:.9}62%{opacity:1;transform:perspective(600px) rotateY(0) scale(1)}100%{opacity:0;transform:perspective(600px) rotateY(-10deg) scale(1.05)}}
