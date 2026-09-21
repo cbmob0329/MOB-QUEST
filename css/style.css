@@ -4995,3 +4995,93 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes matrixCoreCollapseV208{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}55%{opacity:.9;transform:translate(-50%,-50%) scale(1.38, .45)}100%{opacity:0;transform:translate(-50%,-50%) scale(.04,2.1)}}
 @media(max-height:720px){.story-guest-group.book-navi-hero-duel-v207{bottom:29%!important;height:min(25vh,165px)!important}.matrix-col-v208{font-size:13px}.matrix-core-v208{font-size:54px}}
 /* ===== END MOB STORY v208 ===== */
+
+/* ===== MOB STORY v209: KAIJIN BOSS / READING BOOK PRESENTATION ===== */
+
+/* Keep the Navi + Hero confrontation fully in the enemy lane. */
+.story-guest-group.book-navi-hero-duel-v207{
+  left:43%!important;right:4%!important;width:53%!important;
+  bottom:46%!important;height:min(24vh,172px)!important;
+  justify-content:center!important;align-items:flex-end!important;
+  gap:clamp(10px,3.2vw,26px)!important;overflow:visible!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="book-navi"]{
+  transform:none!important;animation:none!important;align-self:flex-end!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="yusha"]{
+  transform:none!important;transform-origin:center bottom!important;align-self:flex-end!important;
+}
+/* First confrontation still flies Hero from the party side; resumed confrontation does not. */
+.story-guest-group.book-navi-hero-duel-v207:not(.book-duel-resume-v208) [data-story-actor="yusha"]{
+  animation:bookHeroFlyEnemyLaneV209 1.25s cubic-bezier(.2,.74,.24,1) both!important;
+}
+.story-guest-group.book-navi-hero-duel-v207.book-duel-resume-v208 [data-story-actor="yusha"]{animation:none!important}
+@keyframes bookHeroFlyEnemyLaneV209{
+  0%{opacity:0;transform:translate(-47vw,20vh) scale(.72) rotate(-4deg)}
+  45%{opacity:1;transform:translate(-25vw,9vh) scale(.88) rotate(2deg)}
+  76%{transform:translate(-6vw,2vh) scale(1.03) rotate(-1deg)}
+  100%{opacity:1;transform:translate(0,0) scale(1) rotate(0)}
+}
+
+/* If the 3-character version is used, keep all three on the same enemy stage. */
+.story-guest-group.book-triad-v94{
+  left:38%!important;right:3%!important;width:59%!important;
+  bottom:46%!important;height:min(25vh,180px)!important;
+  gap:clamp(5px,1.8vw,13px)!important;justify-content:center!important;align-items:flex-end!important;
+}
+.story-guest-group.book-triad-v94 [data-story-actor="book-kaijin-boss"]{transform:translateX(0) scale(.96)!important}
+.story-guest-group.book-triad-v94 [data-story-actor="book-navi"]{transform:none!important}
+.story-guest-group.book-triad-v94 [data-story-actor="yusha"]{transform-origin:center bottom!important}
+
+/* Story-only boss cap. JS calculates the natural-ratio size; this class only
+   protects against older generic boss width rules winning later in the cascade. */
+.story-guest.book-kaijin-story-scale-v209,
+.story-guest-multi.book-kaijin-story-scale-v209{max-width:30vw!important;max-height:34vh!important}
+.story-guest-multi.book-kaijin-story-scale-v209{max-width:18.5vw!important;max-height:25.5vh!important}
+
+/* Atomic party rebuild: never expose the freshly-created first slot before Hero's
+   relocation class has been restored. */
+.story-party-line.book-party-rebuild-v209{visibility:hidden!important;transition:none!important}
+.story-party-actor.book-kaijin-party-arrive-v209{animation:bookKaijinPartyArriveV209 .56s cubic-bezier(.18,.8,.22,1) both!important}
+@keyframes bookKaijinPartyArriveV209{
+  0%{opacity:0;transform:translateY(-18px) scale(.76);filter:brightness(2.4) drop-shadow(0 0 14px rgba(166,100,255,.95))}
+  48%{opacity:1;transform:translateY(3px) scale(1.08);filter:brightness(1.45) drop-shadow(0 0 9px rgba(166,100,255,.8))}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 7px 6px rgba(0,0,0,.38))}
+}
+
+/* Strong Kaijin entrance. It uses the boss art itself, not a final X-shaped line. */
+.book-kaijin-intro-v209{position:absolute;inset:0;z-index:29;overflow:hidden;pointer-events:none;opacity:0;background:rgba(2,0,8,.08)}
+.book-kaijin-intro-v209.play{animation:bookKaijinBackdropV209 2.65s ease both}
+.book-kaijin-intro-v209::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 48%,rgba(111,60,171,.28),rgba(8,2,18,.72) 45%,rgba(0,0,0,.86) 78%);opacity:0;animation:bookKaijinDarkV209 2.25s .22s ease both}
+.kaijin-book-v209{position:absolute;left:50%;top:50%;width:min(78vw,390px);height:min(50vh,290px);transform:translate(-50%,-48%);perspective:750px;z-index:1}
+.kaijin-book-v209>i{position:absolute;top:6%;width:49%;height:86%;background:#efe5c7;border:5px solid #171717;box-shadow:0 18px 35px rgba(0,0,0,.58),inset 0 0 0 8px rgba(83,48,111,.16);opacity:0}
+.kaijin-book-v209>i.left{left:1%;transform-origin:right center;animation:kaijinBookLeftV209 1.35s .08s cubic-bezier(.2,.72,.2,1) both}
+.kaijin-book-v209>i.right{right:1%;transform-origin:left center;animation:kaijinBookRightV209 1.35s .12s cubic-bezier(.2,.72,.2,1) both}
+.kaijin-book-v209>b{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) scale(.4);font-size:clamp(46px,17vw,92px);font-weight:1000;letter-spacing:.08em;color:#2a112f;text-shadow:0 0 0 #000;opacity:0;animation:kaijinBookMarkV209 1.15s .62s ease both}
+.kaijin-portal-v209{position:absolute;z-index:2;left:50%;top:47%;width:min(55vw,260px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;opacity:0;animation:kaijinPortalAppearV209 1.75s .68s ease both;background:radial-gradient(circle,rgba(237,219,255,.76) 0 4%,rgba(150,74,204,.50) 5% 19%,rgba(42,9,65,.78) 35%,rgba(2,0,8,.10) 66%,transparent 70%);filter:drop-shadow(0 0 18px rgba(181,100,255,.85))}
+.kaijin-portal-v209>i{position:absolute;inset:4%;border:3px solid rgba(229,207,255,.78);border-radius:50%;animation:kaijinPortalRingV209 .82s linear infinite}
+.kaijin-portal-v209>i:nth-child(2){inset:17%;animation-direction:reverse;animation-duration:.62s;border-style:dashed}.kaijin-portal-v209>i:nth-child(3){inset:29%;animation-duration:.48s;border-width:2px}
+.kaijin-boss-shadow-v209{position:absolute;z-index:4;left:50%;bottom:32%;width:min(30vw,150px);height:min(34vh,225px);display:flex;align-items:flex-end;justify-content:center;transform:translate(-50%,42px) scale(.42);opacity:0;filter:brightness(0) drop-shadow(0 0 12px rgba(170,100,255,.8));animation:kaijinBossRiseV209 1.5s .72s cubic-bezier(.18,.78,.2,1) both}
+.kaijin-boss-shadow-v209 img{width:100%;height:100%;object-fit:contain;object-position:center bottom;opacity:0;visibility:hidden}.kaijin-boss-shadow-v209 img.size-ready{opacity:1;visibility:visible}
+.kaijin-seal-v209{position:absolute;z-index:5;left:50%;top:45%;transform:translate(-50%,-50%) scale(.25);font-size:clamp(38px,14vw,78px);font-weight:1000;letter-spacing:.18em;color:#fff;border:4px solid rgba(255,255,255,.88);padding:.03em .14em .03em .28em;text-shadow:0 3px 0 #180421,0 0 13px #b86dff;box-shadow:0 0 0 6px rgba(89,26,126,.46),0 0 30px rgba(181,96,255,.92);opacity:0;animation:kaijinSealPulseV209 .72s 1.42s ease both}
+.kaijin-floor-v209{position:absolute;z-index:3;left:26%;right:26%;bottom:29%;height:18px;border-radius:50%;background:radial-gradient(ellipse,rgba(201,147,255,.9),rgba(95,31,132,.55) 38%,transparent 72%);opacity:0;filter:blur(2px);animation:kaijinFloorV209 1.35s 1.05s ease both}
+.kaijin-shards-v209{position:absolute;inset:0;z-index:3}.kaijin-shards-v209 i{position:absolute;left:50%;top:48%;width:8px;height:18px;border:2px solid rgba(237,217,255,.9);background:rgba(91,36,126,.75);opacity:0;transform:rotate(calc(var(--i)*36deg)) translateY(-30px);animation:kaijinShardV209 .95s calc(.95s + var(--i)*.035s) ease-out both}
+.book-kaijin-intro-v209.handoff{animation:bookKaijinHandoffV209 .48s ease both!important}.book-kaijin-intro-v209.handoff .kaijin-boss-shadow-v209{opacity:0!important;transition:opacity .2s ease!important}
+@keyframes bookKaijinBackdropV209{0%{opacity:0}8%,84%{opacity:1}100%{opacity:1}}
+@keyframes bookKaijinDarkV209{0%{opacity:0}30%,82%{opacity:1}100%{opacity:.72}}
+@keyframes kaijinBookLeftV209{0%{opacity:0;transform:rotateY(86deg) scale(.72)}25%{opacity:1}70%{transform:rotateY(0) scale(1)}100%{opacity:.45;transform:translateX(-18%) rotateY(-23deg) scale(1.06)}}
+@keyframes kaijinBookRightV209{0%{opacity:0;transform:rotateY(-86deg) scale(.72)}25%{opacity:1}70%{transform:rotateY(0) scale(1)}100%{opacity:.45;transform:translateX(18%) rotateY(23deg) scale(1.06)}}
+@keyframes kaijinBookMarkV209{0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}45%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.32)}}
+@keyframes kaijinPortalAppearV209{0%{opacity:0;transform:translate(-50%,-50%) scale(.15)}35%{opacity:1;transform:translate(-50%,-50%) scale(.72)}72%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}100%{opacity:.58;transform:translate(-50%,-50%) scale(1.34)}}
+@keyframes kaijinPortalRingV209{to{transform:rotate(360deg)}}
+@keyframes kaijinBossRiseV209{0%{opacity:0;transform:translate(-50%,52px) scale(.36);filter:brightness(0) blur(3px) drop-shadow(0 0 10px rgba(170,100,255,.8))}38%{opacity:.92;filter:brightness(0) blur(0) drop-shadow(0 0 18px rgba(170,100,255,.95))}72%{opacity:1;transform:translate(-50%,0) scale(1.08);filter:brightness(.18) contrast(1.5) drop-shadow(0 0 22px rgba(170,100,255,1))}100%{opacity:1;transform:translate(-50%,0) scale(1);filter:brightness(.72) contrast(1.12) drop-shadow(0 0 8px rgba(170,100,255,.72))}}
+@keyframes kaijinSealPulseV209{0%{opacity:0;transform:translate(-50%,-50%) scale(.18) rotate(-7deg)}45%{opacity:1;transform:translate(-50%,-50%) scale(1.12) rotate(2deg)}72%{opacity:1;transform:translate(-50%,-50%) scale(.96)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45)}}
+@keyframes kaijinFloorV209{0%{opacity:0;transform:scaleX(.2)}45%{opacity:1;transform:scaleX(1.12)}100%{opacity:.25;transform:scaleX(1.6)}}
+@keyframes kaijinShardV209{0%{opacity:0;transform:rotate(calc(var(--i)*36deg)) translateY(-25px) scale(.35)}25%{opacity:1}100%{opacity:0;transform:rotate(calc(var(--i)*36deg)) translateY(-155px) scale(1.1)}}
+@keyframes bookKaijinHandoffV209{0%{opacity:1;filter:none}55%{opacity:.8;filter:brightness(1.8)}100%{opacity:0;filter:brightness(2.8) blur(5px)}}
+
+@media(max-height:720px){
+  .story-guest-group.book-navi-hero-duel-v207,.story-guest-group.book-triad-v94{bottom:43%!important;height:min(22vh,150px)!important}
+  .kaijin-boss-shadow-v209{bottom:30%;height:min(30vh,190px)}
+}
+/* ===== END MOB STORY v209 ===== */

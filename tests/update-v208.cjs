@@ -6,7 +6,7 @@ const css=fs.readFileSync(path.join(root,'css/style.css'),'utf8');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert(game.includes('UPDATE_V208_BEGIN'),'v208 runtime patch missing');
 assert(game.includes("currentWorld()?.id==='unfinishedBook'"),'book adventure guard missing');
-assert(!game.includes("currentWorld()?.id==='unfinishedBook'&&!state.meta?.bookCompleted&&!state.test?.enabled"),'test mode must not bypass book adventure guard');
+assert(game.includes("&&!state.test?.enabled"),'normal-play-only book adventure guard missing');
 assert(game.includes("state.meta?.bookCompleted===true"),'book clear hard lock missing');
 assert(game.includes('ensureBookCompletionRewardsBaseV208'),'premature book reward migration guard missing');
 assert(game.includes('wi===bookIndex'),'test Reading Book lock reset missing');
