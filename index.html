@@ -4954,6 +4954,59 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #dialogOverlay.book-facility-big-v207 .dialog-card{transform:scale(1.03)}
 
 .book-skull-v207 .summon-page-v207{position:absolute;top:12%;width:42%;height:72%;background:#efe6c8;border:5px solid #171717;box-shadow:0 12px 34px #000b;opacity:0;z-index:-1;animation:bookDarkPageV207 2.8s ease both}.book-skull-v207 .summon-page-v207.left{left:7%;transform-origin:right center}.book-skull-v207 .summon-page-v207.right{right:7%;transform-origin:left center;animation-delay:.08s}@keyframes bookDarkPageV207{0%{opacity:0;transform:perspective(600px) rotateY(78deg) scale(.72)}25%{opacity:.9}62%{opacity:1;transform:perspective(600px) rotateY(0) scale(1)}100%{opacity:0;transform:perspective(600px) rotateY(-10deg) scale(1.05)}}
+
+/* ===== MOB STORY v208: READING BOOK FINAL STAGING ===== */
+/* Navi stays on the enemy stage. Only the Hero travels from party side to Navi. */
+.story-guest-group.book-navi-hero-duel-v207{
+  left:24%!important;right:24%!important;bottom:31%!important;width:52%!important;height:min(28vh,190px)!important;
+  justify-content:center!important;align-items:flex-end!important;gap:clamp(12px,4vw,34px)!important;overflow:visible!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="book-navi"]{
+  transform:none!important;animation:none!important;align-self:flex-end!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="yusha"]{
+  transform:none!important;transform-origin:center bottom!important;align-self:flex-end!important;
+  animation:bookHeroFlyToNaviV208 1.35s cubic-bezier(.2,.74,.24,1) both!important;
+}
+.story-guest-group.book-navi-hero-duel-v207.book-duel-resume-v208 [data-story-actor="yusha"]{animation:none!important}
+@keyframes bookHeroFlyToNaviV208{
+  0%{opacity:0;transform:translate(-44vw,19vh) scale(.72) rotate(-4deg)}
+  42%{opacity:1;transform:translate(-22vw,9vh) scale(.88) rotate(2deg)}
+  74%{opacity:1;transform:translate(-5vw,1.8vh) scale(1.04) rotate(-1deg)}
+  100%{opacity:1;transform:translate(0,0) scale(1) rotate(0)}
+}
+
+/* Strong Matrix: columns move independently instead of one block of text. */
+.book-matrix-v208{position:fixed!important;inset:0!important;z-index:99998!important;overflow:hidden!important;pointer-events:none!important;background:rgba(0,4,7,.74)!important;perspective:700px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.book-matrix-v208::before,.book-matrix-v208::after{content:"";position:absolute;inset:0;pointer-events:none}
+.book-matrix-v208::before{background:repeating-linear-gradient(0deg,rgba(120,255,235,.035) 0 1px,transparent 1px 5px);animation:matrixNoiseV208 .16s steps(2,end) infinite}
+.book-matrix-v208::after{background:radial-gradient(circle at 50% 48%,rgba(119,255,233,.20),transparent 30%),radial-gradient(circle at 50% 48%,transparent 0 42%,rgba(0,0,0,.66) 88%);animation:matrixPulseBgV208 .72s ease-in-out infinite alternate}
+.matrix-grid-v208{position:absolute;left:-20%;right:-20%;bottom:-38%;height:70%;background:linear-gradient(rgba(94,255,226,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(94,255,226,.14) 1px,transparent 1px);background-size:28px 28px;transform:rotateX(67deg) translateZ(-40px);transform-origin:center top;animation:matrixGridV208 1.15s linear infinite}
+.matrix-rain-v208{position:absolute;inset:0;overflow:hidden;filter:drop-shadow(0 0 5px rgba(67,255,224,.9))}
+.matrix-col-v208{position:absolute;top:-72%;left:calc((var(--i) + .35) * 7.05%);display:block;width:6.2%;text-align:center;color:#bafff5;font-style:normal;font-weight:1000;font-size:clamp(13px,4.1vw,24px);line-height:1.12;text-shadow:0 0 5px #38ffe1,0 0 14px #14cbb1;opacity:.82;transform:translateX(var(--offset));animation:matrixColumnV208 var(--speed) linear var(--delay) infinite}
+.matrix-col-v208:nth-child(3n){color:#fff;font-size:clamp(15px,4.8vw,27px);opacity:1}.matrix-col-v208:nth-child(4n){filter:blur(.35px);opacity:.62}
+.matrix-scan-v208{position:absolute;left:0;right:0;height:9%;top:-12%;background:linear-gradient(180deg,transparent,rgba(190,255,246,.38),rgba(67,255,224,.06),transparent);mix-blend-mode:screen;animation:matrixScanV208 .92s linear infinite}
+.matrix-glitch-v208{position:absolute;left:50%;top:48%;font-size:clamp(64px,25vw,150px);font-weight:1000;letter-spacing:.06em;color:transparent;-webkit-text-stroke:2px rgba(159,255,242,.8);text-shadow:7px 0 0 rgba(255,60,190,.38),-7px 0 0 rgba(0,220,255,.48),0 0 26px #4affdf;transform:translate(-50%,-50%);opacity:0;mix-blend-mode:screen;animation:matrixGlitchV208 .58s steps(2,end) infinite}
+.matrix-glitch-v208.g2{animation-delay:.19s;transform:translate(-50%,-50%) scale(1.08);filter:blur(1px)}
+.matrix-core-v208{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:clamp(54px,22vw,138px);font-weight:1000;letter-spacing:.08em;color:#eafffb;text-shadow:0 0 8px #fff,0 0 18px #51ffe5,0 0 42px #12c9ad;animation:matrixCoreV208 .82s ease-in-out infinite alternate}
+.matrix-ring-v208{position:absolute;left:50%;top:48%;width:min(72vw,390px);aspect-ratio:1;border:2px solid rgba(119,255,233,.78);border-radius:50%;box-shadow:0 0 14px #48ffe2,inset 0 0 14px #48ffe2;transform:translate(-50%,-50%) scale(.2);animation:matrixRingV208 .86s ease-out infinite}
+.book-navi-matrix-charge-v208{animation:naviChargeV208 .24s steps(2,end) infinite!important;filter:drop-shadow(0 0 8px #73ffec) drop-shadow(0 0 20px #0fd4b8)!important}
+.story-scene.book-matrix-shake-v208{animation:matrixSceneShakeV208 .16s linear infinite!important}
+.book-matrix-v208.collapse{animation:matrixCollapseV208 1.45s ease both!important}.book-matrix-v208.collapse .matrix-col-v208{animation-duration:.36s!important;animation-direction:reverse!important}.book-matrix-v208.collapse .matrix-core-v208{animation:matrixCoreCollapseV208 1.2s ease both!important}
+@keyframes matrixColumnV208{0%{transform:translate(var(--offset),-10%) scaleY(.92);opacity:0}8%{opacity:.9}82%{opacity:.85}100%{transform:translate(var(--offset),195vh) scaleY(1.08);opacity:0}}
+@keyframes matrixScanV208{to{transform:translateY(125vh)}}
+@keyframes matrixGridV208{to{background-position:0 28px,28px 0}}
+@keyframes matrixGlitchV208{0%,38%,100%{opacity:.08;clip-path:inset(0 0 84% 0)}40%,54%{opacity:.9;clip-path:inset(28% 0 42% 0)}56%,74%{opacity:.35;clip-path:inset(70% 0 8% 0)}76%,90%{opacity:.72;clip-path:inset(10% 0 67% 0)}}
+@keyframes matrixCoreV208{from{transform:translate(-50%,-50%) scale(.84);opacity:.66;filter:blur(.7px)}to{transform:translate(-50%,-50%) scale(1.08);opacity:1;filter:none}}
+@keyframes matrixRingV208{0%{transform:translate(-50%,-50%) scale(.18);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.45);opacity:0}}
+@keyframes matrixNoiseV208{0%{transform:translate(0,0)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,1px)}}
+@keyframes matrixPulseBgV208{to{opacity:.74}}
+@keyframes naviChargeV208{0%{transform:translateX(-2px) skewX(-1deg)}50%{transform:translateX(2px) skewX(1deg)}100%{transform:translateX(0)}}
+@keyframes matrixSceneShakeV208{0%,100%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-1px)}}
+@keyframes matrixCollapseV208{0%{opacity:1;filter:none}45%{opacity:.95;filter:contrast(2.2) brightness(1.7);transform:scaleX(.98) skewX(2deg)}72%{opacity:.65;filter:blur(2px) brightness(2.5);transform:scaleX(.64) skewX(-8deg)}100%{opacity:0;filter:blur(14px) brightness(4);transform:scale(.03,.78) skewX(14deg)}}
+@keyframes matrixCoreCollapseV208{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}55%{opacity:.9;transform:translate(-50%,-50%) scale(1.38, .45)}100%{opacity:0;transform:translate(-50%,-50%) scale(.04,2.1)}}
+@media(max-height:720px){.story-guest-group.book-navi-hero-duel-v207{bottom:29%!important;height:min(25vh,165px)!important}.matrix-col-v208{font-size:13px}.matrix-core-v208{font-size:54px}}
+/* ===== END MOB STORY v208 ===== */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5457,7 +5510,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v207</div>
+      <div class="title-version">v208</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -7338,6 +7391,21 @@ for(const [element,id] of Object.entries(_v73Middle)){
 /* ===== MOB STORY v200: REMOVED PLAYER DATA =====
    Removed-player records are intentionally absent from all playable balance and learnset tables.
    ===== END MOB STORY v200 ===== */
+
+/* ===== MOB STORY v208: PLAYABLE KAIJIN FINAL REBALANCE ===== */
+{
+  const t=TEMP_BALANCE.playerTargets?.kaijin;
+  if(t){
+    t.hp=[330,1800,2150];       /* highest playable HP at Lv99 / Lv120 */
+    t.mp=[100,600,720];
+    t.atk=[82,590,715];
+    t.mag=[60,455,555];
+    t.def=[65,560,680];
+    t.res=[62,520,630];
+    t.spd=[60,310,375];
+  }
+}
+/* ===== END MOB STORY v208 ===== */
 (() => {
 'use strict';
 
@@ -7681,7 +7749,7 @@ function useInventoryItemOn(id,pid){const it=itemData(id),t=inventoryTargetStatu
 
 function playerDetailMagic(p){const element=normalizeElement(p.attribute),all=MOB_DATA.magicCatalog||[];return all.find(x=>x.element===element&&x.tier==='medium')||all.find(x=>x.element===element)||null;}
 function playerDetailTechnique(p){return temporaryTechnique({...p,equipment:equipmentFor(p.id)});}
-function openPlayerDetail(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),magic=playerDetailMagic(p),tech=playerDetailTechnique(p),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>${p.attribute} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>魔法</h3>${magic?`<div class="player-detail-list"><span><b>${magic.name}</b><small>MP ${magic.cost} / ${magic.element}属性 / ${magic.target==='all'?'敵全体':'敵単体'}</small></span></div>`:'<p>現在使用できる魔法はありません。</p>'}</section><section><h3>特技</h3>${tech?`<div class="player-detail-list"><span><b>${tech.name}</b><small>MP ${tech.cost} / 現在使用可能な基本特技</small></span></div>`:'<p>現在使用できる特技はありません。</p>'}</section><section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;}
+function openPlayerDetail(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),magic=playerDetailMagic(p),tech=playerDetailTechnique(p),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.bookCompleted===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>${p.attribute} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>魔法</h3>${magic?`<div class="player-detail-list"><span><b>${magic.name}</b><small>MP ${magic.cost} / ${magic.element}属性 / ${magic.target==='all'?'敵全体':'敵単体'}</small></span></div>`:'<p>現在使用できる魔法はありません。</p>'}</section><section><h3>特技</h3>${tech?`<div class="player-detail-list"><span><b>${tech.name}</b><small>MP ${tech.cost} / 現在使用可能な基本特技</small></span></div>`:'<p>現在使用できる特技はありません。</p>'}</section><section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;}
 function closePlayerDetail(){const ov=$('#playerDetailOverlay');if(ov)ov.hidden=true;}
 function defaultMeta(){return{coins:0,diamonds:0,exp:{},inventory:{},drinkSets:{},weapons:{},medals:{},armors:{},equipment:{},subquests:{cleared:{}},figures:{},figureEquipment:{},figureOrder:[],ultimateCooldowns:{},openingCompleted:false,starterGrantReceived:false,firstGrassReviveUsed:false,firstGrassReviveCount:0,defeatedBosses:[],defeatedElites:[]};}
 function loadMeta(){try{const v=JSON.parse(localStorage.getItem('mobQuestMetaV1'));if(v&&typeof v==='object'){const equipment={...(v.equipment||{})};if(equipment.jerry&&!equipment.jessie){equipment.jessie=equipment.jerry;delete equipment.jerry;}return{...defaultMeta(),...v,exp:{...(v.exp||{})},inventory:{...(v.inventory||{})},drinkSets:{...(v.drinkSets||{})},weapons:{...(v.weapons||{})},medals:{...(v.medals||{})},armors:{...(v.armors||{})},subquests:{cleared:{...(v.subquests?.cleared||{})}},equipment,figures:{...(v.figures||{})},figureEquipment:{...(v.figureEquipment||{})},figureOrder:[...(v.figureOrder||[])],ultimateCooldowns:{...(v.ultimateCooldowns||{})},defeatedBosses:[...(v.defeatedBosses||[])],defeatedElites:[...(v.defeatedElites||[])]};}}catch(_){}return defaultMeta();}
@@ -13161,7 +13229,7 @@ damageAlly=async function(a,power,type='physical',superHalf=false,element=''){
 
 playerDetailMagic=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv,mpNow:999999};return availableMagicSkillsV104(fake);};
 playerDetailTechnique=function(p){const lv=currentPlayerLevel(p.id),fake={...p,level:lv};return availableTechniqueSkillsV104(fake);};
-openPlayerDetail=function(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),fake={...p,level:lv,mpNow:999999},magics=availableMagicSkillsV104(fake),techs=availableTechniqueSkillsV104(fake),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.heroPassive2Unlocked===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));const er=['火','水','雷','風','地','光','闇','無'].map(k=>{const n=Math.round(Number(p.elementResist?.[k]||0)*100);return`<span>${k}<b class="${n<0?'weak':''}">${n>0?'+':''}${n}%</b></span>`}).join(''),sr=[['poison','毒'],['paralyze','マヒ'],['burn','やけど'],['sleep','眠り'],['confuse','混乱'],['stun','ひるみ']].map(([k,n])=>`<span>${n}<b>${Math.round(playerBaseStatusResistanceV104(p,k)*100)}%</b></span>`).join(''),next=[...nextLearnRowsV104(p,'magic',lv).map(x=>({...x,type:'魔法'})),...nextLearnRowsV104(p,'technique',lv).map(x=>({...x,type:'特技'}))].sort((a,b)=>a.level-b.level).slice(0,5),allSkill=MOB_DATA.magicCatalog||[],allTech=MOB_DATA.techniqueCatalog||[];body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>メイン ${p.attribute} / サブ ${(p.subAttributes||[]).join('・')||'なし'} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>属性耐性</h3><div class="player-detail-stats player-resist-v104">${er}</div></section><section><h3>状態異常耐性</h3><div class="player-detail-stats player-resist-v104">${sr}</div></section><section><h3>習得魔法</h3><div class="player-detail-list">${magics.length?magics.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section><section><h3>習得特技</h3><div class="player-detail-list">${techs.length?techs.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section>${next.length?`<section><h3>次の習得</h3><div class="player-detail-list">${next.map(x=>{const sk=x.type==='魔法'?allSkill.find(s=>s.id===x.id):allTech.find(s=>s.id===x.id);return`<span><b>Lv${x.level} ${sk?.name||x.id}</b><small>${x.type}</small></span>`}).join('')}</div></section>`:''}<section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;};
+openPlayerDetail=function(pid){const row=state.party.find(x=>x[0]===pid),p=player(pid),ov=$('#playerDetailOverlay'),body=$('#playerDetailBody');if(!row||!p||!ov||!body)return;const lv=row[1],st=baseStats(p,lv),v=ensureAdventureVitals()[pid],eq=equipmentFor(pid),fake={...p,level:lv,mpNow:999999},magics=availableMagicSkillsV104(fake),techs=availableTechniqueSkillsV104(fake),ults=(p.ults||[]).filter((u,i)=>i<4?lv>=ULT_UNLOCK_LEVELS[i]:(p.id==='yusha'&&state.meta?.bookCompleted===true)||(p.id==='money'&&state.meta?.moneyFriendsUnlocked===true));const er=['火','水','雷','風','地','光','闇','無'].map(k=>{const n=Math.round(Number(p.elementResist?.[k]||0)*100);return`<span>${k}<b class="${n<0?'weak':''}">${n>0?'+':''}${n}%</b></span>`}).join(''),sr=[['poison','毒'],['paralyze','マヒ'],['burn','やけど'],['sleep','眠り'],['confuse','混乱'],['stun','ひるみ']].map(([k,n])=>`<span>${n}<b>${Math.round(playerBaseStatusResistanceV104(p,k)*100)}%</b></span>`).join(''),next=[...nextLearnRowsV104(p,'magic',lv).map(x=>({...x,type:'魔法'})),...nextLearnRowsV104(p,'technique',lv).map(x=>({...x,type:'特技'}))].sort((a,b)=>a.level-b.level).slice(0,5),allSkill=MOB_DATA.magicCatalog||[],allTech=MOB_DATA.techniqueCatalog||[];body.innerHTML=`<div class="player-detail-hero"><img src="${versionedPlay(p.image)}" alt="${p.name}"><div><small>メイン ${p.attribute} / サブ ${(p.subAttributes||[]).join('・')||'なし'} / ${p.weapon}</small><h2>${p.name}</h2><b>Lv${lv}</b><em>${statusLabel(v)}</em></div></div><section><h3>ステータス</h3><div class="player-detail-stats"><span>HP <b>${Math.round(v.hp)}/${st.maxHp}</b></span><span>MP <b>${Math.round(v.mp)}/${st.maxMp}</b></span><span>ATK <b>${st.atk}</b></span><span>MAG <b>${st.mag}</b></span><span>DEF <b>${st.def}</b></span><span>MND <b>${st.res}</b></span><span>SPD <b>${st.spd}</b></span></div></section><section><h3>属性耐性</h3><div class="player-detail-stats player-resist-v104">${er}</div></section><section><h3>状態異常耐性</h3><div class="player-detail-stats player-resist-v104">${sr}</div></section><section><h3>習得魔法</h3><div class="player-detail-list">${magics.length?magics.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section><section><h3>習得特技</h3><div class="player-detail-list">${techs.length?techs.map(x=>`<span><b>${x.name}</b><small>${x.element} / MP ${x.cost}</small></span>`).join(''):'<span><b>なし</b></span>'}</div></section>${next.length?`<section><h3>次の習得</h3><div class="player-detail-list">${next.map(x=>{const sk=x.type==='魔法'?allSkill.find(s=>s.id===x.id):allTech.find(s=>s.id===x.id);return`<span><b>Lv${x.level} ${sk?.name||x.id}</b><small>${x.type}</small></span>`}).join('')}</div></section>`:''}<section><h3>装備</h3><div class="player-detail-list"><span><b>MAIN</b><small>${eq.main?weaponById(eq.main)?.name||eq.main:'なし'}</small></span><span><b>SUB</b><small>${eq.sub?weaponById(eq.sub)?.name||eq.sub:'なし'}</small></span><span><b>ARMOR</b><small>${eq.armor?armorById(eq.armor)?.name||eq.armor:'なし'}</small></span><span><b>FIGURE</b><small>${figureEquipmentFor(pid).filter(Boolean).map(id=>figureById(id)?.name||id).join(' / ')||'なし'}</small></span></div></section><section><h3>必殺技</h3><div class="player-detail-list">${ults.length?ults.map(u=>`<span><b>${u.name}</b><small>${u.desc}</small></span>`).join(''):'<span><b>現在習得している必殺技はありません。</b></span>'}</div></section>`;bindImages(body);ov.hidden=false;};
 
 const _renderAdventureV104Base=renderAdventure;
 renderAdventure=function(){const r=_renderAdventureV104Base();const w=currentWorld(),title=$('#adventureStageTitle');if(title&&!state.adventure.completed){title.textContent=w?.recommendedLevel?`${w.name}　適正Lv${w.recommendedLevel}`:(w?.name||'冒険');}return r;};
@@ -20796,6 +20864,137 @@ window.__mobV207ReadingBookScript=true;
 window.__mobV207AutoTargetFix=true;
 window.__mobV207BookReportGuard=true;
 // UPDATE_V207_END
+
+
+
+// UPDATE_V208_BEGIN
+/* MOB STORY v208
+   Reading Book staging / access / reward-lock fixes and playable Kaijin rebalance.
+*/
+
+/* Keep the temporarily displaced tenth party member visible during the authored
+   Area 4 sequence. The old join helper reserves a slot for Kaijin immediately,
+   which can otherwise make the final core member (normally Riro) vanish from the
+   story lineup before the actual join announcement. */
+let bookDisplacedPartyMemberV208=null;
+const renderStoryPartyBaseV208=renderStoryParty;
+renderStoryParty=async function(extraIds=null){
+  let extras=Array.isArray(extraIds)?[...extraIds]:(extraIds?[extraIds]:[]);
+  const inBookFinal=currentWorld()?.id==='unfinishedBook'&&Number(state.adventure?.areaIndex||0)===3&&storyBusy;
+  if(inBookFinal&&bookDisplacedPartyMemberV208&&!extras.includes(bookDisplacedPartyMemberV208))extras.push(bookDisplacedPartyMemberV208);
+  return renderStoryPartyBaseV208(extras.length?extras:null);
+};
+
+moveBookBossIntoPartyV207=async function(){
+  const already=state.party.some(x=>canonicalPlayerId(x[0])==='kaijin');
+  if(!already){
+    if(state.party.length>=10){
+      const row=state.party[state.party.length-1];
+      bookDisplacedPartyMemberV208=canonicalPlayerId(row?.[0])||null;
+    }
+    storyJoin('kaijin');
+  }
+  saveParty();saveMeta();
+  await storyHideGuest().catch(()=>{});
+  await renderStoryParty(bookDisplacedPartyMemberV208);
+  if($('[data-story-actor="yusha"]',$('#storyGuestGroup')))hideStoryPartyHeroV94(true);
+  await fixedDelay(260);
+};
+
+/* On the second scene after the solo duel, keep Navi/Hero at the enemy stage but
+   do not replay the first "Hero flies to Navi" animation. */
+showBookNaviHeroDuelV207=async function(){
+  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
+  await storyShowGuests(['book-navi','yusha'],{slow:true});
+  const g=$('#storyGuestGroup');g?.classList.add('book-navi-hero-duel-v207','book-duel-resume-v208');
+  const hero=$('[data-story-actor="yusha"]',g);hero?.classList.add('book-hero-guest-v94');
+};
+
+/* Reading Book is entered ONLY from the Record Room book. HOME > Adventure must
+   never launch the world directly, including test mode. */
+const openHomeActionBaseV208=openHomeAction;
+openHomeAction=function(action){
+  if(action==='adventure'&&currentWorld()?.id==='unfinishedBook'&&!state.meta?.bookCompleted){
+    return facilityTalk('読みかけの本へは、レコードルームの本をタップして入るであります！','モブピンク','play/02.png');
+  }
+  return openHomeActionBaseV208(action);
+};
+
+/* Do not let the old save-migration helper convert mere world progress into a
+   Reading Book clear. Only the explicit authored completion flag can grant the
+   reward now. This closes reload/test edge cases around AREA 4. */
+const ensureBookCompletionRewardsBaseV208=ensureBookCompletionRewardsV165;
+ensureBookCompletionRewardsV165=function(){
+  if(state.meta?.bookCompleted!==true)return false;
+  return ensureBookCompletionRewardsBaseV208();
+};
+const applyTestChapterBaseV208=applyTestChapter;
+applyTestChapter=function(...args){
+  const r=applyTestChapterBaseV208(...args);
+  if(state.test?.enabled){
+    const worlds=MOB_DATA.adventureWorlds||[],bookIndex=worlds.findIndex(w=>w.id==='unfinishedBook'),wi=Number(state.adventure?.worldIndex)||0;
+    if(bookIndex>=0&&wi===bookIndex){state.meta.bookCompleted=false;state.meta.heroPassive2Unlocked=false;saveMeta();}
+    else if(bookIndex>=0&&wi>bookIndex){state.meta.bookCompleted=true;ensureBookCompletionRewardsV165();saveMeta();}
+  }
+  return r;
+};
+
+/* Hero's fifth ultimate is a true clear reward. Test "all skills", stale unlock
+   flags, and direct battle calls must not expose it before bookCompleted. */
+const transformUnlockedBaseV208=transformUnlockedV158;
+transformUnlockedV158=function(u){
+  if(u?.kind==='heroTransform'||u?.name==='読みかけの本')return state.meta?.bookCompleted===true;
+  return transformUnlockedBaseV208(u);
+};
+const availableUltsBaseV208=availableUlts;
+availableUlts=function(a){
+  const rows=availableUltsBaseV208(a)||[];
+  if(a?.id!=='yusha'||state.meta?.bookCompleted===true)return rows;
+  return rows.filter(u=>u?.kind!=='heroTransform'&&u?.name!=='読みかけの本');
+};
+const performUltimateBaseV208=performUltimate;
+performUltimate=async function(a,u,...args){
+  if(a?.id==='yusha'&&(u?.kind==='heroTransform'||u?.name==='読みかけの本')&&state.meta?.bookCompleted!==true){
+    notice('「読みかけの本」をクリアすると習得します','system',850);return false;
+  }
+  return performUltimateBaseV208(a,u,...args);
+};
+
+/* Stronger asynchronous Matrix transformation: independent MOB columns, scan
+   lines, glitch layers, perspective grid and a central pulse. */
+function matrixOverlayV208(collapse=false){
+  const fx=document.createElement('div');
+  fx.className=`book-scene-fx-v207 book-matrix-v208${collapse?' collapse':''}`;
+  const cols=Array.from({length:14},(_,i)=>{
+    const delay=(-(i%7)*0.17).toFixed(2),speed=(0.78+(i%5)*0.13).toFixed(2),offset=((i*7)%19)-9;
+    return `<i class="matrix-col-v208" style="--i:${i};--delay:${delay}s;--speed:${speed}s;--offset:${offset}px">M<br>O<br>B<br>M<br>O<br>B<br>M<br>O<br>B<br>M<br>O<br>B</i>`;
+  }).join('');
+  fx.innerHTML=`<div class="matrix-grid-v208"></div><div class="matrix-rain-v208">${cols}</div><div class="matrix-scan-v208"></div><div class="matrix-glitch-v208 g1">MOB</div><div class="matrix-glitch-v208 g2">MOB</div><div class="matrix-core-v208">MOB</div><div class="matrix-ring-v208"></div>`;
+  document.body.appendChild(fx);return fx;
+}
+matrixOverlayV207=matrixOverlayV208;
+naviMatrixTransformV207=async function(){
+  const fx=matrixOverlayV208(false),navi=storyAnchor('book-navi');
+  navi?.classList.add('book-navi-matrix-charge-v208');
+  const sc=$('#storyScene');sc?.classList.add('book-matrix-shake-v208');
+  try{
+    await Promise.all([naviTransformV161(),fixedDelay(3200)]);
+  }finally{
+    navi?.classList.remove('book-navi-matrix-charge-v208');sc?.classList.remove('book-matrix-shake-v208');fx.remove();
+  }
+};
+naviMatrixCollapseV207=async function(){
+  const fx=matrixOverlayV208(true),navi=storyAnchor('book-navi-master');
+  try{await Promise.all([fixedDelay(1450),navi?animateV157(navi,[{opacity:1,filter:'none',scale:'1'},{opacity:.75,filter:'brightness(2.7) contrast(1.9)',scale:'1.06',offset:.38},{opacity:.45,filter:'blur(2px) brightness(3.5)',scale:'.92 1.06',offset:.66},{opacity:0,filter:'blur(10px) brightness(5)',scale:'.04 .88'}],1350):Promise.resolve()]);}finally{fx.remove();}
+  await storyHideGuest().catch(()=>{});
+};
+
+window.__mobBuildVersion='v208';
+window.__mobV208ReadingBookStageFix=true;
+window.__mobV208BookUltimateHardLock=true;
+window.__mobV208MatrixEnhanced=true;
+// UPDATE_V208_END
 
 
 })();

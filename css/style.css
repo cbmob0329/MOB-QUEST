@@ -4942,3 +4942,56 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #dialogOverlay.book-facility-big-v207 .dialog-card{transform:scale(1.03)}
 
 .book-skull-v207 .summon-page-v207{position:absolute;top:12%;width:42%;height:72%;background:#efe6c8;border:5px solid #171717;box-shadow:0 12px 34px #000b;opacity:0;z-index:-1;animation:bookDarkPageV207 2.8s ease both}.book-skull-v207 .summon-page-v207.left{left:7%;transform-origin:right center}.book-skull-v207 .summon-page-v207.right{right:7%;transform-origin:left center;animation-delay:.08s}@keyframes bookDarkPageV207{0%{opacity:0;transform:perspective(600px) rotateY(78deg) scale(.72)}25%{opacity:.9}62%{opacity:1;transform:perspective(600px) rotateY(0) scale(1)}100%{opacity:0;transform:perspective(600px) rotateY(-10deg) scale(1.05)}}
+
+/* ===== MOB STORY v208: READING BOOK FINAL STAGING ===== */
+/* Navi stays on the enemy stage. Only the Hero travels from party side to Navi. */
+.story-guest-group.book-navi-hero-duel-v207{
+  left:24%!important;right:24%!important;bottom:31%!important;width:52%!important;height:min(28vh,190px)!important;
+  justify-content:center!important;align-items:flex-end!important;gap:clamp(12px,4vw,34px)!important;overflow:visible!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="book-navi"]{
+  transform:none!important;animation:none!important;align-self:flex-end!important;
+}
+.story-guest-group.book-navi-hero-duel-v207 [data-story-actor="yusha"]{
+  transform:none!important;transform-origin:center bottom!important;align-self:flex-end!important;
+  animation:bookHeroFlyToNaviV208 1.35s cubic-bezier(.2,.74,.24,1) both!important;
+}
+.story-guest-group.book-navi-hero-duel-v207.book-duel-resume-v208 [data-story-actor="yusha"]{animation:none!important}
+@keyframes bookHeroFlyToNaviV208{
+  0%{opacity:0;transform:translate(-44vw,19vh) scale(.72) rotate(-4deg)}
+  42%{opacity:1;transform:translate(-22vw,9vh) scale(.88) rotate(2deg)}
+  74%{opacity:1;transform:translate(-5vw,1.8vh) scale(1.04) rotate(-1deg)}
+  100%{opacity:1;transform:translate(0,0) scale(1) rotate(0)}
+}
+
+/* Strong Matrix: columns move independently instead of one block of text. */
+.book-matrix-v208{position:fixed!important;inset:0!important;z-index:99998!important;overflow:hidden!important;pointer-events:none!important;background:rgba(0,4,7,.74)!important;perspective:700px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.book-matrix-v208::before,.book-matrix-v208::after{content:"";position:absolute;inset:0;pointer-events:none}
+.book-matrix-v208::before{background:repeating-linear-gradient(0deg,rgba(120,255,235,.035) 0 1px,transparent 1px 5px);animation:matrixNoiseV208 .16s steps(2,end) infinite}
+.book-matrix-v208::after{background:radial-gradient(circle at 50% 48%,rgba(119,255,233,.20),transparent 30%),radial-gradient(circle at 50% 48%,transparent 0 42%,rgba(0,0,0,.66) 88%);animation:matrixPulseBgV208 .72s ease-in-out infinite alternate}
+.matrix-grid-v208{position:absolute;left:-20%;right:-20%;bottom:-38%;height:70%;background:linear-gradient(rgba(94,255,226,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(94,255,226,.14) 1px,transparent 1px);background-size:28px 28px;transform:rotateX(67deg) translateZ(-40px);transform-origin:center top;animation:matrixGridV208 1.15s linear infinite}
+.matrix-rain-v208{position:absolute;inset:0;overflow:hidden;filter:drop-shadow(0 0 5px rgba(67,255,224,.9))}
+.matrix-col-v208{position:absolute;top:-72%;left:calc((var(--i) + .35) * 7.05%);display:block;width:6.2%;text-align:center;color:#bafff5;font-style:normal;font-weight:1000;font-size:clamp(13px,4.1vw,24px);line-height:1.12;text-shadow:0 0 5px #38ffe1,0 0 14px #14cbb1;opacity:.82;transform:translateX(var(--offset));animation:matrixColumnV208 var(--speed) linear var(--delay) infinite}
+.matrix-col-v208:nth-child(3n){color:#fff;font-size:clamp(15px,4.8vw,27px);opacity:1}.matrix-col-v208:nth-child(4n){filter:blur(.35px);opacity:.62}
+.matrix-scan-v208{position:absolute;left:0;right:0;height:9%;top:-12%;background:linear-gradient(180deg,transparent,rgba(190,255,246,.38),rgba(67,255,224,.06),transparent);mix-blend-mode:screen;animation:matrixScanV208 .92s linear infinite}
+.matrix-glitch-v208{position:absolute;left:50%;top:48%;font-size:clamp(64px,25vw,150px);font-weight:1000;letter-spacing:.06em;color:transparent;-webkit-text-stroke:2px rgba(159,255,242,.8);text-shadow:7px 0 0 rgba(255,60,190,.38),-7px 0 0 rgba(0,220,255,.48),0 0 26px #4affdf;transform:translate(-50%,-50%);opacity:0;mix-blend-mode:screen;animation:matrixGlitchV208 .58s steps(2,end) infinite}
+.matrix-glitch-v208.g2{animation-delay:.19s;transform:translate(-50%,-50%) scale(1.08);filter:blur(1px)}
+.matrix-core-v208{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:clamp(54px,22vw,138px);font-weight:1000;letter-spacing:.08em;color:#eafffb;text-shadow:0 0 8px #fff,0 0 18px #51ffe5,0 0 42px #12c9ad;animation:matrixCoreV208 .82s ease-in-out infinite alternate}
+.matrix-ring-v208{position:absolute;left:50%;top:48%;width:min(72vw,390px);aspect-ratio:1;border:2px solid rgba(119,255,233,.78);border-radius:50%;box-shadow:0 0 14px #48ffe2,inset 0 0 14px #48ffe2;transform:translate(-50%,-50%) scale(.2);animation:matrixRingV208 .86s ease-out infinite}
+.book-navi-matrix-charge-v208{animation:naviChargeV208 .24s steps(2,end) infinite!important;filter:drop-shadow(0 0 8px #73ffec) drop-shadow(0 0 20px #0fd4b8)!important}
+.story-scene.book-matrix-shake-v208{animation:matrixSceneShakeV208 .16s linear infinite!important}
+.book-matrix-v208.collapse{animation:matrixCollapseV208 1.45s ease both!important}.book-matrix-v208.collapse .matrix-col-v208{animation-duration:.36s!important;animation-direction:reverse!important}.book-matrix-v208.collapse .matrix-core-v208{animation:matrixCoreCollapseV208 1.2s ease both!important}
+@keyframes matrixColumnV208{0%{transform:translate(var(--offset),-10%) scaleY(.92);opacity:0}8%{opacity:.9}82%{opacity:.85}100%{transform:translate(var(--offset),195vh) scaleY(1.08);opacity:0}}
+@keyframes matrixScanV208{to{transform:translateY(125vh)}}
+@keyframes matrixGridV208{to{background-position:0 28px,28px 0}}
+@keyframes matrixGlitchV208{0%,38%,100%{opacity:.08;clip-path:inset(0 0 84% 0)}40%,54%{opacity:.9;clip-path:inset(28% 0 42% 0)}56%,74%{opacity:.35;clip-path:inset(70% 0 8% 0)}76%,90%{opacity:.72;clip-path:inset(10% 0 67% 0)}}
+@keyframes matrixCoreV208{from{transform:translate(-50%,-50%) scale(.84);opacity:.66;filter:blur(.7px)}to{transform:translate(-50%,-50%) scale(1.08);opacity:1;filter:none}}
+@keyframes matrixRingV208{0%{transform:translate(-50%,-50%) scale(.18);opacity:.9}100%{transform:translate(-50%,-50%) scale(1.45);opacity:0}}
+@keyframes matrixNoiseV208{0%{transform:translate(0,0)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,1px)}}
+@keyframes matrixPulseBgV208{to{opacity:.74}}
+@keyframes naviChargeV208{0%{transform:translateX(-2px) skewX(-1deg)}50%{transform:translateX(2px) skewX(1deg)}100%{transform:translateX(0)}}
+@keyframes matrixSceneShakeV208{0%,100%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-1px)}}
+@keyframes matrixCollapseV208{0%{opacity:1;filter:none}45%{opacity:.95;filter:contrast(2.2) brightness(1.7);transform:scaleX(.98) skewX(2deg)}72%{opacity:.65;filter:blur(2px) brightness(2.5);transform:scaleX(.64) skewX(-8deg)}100%{opacity:0;filter:blur(14px) brightness(4);transform:scale(.03,.78) skewX(14deg)}}
+@keyframes matrixCoreCollapseV208{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}55%{opacity:.9;transform:translate(-50%,-50%) scale(1.38, .45)}100%{opacity:0;transform:translate(-50%,-50%) scale(.04,2.1)}}
+@media(max-height:720px){.story-guest-group.book-navi-hero-duel-v207{bottom:29%!important;height:min(25vh,165px)!important}.matrix-col-v208{font-size:13px}.matrix-core-v208{font-size:54px}}
+/* ===== END MOB STORY v208 ===== */

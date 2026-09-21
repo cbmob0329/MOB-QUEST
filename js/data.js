@@ -1468,3 +1468,18 @@ for(const [element,id] of Object.entries(_v73Middle)){
 /* ===== MOB STORY v200: REMOVED PLAYER DATA =====
    Removed-player records are intentionally absent from all playable balance and learnset tables.
    ===== END MOB STORY v200 ===== */
+
+/* ===== MOB STORY v208: PLAYABLE KAIJIN FINAL REBALANCE ===== */
+{
+  const t=TEMP_BALANCE.playerTargets?.kaijin;
+  if(t){
+    t.hp=[330,1800,2150];       /* highest playable HP at Lv99 / Lv120 */
+    t.mp=[100,600,720];
+    t.atk=[82,590,715];
+    t.mag=[60,455,555];
+    t.def=[65,560,680];
+    t.res=[62,520,630];
+    t.spd=[60,310,375];
+  }
+}
+/* ===== END MOB STORY v208 ===== */
