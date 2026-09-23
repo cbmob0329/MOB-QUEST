@@ -10,7 +10,7 @@ const injection=`window.test214={
  split:async()=>{state.meta.bookCompleted=true;state.adventure.worldIndex=MOB_DATA.adventureWorlds.findIndex(w=>w.id==='demonCastle2');state.adventure.areaIndex=0;showScreen('adventure');await openStoryScene('demonCastle2',0);await runStorySteps([['dc2Split181']]);window.splitDone214=true;},
  saved:()=>({split:state.meta.demonCastle2SplitV181,roster:dc2RosterV214(),active:state.party.length}),
  battle:async()=>{storyBusy=false;state.adventure.storyFlags['pre:demonCastle2:0']=true;state.adventure.battleReady=true;await closeStoryScene(false);await startAdventureBattle();return state.battle.allies.map(a=>a.id);},
- nextTeam:async()=>{state.battle.finished=false;for(const e of state.battle.enemies)e.hp=0;await spawnNextEnemyWave();return state.battle.allies.map(a=>a.id);},
+ nextTeam:async()=>{state.battle.finished=false;for(const e of state.battle.enemies)e.hp=0;const tap=waitBattleStoryTapV88;waitBattleStoryTapV88=async()=>{};try{await spawnNextEnemyWave();return state.battle.allies.map(a=>a.id);}finally{waitBattleStoryTapV88=tap;}},
  ready:()=>!!state.battle?.config?.bookNaviMasterFinal
 };`;
 (async()=>{const {browser,page,errors}=await open(injection);try{

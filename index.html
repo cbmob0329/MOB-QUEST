@@ -5182,6 +5182,21 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 /* Keep the vacant Hero slot concealed throughout asynchronous party rebuilds. */
 #storyPartyLine.book-hero-away-v214 [data-story-actor="yusha"]{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+/* Castle II group handoff: cover the old HUD while the new roster enters. */
+.dc2-handoff-v215{position:absolute;inset:0;z-index:180;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#281349f2,#070916fa 75%);color:#fff;pointer-events:auto;text-align:center}
+.dc2-handoff-v215 section{position:relative;width:94%;z-index:1;animation:dc2-title-v215 .55s ease-out both}
+.dc2-handoff-v215 small{color:#ead1ff;letter-spacing:.2em;font-weight:900}
+.dc2-handoff-v215 h2{font-size:clamp(24px,7vw,38px);margin:12px 0 24px;text-shadow:0 0 22px #eb69ff}
+.dc2-handoff-ring-v215{position:absolute;width:330px;height:330px;border:3px solid #e793ff;border-radius:50%;box-shadow:0 0 40px #aa32ff,inset 0 0 50px #b947ff;animation:dc2-ring-v215 1.6s ease-out both}
+.dc2-handoff-members-v215{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 6px;margin:auto;max-width:480px}
+.dc2-handoff-members-v215 figure{margin:0;min-width:0;animation:dc2-in-v215 .75s cubic-bezier(.16,1,.3,1) both}
+.team-a .dc2-handoff-members-v215 figure{animation:dc2-out-v215 .9s ease-in both}
+.dc2-handoff-members-v215 img{width:70px;height:85px;object-fit:contain;filter:drop-shadow(0 0 9px #c394ff)}
+.dc2-handoff-members-v215 figcaption{font-size:11px;font-weight:bold;line-height:1.4;overflow-wrap:anywhere}
+@keyframes dc2-title-v215{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dc2-ring-v215{from{opacity:0;transform:scale(.2) rotate(-90deg)}40%{opacity:.8}to{opacity:.15;transform:scale(1.8) rotate(30deg)}}
+@keyframes dc2-in-v215{from{opacity:0;transform:translateX(70px);filter:brightness(3)}to{opacity:1;transform:translateX(0);filter:brightness(1)}}
+@keyframes dc2-out-v215{0%,35%{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-100px)}}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5685,7 +5700,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v214</div>
+      <div class="title-version">v215</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -19872,6 +19887,7 @@ function currentDc2SplitV181(){return normalizeSplitV181('demonCastle2SplitV181'
 function switchBattleTeamV181(team){
   const b=state.battle;if(!b?.config?.dualPartyV181)return;
   const split=b.config.dualPartySplitV181||currentDc2SplitV181(),rows=team==='A'?split.A:split.B;
+  b.config.dualPartySplitV181=split;b.config.party=rows.map(row=>[...row]);
   persistAdventureVitals();persistUltimateCooldownsFromBattle();const vitals=ensureAdventureVitals();
   b.allies=rows.map(([id,lv])=>buildAlly(player(id),lv,vitals[id])).filter(Boolean);
   for(const a of b.allies){initUltimateCooldowns(a);const buff=state.adventure.areaBuff||{};for(const k of ['atk','def','spd'])if(buff[k]){a[k+'Buff']=buff[k];a[k+'BuffTurns']=99;}if(buff.mag)a.mag=Math.round(a.mag*(1+buff.mag));if(buff.all)for(const k of ['atk','mag','def','res','spd'])a[k]=Math.round(a[k]*(1+buff.all));}
@@ -19882,7 +19898,20 @@ persistBattlePartyOrder=function(){if(state.battle?.config?.dualPartyV181)return
 const spawnNextEnemyWaveBaseV181=spawnNextEnemyWave;
 spawnNextEnemyWave=async function(...args){
   const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[];
-  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.some(r=>['dc2-kufu','dc2-riva'].includes(r.id))){await actionCutin('Aグループ勝利！ 次はBグループの戦闘を開始します','system',1100);switchBattleTeamV181('B');}
+  if(b?.dc2TransitionV215)return b.dc2TransitionV215;
+  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.length){
+    // The last attack releases busy before wave clear. Lock the entire handoff,
+    // including dialogue, so AUTO/taps cannot run the outgoing queue again.
+    b.busy=true;b.queue=[];b.queuePos=0;setCommandDisabled(true);
+    b.dc2TransitionV215=(async()=>{
+      await dc2HandoffDialogueV215(b);
+      await dc2HandoffStageV215('A',b.allies);
+      switchBattleTeamV181('B');
+      await dc2HandoffStageV215('B',b.allies);
+      return spawnNextEnemyWaveBaseV181(...args);
+    })();
+    try{return await b.dc2TransitionV215;}finally{delete b.dc2TransitionV215;}
+  }
   const enma2=next.some(r=>r.id==='dc2-enma2'),enma3=next.some(r=>r.id==='dc2-enma3');
   if(enma2||enma3){const fx=document.createElement('div');fx.className='dc2-battle-fire-v181 dc2-cinematic-v211 flame-v211 release';fx.innerHTML=dc2FxMarkupV211();($('#battleScreen')||document.body).appendChild(fx);setTimeout(()=>fx.remove(),2100);}
   return spawnNextEnemyWaveBaseV181(...args);
@@ -21539,6 +21568,33 @@ bookPartyFormationV92=async function(){
 };
 window.__mobBuildVersion='v214';
 // UPDATE_V214_END
+
+// UPDATE_V215_BEGIN
+/* Castle II: authored dialogue and an explicit, locked A-to-B handoff. */
+async function dc2HandoffDialogueV215(b){
+  await allyStoryCutin('money','このまま一気に倒すわよ！');
+  await allyStoryCutin('denden','モブリリス、覚悟でやんす！');
+  await allyStoryCutin('kaijin','薔薇の魔女！最高の獲物だぜ！');
+  const lilith=b.enemies.find(e=>e.id==='dc2-lilith')||trainingEnemyTemplate('dc2-lilith');
+  await enemyStoryCutin(lilith,'うるさいなー');
+  await enemyStoryCutin(lilith,'怒るよ？');
+  await storyDarkBattlePulse();
+}
+async function dc2HandoffStageV215(team,allies){
+  await Promise.all(allies.map(a=>preloadAsset(versionedPlay(a.image)).catch(()=>{})));
+  const stage=document.createElement('div');stage.className=`dc2-handoff-v215 team-${team.toLowerCase()}`;
+  stage.innerHTML=`<div class="dc2-handoff-ring-v215"></div><section><small>${team==='A'?'1戦目 終了':'2戦目 開始'}</small><h2>${team}グループ${team==='A'?'から交代':' 出陣！'}</h2><div class="dc2-handoff-members-v215">${allies.map(a=>`<figure><img src="${versionedPlay(a.image)}" alt=""><figcaption>${a.name}</figcaption></figure>`).join('')}</div></section>`;
+  $('#battleScreen').appendChild(stage);
+  try{await nextPaint();await fixedDelay(team==='A'?950:1700);}finally{stage.remove();}
+}
+const renderBattleBaseV215=renderBattle;
+renderBattle=function(...args){
+  const result=renderBattleBaseV215(...args),b=state.battle;
+  if(b?.config?.dualPartyV181==='demonCastle2')$('#battleModeLabel').textContent=`魔王城Ⅱ / ${b.dualPartyTeamV181==='B'?'Bグループ・2戦目':'Aグループ・1戦目'}`;
+  return result;
+};
+window.__mobBuildVersion='v215';
+// UPDATE_V215_END
 
 })();
 </script>

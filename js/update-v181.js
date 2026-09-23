@@ -61,6 +61,7 @@ function currentDc2SplitV181(){return normalizeSplitV181('demonCastle2SplitV181'
 function switchBattleTeamV181(team){
   const b=state.battle;if(!b?.config?.dualPartyV181)return;
   const split=b.config.dualPartySplitV181||currentDc2SplitV181(),rows=team==='A'?split.A:split.B;
+  b.config.dualPartySplitV181=split;b.config.party=rows.map(row=>[...row]);
   persistAdventureVitals();persistUltimateCooldownsFromBattle();const vitals=ensureAdventureVitals();
   b.allies=rows.map(([id,lv])=>buildAlly(player(id),lv,vitals[id])).filter(Boolean);
   for(const a of b.allies){initUltimateCooldowns(a);const buff=state.adventure.areaBuff||{};for(const k of ['atk','def','spd'])if(buff[k]){a[k+'Buff']=buff[k];a[k+'BuffTurns']=99;}if(buff.mag)a.mag=Math.round(a.mag*(1+buff.mag));if(buff.all)for(const k of ['atk','mag','def','res','spd'])a[k]=Math.round(a[k]*(1+buff.all));}
@@ -71,7 +72,20 @@ persistBattlePartyOrder=function(){if(state.battle?.config?.dualPartyV181)return
 const spawnNextEnemyWaveBaseV181=spawnNextEnemyWave;
 spawnNextEnemyWave=async function(...args){
   const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[];
-  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.some(r=>['dc2-kufu','dc2-riva'].includes(r.id))){await actionCutin('Aグループ勝利！ 次はBグループの戦闘を開始します','system',1100);switchBattleTeamV181('B');}
+  if(b?.dc2TransitionV215)return b.dc2TransitionV215;
+  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.length){
+    // The last attack releases busy before wave clear. Lock the entire handoff,
+    // including dialogue, so AUTO/taps cannot run the outgoing queue again.
+    b.busy=true;b.queue=[];b.queuePos=0;setCommandDisabled(true);
+    b.dc2TransitionV215=(async()=>{
+      await dc2HandoffDialogueV215(b);
+      await dc2HandoffStageV215('A',b.allies);
+      switchBattleTeamV181('B');
+      await dc2HandoffStageV215('B',b.allies);
+      return spawnNextEnemyWaveBaseV181(...args);
+    })();
+    try{return await b.dc2TransitionV215;}finally{delete b.dc2TransitionV215;}
+  }
   const enma2=next.some(r=>r.id==='dc2-enma2'),enma3=next.some(r=>r.id==='dc2-enma3');
   if(enma2||enma3){const fx=document.createElement('div');fx.className='dc2-battle-fire-v181 dc2-cinematic-v211 flame-v211 release';fx.innerHTML=dc2FxMarkupV211();($('#battleScreen')||document.body).appendChild(fx);setTimeout(()=>fx.remove(),2100);}
   return spawnNextEnemyWaveBaseV181(...args);

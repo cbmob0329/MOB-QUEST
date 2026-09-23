@@ -12289,6 +12289,7 @@ function currentDc2SplitV181(){return normalizeSplitV181('demonCastle2SplitV181'
 function switchBattleTeamV181(team){
   const b=state.battle;if(!b?.config?.dualPartyV181)return;
   const split=b.config.dualPartySplitV181||currentDc2SplitV181(),rows=team==='A'?split.A:split.B;
+  b.config.dualPartySplitV181=split;b.config.party=rows.map(row=>[...row]);
   persistAdventureVitals();persistUltimateCooldownsFromBattle();const vitals=ensureAdventureVitals();
   b.allies=rows.map(([id,lv])=>buildAlly(player(id),lv,vitals[id])).filter(Boolean);
   for(const a of b.allies){initUltimateCooldowns(a);const buff=state.adventure.areaBuff||{};for(const k of ['atk','def','spd'])if(buff[k]){a[k+'Buff']=buff[k];a[k+'BuffTurns']=99;}if(buff.mag)a.mag=Math.round(a.mag*(1+buff.mag));if(buff.all)for(const k of ['atk','mag','def','res','spd'])a[k]=Math.round(a[k]*(1+buff.all));}
@@ -12299,7 +12300,20 @@ persistBattlePartyOrder=function(){if(state.battle?.config?.dualPartyV181)return
 const spawnNextEnemyWaveBaseV181=spawnNextEnemyWave;
 spawnNextEnemyWave=async function(...args){
   const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[];
-  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.some(r=>['dc2-kufu','dc2-riva'].includes(r.id))){await actionCutin('Aグループ勝利！ 次はBグループの戦闘を開始します','system',1100);switchBattleTeamV181('B');}
+  if(b?.dc2TransitionV215)return b.dc2TransitionV215;
+  if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.length){
+    // The last attack releases busy before wave clear. Lock the entire handoff,
+    // including dialogue, so AUTO/taps cannot run the outgoing queue again.
+    b.busy=true;b.queue=[];b.queuePos=0;setCommandDisabled(true);
+    b.dc2TransitionV215=(async()=>{
+      await dc2HandoffDialogueV215(b);
+      await dc2HandoffStageV215('A',b.allies);
+      switchBattleTeamV181('B');
+      await dc2HandoffStageV215('B',b.allies);
+      return spawnNextEnemyWaveBaseV181(...args);
+    })();
+    try{return await b.dc2TransitionV215;}finally{delete b.dc2TransitionV215;}
+  }
   const enma2=next.some(r=>r.id==='dc2-enma2'),enma3=next.some(r=>r.id==='dc2-enma3');
   if(enma2||enma3){const fx=document.createElement('div');fx.className='dc2-battle-fire-v181 dc2-cinematic-v211 flame-v211 release';fx.innerHTML=dc2FxMarkupV211();($('#battleScreen')||document.body).appendChild(fx);setTimeout(()=>fx.remove(),2100);}
   return spawnNextEnemyWaveBaseV181(...args);
@@ -13956,5 +13970,32 @@ bookPartyFormationV92=async function(){
 };
 window.__mobBuildVersion='v214';
 // UPDATE_V214_END
+
+// UPDATE_V215_BEGIN
+/* Castle II: authored dialogue and an explicit, locked A-to-B handoff. */
+async function dc2HandoffDialogueV215(b){
+  await allyStoryCutin('money','このまま一気に倒すわよ！');
+  await allyStoryCutin('denden','モブリリス、覚悟でやんす！');
+  await allyStoryCutin('kaijin','薔薇の魔女！最高の獲物だぜ！');
+  const lilith=b.enemies.find(e=>e.id==='dc2-lilith')||trainingEnemyTemplate('dc2-lilith');
+  await enemyStoryCutin(lilith,'うるさいなー');
+  await enemyStoryCutin(lilith,'怒るよ？');
+  await storyDarkBattlePulse();
+}
+async function dc2HandoffStageV215(team,allies){
+  await Promise.all(allies.map(a=>preloadAsset(versionedPlay(a.image)).catch(()=>{})));
+  const stage=document.createElement('div');stage.className=`dc2-handoff-v215 team-${team.toLowerCase()}`;
+  stage.innerHTML=`<div class="dc2-handoff-ring-v215"></div><section><small>${team==='A'?'1戦目 終了':'2戦目 開始'}</small><h2>${team}グループ${team==='A'?'から交代':' 出陣！'}</h2><div class="dc2-handoff-members-v215">${allies.map(a=>`<figure><img src="${versionedPlay(a.image)}" alt=""><figcaption>${a.name}</figcaption></figure>`).join('')}</div></section>`;
+  $('#battleScreen').appendChild(stage);
+  try{await nextPaint();await fixedDelay(team==='A'?950:1700);}finally{stage.remove();}
+}
+const renderBattleBaseV215=renderBattle;
+renderBattle=function(...args){
+  const result=renderBattleBaseV215(...args),b=state.battle;
+  if(b?.config?.dualPartyV181==='demonCastle2')$('#battleModeLabel').textContent=`魔王城Ⅱ / ${b.dualPartyTeamV181==='B'?'Bグループ・2戦目':'Aグループ・1戦目'}`;
+  return result;
+};
+window.__mobBuildVersion='v215';
+// UPDATE_V215_END
 
 })();
