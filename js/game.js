@@ -1627,13 +1627,13 @@ function handleStoryTapAdvance(e){
 }
 async function readyStoryImage(img,src){
   img.classList.remove('size-ready','asset-missing');if(!src){img.classList.add('asset-missing');return false;}
-  img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}
+  img.src=src;bindImage(img);try{await preloadAsset(src,'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}
   await nextPaint();if(img.naturalWidth){img.classList.add('size-ready');return true;}img.classList.add('asset-missing');return false;
 }
 let lastStoryPartyScale=.14;
 async function sizeStoryPartyImages(root){
   const imgs=$$('[data-story-party-img]',root);
-  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
   const count=valid.length,rows=Math.max(1,Math.ceil(count/6));
   const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(valid.slice(i,i+6).reduce((a,img)=>a+img.naturalWidth,0));
@@ -1756,7 +1756,7 @@ async function storyShowGuests(keys=[],opt={}){
   if(opt.raised)group.classList.add('story-guests-raised-v106');
   group.dataset.count=String(ids.length);group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
-  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});if(opt.compactLilith){holder.style.setProperty('width',ids.length>=5?'19%':'23%','important');holder.style.setProperty('height','100%','important');}}else img.classList.add('asset-missing');}));
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});if(opt.compactLilith){holder.style.setProperty('width',ids.length>=5?'19%':'23%','important');holder.style.setProperty('height','100%','important');}}else img.classList.add('asset-missing');}));
   if($('#storyScene')?.classList.contains('subquest-story-v111')){group.classList.add('subquest-guests-v111');group.dataset.subquestId=$('#storyScene')?.dataset?.subquestId||'';fitSubquestStoryGuestsV111();}
   /* The silhouette class must exist BEFORE opacity changes, otherwise the real boss flashes for one frame. */
   for(const key of (opt.silhouetteKeys||[])){const holder=$(`[data-story-actor="${key}"]`,group);holder?.classList.add('demon-maou-silhouette-v95');}
@@ -4833,7 +4833,7 @@ async function storyShowSecondaryGuestsV94(keys=[],className=''){
   group.hidden=false;group.className=`story-guest-group ${className}`.trim();group.dataset.count=String(ids.length);
   group.innerHTML=ids.map(key=>{const info=storyActorInfo(key),kind=info.player?'player':storyEnemyScaleKind(info),winged=info.winged?' story-enemy-winged':'';return `<div class="story-guest-multi story-multi-${kind}${winged}" data-story-actor="${key}"><img src="${info.image||''}" alt="${info.name}"><span>${info.symbol||'敵'}</span></div>`;}).join('');
   bindImages(group);
-  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
+  await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
   await nextPaint();group.classList.add('visible');await fixedDelay(950);await fixedDelay(220);
 }
 function hideStoryPartyHeroV94(on=true){const line=$('#storyPartyLine');line?.classList.toggle('book-hero-away-v214',!!on);const h=$('[data-story-actor="yusha"]',line);h?.classList.toggle('book-hero-relocated-v94',!!on);}
@@ -8547,7 +8547,7 @@ window.__mobV137PatchRuntime=true;
 /* ---------- Tribe arrival: 7-8 party members use a true 4x2 arrangement ---------- */
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
-  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
   const count=valid.length,tribe=$('#storyScene')?.classList.contains('story-world-tribe');
   const cols=(tribe&&count>=7&&count<=8)?4:6,rows=Math.max(1,Math.ceil(count/cols));
@@ -8681,7 +8681,7 @@ window.__mobV139PatchRuntime=true;
 */
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
-  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
   const count=valid.length,cols=6,rows=Math.max(1,Math.ceil(count/cols));
   const tribe=!!(root?.id==='storyPartyLine'&&$('#storyScene')?.classList.contains('story-world-tribe'));
@@ -8752,7 +8752,7 @@ window.__mobV140PatchRuntime=true;
 */
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
-  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
   const count=valid.length,cols=6,rows=Math.max(1,Math.ceil(count/cols));
   const scene=$('#storyScene');
@@ -10104,7 +10104,7 @@ applyAdventurePartyScale=async function(){
 };
 sizeStoryPartyImages=async function(root){
   const imgs=$$('[data-story-party-img]',root);
-  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await img.decode();}catch(_){}}));
+  await Promise.all(imgs.map(async img=>{try{await preloadAsset(img.getAttribute('src'),'high');if(img.decode)await decodeImageBoundedV217(img);}catch(_){}}));
   const valid=imgs.filter(img=>img.naturalWidth>0&&img.naturalHeight>0);if(!valid.length)return;
   const eff=await Promise.all(valid.map(effectivePartyNaturalV153)),count=valid.length,rows=Math.max(1,Math.ceil(count/6));
   const rowSums=[];for(let i=0;i<count;i+=6)rowSums.push(eff.slice(i,i+6).reduce((a,n)=>a+n.w,0));
@@ -10257,7 +10257,7 @@ const kaijinMoveBaseV157=moveBookKaijinToPartyV94;moveBookKaijinToPartyV94=async
 const sayBaseV157=storySay;storySay=async function(id,text,...args){const big=(id==='book-kaijin-boss'&&(/神だ|悪は必ず勝つ/.test(text)))||(id==='money'&&text.includes('なーに言ってる'));const bubble=$('#storyBubble');if(big)bubble?.classList.add('shout-v157');try{return await sayBaseV157(id,text,...args);}finally{if(big)bubble?.classList.remove('shout-v157');}};
 const facilityBaseV157=facilityTalk;facilityTalk=async function(text,speaker,image){const r=await facilityBaseV157(text,speaker,image);if(text==='これで魔王を倒せますね！'){const pink=ensureOpeningPinkActor();await animateV157(pink,[{translate:'0 0'},{translate:'0 -18px'},{translate:'0 0'},{translate:'0 -12px'},{translate:'0 0'}],1100);}if(text.includes('王の間にて知らせを待つ！')){const king=document.querySelector('[data-book-king-v119]');await animateV157(king,[{translate:'0 0',opacity:1},{translate:'140px 0',opacity:0}],800);if(king)king.hidden=true;}return r;};
 // Block keyboard shortcuts as well as pointer input while a cinematic owns the screen.
-for(const type of ['click','pointerdown','keydown'])window.addEventListener(type,e=>{if(document.querySelector('.ending-v157,.portal-party-v157')){e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
+for(const type of ['click','pointerdown','keydown'])window.addEventListener(type,e=>{if(document.querySelector('.ending-v157,.portal-party-v157')&&!e.target?.closest?.('.ending-next-v217')){e.preventDefault();e.stopImmediatePropagation();}},{capture:true});
 
 /* Hide the subtree, including size-ready images that set their own visibility. */
 function duelPartyV158(on){$('#storyScene')?.classList.toggle('duel-party-v158',on);}
@@ -10308,7 +10308,7 @@ async function auraV159(id){const a=actorV157(id);if(!a)return;const glow=docume
 async function warpV159(id){const a=actorV157(id);if(!a)return;const hole=document.createElement('i');hole.className='warp-hole-v159';a.parentElement?.appendChild(hole);const ar=a.getBoundingClientRect(),pr=a.parentElement?.getBoundingClientRect();if(pr){hole.style.left=`${ar.left-pr.left+ar.width*.12}px`;hole.style.top=`${ar.top-pr.top+ar.height*.42}px`;}try{await Promise.all([animateV157(hole,[{opacity:0,scale:'.2',rotate:'0deg'},{opacity:1,scale:'1',rotate:'240deg',offset:.42},{opacity:0,scale:'1.45',rotate:'520deg'}],1400),animateV157(a,[{filter:'hue-rotate(0deg)',scale:'1',opacity:1},{filter:'hue-rotate(180deg) blur(3px)',scale:'.1',rotate:'300deg',opacity:0}],1400)]);a.style.opacity='0';}finally{hole.remove();}}
 async function naviAbsorbV159(){const a=actorV157('book-navi');if(!a)return;const balls=[];try{await Promise.all([false,true].map(async(light)=>{const ball=document.createElement('i');ball.className='navi-ball-v159'+(light?' light':'');a.appendChild(ball);balls.push(ball);await animateV157(ball,[{translate:light?'-65px -45px':'65px -45px',scale:'1',opacity:0},{translate:light?'-45px -65px':'45px -65px',scale:'1',opacity:1,offset:.35},{translate:'0 0',scale:'0',opacity:1}],1800);}));await glowV157(a,1);}finally{balls.forEach(x=>x.remove());}}
 async function partyHealFxV159(){await Promise.all($$('[data-story-actor]',$('#storyPartyLine')).filter(a=>a.dataset.storyActor!=='yusha').map(a=>glowV157(a,2)));fullPartyHealV159();}
-async function recordsReadyV159(){const root=$('#castleContent');await Promise.all($$('img',root).map(async img=>{if(!img.complete)await new Promise(resolve=>{const finish=()=>{img.removeEventListener('load',finish);img.removeEventListener('error',finish);resolve();};img.addEventListener('load',finish);img.addEventListener('error',finish);});try{if(img.decode)await img.decode();}catch(_){} }));await nextPaint();await nextPaint();}
+async function recordsReadyV159(){const root=$('#castleContent');await Promise.all($$('img',root).map(async img=>{if(!img.complete)await new Promise(resolve=>{const finish=()=>{img.removeEventListener('load',finish);img.removeEventListener('error',finish);resolve();};img.addEventListener('load',finish);img.addEventListener('error',finish);});try{if(img.decode)await decodeImageBoundedV217(img);}catch(_){} }));await nextPaint();await nextPaint();}
 const settingsFinalBaseV159=renderSettings;renderSettings=function(){settingsFinalBaseV159();$('#testChapterApplyBtn').onclick=applyTestChapter;};
 const ultimateBaseV159=performUltimate;performUltimate=async function(a,u){u.cost=0;return ultimateBaseV159(a,u);};
 const strongestButtonV159=$('#testModeControls [data-test-loadout="optimal"]');if(strongestButtonV159){strongestButtonV159.textContent='最強装備';strongestButtonV159.onclick=()=>strongestV159();}
@@ -14042,5 +14042,101 @@ $('#battleBackBtn').onclick=async function(...args){
 };
 window.__mobBuildVersion='v216';
 // UPDATE_V216_END
+
+// UPDATE_V217_BEGIN
+/* Battle dialogue lives in the adventure screen, not the battle screen. */
+const fusionBaseV217=fusionV157;
+fusionV157=async function(...args){
+  const b=state.battle,wasStoryBusy=storyBusy;storyBusy=true;
+  if(b){b.busy=true;b.queue=[];b.queuePos=0;}setCommandDisabled(true);
+  showScreen('adventure');
+  try{return await fusionBaseV217(...args);}
+  finally{storyBusy=wasStoryBusy;if(state.battle===b)showScreen('battle');}
+};
+const waveBaseV217=spawnNextEnemyWave;
+spawnNextEnemyWave=async function(...args){
+  const b=state.battle;
+  if(b?.finalTransitionV217)return b.finalTransitionV217;
+  const finalWave=b?.pendingWaveConfigs?.[0]?.some(r=>r.id==='dc2-ulrilis')&&b.enemies.some(e=>e.id==='dc2-maou');
+  if(!finalWave)return waveBaseV217(...args);
+  b.busy=true;setCommandDisabled(true);
+  b.finalTransitionV217=waveBaseV217(...args);
+  try{return await b.finalTransitionV217;}finally{delete b.finalTransitionV217;}
+};
+const finalPostBaseV217=finalBossPostV89Final;
+finalBossPostV89Final=async function(...args){showScreen('adventure');return finalPostBaseV217(...args);};
+
+function decodeImageBoundedV217(img,ms=1500){
+  if(!img?.decode)return Promise.resolve(false);
+  return new Promise(resolve=>{let done=false;const finish=ok=>{if(done)return;done=true;clearTimeout(timer);resolve(ok);},timer=setTimeout(()=>finish(false),ms);Promise.resolve().then(()=>img.decode()).then(()=>finish(true),()=>finish(false));});
+}
+
+/* Stream only the current and next two posters; do not decode 80 MB before
+   the first ending conversation. Failed requests have a finite deadline. */
+const endingFramesV217=new Map();
+function loadEndingFrameV217(n){
+  if(endingFramesV217.has(n))return endingFramesV217.get(n);
+  const task=(async()=>{
+    for(let attempt=0;attempt<2;attempt++){
+      const img=new Image();img.alt=`冒険の記録 ${n}`;img.decoding='async';
+      const ok=await new Promise(resolve=>{let done=false;const finish=value=>{if(done)return;done=true;clearTimeout(timer);img.onload=img.onerror=null;resolve(value);},timer=setTimeout(()=>finish(false),5000);img.onload=()=>finish(true);img.onerror=()=>finish(false);img.src=`poster/${String(n).padStart(2,'0')}.png`;if(img.complete)finish(img.naturalWidth>0);});
+      if(ok){await decodeImageBoundedV217(img);return img;}
+      img.removeAttribute('src');
+    }
+    const fallback=document.createElement('div');fallback.className='ending-fallback-v217';fallback.textContent=`冒険の記録 ${n}\n画像を読み込めませんでした。\nエンディングは続きます。`;return fallback;
+  })();endingFramesV217.set(n,task);return task;
+}
+preloadEndingV157=async function(){
+  const loading=document.createElement('div');loading.className='ending-loading-v169';loading.textContent='エンディングを準備しています… 0 / 2';document.body.appendChild(loading);
+  let count=0;
+  try{await Promise.all([1,2].map(async n=>{await loadEndingFrameV217(n);loading.textContent=`エンディングを準備しています… ${++count} / 2`;}));}
+  finally{loading.remove();}
+};
+endingMontageV157=async function(){
+  const root=document.createElement('div');root.className='ending-v157 ending-montage-v169';root.setAttribute('aria-label','エンディング');
+  const status=document.createElement('div');status.className='ending-status-v217';status.setAttribute('role','status');
+  const skip=document.createElement('button');skip.type='button';skip.className='ending-next-v217';skip.textContent='メッセージへ';root.append(status,skip);document.body.appendChild(root);
+  const audio=new Audio('music/end.mp3');audio.volume=.55;let skipped=false,stop;
+  const stopped=new Promise(resolve=>stop=resolve);skip.onclick=()=>{skipped=true;stop();audio.pause();};
+  const wait=promise=>Promise.race([promise,stopped]);
+  const audioDone=new Promise(resolve=>{audio.onended=audio.onerror=resolve;});
+  let deadline;
+  try{
+    // Playback can remain pending on a stalled media response. Slides still run.
+    const played=audio.play();if(played?.catch)played.catch(()=>{});
+    let previous=null;
+    for(let n=1;n<=31&&!skipped;n++){
+      status.textContent=`冒険の記録 ${n} / 31 を読み込んでいます…`;
+      const frame=await wait(loadEndingFrameV217(n));if(skipped)break;
+      for(let next=n+1;next<=Math.min(31,n+2);next++)void loadEndingFrameV217(next);
+      frame.classList.add('ending-frame-v169');root.insertBefore(frame,status);
+      await wait(animateV157(frame,[{opacity:0},{opacity:1}],800));frame.style.opacity='1';previous?.remove();previous=frame;endingFramesV217.delete(n-1);
+      status.textContent=`冒険の記録 ${n} / 31`;await wait(fixedDelay(3200));
+    }
+    if(!skipped&&!audio.ended&&!audio.error&&!audio.paused){
+      status.textContent='エンディング曲を再生中…「メッセージへ」で進めます';
+      const remaining=Number.isFinite(audio.duration)?Math.max(0,audio.duration-audio.currentTime)*1000+1500:15000;
+      await wait(Promise.race([audioDone,new Promise(resolve=>{deadline=setTimeout(resolve,Math.min(remaining,120000));})]));
+    }
+    await animateV157(root,[{opacity:1},{opacity:0}],1000);
+  }finally{clearTimeout(deadline);audio.pause();audio.removeAttribute('src');audio.load();root.remove();endingFramesV217.clear();}
+};
+
+/* Keep a report checkpoint until the entire ending succeeds, including reloads. */
+const endingBaseV217=finalEndingV89Final;
+finalEndingV89Final=async function(...args){
+  if(endingBusyV169)return;
+  state.meta.pendingFinalEndingV217=true;saveMeta();
+  try{const result=await endingBaseV217(...args);delete state.meta.pendingFinalEndingV217;saveMeta();return result;}
+  finally{document.querySelectorAll('.ending-loading-v169,.ending-v157,.ending-caption-v157').forEach(el=>el.remove());}
+};
+function restoreEndingReportV217(){
+  if(state.meta?.pendingFinalEndingV217&&state.meta?.finalBossDefeated&&!state.adventure.awaitingReport){state.adventure.awaitingReport={worldId:'demonCastle2',worldName:'魔王城Ⅱ'};saveAdventure();}
+}
+const renderCastleBaseV217=renderCastle;
+renderCastle=function(...args){restoreEndingReportV217();return renderCastleBaseV217(...args);};
+restoreEndingReportV217();
+window.__mobBuildVersion='v217';
+// UPDATE_V217_END
 
 })();

@@ -5185,3 +5185,10 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes dc2-ring-v215{from{opacity:0;transform:scale(.2) rotate(-90deg)}40%{opacity:.8}to{opacity:.15;transform:scale(1.8) rotate(30deg)}}
 @keyframes dc2-in-v215{from{opacity:0;transform:translateX(70px);filter:brightness(3)}to{opacity:1;transform:translateX(0);filter:brightness(1)}}
 @keyframes dc2-out-v215{0%,35%{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(-100px)}}
+.ending-status-v217{position:absolute;z-index:3;left:12px;right:12px;bottom:76px;text-align:center;font-size:12px;color:#fff;text-shadow:0 2px 5px #000;background:#0009;border-radius:10px;padding:8px}
+.ending-next-v217{position:absolute;z-index:4;bottom:calc(20px + env(safe-area-inset-bottom));right:20px;padding:12px 18px;border:1px solid #ffffff80;border-radius:20px;background:#15152bdc;color:#fff;font-weight:bold}
+.ending-fallback-v217{display:grid;place-content:center;white-space:pre-line;text-align:center;background:radial-gradient(ellipse,#342152,#090b18);color:#fff;line-height:2;font-size:16px}
+.ending-loading-v169{position:fixed;inset:0;z-index:100001;display:grid;place-content:center;background:#080a14;color:#fff;text-align:center;padding:24px;font-size:16px}
+.ending-montage-v169 .ending-frame-v169{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;animation:none}
+.ending-caption-v157:has(.ending-logo-v169){flex-direction:column;gap:20px}
+.ending-caption-v157 .ending-logo-v169{width:min(80vw,360px);max-height:45vh;object-fit:contain;flex-shrink:0}
