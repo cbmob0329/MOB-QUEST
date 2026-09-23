@@ -35,7 +35,7 @@ moveBookBossIntoPartyV207=async function(){
 /* On the second scene after the solo duel, keep Navi/Hero at the enemy stage but
    do not replay the first "Hero flies to Navi" animation. */
 showBookNaviHeroDuelV207=async function(){
-  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await renderStoryParty();
   await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
   await storyShowGuests(['book-navi','yusha'],{slow:true});
   const g=$('#storyGuestGroup');g?.classList.add('book-navi-hero-duel-v207','book-duel-resume-v208');

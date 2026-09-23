@@ -5167,3 +5167,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes flameRaysV213{to{transform:translate(-50%,-50%) rotate(40deg)}}
 @media(prefers-reduced-motion:reduce){.never-flame-v213 *{animation:none!important}.flame-art-v213{transform:translate(-50%,-50%)!important}.flame-rays-v213{display:none}}
 /* UPDATE_V213_END */
+
+/* Keep the vacant Hero slot concealed throughout asynchronous party rebuilds. */
+#storyPartyLine.book-hero-away-v214 [data-story-actor="yusha"]{opacity:0!important;visibility:hidden!important;pointer-events:none!important}

@@ -6,7 +6,8 @@
    and the latest Demon Castle II presentation. */
 
 /* ---------- Robust two-party formation ---------- */
-function validPartyRowsV181(){
+function validPartyRowsV181(storageKey){
+  if(storageKey==='demonCastle2SplitV181')return dc2RosterV214();
   const seen=new Set(),out=[];
   for(const row of state.party||[]){
     const id=canonicalPlayerId(row?.[0]);
@@ -16,22 +17,23 @@ function validPartyRowsV181(){
   return out;
 }
 function normalizeSplitV181(storageKey){
-  const roster=validPartyRowsV181(),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
+  const roster=validPartyRowsV181(storageKey),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
   const saved=state.meta?.[storageKey];
   const clean=list=>(Array.isArray(list)?list:[]).map(r=>canonicalPlayerId(r?.[0])).filter(id=>id&&valid.has(id)&&!used.has(id)&&used.add(id)).map(id=>[...valid.get(id)]);
   let A=clean(saved?.A),B=clean(saved?.B);
   for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
   if(!A.length||!B.length){A=[];B=[];roster.forEach((r,i)=>(i%2?B:A).push([...r]));if(!B.length&&A.length>1)B.push(A.pop());}
+  if(storageKey==='demonCastle2SplitV181'){while(A.length>6)B.push(A.pop());while(B.length>6)A.push(B.pop());}
   return {A,B};
 }
 function renderSplitV181(overlay,split,opt){
-  const roster=validPartyRowsV181(),teamOf=id=>split.A.some(r=>r[0]===id)?'A':'B';
+  const roster=validPartyRowsV181(opt.storageKey),teamOf=id=>split.A.some(r=>r[0]===id)?'A':'B';
   const member=(id,lv)=>{const p=player(id);if(!p)return'';const team=teamOf(id);return `<button type="button" data-v181-split-member="${id}" class="team-${team.toLowerCase()}"><em>${team}</em><img src="${versionedPlay(p.image)}" alt="${p.name}"><b>${p.name}</b><small>Lv${lv}</small></button>`;};
   overlay.innerHTML=`<div class="lilith-split-card split-card-v181"><div class="settings-head"><div><small>PARTY SPLIT</small><h2>${opt.title||'パーティーを2つに分けてください'}</h2></div></div><div class="lilith-opponents"><div><b>Aグループ</b><span>${opt.aEnemies}</span></div><div><b>Bグループ</b><span>${opt.bEnemies}</span></div></div><p>キャラクターをタップするとA/Bを移動します。</p><div class="lilith-split-roster">${roster.map(r=>member(r[0],r[1])).join('')}</div><div class="lilith-team-count"><span>A ${split.A.length}人</span><span>B ${split.B.length}人</span></div><button type="button" class="primary-btn" data-v181-split-confirm>編成を決定</button></div>`;
   bindImages(overlay);
 }
 async function chooseSplitV181(opt){
-  const roster=validPartyRowsV181();
+  const roster=validPartyRowsV181(opt.storageKey);
   if(roster.length<2){await narrationDialog('2パーティー戦には2人以上の仲間が必要です。',[['確認','ok','primary']],'PARTY SPLIT');throw new Error('split party requires at least two valid members');}
   let overlay=document.querySelector('#lilithSplitOverlay');
   if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}
@@ -40,7 +42,7 @@ async function chooseSplitV181(opt){
   renderSplitV181(overlay,split,opt);
   return await new Promise(resolve=>{
     const bind=()=>{
-      $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
+      $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');if(opt.storageKey==='demonCastle2SplitV181'&&to.length>=6)return toast('1グループは6人までです');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
       const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');if(confirm.disabled)return;confirm.disabled=true;let accepted;try{accepted=await confirmSplitInlineV210(overlay,split);}finally{confirm.disabled=false;}if(!accepted)return;state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
     };bind();
   });

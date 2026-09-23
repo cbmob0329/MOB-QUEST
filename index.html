@@ -5179,6 +5179,9 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes flameRaysV213{to{transform:translate(-50%,-50%) rotate(40deg)}}
 @media(prefers-reduced-motion:reduce){.never-flame-v213 *{animation:none!important}.flame-art-v213{transform:translate(-50%,-50%)!important}.flame-rays-v213{display:none}}
 /* UPDATE_V213_END */
+
+/* Keep the vacant Hero slot concealed throughout asynchronous party rebuilds. */
+#storyPartyLine.book-hero-away-v214 [data-story-actor="yusha"]{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5682,7 +5685,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v213</div>
+      <div class="title-version">v214</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -9269,7 +9272,7 @@ async function renderStoryParty(extraIds=null){
   const root=$('#storyPartyLine');
   const list=storyDisplayPartyIds(extraIds).map(id=>storyActorInfo(id)).filter(x=>x?.image);
   root.dataset.partyCount=String(list.length);
-  root.innerHTML=list.map(p=>`<div class="story-party-actor" data-story-actor="${p.key}"><img data-story-party-img src="${p.image}" alt="${p.name}"></div>`).join('');
+  root.innerHTML=list.map(p=>`<div class="story-party-actor${p.key==='yusha'&&root.classList.contains('book-hero-away-v214')?' book-hero-relocated-v94':''}" data-story-actor="${p.key}"><img data-story-party-img src="${p.image}" alt="${p.name}"></div>`).join('');
   bindImages(root);await sizeStoryPartyImages(root);
 }
 async function openStoryScene(worldId,areaIndex=0,layout='default',extras=[]){
@@ -9283,7 +9286,7 @@ async function openStoryScene(worldId,areaIndex=0,layout='default',extras=[]){
   sc.hidden=false;sc.style.visibility='hidden';await renderStoryParty();await nextPaint();sc.style.visibility='visible';setAdventureVisualLoading(false);await fixedDelay(240);
 }
 async function closeStoryScene(forceHome=false){
-  const sc=$('#storyScene');sc.classList.add('closing');storyTapResolve=null;await fixedDelay(350);sc.hidden=true;sc.style.visibility='';[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyPartyLine').innerHTML='';storySceneExtras=[];
+  const sc=$('#storyScene');sc.classList.add('closing');storyTapResolve=null;await fixedDelay(350);sc.hidden=true;sc.style.visibility='';[...sc.classList].filter(c=>c.startsWith('story-world-')).forEach(c=>sc.classList.remove(c));sc.classList.remove('closing','shake','story-layout-party-left');$('#storyGuest').hidden=true;$('#storyGuestGroup').hidden=true;$('#storyGuestGroup').innerHTML='';$('#storyBubble').hidden=true;$('#storyNarration').hidden=true;$('#storyPartyLine').innerHTML='';$('#storyPartyLine').classList.remove('book-hero-away-v214');storySceneExtras=[];
   const advScreen=$('#adventureScreen');if(advScreen)advScreen.classList.remove('story-event-active');const underParty=$('#adventureParty');if(underParty)underParty.hidden=false;
   if(forceHome){await goHome();}else{renderAdventure();showScreen('adventure');}
 }
@@ -12416,7 +12419,7 @@ async function storyShowSecondaryGuestsV94(keys=[],className=''){
   await Promise.all($$('.story-guest-multi',group).map(async holder=>{const img=$('img',holder),key=holder.dataset.storyActor,info=storyActorInfo(key),src=img?.getAttribute('src');if(!src)return;try{await preloadAsset(src,'high');if(img.decode)await img.decode();}catch(_){}if(img.naturalWidth){img.classList.add('size-ready');applyStoryGuestNaturalSize(holder,img,info,{multi:true});}else img.classList.add('asset-missing');}));
   await nextPaint();group.classList.add('visible');await fixedDelay(950);await fixedDelay(220);
 }
-function hideStoryPartyHeroV94(on=true){const h=$('[data-story-actor="yusha"]',$('#storyPartyLine'));h?.classList.toggle('book-hero-relocated-v94',!!on);}
+function hideStoryPartyHeroV94(on=true){const line=$('#storyPartyLine');line?.classList.toggle('book-hero-away-v214',!!on);const h=$('[data-story-actor="yusha"]',line);h?.classList.toggle('book-hero-relocated-v94',!!on);}
 async function showBookBossNaviHeroV94(){hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';await storyHideGuests().catch(()=>{});await storyShowGuests(['book-kaijin-boss','book-navi','yusha'],{slow:true});const group=$('#storyGuestGroup');group?.classList.add('book-triad-v94');const hero=$('[data-story-actor="yusha"]',group);hero?.classList.add('book-hero-guest-v94');}
 async function moveBookKaijinToPartyV94(){const group=$('#storyGuestGroup');if(!group)return;group.classList.add('book-kaijin-to-party-v94');await fixedDelay(900);}
 function restoreStoryPartyHeroV94(){hideStoryPartyHeroV94(false);}
@@ -17961,7 +17964,7 @@ async function startBookNaviMasterV161(){
   const bg=storySceneBg('unfinishedBook',3);
   return new Promise(async resolve=>{
     scriptedBattleResolve=resolve;
-    await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs:[{id:'book-navi-master',level:90}],party,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:true,scriptedImmortalParty:true,bookHeroPower:true,bookNaviMasterFinal:true,storyLabel:'モブナビマスター FINAL BATTLE'});
+    await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs:[{id:'book-navi-master',level:90}],party,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:true,scriptedImmortalParty:false,bookHeroPower:true,bookNaviMasterFinal:true,storyLabel:'モブナビマスター FINAL BATTLE'});
   });
 }
 startBookNaviMasterV89Final=startBookNaviMasterV161;
@@ -19814,7 +19817,8 @@ window.__mobV180Runtime=true;
    and the latest Demon Castle II presentation. */
 
 /* ---------- Robust two-party formation ---------- */
-function validPartyRowsV181(){
+function validPartyRowsV181(storageKey){
+  if(storageKey==='demonCastle2SplitV181')return dc2RosterV214();
   const seen=new Set(),out=[];
   for(const row of state.party||[]){
     const id=canonicalPlayerId(row?.[0]);
@@ -19824,22 +19828,23 @@ function validPartyRowsV181(){
   return out;
 }
 function normalizeSplitV181(storageKey){
-  const roster=validPartyRowsV181(),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
+  const roster=validPartyRowsV181(storageKey),valid=new Map(roster.map(r=>[r[0],r])),used=new Set();
   const saved=state.meta?.[storageKey];
   const clean=list=>(Array.isArray(list)?list:[]).map(r=>canonicalPlayerId(r?.[0])).filter(id=>id&&valid.has(id)&&!used.has(id)&&used.add(id)).map(id=>[...valid.get(id)]);
   let A=clean(saved?.A),B=clean(saved?.B);
   for(const row of roster)if(!used.has(row[0]))(A.length<=B.length?A:B).push([...row]);
   if(!A.length||!B.length){A=[];B=[];roster.forEach((r,i)=>(i%2?B:A).push([...r]));if(!B.length&&A.length>1)B.push(A.pop());}
+  if(storageKey==='demonCastle2SplitV181'){while(A.length>6)B.push(A.pop());while(B.length>6)A.push(B.pop());}
   return {A,B};
 }
 function renderSplitV181(overlay,split,opt){
-  const roster=validPartyRowsV181(),teamOf=id=>split.A.some(r=>r[0]===id)?'A':'B';
+  const roster=validPartyRowsV181(opt.storageKey),teamOf=id=>split.A.some(r=>r[0]===id)?'A':'B';
   const member=(id,lv)=>{const p=player(id);if(!p)return'';const team=teamOf(id);return `<button type="button" data-v181-split-member="${id}" class="team-${team.toLowerCase()}"><em>${team}</em><img src="${versionedPlay(p.image)}" alt="${p.name}"><b>${p.name}</b><small>Lv${lv}</small></button>`;};
   overlay.innerHTML=`<div class="lilith-split-card split-card-v181"><div class="settings-head"><div><small>PARTY SPLIT</small><h2>${opt.title||'パーティーを2つに分けてください'}</h2></div></div><div class="lilith-opponents"><div><b>Aグループ</b><span>${opt.aEnemies}</span></div><div><b>Bグループ</b><span>${opt.bEnemies}</span></div></div><p>キャラクターをタップするとA/Bを移動します。</p><div class="lilith-split-roster">${roster.map(r=>member(r[0],r[1])).join('')}</div><div class="lilith-team-count"><span>A ${split.A.length}人</span><span>B ${split.B.length}人</span></div><button type="button" class="primary-btn" data-v181-split-confirm>編成を決定</button></div>`;
   bindImages(overlay);
 }
 async function chooseSplitV181(opt){
-  const roster=validPartyRowsV181();
+  const roster=validPartyRowsV181(opt.storageKey);
   if(roster.length<2){await narrationDialog('2パーティー戦には2人以上の仲間が必要です。',[['確認','ok','primary']],'PARTY SPLIT');throw new Error('split party requires at least two valid members');}
   let overlay=document.querySelector('#lilithSplitOverlay');
   if(!overlay){overlay=document.createElement('div');overlay.id='lilithSplitOverlay';overlay.className='lilith-split-overlay';document.body.appendChild(overlay);}
@@ -19848,7 +19853,7 @@ async function chooseSplitV181(opt){
   renderSplitV181(overlay,split,opt);
   return await new Promise(resolve=>{
     const bind=()=>{
-      $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
+      $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');if(opt.storageKey==='demonCastle2SplitV181'&&to.length>=6)return toast('1グループは6人までです');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
       const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');if(confirm.disabled)return;confirm.disabled=true;let accepted;try{accepted=await confirmSplitInlineV210(overlay,split);}finally{confirm.disabled=false;}if(!accepted)return;state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
     };bind();
   });
@@ -19988,17 +19993,6 @@ finalEndingV89Final=async function(){
   state.meta.gameCleared=true;state.meta.eventQuestUnlocked=true;state.meta.otherWorldUnlocked=true;state.meta.shadowWorldUnlocked=true;saveMeta();await fixedDelay(3000);document.querySelector('.ending-caption-v157')?.remove();await showTitle();
   }finally{endingBusyV169=false;document.body.classList.remove('ending-report-v169');}
 };
-
-/* ---------- Gacha v182: backdrop taps never close the gacha UI ---------- */
-for(const type of ['pointerdown','pointerup','touchstart','touchend','click']){
-  document.addEventListener(type,e=>{
-    const ov=document.getElementById('figureGachaOverlayV96');
-    if(!ov||ov.hidden||e.target!==ov)return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  },true);
-}
-window.__mobV182GachaBackdropLock=true;
 
 
 
@@ -20845,7 +20839,7 @@ async function moveBookBossIntoPartyV207(){
   await fixedDelay(260);
 }
 async function showBookNaviHeroDuelV207(){
-  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await renderStoryParty();
   await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
   await storyShowGuests(['book-navi','yusha'],{slow:true});
   const g=$('#storyGuestGroup');g?.classList.add('book-navi-hero-duel-v207');
@@ -20944,7 +20938,7 @@ async function bookArea4PostV207(){
   await storySay('book-navi','私はこの世界の支配者\n怪人はヒーローに倒される');await storySay('book-navi','そんな当たり前のループに疲れました\nなので');await storySay('book-navi','2人とも消えてもらうことにしました');await storySay('book-kaijin-boss','なんだと？\nあのヒーローが消えたのは\nお前の仕業か？');await storySay('book-navi','如何にも');await storySay('book-navi','あのヒーローが消えて\nあなたが誰かに倒されれば');await storySay('book-navi','二度と復活しない');await storySay('book-navi','だからずっと待っていました');await storySay('book-navi','あのヒーローが消えて\nあなたが倒れる日を');await storySay('pink','とんでもないやつであります！！');await storySay('book-navi','そうですか？\n私はこの世界の秩序を保っている');await storySay('book-navi','私は神なのです\n神の言うことに不満でも？');await storySay('tetsu','大いにあるでござる！\nお主は神などではない！\nただの悪党でござる！');
   await bookNaviHitKaijinV207();await moveBookBossIntoPartyV207();await storySay('kaijin','ぐは・・ッ');await storySay('desert','ここは勇者に任せるしかないな');await storySay('pink','勇者様！！');await storySay('nyoro','僕たちのヒーロー！！');
   await storyHideGuests().catch(()=>{});restoreStoryPartyHeroV94();$('#storyScene').hidden=true;await startBookNaviSoloV89Final();
-  bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await showBookNaviHeroDuelV207();await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');await storySay('denden','オイラたちも一緒に戦うでやんす！');await storySay('tetsu','ヒーロー殿、助太刀いたす！');await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');await storySay('money','敵の敵は味方じゃないの？');await storySay('kaijin','ハハッ・・\nヒーローと共闘か');await storySay('kaijin','おもしれえ！やってやるよ！！');await storySay('nekoku','お前、なんかカッコイイぞ');await storySay('denden','アチアチの展開でやんす！');await storySay('kaijin','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await openStoryScene('unfinishedBook',3);await showBookNaviHeroDuelV207();await storySay('jessie','このままじゃまずい！\nあいつ、ほとんどダメージを受けてないわ、、\nきっと何かカラクリがある！');await storySay('denden','オイラたちも一緒に戦うでやんす！');await storySay('tetsu','ヒーロー殿、助太刀いたす！');await storySay('desert','怪人よ\n俺たちはやつを倒す\nお前はどうする？');await storySay('money','敵の敵は味方じゃないの？');await storySay('kaijin','ハハッ・・\nヒーローと共闘か');await storySay('kaijin','おもしれえ！やってやるよ！！');await storySay('nekoku','お前、なんかカッコイイぞ');await storySay('denden','アチアチの展開でやんす！');await storySay('kaijin','やつは常にバリアを張っている！\n一斉に攻撃してバリアを破壊するんだ！');
   await restoreBookHeroToPartyV207();$('#storyScene').hidden=true;await bookPartyFormationV92();
   bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi',{slow:true});await storySay('book-navi','やれやれ、面倒だな');await naviMatrixTransformV207();await storySay('book-navi-master','さあ、どんなエンディングになるかな？');await storySay('pink','正義は勝つであります！');await storySay('money','ヒロインも勝つのよ！');await storySay('kaijin','ハハッ！\n最高の物語になりそうだな！！');await storyHideGuest();$('#storyScene').hidden=true;await bookNaviMasterBattleLoopV94();
   bookHeroStoryModeV94='hero';await openStoryScene('unfinishedBook',3);await storyShowGuest('book-navi-master',{slow:true});await storySay('book-navi-master','こ、の、わた、、、');await naviMatrixCollapseV207();await storySay('desert','やったな');await glowV157('yusha',2);bookHeroStoryModeV94='normal';setBookStoryHeroArtV92('normal');await storyFlash();setBookStoryHeroArtV92('normal');
@@ -21076,7 +21070,7 @@ moveBookBossIntoPartyV207=async function(){
 /* On the second scene after the solo duel, keep Navi/Hero at the enemy stage but
    do not replay the first "Hero flies to Navi" animation. */
 showBookNaviHeroDuelV207=async function(){
-  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await renderStoryParty();
   await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
   await storyShowGuests(['book-navi','yusha'],{slow:true});
   const g=$('#storyGuestGroup');g?.classList.add('book-navi-hero-duel-v207','book-duel-resume-v208');
@@ -21259,7 +21253,7 @@ moveBookBossIntoPartyV207=async function(){
 /* Resume scene after the solo duel: build Navi/Hero directly on the enemy lane,
    without first painting them at the generic guest position. */
 showBookNaviHeroDuelV207=async function(){
-  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await renderStoryParty();
   await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
   await storyShowSecondaryGuestsV94(['book-navi','yusha'],'book-navi-hero-duel-v207 book-duel-resume-v208');
   const hero=$('[data-story-actor="yusha"]',$('#storyGuestGroup'));hero?.classList.add('book-hero-guest-v94');
@@ -21501,6 +21495,50 @@ playUltimatePostAnimation=async function(a,u){
 };
 window.__mobBuildVersion='v213';
 // UPDATE_V213_END
+
+// UPDATE_V214_BEGIN
+/* Retain the recruited story roster independently of the ten active slots. */
+const BOOK_ROSTER_V214=['yusha','pink','tetsu','desert','denden','money','jessie','nyoro','nekoku','riro','kaijin'];
+function rememberBookRosterV214(rows){
+  const saved=new Map((state.meta.bookRosterV214||[]).map(row=>[row[0],row[1]]));
+  for(const [raw,lv] of rows||[]){const id=canonicalPlayerId(raw);if(BOOK_ROSTER_V214.includes(id))saved.set(id,Number(lv)||1);}
+  state.meta.bookRosterV214=[...saved];saveMeta();
+}
+const joinBaseV214=storyJoin;
+storyJoin=function(id){
+  if(canonicalPlayerId(id)==='kaijin')rememberBookRosterV214(state.party);
+  const r=joinBaseV214(id);
+  if(canonicalPlayerId(id)==='kaijin')rememberBookRosterV214(state.party);
+  return r;
+};
+function dc2RosterV214(){
+  const stored=state.meta.bookRosterV214||[],split=state.meta.demonCastle2SplitV181||{};
+  const history=[...(state.adventure.checkpoint?.party||[]),...(state.adventure.runSnapshot?.party||[])];
+  const levels=new Map([...history,...stored,...(split.A||[]),...(split.B||[]),...state.party].map(([id,lv])=>[canonicalPlayerId(id),Number(lv)||1]));
+  const fallback=levels.get('yusha')||85;
+  // Older saves discarded the displaced member; restore that story companion
+  // at the Hero's level only when no recorded level survives.
+  const order=[...new Set([...state.party.map(r=>canonicalPlayerId(r[0])),...BOOK_ROSTER_V214])].filter(id=>BOOK_ROSTER_V214.includes(id)&&player(id));
+  const rows=order.map(id=>[id,levels.get(id)||fallback]);rememberBookRosterV214(rows);return rows;
+}
+
+/* Heal before the user sees the final formation, including defeated members. */
+const bookFormationBaseV214=bookPartyFormationV92;
+bookPartyFormationV92=async function(){
+  fullHealAtCastleInn();
+  for(const ally of state.battle?.allies||[]){
+    if(!state.party.some(row=>canonicalPlayerId(row[0])===ally.id))continue;
+    ally.hp=ally.maxHp;ally.mpNow=ally.maxMp;ally.dead=false;
+    ally.status={poison:0,burn:0,sleep:0,stun:0,paralyze:0,confuse:0};
+  }
+  rememberBookRosterV214(state.party);
+  const pending=bookFormationBaseV214();
+  const grid=$('.book-formation-grid-v92');
+  if(grid){const note=document.createElement('p');note.className='book-recovered-v214';note.textContent='全員のHP・MPが全回復しました';grid.before(note);}
+  return pending;
+};
+window.__mobBuildVersion='v214';
+// UPDATE_V214_END
 
 })();
 </script>

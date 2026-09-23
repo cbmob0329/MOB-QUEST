@@ -88,7 +88,7 @@ moveBookBossIntoPartyV207=async function(){
 /* Resume scene after the solo duel: build Navi/Hero directly on the enemy lane,
    without first painting them at the generic guest position. */
 showBookNaviHeroDuelV207=async function(){
-  restoreStoryPartyHeroV94();await renderStoryParty();hideStoryPartyHeroV94(true);bookHeroStoryModeV94='hero';
+  bookHeroStoryModeV94='hero';hideStoryPartyHeroV94(true);await renderStoryParty();
   await storyHideGuest().catch(()=>{});await storyHideGuests().catch(()=>{});
   await storyShowSecondaryGuestsV94(['book-navi','yusha'],'book-navi-hero-duel-v207 book-duel-resume-v208');
   const hero=$('[data-story-actor="yusha"]',$('#storyGuestGroup'));hero?.classList.add('book-hero-guest-v94');
