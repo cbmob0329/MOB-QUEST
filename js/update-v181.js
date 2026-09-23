@@ -41,7 +41,7 @@ async function chooseSplitV181(opt){
   return await new Promise(resolve=>{
     const bind=()=>{
       $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
-      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');const names=t=>t.map(([id])=>player(id)?.name||id).join(' / ');overlay.hidden=true;const ans=await narrationDialog(`A：${names(split.A)}\nB：${names(split.B)}\n\nこのパーティーで挑みますか？`,[['はい','yes','primary'],['いいえ','no']],'PARTY SPLIT');if(ans!=='yes'){overlay.hidden=false;return;}state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
+      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');if(confirm.disabled)return;confirm.disabled=true;let accepted;try{accepted=await confirmSplitInlineV210(overlay,split);}finally{confirm.disabled=false;}if(!accepted)return;state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
     };bind();
   });
 }

@@ -5085,3 +5085,29 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
   .kaijin-boss-shadow-v209{bottom:30%;height:min(30vh,190px)}
 }
 /* ===== END MOB STORY v209 ===== */
+
+/* v210: phased digital transformation and coordinated Kaijin entrances. */
+.split-confirm-v210{position:sticky;bottom:0;width:min(92vw,490px);padding:16px;border:3px solid #b686a8;border-radius:18px;background:#fff4ed;color:#291e21;box-sizing:border-box;box-shadow:0 0 0 100vmax #080413bb;z-index:2}
+.split-confirm-v210 p{font-size:13px;line-height:1.5}.split-confirm-v210 button{min-height:48px;min-width:100px;margin:6px;border-radius:12px;background:#38243a;color:white;font:inherit}
+.lilith-split-overlay.split-overlay-v181:has(.split-confirm-v210){flex-direction:column;align-items:center!important}
+.book-arrival-concealed-v210{visibility:hidden!important}
+.book-arrival-v210{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#773bc055,transparent 65%)}
+.book-arrival-v210 i{position:absolute;left:20%;top:35%;width:60%;height:20%;border:3px solid #ddc1ff;border-radius:50%;box-shadow:0 0 22px #b344ff,inset 0 0 25px #5e25a5;animation:bookArrivalRingV210 1.2s ease-out infinite}
+.book-arrival-v210 i:nth-child(2){animation-delay:.3s}.book-arrival-v210 i:nth-child(3){animation-delay:.6s}
+.book-arrival-v210 b{position:absolute;top:32%;width:100%;text-align:center;font:900 clamp(38px,14vw,82px) monospace;letter-spacing:.2em;color:#ebd6ff88;animation:bookArrivalSealV210 1.8s ease both}
+@keyframes bookArrivalRingV210{from{transform:scale(.15);opacity:1}to{transform:scale(1.6);opacity:0}}
+@keyframes bookArrivalSealV210{0%{opacity:0;filter:blur(12px);transform:scale(2)}45%{opacity:1;filter:none;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}
+.book-kaijin-intro-v209.play .kaijin-floor-v209{filter:drop-shadow(0 0 20px #cc5bff)}
+.book-kaijin-intro-v209.play .kaijin-shards-v209 i{box-shadow:0 0 14px #f89fff}
+.book-matrix-v210 .matrix-core-v208,.book-matrix-v210 .matrix-glitch-v208{top:23%;font-size:clamp(35px,12vw,72px)}
+.matrix-actor-v210{position:absolute;left:50%;top:48%;width:min(45vw,250px);height:38vh;transform:translate(-50%,-50%);filter:drop-shadow(0 0 20px #60ffe3);transition:filter .6s,opacity .6s}
+.matrix-actor-v210 img{width:100%;height:100%;object-fit:contain}
+.encoding .matrix-actor-v210{animation:matrixEncodeV210 1.2s ease-in-out infinite}
+.decoded .matrix-actor-v210{animation:matrixDecodeV210 .9s ease-out both}
+.matrix-fragments-v210{position:absolute;inset:0;pointer-events:none}.matrix-fragments-v210 i{position:absolute;left:var(--x);top:var(--y);color:#aeffed;font:900 20px monospace;text-shadow:0 0 12px #33ffbd;animation:matrixFragmentV210 1.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.08s)}
+.book-matrix-v210.reveal{opacity:0;transition:opacity .65s}
+.book-matrix-v210.collapse .matrix-actor-v210{animation:matrixDecodeV210 1.3s ease-in reverse both}
+@keyframes matrixEncodeV210{0%,100%{filter:drop-shadow(0 0 18px #60ffe3);clip-path:inset(0)}50%{filter:brightness(2) drop-shadow(8px 0 10px #78ffff);clip-path:inset(12% 0 6%)}}
+@keyframes matrixDecodeV210{from{opacity:0;filter:brightness(4) blur(12px);transform:translate(-50%,-50%) scale(.1,1.4)}to{opacity:1;filter:drop-shadow(0 0 20px #60ffe3);transform:translate(-50%,-50%) scale(1)}}
+@keyframes matrixFragmentV210{0%{opacity:0;transform:scale(.2) translateY(45px)}45%{opacity:.85}100%{opacity:0;transform:scale(1.4) translateY(-90px)}}
+@media(prefers-reduced-motion:reduce){.matrix-actor-v210,.matrix-fragments-v210 i,.book-arrival-v210 i,.book-arrival-v210 b{animation:none!important}.book-matrix-v210 .matrix-glitch-v208{display:none}}

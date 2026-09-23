@@ -5097,6 +5097,32 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
   .kaijin-boss-shadow-v209{bottom:30%;height:min(30vh,190px)}
 }
 /* ===== END MOB STORY v209 ===== */
+
+/* v210: phased digital transformation and coordinated Kaijin entrances. */
+.split-confirm-v210{position:sticky;bottom:0;width:min(92vw,490px);padding:16px;border:3px solid #b686a8;border-radius:18px;background:#fff4ed;color:#291e21;box-sizing:border-box;box-shadow:0 0 0 100vmax #080413bb;z-index:2}
+.split-confirm-v210 p{font-size:13px;line-height:1.5}.split-confirm-v210 button{min-height:48px;min-width:100px;margin:6px;border-radius:12px;background:#38243a;color:white;font:inherit}
+.lilith-split-overlay.split-overlay-v181:has(.split-confirm-v210){flex-direction:column;align-items:center!important}
+.book-arrival-concealed-v210{visibility:hidden!important}
+.book-arrival-v210{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#773bc055,transparent 65%)}
+.book-arrival-v210 i{position:absolute;left:20%;top:35%;width:60%;height:20%;border:3px solid #ddc1ff;border-radius:50%;box-shadow:0 0 22px #b344ff,inset 0 0 25px #5e25a5;animation:bookArrivalRingV210 1.2s ease-out infinite}
+.book-arrival-v210 i:nth-child(2){animation-delay:.3s}.book-arrival-v210 i:nth-child(3){animation-delay:.6s}
+.book-arrival-v210 b{position:absolute;top:32%;width:100%;text-align:center;font:900 clamp(38px,14vw,82px) monospace;letter-spacing:.2em;color:#ebd6ff88;animation:bookArrivalSealV210 1.8s ease both}
+@keyframes bookArrivalRingV210{from{transform:scale(.15);opacity:1}to{transform:scale(1.6);opacity:0}}
+@keyframes bookArrivalSealV210{0%{opacity:0;filter:blur(12px);transform:scale(2)}45%{opacity:1;filter:none;transform:scale(1)}100%{opacity:0;transform:scale(.6)}}
+.book-kaijin-intro-v209.play .kaijin-floor-v209{filter:drop-shadow(0 0 20px #cc5bff)}
+.book-kaijin-intro-v209.play .kaijin-shards-v209 i{box-shadow:0 0 14px #f89fff}
+.book-matrix-v210 .matrix-core-v208,.book-matrix-v210 .matrix-glitch-v208{top:23%;font-size:clamp(35px,12vw,72px)}
+.matrix-actor-v210{position:absolute;left:50%;top:48%;width:min(45vw,250px);height:38vh;transform:translate(-50%,-50%);filter:drop-shadow(0 0 20px #60ffe3);transition:filter .6s,opacity .6s}
+.matrix-actor-v210 img{width:100%;height:100%;object-fit:contain}
+.encoding .matrix-actor-v210{animation:matrixEncodeV210 1.2s ease-in-out infinite}
+.decoded .matrix-actor-v210{animation:matrixDecodeV210 .9s ease-out both}
+.matrix-fragments-v210{position:absolute;inset:0;pointer-events:none}.matrix-fragments-v210 i{position:absolute;left:var(--x);top:var(--y);color:#aeffed;font:900 20px monospace;text-shadow:0 0 12px #33ffbd;animation:matrixFragmentV210 1.8s ease-in-out infinite;animation-delay:calc(var(--i)*-.08s)}
+.book-matrix-v210.reveal{opacity:0;transition:opacity .65s}
+.book-matrix-v210.collapse .matrix-actor-v210{animation:matrixDecodeV210 1.3s ease-in reverse both}
+@keyframes matrixEncodeV210{0%,100%{filter:drop-shadow(0 0 18px #60ffe3);clip-path:inset(0)}50%{filter:brightness(2) drop-shadow(8px 0 10px #78ffff);clip-path:inset(12% 0 6%)}}
+@keyframes matrixDecodeV210{from{opacity:0;filter:brightness(4) blur(12px);transform:translate(-50%,-50%) scale(.1,1.4)}to{opacity:1;filter:drop-shadow(0 0 20px #60ffe3);transform:translate(-50%,-50%) scale(1)}}
+@keyframes matrixFragmentV210{0%{opacity:0;transform:scale(.2) translateY(45px)}45%{opacity:.85}100%{opacity:0;transform:scale(1.4) translateY(-90px)}}
+@media(prefers-reduced-motion:reduce){.matrix-actor-v210,.matrix-fragments-v210 i,.book-arrival-v210 i,.book-arrival-v210 b{animation:none!important}.book-matrix-v210 .matrix-glitch-v208{display:none}}
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5600,7 +5626,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v209</div>
+      <div class="title-version">v210</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -18384,7 +18410,7 @@ buildEnemyFromTemplate=function(t,...args){const e=_buildEnemyFromTemplateV165(t
 /* A party saved before v165 can have ten members, which used to discard kaijin when
    saveParty() sliced the roster. Reserve the final slot for the book reward and make
    both the reward and the hero ultimate self-healing for existing saves. */
-const ensureBookCompletionRewardsV165=()=>{
+let ensureBookCompletionRewardsV165=()=>{
   if(!(state.meta?.bookCompleted===true||worldCleared('unfinishedBook')))return false;
   const kaijin=player('kaijin'),yusha=player('yusha');if(!kaijin||!yusha)return false;
   if(!state.party.some(x=>canonicalPlayerId(x[0])==='kaijin')){
@@ -19257,7 +19283,7 @@ storyActorInfo=function(key){if(String(key).startsWith('hot177-')){const t=hotTe
 async function hotJumpV177(el,strong=false){await animateV157(el,[{translate:'0 0'},{translate:strong?'0 -100px':'0 -30px',offset:.2},{translate:'0 0',offset:.45},{translate:strong?'0 -75px':'0 -24px',offset:.7},{translate:'0 0'}],900);}
 async function hotEntranceV177(kind,strong=false){await storyShowGuest('hot177-'+kind);if(kind==='iwakiri'){await storyFlash();await glowV157('hot177-'+kind,2);}else await hotJumpV177(storyAnchor('hot177-'+kind),strong||kind==='passion');}
 const hotStepsBaseV177=runStorySteps;
-runStorySteps=async function(steps=[]){for(const st of steps){if(skippingV174()&&String(st[0]).startsWith('hot'))continue;const el=storyAnchor(st[1]);if(st[0]==='hotJump')await hotJumpV177(el);else if(st[0]==='hotEntrance')await hotEntranceV177(st[1],st[2]);else if(st[0]==='hotFire'){el?.classList.add('hot-fire-v177');}else if(st[0]==='hotSymbol'){const scene=$('#storyScene'),r=el?.getBoundingClientRect(),sr=scene.getBoundingClientRect();if(r){const mark=document.createElement('i');mark.className='hot-symbol-v177';mark.textContent=st[2];mark.style.left=(r.left+r.width/2-sr.left)+'px';mark.style.top=(r.top-sr.top)+'px';scene.appendChild(mark);setTimeout(()=>mark.remove(),3000);}}else await hotStepsBaseV177([st]);}};
+runStorySteps=async function(steps=[]){for(const st of steps){if(skippingV174()&&String(st[0]).startsWith('hot'))continue;const el=String(st[0]).startsWith('hot')?storyAnchor(st[1]):null;if(st[0]==='hotJump')await hotJumpV177(el);else if(st[0]==='hotEntrance')await hotEntranceV177(st[1],st[2]);else if(st[0]==='hotFire'){el?.classList.add('hot-fire-v177');}else if(st[0]==='hotSymbol'){const scene=$('#storyScene'),r=el?.getBoundingClientRect(),sr=scene.getBoundingClientRect();if(r){const mark=document.createElement('i');mark.className='hot-symbol-v177';mark.textContent=st[2];mark.style.left=(r.left+r.width/2-sr.left)+'px';mark.style.top=(r.top-sr.top)+'px';scene.appendChild(mark);setTimeout(()=>mark.remove(),3000);}}else await hotStepsBaseV177([st]);}};
 const hotSceneBaseV177=savannaSceneV174;
 savannaSceneV174=async function(phase){const r=eventRunV174;if(!r?.hotV177)return hotSceneBaseV177(phase);showScreen('adventure');storyBusy=true;if(r.area===3){(state.meta.storyEventSeenV175??={}).hot=true;saveMeta();}try{await openStoryScene('grassland',r.area,'default',['pink','denden','money','desert']);$('#adventureStageTitle').textContent='熱血スライム';$('#adventureProgress').textContent=`AREA ${r.area+1} / ${HOT_DIFFICULTIES_V177[r.difficulty].name}`;await runStorySteps(HOT_STORY_V177[r.area][phase]);}finally{$$('.hot-symbol-v177').forEach(el=>el.remove());await closeStoryScene(false);storyBusy=false;}};
 function hotWaveV177(area,d){return (area===0?['iwakiri']:area<3?['fight']:['slime','passion','slime']).map(kind=>{const template=hotTemplateV177(kind,d);return {template,level:template.levelMin};});}
@@ -19767,7 +19793,7 @@ async function chooseSplitV181(opt){
   return await new Promise(resolve=>{
     const bind=()=>{
       $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
-      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');const names=t=>t.map(([id])=>player(id)?.name||id).join(' / ');overlay.hidden=true;const ans=await narrationDialog(`A：${names(split.A)}\nB：${names(split.B)}\n\nこのパーティーで挑みますか？`,[['はい','yes','primary'],['いいえ','no']],'PARTY SPLIT');if(ans!=='yes'){overlay.hidden=false;return;}state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
+      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');if(confirm.disabled)return;confirm.disabled=true;let accepted;try{accepted=await confirmSplitInlineV210(overlay,split);}finally{confirm.disabled=false;}if(!accepted)return;state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
     };bind();
   });
 }
@@ -21189,6 +21215,97 @@ window.__mobV209KaijinEntranceEnhanced=true;
 window.__mobV209BookEnemyLane=true;
 // UPDATE_V209_END
 
+
+// UPDATE_V210_BEGIN
+/* Book endings own their destination; generic result handling must not resume
+   adventure after the authored return to the Record Room. */
+const pendingPostBaseV210=runPendingPostStory;
+runPendingPostStory=async function(suppressArrival=false,forceHomeAfter=false){
+  const key=state.adventure.pendingPostStory?.key;
+  if(key!=='post:unfinishedBook:3')return pendingPostBaseV210(suppressArrival,forceHomeAfter);
+  return pendingPostBaseV210(true,false);
+};
+const resultNextV210=$('#resultSetupBtn'),resultNextBaseV210=resultNextV210?.onclick;
+if(resultNextV210)resultNextV210.onclick=async function(...args){
+  if(state.battle?.mode!=='adventure'||state.adventure.pendingPostStory?.key!=='post:unfinishedBook:3')return resultNextBaseV210?.apply(this,args);
+  if(this.disabled)return;
+  this.disabled=true;$('#resultOverlay').hidden=true;
+  try{await runPendingPostStory(true,false);}finally{this.disabled=false;}
+};
+
+/* The adventure cursor has already advanced when post-battle scenes run.
+   Use the scene being displayed, not currentWorld(), to preserve Riro. */
+const renderPartyBaseV210=renderStoryParty;
+renderStoryParty=async function(extraIds=null){
+  const extras=Array.isArray(extraIds)?[...extraIds]:(extraIds?[extraIds]:[]);
+  if(storyBusy&&$('#storyScene')?.classList.contains('story-world-unfinishedBook')){
+    extras.push('riro');
+    if(bookDisplacedPartyMemberV208)extras.push(bookDisplacedPartyMemberV208);
+  }
+  return renderPartyBaseV210([...new Set(extras)]);
+};
+
+/* Formation stays in one visible layer, including its confirmation. This also
+   avoids handing input from the split overlay to the shared dialogue overlay. */
+function confirmSplitInlineV210(overlay,split){
+  return new Promise(resolve=>{
+    const roster=overlay.firstElementChild,wasInert=roster?.inert;if(roster)roster.inert=true;
+    const card=document.createElement('div');card.className='split-confirm-v210';
+    const title=document.createElement('h3');title.textContent='このパーティーで挑みますか？';card.appendChild(title);
+    for(const team of ['A','B']){const line=document.createElement('p');line.textContent=`${team}：${split[team].map(([id])=>player(id)?.name||id).join(' / ')}`;card.appendChild(line);}
+    for(const [label,value] of [['はい',true],['いいえ',false]]){
+      const button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.splitAnswerV210=String(value);
+      button.onclick=e=>{e.preventDefault();e.stopPropagation();card.remove();if(roster)roster.inert=wasInert;resolve(value);};card.appendChild(button);
+    }
+    overlay.appendChild(card);card.scrollIntoView({block:'nearest'});
+  });
+}
+
+let bookEntranceActiveV210=false;
+for(const key of ['pre:unfinishedBook:0','pre:unfinishedBook:1']){
+  const runner=BOOK_RUNNERS_V207[key];
+  BOOK_RUNNERS_V207[key]=async function(){bookEntranceActiveV210=true;try{return await runner();}finally{bookEntranceActiveV210=false;}};
+}
+const showGuestsBaseV210=storyShowGuests;
+storyShowGuests=async function(ids,opt={}){
+  if(!bookEntranceActiveV210)return showGuestsBaseV210(ids,opt);
+  const scene=$('#storyScene'),fx=document.createElement('div');fx.className='book-arrival-v210';
+  fx.innerHTML='<i></i><i></i><i></i><b>MOB</b>';scene?.appendChild(fx);
+  const group=$('#storyGuestGroup'),visibility=group?.style.visibility||'';group?.style.setProperty('visibility','hidden');
+  try{
+    await showGuestsBaseV210(ids,{...opt,slow:false});
+    const actors=$$('[data-story-actor]',group);
+    for(const actor of actors)actor.style.opacity='0';
+    await fixedDelay(400);if(group)group.style.visibility=visibility;
+    await Promise.all(actors.map(async(actor,i)=>{
+      actor.style.opacity='0';await fixedDelay(i*180);
+      await animateV157(actor,[{opacity:0,translate:'0 -65px',filter:'brightness(0)'},{opacity:1,translate:'0 8px',filter:'brightness(2)',offset:.7},{opacity:1,translate:'0 0',filter:'none'}],750);
+      actor.style.removeProperty('opacity');
+    }));
+  }finally{if(group)group.style.visibility=visibility;fx.remove();}
+};
+
+const matrixBaseV210=matrixOverlayV208;
+matrixOverlayV208=function(collapse=false){
+  const fx=matrixBaseV210(collapse);fx.classList.add('book-matrix-v210');
+  const focal=document.createElement('div');focal.className='matrix-actor-v210';
+  const img=document.createElement('img');img.alt='';img.src=storyActorInfo(collapse?'book-navi-master':'book-navi').image;focal.appendChild(img);fx.appendChild(focal);
+  const fragments=document.createElement('div');fragments.className='matrix-fragments-v210';
+  fragments.innerHTML=Array.from({length:24},(_,i)=>`<i style="--i:${i};--x:${(i*37)%100}%;--y:${(i*23)%100}%">${['M','O','B'][i%3]}</i>`).join('');fx.appendChild(fragments);
+  fx.setAttribute('aria-hidden','true');return fx;
+};
+naviMatrixTransformV207=async function(){
+  const fx=matrixOverlayV208(false);
+  try{
+    await fixedDelay(700);fx.classList.add('encoding');
+    await naviAbsorbV161();await storyHideGuest();
+    const img=$('.matrix-actor-v210 img',fx);await readyStoryImage(img,storyActorInfo('book-navi-master').image);
+    fx.classList.add('decoded');await storyShowGuest('book-navi-master',{slow:true});
+    await fixedDelay(700);fx.classList.add('reveal');await fixedDelay(650);
+  }finally{fx.remove();}
+};
+window.__mobBuildVersion='v210';
+// UPDATE_V210_END
 
 })();
 </script>

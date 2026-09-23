@@ -10886,7 +10886,7 @@ buildEnemyFromTemplate=function(t,...args){const e=_buildEnemyFromTemplateV165(t
 /* A party saved before v165 can have ten members, which used to discard kaijin when
    saveParty() sliced the roster. Reserve the final slot for the book reward and make
    both the reward and the hero ultimate self-healing for existing saves. */
-const ensureBookCompletionRewardsV165=()=>{
+let ensureBookCompletionRewardsV165=()=>{
   if(!(state.meta?.bookCompleted===true||worldCleared('unfinishedBook')))return false;
   const kaijin=player('kaijin'),yusha=player('yusha');if(!kaijin||!yusha)return false;
   if(!state.party.some(x=>canonicalPlayerId(x[0])==='kaijin')){
@@ -11759,7 +11759,7 @@ storyActorInfo=function(key){if(String(key).startsWith('hot177-')){const t=hotTe
 async function hotJumpV177(el,strong=false){await animateV157(el,[{translate:'0 0'},{translate:strong?'0 -100px':'0 -30px',offset:.2},{translate:'0 0',offset:.45},{translate:strong?'0 -75px':'0 -24px',offset:.7},{translate:'0 0'}],900);}
 async function hotEntranceV177(kind,strong=false){await storyShowGuest('hot177-'+kind);if(kind==='iwakiri'){await storyFlash();await glowV157('hot177-'+kind,2);}else await hotJumpV177(storyAnchor('hot177-'+kind),strong||kind==='passion');}
 const hotStepsBaseV177=runStorySteps;
-runStorySteps=async function(steps=[]){for(const st of steps){if(skippingV174()&&String(st[0]).startsWith('hot'))continue;const el=storyAnchor(st[1]);if(st[0]==='hotJump')await hotJumpV177(el);else if(st[0]==='hotEntrance')await hotEntranceV177(st[1],st[2]);else if(st[0]==='hotFire'){el?.classList.add('hot-fire-v177');}else if(st[0]==='hotSymbol'){const scene=$('#storyScene'),r=el?.getBoundingClientRect(),sr=scene.getBoundingClientRect();if(r){const mark=document.createElement('i');mark.className='hot-symbol-v177';mark.textContent=st[2];mark.style.left=(r.left+r.width/2-sr.left)+'px';mark.style.top=(r.top-sr.top)+'px';scene.appendChild(mark);setTimeout(()=>mark.remove(),3000);}}else await hotStepsBaseV177([st]);}};
+runStorySteps=async function(steps=[]){for(const st of steps){if(skippingV174()&&String(st[0]).startsWith('hot'))continue;const el=String(st[0]).startsWith('hot')?storyAnchor(st[1]):null;if(st[0]==='hotJump')await hotJumpV177(el);else if(st[0]==='hotEntrance')await hotEntranceV177(st[1],st[2]);else if(st[0]==='hotFire'){el?.classList.add('hot-fire-v177');}else if(st[0]==='hotSymbol'){const scene=$('#storyScene'),r=el?.getBoundingClientRect(),sr=scene.getBoundingClientRect();if(r){const mark=document.createElement('i');mark.className='hot-symbol-v177';mark.textContent=st[2];mark.style.left=(r.left+r.width/2-sr.left)+'px';mark.style.top=(r.top-sr.top)+'px';scene.appendChild(mark);setTimeout(()=>mark.remove(),3000);}}else await hotStepsBaseV177([st]);}};
 const hotSceneBaseV177=savannaSceneV174;
 savannaSceneV174=async function(phase){const r=eventRunV174;if(!r?.hotV177)return hotSceneBaseV177(phase);showScreen('adventure');storyBusy=true;if(r.area===3){(state.meta.storyEventSeenV175??={}).hot=true;saveMeta();}try{await openStoryScene('grassland',r.area,'default',['pink','denden','money','desert']);$('#adventureStageTitle').textContent='熱血スライム';$('#adventureProgress').textContent=`AREA ${r.area+1} / ${HOT_DIFFICULTIES_V177[r.difficulty].name}`;await runStorySteps(HOT_STORY_V177[r.area][phase]);}finally{$$('.hot-symbol-v177').forEach(el=>el.remove());await closeStoryScene(false);storyBusy=false;}};
 function hotWaveV177(area,d){return (area===0?['iwakiri']:area<3?['fight']:['slime','passion','slime']).map(kind=>{const template=hotTemplateV177(kind,d);return {template,level:template.levelMin};});}
@@ -12269,7 +12269,7 @@ async function chooseSplitV181(opt){
   return await new Promise(resolve=>{
     const bind=()=>{
       $$('[data-v181-split-member]',overlay).forEach(btn=>btn.onclick=e=>{e.preventDefault();e.stopPropagation();const id=canonicalPlayerId(btn.dataset.v181SplitMember),from=split.A.some(r=>r[0]===id)?split.A:split.B,to=from===split.A?split.B:split.A;if(from.length<=1)return toast('A/Bどちらにも1人以上必要です');const i=from.findIndex(r=>r[0]===id);if(i<0)return;to.push(from.splice(i,1)[0]);renderSplitV181(overlay,split,opt);bind();});
-      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');const names=t=>t.map(([id])=>player(id)?.name||id).join(' / ');overlay.hidden=true;const ans=await narrationDialog(`A：${names(split.A)}\nB：${names(split.B)}\n\nこのパーティーで挑みますか？`,[['はい','yes','primary'],['いいえ','no']],'PARTY SPLIT');if(ans!=='yes'){overlay.hidden=false;return;}state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
+      const confirm=$('[data-v181-split-confirm]',overlay);if(confirm)confirm.onclick=async e=>{e.preventDefault();e.stopPropagation();if(!split.A.length||!split.B.length)return toast('A/Bどちらにもメンバーが必要です');if(confirm.disabled)return;confirm.disabled=true;let accepted;try{accepted=await confirmSplitInlineV210(overlay,split);}finally{confirm.disabled=false;}if(!accepted)return;state.meta[opt.storageKey]={A:clone(split.A),B:clone(split.B)};saveMeta();overlay.hidden=true;overlay.classList.remove('split-overlay-v181');resolve(state.meta[opt.storageKey]);};
     };bind();
   });
 }
@@ -13691,5 +13691,96 @@ window.__mobV209KaijinEntranceEnhanced=true;
 window.__mobV209BookEnemyLane=true;
 // UPDATE_V209_END
 
+
+// UPDATE_V210_BEGIN
+/* Book endings own their destination; generic result handling must not resume
+   adventure after the authored return to the Record Room. */
+const pendingPostBaseV210=runPendingPostStory;
+runPendingPostStory=async function(suppressArrival=false,forceHomeAfter=false){
+  const key=state.adventure.pendingPostStory?.key;
+  if(key!=='post:unfinishedBook:3')return pendingPostBaseV210(suppressArrival,forceHomeAfter);
+  return pendingPostBaseV210(true,false);
+};
+const resultNextV210=$('#resultSetupBtn'),resultNextBaseV210=resultNextV210?.onclick;
+if(resultNextV210)resultNextV210.onclick=async function(...args){
+  if(state.battle?.mode!=='adventure'||state.adventure.pendingPostStory?.key!=='post:unfinishedBook:3')return resultNextBaseV210?.apply(this,args);
+  if(this.disabled)return;
+  this.disabled=true;$('#resultOverlay').hidden=true;
+  try{await runPendingPostStory(true,false);}finally{this.disabled=false;}
+};
+
+/* The adventure cursor has already advanced when post-battle scenes run.
+   Use the scene being displayed, not currentWorld(), to preserve Riro. */
+const renderPartyBaseV210=renderStoryParty;
+renderStoryParty=async function(extraIds=null){
+  const extras=Array.isArray(extraIds)?[...extraIds]:(extraIds?[extraIds]:[]);
+  if(storyBusy&&$('#storyScene')?.classList.contains('story-world-unfinishedBook')){
+    extras.push('riro');
+    if(bookDisplacedPartyMemberV208)extras.push(bookDisplacedPartyMemberV208);
+  }
+  return renderPartyBaseV210([...new Set(extras)]);
+};
+
+/* Formation stays in one visible layer, including its confirmation. This also
+   avoids handing input from the split overlay to the shared dialogue overlay. */
+function confirmSplitInlineV210(overlay,split){
+  return new Promise(resolve=>{
+    const roster=overlay.firstElementChild,wasInert=roster?.inert;if(roster)roster.inert=true;
+    const card=document.createElement('div');card.className='split-confirm-v210';
+    const title=document.createElement('h3');title.textContent='このパーティーで挑みますか？';card.appendChild(title);
+    for(const team of ['A','B']){const line=document.createElement('p');line.textContent=`${team}：${split[team].map(([id])=>player(id)?.name||id).join(' / ')}`;card.appendChild(line);}
+    for(const [label,value] of [['はい',true],['いいえ',false]]){
+      const button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.splitAnswerV210=String(value);
+      button.onclick=e=>{e.preventDefault();e.stopPropagation();card.remove();if(roster)roster.inert=wasInert;resolve(value);};card.appendChild(button);
+    }
+    overlay.appendChild(card);card.scrollIntoView({block:'nearest'});
+  });
+}
+
+let bookEntranceActiveV210=false;
+for(const key of ['pre:unfinishedBook:0','pre:unfinishedBook:1']){
+  const runner=BOOK_RUNNERS_V207[key];
+  BOOK_RUNNERS_V207[key]=async function(){bookEntranceActiveV210=true;try{return await runner();}finally{bookEntranceActiveV210=false;}};
+}
+const showGuestsBaseV210=storyShowGuests;
+storyShowGuests=async function(ids,opt={}){
+  if(!bookEntranceActiveV210)return showGuestsBaseV210(ids,opt);
+  const scene=$('#storyScene'),fx=document.createElement('div');fx.className='book-arrival-v210';
+  fx.innerHTML='<i></i><i></i><i></i><b>MOB</b>';scene?.appendChild(fx);
+  const group=$('#storyGuestGroup'),visibility=group?.style.visibility||'';group?.style.setProperty('visibility','hidden');
+  try{
+    await showGuestsBaseV210(ids,{...opt,slow:false});
+    const actors=$$('[data-story-actor]',group);
+    for(const actor of actors)actor.style.opacity='0';
+    await fixedDelay(400);if(group)group.style.visibility=visibility;
+    await Promise.all(actors.map(async(actor,i)=>{
+      actor.style.opacity='0';await fixedDelay(i*180);
+      await animateV157(actor,[{opacity:0,translate:'0 -65px',filter:'brightness(0)'},{opacity:1,translate:'0 8px',filter:'brightness(2)',offset:.7},{opacity:1,translate:'0 0',filter:'none'}],750);
+      actor.style.removeProperty('opacity');
+    }));
+  }finally{if(group)group.style.visibility=visibility;fx.remove();}
+};
+
+const matrixBaseV210=matrixOverlayV208;
+matrixOverlayV208=function(collapse=false){
+  const fx=matrixBaseV210(collapse);fx.classList.add('book-matrix-v210');
+  const focal=document.createElement('div');focal.className='matrix-actor-v210';
+  const img=document.createElement('img');img.alt='';img.src=storyActorInfo(collapse?'book-navi-master':'book-navi').image;focal.appendChild(img);fx.appendChild(focal);
+  const fragments=document.createElement('div');fragments.className='matrix-fragments-v210';
+  fragments.innerHTML=Array.from({length:24},(_,i)=>`<i style="--i:${i};--x:${(i*37)%100}%;--y:${(i*23)%100}%">${['M','O','B'][i%3]}</i>`).join('');fx.appendChild(fragments);
+  fx.setAttribute('aria-hidden','true');return fx;
+};
+naviMatrixTransformV207=async function(){
+  const fx=matrixOverlayV208(false);
+  try{
+    await fixedDelay(700);fx.classList.add('encoding');
+    await naviAbsorbV161();await storyHideGuest();
+    const img=$('.matrix-actor-v210 img',fx);await readyStoryImage(img,storyActorInfo('book-navi-master').image);
+    fx.classList.add('decoded');await storyShowGuest('book-navi-master',{slow:true});
+    await fixedDelay(700);fx.classList.add('reveal');await fixedDelay(650);
+  }finally{fx.remove();}
+};
+window.__mobBuildVersion='v210';
+// UPDATE_V210_END
 
 })();
