@@ -5156,6 +5156,29 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .story-narration.book-page-narration-v207.book-single-line-v212 p{white-space:nowrap!important;letter-spacing:0!important;font-size:clamp(10px,4.8cqw,24px)!important;word-break:normal!important;overflow-wrap:normal!important}
 .smooth-spell-layer-v212{position:absolute;inset:0;pointer-events:none;will-change:opacity,transform}
 /* UPDATE_V212_END */
+
+/* UPDATE_V213_BEGIN */
+.never-flame-v213{position:absolute;inset:0;z-index:70;pointer-events:none;overflow:hidden;opacity:1;transition:opacity .48s ease}
+.never-flame-v213[hidden]{display:none!important}
+.flame-art-v213{position:absolute;left:50%;top:44%;width:min(90vw,540px,76vh);aspect-ratio:1;transform:translate(-50%,-50%) scale(.72);transition:transform .6s cubic-bezier(.16,.7,.3,1);filter:drop-shadow(0 0 18px #ff8b25)}
+.flame-art-v213 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .23s ease;pointer-events:none}
+.flame-art-v213 img.active{opacity:1}
+.ignite .flame-art-v213{transform:translate(-50%,-50%) scale(.9)}
+.burst .flame-art-v213{transform:translate(-50%,-50%) scale(1)}
+.flame-halo-v213{position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse at 50% 43%,#fff3b666 0 8%,#ff9b2955 25%,#ba260033 45%,transparent 70%);transition:opacity .4s ease}
+.ignite .flame-halo-v213{opacity:.6}.burst .flame-halo-v213{opacity:1}
+.flame-rays-v213{position:absolute;left:50%;top:44%;width:110%;aspect-ratio:1;transform:translate(-50%,-50%);background:repeating-conic-gradient(#ffd96400 0deg 14deg,#ffd96444 16deg 19deg,#ffd96400 22deg 30deg);mask-image:radial-gradient(circle,transparent 5%,#000 22%,transparent 68%);opacity:0;transition:opacity .35s}
+.burst .flame-rays-v213{opacity:1;animation:flameRaysV213 7s linear infinite}
+.flame-ring-v213{position:absolute;left:50%;top:44%;width:72%;aspect-ratio:1;border:4px solid #ffdf88;border-radius:50%;box-shadow:0 0 24px #ff6f13,inset 0 0 25px #ffbc5b;opacity:0;transform:translate(-50%,-50%) scale(.2)}
+.burst .flame-ring-v213{animation:flameRingV213 1.1s ease-out both}
+.flame-ember-v213{position:absolute;left:var(--x);top:65%;width:5px;height:26px;border-radius:50%;background:linear-gradient(#fff5b2,#ff8226,transparent);box-shadow:0 0 9px #ff8c35;opacity:0}
+.ignite .flame-ember-v213{animation:flameEmberV213 1.2s var(--delay) ease-out infinite}
+.never-flame-v213.out{opacity:0}.out .flame-art-v213{transform:translate(-50%,-50%) scale(1.08)}
+@keyframes flameRingV213{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}20%{opacity:.9}100%{opacity:0;transform:translate(-50%,-50%) scale(1.65)}}
+@keyframes flameEmberV213{0%{opacity:0;transform:translate(0,20px) scaleY(.4)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-380px) scaleY(1.3)}}
+@keyframes flameRaysV213{to{transform:translate(-50%,-50%) rotate(40deg)}}
+@media(prefers-reduced-motion:reduce){.never-flame-v213 *{animation:none!important}.flame-art-v213{transform:translate(-50%,-50%)!important}.flame-rays-v213{display:none}}
+/* UPDATE_V213_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5659,7 +5682,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v212</div>
+      <div class="title-version">v213</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -21263,7 +21286,7 @@ if(resultNextV210)resultNextV210.onclick=async function(...args){
   if(state.battle?.mode!=='adventure'||state.adventure.pendingPostStory?.key!=='post:unfinishedBook:3')return resultNextBaseV210?.apply(this,args);
   if(this.disabled)return;
   this.disabled=true;$('#resultOverlay').hidden=true;
-  try{await runPendingPostStory(true,false);}finally{this.disabled=false;}
+  try{renderAdventure();showScreen('adventure');await runPendingPostStory(true,false);}finally{this.disabled=false;}
 };
 
 /* The adventure cursor has already advanced when post-battle scenes run.
@@ -21452,6 +21475,32 @@ fastLargeSkillSpriteV141=async function(frames,target='enemy',kind='earth'){
 };
 window.__mobBuildVersion='v212';
 // UPDATE_V212_END
+
+// UPDATE_V213_BEGIN
+async function neverEndingFlameV213(frames){
+  const layer=$('#battleFxLayer');if(!layer||!frames?.length)return;
+  const root=document.createElement('div');root.className='never-flame-v213';root.setAttribute('aria-hidden','true');
+  root.innerHTML='<div class="flame-halo-v213"></div><div class="flame-rays-v213"></div><div class="flame-ring-v213"></div><div class="flame-art-v213"></div>'+Array.from({length:20},(_,i)=>`<i class="flame-ember-v213" style="--x:${5+(i*37)%90}%;--dx:${(i%2?1:-1)*(15+i*4)}px;--delay:${-(i%6)*.12}s"></i>`).join('');
+  const art=$('.flame-art-v213',root),images=[];
+  root.hidden=true;layer.appendChild(root);
+  try{
+    for(const src of frames){const img=document.createElement('img');img.alt='';img.draggable=false;img.src=src;bindImage(img);art.appendChild(img);images.push(img);}
+    await Promise.all(images.map(img=>ensureDomImageReady(img,img.src,1500)));
+    root.hidden=false;images[0].classList.add('active');await nextPaint();root.classList.add('ignite');await fixedDelay(300);
+    root.classList.add('burst');
+    for(let i=1;i<images.length;i++){
+      images[i].classList.add('active');images[i-1].classList.remove('active');await fixedDelay(230);
+    }
+    await fixedDelay(260);root.classList.add('out');await fixedDelay(480);
+  }finally{root.remove();}
+}
+const ultimatePostBaseV213=playUltimatePostAnimation;
+playUltimatePostAnimation=async function(a,u){
+  if(a?.id==='yusha'&&u?.name==='ネバー・エンディング・フレイム'&&u.effectFrames?.length)return neverEndingFlameV213(u.effectFrames);
+  return ultimatePostBaseV213(a,u);
+};
+window.__mobBuildVersion='v213';
+// UPDATE_V213_END
 
 })();
 </script>

@@ -12,7 +12,7 @@ if(resultNextV210)resultNextV210.onclick=async function(...args){
   if(state.battle?.mode!=='adventure'||state.adventure.pendingPostStory?.key!=='post:unfinishedBook:3')return resultNextBaseV210?.apply(this,args);
   if(this.disabled)return;
   this.disabled=true;$('#resultOverlay').hidden=true;
-  try{await runPendingPostStory(true,false);}finally{this.disabled=false;}
+  try{renderAdventure();showScreen('adventure');await runPendingPostStory(true,false);}finally{this.disabled=false;}
 };
 
 /* The adventure cursor has already advanced when post-battle scenes run.
