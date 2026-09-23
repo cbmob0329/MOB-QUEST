@@ -9,17 +9,18 @@ const injection=`window.test215={
   state.adventure.areaIndex=0;state.adventure.battleReady=true;state.adventure.demonCastle2SplitReadyV183=true;
   state.adventure.storyFlags['pre:demonCastle2:0']=true;state.autoBattle=false;storyBusy=false;
   passiveChance=()=>false;initiativeSpeed=e=>e.type==='ally'?100000:1;
-  await startAdventureBattle();
+  renderAdventure();showScreen('adventure');
  },
  prepare:()=>{const b=state.battle;for(const e of b.enemies)e.hp=1;const a=activeAlly();a.bookHeroNormalAoe=true;a.bookHeroCrit100=true;return a.id;},
- snap:()=>{const b=state.battle;return {ids:b.allies.map(a=>a.id),team:b.dualPartyTeamV181,busy:b.busy,pending:b.pendingWaveConfigs.length,enemies:b.enemies.map(e=>e.id),queue:b.queue.filter(e=>e.type!=='enemy').map(e=>e.id),label:$('#battleModeLabel').textContent,finished:b.finished,locked:!!b.dc2TransitionV215};},
+ snap:()=>{const b=state.battle;if(!b)return {busy:true,queue:[]};return {ids:b.allies.map(a=>a.id),team:b.dualPartyTeamV181,busy:b.busy,pending:b.pendingWaveConfigs.length,enemies:b.enemies.map(e=>e.id),queue:b.queue.filter(e=>e.type!=='enemy').map(e=>e.id),label:$('#battleModeLabel').textContent,finished:b.finished,locked:!!b.dc2TransitionV215};},
  duplicate:()=>{spawnNextEnemyWave().then(()=>window.duplicateDone215=true);act('attack');},
  result:()=>({post:state.adventure.pendingPostStory?.key,visible:!$('#resultOverlay').hidden})
 };`;
 (async()=>{const {browser,page,errors}=await open(injection);try{
  for(const count of [5,6]){
   await page.evaluate(n=>test215.setup(n),count);
-  await page.waitForFunction(()=>!test215.snap().busy&&test215.snap().queue.length>0);
+  await page.locator('#fieldBattleBtn').click();
+  await page.waitForFunction(()=>{const s=test215.snap();return s.team==='A'&&!s.finished&&!s.busy&&s.queue.length>0;});
   const first=await page.evaluate(()=>test215.snap());assert.equal(first.ids.length,count);
   await page.evaluate(()=>test215.prepare());await page.locator('#attackBtn').click();
   const lines=[['モブマニー','このまま一気に倒すわよ！'],['モブデンデン','モブリリス、覚悟でやんす！'],['モブ怪人のボス','薔薇の魔女！最高の獲物だぜ！'],['モブリリス','うるさいなー'],['モブリリス','怒るよ？']];
@@ -43,5 +44,5 @@ const injection=`window.test215={
   await page.waitForFunction(()=>test215.snap().finished&&test215.result().visible);
   assert.equal((await page.evaluate(()=>test215.result())).post,'post:demonCastle2:0');
  }
- assert.deepEqual(errors,[]);console.log('v215 PASS: actual attack -> five dialogue taps -> A/B handoff, 5/6 and 6/5, duplicate/AUTO guard, B-only queue, second victory and post-story');
+ assert.deepEqual(errors,[]);console.log('v215/v216 UI PASS: actual attack -> five dialogue taps -> A/B handoff, 5/6 and 6/5, duplicate/AUTO guard, B-only queue, second victory and post-story');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

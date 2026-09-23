@@ -5700,7 +5700,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v215</div>
+      <div class="title-version">v216</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -11527,7 +11527,7 @@ function bindEvents(){
   $('#equipmentBackBtn').onclick=()=>{closeFigurePicker();if(equipmentFacilityOrigin==='smith')leaveBlacksmith();else goHome();};$$('[data-equipment-tab]').forEach(b=>b.onclick=()=>{equipmentTab=b.dataset.equipmentTab;renderEquipment();});$('#weaponPickerCloseBtn').onclick=closeWeaponPicker;$('#weaponPickerOverlay').addEventListener('click',e=>{if(e.target===$('#weaponPickerOverlay'))closeWeaponPicker();});$('#figurePickerCloseBtn').onclick=closeFigurePicker;$('#figurePickerOverlay').addEventListener('click',e=>{if(e.target===$('#figurePickerOverlay'))closeFigurePicker();});
   $('#tavernBackBtn').onclick=()=>{if(!$('#tavernPartyPopup').hidden||!$('#tavernDrinkPopup').hidden||!$('#tavernFigurePopup').hidden)return showTavernMenu();leaveTavern();};$('#tavernResetBtn').onclick=()=>{};$('#savePartyBtn').onclick=async()=>{if(state.party.length<1)return;saveParty();state.training.party=state.party.map(x=>[...x]);toast('パーティーを保存しました');showTavernMenu();};$('#tavernPartyCloseBtn').onclick=showTavernMenu;$('#tavernDrinkCloseBtn').onclick=()=>{$('#tavernDrinkPopup').hidden=true;};$('#tavernFigureCloseBtn').onclick=()=>{$('#tavernFigurePopup').hidden=true;};$$('[data-tavern-menu]').forEach(b=>b.onclick=()=>{const a=b.dataset.tavernMenu;if(a==='party')showTavernParty();else if(a==='drink')showTavernDrinks();else if(a==='figure')showTavernFigureShop();else leaveTavern();});
   $('#trainingBackBtn').onclick=()=>{if(!$('#trainingFeaturePopup').hidden){state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();return;}if((state.training.mode||'menu')!=='menu'){state.training.mode='menu';renderTraining();return;}leaveTraining();};$('#trainingHomeQuick').onclick=leaveTraining;$('#trainingFeatureCloseBtn').onclick=()=>{state.training.mode='menu';$('#trainingFeaturePopup').hidden=true;renderTraining();};$('#trainingRandomBtn').onclick=randomTraining;$('#allLevelBtn').onclick=()=>{ensureTrainingParty();state.training.party=state.training.party.map(x=>x?[x[0],50]:null);renderTraining();};$('#trainingEnemyAddBtn').onclick=()=>{ensureTrainingEnemies();const i=state.training.enemySlots.findIndex(x=>!x);if(i<0)return toast('敵は最大4体です');state.training.activeEnemySlot=i;renderTraining();};$('#trainingEnemyClearBtn').onclick=()=>{state.training.enemySlots=[null,null,null,null];state.training.activeEnemySlot=0;renderTraining();};$('#startTrainingBattleBtn').onclick=resetTrainingBattle;
-  $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=startAdventureBattle;const abandonBtn=$('#abandonAdventureBtn');if(abandonBtn)abandonBtn.onclick=abandonAdventure;
+  $('#exploreBtn').onclick=exploreField;$('#campBtn').onclick=openCamp;$('#fieldBattleBtn').onclick=()=>startAdventureBattle();const abandonBtn=$('#abandonAdventureBtn');if(abandonBtn)abandonBtn.onclick=abandonAdventure;
   $('#questBackBtn').onclick=async()=>{if(!state.quest)return setTrainingMode(state.training.mode||'menu');if(state.quest.type!=='journal')return facilityTalk('このエリアはクリアかゲームオーバーまで出られないよ','モブコーチ','play/003.png');const a=await dialog('冒険日記を中断してトレーニングへ戻りますか？',[['はい','yes','primary'],['いいえ','no']],'モブコーチ','play/003.png');if(a==='yes')endQuestToTraining();};$('#questExploreBtn').onclick=questExplore;$('#questCampBtn').onclick=questCamp;$('#questBattleBtn').onclick=startQuestBattle;
   $('#battleBackBtn').onclick=()=>{if(!state.battle||state.battle.mode!=='training')return;state.battle.auto=false;renderTraining();showScreen('training');};
   $('#campCloseBtn').onclick=closeCamp;$$('[data-camp-action]').forEach(b=>b.onclick=()=>{const a=b.dataset.campAction;if(a==='tent')useCampTent();else if(a==='chair')useCampChair();else if(a==='party')renderCampPartyMenu();else renderCampDrinks();});
@@ -21595,6 +21595,51 @@ renderBattle=function(...args){
 };
 window.__mobBuildVersion='v215';
 // UPDATE_V215_END
+
+// UPDATE_V216_BEGIN
+/* Resolve the current start handler at click time, after story patches load. */
+$('#fieldBattleBtn').onclick=()=>startAdventureBattle();
+
+function bookTransformLockedV216(a,u){
+  return a?.id==='yusha'&&!!a.transformed&&(u?.kind==='heroTransform'||u?.name==='読みかけの本');
+}
+const readyUltsBaseV216=readyUlts;
+readyUlts=function(a){return readyUltsBaseV216(a).filter(u=>!bookTransformLockedV216(a,u));};
+const performUltimateBaseV216=performUltimate;
+performUltimate=async function(a,u,...args){
+  if(bookTransformLockedV216(a,u)){notice('変身中は「読みかけの本」を使用できません','system',900);return false;}
+  return performUltimateBaseV216(a,u,...args);
+};
+const openSkillMenuBaseV216=openSkillMenu;
+openSkillMenu=function(type){
+  const result=openSkillMenuBaseV216(type),a=activeAlly();
+  if(type==='ultimate'&&a)for(const button of $$('[data-ult-index]',$('#skillMenuList'))){
+    if(!bookTransformLockedV216(a,a.ults[Number(button.dataset.ultIndex)]))continue;
+    button.disabled=true;button.classList.add('disabled');button.onclick=null;
+    const label=$('em',button);if(label)label.textContent='変身中 / 使用不可';
+  }
+  return result;
+};
+function resetBookTransformV216(b){
+  for(const a of b?.allies||[]){
+    if(a.id!=='yusha')continue;
+    if(a.transformed){a.allBuff=0;a.allBuffTurns=0;}
+    a.transformed=false;
+    for(const key of ['heroTransformUltBoost','bookHeroDamageCut','bookHeroDamageBoost','bookHeroStatusImmune','bookHeroNormalAoe','bookHeroAllAoe','bookHeroCrit100'])delete a[key];
+  }
+}
+const finishBattleBaseV216=finishBattle;
+finishBattle=function(...args){resetBookTransformV216(state.battle);return finishBattleBaseV216(...args);};
+const finishScriptedBattleBaseV216=finishScriptedBattle;
+finishScriptedBattle=function(...args){resetBookTransformV216(state.battle);return finishScriptedBattleBaseV216(...args);};
+const battleBackBaseV216=$('#battleBackBtn').onclick;
+$('#battleBackBtn').onclick=async function(...args){
+  const b=state.battle,result=await battleBackBaseV216?.apply(this,args);
+  if(b&&(b.finished||state.battle!==b||!$('#battleScreen').classList.contains('active')))resetBookTransformV216(b);
+  return result;
+};
+window.__mobBuildVersion='v216';
+// UPDATE_V216_END
 
 })();
 </script>
