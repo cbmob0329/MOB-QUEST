@@ -5138,3 +5138,9 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes dc2Ember211{0%{opacity:0;transform:translate(0,90px) scaleY(.5)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-320px) scaleY(1.8)}}
 @media(prefers-reduced-motion:reduce){.dc2-cinematic-v211 *{animation:none!important;transition:none!important}.dc2-particle-v211{display:none}.dc2-rift-v211{opacity:.3;transform:translate(-50%,-50%)}.release .dc2-beam-v211{opacity:.2}}
 /* UPDATE_V211_END */
+
+/* UPDATE_V212_BEGIN */
+.story-narration.book-single-line-v212{container-type:inline-size}
+.story-narration.book-page-narration-v207.book-single-line-v212 p{white-space:nowrap!important;letter-spacing:0!important;font-size:clamp(10px,4.8cqw,24px)!important;word-break:normal!important;overflow-wrap:normal!important}
+.smooth-spell-layer-v212{position:absolute;inset:0;pointer-events:none;will-change:opacity,transform}
+/* UPDATE_V212_END */
