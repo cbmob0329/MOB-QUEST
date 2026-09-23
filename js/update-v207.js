@@ -139,7 +139,7 @@ async function bookArea1PreV207(){
   await storySay('desert','これが怪人か？');await storySay('pink','見た目は可愛いですが');await storySay('denden','強い覇気を感じるでやんす！');await storySay('tetsu','手加減無用でござるな');await storySay('nyoro','サポートし合うニョロ！');
 }
 async function bookArea1PostV207(){
-  await openStoryScene('unfinishedBook',0);await storySay('jessie','これで手下なら\nボスは相当な強さね');await storySay('nekoku','あいつら\n本気じゃなかったぞ');await storySay('nekoku','みんな事情があるのよ');await storySay('pink','変な世界でありますね');await storySay('desert','先へ進むぞ');
+  await openStoryScene('unfinishedBook',0);await storySay('jessie','これで手下なら\nボスは相当な強さね');await storySay('nekoku','あいつら\n本気じゃなかったぞ');await storySay('jessie','みんな事情があるのよ');await storySay('pink','変な世界でありますね');await storySay('desert','先へ進むぞ');
 }
 async function bookArea2PreV207(){
   await openStoryScene('unfinishedBook',1);const fxPromise=bookArea2SummonFxV207();await fixedDelay(540);await storyShowGuests(['book-exec-blue','book-exec-red'],{slow:true});await fxPromise;

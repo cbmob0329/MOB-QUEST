@@ -4240,7 +4240,7 @@ bookArea4PostV89Final=async function(){
 
 finalBossPostV89Final=async function(){
   await openStoryScene('demonCastle2',3);
-  await storyShowGuest('dc2-ulrilis',{slow:true});await glowV157('dc2-ulrilis',2);await storyHideGuest();await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});
+  await dc2EntranceV211(['dc2-ulrilis'],'abyss');await glowV157('dc2-ulrilis',2);await storyHideGuest();await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});
   await storySay('dc2-maou','馬鹿な・・\nこの私が\n勇者などに・・‼︎');
   await maouDissolveV169();
   await storySay('boss-lilith-castle','ウッ・・・');
@@ -10245,7 +10245,7 @@ const heroTransformBaseV157=bookHeroTransformV94;bookHeroTransformV94=async func
 const narrateBaseV157=storyNarrate;storyNarrate=async function(text,...args){const poetic=['思い出が苦しくなる時は','読みかけの本を読もう','無力で惨めなその気持ち','あのヒーローにやっつけてもらおう'].includes(text);if(!poetic)return narrateBaseV157(text,...args);document.body.classList.add('poem-v157');try{await fixedDelay(650);return await narrateBaseV157(text,...args);}finally{document.body.classList.remove('poem-v157');}};
 const stepsBaseV157=runStorySteps;runStorySteps=async function(steps=[]){for(const st of steps){if(st[0]==='summonV157'){await glowV157('boss-lilith-castle',2);await storyShowGuests(['dc2-kirin','dc2-hell','boss-lilith-castle','dc2-riva','dc2-kufu'],{allowFive:true,slow:true});}else if(st[0]==='leaveLilithV157'){await animateV157(actorV157('boss-lilith-castle'),[{opacity:1},{opacity:0}],1000);await storyShowGuests(['dc2-kirin','dc2-hell','dc2-riva','dc2-kufu'],{slow:false});}else if(st[0]==='cloneV157'){await glowV157('dc2-lilith',1);await storyShowGuests(['dc2-lilith','dc2-lilith','dc2-lilith'],{slow:true});}else if(st[0]==='fadeV157'){await animateV157(actorV157(st[1]),[{opacity:1},{opacity:0}],1000);await storyHideGuests();await storyHideGuest();}else if(st[0]==='chorusV157'){await Promise.all($$('[data-story-actor]',$('#storyPartyLine')).filter(x=>x.dataset.storyActor!=='yusha').map(x=>animateV157(x,[{translate:'0 0'},{translate:'0 -10px'},{translate:'0 0'}],450)));await storyNarrate('勝負！！');}else await stepsBaseV157([st]);}};
 {const s=STORY_EVENTS['pre:demonCastle2:0'].steps;const i=s.findIndex(x=>x[0]==='guests');s[i]=['summonV157'];s.splice(i+2,0,['leaveLilithV157']);const t=STORY_EVENTS['pre:demonCastle2:1'].steps;const j=t.findIndex(x=>x[0]==='narrate');t.splice(j,1,['say','dc2-lilith','僕舐められてるね'],['cloneV157']);const k=t.findIndex(x=>x[1]==='desert'&&x[2]?.includes('もはや'));t.splice(k,0,['say','jessie','・・・・']);for(const [area,id]of [[1,'dc2-lilith'],[2,'dc2-enma']])STORY_EVENTS[`post:demonCastle2:${area}`].steps.splice(1,0,['fadeV157',id]);const c=STORY_EVENTS['pre:demonCastle2:3'].steps;c[c.length-1]=['chorusV157'];}
-async function fusionV157(){await openStoryScene('demonCastle2',3);await storyShowGuest('dc2-maou',{slow:true});for(const [id,t]of [['dc2-maou','フッ・・\nフハハハハ‼︎'],['money','何がおかしいのよ！'],['denden','お前の負けでやんす！']])await storySay(id,t);await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});for(const [id,t]of [['jessie','モブリリス！？'],['dc2-maou','さあ！今こそ闇を解き放つのだ！'],['desert','まずいぞ‼︎']])await storySay(id,t);await Promise.all(['dc2-maou','boss-lilith-castle'].map(id=>animateV157(actorV157(id),[{filter:'brightness(1)',opacity:1},{filter:'brightness(0) drop-shadow(0 0 25px #842eff)',opacity:1,offset:.6},{filter:'brightness(0)',opacity:0}],3000)));await storyHideGuests();await storyShowGuest('dc2-ulrilis',{slow:true});for(const [id,t]of FUSION_LINES_V157)await storySay(id,t);await closeStoryScene(false);showScreen('battle');}
+async function fusionV157(){await openStoryScene('demonCastle2',3);await storyShowGuest('dc2-maou',{slow:true});for(const [id,t]of [['dc2-maou','フッ・・\nフハハハハ‼︎'],['money','何がおかしいのよ！'],['denden','お前の負けでやんす！']])await storySay(id,t);await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});for(const [id,t]of [['jessie','モブリリス！？'],['dc2-maou','さあ！今こそ闇を解き放つのだ！'],['desert','まずいぞ‼︎']])await storySay(id,t);await Promise.all(['dc2-maou','boss-lilith-castle'].map(id=>animateV157(actorV157(id),[{filter:'brightness(1)',opacity:1},{filter:'brightness(0) drop-shadow(0 0 25px #842eff)',opacity:1,offset:.6},{filter:'brightness(0)',opacity:0}],3000)));await storyHideGuests();await dc2EntranceV211(['dc2-ulrilis'],'abyss');for(const [id,t]of FUSION_LINES_V157)await storySay(id,t);await closeStoryScene(false);showScreen('battle');}
 const FUSION_LINES_V157=[['dc2-ulrilis','そうだ\n僕が\n闇の王\nウルモブリリス\n闇と\n仲良くなるんだよ'],['money','モブリリス！'],['desert','違う\n全く別のモンスターだ‼︎'],['pink','恐れるなであります！'],['tetsu','そうでござる！\n皆想いは様々\nしかし\n魔王討伐が平和への道\nそれだけは変わらないでござる！'],['denden','・・・・\nオイラは空海の国の護衛隊長\nモブデンデン‼︎\n魔王を討伐し、\n平和を取り戻すでやんす！'],['desert','空海の国か\n魔王退治の後は空の観光だな！'],['kaijin','クライマックスか！\n俺はこういうのに慣れてるんだ！\n暴れるぜ‼︎'],['dc2-ulrilis','全部\n全部終わらせる\n闇こそが正義\n闇こそが平和\n僕は僕のために\n僕は君たちのために\n力は惜しまない'],['pink','最終決戦、アチアチであります‼︎']];
 async function endingMontageV157(){const root=document.createElement('div');root.className='ending-v157';root.setAttribute('role','region');root.setAttribute('aria-label','エンディング');document.body.appendChild(root);const audio=new Audio('music/end.mp3');audio.volume=.55;let ended=false;audio.onended=audio.onerror=()=>{ended=true;};try{await animateV157(root,[{opacity:0},{opacity:1}],1800);try{await audio.play();}catch(_){ended=true;}for(let n=1;n<=31;n++){const img=document.createElement('img');img.alt='';img.src=`poster/${String(n).padStart(2,'0')}.png`;root.replaceChildren(img);await fixedDelay(4000);}while(!ended&&!audio.ended&&!audio.error){if(audio.paused)break;await fixedDelay(250);}root.replaceChildren();}finally{audio.pause();audio.removeAttribute('src');audio.load();root.remove();}}
 async function preloadEndingV157(){await preloadAssetsSafe(Array.from({length:31},(_,i)=>`poster/${String(i+1).padStart(2,'0')}.png`),3000).catch(()=>{});}
@@ -12299,7 +12299,7 @@ spawnNextEnemyWave=async function(...args){
   const b=state.battle,next=b?.pendingWaveConfigs?.[0]||[];
   if(b?.config?.dualPartyV181==='demonCastle2'&&b.dualPartyTeamV181!=='B'&&next.some(r=>['dc2-kufu','dc2-riva'].includes(r.id))){await actionCutin('Aグループ勝利！ 次はBグループの戦闘を開始します','system',1100);switchBattleTeamV181('B');}
   const enma2=next.some(r=>r.id==='dc2-enma2'),enma3=next.some(r=>r.id==='dc2-enma3');
-  if(enma2||enma3){const fx=document.createElement('div');fx.className='dc2-battle-fire-v181';($('#battleScreen')||document.body).appendChild(fx);setTimeout(()=>fx.remove(),2100);}
+  if(enma2||enma3){const fx=document.createElement('div');fx.className='dc2-battle-fire-v181 dc2-cinematic-v211 flame-v211 release';fx.innerHTML=dc2FxMarkupV211();($('#battleScreen')||document.body).appendChild(fx);setTimeout(()=>fx.remove(),2100);}
   return spawnNextEnemyWaveBaseV181(...args);
 };
 const startAdventureBattleBaseV181=startAdventureBattle;
@@ -12390,7 +12390,7 @@ if(Array.isArray(FUSION_LINES_V157))FUSION_LINES_V157.splice(0,FUSION_LINES_V157
  ['dc2-ulrilis','そうだ'],['dc2-ulrilis','僕が'],['dc2-ulrilis','闇の王'],['dc2-ulrilis','ウルモブリリス'],['dc2-ulrilis','闇と仲良くなるんだよ'],['money','モブリリス！'],['desert','違う\n全く別のモンスターだ‼︎'],['pink','恐れるなであります！'],['tetsu','そうでござる！'],['tetsu','皆想いは様々\nしかし'],['tetsu','魔王討伐が平和への道\nそれだけは変わらないでござる！'],['denden','・・・・'],['denden','オイラは空海の国の護衛隊長\nモブデンデン‼︎'],['denden','魔王を討伐し、\n平和を取り戻すでやんす！'],['desert','空海の国か\n魔王退治の後は空の観光だな！'],['kaijin','クライマックスか！\n俺はこういうのに慣れてるんだ！\n暴れるぜ‼︎'],['dc2-ulrilis','全部'],['dc2-ulrilis','全部終わらせる'],['dc2-ulrilis','闇こそが正義\n闇こそが平和'],['dc2-ulrilis','僕は僕のために\n僕は君たちのために\n力は惜しまない'],['pink','最終決戦、アチアチであります‼︎']);
 
 finalBossPostV89Final=async function(){
-  await openStoryScene('demonCastle2',3);await storyShowGuest('dc2-ulrilis',{slow:true});await glowV157('dc2-ulrilis',2);await storyHideGuest();await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});
+  await openStoryScene('demonCastle2',3);await dc2EntranceV211(['dc2-ulrilis'],'abyss');await glowV157('dc2-ulrilis',2);await storyHideGuest();await storyShowGuests(['dc2-maou','boss-lilith-castle'],{slow:true});
   await storySay('dc2-maou','馬鹿な・・\nこの私が\n勇者などに・・‼︎');await dc2MaouExplosionV181();await storyHideGuests();await storyShowGuest('boss-lilith-castle',{slow:true});await storySay('boss-lilith-castle','ウッ・・・');await storySay('money','モブリリス！\n無事なの！？');await storySay('kaijin','あのヒーローの力だ\n悪を討ち、モブリリスを救った');await storySay('boss-lilith-castle','僕だって悪だよ\n魔王軍のNo.2');await storySay('boss-lilith-castle','モブリリスだ');await storySay('jessie','いいえ\nあなたはやろうと思えば\n私達をいつでも倒せたはず');await storySay('desert','ソウルフュージョンか');await storySay('denden','使われたら終わってたでやんす');await storySay('boss-lilith-castle','買い被りすぎだよ\n使いたくなかっただけ');await storySay('boss-lilith-castle','僕にそんな資格はない');await storySay('riro','あなたはまだやり直せまス\nサクラ一族として');await storySay('riro','あなたを魔王に任命します');await chorusV169('！？','riro');
   for(const t of ['世界の秩序を守るには\nバランスが大切でス','全てのエリアに\n新たなボスが必要でス','草原にはモブテツ','砂漠にはモブデザート','田舎町にはモブデンデン','ネオン街にはモブマニー','マグマにはモブニョロ','そして','魔王城にはモブリリス\nこれで世界は守られます'])await storySay('riro',t);
   await storySay('tetsu','拙者がボスでござるか？\n平和のためならやるでござる！');await storySay('desert','砂漠は俺が守る\n安心しろ');await storySay('denden','オイラ、\nもう何も怖くないでやんす\n町を守るでやんす！');await storySay('money','私が王・・\nいや無理でしょ！');await storySay('jessie','私もサポートするから安心して');await storySay('nyoro','偉大なる王達に負けないように\n僕もっと強くなるニョロ！');await storySay('kaijin','俺は元の世界に帰るぜ\nいいものを見せてもらった');await storySay('nekoku','あれ？オラは？');await storySay('riro','海底は王がまだいますかラ\nあなたは部族村を任せまス');await storySay('nekoku','部族村か\n楽しみだ！');await storySay('denden','ピッタリだと思うでやんす');await storySay('boss-lilith-castle','僕は・・\nいや、引き受けるよ');await storySay('boss-lilith-castle','魔王として世界を回ってみたい\nだから、\n君たちのパーティーに入っていいかな？');await storySay('money','大歓迎よ！\n魔法いっぱい教えてね！');await storySay('pink','まだまだ世界には\n危険なエリアがいっぱいであります！\nこんな心強い仲間は最高であります！');await storySay('desert','これは旅の終わりであり\n旅の始まりだな');storyJoin('lilith');state.meta.finalBossDefeated=true;saveMeta();await renderStoryParty();await storySay('pink','王様に報告へ行きましょう！');await storyNarrate('モブリリスが仲間になった！');
@@ -13326,7 +13326,7 @@ async function bookArea1PreV207(){
   await storySay('desert','これが怪人か？');await storySay('pink','見た目は可愛いですが');await storySay('denden','強い覇気を感じるでやんす！');await storySay('tetsu','手加減無用でござるな');await storySay('nyoro','サポートし合うニョロ！');
 }
 async function bookArea1PostV207(){
-  await openStoryScene('unfinishedBook',0);await storySay('jessie','これで手下なら\nボスは相当な強さね');await storySay('nekoku','あいつら\n本気じゃなかったぞ');await storySay('nekoku','みんな事情があるのよ');await storySay('pink','変な世界でありますね');await storySay('desert','先へ進むぞ');
+  await openStoryScene('unfinishedBook',0);await storySay('jessie','これで手下なら\nボスは相当な強さね');await storySay('nekoku','あいつら\n本気じゃなかったぞ');await storySay('jessie','みんな事情があるのよ');await storySay('pink','変な世界でありますね');await storySay('desert','先へ進むぞ');
 }
 async function bookArea2PreV207(){
   await openStoryScene('unfinishedBook',1);const fxPromise=bookArea2SummonFxV207();await fixedDelay(540);await storyShowGuests(['book-exec-blue','book-exec-red'],{slow:true});await fxPromise;
@@ -13782,5 +13782,66 @@ naviMatrixTransformV207=async function(){
 };
 window.__mobBuildVersion='v210';
 // UPDATE_V210_END
+
+// UPDATE_V211_BEGIN
+/* Scene effects use the existing actor artwork and never accept input. */
+function dc2FxMarkupV211(){
+  return '<div class="dc2-veil-v211"></div><div class="dc2-seal-v211"><i></i><i></i><i></i></div><div class="dc2-beam-v211"></div><div class="dc2-rift-v211"></div>'+Array.from({length:24},(_,i)=>`<i class="dc2-particle-v211" style="--i:${i};--x:${(i*43)%100}%;--dx:${(i%2?1:-1)*(30+i*4)}px;--delay:${-(i%8)*.17}s"></i>`).join('');
+}
+function dc2EffectV211(kind,parent=$('#storyScene')){
+  const fx=document.createElement('div');fx.className=`dc2-cinematic-v211 ${kind}-v211`;fx.setAttribute('aria-hidden','true');fx.innerHTML=dc2FxMarkupV211();parent?.appendChild(fx);return fx;
+}
+async function dc2EntranceV211(ids,kind='rose',opt={}){
+  const group=ids.length>1,holder=$(group?'#storyGuestGroup':'#storyGuest');
+  const visibility=holder?.style.visibility||'',fx=dc2EffectV211(kind);
+  holder?.style.setProperty('visibility','hidden');
+  try{
+    await fixedDelay(360);
+    if(group)await storyShowGuests(ids,{...opt,slow:false});else await storyShowGuest(ids[0],{slow:false});
+    const actors=group?$$('[data-story-actor]',holder):[holder].filter(Boolean);
+    for(const actor of actors)actor.style.opacity='0';
+    fx.classList.add('release');if(holder)holder.style.visibility=visibility;
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    await Promise.all(actors.map(async(actor,i)=>{
+      try{
+        await fixedDelay(reduced?0:i*130);
+        await animateV157(actor,reduced?[{opacity:0},{opacity:1}]:[
+          {opacity:0,translate:kind==='flame'?'0 55px':'0 -25px',filter:'brightness(0) blur(7px)',scale:'.8'},
+          {opacity:1,translate:'0 0',filter:'brightness(.15) drop-shadow(0 0 16px var(--dc2-glow, #db8aff))',scale:'1.04',offset:.55},
+          {opacity:1,translate:'0 0',filter:'brightness(1.7)',scale:'1',offset:.8},
+          {opacity:1,translate:'0 0',filter:'none',scale:'1'}
+        ],reduced?300:1100);
+      }finally{actor.style.removeProperty('opacity');}
+    }));
+    fx.classList.add('settle');await fixedDelay(450);
+  }finally{if(holder)holder.style.visibility=visibility;fx.remove();}
+}
+async function dc2VanishV211(id,kind='rose'){
+  const actor=storyAnchor(id),fx=dc2EffectV211(kind);fx.classList.add('release','vanish');
+  try{
+    if(actor)await animateV157(actor,[{opacity:1,filter:'none'},{opacity:.9,filter:'brightness(2) blur(1px)',offset:.4},{opacity:0,translate:'0 -30px',filter:'brightness(3) blur(12px)',scale:'.65'}],1400);
+    await fixedDelay(300);
+  }finally{fx.remove();}
+}
+
+/* Replace authored effect steps, preserving every dialogue and formation step. */
+const dc2StepsBaseV211=runStorySteps;
+runStorySteps=async function(steps=[]){
+  for(const step of steps){
+    const dc2=$('#storyScene')?.classList.contains('story-world-demonCastle2');
+    if(!dc2){await dc2StepsBaseV211([step]);continue;}
+    const [type,id]=step;
+    if(type==='guest'&&id==='boss-lilith-castle' || type==='lilithRoseSummon180')await dc2EntranceV211(['boss-lilith-castle'],'rose');
+    else if(type==='dc2Awaken181')await dc2EntranceV211(['dc2-kirin','dc2-hell','boss-lilith-castle','dc2-riva','dc2-kufu'],'rose',{allowFive:true,compactLilith:true,raised:true});
+    else if(type==='dc2RoseClone181')await dc2EntranceV211(['dc2-lilith','dc2-lilith','dc2-lilith'],'mirror');
+    else if(type==='dc2FireSummon181')await dc2EntranceV211(['dc2-enma'],'flame');
+    else if(type==='dc2MaouSummon181')await dc2EntranceV211(['dc2-maou'],'abyss');
+    else if(type==='roseFade180')await dc2VanishV211(id,'rose');
+    else if(type==='fadeV157'&&id==='dc2-enma3'){await dc2VanishV211(id,'flame');await storyHideGuests();await storyHideGuest();}
+    else await dc2StepsBaseV211([step]);
+  }
+};
+window.__mobBuildVersion='v211';
+// UPDATE_V211_END
 
 })();

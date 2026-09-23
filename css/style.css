@@ -5111,3 +5111,30 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @keyframes matrixDecodeV210{from{opacity:0;filter:brightness(4) blur(12px);transform:translate(-50%,-50%) scale(.1,1.4)}to{opacity:1;filter:drop-shadow(0 0 20px #60ffe3);transform:translate(-50%,-50%) scale(1)}}
 @keyframes matrixFragmentV210{0%{opacity:0;transform:scale(.2) translateY(45px)}45%{opacity:.85}100%{opacity:0;transform:scale(1.4) translateY(-90px)}}
 @media(prefers-reduced-motion:reduce){.matrix-actor-v210,.matrix-fragments-v210 i,.book-arrival-v210 i,.book-arrival-v210 b{animation:none!important}.book-matrix-v210 .matrix-glitch-v208{display:none}}
+
+/* UPDATE_V211_BEGIN */
+.dc2-cinematic-v211{--dc2-glow:#fb73b5;position:absolute;inset:0;z-index:35;overflow:hidden;pointer-events:none!important;contain:paint;opacity:1;transition:opacity .45s}
+.dc2-cinematic-v211.mirror-v211{--dc2-glow:#b785ff}.dc2-cinematic-v211.flame-v211{--dc2-glow:#ff8b29}.dc2-cinematic-v211.abyss-v211{--dc2-glow:#a068ff}
+.dc2-veil-v211{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 43%,transparent 10%,#080312b8 75%);animation:dc2Veil211 .6s ease both}
+.dc2-seal-v211{position:absolute;left:50%;top:48%;width:min(78vw,440px);aspect-ratio:1;transform:translate(-50%,-50%) rotateX(62deg);color:var(--dc2-glow);filter:drop-shadow(0 0 12px var(--dc2-glow))}
+.dc2-seal-v211 i{position:absolute;inset:0;border:3px solid currentColor;border-radius:50%;box-shadow:inset 0 0 24px currentColor;animation:dc2Seal211 2.5s linear infinite}
+.dc2-seal-v211 i:nth-child(2){inset:14%;border-style:dashed;animation-direction:reverse}.dc2-seal-v211 i:nth-child(3){inset:28%;border-radius:0;transform:rotate(45deg)}
+.dc2-beam-v211{position:absolute;left:30%;top:8%;width:40%;height:53%;background:linear-gradient(90deg,transparent,var(--dc2-glow),transparent);mask-image:linear-gradient(transparent,#000 55%,transparent);opacity:.2;transform:scaleX(.1);transition:transform .6s,opacity .6s;mix-blend-mode:screen}
+.release .dc2-beam-v211{transform:scaleX(1.4);opacity:.55}
+.dc2-rift-v211{position:absolute;left:50%;top:40%;width:22%;height:36%;transform:translate(-50%,-50%) scaleX(.05);border:2px solid var(--dc2-glow);border-radius:50%;background:radial-gradient(ellipse,#05000ce6 30%,#21103299 65%,transparent);box-shadow:0 0 30px var(--dc2-glow);animation:dc2Rift211 2.4s ease both}
+.dc2-particle-v211{position:absolute;left:var(--x);top:58%;width:10px;height:16px;border-radius:75% 0 70% 25%;background:var(--dc2-glow);box-shadow:0 0 8px var(--dc2-glow);animation:dc2Petal211 2.4s var(--delay) ease-in-out infinite}
+.flame-v211 .dc2-particle-v211{width:5px;height:35px;border-radius:50%;background:linear-gradient(#ffefaa,var(--dc2-glow),transparent);animation-name:dc2Ember211}
+.flame-v211 .dc2-rift-v211{width:70%;height:12%;top:50%;border-radius:50%;background:#260700;transform:translate(-50%,-50%);animation:dc2Veil211 .7s both}
+.abyss-v211 .dc2-seal-v211{transform:translate(-50%,-50%) rotateX(35deg)}
+.abyss-v211 .dc2-seal-v211 i:nth-child(3){clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);border-radius:0;background:repeating-conic-gradient(transparent 0 55deg,#b994ff88 56deg 60deg)}
+.abyss-v211 .dc2-particle-v211{border-radius:0;width:4px;height:26px;animation-name:dc2Ember211}
+.mirror-v211 .dc2-rift-v211{width:65%;height:35%;border-radius:12%;background:repeating-linear-gradient(110deg,transparent 0 23%,#c290ff55 24% 25%);box-shadow:0 0 25px #b785ff}
+.dc2-cinematic-v211.settle{opacity:0}.vanish .dc2-particle-v211{animation-direction:reverse}.vanish .dc2-rift-v211{animation-direction:reverse}
+.dc2-battle-fire-v181.dc2-cinematic-v211{animation:none;background:none;--dc2-glow:#ff8b29}
+@keyframes dc2Seal211{to{rotate:360deg}}
+@keyframes dc2Veil211{from{opacity:0}to{opacity:1}}
+@keyframes dc2Rift211{0%{opacity:0;transform:translate(-50%,-50%) scale(.03,.5)}35%{opacity:.9;transform:translate(-50%,-50%) scale(1)}75%{opacity:.7}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
+@keyframes dc2Petal211{0%{opacity:0;transform:translate(0,80px) rotate(0)}25%{opacity:.85}100%{opacity:0;transform:translate(var(--dx),-240px) rotate(220deg)}}
+@keyframes dc2Ember211{0%{opacity:0;transform:translate(0,90px) scaleY(.5)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-320px) scaleY(1.8)}}
+@media(prefers-reduced-motion:reduce){.dc2-cinematic-v211 *{animation:none!important;transition:none!important}.dc2-particle-v211{display:none}.dc2-rift-v211{opacity:.3;transform:translate(-50%,-50%)}.release .dc2-beam-v211{opacity:.2}}
+/* UPDATE_V211_END */
