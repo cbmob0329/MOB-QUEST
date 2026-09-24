@@ -60,7 +60,7 @@ if(game.includes('// UPDATE_V218_BEGIN'))game=game.replace(/\/\/ UPDATE_V218_BEG
 else {const i=game.lastIndexOf('})();');game=game.slice(0,i)+patch+'\n\n'+game.slice(i);}
 fs.writeFileSync(path.join(root,'js/game.js'),game);
 let css=fs.readFileSync(path.join(root,'css/style.css'),'utf8').replace(/\/\* UPDATE_V218_BEGIN \*\/[\s\S]*?\/\* UPDATE_V218_END \*\//,'');
-fs.writeFileSync(path.join(root,'css/style.css'),css.trim()+'\n/* UPDATE_V218_BEGIN */\n'+fs.readFileSync(path.join(root,'css/update-v218.css'),'utf8')+'\n/* UPDATE_V218_END */\n');
+fs.writeFileSync(path.join(root,'css/style.css'),css.trim()+'\n/* UPDATE_V218_BEGIN */\n'+['update-v218.css','quest-presentation-v218.css'].map(f=>fs.readFileSync(path.join(root,'css',f),'utf8')).join('\n')+'\n/* UPDATE_V218_END */\n');
 const html=path.join(root,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v218</div>'));
 require('./sync-inline.cjs');
 console.log('v218',data.figures.length,'figures',tags.length,'tags',adjacency.length,'adjacency tags');

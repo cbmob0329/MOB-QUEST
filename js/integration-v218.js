@@ -62,3 +62,15 @@ const effectsParseFinalV218=parseFigureEffectText;parseFigureEffectText=function
 const effectsMergeFinalV218=mergeFigureEffects;mergeFigureEffects=function(a,b){const x={};for(const k of ['passiveChanceV218','debuffCutV218'])x[k]=(a[k]||0)+(b?.[k]||0);const r=effectsMergeFinalV218(a,b);Object.assign(r,x);return r;};
 const passiveBaseV218=passiveChance;passiveChance=function(rate,...args){return passiveBaseV218(Math.min(1,rate+(activeAlly()?.figureEffects?.passiveChanceV218||0)),...args);};
 const timedEffectsBaseV218=soulEffectValueV218;soulEffectValueV218=function(a,key){const v=timedEffectsBaseV218(a,key);return v<0?v*(1-clamp(a.figureEffects?.debuffCutV218||0,0,.9)):v;};
+
+// Native swipe navigation with a stable panel and element-colored quest cards.
+const questPresentationBaseV218=renderEventQuestsV163;
+renderEventQuestsV163=function(...args){const r=questPresentationBaseV218(...args),panel=$('.event-panel-v163',$('#trainingFeaturePanel'));if(!panel)return r;
+ panel.classList.add('quest-enter-v218');const grid=$('.quest-cards-v218',panel);if(!grid)return r;
+ const cards=[...grid.children].filter(x=>x.tagName==='BUTTON'),colors={火:'#ff956b',水:'#65dfff',雷:'#ffe07b',風:'#86ecc8',地:'#e8b87d',光:'#ffe6a1',闇:'#c995ff',無:'#b2c9ff'};
+ cards.forEach(card=>{const q=EVENT_BOSSES_V163.find(x=>x.key===card.dataset.eventBoss)||LEGENDS_V218.find(x=>x.key===card.dataset.legend);if(q)card.style.setProperty('--card-glow',colors[q.attribute]||colors.無);});
+ grid.setAttribute('aria-label','左右にスワイプしてクエストを選択');const nav=document.createElement('nav');nav.className='quest-nav-v218';nav.setAttribute('aria-label','クエスト切替');nav.innerHTML='<button type="button" aria-label="前のクエスト">‹</button><span><b></b>左右にスワイプして選択</span><button type="button" aria-label="次のクエスト">›</button>';grid.before(nav);
+ const buttons=nav.querySelectorAll('button'),label=nav.querySelector('b');let selected=0;
+ function update(){const center=grid.getBoundingClientRect().left+grid.clientWidth/2;selected=cards.reduce((best,c,i)=>Math.abs(c.getBoundingClientRect().left+c.offsetWidth/2-center)<Math.abs(cards[best].getBoundingClientRect().left+cards[best].offsetWidth/2-center)?i:best,0);label.textContent=cards.length?`${selected+1} / ${cards.length}`:'クエスト準備中';buttons[0].disabled=selected===0;buttons[1].disabled=selected>=cards.length-1;}
+ buttons.forEach((b,i)=>b.onclick=()=>{const c=cards[Math.max(0,Math.min(cards.length-1,selected+(i?1:-1)))];if(c)grid.scrollBy({left:c.getBoundingClientRect().left-grid.getBoundingClientRect().left-(grid.clientWidth-c.offsetWidth)/2,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});grid.addEventListener('scroll',update,{passive:true});update();return r;
+};

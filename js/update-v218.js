@@ -109,13 +109,12 @@ const enemyActionBaseV218=enemyAction;enemyAction=async function(action=1,uid){c
  }finally{b.actingEnemyId=old;renderBattle();}};
 
 /* Real scroll snap pages retain keyboard and native swipe navigation. */
-let bookPageV218='';
 const eventRenderBaseV218=renderEventQuestsV163;
 renderEventQuestsV163=function(){eventRenderBaseV218();const root=$('#trainingFeaturePanel'),panel=$('.event-panel-v163',root);if(!panel)return;
- panel.classList.add('magic-book-v218');const key=eventViewV163+':'+(selectedStoryV179||eventSelectedV163||'');if(key!==bookPageV218){panel.classList.add('page-turn-v218');bookPageV218=key;}
+ panel.classList.add('quest-hub-v218','quest-enter-v218');panel.dataset.questTheme=eventViewV163==='story'?'story':'boss';
  if(eventViewV163==='story'&&!selectedStoryV179&&(worldCleared('neon')||testAllQuestsV171())){const b=document.createElement('button');b.className='event-story-card-v174';b.innerHTML=`<img class="event-portrait-v163 ${seenV179('mochi')?'':'silhouette'}" src="spenemy/51.png" alt=""><strong>草原の餅つきの達人！？</strong>`;b.onclick=()=>{selectedStoryV179='mochi';renderEventQuestsV163();};($('.event-story-list-v177',panel)||panel).append(b);}
  if(eventViewV163==='story'&&selectedStoryV179==='mochi'){const card=$('.event-story-card-v174',panel);if(card){const p=document.createElement('p');p.textContent='出撃可能：モブデザート / モブデンデン / モブピンク / モブマニー';card.append(p);}$$('[data-v179-start]',panel).forEach(b=>{const d=+b.dataset.v179Start.split(':')[1],p=document.createElement('p');p.textContent=d===0?'初回報酬：フィギュア30 / 2回目報酬：フィギュア31':'初回報酬のみ';b.append(p);});}
- const grid=$('.event-boss-grid-v163,.event-story-list-v177',panel);if(grid){grid.classList.add('book-pages-v218');grid.setAttribute('aria-label','左右にスワイプしてクエストを選択');const hint=document.createElement('nav');hint.className='book-nav-v218';hint.innerHTML='<button aria-label="前のページ">←</button><span>ページをめくる</span><button aria-label="次のページ">→</button>';grid.before(hint);const buttons=hint.querySelectorAll('button');buttons.forEach((btn,i)=>btn.onclick=()=>grid.scrollBy({left:(i?1:-1)*grid.clientWidth*.94,behavior:'smooth'}));let page=0;grid.addEventListener('scroll',()=>{const next=Math.round(grid.scrollLeft/(grid.clientWidth*.94));if(next===page)return;page=next;panel.classList.remove('page-turn-v218');void panel.offsetWidth;panel.classList.add('page-turn-v218');},{passive:true});}
+ const grid=$('.event-boss-grid-v163,.event-story-list-v177',panel);if(grid)grid.classList.add('quest-cards-v218');
 };
 migrateFiguresV218();
 window.__mobBuildVersion='v218';
