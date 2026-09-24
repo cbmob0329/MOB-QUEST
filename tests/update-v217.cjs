@@ -19,6 +19,7 @@ window.test217={
 async function advance(page,done,limit=90000){const start=Date.now();while(Date.now()-start<limit){if(await page.evaluate(done))return;
  const state=await page.evaluate(()=>test217.snap());
  if(state.tap){assert.equal(state.screen,'adventureScreen','pending story dialogue must be visible');await page.locator('#storyScene').click({position:{x:190,y:350},timeout:2000});}
+ else if(await page.locator('.ending-stage-v222').isVisible())await page.locator('.ending-stage-v222').click({position:{x:190,y:350}});
  else if(await page.locator('[data-event-unlock-close]').isVisible())await page.locator('[data-event-unlock-close]').click();
  else if(await page.locator('[data-home-unlock-close-v137]').isVisible())await page.locator('[data-home-unlock-close-v137]').click();
  else if(await page.locator('#passiveCutin.battle-story-hold-v88').isVisible())await page.mouse.click(190,450);
