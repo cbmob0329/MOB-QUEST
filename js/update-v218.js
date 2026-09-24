@@ -20,7 +20,7 @@ function migrateFiguresV218(){
  const used=new Set();for(const [pid,raw] of Object.entries(m.figureEquipment||{}))m.figureEquipment[pid]=normalizeFigureEquipmentRecord(raw).map(id=>{if(!id||!figureOwned(id)||used.has(id))return null;used.add(id);return id;});
  m.figureInventoryV115Migrated=true;m.figureMigrationV218=true;saveMeta();
 }
-figureOverflowRubyV115=f=>({R:1,SR:3,SSR:8,UR:20,MOB:50}[f?.rarity]||1);
+figureOverflowRubyV115=f=>({R:1,SR:2,SSR:5,UR:10,MOB:20}[f?.rarity]||1);
 function figurePlusV218(id){return clamp(Number(state.meta.figurePlusV218?.[id])||0,0,9);}
 awardGachaFigureV115=function(f){
  if(!f)throw new Error('フィギュアの登録がありません');migrateFiguresV218();const m=state.meta;m.figures??={};m.figureOrder??=[];m.figurePlusV218??={};
