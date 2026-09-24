@@ -57,12 +57,12 @@ game=game.replace(/function unreleasedPartyFigureV132\(f\)\{[^\n]*\}/,'function 
 game=game.replaceAll('const skill=Math.random()<raritySkillChanceV110(a.f?.rarity),crit=', 'const skill=false,crit=');
 game=game.replace("e.atkBuff=Math.max(e.atkBuff||0,.30);e.magBuff=Math.max(e.magBuff||0,.30);e.atkBuffTurns=e.magBuffTurns=99;notice('火属性与ダメージ +30%'", "e.fireDamageV218=.30;notice('火属性与ダメージ +30%'");
 game=game.replace("dealt+=await damageAlly(t,1.35,'physical',false,'火');for(const a of livingField())dealt+=await damageAlly(a,.45,'physical',isSuper(a),'火');", "dealt+=await damageAlly(t,1.8,'physical',false,'火');e.phoenixIgnoreV218=true;try{for(const a of livingField())dealt+=await damageAlly(a,.45,'physical',isSuper(a),'火');}finally{e.phoenixIgnoreV218=false;}");
-const patch='// UPDATE_V218_BEGIN\nconst CATALOG_V218='+JSON.stringify(data)+';\n'+['update-v218.js','events-v218.js','soul-v218.js','integration-v218.js','update-v219.js'].map(f=>fs.readFileSync(path.join(root,'js',f),'utf8')).join('\n')+'\n// UPDATE_V218_END';
+const patch='// UPDATE_V218_BEGIN\nconst CATALOG_V218='+JSON.stringify(data)+';\n'+['update-v218.js','events-v218.js','soul-v218.js','integration-v218.js','update-v219.js','figures-v220.js','combat-v220.js','gacha-v220.js'].map(f=>fs.readFileSync(path.join(root,'js',f),'utf8')).join('\n')+'\n// UPDATE_V218_END';
 if(game.includes('// UPDATE_V218_BEGIN'))game=game.replace(/\/\/ UPDATE_V218_BEGIN[\s\S]*?\/\/ UPDATE_V218_END/,()=>patch);
 else {const i=game.lastIndexOf('})();');game=game.slice(0,i)+patch+'\n\n'+game.slice(i);}
 fs.writeFileSync(path.join(root,'js/game.js'),game);
 let css=fs.readFileSync(path.join(root,'css/style.css'),'utf8').replace(/\/\* UPDATE_V218_BEGIN \*\/[\s\S]*?\/\* UPDATE_V218_END \*\//,'');
-fs.writeFileSync(path.join(root,'css/style.css'),css.trim()+'\n/* UPDATE_V218_BEGIN */\n'+['update-v218.css','quest-presentation-v218.css','update-v219.css'].map(f=>fs.readFileSync(path.join(root,'css',f),'utf8')).join('\n')+'\n/* UPDATE_V218_END */\n');
-const html=path.join(root,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v219</div>'));
+fs.writeFileSync(path.join(root,'css/style.css'),css.trim()+'\n/* UPDATE_V218_BEGIN */\n'+['update-v218.css','quest-presentation-v218.css','update-v219.css','update-v220.css'].map(f=>fs.readFileSync(path.join(root,'css',f),'utf8')).join('\n')+'\n/* UPDATE_V218_END */\n');
+const html=path.join(root,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v220</div>'));
 require('./sync-inline.cjs');
 console.log('v218',data.figures.length,'figures',tags.length,'tags',adjacency.length,'adjacency tags');

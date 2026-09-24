@@ -25,7 +25,7 @@ async function applySoulTextV218(f,a,own,enemies,text,piece=false){
  let targets=piece?own:[a],defaultTurns=+(text.match(/(\d+)ターン/)?.[1]||2),dealt=0;
  for(const clause of soulClausesV218(text)){
   targets=soulTargetsV218(clause,a,own,enemies,targets);const turns=+(clause.match(/(\d+)ターン/)?.[1]||defaultTurns);
-  if(!piece&&/ダメージを与|ダメージ$/.test(clause)&&!/ダメージ軽減/.test(clause)){
+  if(!piece&&/ダメージ.*与|ダメージ$/.test(clause)&&!/ダメージ軽減/.test(clause)){
    const count=+(clause.match(/(?:×|連続|小ダメージを)(\d+)/)?.[1]||clause.match(/(\d+)(?:回|連続|連)/)?.[1]||1),element=clause.match(/([火水雷風地光闇無])属性/)?.[1]||clause.match(/([火水雷風地光闇無])(?:の)?(?:魔法|物理)/)?.[1]||'無',type=clause.includes('魔法')?'magic':'physical',power=(clause.includes('極大')?2.4:clause.includes('大')?1.8:clause.includes('中')?1.3:.8)/(clause.includes('分けて')?count:1),old=state.battle.weaponAttackContext;
    const elements=[...clause.matchAll(/([火水雷風地光闇無])属性/g)].map(m=>m[1]),hits=Math.max(count,elements.length),hitPower=count===1&&elements.length>1?power/elements.length:power;
    state.battle.weaponAttackContext={normal:false,element,figurePenetrationV218: +(text.match(/ダメージ軽減を(\d+)%無視/)?.[1]||0)/100};try{for(let i=0;i<hits;i++)for(const t of targets.filter(t=>enemies.includes(t)&&t.hp>0)){state.battle.weaponAttackContext.element=elements.length?elements[i%elements.length]:element;const stamp=document.createElement('img');stamp.className='soul-stamp-v218';stamp.src=f.image;positionEffect(stamp,`enemy:${t.uid}`);$('#battleFxLayer').append(stamp);try{await fixedDelay(160);dealt+=applyEnemyDamageTo(a,t,hitPower,type,+(text.match(/会心率(\d+)%/)?.[1]||0)/100).value||0;fx('magic',`enemy:${t.uid}`);}finally{setTimeout(()=>stamp.remove(),450);}}}finally{state.battle.weaponAttackContext=old;}

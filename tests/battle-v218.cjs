@@ -5,8 +5,8 @@ window.live218={
  setup:()=>{state.party=['yusha','pink','desert','denden','money','jessie','tetsu','nyoro','nekoku','kaijin'].map(id=>[id,80]);state.meta.openingCompleted=true;state.meta.trainingPlayed=true;worldCleared=()=>true;state.autoBattle=false;passiveChance=()=>false;initiativeSpeed=e=>e.type==='enemy'?1:10000;},
  start:()=>startLegendV218(LEGENDS_V218[0],['dolphin','coach']),
  snap:()=>({allies:state.battle?.allies.length,main:state.battle?.mainIds.length,busy:state.battle?.busy,queue:state.battle?.queue.map(x=>[x.type,x.id||x.enemyId]),active:activeAlly()?.id,hp:state.battle?.enemies[0]?.hp,turn:state.battle?.turn}),
- figure:()=>{const a=activeAlly(),f=figureById('01');state.meta.figures[f.id]=1;state.meta.figurePlusV218??={};a.figureEquipment=[f.id];a.hp=Math.max(1,a.hp-100);a.figureSoulV218={[f.id]:f.soul.cost};renderBattle();return{hp:a.hp,queuePos:state.battle.queuePos,id:a.id};},
- figureSnap:()=>{const a=activeAlly();return{hp:a.hp,queuePos:state.battle.queuePos,soul:a.figureSoulV218?.['01']};},
+ figure:()=>{const a=activeAlly(),f=figureById('01');state.meta.figures[f.id]=1;state.meta.figurePlusV218??={};a.figureEquipment=[f.id];a.hp=Math.max(1,a.hp-100);a.soulPointsV220=f.soul.cost;renderBattle();return{hp:a.hp,queuePos:state.battle.queuePos,id:a.id};},
+ figureSnap:()=>{const a=activeAlly();return{hp:a.hp,queuePos:state.battle.queuePos,soul:a.soulPointsV220};},
  rewards:()=>({value:state.meta.legendsV218?.caramel}),
  kill:()=>{const e=state.battle.enemies[0];e.hp=1;e.evasion=0;calcDamage=()=>({value:10000,crit:false,miss:false});}
 };`;
