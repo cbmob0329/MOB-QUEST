@@ -5274,4 +5274,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 #conversationSkipV224{position:fixed;right:10px;top:calc(12px + var(--safe-top,0px));z-index:100010;border:1px solid #b4cadd;border-radius:8px;padding:10px 14px;background:#142338ed;color:#e8f0fa;font-size:12px;touch-action:manipulation}#conversationSkipV224[hidden]{display:none!important}body:has(#conversationSkipV224:not([hidden])) #storySkipV174{top:calc(58px + var(--safe-top,0px))!important}#testToolsV224 small{display:block;font-size:11px;line-height:1.6}
 
+.ending-stage-v222.ending-solo-v225 .ending-cast-v222{inset:0}.ending-curtain-v225{position:absolute;inset:0;z-index:20;background:#000;pointer-events:auto}.ending-person-v222 img{display:block}.mob-piece-battle-v132,.mob-piece-battle-v132 .piece-player-card-v103{overflow-anchor:none}
+
 /* UPDATE_V218_END */
