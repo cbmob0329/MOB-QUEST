@@ -45,10 +45,10 @@ const equipBaseV218=setFigureEquipment;
 setFigureEquipment=function(pid,index,id){if(id&&!figureOwned(id))return false;const backup=clone({equipment:state.meta.figureEquipment||{},sub:state.meta.subFiguresV218||{},shelf:state.meta.figureShelfV218||[]});if(id)detachFigureV218(id);const ok=equipBaseV218(pid,index,id);if(!ok){state.meta.figureEquipment=backup.equipment;state.meta.subFiguresV218=backup.sub;state.meta.figureShelfV218=backup.shelf;}return ok;};
 const autoEquipBaseV218=applyFigureEquipmentSetV132;
 applyFigureEquipmentSetV132=function(pid,set,...args){if(!set||set.length<4)return false;for(const f of set)detachFigureV218(f.id);return autoEquipBaseV218(pid,set,...args);};
-const shelfLimitsV218={MOB:1,UR:3,SSR:5,SR:7,R:12};
+const shelfLimitsV218={MOB:1,UR:3,SSR:5,SR:7,R:9};
 function assignFigureV218(id,mode,pid,index){
  if(id&&!figureOwned(id))return false;migrateFiguresV218();
- if(mode==='shelf'){const f=figureById(id);if(!f)return false;const shelf=state.meta.figureShelfV218;if(shelf.includes(id)){state.meta.figureShelfV218=shelf.filter(x=>x!==id);saveMeta();return true;}if(shelf.filter(x=>figureById(x)?.rarity===f.rarity).length>=shelfLimitsV218[f.rarity])return false;detachFigureV218(id);state.meta.figureShelfV218.push(id);}
+ if(mode==='shelf'){const f=figureById(id);if(!f)return false;const shelf=state.meta.figureShelfV218;if(shelf.includes(id))return false;if(shelf.filter(x=>figureById(x)?.rarity===f.rarity).length>=shelfLimitsV218[f.rarity])return false;detachFigureV218(id);state.meta.figureShelfV218.push(id);}
  else {if(!player(pid)||index<0||index>3)return false;if(id)detachFigureV218(id);state.meta.subFiguresV218??={};const row=state.meta.subFiguresV218[pid]??=[null,null,null,null];row[index]=id||null;}
  saveMeta();return true;
 }
