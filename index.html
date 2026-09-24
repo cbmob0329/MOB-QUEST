@@ -5264,6 +5264,9 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #homeScreen .home-top .brand-box{display:flex!important;flex-direction:column!important;align-items:center!important;width:160px!important;max-width:43%!important}#homeScreen .brand-box #shelfButtonV218{align-self:center;max-width:100%;font-size:9px}
 #homeScreen .home-top{align-items:flex-start!important}#homeScreen .home-top .brand-box{height:auto!important}#homeScreen .brand-box .brand-logo{position:relative!important;inset:auto!important;width:100%!important;height:100px!important;max-height:100px!important;object-fit:contain}
 .treasure-row-v220{position:absolute;left:5%;right:5%;bottom:20%;display:flex;justify-content:center;align-items:flex-end;gap:14px;z-index:4}.treasure-v220{--wood:#965334;--edge:#e1ba65;position:relative;width:100px;height:80px;filter:drop-shadow(0 4px 5px #0007);flex-shrink:1}.treasure-v220.gold{--wood:#ffc754;--edge:#fff1ac}.treasure-v220.rainbow{--wood:linear-gradient(115deg,#ff87cc,#b2a5ff,#8feced,#ffe98d);--edge:#fff2df}.treasure-base-v220{position:absolute;inset:30% 0 0;border-radius:4px 4px 10px 10px;background:var(--wood);border:5px solid var(--edge)}.treasure-lid-v220{position:absolute;inset:0 0 55%;border-radius:22px 22px 4px 4px;background:var(--wood);border:5px solid var(--edge);z-index:2;transform-origin:bottom center;transition:transform .5s}.treasure-v220>b{position:absolute;top:32%;left:38%;z-index:3;color:#4c3453;background:var(--edge);border-radius:5px;padding:4px;font-size:18px}.opened .treasure-lid-v220{transform:translateY(-25px) rotateX(-45deg)}.pink-rays-v220{position:absolute;inset:0;opacity:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at 50% 65%,#fff 0%,#fff4caaa 20%,transparent 68%)}.opened .pink-rays-v220{animation:graffiti-flash-v219 .85s both}.pink-stage-v220.rainbow,.pink-stage-v220.rush{background:radial-gradient(ellipse at bottom,#b5894c,#483375 60%,#20415d)}.rush .treasure-row-v220{gap:4px;flex-wrap:wrap}.rush .treasure-v220{width:70px;height:60px}.rush .treasure-v220:nth-child(even){translate:0 -16px}
+/* Each reserve/support badge must be anchored to its own card, not the party HUD. */
+.super-chip,.bench-chip{position:relative}
+.super-chip>.soul-orb-v220,.bench-chip>.soul-orb-v220{width:16px;height:20px;top:1px;left:1px;font-size:9px;display:grid;place-items:center;box-shadow:0 0 4px #7aedff}
 @media(prefers-reduced-motion:reduce){.soul-orb-v220,.soul-feedback-v220,.pink-runner-v220,.pink-stage-v220.returned .pink-runner-v220,.opened .pink-rays-v220{animation:none!important}.treasure-lid-v220{transition:none}.pink-stage-v220:not(.returned) .pink-runner-v220{opacity:0}}
 
 #homeShelfV220{height:31%;top:19%}#homeShelfV220 button{height:49px;max-width:10.5%;width:49px}#figureChooseV220>section>section{padding:10px;background:#13233d;border:1px solid #6182a5;border-radius:12px;font-size:12px}
@@ -5278,6 +5281,8 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @media(prefers-reduced-motion:reduce){.ending-frame-v222,.chest-turn-v222,.ending-bubble-v222.farewell{animation:none}.chest-lid-v222{transition:none}}
 .ending-stage-v222.black .ending-person-v222{filter:brightness(1)}.treasure-v222 .chest-turn-v222{transform:rotateX(-24deg) rotateY(-34deg);animation:chest-arrive-v222 .8s both}.chest-front-v222:after,.chest-back-v222:after{content:'';position:absolute;inset:0 13%;border-left:6px solid var(--edge);border-right:6px solid var(--edge);box-shadow:1px 0 2px #0005}.chest-top-v222:after{content:'';position:absolute;inset:0 13%;border-left:6px solid var(--edge);border-right:6px solid var(--edge)}.chest-left-v222{filter:brightness(.8)}.chest-bottom-v222 .chest-front-v222{background-color:#80521e}.wood .chest-bottom-v222 .chest-front-v222{background-color:#593825}.rainbow .chest-bottom-v222 .chest-front-v222{background:linear-gradient(115deg,#765172,#536889,#477d79)!important}@keyframes chest-arrive-v222{0%{transform:translateY(-40px) rotateX(-24deg) rotateY(-54deg)}65%{transform:translateY(5px) rotateX(-20deg) rotateY(-32deg)}100%{transform:translateY(0) rotateX(-24deg) rotateY(-34deg)}}
 @media(prefers-reduced-motion:reduce){.treasure-v222 .chest-turn-v222{animation:none}}
+
+.rural-report-v223 .ending-bubble-v222.shout p{font-size:clamp(24px,6.3vw,42px);line-height:1.7;font-weight:1000;text-shadow:2px 2px #d8b15c}.rural-report-v223 .ending-bubble-v222.shout{animation:rural-impact-v223 .45s ease-out both}@keyframes rural-impact-v223{from{transform:scale(.8) rotate(-2deg);opacity:0}65%{transform:scale(1.04) rotate(1deg)}to{transform:scale(1);opacity:1}}@media(prefers-reduced-motion:reduce){.rural-report-v223 .ending-bubble-v222.shout{animation:none}}
 
 /* UPDATE_V218_END */
 </style>
@@ -5783,7 +5788,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v222</div>
+      <div class="title-version">v223</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -22363,6 +22368,30 @@ chestMarkupV220=function(kind){return `<div class="treasure-v220 treasure-v222 $
 function gachaDepthV222(stage){const canvas=document.createElement('canvas');canvas.className='gacha-depth-v222';stage.prepend(canvas);const ctx=canvas.getContext('2d');if(!ctx)return()=>canvas.remove();const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,stars=Array.from({length:65},()=>({x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random(),size:.4+Math.random()}));let frame,last=performance.now();const paint=now=>{if(!stage.isConnected)return;const w=stage.clientWidth,h=stage.clientHeight,dpr=Math.min(devicePixelRatio||1,2);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const dt=Math.min(.04,(now-last)/1000);last=now;for(const s of stars){if(!reduced)s.z-=dt*(stage.classList.contains('flight')?.42:.06);if(s.z<.08){s.z=1;s.x=Math.random()*2-1;s.y=Math.random()*2-1;}const x=w/2+s.x*w*.45/s.z,y=h*.4+s.y*h*.45/s.z,alpha=(1-s.z)*.65;ctx.strokeStyle=`rgba(174,201,230,${alpha})`;ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=s.size;if(stage.classList.contains('flight')){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+(x-w/2)*.06,y+(y-h*.4)*.06);ctx.stroke();}else{ctx.beginPath();ctx.arc(x,y,s.size*(1.5-s.z),0,Math.PI*2);ctx.fill();}}if(!reduced)frame=requestAnimationFrame(paint);};frame=requestAnimationFrame(paint);return()=>{cancelAnimationFrame(frame);};}
 const pinkDepthBaseV222=pinkGachaV220;pinkGachaV220=async function(...args){const task=pinkDepthBaseV222(...args),stage=document.querySelector('.pink-stage-v220'),cleanup=stage?gachaDepthV222(stage):()=>{};try{return await task;}finally{cleanup();}};
 window.__mobBuildVersion='v222';
+
+// Second rural clear: preserve each authored speech and line break.
+CASTLE_REPORT_SCRIPTS_V126.rural2=[
+ ['talk','king','おおー！\nおおー！！\n戻ったか！\nさすがのさすがの\nさすがは勇者じゃ！\nあっぱれじゃ！'],
+ ['talk','pink','なんとか倒しましたが\nやはりレコードはありませんでした'],
+ ['talk','king','そうか・・\nしかし、確実に前に進んでおる！'],
+ ['talk','pink','はい！\n頑張るであります！'],
+ ['handshake','王様と握手を交わした'],
+ ['talk','king','次の目的地は再びネオン街じゃ！'],
+ ['talk','king','新たなボスの名は\nモブネオンマスター！！','shout'],
+ ['talk','jessie','確かなの？'],['talk','king','うむ'],
+ ['talk','king','ネオン街だけでなく\n各地のエリアで名を残す\n強力なモンスターじゃ！'],
+ ['talk','king','魔王城への\n重要なカギを握っておる'],
+ ['talk','pink','ネオン街でありますか！'],
+ ['talk','king','やつは各地の扉も管理しておる'],
+ ['talk','king','やつを倒せば\n魔王城への扉も開かれるであろう！'],
+ ['talk','jessie','とうとう来たのね'],['talk','money','知ってるの？'],
+ ['talk','jessie','ええ\nとても強いモンスターよ'],
+ ['last','pink','我々にお任せであります！\n行ってくるでありまーーす！']
+];
+async function ruralHandshakeV223(stage,text){endingCastV222(stage,['king','yusha']);const images=[...stage.querySelectorAll('.ending-person-v222 img')],dx=stage.clientWidth*.14;await Promise.all(images.map((img,i)=>animateV157(img,[{transform:'translateX(0)'},{transform:`translateX(${i?-dx:dx}px) translateY(0)`,offset:.3},{transform:`translateX(${i?-dx:dx}px) translateY(-9px)`,offset:.45},{transform:`translateX(${i?-dx:dx}px) translateY(0)`,offset:.6},{transform:`translateX(${i?-dx:dx}px) translateY(-9px)`,offset:.75},{transform:'translateX(0)'}],1500)));const wait=endingLineV222(stage,'king',text);stage.querySelector('.ending-bubble-v222 b').textContent='ナレーション';await wait;}
+const reportSubmitBaseV223=submitAdventureReport;
+submitAdventureReport=async function(){const report=state.adventure?.awaitingReport;if(report?.worldId!=='rural2')return reportSubmitBaseV223();if(castleReportBusy||storyBusy)return;castleReportBusy=true;const stage=document.createElement('section');stage.className='ending-stage-v222 rural-report-v223';stage.tabIndex=0;stage.setAttribute('aria-label','田舎町Ⅱの報告');stage.innerHTML='<div class="ending-cast-v222"></div><div class="ending-bubble-v222" hidden></div>';document.body.append(stage);try{for(const [kind,id,text,style]of CASTLE_REPORT_SCRIPTS_V126.rural2){if(kind==='handshake'){stage.querySelector('.ending-bubble-v222').hidden=true;await ruralHandshakeV223(stage,id);continue;}endingCastV222(stage,id==='king'?['king','pink']:['king',id]);if(kind==='last'){const bubble=stage.querySelector('.ending-bubble-v222');bubble.className='ending-bubble-v222';bubble.hidden=false;bubble.replaceChildren();const name=document.createElement('b'),line=document.createElement('p');name.textContent=player(id).name;line.textContent=text;bubble.append(name,line);await fixedDelay(1000);}else await endingLineV222(stage,id,text,style);}commitCastleReportProgressV126(report);stage.remove();renderCastle();showScreen('castle');}finally{stage.remove();castleReportBusy=false;}};
+window.__mobBuildVersion='v223';
 
 // UPDATE_V218_END
 
