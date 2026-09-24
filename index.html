@@ -5284,6 +5284,8 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 .rural-report-v223 .ending-bubble-v222.shout p{font-size:clamp(24px,6.3vw,42px);line-height:1.7;font-weight:1000;text-shadow:2px 2px #d8b15c}.rural-report-v223 .ending-bubble-v222.shout{animation:rural-impact-v223 .45s ease-out both}@keyframes rural-impact-v223{from{transform:scale(.8) rotate(-2deg);opacity:0}65%{transform:scale(1.04) rotate(1deg)}to{transform:scale(1);opacity:1}}@media(prefers-reduced-motion:reduce){.rural-report-v223 .ending-bubble-v222.shout{animation:none}}
 
+#conversationSkipV224{position:fixed;right:10px;top:calc(12px + var(--safe-top,0px));z-index:100010;border:1px solid #b4cadd;border-radius:8px;padding:10px 14px;background:#142338ed;color:#e8f0fa;font-size:12px;touch-action:manipulation}#conversationSkipV224[hidden]{display:none!important}body:has(#conversationSkipV224:not([hidden])) #storySkipV174{top:calc(58px + var(--safe-top,0px))!important}#testToolsV224 small{display:block;font-size:11px;line-height:1.6}
+
 /* UPDATE_V218_END */
 </style>
   <script>
@@ -5788,7 +5790,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v223</div>
+      <div class="title-version">v224</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -19254,7 +19256,7 @@ const skipBtnV174=document.createElement('button');skipBtnV174.id='storySkipV174
 const allowedTargetBaseV174=conversationAllowedTargetV171;
 conversationAllowedTargetV171=target=>!!target?.closest?.('#storySkipV174')||allowedTargetBaseV174(target);
 skipBtnV174.onclick=e=>{e.preventDefault();e.stopPropagation();if(!skipAllowedV174())return;skippedV174=true;skipBtnV174.hidden=true;if(storyTapResolve){const resolve=storyTapResolve;storyTapResolve=null;resolve();}battleSkipResolveV174?.();for(const animation of $('#storyScene').getAnimations({subtree:true}))try{animation.finish();}catch(_){};};
-waitBattleStoryTapV88=function(){if(skippedV174&&skipAllowedV174())return Promise.resolve();skipBtnV174.hidden=!skipAllowedV174();return new Promise(resolve=>{const ready=performance.now()+180,done=()=>{document.removeEventListener('pointerup',tap,true);battleSkipResolveV174=null;skipBtnV174.hidden=true;resolve();},tap=e=>{if(e.target.closest?.('#storySkipV174')||performance.now()<ready)return;e.preventDefault();e.stopPropagation();done();};battleSkipResolveV174=done;document.addEventListener('pointerup',tap,{capture:true,passive:false});});};
+waitBattleStoryTapV88=function(){if(skippedV174&&skipAllowedV174())return Promise.resolve();skipBtnV174.hidden=!skipAllowedV174();return new Promise(resolve=>{const ready=performance.now()+180,done=()=>{document.removeEventListener('pointerup',tap,true);battleSkipResolveV174=null;skipBtnV174.hidden=true;resolve();},tap=e=>{if(e.target.closest?.('#storySkipV174,#conversationSkipV224')||performance.now()<ready)return;e.preventDefault();e.stopPropagation();done();};battleSkipResolveV174=done;document.addEventListener('pointerup',tap,{capture:true,passive:false});});};
 const battleDialogueBaseV174=battleStoryCutinV88;
 battleStoryCutinV88=async function(...args){if(skippedV174&&skipAllowedV174())return;try{return await battleDialogueBaseV174(...args);}finally{skipBtnV174.hidden=true;}};
 const openStoryBaseV174=openStoryScene;
@@ -22392,6 +22394,34 @@ async function ruralHandshakeV223(stage,text){endingCastV222(stage,['king','yush
 const reportSubmitBaseV223=submitAdventureReport;
 submitAdventureReport=async function(){const report=state.adventure?.awaitingReport;if(report?.worldId!=='rural2')return reportSubmitBaseV223();if(castleReportBusy||storyBusy)return;castleReportBusy=true;const stage=document.createElement('section');stage.className='ending-stage-v222 rural-report-v223';stage.tabIndex=0;stage.setAttribute('aria-label','田舎町Ⅱの報告');stage.innerHTML='<div class="ending-cast-v222"></div><div class="ending-bubble-v222" hidden></div>';document.body.append(stage);try{for(const [kind,id,text,style]of CASTLE_REPORT_SCRIPTS_V126.rural2){if(kind==='handshake'){stage.querySelector('.ending-bubble-v222').hidden=true;await ruralHandshakeV223(stage,id);continue;}endingCastV222(stage,id==='king'?['king','pink']:['king',id]);if(kind==='last'){const bubble=stage.querySelector('.ending-bubble-v222');bubble.className='ending-bubble-v222';bubble.hidden=false;bubble.replaceChildren();const name=document.createElement('b'),line=document.createElement('p');name.textContent=player(id).name;line.textContent=text;bubble.append(name,line);await fixedDelay(1000);}else await endingLineV222(stage,id,text,style);}commitCastleReportProgressV126(report);stage.remove();renderCastle();showScreen('castle');}finally{stage.remove();castleReportBusy=false;}};
 window.__mobBuildVersion='v223';
+
+try{state.test.oneHitV224=!!JSON.parse(localStorage.getItem('mobQuestTestSettingsV1')||'{}').oneHitV224;}catch(_){state.test.oneHitV224=false;}
+const testSettingsBaseV224=renderSettings;renderSettings=function(...args){const r=testSettingsBaseV224(...args),root=$('#testModeControls');if(!root)return r;let panel=$('#testToolsV224');if(!panel){panel=document.createElement('div');panel.id='testToolsV224';panel.className='test-extra-v159';root.append(panel);}panel.innerHTML=`<button id="testOneHitV224" ${state.test.enabled?'':'disabled'}>敵を一撃で撃破：${state.test.enabled&&state.test.oneHitV224?'ON':'OFF'}</button><small>攻撃した敵を撃破します。物語上の不死状態は維持します。</small><p>会話中に「この会話のみスキップ」を表示します。</p>`;$('#testOneHitV224').onclick=()=>{if(!state.test.enabled)return;state.test.oneHitV224=!state.test.oneHitV224;saveTestSettings();renderSettings();};return r;};
+const oneHitBaseV224=applyEnemyDamageTo;applyEnemyDamageTo=function(a,e,...args){const b=state.battle;if(!state.test?.enabled||!state.test.oneHitV224||!b||!a||!b.allies.includes(a)||!e||e.hp<=0)return oneHitBaseV224(a,e,...args);const hp=e.hp,immortal=b.config?.scriptedImmortalEnemy&&b.mode==='story';e.hp=immortal?1:0;if(e.hp<=0){recordEnemyDefeat(e);if(['boss-debuff','boss-berserk'].includes(e.id)&&b.pendingWaveConfigs?.[0]?.some(r=>['boss-debuff2','boss-berserk2'].includes(r.id)))b.forcePhaseChange='tribe';if(b.targetEnemyId===e.uid){const next=livingEnemies()[0];b.targetEnemyId=next?.uid||null;if(!b.actingEnemyId)b.enemy=next||e;}}gainSoulV220(a,(b.figureSoulCastingV220?0:1)+(e.hp<=0?2:0));renderBattle();floatNumber(hp-e.hp,'damage',`enemy:${e.uid}`);pulseEnemy('hit',e.uid);return{value:hp-e.hp,crit:false,miss:false};};
+
+let conversationV224=null;
+const conversationButtonV224=document.createElement('button');conversationButtonV224.id='conversationSkipV224';conversationButtonV224.textContent='この会話のみスキップ';conversationButtonV224.hidden=true;document.body.append(conversationButtonV224);
+function beginConversationV224(){const context={skipped:false};conversationV224=context;conversationButtonV224.hidden=!state.test?.enabled;return context;}
+function endConversationV224(context){if(conversationV224===context){conversationV224=null;conversationButtonV224.hidden=true;}}
+function skipConversationV224(){return !!state.test?.enabled&&!!conversationV224?.skipped;}
+conversationButtonV224.onclick=e=>{e.preventDefault();e.stopPropagation();if(!state.test?.enabled||!conversationV224)return;conversationV224.skipped=true;conversationButtonV224.hidden=true;if(storyTapResolve){const done=storyTapResolve;storyTapResolve=null;done();}battleSkipResolveV174?.();document.querySelector('.ending-stage-v222')?.click();const buttons=[...document.querySelectorAll('#dialogChoices button')].filter(b=>b.getClientRects().length);if(buttons.length===1)buttons[0].click();for(const root of document.querySelectorAll('#storyScene,.ending-stage-v222'))for(const animation of root.getAnimations({subtree:true}))try{animation.finish();}catch(_){};};
+const allowedBaseV224=conversationAllowedTargetV171;conversationAllowedTargetV171=target=>!!target?.closest?.('#conversationSkipV224')||allowedBaseV224(target);
+// Keep the area-wide skip state untouched. Every new scene gets a fresh scope.
+const openConversationBaseV224=openStoryScene;openStoryScene=async function(...args){const r=await openConversationBaseV224(...args);beginConversationV224();return r;};
+const closeConversationBaseV224=closeStoryScene;closeStoryScene=async function(...args){const context=conversationV224;try{return await closeConversationBaseV224(...args);}finally{endConversationV224(context);}};
+const sayConversationBaseV224=storySay;storySay=async function(...args){if(skipConversationV224())return;return sayConversationBaseV224(...args);};
+const advanceConversationBaseV224=storyAdvanceWait;storyAdvanceWait=function(...args){return skipConversationV224()?Promise.resolve():advanceConversationBaseV224(...args);};
+const delayConversationBaseV224=fixedDelay;fixedDelay=function(ms){return skipConversationV224()?Promise.resolve():delayConversationBaseV224(ms);};
+const animationConversationBaseV224=animateV157;animateV157=async function(...args){if(skipConversationV224())return;return animationConversationBaseV224(...args);};
+async function scopedConversationV224(fn,args){const own=!conversationV224,context=own?beginConversationV224():conversationV224;try{return await fn(...args);}finally{if(own)endConversationV224(context);}}
+const reportConversationBaseV224=submitAdventureReport;submitAdventureReport=(...args)=>scopedConversationV224(reportConversationBaseV224,args);
+const endingConversationBaseV224=finalEndingV89Final;finalEndingV89Final=(...args)=>scopedConversationV224(endingConversationBaseV224,args);
+const facilityConversationBaseV224=facilityTalk;facilityTalk=async function(...args){if(skipConversationV224())return;return scopedConversationV224(facilityConversationBaseV224,args);};
+const endingLineBaseV224=endingLineV222;endingLineV222=async function(...args){if(skipConversationV224())return;return endingLineBaseV224(...args);};
+const battleConversationBaseV224=battleStoryCutinV88;battleStoryCutinV88=async function(...args){if(skipConversationV224())return;return scopedConversationV224(battleConversationBaseV224,args);};
+// The montage and subsequent messages are separate from the ending conversation.
+const montageConversationBaseV224=endingMontageV157;endingMontageV157=async function(...args){endConversationV224(conversationV224);return montageConversationBaseV224(...args);};
+window.__mobBuildVersion='v224';
 
 // UPDATE_V218_END
 

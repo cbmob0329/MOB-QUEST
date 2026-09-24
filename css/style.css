@@ -5272,4 +5272,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 .rural-report-v223 .ending-bubble-v222.shout p{font-size:clamp(24px,6.3vw,42px);line-height:1.7;font-weight:1000;text-shadow:2px 2px #d8b15c}.rural-report-v223 .ending-bubble-v222.shout{animation:rural-impact-v223 .45s ease-out both}@keyframes rural-impact-v223{from{transform:scale(.8) rotate(-2deg);opacity:0}65%{transform:scale(1.04) rotate(1deg)}to{transform:scale(1);opacity:1}}@media(prefers-reduced-motion:reduce){.rural-report-v223 .ending-bubble-v222.shout{animation:none}}
 
+#conversationSkipV224{position:fixed;right:10px;top:calc(12px + var(--safe-top,0px));z-index:100010;border:1px solid #b4cadd;border-radius:8px;padding:10px 14px;background:#142338ed;color:#e8f0fa;font-size:12px;touch-action:manipulation}#conversationSkipV224[hidden]{display:none!important}body:has(#conversationSkipV224:not([hidden])) #storySkipV174{top:calc(58px + var(--safe-top,0px))!important}#testToolsV224 small{display:block;font-size:11px;line-height:1.6}
+
 /* UPDATE_V218_END */
