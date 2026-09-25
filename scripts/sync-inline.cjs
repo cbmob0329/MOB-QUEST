@@ -8,7 +8,8 @@ const styleTag = '<style id="mobQuestInlineStyle">';
 const styleStart = html.indexOf(styleTag) + styleTag.length;
 const styleEnd = html.indexOf('</style>', styleStart);
 if (styleStart < styleTag.length || styleEnd < styleStart) throw new Error('Inline style boundary not found');
-const css = fs.readFileSync(path.join(root, 'css/style.css'), 'utf8').trim();
+// External CSS is rooted in /css; embedded CSS is rooted beside index.html.
+const css = fs.readFileSync(path.join(root, 'css/style.css'), 'utf8').trim().replace(/url\((['"]?)\.\.\//g,'url($1');
 html = html.slice(0, styleStart) + '\n' + css + '\n' + html.slice(styleEnd);
 const tag = '<script id="mobQuestInlineData">';
 const start = html.indexOf(tag) + tag.length;

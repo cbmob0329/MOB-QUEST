@@ -258,7 +258,7 @@ submitAdventureReport=async function(){
 
 const castleActorSpeakBaseV207=castleActorSpeak;
 castleActorSpeak=function(kind,actorEl){
-  if(kind==='king'&&(state.meta?.bookKingReturnDone||state.meta?.bookCompleted)&&!state.meta?.finalBossDefeated){
+  if(kind==='king'&&!state.adventure?.awaitingReport&&(state.meta?.bookKingReturnDone||state.meta?.bookCompleted)&&!state.meta?.finalBossDefeated){
     clearStaleBookReportV207();showCastleSpeech('モブスライムキング','武運を祈る！',actorEl,'center');return;
   }
   return castleActorSpeakBaseV207(kind,actorEl);

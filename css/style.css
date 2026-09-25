@@ -5192,6 +5192,18 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-montage-v169 .ending-frame-v169{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;animation:none}
 .ending-caption-v157:has(.ending-logo-v169){flex-direction:column;gap:20px}
 .ending-caption-v157 .ending-logo-v169{width:min(80vw,360px);max-height:45vh;object-fit:contain;flex-shrink:0}
+
+
+
+
+
+
+
+
+
+
+
+
 /* UPDATE_V218_BEGIN */
 .figure-extra-v218{position:fixed;inset:0;z-index:30000;background:#090e1bec;overflow:auto;padding:20px;color:#edf4ff}.figure-extra-v218[hidden]{display:none}
 .figure-extra-v218>section{max-width:780px;margin:auto}.figure-extra-v218 header{display:flex;justify-content:space-between;align-items:center}.figure-extra-v218 button{color:inherit;background:#22324d;border:1px solid #647b9b;border-radius:8px;padding:8px}
@@ -5277,3 +5289,13 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-stage-v222.ending-solo-v225 .ending-cast-v222{inset:0}.ending-curtain-v225{position:absolute;inset:0;z-index:20;background:#000;pointer-events:auto}.ending-person-v222 img{display:block}.mob-piece-battle-v132,.mob-piece-battle-v132 .piece-player-card-v103{overflow-anchor:none}
 
 /* UPDATE_V218_END */
+
+/* UPDATE_V227_BEGIN */
+.castle-report-v227{background-color:#cfb589;background-image:radial-gradient(ellipse at top,#e6d1a3,#847053)}
+.castle-report-v227 .ending-bubble-v222{bottom:max(6%,env(safe-area-inset-bottom));padding:18px 12px}
+.castle-report-v227 .ending-bubble-v222 p{white-space:nowrap;overflow-wrap:normal;word-break:keep-all;width:100%;font-size:clamp(16px,4.5vw,26px)}
+.castle-report-v227 .ending-bubble-v222.shout p{font-size:clamp(22px,6vw,36px)}
+.report-record-v227{position:absolute;width:60px;z-index:3;object-fit:contain;filter:drop-shadow(0 0 12px #ffe393)}
+.report-arm-v227{position:absolute;left:70%;top:35%;height:22vh;max-width:25%;object-fit:contain}
+
+/* UPDATE_V227_END */

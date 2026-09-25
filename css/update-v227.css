@@ -1,0 +1,6 @@
+.castle-report-v227{background-color:#cfb589;background-image:radial-gradient(ellipse at top,#e6d1a3,#847053)}
+.castle-report-v227 .ending-bubble-v222{bottom:max(6%,env(safe-area-inset-bottom));padding:18px 12px}
+.castle-report-v227 .ending-bubble-v222 p{white-space:nowrap;overflow-wrap:normal;word-break:keep-all;width:100%;font-size:clamp(16px,4.5vw,26px)}
+.castle-report-v227 .ending-bubble-v222.shout p{font-size:clamp(22px,6vw,36px)}
+.report-record-v227{position:absolute;width:60px;z-index:3;object-fit:contain;filter:drop-shadow(0 0 12px #ffe393)}
+.report-arm-v227{position:absolute;left:70%;top:35%;height:22vh;max-width:25%;object-fit:contain}

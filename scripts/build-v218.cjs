@@ -40,6 +40,7 @@ for(const f of figures){if(!fs.existsSync(path.join(root,f.image))){const altern
 const validFigures=figures.filter(f=>f.rarity);
 const duplicated=new Set(validFigures.filter((f,i)=>validFigures.findIndex(x=>x.image===f.image)!==i).map(f=>f.image));
 for(const f of figures)if(duplicated.has(f.image))f.conflictV218=true;
+for(const tag of adjacency)tag.equipment=tag.equipment.normalize('NFKC').replace(/混乱耐性\+20&/g,'混乱耐性+20%');
 const data={figures:figures.filter(f=>f.rarity),tags,adjacency};
 fs.writeFileSync(path.join(root,'js/figure-catalog-v218.json'),JSON.stringify(data,null,2)+'\n');
 let game=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
