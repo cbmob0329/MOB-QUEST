@@ -5299,3 +5299,19 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .report-arm-v227{position:absolute;left:70%;top:35%;height:22vh;max-width:25%;object-fit:contain}
 
 /* UPDATE_V227_END */
+
+
+
+
+
+
+
+/* UPDATE_V228_BEGIN */
+.inspect-portrait-v228{cursor:pointer;pointer-events:auto!important;touch-action:manipulation}
+.inspect-portrait-v228:focus-visible{outline:3px solid #267657;outline-offset:3px;border-radius:8px}
+.portrait-hint-v228{font-size:12px;line-height:1.6;color:#504330;margin:8px 0}
+#equipmentContent .equipment-party-strip button{flex-basis:80px;height:104px}
+#equipmentContent .equipment-party-strip b{display:block!important;max-width:72px;font-size:10px;line-height:1.4;white-space:normal;min-height:28px;padding:3px 0}
+#playerDetailOverlay.player-detail-active-v117{z-index:2000001!important}
+
+/* UPDATE_V228_END */

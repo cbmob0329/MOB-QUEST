@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path'),root=path.resolve(__dirname,'..');
+const p=path.join(root,'js/game.js'),block='// UPDATE_V228_BEGIN\n'+fs.readFileSync(path.join(root,'js/update-v228.js'),'utf8')+'\n// UPDATE_V228_END';
+let game=fs.readFileSync(p,'utf8');if(game.includes('// UPDATE_V228_BEGIN'))game=game.replace(/\/\/ UPDATE_V228_BEGIN[\s\S]*?\/\/ UPDATE_V228_END/,()=>block);else{const i=game.lastIndexOf('})();');game=game.slice(0,i)+block+'\n'+game.slice(i);}fs.writeFileSync(p,game);
+const c=path.join(root,'css/style.css');let css=fs.readFileSync(c,'utf8').replace(/\/\* UPDATE_V228_BEGIN \*\/[\s\S]*?\/\* UPDATE_V228_END \*\//,'');css+='\n/* UPDATE_V228_BEGIN */\n'+fs.readFileSync(path.join(root,'css/update-v228.css'),'utf8')+'\n/* UPDATE_V228_END */\n';fs.writeFileSync(c,css);
+const h=path.join(root,'index.html');fs.writeFileSync(h,fs.readFileSync(h,'utf8').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v228</div>'));require('./sync-inline.cjs');
