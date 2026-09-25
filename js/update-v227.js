@@ -16,8 +16,11 @@ async function reportLineV227(stage,id,text,style='',last=false,narration=false)
   if(narration)stage.querySelector('.ending-bubble-v222 b').textContent='ナレーション';
   fitReportLineV227(stage);await pending;
 }
-async function reportRecordV227(stage,text){
-  endingCastV222(stage,['king','pink']);const record=document.createElement('img');record.className='report-record-v227';record.src='icon/21.png';record.alt='レコード';stage.append(record);
+async function reportRecordV227(stage,text,worldId){
+  const info=STORY_RECORDS_V119.find(r=>r.worldId===worldId);
+  if(!info)throw new Error(`報告用レコードが未登録です: ${worldId}`);
+  endingCastV222(stage,['king','pink']);const record=document.createElement('img');record.className='report-record-v227';record.src=info.image;record.alt=info.name;
+  await endingImageReadyV225(record);stage.append(record);
   try{await animateV157(record,[{left:'70%',top:'45%',opacity:0},{left:'65%',top:'43%',opacity:1,offset:.2},{left:'25%',top:'43%',opacity:1,offset:.8},{left:'25%',top:'43%',opacity:0}],1000);await reportLineV227(stage,'king',text,'',false,true);}finally{record.remove();}
 }
 async function reportArmV227(stage){
@@ -38,7 +41,7 @@ async function castleReportV227(report){
     const background=await reportBackgroundV227();if(background)stage.style.backgroundImage=`url("${background}")`;
     document.body.append(stage);const resize=()=>fitReportLineV227(stage);window.addEventListener('resize',resize);
     try{for(const [kind,id,text,style]of CASTLE_REPORTS_V227[report.worldId]){
-      if(kind==='record'){await reportRecordV227(stage,id);continue;}
+      if(kind==='record'){await reportRecordV227(stage,id,report.worldId);continue;}
       if(kind==='handshake'){await reportHandshakeV227(stage,id);continue;}
       if(kind==='arm'){await reportArmV227(stage);continue;}
       endingCastV222(stage,id==='king'?['king','pink']:['king',id]);
