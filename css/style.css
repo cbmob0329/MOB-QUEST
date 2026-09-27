@@ -5330,5 +5330,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 [data-v179-start^="bandits:"]>div:first-child{display:block}
 [data-v179-start^="bandits:"]>div:first-child b,[data-v179-start^="bandits:"]>div:first-child strong{display:block;white-space:nowrap;font-size:16px}
 [data-v179-start^="bandits:"]>p{white-space:normal;line-height:1.7}
+#trainingFeaturePanel .event-silhouette-v175{filter:brightness(0)!important;opacity:.85!important}
 
 /* UPDATE_V230_END */

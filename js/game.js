@@ -14936,6 +14936,15 @@ const banditAreaBaseV230=startSavannaAreaV174;startSavannaAreaV174=async functio
 const banditWaveBaseV230=spawnNextEnemyWave;spawnNextEnemyWave=async function(...args){const b=state.battle;if(b?.config?.storyV179!=='bandits')return banditWaveBaseV230(...args);if(!b.pendingWaveConfigs?.length)return false;const rows=b.pendingWaveConfigs.shift();b.enemies=buildEnemyWave(rows,Math.min(4,b.allies.length),b.bg,b.fallbackBg);b.enemy=b.enemies[0];b.targetEnemyId=b.enemy.uid;b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();await actionCutin('新たな敵が走ってくる！','danger',600);await Promise.all(b.enemies.map((e,i)=>{const el=enemyVisual(e.uid)?.closest('.enemy-unit');return el?animateV157(el,[{translate:`${i%2?-100:100}vw 0`,opacity:0},{translate:'0 0',opacity:1}],750):null;}));b.turn++;b.busy=false;startRound();return true;};
 const banditFinishBaseV230=finishSavannaV174;finishSavannaV174=async function(b,win){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditFinishBaseV230(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);let reward=null;if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};applyProgressRewards(b,r.vitals);await scopedConversationV224(()=>banditSceneV230('post'),[]);if(r.area===STORY179.bandits.diffs[r.difficulty].areas-1)reward=rewardV179();}showResultV179(win,reward);};
 const banditResultBaseV230=showResultV179;showResultV179=function(win,...args){banditResultBaseV230(win,...args);const r=eventRunV174;if(r?.storyV179!=='bandits'||r.area!==STORY179.bandits.diffs[r.difficulty].areas-1)return;const b=$('[data-v179-next]',eventOverlayV163());b.textContent='クエストへ戻る';b.onclick=()=>returnSavannaV174();};
+// The custom list and reward cards are created after the shared menu renderer.
+// Apply the same discovery/clear rules after those images exist.
+const banditSilhouetteBaseV230=renderEventQuestsV163;
+renderEventQuestsV163=function(...args){const result=banditSilhouetteBaseV230(...args);if(eventViewV163!=='story')return result;const panel=$('#trainingFeaturePanel');
+ const hide=(img,hidden,label)=>{if(!img)return;img.classList.toggle('event-silhouette-v175',hidden);img.alt=hidden?label:img.dataset.revealedAltV230||img.alt;};
+ const boss=selectedStoryV179==='bandits'?$('.event-story-card-v174>img',panel):$('[data-story230="bandits"]>img',panel);if(boss){boss.dataset.revealedAltV230='砂漠の盗賊団';hide(boss,!seenV179('bandits'),'未遭遇のボス');}
+ if(selectedStoryV179==='bandits')for(const card of $$('[data-v179-start^="bandits:"]',panel)){const d=+card.dataset.v179Start.split(':')[1];for(const img of $$('.event-story-rewards-v174 img',card)){img.dataset.revealedAltV230=img.alt;hide(img,!recordsV179('bandits')[d],'未獲得の限定報酬');}}
+ return result;
+};
 window.__mobBuildVersion='v230';
 
 async function banditHitV230(e,power=1,all=false,element=e.attribute,crit=0,hits=1,confuse=0){
