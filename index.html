@@ -22653,6 +22653,9 @@ function banditTemplateV230(key,level,escort=false){
  const n=key==='hari'||key==='eri'?2:key==='queen'?2:3,max=key==='queen'?3:n;
  return{...common,name:BANDIT_NAMES_V230[i],image:`spenemy/${83+i}.png`,symbol:'♪',category:escort?'normal':'boss',attribute:['地','風','水','地','風'][i],damageReduction:escort?0:.1,evasion:escort?0:[.05,.05,.06,.05,.04][i],actionCount:escort?(key==='hari'||key==='eri'?1:2):n,forceActionCount:true,v144ActionMin:escort?1:n,v144ActionMax:escort?(key==='hari'||key==='eri'?1:2):max,banditEscortV230:escort};
 }
+// These two human-sized bosses use normal sprite bounds, while retaining boss combat rules.
+const banditSizeBaseV230=enemySizeClass;
+enemySizeClass=function(e){return ['hari','eri'].includes(e?.banditV230)?'normal':banditSizeBaseV230(e);};
 function banditWavesV230(d,area){
  const one=(k,lv,esc=false)=>({template:banditTemplateV230(k,lv,esc),level:lv}),m=(lv,n)=>Array.from({length:n},()=>one('mummy',lv));
  if(d===0)return [[m(25,3),m(25,3)],[[one('sharty',27),one('poison',26)]],[m(27,5),m(27,5)],[[one('hari',30),one('eri',30)]]][area];
@@ -22701,7 +22704,7 @@ const banditActionBaseV230=enemyAction;enemyAction=async function(index=1,uid){c
   if(k==='queen'&&index===1&&b.turn%3===0&&e.banditBuffTurnV230!==b.turn){e.banditBuffTurnV230=b.turn;await actionCutin('盗賊団のリーダー','buff',700);for(const ally of livingEnemies()){ally.atk*=1.1;ally.def*=1.1;ally.damageReduction=Math.min(.8,(ally.damageReduction||0)+.02);fx('buff',`enemy:${ally.uid}`);}}
   if(k==='healer'){await actionCutin('回復の魔法','heal',600);const t=livingEnemies().sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];if(t)eventHealV163(t,.15);return;}
   if(k==='hari'){if(index===1){await actionCutin('ゴレマソード','danger',600);await banditHitV230(e,1.3,false,'地',.4);}else await banditHitV230(e);}
-  if(k==='eri'){if(index===1&&(!e.banditEscortV230||b.turn%3===0)){await actionCutin('マッキン・モッキン','heal',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));for(const t of livingEnemies()){eventHealV163(t,.15);soulBuffV218(t,'atk',.15,2);}}else await banditHitV230(e,1,true);}
+  if(k==='eri'){if(index===1&&b.turn%3===0&&e.banditHealTurnV230!==b.turn){e.banditHealTurnV230=b.turn;await actionCutin('マッキン・モッキン','heal',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));for(const t of livingEnemies()){eventHealV163(t,.15);soulBuffV218(t,'atk',.15,2);}}else await banditHitV230(e,1,true);}
   if(k==='pue'){if(index===1){await actionCutin('プエルトリガー','danger',700);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'),true);await banditHitV230(e,1.3,true,'水',.13);await banditHitV230(e,1,true,'水',.13);}else await banditHitV230(e,1,index===2&&Math.random()<.5,'水',.13);}
   if(k==='onbu'){if(index===1){await actionCutin('ポンポコ乱撃','danger',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));await banditHitV230(e,1.1,false,e.attribute,.1,3);}else await banditHitV230(e,1,index===2);if(Math.random()<.1)await banditHitV230(e);}
   if(k==='queen'){if(index===1){await actionCutin('ホラ・ロック・クイーン','danger',750);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'),true);await banditHitV230(e,1.8,false,'風',0,1,.3);}else await banditHitV230(e,1,index===2,'風');}

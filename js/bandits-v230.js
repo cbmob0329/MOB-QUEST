@@ -24,6 +24,9 @@ function banditTemplateV230(key,level,escort=false){
  const n=key==='hari'||key==='eri'?2:key==='queen'?2:3,max=key==='queen'?3:n;
  return{...common,name:BANDIT_NAMES_V230[i],image:`spenemy/${83+i}.png`,symbol:'♪',category:escort?'normal':'boss',attribute:['地','風','水','地','風'][i],damageReduction:escort?0:.1,evasion:escort?0:[.05,.05,.06,.05,.04][i],actionCount:escort?(key==='hari'||key==='eri'?1:2):n,forceActionCount:true,v144ActionMin:escort?1:n,v144ActionMax:escort?(key==='hari'||key==='eri'?1:2):max,banditEscortV230:escort};
 }
+// These two human-sized bosses use normal sprite bounds, while retaining boss combat rules.
+const banditSizeBaseV230=enemySizeClass;
+enemySizeClass=function(e){return ['hari','eri'].includes(e?.banditV230)?'normal':banditSizeBaseV230(e);};
 function banditWavesV230(d,area){
  const one=(k,lv,esc=false)=>({template:banditTemplateV230(k,lv,esc),level:lv}),m=(lv,n)=>Array.from({length:n},()=>one('mummy',lv));
  if(d===0)return [[m(25,3),m(25,3)],[[one('sharty',27),one('poison',26)]],[m(27,5),m(27,5)],[[one('hari',30),one('eri',30)]]][area];
