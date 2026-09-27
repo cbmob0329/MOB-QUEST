@@ -24,9 +24,9 @@ function banditTemplateV230(key,level,escort=false){
  const n=key==='hari'||key==='eri'?2:key==='queen'?2:3,max=key==='queen'?3:n;
  return{...common,name:BANDIT_NAMES_V230[i],image:`spenemy/${83+i}.png`,symbol:'♪',category:escort?'normal':'boss',attribute:['地','風','水','地','風'][i],damageReduction:escort?0:.1,evasion:escort?0:[.05,.05,.06,.05,.04][i],actionCount:escort?(key==='hari'||key==='eri'?1:2):n,forceActionCount:true,v144ActionMin:escort?1:n,v144ActionMax:escort?(key==='hari'||key==='eri'?1:2):max,banditEscortV230:escort};
 }
-// These two human-sized bosses use normal sprite bounds, while retaining boss combat rules.
+// All five bandits use character-sized art, independently of boss/escort combat rules.
 const banditSizeBaseV230=enemySizeClass;
-enemySizeClass=function(e){return ['hari','eri'].includes(e?.banditV230)?'normal':banditSizeBaseV230(e);};
+enemySizeClass=function(e){return BANDIT_IDS_V230.includes(e?.banditV230)?'normal':banditSizeBaseV230(e);};
 function banditWavesV230(d,area){
  const one=(k,lv,esc=false)=>({template:banditTemplateV230(k,lv,esc),level:lv}),m=(lv,n)=>Array.from({length:n},()=>one('mummy',lv));
  if(d===0)return [[m(25,3),m(25,3)],[[one('sharty',27),one('poison',26)]],[m(27,5),m(27,5)],[[one('hari',30),one('eri',30)]]][area];
@@ -37,8 +37,24 @@ const banditBuildBaseV230=buildEnemyFromTemplate;buildEnemyFromTemplate=function
 const banditActorBaseV230=storyActorInfo;storyActorInfo=function(key){if(String(key).startsWith('bandit230-')){const t=banditTemplateV230(key.slice(10),30);return{...t,enemyTemplate:t};}return banditActorBaseV230(key);};
 async function banditNotesV230(host,large=false){if(!host)return;const layer=document.createElement('div');layer.className='bandit-notes-v230';host.append(layer);try{for(let i=0;i<(large?18:9);i++){const n=document.createElement('i');n.textContent=i%2?'♪':'♫';n.style.setProperty('--i',i);layer.append(n);}await animateV157(host,[{translate:'0 0'},{translate:'-4px 0'},{translate:'4px 0'},{translate:'-3px 0'},{translate:'0 0'}],large?1000:650);await fixedDelay(250);}finally{layer.remove();}}
 async function banditEnterV230(keys,mode='run'){
- const scene=$('#storyScene');scene.classList.add('bandit-enter-preparing-v233');try{await storyShowGuests(keys.map(k=>'bandit230-'+k),{allowFive:true});}finally{scene.classList.remove('bandit-enter-preparing-v233');}const group=$('#storyGuestGroup');group.classList.add('bandit-guests-v230');
- await Promise.all([...group.children].map((el,i)=>{const direction=i%2?-1:1;return animateV157(el,mode==='dance'?[{translate:`${direction*100}px 0`},{translate:`${direction*-35}px -32px`,offset:.3},{translate:`${direction*35}px 0`,offset:.6},{translate:'0 -24px',offset:.8},{translate:'0 0'}]:[{translate:mode==='jump'?'0 -120px':`${direction*350}px 0`,opacity:0},{translate:'0 0',opacity:1}],mode==='walk'?1500:mode==='dance'?1600:mode==='fast'?500:900);}));
+ const scene=$('#storyScene'),group=$('#storyGuestGroup');let actors=[];
+ scene.classList.add('bandit-enter-preparing-v233');
+ try{
+  await storyShowGuests(keys.map(k=>'bandit230-'+k),{allowFive:true});
+  group.classList.add('bandit-guests-v230');actors=[...group.children];
+  actors.forEach(el=>el.style.opacity='0');
+  // Seed the hidden first frame before revealing the container, including dance entrances.
+  const jobs=actors.map((el,i)=>{const direction=i%2?-1:1,offscreen=direction*Math.max(scene.clientWidth,350);return animateV157(el,mode==='dance'?[{translate:`${offscreen}px 0`,opacity:0},{translate:`${direction*-35}px -32px`,opacity:1,offset:.3},{translate:`${direction*35}px 0`,opacity:1,offset:.6},{translate:'0 -24px',opacity:1,offset:.8},{translate:'0 0',opacity:1}]:[{translate:mode==='jump'?'0 -120px':`${offscreen}px 0`,opacity:0},{translate:'0 0',opacity:1}],mode==='walk'?1500:mode==='dance'?1600:mode==='fast'?500:900).then(()=>el.style.removeProperty('opacity'));});
+  scene.classList.remove('bandit-enter-preparing-v233');await Promise.all(jobs);
+ }finally{scene.classList.remove('bandit-enter-preparing-v233');actors.forEach(el=>el.style.removeProperty('opacity'));}
+}
+async function banditBattleEntranceV234(b){
+ const screen=$('#battleScreen'),actors=b.enemies.map(e=>enemyVisual(e.uid)?.closest('.enemy-unit')).filter(Boolean);
+ actors.forEach(el=>el.style.opacity='0');
+ try{
+  const jobs=actors.map((el,i)=>animateV157(el,[{translate:`${i%2?-100:100}vw 0`,opacity:0},{translate:'0 0',opacity:1}],750).then(()=>el.style.removeProperty('opacity')));
+  screen.classList.remove('bandit-wave-preparing-v233');await Promise.all(jobs);
+ }finally{screen.classList.remove('bandit-wave-preparing-v233');actors.forEach(el=>el.style.removeProperty('opacity'));}
 }
 async function banditSceneV230(phase){const r=eventRunV174;$('#adventureScreen').classList.add('bandit-transition-v233');showScreen('adventure');storyBusy=true;try{await openStoryScene('desert',r.area,'default');$('#storyScene').classList.add('bandit-story-v230');$('#adventureStageTitle').textContent=STORY179.bandits.title;$('#adventureProgress').textContent='AREA '+(r.area+1)+' / '+STORY179.bandits.diffs[r.difficulty].name;if(phase==='pre'&&r.area===0){const title=document.createElement('div');title.className='bandit-title-v230';title.innerHTML=`<small>第${['一','二','三'][r.difficulty]}章</small><b>${['砂漠の盗賊団登場！','ロックな出会い！','プーホラ盗賊団のライブ！'][r.difficulty]}</b>`;$('#storyScene').append(title);try{await fixedDelay(1700);}finally{title.remove();}}
  if(phase==='post'){const guests=([ [[],[],['hari','eri'],['hari','eri']], [[],['onbu'],['pue']], [['hari','pue','eri'],[],['onbu'],['hari','eri','queen','onbu','pue']] ])[r.difficulty][r.area];if(guests.length)await banditEnterV230(guests,'walk');}
@@ -53,7 +69,7 @@ async function banditSceneV230(phase){const r=eventRunV174;$('#adventureScreen')
  }
  }finally{try{await closeStoryScene(false);}finally{$('#storyScene').classList.remove('bandit-story-v230');storyBusy=false;}}}
 const banditAreaBaseV230=startSavannaAreaV174;startSavannaAreaV174=async function(...args){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditAreaBaseV230(...args);eventOverlayV163().hidden=true;try{await scopedConversationV224(()=>banditSceneV230('pre'),[]);const bg=storySceneBg('desert',r.area);await startBattleLoaded({mode:'eventStory174',storyEventV174:true,storyV179:'bandits',worldId:'desert',returnScreen:'training',party:partyV179('bandits'),questVitals:r.vitals,waves:banditWavesV230(r.difficulty,r.area),bg:bg.bg,fallbackBg:bg.fallback});$('#battleModeLabel').textContent=`砂漠の盗賊ファミリー！ / ${STORY179.bandits.diffs[r.difficulty].name} / AREA ${r.area+1}`;$('#battleBackBtn').style.display='';$('#adventureScreen').classList.remove('bandit-transition-v233');}catch(err){console.error('[bandits230]',err);$('#adventureScreen').classList.remove('bandit-transition-v233');returnSavannaV174();toast('準備に失敗しました。もう一度お試しください。');}};
-const banditWaveBaseV230=spawnNextEnemyWave;spawnNextEnemyWave=async function(...args){const b=state.battle;if(b?.config?.storyV179!=='bandits')return banditWaveBaseV230(...args);if(!b.pendingWaveConfigs?.length)return false;const rows=b.pendingWaveConfigs.shift();b.enemies=buildEnemyWave(rows,Math.min(4,b.allies.length),b.bg,b.fallbackBg);b.enemy=b.enemies[0];b.targetEnemyId=b.enemy.uid;b.actingEnemyId=null;b.queue=[];b.queuePos=0;const screen=$('#battleScreen');screen.classList.add('bandit-wave-preparing-v233');renderBattle();try{await actionCutin('新たな敵が走ってくる！','danger',600);}finally{screen.classList.remove('bandit-wave-preparing-v233');}await Promise.all(b.enemies.map((e,i)=>{const el=enemyVisual(e.uid)?.closest('.enemy-unit');return el?animateV157(el,[{translate:`${i%2?-100:100}vw 0`,opacity:0},{translate:'0 0',opacity:1}],750):null;}));b.turn++;b.busy=false;startRound();return true;};
+const banditWaveBaseV230=spawnNextEnemyWave;spawnNextEnemyWave=async function(...args){const b=state.battle;if(b?.config?.storyV179!=='bandits')return banditWaveBaseV230(...args);if(!b.pendingWaveConfigs?.length)return false;const rows=b.pendingWaveConfigs.shift();b.enemies=buildEnemyWave(rows,Math.min(4,b.allies.length),b.bg,b.fallbackBg);b.enemy=b.enemies[0];b.targetEnemyId=b.enemy.uid;b.actingEnemyId=null;b.queue=[];b.queuePos=0;const screen=$('#battleScreen');screen.classList.add('bandit-wave-preparing-v233');renderBattle();try{await actionCutin('新たな敵が走ってくる！','danger',600);await banditBattleEntranceV234(b);}finally{screen.classList.remove('bandit-wave-preparing-v233');}b.turn++;b.busy=false;startRound();return true;};
 const banditFinishBaseV230=finishSavannaV174;finishSavannaV174=async function(b,win){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditFinishBaseV230(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);let reward=null;if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};applyProgressRewards(b,r.vitals);await scopedConversationV224(()=>banditSceneV230('post'),[]);if(r.area===STORY179.bandits.diffs[r.difficulty].areas-1)reward=rewardV179();}showResultV179(win,reward);$('#adventureScreen').classList.remove('bandit-transition-v233');};
 const banditResultBaseV230=showResultV179;showResultV179=function(win,...args){banditResultBaseV230(win,...args);const r=eventRunV174;if(r?.storyV179!=='bandits'||r.area!==STORY179.bandits.diffs[r.difficulty].areas-1)return;const b=$('[data-v179-next]',eventOverlayV163());b.textContent='クエストへ戻る';b.onclick=()=>returnSavannaV174();};
 // The custom list and reward cards are created after the shared menu renderer.

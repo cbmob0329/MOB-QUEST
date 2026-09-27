@@ -5361,3 +5361,9 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .shelf-selection-v233>div{display:flex;gap:8px}.shelf-selection-v233 button{min-height:44px;border:1px solid #9d895f;border-radius:9px;padding:8px;background:#263147;color:white}.shelf-selection-v233 [data-shelf-commit]{flex:1;background:#dfbd77;color:#201b13;font-weight:800}.shelf-selection-v233 button:disabled{opacity:.45}
 
 /* UPDATE_V233_END */
+/* UPDATE_V234_BEGIN */
+/* The shared flex formation reserves 25% per unit, overflowing at five enemies. */
+.bandit-battle-v234 .enemy-area.enemy-count-5{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:1px!important}
+.bandit-battle-v234 .enemy-count-5 .enemy-unit{width:100%!important;max-width:100%!important;min-width:0!important}
+
+/* UPDATE_V234_END */
