@@ -5193,17 +5193,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-caption-v157:has(.ending-logo-v169){flex-direction:column;gap:20px}
 .ending-caption-v157 .ending-logo-v169{width:min(80vw,360px);max-height:45vh;object-fit:contain;flex-shrink:0}
 
-
-
-
-
-
-
-
-
-
-
-
 /* UPDATE_V218_BEGIN */
 .figure-extra-v218{position:fixed;inset:0;z-index:30000;background:#090e1bec;overflow:auto;padding:20px;color:#edf4ff}.figure-extra-v218[hidden]{display:none}
 .figure-extra-v218>section{max-width:780px;margin:auto}.figure-extra-v218 header{display:flex;justify-content:space-between;align-items:center}.figure-extra-v218 button{color:inherit;background:#22324d;border:1px solid #647b9b;border-radius:8px;padding:8px}
@@ -5300,12 +5289,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 /* UPDATE_V227_END */
 
-
-
-
-
-
-
 /* UPDATE_V228_BEGIN */
 .inspect-portrait-v228{cursor:pointer;pointer-events:auto!important;touch-action:manipulation}
 .inspect-portrait-v228:focus-visible{outline:3px solid #267657;outline-offset:3px;border-radius:8px}
@@ -5333,3 +5316,28 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #trainingFeaturePanel .event-silhouette-v175{filter:brightness(0)!important;opacity:.85!important}
 
 /* UPDATE_V230_END */
+
+/* UPDATE_V231_BEGIN */
+.entrance-hidden-v231 #storyGuest,.entrance-hidden-v231 #storyGuestGroup{visibility:hidden!important}
+.story-fx-v231{position:absolute;inset:0;pointer-events:none;z-index:55;overflow:hidden;--fx:#67bfd2}
+.story-fx-v231.fire,.story-fx-v231.lava,.story-fx-v231.earth-fire{--fx:#d98742}
+.story-fx-v231.dark,.story-fx-v231.souls,.story-fx-v231.time{--fx:#8e69c6;background:radial-gradient(ellipse,#30154135,transparent 70%)}
+.story-fx-v231.earth{--fx:#af9254}.story-fx-v231.sakura{--fx:#ec9bb7}
+.story-fx-v231 i{position:absolute;left:var(--x);top:var(--y);width:6px;height:28px;background:var(--fx);border-radius:50%;opacity:.7;animation:story-particles-v231 1s ease-out infinite;animation-delay:calc(var(--i)*-55ms)}
+.story-fx-v231.neon i,.story-fx-v231.neon-master i,.story-fx-v231.slash i{width:50%;height:2px;transform:rotate(-20deg)}
+.story-fx-v231.time i{width:60%;height:60%;border:2px solid var(--fx);border-radius:50%;background:none;left:20%;top:20%;animation:story-ring-v231 1.5s ease-out infinite}
+.story-fx-v231.sakura i{width:11px;height:7px;border-radius:70% 0 70% 0}
+.four-title-v231{position:absolute;left:4%;right:4%;top:27%;z-index:80;padding:25px 10px;background:repeating-linear-gradient(125deg,#30243e 0 12px,#3e2e4e 12px 15px);color:#ffe7a9;border:4px solid #cfab63;clip-path:polygon(0 12%,7% 0,94% 6%,100% 80%,91% 100%,5% 92%);font-size:clamp(28px,7vw,52px);font-weight:1000;text-align:center;text-shadow:3px 3px #000;animation:four-title-v231 .35s ease-out both}
+.transfer-orb-v231{position:absolute;width:150px;height:150px;margin:-75px;z-index:65;border-radius:50%;background:repeating-conic-gradient(#755a9b66 0 20deg,#50aaa966 20deg 40deg);border:3px solid #91bec8;box-shadow:0 0 20px #668dba66;pointer-events:none}
+.transfer-orb-v231.dark{background:#1e1425aa;border-color:#63446d;box-shadow:0 0 18px #4b265888}.transfer-orb-v231 img{width:100%;height:100%;object-fit:contain;filter:brightness(.25)}
+.absorb-ghost-v231{position:absolute;left:20%;top:35%;width:23%;height:20%;object-fit:contain;z-index:60;transform:translate(-50%,-50%)}
+.story-medal-v231{position:fixed;inset:0;z-index:180000;display:grid;place-content:center;justify-items:center;gap:20px;background:#151124bb;color:#fff;text-align:center;padding:24px;font-size:20px}
+.story-medal-v231 img,img.story-medal-icon-v231{border-radius:50%;border:5px double #dcb879;background:radial-gradient(circle,#504d70,#211c35);object-fit:contain;padding:8px;box-sizing:border-box}
+.story-medal-v231 img{width:min(45vw,200px);height:min(45vw,200px);box-shadow:0 0 22px #bf9d4444}
+.equipment-slot.medal img,.weapon-picker-item img[alt$="メダル"],.inventory-row img[alt$="メダル"]{border:4px double #dcb879;border-radius:50%;background:radial-gradient(circle,#504d70,#211c35);padding:5px;box-sizing:border-box}
+@keyframes story-particles-v231{from{translate:0 25px;opacity:0}35%{opacity:.7}to{translate:20px -40px;opacity:0}}
+@keyframes story-ring-v231{from{scale:.1;rotate:-30deg;opacity:0}40%{opacity:.65}to{scale:1.5;rotate:90deg;opacity:0}}
+@keyframes four-title-v231{from{transform:scale(1.35) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(-2deg);opacity:1}}
+@media(prefers-reduced-motion:reduce){.story-fx-v231 i,.four-title-v231{animation:none}}
+
+/* UPDATE_V231_END */

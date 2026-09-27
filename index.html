@@ -5205,17 +5205,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-caption-v157:has(.ending-logo-v169){flex-direction:column;gap:20px}
 .ending-caption-v157 .ending-logo-v169{width:min(80vw,360px);max-height:45vh;object-fit:contain;flex-shrink:0}
 
-
-
-
-
-
-
-
-
-
-
-
 /* UPDATE_V218_BEGIN */
 .figure-extra-v218{position:fixed;inset:0;z-index:30000;background:#090e1bec;overflow:auto;padding:20px;color:#edf4ff}.figure-extra-v218[hidden]{display:none}
 .figure-extra-v218>section{max-width:780px;margin:auto}.figure-extra-v218 header{display:flex;justify-content:space-between;align-items:center}.figure-extra-v218 button{color:inherit;background:#22324d;border:1px solid #647b9b;border-radius:8px;padding:8px}
@@ -5312,12 +5301,6 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 /* UPDATE_V227_END */
 
-
-
-
-
-
-
 /* UPDATE_V228_BEGIN */
 .inspect-portrait-v228{cursor:pointer;pointer-events:auto!important;touch-action:manipulation}
 .inspect-portrait-v228:focus-visible{outline:3px solid #267657;outline-offset:3px;border-radius:8px}
@@ -5345,6 +5328,31 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #trainingFeaturePanel .event-silhouette-v175{filter:brightness(0)!important;opacity:.85!important}
 
 /* UPDATE_V230_END */
+
+/* UPDATE_V231_BEGIN */
+.entrance-hidden-v231 #storyGuest,.entrance-hidden-v231 #storyGuestGroup{visibility:hidden!important}
+.story-fx-v231{position:absolute;inset:0;pointer-events:none;z-index:55;overflow:hidden;--fx:#67bfd2}
+.story-fx-v231.fire,.story-fx-v231.lava,.story-fx-v231.earth-fire{--fx:#d98742}
+.story-fx-v231.dark,.story-fx-v231.souls,.story-fx-v231.time{--fx:#8e69c6;background:radial-gradient(ellipse,#30154135,transparent 70%)}
+.story-fx-v231.earth{--fx:#af9254}.story-fx-v231.sakura{--fx:#ec9bb7}
+.story-fx-v231 i{position:absolute;left:var(--x);top:var(--y);width:6px;height:28px;background:var(--fx);border-radius:50%;opacity:.7;animation:story-particles-v231 1s ease-out infinite;animation-delay:calc(var(--i)*-55ms)}
+.story-fx-v231.neon i,.story-fx-v231.neon-master i,.story-fx-v231.slash i{width:50%;height:2px;transform:rotate(-20deg)}
+.story-fx-v231.time i{width:60%;height:60%;border:2px solid var(--fx);border-radius:50%;background:none;left:20%;top:20%;animation:story-ring-v231 1.5s ease-out infinite}
+.story-fx-v231.sakura i{width:11px;height:7px;border-radius:70% 0 70% 0}
+.four-title-v231{position:absolute;left:4%;right:4%;top:27%;z-index:80;padding:25px 10px;background:repeating-linear-gradient(125deg,#30243e 0 12px,#3e2e4e 12px 15px);color:#ffe7a9;border:4px solid #cfab63;clip-path:polygon(0 12%,7% 0,94% 6%,100% 80%,91% 100%,5% 92%);font-size:clamp(28px,7vw,52px);font-weight:1000;text-align:center;text-shadow:3px 3px #000;animation:four-title-v231 .35s ease-out both}
+.transfer-orb-v231{position:absolute;width:150px;height:150px;margin:-75px;z-index:65;border-radius:50%;background:repeating-conic-gradient(#755a9b66 0 20deg,#50aaa966 20deg 40deg);border:3px solid #91bec8;box-shadow:0 0 20px #668dba66;pointer-events:none}
+.transfer-orb-v231.dark{background:#1e1425aa;border-color:#63446d;box-shadow:0 0 18px #4b265888}.transfer-orb-v231 img{width:100%;height:100%;object-fit:contain;filter:brightness(.25)}
+.absorb-ghost-v231{position:absolute;left:20%;top:35%;width:23%;height:20%;object-fit:contain;z-index:60;transform:translate(-50%,-50%)}
+.story-medal-v231{position:fixed;inset:0;z-index:180000;display:grid;place-content:center;justify-items:center;gap:20px;background:#151124bb;color:#fff;text-align:center;padding:24px;font-size:20px}
+.story-medal-v231 img,img.story-medal-icon-v231{border-radius:50%;border:5px double #dcb879;background:radial-gradient(circle,#504d70,#211c35);object-fit:contain;padding:8px;box-sizing:border-box}
+.story-medal-v231 img{width:min(45vw,200px);height:min(45vw,200px);box-shadow:0 0 22px #bf9d4444}
+.equipment-slot.medal img,.weapon-picker-item img[alt$="メダル"],.inventory-row img[alt$="メダル"]{border:4px double #dcb879;border-radius:50%;background:radial-gradient(circle,#504d70,#211c35);padding:5px;box-sizing:border-box}
+@keyframes story-particles-v231{from{translate:0 25px;opacity:0}35%{opacity:.7}to{translate:20px -40px;opacity:0}}
+@keyframes story-ring-v231{from{scale:.1;rotate:-30deg;opacity:0}40%{opacity:.65}to{scale:1.5;rotate:90deg;opacity:0}}
+@keyframes four-title-v231{from{transform:scale(1.35) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(-2deg);opacity:1}}
+@media(prefers-reduced-motion:reduce){.story-fx-v231 i,.four-title-v231{animation:none}}
+
+/* UPDATE_V231_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5848,7 +5856,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v230</div>
+      <div class="title-version">v231</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -9603,15 +9611,15 @@ async function checkBattleHpDialogue(){
   if(karami&&karami.hp>0&&karami.hp/Math.max(1,karami.maxHp)<=.50&&!b.storyHpFlags.d2Karami50){
     b.storyHpFlags.d2Karami50=true;
     await enemyStoryCutin(karami,'やるじゃねえか！\n燃えてきたぜ！',920);
-    karami.atkBuff=.20;karami.atkBuffTurns=99;karami.defBuff=.20;karami.defBuffTurns=99;fx('buff',`enemy:${karami.uid}`);
-    await actionCutin('モブミラカラミのATKとDEFが20%アップした！','buff',760);
+    boostEnemyV231(karami,.20,.15);
+    await actionCutin('モブミラカラミの全ステータスが20%・ダメージ軽減が15%アップした！','buff',760);
   }
   const earth=(b.enemies||[]).find(e=>e.id==='d2-miraearth');
   if(earth&&earth.hp>0&&earth.hp/Math.max(1,earth.maxHp)<=.50&&!b.storyHpFlags.d2Earth50){
     b.storyHpFlags.d2Earth50=true;
     await enemyStoryCutin(earth,'小賢しいガキ共だ\n踏みつぶしてくれる！',920);
-    earth.atkBuff=.20;earth.atkBuffTurns=99;earth.defBuff=.20;earth.defBuffTurns=99;fx('buff',`enemy:${earth.uid}`);
-    await actionCutin('モブミラアースのATKとDEFが20%アップした！','buff',760);
+    boostEnemyV231(earth,.20,.15);
+    await actionCutin('モブミラアースの全ステータスが20%・ダメージ軽減が15%アップした！','buff',760);
   }
   if(karami&&karami.hp<=0&&!b.storyHpFlags.d2KaramiDown){b.storyHpFlags.d2KaramiDown=true;await enemyStoryCutin(karami,'くそ・・俺がやられるとはな・・',800);}
   if(earth&&earth.hp<=0&&!b.storyHpFlags.d2EarthDown){b.storyHpFlags.d2EarthDown=true;await enemyStoryCutin(earth,'貴様ら如きにこの私が!!',800);}
@@ -11018,13 +11026,13 @@ async function spawnNextEnemyWave(){
   const records=b.pendingWaveConfigs.shift(),isFrezard=records.some(r=>r.id==='m-frezard'),isTribeTransform=records.some(r=>r.id==='boss-debuff2'||r.id==='boss-berserk2'),isGidora=records.some(r=>r.id==='boss-gidora'),isMira2=records.some(r=>r.id==='boss-mira2-d2'),isLilithPartyA=records.some(r=>r.id==='boss-lilith-castle')&&b.config?.lilithSplitBattle,isD2Pair2=records.length===2&&records.some(r=>r.id==='d2-miranight')&&records.some(r=>r.id==='d2-miratime'),isD2Revive=records.length===4&&['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'].every(id=>records.some(r=>r.id===id))&&records.some(r=>Number(r.startingHpRate)>0&&Number(r.startingHpRate)<=.31);
   if(isLilithPartyA){await waitLilithPartyNextV198();switchBattleToLilithPartyA();}
   if(isFrezard)await playFrezardFusion();
-  if(isGidora){const oldDragon=(b.enemies||[]).find(e=>e.id==='boss-dragon2');if(oldDragon)await enemyStoryCutin(oldDragon,`素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！`,1200);await storyFlashBattle();}
+  if(isGidora){await playBattleSequenceV173('gidora',true);await flameAbsorbV231();}
   if(isMira2){await playBattleSequenceV173('mira2',true);await storyDarkBattlePulse();}
   if(isD2Revive){
     await playBattleSequenceV173('reviveBefore');
   }
   const next=buildEnemyWave(records,Math.min(4,b.allies.length),b.bg,b.fallbackBg);if(!next.length)return false;
-  if(isD2Revive)for(const e of next){e.actionCount=1;e.forceActionCount=true;}
+  if(isD2Revive)for(const e of next){e.actionCount=rint(1,2);e.forceActionCount=true;e.revivedFourV231=true;}
   b.enemies=next;b.targetEnemyId=next[0].uid;b.enemy=next[0];b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();
   if(isFrezard){
     await actionCutin('モブフレザードが出現！','danger',650);
@@ -11046,8 +11054,8 @@ async function spawnNextEnemyWave(){
   }else if(isD2Pair2){
     await actionCutin('モブミラナイト・モブミラタイムが出現！','danger',760);
     await playBattleSequenceV173('pair2',true);
-    for(const e of next){e.atkBuff=.20;e.atkBuffTurns=99;e.defBuff=.20;e.defBuffTurns=99;}
-    await fixedDelay(160);await actionCutin('2人のATKとDEFが20%アップした！','buff',760);
+    for(const e of next)boostEnemyV231(e,.20,.15);
+    await fixedDelay(160);await actionCutin('2人の全ステータスが20%・ダメージ軽減が15%アップした！','buff',760);
   }else if(isD2Revive){
     await playBattleSequenceV173('reviveAfter',true);
     for(const a of b.allies.filter(a=>!a.dead&&a.hp>0)){const h=Math.round(a.maxHp*.30),before=a.hp;a.hp=Math.min(a.maxHp,a.hp+h);if(a.hp>before)floatNumber(a.hp-before,'heal',a.id);}
@@ -11116,7 +11124,7 @@ async function enemyAction(actionIndex=1,enemyId){
   if(e.oneAoePerTurn&&actionIndex===1){await bossSpecial({special:e.special||'全体攻撃',kind:'aoe',power:Number(e.power)||.84,skillElement:e.skillElement||e.attribute,skillType:e.skillType||'physical'});if(!livingRoster().length)finishBattle(false);return;}
   if(e.firstActionSpec&&!e.firstActionUsed&&b.turn===1&&actionIndex===1){e.firstActionUsed=true;await bossSpecial(e.firstActionSpec);if(!livingRoster().length)finishBattle(false);return;}
   if(/^boss-mira(?:2)?(?:-d2)?$/.test(e.id)){e.miraNextV169??=rint(2,3);if(actionIndex===1&&b.turn>=e.miraNextV169){e.miraNextV169=b.turn+rint(2,3);await bossSpecial(enemySpecialSpec(e));}else await bossNormal();if(!livingRoster().length)finishBattle(false);return;}
-  const hasSource=!!(e.special||e.specialOptions?.length),authoredAlways=['book-minion','book-captain','book-exec-blue','book-exec-red','book-exec-blue2','book-exec-red2','book-kaijin-boss','book-navi','book-navi-master','dc2-hell','dc2-kirin','dc2-riva','dc2-kufu','dc2-lilith','dc2-enma','dc2-enma2','dc2-enma3','dc2-maou','dc2-ulrilis'].includes(e.id),useSpecial=(e.alwaysSpecial||authoredAlways)?true:e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
+  const hasSource=!!(e.special||e.specialOptions?.length),authoredAlways=['book-minion','book-captain','book-exec-blue','book-exec-red','book-exec-blue2','book-exec-red2','book-kaijin-boss','book-navi','book-navi-master','dc2-hell','dc2-kirin','dc2-riva','dc2-kufu','dc2-lilith','dc2-enma','dc2-enma2','dc2-enma3','dc2-maou','dc2-ulrilis'].includes(e.id),useSpecial=e.specialChanceV231!=null?Math.random()<e.specialChanceV231:(e.alwaysSpecial||authoredAlways)?true:e.isBoss?(actionIndex===1&&b.turn%(e.specialEvery||TEMP_BALANCE.bossSpecialEvery)===0):e.isElite?(hasSource?b.turn%3===0:Math.random()<.22):Math.random()<.18;
   if(useSpecial)await bossSpecial(enemySpecialSpec(e));else await bossNormal();if(!livingRoster().length)finishBattle(false);
 }
 async function bossNormal(){const e=actingEnemy()||state.battle.enemy,t=pick(livingMain());if(!e||!t)return;const type=e.normalAttackType||'physical',ranged=e.id==='boss-gladi';await actionCutin(`${e.name}の攻撃！`,'danger',520);if(ranged)await playEnemyProjectile(e,t);else await beginEnemyLunge(e.uid);try{await damageAlly(t,1,type,false,e.attribute);await delay(320);}finally{if(!ranged)endEnemyLunge();}}
@@ -22397,10 +22405,10 @@ patchUltV221('tetsu',0,{kind:'tetsuSweepV221'});patchUltV221('tetsu',3,{kind:'te
 ['kaijinFearV221','kaijinEvadeV221','kaijinGuardV221','kaijinFinalV221'].forEach((kind,i)=>patchUltV221('kaijin',i,{kind,attackElement:'闇',type:i===2?'magic':'physical',power:[1.65,2.2,2.2,2.72][i]}));
 patchUltV221('lilith',1,{kind:'lilithSisters',power:1.3});patchUltV221('lilith',2,{kind:'aoeCrit',power:2.72,crit:.10});patchUltV221('lilith',3,{kind:'teamHealMpGuard'});
 
-const detailBaseV221=openPlayerDetail;openPlayerDetail=function(pid){detailBaseV221(pid);if(!passiveTwoV221(pid))return;const spec=PARTY_SPEC_V221.find(p=>p.id===pid),section=document.createElement('section');section.className='player-passive-v172';const descriptions={yusha:'あのヒーローに変身中、味方が攻撃を受けると10%の確率で敵全体に通常攻撃の120%で反撃。',money:'ヤミモブマニーに変身中、バブルネオンは極大ダメージ、レッドブルーボムは極大全体攻撃に強化。',desert:'会心時、通常攻撃の100%で追撃し、耐性を無視して毒を付与。'};section.innerHTML=`<h3>パッシブⅡ</h3><b>${spec.secondary}</b><p>${descriptions[pid]}</p>`;$('#playerDetailBody')?.append(section);};
+const detailBaseV221=openPlayerDetail;openPlayerDetail=function(pid){detailBaseV221(pid);if(!passiveTwoV221(pid))return;const spec=PARTY_SPEC_V221.find(p=>p.id===pid),section=document.createElement('section');section.className='player-passive-v172';const descriptions={yusha:'あのヒーローに変身中、味方が攻撃を受けると10%の確率で敵全体に通常攻撃の120%で反撃。',money:'ヤミモブマニーに変身中、バブルネオンは極大ダメージ、レッドブルーボムは極大全体攻撃に強化。',desert:'会心時、通常攻撃の120%で追撃し、耐性を無視して毒を付与。'};section.innerHTML=`<h3>パッシブⅡ</h3><b>${spec.secondary}</b><p>${descriptions[pid]}</p>`;$('#playerDetailBody')?.append(section);};
 const ultBaseV221=performUltimate;performUltimate=async function(a,u,...args){if(String(a?.id).startsWith('helper218-'))return false;const saved={kind:u.kind,power:u.power};if(a.id==='money'&&a.transformedMoney&&passiveTwoV221('money')){if(u===a.ults[0])u.power=2.72;if(u===a.ults[1]){u.kind='aoeDamage';u.power=2.72;}}try{return await ultBaseV221(a,u,...args);}finally{Object.assign(u,saved);}};
 let miraFollowupV221=false;
-const hitBaseV221=applyEnemyDamageTo;applyEnemyDamageTo=function(a,e,...args){const r=hitBaseV221(a,e,...args);if(a?.id==='desert'&&passiveTwoV221('desert')&&r?.crit&&!r.miss&&e.hp>0&&!miraFollowupV221){miraFollowupV221=true;try{hitBaseV221(a,e,1,'physical',0);if(e.hp>0){(e.status??={}).poison=Math.max(e.status.poison||0,3);notice('ミラモブソウル','status');}}finally{miraFollowupV221=false;}}return r;};
+const hitBaseV221=applyEnemyDamageTo;applyEnemyDamageTo=function(a,e,...args){const r=hitBaseV221(a,e,...args);if(a?.id==='desert'&&passiveTwoV221('desert')&&r?.crit&&!r.miss&&e.hp>0&&!miraFollowupV221){miraFollowupV221=true;const b=state.battle,context=b.weaponAttackContext;try{b.weaponAttackContext={normal:true,element:a.attribute||'無'};hitBaseV221(a,e,1.2,'physical',0,true);if(e.hp>0){(e.status??={}).poison=Math.max(e.status.poison||0,3);notice('ミラモブソウル','status');}}finally{b.weaponAttackContext=context;miraFollowupV221=false;}}return r;};
 const damageBaseV221=damageAlly;damageAlly=async function(a,...args){const b=state.battle,source=actingEnemy(),d=await damageBaseV221(a,...args);if(d>0&&state.battle===b&&!b.finished){const hero=livingField().find(x=>x.id==='yusha'&&x.transformed);if(hero&&passiveTwoV221('yusha')&&passiveChance(.10)){await reactivePassiveBeat(hero,'あのヒーローにやっつけてもらおう');await playerAoeDamage(hero,1.2,'physical');}if(a.id==='lilith'&&!a.dead&&source?.hp>0&&passiveChance(.10)){const spells=availableMagicSkillsV104(a).filter(s=>s.power>0);if(spells.length){await reactivePassiveBeat(a,'薔薇の魔女');const s=pick(spells),context=b.weaponAttackContext;b.weaponAttackContext={normal:false,element:s.element||'闇'};try{await skillSprite(s.frames||[],'enemy',s.mode);applyEnemyDamageTo(a,source,s.power,'magic');}finally{b.weaponAttackContext=context;}}}}return d;};
 let doubleMagicV221=false;
 const magicBaseV221=performMagic;performMagic=async function(a,skill,...args){const chosen=skill?.id?skill:defaultMagicFor(a),r=await magicBaseV221(a,skill,...args);if(r!==false&&!doubleMagicV221&&a.id==='jessie'&&normalizeElement(chosen.element||a.attribute)==='雷'&&livingEnemies().length&&passiveChance(.80)){doubleMagicV221=true;const mp=a.mpNow;try{await passiveBeat(a,'ダブルサンダー');a.mpNow=a.maxMp;await magicBaseV221(a,skill,...args);}finally{a.mpNow=mp;doubleMagicV221=false;}}return r;};
@@ -22735,6 +22743,126 @@ performAttack=banditWrapActionV230(performAttack);performMagic=banditWrapActionV
 const banditEffectsBaseV230=figureEffectStatusMarkup;figureEffectStatusMarkup=function(pid){const rate=figureEffectsFor(pid).buffEffectV230;return banditEffectsBaseV230(pid)+(rate?`<section class="figure-extra-effects-v163"><span>バフ効果<b>+${figurePercentText(rate)}</b></span></section>`:'');};
 
 // UPDATE_V230_END
+// UPDATE_V231_BEGIN
+const STORY_V231={"events":{"arrival:neon2":{"worldId":"neon2","area":0,"steps":[["say","jessie","ようやく帰ってこれた"],["say","denden","そういえば\nここの保安官でやんしたねー"],["motionV231","money","ill"],["say","money","うっ・・・"],["say","nekoku","ん？大丈夫か？"],["say","money","頭が・・\n割れそう・・"],["say","nyoro","少し休むニョロ！"],["say","money","だめ・・\n急がない・・と・・"],["say","desert","先に進むべきだ\n立ち止まっても状況は変わらない"],["say","pink","モブマニー！\n頑張るであります!!"],["say","pink","僕たちがフォローするであります!!"],["say","jessie","そうね、急ぎましょう！"]]},"pre:neon2:0":{"worldId":"neon2","area":0,"steps":[["entranceV231",["n2-tiger"],"neon"],["motionV231","denden","shake"],["say","denden","チカチカでやんす！"],["say","n2-tiger","侵入者発見、排除する"],["say","desert","スピードタイプか\n厄介だな"],["say","money","しん・・にゅう・・\n侵入・・者・・"],["say","jessie","急いだ方が良さそうね"],["say","tetsu","すぐに終わらせるでござる！"]]},"post:neon2:0":{"worldId":"neon2","area":0,"steps":[["motionV231",["denden","pink"],"hop"],["say","denden","次次次～！でやんす！"],["say","pink","次次次～！であります！"]]},"pre:neon2:1":{"worldId":"neon2","area":1,"steps":[["entranceV231",["n2-tama","n2-kodora"],"hop"],["say","nyoro","なんだかキュートな子達だニョロ"],["say","jessie","油断しないで"],["say","desert","お前達を見ていれば分かる"],["say","denden","でも可愛いでやんす～"],["motionV231","money","stagger"],["say","money","ウッ・・・"],["say","tetsu","モブマニー、拙者に掴まるでござる"],["say","money","・・ありがとう"]]},"post:neon2:1":{"worldId":"neon2","area":1,"steps":[["say","nekoku","オラ、この場所見覚えがあるぞ"],["say","jessie","今更？\n海底はネオン街出身が多いのよ"],["say","nekoku","そうだ\n国王様に連れて来てもらったんだ"],["say","desert","国王はネオン街出身なのか？"],["say","nekoku","いや、女王様がネオン街出身だ"],["say","jessie","そうだったわね"],["say","desert","それくらいでいいだろう\n行くぞ"]]},"pre:neon2:2":{"worldId":"neon2","area":2,"steps":[["entranceV231",["n2-palette"],"neon"],["say","n2-palette","止まれ"],["say","denden","派手なやつが来たでやんす！"],["say","money","モブ・・パレット・・"],["say","jessie","モブマニー、\n今は何も考えなくていい"],["say","jessie","私たちに任せて"],["say","nyoro","素早く倒すニョロ！"],["say","n2-palette","悪いがここまでだ\n魔王などどうでもいいが"],["say","n2-palette","マスター様の言うこと絶対だ"],["say","desert","魔王の傘下じゃないだと？"],["say","jessie","彼は、\nマスターと共に世界を回っていた"],["say","pink","なぜ魔王の肩を持つでありますか！？"],["say","n2-palette","マスター様に考えがあってのこと"],["say","n2-palette","私は従うまでだ"],["say","n2-palette","かつての仲間であろうと\n容赦はしない"],["say","nekoku","オラ、モブマニーを守る！"],["say","denden","やるでやんす！！"]]},"post:neon2:2":{"worldId":"neon2","area":2,"steps":[["guest","n2-palette"],["say","n2-palette","見事だ、お前たちは強い"],["say","jessie","後は私たち任せて"],["say","n2-palette","魔王との戦い、\n楽しみにしているぞ"],["hideGuests"],["hideGuest"]]},"pre:neon2:3":{"worldId":"neon2","area":3,"steps":[["entranceV231",["boss-neomaster"],"neon-master"],["say","boss-neomaster","ボス表示"],["say","boss-neomaster","よくぞここまで来ました"],["say","boss-neomaster","これも運命というやつですね\n勇者よ、あなたには何が見える？"],["say","boss-neomaster","戦士達よ、\nこの戦いの先に、何を見る？"],["say","pink","洗脳する気であります！！\n聞かなくていいであります！"],["say","jessie","そんなせこいことしないわ\nこの人はネオン街のマスターよ"],["say","boss-neomaster","モブジェシー、お久しぶりです"],["say","boss-neomaster","随分と長いこと旅をしましたね\nお互いに"],["say","jessie","そうね"],["say","jessie","まさかあなたと対峙するなんて\n思ってもみなかったわ"],["say","boss-neomaster","これも運命です"],["say","boss-neomaster","モブマニー\nあなたも元気そうですね"],["say","money","・・・？"],["say","boss-neomaster","そうですね\n封印が解かれて間もない\nしかし、時間もない"],["say","nekoku","モブマニー\n苦しんでるぞ"],["say","denden","い、急ぐでやんす！"],["say","jessie","私はやるべきことをやる"],["say","desert","話しはまとまったようだな"],["say","desert","お前達とやつに\nどんな関わりがあるかは知らない"],["say","desert","だが、俺は俺の使命を全うする"],["say","tetsu","あとは刀で語るでござる！"],["say","pink","魔王城への扉を開くため、\nみなさん、やるであります！"]]},"post:neon2:3":{"worldId":"neon2","area":3,"steps":[["guest","boss-neomaster"],["say","jessie","私たちの勝ちね"],["say","boss-neomaster","素晴らしい力です"],["say","boss-neomaster","魔王の力は強大\nしかし、あなたたちなら"],["say","money","マスター・・"],["say","nyoro","モブマニー、\nまだ良くならないニョロ・・"],["say","tetsu","しかし何か方法があるはずでござる"],["say","denden","急いでここを出るでやんす！"],["say","boss-neomaster","待ちなさい"],["say","boss-neomaster","モブマニー、\nあなたは運命の子"],["say","boss-neomaster","ここで失うわけにはいかない"],["transferV231","boss-neomaster","money","neon"],["say","jessie","マスター・・"],["softLight"],["hideGuest"],["motionV231","money","glow"],["say","money","・・・・あれ？"],["say","denden","正気に戻ったでやんすか！？"],["say","desert","気分はどうだ？"],["say","money","うん、平気！"],["say","money","意識はあったんだけど\n頭がもやもやしてたの"],["say","money","でも、もう大丈夫！\n次へ行きましょう！"],["say","tetsu","良かったでござる！"],["say","money","ありがとう！あんた優しいのね"],["say","tetsu","当然のことをしたまででござる！"],["say","pink","王様に報告へ行きましょう！"],["fadePartyExcept","jessie"],["say","jessie","マスター・・\n必ずやり遂げて見せます"],["medalV231","neon2"]]},"arrival:magma2":{"worldId":"magma2","area":0,"steps":[["say","nyoro","帰って来たニョロ～！\nやっぱり落ち着くニョロ"],["say","denden","故郷は特別でやんすからね～"],["say","money","相変わらず暑いわね"],["say","tetsu","これは良い修行になるでござる"],["say","jessie","ここも強敵だらけよ\n油断せず進みましょう"],["say","desert","モブドラゴンは火属性だ\nしっかり対策して挑むぞ"]]},"pre:magma2:0":{"worldId":"magma2","area":0,"steps":[["entranceV231",["m2-yogan"],"lava"],["say","nekoku","すんごいスライムだなー"],["say","desert","スライムにしては\n魔力が高すぎる"],["say","nyoro","たぶん変異体ニョロ！\nマグマではよくあるニョロ！"],["motionV231","denden","hop"],["say","denden","ビリビリさせてやるでやんす！"],["say","money","魔力なら負けないわ！"]]},"post:magma2:0":{"worldId":"magma2","area":0,"steps":[["say","nyoro","最近本当に多いニョロ"],["say","jessie","危険なモンスターね"],["say","desert","そうだな\nやはり急がねば"],["say","pink","こんなのが増えたら大変であります！"]]},"pre:magma2:1":{"worldId":"magma2","area":1,"steps":[["entranceV231",["m2-salamander"],"fire"],["say","denden","オイラやっぱり\n暑いの嫌いでやんす！"],["say","nyoro","あいつはこのエリアでも\n特に熱いモンスターニョロ！"],["say","pink","本当にアッチイであります！"],["say","jessie","モブサラマンダーね？\n聞いたことがあるわ"],["say","pink","倒して、\n少しでも涼しくするであります！"],["say","desert","やけどに注意しつつ、一気に倒すぞ！"]]},"pre:magma2:2":{"worldId":"magma2","area":2,"steps":[["entranceV231",["m2-buster"],"walk"],["say","m2-buster","勇者一行よ\nお前達の命運もここまでだ"],["say","desert","なんだこいつは・・"],["say","money","この感じ・・"],["say","desert","モブドラゴンと同じ魔力を持っている！"],["say","nyoro","あいつはマグマの処刑人ニョロ！"],["say","nyoro","モブドラゴンと\n同じくらいの力を持っているニョロ！"],["say","m2-buster","その通り"],["say","m2-buster","我らは魔王様より\n同じ魔力を与えられている"],["say","money","でも同じでしょ？\nなんでそんなに強気なの？"],["say","denden","オイラたちは\nモブドラゴンを倒しているでやんす！"],["say","m2-buster","無知と言うのは楽なものだな"],["say","tetsu","この者\n力を隠しているでござる"],["say","m2-buster","ほう"],["say","m2-buster","お前は見込みがありそうだ\nでは、始めるぞ"]]},"post:magma2:2":{"worldId":"magma2","area":2,"steps":[["guest","m2-buster"],["say","m2-buster","これで完成するのだ"],["say","m2-buster","全てを滅ぼす\n最強のドラゴンが！！"],["hideGuests"],["hideGuest"],["say","denden","もっと凄いドラゴンでやんすか！\n（会ってみたいでやんす）"],["say","nekoku","きっと大きいぞ"],["say","jessie","しっかり回復してから行きましょう"],["say","pink","キャンプで休むであります！"]]},"pre:magma2:3":{"worldId":"magma2","area":3,"steps":[["entranceV231",["dragon"],"fire"],["say","dragon","待ちわびたぞ\nこの時を"],["say","dragon","勇者よ\nお前ともう一度戦いたかった"],["say","desert","さらに力が上がっている"],["say","jessie","大変な戦いになりそうね"],["say","money","ドラゴンとの決戦、\n燃えるわ！"],["say","dragon","勇者よ\n覚悟するのだ！！"],["motionV231",["denden","pink"],"hop"],["transformV231","boss-dragon2","fire"],["say","nyoro","気を付けるニョロ！\nこれが本来の姿ニョロ！"]]},"post:magma2:3":{"worldId":"magma2","area":3,"steps":[["guest","dragon"],["say","dragon","私の負けだ"],["say","dragon","最後に\n素晴らしい戦いが出来た"],["say","dragon","もう\n思い残すことは無い"],["say","pink","モブドラゴン！\n立派でありました！"],["say","pink","僕は勇者の相棒として\nお前を決して忘れないであります！"],["say","dragon","ふふふっ・・\n勇者の相棒\nモブピンクよ"],["say","dragon","お前も素晴らしい戦士だ"],["say","dragon","お前にこれを託そう"],["medalV231","magma2"],["hideGuests"],["hideGuest"]]},"arrival:desert2":{"worldId":"desert2","area":0,"steps":[["say","jessie","砂漠は本当に変わらないわね"],["say","desert","ああ、ここが一番落ち着く"],["say","money","あなたにとっては、\n特別な場所だものね"],["say","nyoro","暑くてちょうどいいニョロ"],["say","denden","オイラちょっと苦手でやんす"],["sayOff","???","ちょっといいかナ？"],["entranceV231",["riro"],"sakura"],["say","riro","君たちが勇者一行かナ？"],["say","pink","何者でありますか！？"],["say","riro","私はモブリーロ、魂を司る者"],["say","money","魂を？"],["say","riro","ミラモブは\nいくつものタブーを犯していまス\n魂を軽く見ていまス"],["say","riro","魔王も同じでス"],["say","desert","それで、勇者と共に魔王を討ちたい\nというわけか"],["say","jessie","いいの？あったばかりよ？"],["say","riro","私、強いでス"],["say","pink","みんなあってすぐ\n仲間になったであります！"],["say","denden","魔王討伐に向けて\n仲間は多い方がいいでやんす！"],["say","tetsu","強き心の持ち主\n大歓迎でござる！"],["say","riro","ありがとうございまス"],["say","money","しっかり働いてもらうわよ！"],["join","riro","モブリーロが仲間に加わった！"]]},"pre:desert2:0":{"worldId":"desert2","area":0,"steps":[["entranceV231",["boss-mira-d2"],"dark"],["say","boss-mira-d2","待っていたぞ勇者たちよ"],["say","denden","ミラモブ！？"],["say","boss-mira-d2","この世界を支配するのは魔王様\nお前たちに\n邪魔はさせない"],["say","money","いきなり出てくるなんて\n手間が省けたわね！"],["say","riro","少しいいですカ？\nミラモブ"],["say","riro","あなたは数日前\nソウルフュージョンを実行しタ"],["say","pink","ソウルフュージョン？"],["say","riro","一体どんなモンスターを作ったのですカ？"],["say","boss-mira-d2","貴様サクラ一族か"],["say","boss-mira-d2","ククク・・\nさあ？\nどんなモンスターかな？"],["say","desert","なんでもいい\n俺たちは目の前の敵を倒すだけだ！"],["say","boss-mira-d2","この前のようには\n行かないぞ！！"]]},"post:desert2:0":{"worldId":"desert2","area":0,"steps":[["say","boss-mira-d2","ククク・・\nこれでよい・・"],["hideGuests"],["hideGuest"],["say","jessie","これで目的達成？"],["say","money","ううん\n凄い魔力をいくつも感じる\nここからが本番みたいね"],["say","pink","ミラモブ以上のモンスターが\nまだいるってことでありますね"],["motionV231","nyoro","shake"],["say","nyoro","ちょっと怖いニョロ・・"],["say","desert","砂漠の風が変わった\nみんな注意しろ"]]},"pre:desert2:1":{"worldId":"desert2","area":1,"steps":[["entranceV231",["d2-mirabuster"],"souls"],["say","d2-mirabuster","おーおー・・\nお前たちか"],["say","d2-mirabuster","魔王様に逆らう愚か者は"],["say","desert","なんという不気味な魔力だ"],["say","jessie","これがソウルフュージョン・・？"],["say","riro","そうでス\nみなさんお気をつけテ"],["say","tetsu","妖気を感じるでござる"],["say","pink","サポートし合いながら戦いましょう！"],["say","d2-mirabuster","おーおー・・\n忙しいやつらだな"],["say","money","行くわよ！"]]},"post:desert2:1":{"worldId":"desert2","area":1,"steps":[["say","denden","やったであります！"],["say","nekoku","変な奴だったぞ"],["say","desert","この魔法を魔王も使えるのか？"],["say","riro","この魔法を使えるのハ\nミラモブと"],["say","riro","魔王城の魔女\nモブリリスだけでス"],["say","riro","世界の禁術として\n封じられていましタ"],["say","jessie","聞いたことがあるわ\nモンスターとモンスターを融合させる術"],["say","jessie","あの禁術が\nソウルフュージョンね？"],["say","money","モブリリスはなぜその術を使わないの？\n魔王軍でしょ？"],["say","riro","分かりませン\nしかし\nいつ使ってもおかしくありませン"],["motionV231","denden","shake"],["say","denden","(怖いでやんす)"],["say","nyoro","みんなで戦えば大丈夫ニョロ！"]]},"pre:desert2:2":{"worldId":"desert2","area":2,"steps":[["entranceV231",["d2-miraearth","d2-mirakarami","d2-miranight","d2-miratime"],"four"],["say","desert","なんだこれは！？"],["say","nyoro","ミラモブがいっぱいニョロ！"],["say","d2-miraearth","我ら"],["say","d2-mirakarami","ミラモブ四人衆"],["say","d2-miranight","ミラモブ様の命により"],["say","d2-miratime","お前たちをここで始末する"],["say","money","こいつら\n相当強いわよ！"],["say","nekoku","肌がヒリヒリするぞ"],["say","pink","ここで負けるわけには\nいかないであります！！"],["say","pink","ミラモブ四体分でありますか・・！"],["say","denden","全員ビリビリの系でやんすーー！！"],["say","d2-mirakarami","まずは俺達からだ！"],["say","d2-miraearth","坊やたち、私たちが遊んであげよう"],["sceneFxV231","earth-fire"]]},"post:desert2:2":{"worldId":"desert2","area":2,"steps":[["guests",["d2-miraearth","d2-mirakarami","d2-miranight","d2-miratime"]],["hideGuests"],["hideGuest"],["say","denden","勝ったでやんす！"],["say","jessie","もうヘトヘト・・"],["say","riro","残すはミラモブだけでス"],["say","desert","ああやつとの最後の決戦だ"],["say","pink","うおー！であります！！"]]},"pre:desert2:3":{"worldId":"desert2","area":3,"steps":[["entranceV231",["boss-mira-d2"],"dark"],["say","boss-mira-d2","しつこいやつらだ"],["say","money","あんたもね！"],["say","desert","諦めろ\nお前はここまでだ"],["say","boss-mira-d2","そうかな？"],["absorbFourV231"],["say","boss-mira-d2","お、、おぉ・・！！！！！"],["transformV231","boss-dorafara","dark"],["say","pink","こ、これは！？"],["say","boss-dorafara","この世界を支配するのは魔王様\n砂漠を支配するのはこの私"],["say","desert","その姿・・"],["say","boss-dorafara","私は砂漠の支配者使命を全うする"],["say","jessie","部族村の長たちと同じ・・！"],["say","money","力を求めた代償ね"],["say","nekoku","オラ、なんだか悲しい"],["sceneFxV231","dark"],["motionV231","boss-dorafara","glow"],["say","nyoro","みんな、構えるニョロ！！"],["say","denden","やるでやんす！"],["say","desert","来い！ミラモブ！！"],["say","desert","俺たちがお前を眠らせてやる！"]]},"post:desert2:3":{"worldId":"desert2","area":3,"steps":[["guest","boss-mira-d2"],["say","boss-mira-d2","はあ・・はあ・・、、\n私は不滅・・\nだったはず・・"],["say","desert","砂漠の王よお前は敗れたのだ\n勇者によって"],["say","boss-mira-d2","そうか・・"],["say","boss-mira-d2","わが息子モブデザートよ\n素晴らしい仲間に出会ったな"],["motionV231","pink","big-hop"],["say","pink","えーーーーーーー！！！"],["say","money","親子だったの！？"],["say","boss-mira-d2","お前は昔から\n魔王様のやり方が嫌いだったな"],["say","boss-mira-d2","お前がピラミッドを去った時\nいつかこんな日が来ると思っていた"],["say","desert","俺は・・\n俺は砂漠が好きだ"],["say","desert","種族隔てなく\n自由に生活出来る広大なエリア"],["say","desert","それが魔王によって奪われた\n俺は我慢出来なかった"],["say","boss-mira-d2","そうだな・・だが\n私では砂漠を守り切れなかった"],["say","boss-mira-d2","魔王様は秩序を保たれているのだ\n正しいかは分からないがな"],["say","jessie","正しいわけがないわ"],["say","jessie","あなた達はずっと命を軽く見ている\nただの悪党よ"],["say","boss-mira-d2","悪党か、それは否定しない\nしかし魂はだれよりも重んじている"],["say","boss-mira-d2","そこは譲れない"],["say","boss-mira-d2","モブデザートよ、お前に私の力を授ける\nこの先の未来、好きなように生きてみろ"],["say","boss-mira-d2","砂漠を頼んだぞ"],["transferV231","boss-mira-d2","desert","dark"],["awakenV231"],["hideGuests"],["hideGuest"],["motionV231","pink","hop"],["say","pink","モブデザート！\nかっけーであります！"],["motionV231","denden","hop"],["say","denden","いけてるでやんす～！"],["say","money","あれほどの魔物を従えるなんて\n魔王がまた遠く感じるわね"],["say","nekoku","でも、悪いことはだめだ\n人に、いじわるしちゃダメだ"],["say","nyoro","その通りニョロ"],["say","riro","少なくとモ\n魔王は絶対的な悪でス"],["say","desert","そうだな"],["say","desert","さあ行こう、魔王討伐の時だ"],["say","jessie","魔王城へ向かいましょう\nやることは決まっているわ"],["say","pink","やりましょう！みなさん！"],["fadePartyExcept","desert"],["say","desert","砂漠の王よ\n安らかに・・"],["medalV231","desert2"],["fadeActor","desert"]]}},"battle":{"battle:neo70":[["say","boss-neomaster","やりますね"],["say","boss-neomaster","ではギアを上げますよ"]],"battle:neo40":[["say","boss-neomaster","勝負は、最後まで分かりませんよ"]],"battle:gidora":[["say","boss-dragon2","素晴らしい\n本当に素晴らしいぞ勇者よ！\n私は嬉しいぞ\nようやく\n本当の好敵手に出会えた！！"],["flameAbsorbV231"]],"battle:mira2":[["say","boss-mira-d2","いいぞ\nそうこなくては面白くない！！"],["narrate","ミラモブⅡに変身した！"]],"battle:karami50":[["say","d2-mirakarami","やるじゃねえか！\n燃えてきたぜ！"],["narrate","モブミラカラミの戦闘力がアップした！"]],"battle:earth50":[["say","d2-miraearth","小賢しいガキ共だ\n踏みつぶしてくれる！"],["narrate","モブミラアースのATKとDEFがアップした！"]],"battle:karamiDown":[["say","d2-mirakarami","くそ・・俺がやられるとはな・・"]],"battle:earthDown":[["say","d2-miraearth","貴様ら如きにこの私が!!"]],"battle:pair2":[["say","d2-miranight","中々やるじゃないか"],["say","d2-miratime","遊びすぎなんですよあの二人は"],["say","d2-miranight","では始めから全力で行くとしよう"],["say","d2-miratime","そうですね\nあっという間に終わらせましょう"],["narrate","2人のATKとDEFがアップした！"]],"battle:reviveBefore":[["say","money","・・・・？"],["say","money","なんだろう\n嫌な予感がする"],["say","desert","終わってないのか？"],["darkPulse"],["say","d2-miratime","ソウル・タイム・ミラー！！"]],"battle:reviveAfter":[["say","jessie","そんな!！"],["say","d2-miraearth","結局勝つのは私たちだ！"],["say","d2-mirakarami","派手に暴れてやるぜ！"],["say","d2-miranight","決着をつけようか"],["say","d2-miratime","ゲームオーバーです"],["say","money","みんな、私に任せて！"],["narrate","モブマニーの魔力により\n全員のHPが少し回復した！"]]}};
+for(const [key,event]of Object.entries(STORY_V231.events))STORY_EVENTS[key]={...STORY_EVENTS[key],...event};
+Object.assign(STORY_V173.battle,STORY_V231.battle);
+if(enemyTemplate('boss-neomaster'))enemyTemplate('boss-neomaster').name='モブネオンマスター';
+const FOUR_V231=['d2-miraearth','d2-mirakarami','d2-miranight','d2-miratime'];
+function storySkippingV231(){return skippingV174()||skipConversationV224();}
+async function sceneFxV231(theme,host=$('#storyScene'),target=null){
+ if(!host||storySkippingV231())return;
+ const layer=document.createElement('div');layer.className='story-fx-v231 '+theme;layer.setAttribute('aria-hidden','true');
+ if(target){const hr=host.getBoundingClientRect(),r=storyAnchorRect(target);layer.style.cssText=`left:${r.left-hr.left+r.width/2}px;top:${r.top-hr.top+r.height/2}px;width:230px;height:230px;transform:translate(-50%,-50%);`;}
+ for(let i=0;i<18;i++){const p=document.createElement('i');p.style.setProperty('--i',i);p.style.setProperty('--x',((i*37)%100)+'%');p.style.setProperty('--y',((i*61)%100)+'%');layer.append(p);}host.append(layer);
+ try{await animateV157(layer,[{opacity:0},{opacity:.8,offset:.2},{opacity:.7,offset:.7},{opacity:0}],theme==='neon-master'?1800:1000);}finally{layer.remove();}
+}
+async function motionV231(ids,kind){
+ await Promise.all((Array.isArray(ids)?ids:[ids]).map(async id=>{const actor=storyAnchor(id);if(!actor)return;
+  if(kind==='ill'||kind==='glow')await sceneFxV231('neon',$('#storyScene'),actor);
+  const height=kind==='big-hop'?65:24;
+  const frames=kind==='hop'||kind==='big-hop'?[{translate:'0 0'},{translate:`0 -${height}px`,offset:.2},{translate:'0 0',offset:.45},{translate:`0 -${height*.7}px`,offset:.7},{translate:'0 0'}]:kind==='stagger'?[{rotate:'0deg'},{rotate:'-14deg',translate:'-12px 7px'},{rotate:'8deg',translate:'5px 0'},{rotate:'0deg',translate:'0 0'}]:[{translate:'0 0'},{translate:'-6px 0'},{translate:'5px 0'},{translate:'-4px 0'},{translate:'0 0'}];
+  if(kind!=='glow')await animateV157(actor,frames,850);
+ }));
+}
+async function entranceV231(ids,theme){
+ const scene=$('#storyScene');scene.classList.add('entrance-hidden-v231');
+ try{if(ids.length>1)await storyShowGuests(ids,{raised:theme==='four'});else await storyShowGuest(ids[0]);
+  const actors=ids.map(storyAnchor).filter(Boolean);actors.forEach(el=>el.style.opacity='0');scene.classList.remove('entrance-hidden-v231');
+  for(const [i,actor]of actors.entries()){
+   const mode=theme==='four'?['earth','fire','slash','time'][i]:theme;
+   const frames=mode==='walk'?[{translate:'120px 0',opacity:0},{translate:'80px -6px',offset:.25,opacity:1},{translate:'45px 0',offset:.5},{translate:'20px -5px',offset:.75},{translate:'0 0',opacity:1}]:mode==='lava'?[{scale:'1.4 .1',opacity:0},{scale:'.8 1.2',offset:.65,opacity:1},{scale:'1',opacity:1}]:mode==='hop'?[{translate:'110px -25px',opacity:0},{translate:'65px 0',opacity:1,offset:.4},{translate:'25px -28px',offset:.7},{translate:'0 0',opacity:1}]:[{translate:mode.startsWith('neon')?'180px 0':'0 40px',scale:'.55',opacity:0},{translate:'-8px 0',scale:'1.04',opacity:1,offset:.8},{translate:'0 0',scale:'1',opacity:1}];
+   await Promise.all([sceneFxV231(mode,scene,actor),animateV157(actor,frames,mode==='walk'?1600:900)]);actor.style.opacity='';
+  }
+  if(theme==='four'&&!storySkippingV231()){const title=document.createElement('div');title.className='four-title-v231';title.textContent='ミラモブ四人衆';scene.append(title);try{await fixedDelay(2000);}finally{title.remove();}}
+ }finally{scene.classList.remove('entrance-hidden-v231');for(const id of ids)storyAnchor(id)?.style.removeProperty('opacity');}
+}
+async function transferV231(fromId,toId,theme){
+ if(storySkippingV231())return;
+ const from=storyAnchor(fromId),to=storyAnchor(toId),scene=$('#storyScene');if(!from||!to)return;
+ await sceneFxV231(theme,scene,from);const sr=scene.getBoundingClientRect(),fr=storyAnchorRect(from),tr=storyAnchorRect(to),orb=document.createElement('div');
+ orb.className='transfer-orb-v231 '+theme;orb.style.left=fr.left-sr.left+fr.width/2+'px';orb.style.top=fr.top-sr.top+fr.height/2+'px';
+ if(theme==='dark'){const img=new Image();img.src=storyActorInfo(fromId).image;orb.append(img);}
+ scene.append(orb);const dx=tr.left+tr.width/2-fr.left-fr.width/2,dy=tr.top+tr.height/2-fr.top-fr.height/2;
+ try{await animateV157(orb,[{translate:'0 0',scale:'.2',opacity:0},{translate:`${dx*.15}px ${dy*.15-18}px`,scale:'1',opacity:.85,offset:.2},{translate:`${dx*.5}px ${dy*.5+20}px`,opacity:.85,offset:.5},{translate:`${dx*.8}px ${dy*.8-12}px`,opacity:.75,offset:.8},{translate:`${dx}px ${dy}px`,scale:'.1',opacity:0}],2800);}finally{orb.remove();}
+ await sceneFxV231(theme,scene,to);
+}
+async function absorbFourV231(){
+ const scene=$('#storyScene'),boss=storyAnchor('boss-mira-d2');if(!boss)return;
+ for(const id of FOUR_V231){if(storySkippingV231())break;const info=storyActorInfo(id),ghost=new Image();ghost.src=info.image;ghost.className='absorb-ghost-v231';scene.append(ghost);await endingImageReadyV225(ghost);const sr=scene.getBoundingClientRect(),br=storyAnchorRect(boss),dx=br.left+br.width/2-sr.left-sr.width*.2,dy=br.top+br.height/2-sr.top-sr.height*.35;
+  try{await sceneFxV231('souls',scene,ghost);await animateV157(ghost,[{opacity:0,scale:'.5'},{opacity:1,scale:'1',offset:.25},{opacity:0,translate:`${dx}px ${dy}px`,scale:'.05'}],1200);await animateV157(boss,[{filter:'brightness(1)'},{filter:'brightness(.35)',offset:.4},{filter:'brightness(1.35)',offset:.65},{filter:'brightness(1)'}],500);}finally{ghost.remove();}
+ }
+}
+async function transformV231(id,theme){await sceneFxV231(theme);await storyTransformGuest(id);await sceneFxV231(theme,$('#storyScene'),storyAnchor(id));}
+const storyStepsBaseV231=runStorySteps;
+runStorySteps=async function(steps=[]){for(const [type,a,b,c,...rest]of steps){
+ if(type==='medalV231'){await awardStoryMedalV231(a);continue;}if(type==='awakenV231'){await awakenDesertV120();continue;}
+ if(storySkippingV231()&&type.endsWith('V231'))continue;
+ if(type==='entranceV231')await entranceV231(a,b);
+ else if(type==='motionV231')await motionV231(a,b);
+ else if(type==='sceneFxV231')await sceneFxV231(a);
+ else if(type==='transferV231')await transferV231(a,b,c);
+ else if(type==='transformV231')await transformV231(a,b);
+ else if(type==='absorbFourV231')await absorbFourV231();
+ else await storyStepsBaseV231([[type,a,b,c,...rest]]);
+}};
+window.__mobBuildVersion='v231';
+
+function boostEnemyV231(e,rate,cut=0){
+ for(const stat of ['maxHp','hp','maxMp','mp','atk','mag','def','res','spd'])if(Number.isFinite(e[stat]))e[stat]=Math.max(1,Math.round(e[stat]*(1+rate)));
+ e.damageReduction=clamp((e.damageReduction||0)+cut,0,.9);e.permanentDamageReduction=true;fx('buff',`enemy:${e.uid}`);
+}
+const battleSequenceBaseV231=playBattleSequenceV173;
+playBattleSequenceV173=async function(key,sayOnly=false){
+ await battleSequenceBaseV231(key,sayOnly);
+ const e=state.battle?.enemies?.find(e=>e.id==='boss-neomaster');
+ if(key==='neo70'&&e&&!e.neo70V231){e.neo70V231=true;boostEnemyV231(e,.10,.10);e.critBonusV231=.10;await actionCutin('全ステータス・ダメージ軽減・会心率が10%アップ！','buff',1000);}
+ if(key==='neo40'&&e&&!e.neo40V231){e.neo40V231=true;boostEnemyV231(e,0,.10);e.specialChanceV231=.8;e.actionCount=3;e.forceActionCount=true;await actionCutin('ダメージ軽減アップ！ 3回行動！','buff',1000);}
+ if(key==='reviveBefore')await sceneFxV231('time',$('#battleFxLayer'));
+ renderBattle();
+};
+async function flameAbsorbV231(){
+ const layer=$('#battleFxLayer');if(!layer||skipConversationV224())return;
+ const frames=Array.from({length:8},(_,i)=>{const img=new Image();img.src=`skill/${String(i+5).padStart(2,'0')}.png`;return img;});await Promise.all(frames.map(endingImageReadyV225));
+ const images=[];try{
+  for(const side of [-1,1]){const img=new Image();img.src='skill/05.png';img.className='flame-absorb-v231';img.style.cssText=`position:absolute;left:${side<0?0:80}%;top:20%;width:20%;height:35%;object-fit:contain;pointer-events:none;`;layer.append(img);images.push(img);}
+  await Promise.all(images.map(endingImageReadyV225));
+  for(let n=5;n<=12;n++){for(const img of images)img.src=`skill/${String(n).padStart(2,'0')}.png`;await fixedDelay(95);}
+  await Promise.all(images.map((img,i)=>animateV157(img,[{left:i?'80%':'0%',opacity:.85},{left:'40%',opacity:0,scale:'.2'}],1000)));
+ }finally{images.forEach(img=>img.remove());}
+}
+const damageAllyBaseV231=damageAlly;
+damageAlly=async function(a,power,...args){const e=actingEnemy(),critical=!!e?.critBonusV231&&Math.random()<e.critBonusV231,old=enemyCriticalV163;if(critical){enemyCriticalV163=true;notice('会心の一撃！','danger',450);}try{return await damageAllyBaseV231(a,power*(critical?TEMP_BALANCE.critPower:1),...args);}finally{enemyCriticalV163=old;}};
+const roundBaseV231=startRound;
+startRound=function(...args){for(const e of state.battle?.enemies||[])if(e.revivedFourV231)e.actionCount=rint(1,2);return roundBaseV231(...args);};
+const poisonV231=MOB_DATA.magicCatalog.find(s=>s.id==='mira-mob-poison');
+Object.assign(poisonV231,{name:'デザート・ミラモブ・ポイズン',target:'all',element:'闇',effectText:'敵全体に闇属性中ダメージ＋会心率10%＋70%で毒'});
+performMiraMobPoisonV120=async function(a,chosen){
+ if(a.id!=='desert'||!desertAwakenedV120())return false;
+ const cost=v120MagicCost(a,chosen);if(a.mpNow<cost.cost){notice('MPが足りない！','danger');return false;}const enemies=livingEnemies();if(!enemies.length)return false;a.mpNow-=cost.cost;
+ await actionCutin(`${a.name}の${chosen.name}！`,'system',650);await miraChargeFxV120(a);await skillSprite(chosen.frames||[],'enemy-all');
+ const b=state.battle,previous=b.weaponAttackContext;b.weaponAttackContext={normal:false,element:'闇'};
+ try{for(const e of enemies){const result=applyEnemyDamageTo(a,e,chosen.power||1.7,'magic',chosen.crit||.1,false);if(!result?.miss&&e.hp>0)applyEnemyStatusTo(e,'poison',chosen.chance||.7,3);}return true;}finally{b.weaponAttackContext=previous;renderBattle();await delay(380);}
+};
+showDesertAwakeningV120=async function(){if(storySkippingV231())return;await storyNarrate('モブデザートがパワーアップした！\nパッシブⅡ「ミラモブソウル」を習得！\n「デザート・ミラモブ・ポイズン」を獲得！');};
+const STORY_MEDALS_V231={
+ neon2:{id:'story-neomaster-medal',name:'モブネオンマスター',actor:'boss-neomaster',stats:{mag:50,res:50,maxMp:200},traits:[{kind:'storyMagicCritV231',value:.05,label:'魔法会心率+5%'}]},
+ magma2:{id:'story-dragon-medal',name:'モブドラゴン',actor:'dragon',stats:{atk:50,def:50,maxHp:200},traits:[{kind:'resist',element:'火',value:.15,label:'火属性耐性+15%'},{kind:'resist',element:'闇',value:.15,label:'闇属性耐性+15%'}]},
+ desert2:{id:'story-mira-medal',name:'ミラモブ',actor:'boss-mira-d2',stats:{atk:80,spd:80},traits:[{kind:'darkMagicCritV231',value:.08,label:'闇属性魔法会心率+8%'}]}
+};
+for(const row of Object.values(STORY_MEDALS_V231)){row.image=storyActorInfo(row.actor).image;if(!weaponById(row.id))WEAPONS.push({...row,type:'メダル',types:['メダル'],rarity:'UR',attribute:'無',traitLabel:row.traits.map(t=>t.label).join(' / ')});}
+function grantStoryMedalV231(world){const row=STORY_MEDALS_V231[world];if(!row)return false;const earned=state.meta.storyMedalsV231??={};if(earned[world])return false;addMedal(row.id,1);earned[world]=true;saveMeta();return true;}
+async function awardStoryMedalV231(world){
+ if(!grantStoryMedalV231(world)||storySkippingV231())return;
+ const row=STORY_MEDALS_V231[world],el=document.createElement('div');el.className='story-medal-v231';const img=new Image();img.src=row.image;img.alt=row.name;const text=document.createElement('b');text.textContent=`${row.name}のメダルを手に入れた！`;el.append(img,text);document.body.append(el);
+ try{await endingImageReadyV225(img);await fixedDelay(2400);}finally{el.remove();}
+}
+const medalCritBaseV231=calcDamage;
+calcDamage=function(a,type,power,crit=0,e=targetEnemy()){const element=normalizeElement(state.battle?.weaponAttackContext?.element||a.attribute||'無'),bonus=type==='magic'?weaponTraitSum(a,'storyMagicCritV231')+(element==='闇'?weaponTraitSum(a,'darkMagicCritV231'):0):0;return medalCritBaseV231(a,type,power,bonus?Math.max(TEMP_BALANCE.critRate,crit)+bonus:crit,e);};
+// Completed saves receive each newly introduced story reward once.
+setTimeout(()=>{for(const world of Object.keys(STORY_MEDALS_V231))if(storyDone(`post:${world}:3`)||worldCleared(world))grantStoryMedalV231(world);},0);
+
+// UPDATE_V231_END
 })();
 </script>
 </body>
