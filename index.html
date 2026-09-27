@@ -5205,6 +5205,7 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .ending-caption-v157:has(.ending-logo-v169){flex-direction:column;gap:20px}
 .ending-caption-v157 .ending-logo-v169{width:min(80vw,360px);max-height:45vh;object-fit:contain;flex-shrink:0}
 
+
 /* UPDATE_V218_BEGIN */
 .figure-extra-v218{position:fixed;inset:0;z-index:30000;background:#090e1bec;overflow:auto;padding:20px;color:#edf4ff}.figure-extra-v218[hidden]{display:none}
 .figure-extra-v218>section{max-width:780px;margin:auto}.figure-extra-v218 header{display:flex;justify-content:space-between;align-items:center}.figure-extra-v218 button{color:inherit;background:#22324d;border:1px solid #647b9b;border-radius:8px;padding:8px}
@@ -5313,9 +5314,12 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 
 /* UPDATE_V230_BEGIN */
 .bandit-story-v230 #storyGuestGroup{width:94%!important;left:3%!important;right:3%!important;height:24vh!important;bottom:38%!important;max-height:210px}
+.bandit-enter-preparing-v233 #storyGuestGroup{visibility:hidden!important}
+.bandit-transition-v233 #fieldEvent,.bandit-transition-v233 #adventureParty{visibility:hidden!important}
+.bandit-wave-preparing-v233 #enemyArea{visibility:hidden!important}
 .bandit-story-v230 #storyGuestGroup .story-guest-multi{max-width:24%!important;width:24%!important;height:100%!important}
 .bandit-story-v230 #storyGuestGroup[data-count="5"] .story-guest-multi{max-width:19%!important;width:19%!important}
-.bandit-story-v230 #storyGuestGroup img{width:100%!important;height:100%!important;min-height:0!important;max-width:100%!important;max-height:200px!important;object-fit:contain}
+.bandit-story-v230 #storyGuestGroup img{width:100%!important;height:auto!important;min-height:0!important;max-width:100%!important;max-height:min(200px,100%)!important;object-fit:contain}
 .bandit-beat-v230,.bandit-title-v230{position:absolute;z-index:80;left:4%;right:4%;top:24%;text-align:center;color:#fff0aa;font-weight:1000;text-shadow:3px 3px #61372a,0 0 20px #f38d25;font-size:clamp(21px,6vw,38px);pointer-events:none}
 .bandit-title-v230{background:linear-gradient(90deg,#391918df,#8f542ae8,#391918df);padding:28px 10px;border-block:3px solid #dfb050;display:grid;gap:12px;font-size:clamp(20px,5vw,32px)}
 .bandit-title-v230 small{font-size:18px}.bandit-surprise-v230{position:absolute;top:-22px;left:30%;color:#fff176;font-size:28px;text-shadow:2px 2px #33201a}
@@ -5353,6 +5357,22 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 @media(prefers-reduced-motion:reduce){.story-fx-v231 i,.four-title-v231{animation:none}}
 
 /* UPDATE_V231_END */
+/* UPDATE_V233_BEGIN */
+.shelf-modes-v233{display:grid;grid-template-columns:1fr 1fr .75fr;gap:7px;margin:12px 0}
+.shelf-modes-v233 button{min-height:46px;border:1px solid #726746;border-radius:12px;background:#20293b;color:#eee6d3;font-size:14px;font-weight:700;padding:8px 4px}
+.shelf-modes-v233 button[aria-pressed=true]{background:#e0bd74;border-color:#f6da9e;color:#231c12;box-shadow:0 2px 8px #0004}
+.shelf-hint-v233{font-size:13px;color:#c4c7d0;line-height:1.6}
+.shelf-effects-v233{margin:10px 0 16px;border:1px solid #7796af80;border-radius:10px;padding:10px}.shelf-effects-v233 summary{cursor:pointer;color:#dceaff;font-size:13px;min-height:24px}
+.shelf-row-v233{display:flex;flex-direction:column;gap:0;min-width:0}
+.shelf-row-v233>[data-choose]{display:flex;align-items:center;gap:12px;width:100%;flex:1;text-align:left;position:relative}
+.shelf-row-v233>[data-choose].shelf-selected-v233{outline:3px solid #e6c77d;outline-offset:-3px;background:#3b3b32}
+.shelf-selected-v233:after{content:'✓';position:absolute;top:7px;right:8px;background:#e6c77d;color:#292116;border-radius:50%;width:24px;height:24px;text-align:center;font-weight:900}
+.figure-list-v220 .shelf-detail-v233{display:block;width:100%;min-height:36px;border:1px solid #586077;border-radius:0 0 9px 9px;background:#202b40;color:#dce3f6;padding:7px;font-size:12px;text-align:center}
+.shelf-selection-v233{position:sticky;bottom:0;z-index:3;background:#192334f5;border:1px solid #c9a96a;border-radius:14px;padding:12px;margin-top:14px;box-shadow:0 -5px 20px #0005;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.shelf-selection-v233[hidden]{display:none}.shelf-selection-v233>span{font-weight:800;color:#ffe1a3}.shelf-selection-v233>small{display:block;color:#ffddbb;margin:6px 0}
+.shelf-selection-v233>div{display:flex;gap:8px}.shelf-selection-v233 button{min-height:44px;border:1px solid #9d895f;border-radius:9px;padding:8px;background:#263147;color:white}.shelf-selection-v233 [data-shelf-commit]{flex:1;background:#dfbd77;color:#201b13;font-weight:800}.shelf-selection-v233 button:disabled{opacity:.45}
+
+/* UPDATE_V233_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5856,7 +5876,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v231</div>
+      <div class="title-version">v233</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -10884,7 +10904,7 @@ async function triggerYushaMission(downed){
 }
 async function damageAlly(a,power,type='physical',superHalf=false,element=''){
   if(!a||a.dead)return 0;
-  const fe=a.figureEffects||figureEffectsFor(a.id),ev=clamp(weaponEvasion(a)+Number(fe.evade||0),0,.65);if(ev>0&&Math.random()<ev){notice(`${a.name}は攻撃を回避！`,'system',520);return 0;}
+  const fe=a.figureEffects||figureEffectsFor(a.id),ev=incomingEvadeV232(a);if(ev>0&&Math.random()<ev){notice(`${a.name}は攻撃を回避！`,'system',520);return 0;}
   if(a.barrier>0){a.barrier--;notice(`${a.name}のバリアが攻撃を無効化！`,'buff');renderBattle();return 0;}
   let d=calcEnemyDamage(a,power,type),incomingElement=normalizeElement(element||actingEnemy()?.attribute||'無'),wr=weaponResistance(a,incomingElement);
   if(wr>0)d=Math.max(1,Math.round(d*(1-wr)));const fr=figureResistanceTotal(a.id,incomingElement);if(fr>0)d=Math.max(1,Math.round(d*(1-fr)));if(fe.damageCut)d=Math.max(1,Math.round(d*(1-clamp(fe.damageCut,0,.65))));if(type==='physical'&&fe.physicalCut)d=Math.max(1,Math.round(d*(1-clamp(fe.physicalCut,0,.65))));if(fe.elementCut?.[incomingElement])d=Math.max(1,Math.round(d*(1-clamp(fe.elementCut[incomingElement],0,.65))));if(type==='physical'&&fe.elementPhysicalCut?.[incomingElement])d=Math.max(1,Math.round(d*(1-clamp(fe.elementPhysicalCut[incomingElement],0,.65))));if(type==='magic'&&fe.elementMagicCut?.[incomingElement])d=Math.max(1,Math.round(d*(1-clamp(fe.elementMagicCut[incomingElement],0,.65))));const areaCut=Number(fe.areaCut?.[currentBattleFigureAreaKey()]||0);if(areaCut)d=Math.max(1,Math.round(d*(1-clamp(areaCut,0,.65))));
@@ -12085,7 +12105,7 @@ const _submitAdventureReportV89Final=submitAdventureReport;
 submitAdventureReport=async function(){const r=state.adventure.awaitingReport;if(!r)return _submitAdventureReportV89Final();if(r.worldId==='demonCastle'){if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('demonCastle'))state.adventure.reportedWorlds.push('demonCastle');state.adventure.awaitingReport=null;state.adventure.battleReady=false;state.adventure.pendingEncounter=null;state.adventure.runSnapshot=null;const wi=(MOB_DATA.adventureWorlds||[]).findIndex(w=>w.id==='unfinishedBook');if(wi>=0)state.adventure.worldIndex=wi;state.adventure.areaIndex=0;state.adventure.battleIndex=0;state.meta.bookPortalReady=true;state.meta.bookEntered=false;saveMeta();saveAdventure();await facilityTalk('レコードが7枚揃ったのじゃな！','モブスライムキング','play/007.png');await facilityTalk('レコードルームへ行ってみるのじゃ','モブスライムキング','play/007.png');renderRecordRoom();return;}if(r.worldId==='demonCastle2'&&state.meta?.finalBossDefeated){state.adventure.runSnapshot=null;state.adventure.awaitingReport=null;state.adventure.completed=true;if(!Array.isArray(state.adventure.reportedWorlds))state.adventure.reportedWorlds=[];if(!state.adventure.reportedWorlds.includes('demonCastle2'))state.adventure.reportedWorlds.push('demonCastle2');saveAdventure();return finalEndingV89Final();}state.adventure.runSnapshot=null;return _submitAdventureReportV89Final();};
 
 const _openHomeActionV89Final2=openHomeAction;
-openHomeAction=function(action){if(state.meta?.finalBossDefeated&&!state.meta?.gameCleared&&action!=='castle')return facilityTalk('お城へ向かおう！','モブピンク','play/02.png');if(action==='adventure'&&currentWorld()?.id==='unfinishedBook'&&state.meta?.bookPortalReady&&!state.meta?.bookEntered)return facilityTalk('レコードルームの「読みかけの本」から入るであります！','モブピンク','play/02.png');return _openHomeActionV89Final2(action);};
+openHomeAction=function(action){if(state.meta?.finalBossDefeated&&!state.meta?.gameCleared&&action!=='castle')return facilityTalk('お城へ向かいましょう！','モブピンク','play/02.png');if(action==='adventure'&&currentWorld()?.id==='unfinishedBook'&&state.meta?.bookPortalReady&&!state.meta?.bookEntered)return facilityTalk('レコードルームの「読みかけの本」から入るであります！','モブピンク','play/02.png');return _openHomeActionV89Final2(action);};
 
 
 /* ===== MOB QUEST v91: POSTGAME GATE / EVENT QUEST UNLOCK / ENDING FIX ===== */
@@ -22674,10 +22694,10 @@ const banditBuildBaseV230=buildEnemyFromTemplate;buildEnemyFromTemplate=function
 const banditActorBaseV230=storyActorInfo;storyActorInfo=function(key){if(String(key).startsWith('bandit230-')){const t=banditTemplateV230(key.slice(10),30);return{...t,enemyTemplate:t};}return banditActorBaseV230(key);};
 async function banditNotesV230(host,large=false){if(!host)return;const layer=document.createElement('div');layer.className='bandit-notes-v230';host.append(layer);try{for(let i=0;i<(large?18:9);i++){const n=document.createElement('i');n.textContent=i%2?'♪':'♫';n.style.setProperty('--i',i);layer.append(n);}await animateV157(host,[{translate:'0 0'},{translate:'-4px 0'},{translate:'4px 0'},{translate:'-3px 0'},{translate:'0 0'}],large?1000:650);await fixedDelay(250);}finally{layer.remove();}}
 async function banditEnterV230(keys,mode='run'){
- await storyShowGuests(keys.map(k=>'bandit230-'+k),{allowFive:true});const group=$('#storyGuestGroup');group.classList.add('bandit-guests-v230');
+ const scene=$('#storyScene');scene.classList.add('bandit-enter-preparing-v233');try{await storyShowGuests(keys.map(k=>'bandit230-'+k),{allowFive:true});}finally{scene.classList.remove('bandit-enter-preparing-v233');}const group=$('#storyGuestGroup');group.classList.add('bandit-guests-v230');
  await Promise.all([...group.children].map((el,i)=>{const direction=i%2?-1:1;return animateV157(el,mode==='dance'?[{translate:`${direction*100}px 0`},{translate:`${direction*-35}px -32px`,offset:.3},{translate:`${direction*35}px 0`,offset:.6},{translate:'0 -24px',offset:.8},{translate:'0 0'}]:[{translate:mode==='jump'?'0 -120px':`${direction*350}px 0`,opacity:0},{translate:'0 0',opacity:1}],mode==='walk'?1500:mode==='dance'?1600:mode==='fast'?500:900);}));
 }
-async function banditSceneV230(phase){const r=eventRunV174;showScreen('adventure');storyBusy=true;try{await openStoryScene('desert',r.area,'default');$('#storyScene').classList.add('bandit-story-v230');$('#adventureStageTitle').textContent=STORY179.bandits.title;$('#adventureProgress').textContent='AREA '+(r.area+1)+' / '+STORY179.bandits.diffs[r.difficulty].name;if(phase==='pre'&&r.area===0){const title=document.createElement('div');title.className='bandit-title-v230';title.innerHTML=`<small>第${['一','二','三'][r.difficulty]}章</small><b>${['砂漠の盗賊団登場！','ロックな出会い！','プーホラ盗賊団のライブ！'][r.difficulty]}</b>`;$('#storyScene').append(title);try{await fixedDelay(1700);}finally{title.remove();}}
+async function banditSceneV230(phase){const r=eventRunV174;$('#adventureScreen').classList.add('bandit-transition-v233');showScreen('adventure');storyBusy=true;try{await openStoryScene('desert',r.area,'default');$('#storyScene').classList.add('bandit-story-v230');$('#adventureStageTitle').textContent=STORY179.bandits.title;$('#adventureProgress').textContent='AREA '+(r.area+1)+' / '+STORY179.bandits.diffs[r.difficulty].name;if(phase==='pre'&&r.area===0){const title=document.createElement('div');title.className='bandit-title-v230';title.innerHTML=`<small>第${['一','二','三'][r.difficulty]}章</small><b>${['砂漠の盗賊団登場！','ロックな出会い！','プーホラ盗賊団のライブ！'][r.difficulty]}</b>`;$('#storyScene').append(title);try{await fixedDelay(1700);}finally{title.remove();}}
  if(phase==='post'){const guests=([ [[],[],['hari','eri'],['hari','eri']], [[],['onbu'],['pue']], [['hari','pue','eri'],[],['onbu'],['hari','eri','queen','onbu','pue']] ])[r.difficulty][r.area];if(guests.length)await banditEnterV230(guests,'walk');}
  for(const [type,a,b]of BANDIT_DIALOGUE_V230[r.difficulty][r.area][phase]){if(skipConversationV224())break;
   if(type==='say'){if(a==='unknown')await storyNarrate('？？？\n'+b);else await storySay(a,b);}
@@ -22688,10 +22708,10 @@ async function banditSceneV230(phase){const r=eventRunV174;showScreen('adventure
   else if(type==='pause')await fixedDelay(900);
   else {const els=type==='jumpGuests'?[...$('#storyGuestGroup').children]:type==='surprise'?a.map(k=>storyAnchor('bandit230-'+k)):[storyAnchor(a)];await Promise.all(els.filter(Boolean).map(async el=>{const mark=document.createElement('b');if(type==='surprise'){mark.className='bandit-surprise-v230';mark.textContent='！？';el.append(mark);}try{await animateV157(el,type==='shake'?[{translate:'-5px 0'},{translate:'5px 0'},{translate:'0 0'}]:[{translate:'0 0'},{translate:'0 -25px',offset:.25},{translate:'0 0',offset:.5},{translate:'0 -18px',offset:.75},{translate:'0 0'}],750);}finally{mark.remove();}}));}
  }
- }finally{$('#storyScene').classList.remove('bandit-story-v230');await closeStoryScene(false);storyBusy=false;}}
-const banditAreaBaseV230=startSavannaAreaV174;startSavannaAreaV174=async function(...args){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditAreaBaseV230(...args);eventOverlayV163().hidden=true;try{await scopedConversationV224(()=>banditSceneV230('pre'),[]);const bg=storySceneBg('desert',r.area);await startBattleLoaded({mode:'eventStory174',storyEventV174:true,storyV179:'bandits',worldId:'desert',returnScreen:'training',party:partyV179('bandits'),questVitals:r.vitals,waves:banditWavesV230(r.difficulty,r.area),bg:bg.bg,fallbackBg:bg.fallback});$('#battleModeLabel').textContent=`砂漠の盗賊ファミリー！ / ${STORY179.bandits.diffs[r.difficulty].name} / AREA ${r.area+1}`;$('#battleBackBtn').style.display='';}catch(err){console.error('[bandits230]',err);returnSavannaV174();toast('準備に失敗しました。もう一度お試しください。');}};
-const banditWaveBaseV230=spawnNextEnemyWave;spawnNextEnemyWave=async function(...args){const b=state.battle;if(b?.config?.storyV179!=='bandits')return banditWaveBaseV230(...args);if(!b.pendingWaveConfigs?.length)return false;const rows=b.pendingWaveConfigs.shift();b.enemies=buildEnemyWave(rows,Math.min(4,b.allies.length),b.bg,b.fallbackBg);b.enemy=b.enemies[0];b.targetEnemyId=b.enemy.uid;b.actingEnemyId=null;b.queue=[];b.queuePos=0;renderBattle();await actionCutin('新たな敵が走ってくる！','danger',600);await Promise.all(b.enemies.map((e,i)=>{const el=enemyVisual(e.uid)?.closest('.enemy-unit');return el?animateV157(el,[{translate:`${i%2?-100:100}vw 0`,opacity:0},{translate:'0 0',opacity:1}],750):null;}));b.turn++;b.busy=false;startRound();return true;};
-const banditFinishBaseV230=finishSavannaV174;finishSavannaV174=async function(b,win){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditFinishBaseV230(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);let reward=null;if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};applyProgressRewards(b,r.vitals);await scopedConversationV224(()=>banditSceneV230('post'),[]);if(r.area===STORY179.bandits.diffs[r.difficulty].areas-1)reward=rewardV179();}showResultV179(win,reward);};
+ }finally{try{await closeStoryScene(false);}finally{$('#storyScene').classList.remove('bandit-story-v230');storyBusy=false;}}}
+const banditAreaBaseV230=startSavannaAreaV174;startSavannaAreaV174=async function(...args){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditAreaBaseV230(...args);eventOverlayV163().hidden=true;try{await scopedConversationV224(()=>banditSceneV230('pre'),[]);const bg=storySceneBg('desert',r.area);await startBattleLoaded({mode:'eventStory174',storyEventV174:true,storyV179:'bandits',worldId:'desert',returnScreen:'training',party:partyV179('bandits'),questVitals:r.vitals,waves:banditWavesV230(r.difficulty,r.area),bg:bg.bg,fallbackBg:bg.fallback});$('#battleModeLabel').textContent=`砂漠の盗賊ファミリー！ / ${STORY179.bandits.diffs[r.difficulty].name} / AREA ${r.area+1}`;$('#battleBackBtn').style.display='';$('#adventureScreen').classList.remove('bandit-transition-v233');}catch(err){console.error('[bandits230]',err);$('#adventureScreen').classList.remove('bandit-transition-v233');returnSavannaV174();toast('準備に失敗しました。もう一度お試しください。');}};
+const banditWaveBaseV230=spawnNextEnemyWave;spawnNextEnemyWave=async function(...args){const b=state.battle;if(b?.config?.storyV179!=='bandits')return banditWaveBaseV230(...args);if(!b.pendingWaveConfigs?.length)return false;const rows=b.pendingWaveConfigs.shift();b.enemies=buildEnemyWave(rows,Math.min(4,b.allies.length),b.bg,b.fallbackBg);b.enemy=b.enemies[0];b.targetEnemyId=b.enemy.uid;b.actingEnemyId=null;b.queue=[];b.queuePos=0;const screen=$('#battleScreen');screen.classList.add('bandit-wave-preparing-v233');renderBattle();try{await actionCutin('新たな敵が走ってくる！','danger',600);}finally{screen.classList.remove('bandit-wave-preparing-v233');}await Promise.all(b.enemies.map((e,i)=>{const el=enemyVisual(e.uid)?.closest('.enemy-unit');return el?animateV157(el,[{translate:`${i%2?-100:100}vw 0`,opacity:0},{translate:'0 0',opacity:1}],750):null;}));b.turn++;b.busy=false;startRound();return true;};
+const banditFinishBaseV230=finishSavannaV174;finishSavannaV174=async function(b,win){const r=eventRunV174;if(r?.storyV179!=='bandits')return banditFinishBaseV230(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);let reward=null;if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};applyProgressRewards(b,r.vitals);await scopedConversationV224(()=>banditSceneV230('post'),[]);if(r.area===STORY179.bandits.diffs[r.difficulty].areas-1)reward=rewardV179();}showResultV179(win,reward);$('#adventureScreen').classList.remove('bandit-transition-v233');};
 const banditResultBaseV230=showResultV179;showResultV179=function(win,...args){banditResultBaseV230(win,...args);const r=eventRunV174;if(r?.storyV179!=='bandits'||r.area!==STORY179.bandits.diffs[r.difficulty].areas-1)return;const b=$('[data-v179-next]',eventOverlayV163());b.textContent='クエストへ戻る';b.onclick=()=>returnSavannaV174();};
 // The custom list and reward cards are created after the shared menu renderer.
 // Apply the same discovery/clear rules after those images exist.
@@ -22863,6 +22883,109 @@ calcDamage=function(a,type,power,crit=0,e=targetEnemy()){const element=normalize
 setTimeout(()=>{for(const world of Object.keys(STORY_MEDALS_V231))if(storyDone(`post:${world}:3`)||worldCleared(world))grantStoryMedalV231(world);},0);
 
 // UPDATE_V231_END
+// UPDATE_V232_BEGIN
+// Accuracy's saved keys remain readable; all effects now modify the target's evade.
+function opponentEvadeCutV232(a){
+ const fe=a?.figureEffects||figureEffectsFor(a?.id),gun=String(a?.weapon||player(a?.id)?.weapon||'').includes('銃');
+ return Number(fe?.accuracy||0)+Number(fe?.enemyEvadeDownV227||0)+weaponTraitSum(a,'accuracy')+(gun?Number(fe?.gunAccuracy||0):0)+soulEffectValueV218(a||{},'accuracy')-(a?.accuracyDownTurnsV218>0?Number(a.accuracyDownV218||0):0);
+}
+playerAttackHitChance=function(a,e){
+ if(state.battle?.weaponAttackContext?.sure)return 1;
+ const evade=clamp(Number(e?.evasion||0)+soulEffectValueV218(e||{},'evade'),0,.8);
+ return 1-clamp(evade-opponentEvadeCutV232(a),0,1);
+};
+function incomingEvadeV232(a){
+ const fe=a?.figureEffects||figureEffectsFor(a?.id),base=clamp(weaponEvasion(a)+Number(fe?.evade||0),0,.65),e=actingEnemy();
+ return clamp(base-soulEffectValueV218(e||{},'accuracy'),0,1);
+}
+const oldAccuracyTextV232=new Map();
+function accuracyTextV232(value){
+ if(typeof value!=='string'||!value.includes('命中'))return value;
+ let text=value.replace(/命中率\s*[+＋]\s*(\d+(?:\.\d+)?)%/g,'相手の回避率-$1%');
+ text=text.replace('自分のSPDと命中率を2ターンの間25%アップし、回避率を10%アップする','自分のSPDを2ターンの間25%アップし、攻撃時の相手の回避率を25%下げ、回避率を10%アップする');
+ text=text.replace('自分のSPD・命中率・回避率を2ターンの間15%アップする','自分のSPD・回避率を2ターンの間15%アップし、攻撃時の相手の回避率を15%下げる');
+ text=text.replace('敵単体の命中率を15%ダウンさせる','敵単体の攻撃時、こちらの回避率を15%上げる');
+ text=text.replace(/命中率を(\d+)%アップする/g,'攻撃時の相手の回避率を$1%下げる');
+ text=text.replace(/命中率を(\d+)%ダウンさせる/g,'攻撃時の相手の回避率を$1%上げる');
+ text=text.replaceAll('銃装備時命中率','銃装備時の相手回避率低下量').replaceAll('命中率','相手回避率低下量');
+ oldAccuracyTextV232.set(text,value);return text;
+}
+function legacyAccuracyTextV232(text){return oldAccuracyTextV232.get(text)||String(text).replace(/相手の回避率\s*-\s*(\d+(?:\.\d+)?)%/g,'命中率+$1%').replaceAll('相手回避率低下量','命中率');}
+const parseAccuracyBaseV232=parseFigureEffectText;
+parseFigureEffectText=text=>parseAccuracyBaseV232(legacyAccuracyTextV232(text));
+const soulAccuracyBaseV232=applySoulTextV218;
+applySoulTextV218=(f,a,own,enemies,text,...args)=>soulAccuracyBaseV232(f,a,own,enemies,legacyAccuracyTextV232(text),...args);
+function rewriteAccuracyDataV232(data){if(!data||typeof data!=='object')return;for(const key of Object.keys(data)){const value=data[key];if(typeof value==='string')data[key]=accuracyTextV232(value);else if(value&&typeof value==='object')rewriteAccuracyDataV232(value);}}
+for(const data of [FIGURES,FIGURE_TAGS,CATALOG_V218,ADJACENCY_TAGS_V174,WEAPONS,MOB_DATA.magicCatalog,MOB_DATA.techniqueCatalog])rewriteAccuracyDataV232(data);
+const figureStatusBaseV232=figureEffectStatusMarkup;
+figureEffectStatusMarkup=pid=>accuracyTextV232(figureStatusBaseV232(pid));
+const equipmentStatusBaseV232=equipmentDetailMarkup;
+equipmentDetailMarkup=function(pid){const a={...player(pid),id:pid,equipment:equipmentFor(pid),figureEffects:figureEffectsFor(pid)},cut=opponentEvadeCutV232(a);return accuracyTextV232(equipmentStatusBaseV232(pid)).replace(/基本命中 100% \/ 補正 [+-]?\d+(?:\.\d+)?%/,`攻撃時の相手回避率 ${cut>=0?'-':'+'}${figurePercentText(Math.abs(cut))}`);};
+window.__mobBuildVersion='v232';
+
+// UPDATE_V232_END
+// UPDATE_V233_BEGIN
+const shelfChooseV233={query:'',rarity:'all',mode:'single',selected:new Set()};
+function shelfFreeV233(rarity,selected=[]){return Math.max(0,(shelfLimitsV218[rarity]||0)-(state.meta.figureShelfV218||[]).filter(id=>figureById(id)?.rarity===rarity).length-selected.filter(id=>figureById(id)?.rarity===rarity).length);}
+function shelfCandidatesV233(){return figureSearchRowsV220(shelfChooseV233.query,shelfChooseV233.rarity);}
+function shelfAutoSelectV233(){
+ const selected=[];
+ for(const f of shelfCandidatesV233().filter(f=>!figureOwnersV220(f.id).length).sort((a,b)=>figureStatValueV132(b)-figureStatValueV132(a)||figurePlusV218(b.id)-figurePlusV218(a.id)||a.id.localeCompare(b.id)))if(shelfFreeV233(f.rarity,selected)>0)selected.push(f.id);
+ shelfChooseV233.selected=new Set(selected);return selected;
+}
+function shelfCommitV233(){
+ const chosen=[...shelfChooseV233.selected],counts={};
+ // Validate the whole selection before moving anything out of equipment.
+ for(const id of chosen){const f=figureById(id);if(!f||!figureOwned(id)||state.meta.figureShelfV218?.includes(id)||((counts[f.rarity]=(counts[f.rarity]||0)+1)>shelfFreeV233(f.rarity)))return toast('棚がいっぱいだ！');}
+ if(!chosen.length)return;
+ for(const id of chosen)assignFigureV218(id,'shelf');
+ shelfChooseV233.selected.clear();renderHome();openFigureChooseV220('shelf');toast(`${chosen.length}体を棚に飾りました`);
+}
+const shelfChooseBaseV233=openFigureChooseV220;
+openFigureChooseV220=function(mode,...args){
+ const previous=$('#figureChooseV220'),wasShelf=previous?.dataset.shelfV233==='true'&&!previous.hidden;
+ if(wasShelf){shelfChooseV233.query=$('input[type="search"]',previous).value;shelfChooseV233.rarity=$('select',previous).value;}
+ const scroll=wasShelf?$('section',previous).scrollTop:0;
+ shelfChooseBaseV233(mode,...args);
+ const ov=$('#figureChooseV220');ov.dataset.shelfV233=String(mode==='shelf');if(mode!=='shelf')return;
+ for(const id of shelfChooseV233.selected)if(!figureOwned(id)||state.meta.figureShelfV218?.includes(id))shelfChooseV233.selected.delete(id);
+ const search=$('input[type="search"]',ov),rarity=$('select',ov),list=$('[data-figure-list]',ov),toolbar=document.createElement('div'),footer=document.createElement('div');
+ const effects=list.previousElementSibling;if(effects?.tagName==='SECTION'){const details=document.createElement('details');details.className='shelf-effects-v233';details.innerHTML='<summary>棚で発動中の効果を確認</summary>';effects.before(details);details.append(effects);}
+ toolbar.className='shelf-modes-v233';toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','フィギュアの選び方');
+ toolbar.innerHTML='<button type="button" data-shelf-mode="single">1つずつ選ぶ</button><button type="button" data-shelf-mode="multi">まとめて選択</button><button type="button" data-shelf-auto>お任せ</button>';
+ $('.figure-search-v220',ov).before(toolbar);
+ const hint=document.createElement('p');hint.className='shelf-hint-v233';hint.textContent='お任せは、絞り込み条件に合う未使用のフィギュアから空き枠分を選びます。';toolbar.after(hint);
+ footer.className='shelf-selection-v233';footer.innerHTML='<span data-selected-count aria-live="polite"></span><small data-selected-owners></small><div><button type="button" data-clear-selection>選択を解除</button><button type="button" data-shelf-commit>棚に飾る</button></div>';$('section',ov).append(footer);
+ function update(){
+  const multi=shelfChooseV233.mode==='multi',ids=[...shelfChooseV233.selected];
+  $$('[data-shelf-mode]',toolbar).forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.shelfMode===shelfChooseV233.mode)));
+  footer.hidden=!multi;$('[data-selected-count]',footer).textContent=`${ids.length}体を選択中`;
+  const equipped=ids.filter(id=>figureOwnersV220(id).some(o=>o.mode!=='shelf')).length;
+  $('[data-selected-owners]',footer).textContent=equipped?`装備中の${equipped}体は棚へ移動します。`:'';
+  const commit=$('[data-shelf-commit]',footer);commit.disabled=!ids.length;commit.textContent=`${ids.length}体を棚に飾る`;
+  $$('[data-choose]',list).forEach(b=>{const selected=shelfChooseV233.selected.has(b.dataset.choose);b.classList.toggle('shelf-selected-v233',selected);if(multi)b.setAttribute('aria-pressed',String(selected));else b.removeAttribute('aria-pressed');});
+ }
+ function decorate(){
+  shelfChooseV233.query=search.value;shelfChooseV233.rarity=rarity.value;
+  $$('[data-choose]',list).forEach(b=>{
+   const detail=document.createElement('button');detail.type='button';detail.className='shelf-detail-v233';detail.textContent='性能・タグを確認';detail.setAttribute('aria-label',`${figureById(b.dataset.choose).name}の性能・タグを確認`);
+   detail.onclick=()=>{const f=figureById(b.dataset.choose),pop=document.createElement('div');pop.className='figure-confirm-v220';pop.innerHTML='<section><button type="button" data-back>← 一覧へ戻る</button>'+figureDetailMarkupV96(f)+'</section>';ov.append(pop);bindImages(pop);$('[data-back]',pop).onclick=()=>pop.remove();};
+   const row=document.createElement('div');row.className='shelf-row-v233';b.before(row);row.append(b,detail);
+  });update();
+ }
+ list.addEventListener('click',e=>{const button=e.target.closest('[data-choose]');if(!button||shelfChooseV233.mode!=='multi')return;e.preventDefault();e.stopImmediatePropagation();const id=button.dataset.choose,f=figureById(id),selected=shelfChooseV233.selected;
+  if(selected.has(id))selected.delete(id);else{if(state.meta.figureShelfV218?.includes(id)||shelfFreeV233(f.rarity,[...selected])<=0)return toast('棚がいっぱいだ！');selected.add(id);}update();
+ },true);
+ search.value=shelfChooseV233.query;rarity.value=shelfChooseV233.rarity;
+ search.oninput();decorate();search.addEventListener('input',decorate);rarity.addEventListener('change',decorate);
+ $$('[data-shelf-mode]',toolbar).forEach(b=>b.onclick=()=>{shelfChooseV233.mode=b.dataset.shelfMode;update();});
+ $('[data-shelf-auto]',toolbar).onclick=()=>{shelfChooseV233.mode='multi';const ids=shelfAutoSelectV233();update();if(!ids.length)toast(Object.keys(shelfLimitsV218).every(r=>shelfFreeV233(r)===0)?'棚がいっぱいだ！':'条件に合う未使用のフィギュアがありません');};
+ $('[data-clear-selection]',footer).onclick=()=>{shelfChooseV233.selected.clear();update();};$('[data-shelf-commit]',footer).onclick=shelfCommitV233;
+ $('[data-close]',ov).addEventListener('click',()=>{shelfChooseV233.selected.clear();});$('section',ov).scrollTop=scroll;
+};
+window.__mobBuildVersion='v233';
+
+// UPDATE_V233_END
 })();
 </script>
 </body>

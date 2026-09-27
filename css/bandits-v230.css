@@ -1,7 +1,10 @@
 .bandit-story-v230 #storyGuestGroup{width:94%!important;left:3%!important;right:3%!important;height:24vh!important;bottom:38%!important;max-height:210px}
+.bandit-enter-preparing-v233 #storyGuestGroup{visibility:hidden!important}
+.bandit-transition-v233 #fieldEvent,.bandit-transition-v233 #adventureParty{visibility:hidden!important}
+.bandit-wave-preparing-v233 #enemyArea{visibility:hidden!important}
 .bandit-story-v230 #storyGuestGroup .story-guest-multi{max-width:24%!important;width:24%!important;height:100%!important}
 .bandit-story-v230 #storyGuestGroup[data-count="5"] .story-guest-multi{max-width:19%!important;width:19%!important}
-.bandit-story-v230 #storyGuestGroup img{width:100%!important;height:100%!important;min-height:0!important;max-width:100%!important;max-height:200px!important;object-fit:contain}
+.bandit-story-v230 #storyGuestGroup img{width:100%!important;height:auto!important;min-height:0!important;max-width:100%!important;max-height:min(200px,100%)!important;object-fit:contain}
 .bandit-beat-v230,.bandit-title-v230{position:absolute;z-index:80;left:4%;right:4%;top:24%;text-align:center;color:#fff0aa;font-weight:1000;text-shadow:3px 3px #61372a,0 0 20px #f38d25;font-size:clamp(21px,6vw,38px);pointer-events:none}
 .bandit-title-v230{background:linear-gradient(90deg,#391918df,#8f542ae8,#391918df);padding:28px 10px;border-block:3px solid #dfb050;display:grid;gap:12px;font-size:clamp(20px,5vw,32px)}
 .bandit-title-v230 small{font-size:18px}.bandit-surprise-v230{position:absolute;top:-22px;left:30%;color:#fff176;font-size:28px;text-shadow:2px 2px #33201a}

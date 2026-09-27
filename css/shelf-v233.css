@@ -1,0 +1,13 @@
+.shelf-modes-v233{display:grid;grid-template-columns:1fr 1fr .75fr;gap:7px;margin:12px 0}
+.shelf-modes-v233 button{min-height:46px;border:1px solid #726746;border-radius:12px;background:#20293b;color:#eee6d3;font-size:14px;font-weight:700;padding:8px 4px}
+.shelf-modes-v233 button[aria-pressed=true]{background:#e0bd74;border-color:#f6da9e;color:#231c12;box-shadow:0 2px 8px #0004}
+.shelf-hint-v233{font-size:13px;color:#c4c7d0;line-height:1.6}
+.shelf-effects-v233{margin:10px 0 16px;border:1px solid #7796af80;border-radius:10px;padding:10px}.shelf-effects-v233 summary{cursor:pointer;color:#dceaff;font-size:13px;min-height:24px}
+.shelf-row-v233{display:flex;flex-direction:column;gap:0;min-width:0}
+.shelf-row-v233>[data-choose]{display:flex;align-items:center;gap:12px;width:100%;flex:1;text-align:left;position:relative}
+.shelf-row-v233>[data-choose].shelf-selected-v233{outline:3px solid #e6c77d;outline-offset:-3px;background:#3b3b32}
+.shelf-selected-v233:after{content:'✓';position:absolute;top:7px;right:8px;background:#e6c77d;color:#292116;border-radius:50%;width:24px;height:24px;text-align:center;font-weight:900}
+.figure-list-v220 .shelf-detail-v233{display:block;width:100%;min-height:36px;border:1px solid #586077;border-radius:0 0 9px 9px;background:#202b40;color:#dce3f6;padding:7px;font-size:12px;text-align:center}
+.shelf-selection-v233{position:sticky;bottom:0;z-index:3;background:#192334f5;border:1px solid #c9a96a;border-radius:14px;padding:12px;margin-top:14px;box-shadow:0 -5px 20px #0005;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.shelf-selection-v233[hidden]{display:none}.shelf-selection-v233>span{font-weight:800;color:#ffe1a3}.shelf-selection-v233>small{display:block;color:#ffddbb;margin:6px 0}
+.shelf-selection-v233>div{display:flex;gap:8px}.shelf-selection-v233 button{min-height:44px;border:1px solid #9d895f;border-radius:9px;padding:8px;background:#263147;color:white}.shelf-selection-v233 [data-shelf-commit]{flex:1;background:#dfbd77;color:#201b13;font-weight:800}.shelf-selection-v233 button:disabled{opacity:.45}
