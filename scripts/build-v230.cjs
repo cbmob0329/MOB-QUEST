@@ -1,0 +1,6 @@
+const fs=require('node:fs'),path=require('node:path'),root=path.resolve(__dirname,'..');
+require('./build-v229.cjs');require('./parse-bandits-v230.cjs');
+const block='// UPDATE_V230_BEGIN\nconst BANDIT_DIALOGUE_V230='+JSON.stringify(JSON.parse(fs.readFileSync(path.join(root,'js/bandit-dialogue-v230.json'),'utf8')))+';\n'+['bandits-v230.js','bandit-combat-v230.js'].map(f=>fs.readFileSync(path.join(root,'js',f),'utf8')).join('\n')+'\n// UPDATE_V230_END';
+const p=path.join(root,'js/game.js');let s=fs.readFileSync(p,'utf8');if(s.includes('// UPDATE_V230_BEGIN'))s=s.replace(/\/\/ UPDATE_V230_BEGIN[\s\S]*?\/\/ UPDATE_V230_END/,()=>block);else{const i=s.lastIndexOf('})();');s=s.slice(0,i)+block+'\n'+s.slice(i);}fs.writeFileSync(p,s);
+const css=path.join(root,'css/style.css');s=fs.readFileSync(css,'utf8').replace(/\/\* UPDATE_V230_BEGIN \*\/[\s\S]*?\/\* UPDATE_V230_END \*\//,'');fs.writeFileSync(css,s+'\n/* UPDATE_V230_BEGIN */\n'+fs.readFileSync(path.join(root,'css/bandits-v230.css'),'utf8')+'\n/* UPDATE_V230_END */\n');
+const html=path.join(root,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v230</div>'));delete require.cache[require.resolve('./sync-inline.cjs')];require('./sync-inline.cjs');
