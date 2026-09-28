@@ -1,12 +1,13 @@
-async function mintEnemyHitV237(e,power,all=false,type='magic',debuff=false){
+function mintWaterSpellV237(){return pick(['nepu','nepuma','nepumachun'].map(id=>MOB_DATA.magicCatalog.find(s=>s.id===id)));}
+async function mintEnemyHitV237(e,power,all=false,type='magic',debuff=false,spell=null){
  const b=state.battle,oldCrit=enemyCriticalV163,oldAoe=enemyAoeV163,targets=all?livingField():[pick(livingMain().length?livingMain():livingField())].filter(Boolean);let total=0;
- try{enemyAoeV163=all;await beginEnemyLunge(e.uid);for(const a of targets){enemyCriticalV163=e.mintV237!=='kiba'&&Math.random()<.10;const n=await damageAlly(a,power*(e.mintV237==='ris'&&type==='magic'?1.11:1),type,isSuper(a),e.attribute);total+=n;if(n>0&&debuff){a.atkDebuff=Math.max(a.atkDebuff||0,.20);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,rint(2,3));notice(`${a.name} ATK -20%`,'status',550);}}}finally{enemyCriticalV163=oldCrit;enemyAoeV163=oldAoe;endEnemyLunge();}return total;
+ try{enemyAoeV163=all;await beginEnemyLunge(e.uid);for(const a of targets){if(spell)await skillSprite(spell.frames,a.id,spell.mode);enemyCriticalV163=e.mintV237!=='kiba'&&Math.random()<.10;const n=await damageAlly(a,power*(e.mintV237==='ris'&&type==='magic'?1.11:1),type,isSuper(a),e.attribute);total+=n;if(n>0&&debuff){a.atkDebuff=Math.max(a.atkDebuff||0,.20);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,rint(2,3));notice(`${a.name} ATK -20%`,'status',550);}}}finally{enemyCriticalV163=oldCrit;enemyAoeV163=oldAoe;endEnemyLunge();}return total;
 }
 const mintEnemyActionBaseV237=enemyAction;
 enemyAction=async function(index=1,uid){const b=state.battle,e=enemyByUid(uid)||actingEnemy()||b?.enemy;if(!e?.mintV237)return mintEnemyActionBaseV237(index,uid);if(!b||b.finished||e.hp<=0||statusStopsActionV235(e))return;if(e.status.confuse>0)return confusedActionV235(e,true);const previous=b.actingEnemyId,oldEnemy=b.enemy;b.actingEnemyId=e.uid;b.enemy=e;
  try{if(e.mintV237==='kiba'){const type=index===1?'physical':'magic',all=Math.random()<.40;await actionCutin(type==='magic'?'地属性の魔法！':'地属性の特技！','danger',500);await mintEnemyHitV237(e,1,all,type);return;}
-  const ultimate=index===1,all=index===2;await actionCutin(ultimate?'ミント・テンゲン':all?'水属性の全体魔法！':'水属性の魔法！','danger',600);const layer=mintFxV237($('#enemyArea'));try{await fixedDelay(280);await mintEnemyHitV237(e,ultimate?1.3:all?.85:1,all,'magic',ultimate);}finally{layer.remove();}
-  if(!b.finished&&e.hp>0&&livingField().length&&Math.random()<.50){if(!b.mintGameSpokenV237){b.mintGameSpokenV237=true;await enemyStoryCutin(e,'守りは慎重に！攻めは積極的に！');}await reactionV177(e,'ミントゲーム','水魔法で追撃！');await mintEnemyHitV237(e,.8,false,'magic');}
+  const ultimate=index===1,all=index===2,spell=ultimate?null:mintWaterSpellV237();await actionCutin(ultimate?'ミント・テンゲン':spell.name,'danger',600);const layer=mintFxV237($('#enemyArea'));try{await fixedDelay(280);await mintEnemyHitV237(e,ultimate?1.3:spell.power,all,'magic',ultimate,spell);}finally{layer.remove();}
+  if(!b.finished&&e.hp>0&&livingField().length&&Math.random()<.50){if(!b.mintGameSpokenV237){b.mintGameSpokenV237=true;await enemyStoryCutin(e,'守りは慎重に！攻めは積極的に！');}const follow=mintWaterSpellV237();await reactionV177(e,'ミントゲーム',follow.name+'で追撃！');await mintEnemyHitV237(e,follow.power,false,'magic',false,follow);}
  }finally{b.actingEnemyId=previous;b.enemy=oldEnemy;renderBattle();}
 };
 const mintCritBaseV237=calcDamage;

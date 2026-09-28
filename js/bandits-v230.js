@@ -31,7 +31,8 @@ function banditWavesV230(d,area){
  const one=(k,lv,esc=false)=>({template:banditTemplateV230(k,lv,esc),level:lv}),m=(lv,n)=>Array.from({length:n},()=>one('mummy',lv));
  if(d===0)return [[m(25,3),m(25,3)],[[one('sharty',27),one('poison',26)]],[m(27,5),m(27,5)],[[one('hari',30),one('eri',30)]]][area];
  if(d===1)return [[m(45,5),m(45,5)],[m(45,5),m(45,5),[one('poison',48),one('poison',48)]],[[one('pue',50)]]][area];
- return [[[one('hari',68),one('pue',68),one('eri',70)]],[m(65,5),m(65,5),m(65,5)],[[one('healer',68),one('onbu',70),one('healer',68)]],[[one('hari',70,true),one('eri',70,true),one('queen',78),one('onbu',74,true),one('pue',75,true)]]][area];
+ const final=(key,lv)=>{const row=one(key,lv,key!=='queen');row.template.category=key==='queen'?'boss':'elite';row.template.damageReduction=key==='queen'?.12:.05;return row;};
+ return [[[one('hari',68),one('pue',68),one('eri',70)]],[m(65,5),m(65,5),m(65,5)],[[one('healer',68),one('onbu',70),one('healer',68)]],[[final('hari',70),final('eri',70),final('queen',78),final('onbu',74),final('pue',75)]]][area];
 }
 const banditBuildBaseV230=buildEnemyFromTemplate;buildEnemyFromTemplate=function(t,...args){const e=banditBuildBaseV230(t,...args);if(!t.banditV230)return e;Object.assign(e,{banditV230:t.banditV230,banditEscortV230:!!t.banditEscortV230});if(['onbu','queen'].includes(e.banditV230)&&!e.banditEscortV230)addAllElementResistV142(e,.1);if(e.banditV230==='pue'&&!e.banditEscortV230){e.statusResist={...e.statusResist,...Object.fromEntries(['poison','burn','paralyze','sleep','stun','confuse'].map(s=>[s,.8]))};}return e;};
 const banditActorBaseV230=storyActorInfo;storyActorInfo=function(key){if(String(key).startsWith('bandit230-')){const t=banditTemplateV230(key.slice(10),30);return{...t,enemyTemplate:t};}return banditActorBaseV230(key);};

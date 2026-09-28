@@ -5429,6 +5429,26 @@ img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radiu
 @media(prefers-reduced-motion:reduce){.mint-fx-v237 i,.mint-ring-v237{animation:none}.mint-result-v237{animation-duration:.01s}}
 
 /* UPDATE_V237_END */
+/* UPDATE_V238_BEGIN */
+.gacha-stage-v238{position:relative;width:min(100vw,540px);height:100dvh;max-height:100%;margin:auto;overflow:hidden;background:#101b30;isolation:isolate;border-inline:1px solid #42647933}
+.gacha-stage-v238 canvas{position:absolute;inset:0;width:100%;height:100%}
+.gacha-stage-v238:after{content:'';position:absolute;inset:0;pointer-events:none;background:#101827;opacity:0;transition:opacity .35s}
+.gacha-stage-v238.finish:after{opacity:1}
+.gacha-pink-v238{position:absolute;left:calc(50% - 55px);bottom:11%;width:110px;filter:drop-shadow(0 12px 8px #020812aa);animation:gacha-scout-v238 1.7s cubic-bezier(.25,.6,.35,1) both;transition:transform .7s,opacity .6s}
+.gacha-pink-v238 img{display:block;width:100%;max-height:145px;object-fit:contain}
+.gacha-stage-v238.found .gacha-pink-v238{transform:translateX(-90px) rotate(-8deg)}
+.gacha-stage-v238.opening .gacha-pink-v238{opacity:.35;transform:translateX(-90px) scale(.92)}
+.gacha-speech-v238{position:absolute;bottom:30%;left:8%;right:8%;width:fit-content;max-width:84%;margin:auto;background:#172b40ed;border:1px solid #77949fa8;border-radius:20px;padding:12px 18px;color:#e2e9e7;text-align:center;font-weight:800;font-size:clamp(14px,4vw,19px);box-shadow:0 6px 24px #030a2060;transition:opacity .45s,translate .45s}
+.gacha-stage-v238.opening .gacha-speech-v238{opacity:0;translate:0 8px}
+@keyframes gacha-scout-v238{0%{translate:-180px 30px;rotate:-15deg;opacity:0}25%{opacity:1}45%{translate:-30px -20px;rotate:8deg}65%{translate:10px 3px;rotate:-5deg}85%{translate:0 -8px;rotate:3deg}100%{translate:0 0;rotate:0deg}}
+.gacha-result-v238{background:radial-gradient(ellipse at 50% 0,#344859,#111c30 65%)!important;animation:gacha-result-entry-v238 .5s ease-out both}
+.gacha-result-v238 .gacha-confetti-v219{display:none}
+.gacha-result-v238 [data-result]{animation:gacha-card-entry-v238 .65s cubic-bezier(.16,.8,.3,1) both;animation-delay:var(--reveal-delay);box-shadow:0 7px 14px #0005;transform-origin:50% 100%}
+@keyframes gacha-card-entry-v238{from{opacity:0;transform:perspective(700px) translateY(28px) rotateX(-24deg) scale(.88)}to{opacity:1;transform:perspective(700px) translateY(0) rotateX(0) scale(1)}}
+@keyframes gacha-result-entry-v238{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){.gacha-pink-v238,.gacha-result-v238,.gacha-result-v238 [data-result]{animation:none}.gacha-stage-v238 *{transition:none!important}}
+
+/* UPDATE_V238_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5932,7 +5952,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v237</div>
+      <div class="title-version">v238</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -22763,7 +22783,8 @@ function banditWavesV230(d,area){
  const one=(k,lv,esc=false)=>({template:banditTemplateV230(k,lv,esc),level:lv}),m=(lv,n)=>Array.from({length:n},()=>one('mummy',lv));
  if(d===0)return [[m(25,3),m(25,3)],[[one('sharty',27),one('poison',26)]],[m(27,5),m(27,5)],[[one('hari',30),one('eri',30)]]][area];
  if(d===1)return [[m(45,5),m(45,5)],[m(45,5),m(45,5),[one('poison',48),one('poison',48)]],[[one('pue',50)]]][area];
- return [[[one('hari',68),one('pue',68),one('eri',70)]],[m(65,5),m(65,5),m(65,5)],[[one('healer',68),one('onbu',70),one('healer',68)]],[[one('hari',70,true),one('eri',70,true),one('queen',78),one('onbu',74,true),one('pue',75,true)]]][area];
+ const final=(key,lv)=>{const row=one(key,lv,key!=='queen');row.template.category=key==='queen'?'boss':'elite';row.template.damageReduction=key==='queen'?.12:.05;return row;};
+ return [[[one('hari',68),one('pue',68),one('eri',70)]],[m(65,5),m(65,5),m(65,5)],[[one('healer',68),one('onbu',70),one('healer',68)]],[[final('hari',70),final('eri',70),final('queen',78),final('onbu',74),final('pue',75)]]][area];
 }
 const banditBuildBaseV230=buildEnemyFromTemplate;buildEnemyFromTemplate=function(t,...args){const e=banditBuildBaseV230(t,...args);if(!t.banditV230)return e;Object.assign(e,{banditV230:t.banditV230,banditEscortV230:!!t.banditEscortV230});if(['onbu','queen'].includes(e.banditV230)&&!e.banditEscortV230)addAllElementResistV142(e,.1);if(e.banditV230==='pue'&&!e.banditEscortV230){e.statusResist={...e.statusResist,...Object.fromEntries(['poison','burn','paralyze','sleep','stun','confuse'].map(s=>[s,.8]))};}return e;};
 const banditActorBaseV230=storyActorInfo;storyActorInfo=function(key){if(String(key).startsWith('bandit230-')){const t=banditTemplateV230(key.slice(10),30);return{...t,enemyTemplate:t};}return banditActorBaseV230(key);};
@@ -23281,7 +23302,7 @@ async function mintEnterV237(keys=['mint'],kind='bubble'){
 async function mintExitV237(){const group=$('#storyGuestGroup');await Promise.all([...group.children].filter(el=>el.matches('[data-story-actor]')).map(el=>animateV157(el,[{translate:'0 0',opacity:1},{translate:'40vw -12px',opacity:.7,offset:.6},{translate:'90vw 0',opacity:0}],650)));await storyHideGuests();}
 async function mintTransformV237(){
  const el=storyAnchor('mint237-mint'),img=el?.querySelector('img');if(!el||!img)return;await preloadAsset('spenemy/90.png','high');const layer=mintFxV237(el,'sweet');el.classList.add('mint-transforming-v237');
- try{await animateV157(el,[{scale:'1'},{scale:'.9',rotate:'-5deg',offset:.5},{scale:'.6',opacity:0}],1400);el.style.opacity='0';await readyStoryImage(img,'spenemy/90.png');img.alt='モブリスミント';el.dataset.storyActor='mint237-ris';await animateV157(el,[{opacity:0,scale:'.6'},{opacity:1,scale:'1.12',offset:.6},{opacity:1,scale:'1'}],1600);}finally{el.style.removeProperty('opacity');el.classList.remove('mint-transforming-v237');layer.remove();}
+ try{await animateV157(el,[{scale:'1'},{scale:'.9',rotate:'-5deg',offset:.5},{scale:'.6',opacity:0}],1400);el.style.opacity='0';await readyStoryImage(img,'spenemy/90.png');img.alt='モブリスミント';el.dataset.storyActor='mint237-ris';el.hidden=false;await nextPaint();await animateV157(el,[{opacity:0,scale:'.6'},{opacity:1,scale:'1.12',offset:.6},{opacity:1,scale:'1'}],1600);}finally{el.style.removeProperty('opacity');el.classList.remove('mint-transforming-v237');layer.remove();}
 }
 async function mintIntroduceV237(){const pink=storyAnchor('pink'),hero=storyAnchor('yusha');if(!pink||!hero)return storySay('pink','この方でありますー！！');const p=pink.getBoundingClientRect(),h=hero.getBoundingClientRect(),dx=h.x-p.x+(p.x<h.x?-h.width:h.width)*.7;await animateV157(pink,[{translate:'0 0'},{translate:`${dx*.5}px -24px`,offset:.5},{translate:`${dx}px 0`}],650);pink.style.translate=`${dx}px 0`;try{await storySay('pink','この方でありますー！！');}finally{await animateV157(pink,[{translate:`${dx}px 0`},{translate:'0 -18px',offset:.7},{translate:'0 0'}],550);pink.style.removeProperty('translate');}}
 async function mintStepsV237(steps){for(const [op,a,b]of steps){if(skipConversationV224())break;if(op==='say')await storySay(a,b);else if(op==='jump')await jumpSayV179(a,b);else if(op==='shake')await shakeSayV179(a,b);else if(op==='summon')await mintEnterV237(['mint'],a==='chess'?'chess':'bubble');else if(op==='exit')await mintExitV237();else if(op==='kiba')await mintEnterV237(Array(a).fill('kiba'),'aura');else if(op==='double')await mintEnterV237(['mint','copy']);else if(op==='transform')await mintTransformV237();else if(op==='introduce')await mintIntroduceV237();else if(op==='narrate')await storyNarrate(a);}}
@@ -23314,15 +23335,16 @@ const mintReturnBaseV237=returnSavannaV174;
 returnSavannaV174=function(...args){const result=mintReturnBaseV237(...args);$('#adventureScreen').classList.remove('mint-transition-v237');$('#battleScreen').classList.remove('mint-battle-preparing-v237','mint-battle-v237');return result;};
 window.__mobBuildVersion='v237';
 
-async function mintEnemyHitV237(e,power,all=false,type='magic',debuff=false){
+function mintWaterSpellV237(){return pick(['nepu','nepuma','nepumachun'].map(id=>MOB_DATA.magicCatalog.find(s=>s.id===id)));}
+async function mintEnemyHitV237(e,power,all=false,type='magic',debuff=false,spell=null){
  const b=state.battle,oldCrit=enemyCriticalV163,oldAoe=enemyAoeV163,targets=all?livingField():[pick(livingMain().length?livingMain():livingField())].filter(Boolean);let total=0;
- try{enemyAoeV163=all;await beginEnemyLunge(e.uid);for(const a of targets){enemyCriticalV163=e.mintV237!=='kiba'&&Math.random()<.10;const n=await damageAlly(a,power*(e.mintV237==='ris'&&type==='magic'?1.11:1),type,isSuper(a),e.attribute);total+=n;if(n>0&&debuff){a.atkDebuff=Math.max(a.atkDebuff||0,.20);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,rint(2,3));notice(`${a.name} ATK -20%`,'status',550);}}}finally{enemyCriticalV163=oldCrit;enemyAoeV163=oldAoe;endEnemyLunge();}return total;
+ try{enemyAoeV163=all;await beginEnemyLunge(e.uid);for(const a of targets){if(spell)await skillSprite(spell.frames,a.id,spell.mode);enemyCriticalV163=e.mintV237!=='kiba'&&Math.random()<.10;const n=await damageAlly(a,power*(e.mintV237==='ris'&&type==='magic'?1.11:1),type,isSuper(a),e.attribute);total+=n;if(n>0&&debuff){a.atkDebuff=Math.max(a.atkDebuff||0,.20);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,rint(2,3));notice(`${a.name} ATK -20%`,'status',550);}}}finally{enemyCriticalV163=oldCrit;enemyAoeV163=oldAoe;endEnemyLunge();}return total;
 }
 const mintEnemyActionBaseV237=enemyAction;
 enemyAction=async function(index=1,uid){const b=state.battle,e=enemyByUid(uid)||actingEnemy()||b?.enemy;if(!e?.mintV237)return mintEnemyActionBaseV237(index,uid);if(!b||b.finished||e.hp<=0||statusStopsActionV235(e))return;if(e.status.confuse>0)return confusedActionV235(e,true);const previous=b.actingEnemyId,oldEnemy=b.enemy;b.actingEnemyId=e.uid;b.enemy=e;
  try{if(e.mintV237==='kiba'){const type=index===1?'physical':'magic',all=Math.random()<.40;await actionCutin(type==='magic'?'地属性の魔法！':'地属性の特技！','danger',500);await mintEnemyHitV237(e,1,all,type);return;}
-  const ultimate=index===1,all=index===2;await actionCutin(ultimate?'ミント・テンゲン':all?'水属性の全体魔法！':'水属性の魔法！','danger',600);const layer=mintFxV237($('#enemyArea'));try{await fixedDelay(280);await mintEnemyHitV237(e,ultimate?1.3:all?.85:1,all,'magic',ultimate);}finally{layer.remove();}
-  if(!b.finished&&e.hp>0&&livingField().length&&Math.random()<.50){if(!b.mintGameSpokenV237){b.mintGameSpokenV237=true;await enemyStoryCutin(e,'守りは慎重に！攻めは積極的に！');}await reactionV177(e,'ミントゲーム','水魔法で追撃！');await mintEnemyHitV237(e,.8,false,'magic');}
+  const ultimate=index===1,all=index===2,spell=ultimate?null:mintWaterSpellV237();await actionCutin(ultimate?'ミント・テンゲン':spell.name,'danger',600);const layer=mintFxV237($('#enemyArea'));try{await fixedDelay(280);await mintEnemyHitV237(e,ultimate?1.3:spell.power,all,'magic',ultimate,spell);}finally{layer.remove();}
+  if(!b.finished&&e.hp>0&&livingField().length&&Math.random()<.50){if(!b.mintGameSpokenV237){b.mintGameSpokenV237=true;await enemyStoryCutin(e,'守りは慎重に！攻めは積極的に！');}const follow=mintWaterSpellV237();await reactionV177(e,'ミントゲーム',follow.name+'で追撃！');await mintEnemyHitV237(e,follow.power,false,'magic',false,follow);}
  }finally{b.actingEnemyId=previous;b.enemy=oldEnemy;renderBattle();}
 };
 const mintCritBaseV237=calcDamage;
@@ -23348,6 +23370,64 @@ performMagic=async function(a,skill=null,...args){
 };
 
 // UPDATE_V237_END
+// UPDATE_V238_BEGIN
+// Presentation only. Draw probabilities, currency and awards remain in drawGachaV96.
+function gachaSceneV238(canvas,pattern,reduced=false){
+ const ctx=canvas.getContext('2d');if(!ctx)return{paint(){},stop(){}};
+ let frame=0,stopped=false,start=performance.now(),manual=null;
+ const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);},stars=Array.from({length:70},(_,i)=>({x:((i*137.508)%360)/180-1,y:((i*73.17)%230)/115-1,z:.15+(i*31%83)/100}));
+ const kinds=pattern.id==='choice'?['wood','gold']:pattern.id==='rush'?['gold','rainbow','gold','rainbow','gold']:[pattern.id==='wood'?'wood':pattern.id==='rainbow'?'rainbow':'gold'];
+ const paint=ms=>{
+  const t=reduced?4.8:ms/1000,w=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(devicePixelRatio||1,2);if(!w||!h)return;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);
+  const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#090f24');bg.addColorStop(.5,'#192c46');bg.addColorStop(1,'#121923');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  const rise=ease((t-1)/1.2),opening=ease((t-3.5)/1.1),flight=ease((t-4.7)/1.6),cx=w*.5,cy=h*.48;
+  const halo=ctx.createRadialGradient(cx,cy,1,cx,cy,w*.72);halo.addColorStop(0,pattern.id==='rainbow'||pattern.id==='rush'?'#78639b38':'#b58c5933');halo.addColorStop(1,'#1b274000');ctx.fillStyle=halo;ctx.fillRect(0,0,w,h);
+  for(const s of stars){const z=.2+((s.z+(reduced?0:t*.025))%1),x=cx+s.x*w*.45/z,y=cy+s.y*h*.38/z;ctx.fillStyle=`rgba(159,189,208,${.12+.3*(1-z)})`;ctx.beginPath();ctx.arc(x,y,Math.max(.45,1.4-z),0,7);ctx.fill();}
+  // Floor ellipse and broken orbit lines give the treasure a grounded space.
+  ctx.save();ctx.translate(cx,h*.65);ctx.scale(1,.28);for(let i=0;i<3;i++){ctx.strokeStyle=['#729baa32','#a9bbae24','#49698142'][i];ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,0,w*(.29+i*.13),w*(.29+i*.13),0,t*.12+i,t*.12+i+Math.PI*1.7);ctx.stroke();}ctx.restore();
+  function chest(kind,index){
+   const count=kinds.length,spread=count===5?.18:count===2?.36:0,ox=cx+(index-(count-1)/2)*w*spread,oy=cy+(1-rise)*-h*.4+(count===5?Math.abs(index-2)*17:0)+Math.sin(Math.min(1,(t-2.2)*4)*Math.PI)*Math.max(0,1-(t-2.2))*8;
+   const unit=w*(count===5?.087:count===2?.15:.24)*(1+opening*.08)*(1-flight*.45),yaw=-.58+Math.sin(t*.7+index)*.13,pitch=.38;
+   const project=([x,y,z])=>{const X=x*Math.cos(yaw)+z*Math.sin(yaw),Z=-x*Math.sin(yaw)+z*Math.cos(yaw),Y=y*Math.cos(pitch)-Z*Math.sin(pitch),depth=y*Math.sin(pitch)+Z*Math.cos(pitch),p=5/(5+depth);return[ox+X*unit*p,oy+Y*unit*p,depth];};
+   ctx.save();ctx.globalAlpha=1-flight;ctx.fillStyle='#02081388';ctx.beginPath();ctx.ellipse(ox,h*.65,unit*1.1,unit*.2,0,0,7);ctx.fill();
+   const faces=[],wood=kind==='wood',colors=wood?['#95643e','#68472e','#b07c4b']:kind==='gold'?['#c99b4c','#896335','#e2b96b']:['#9275b4','#526e9b','#75aea4'];
+   function box(x,y,z,sx,sy,sz,palette,hinge=false){const v=[];for(const [a,b,c]of [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]]){let X=x+a*sx,Y=y+b*sy,Z=z+c*sz;if(hinge){const angle=-opening*1.85,dy=Y+.25,dz=Z-.55;Y=-.25+dy*Math.cos(angle)-dz*Math.sin(angle);Z=.55+dy*Math.sin(angle)+dz*Math.cos(angle);}v.push(project([X,Y,Z]));}for(const [ids,col]of [[[0,1,2,3],palette[0]],[[4,5,6,7],palette[1]],[[0,4,7,3],palette[1]],[[1,5,6,2],palette[1]],[[0,1,5,4],palette[2]],[[3,2,6,7],palette[1]]])faces.push({points:ids.map(i=>v[i]),color:col,depth:ids.reduce((s,i)=>s+v[i][2],0)/4});}
+   // Hollow chest: four thick walls and a dark interior, with real hinged lid.
+   box(-1,-.25,-.6,2,1,.15,colors);box(-1,-.25,.45,2,1,.15,colors);box(-1,-.25,-.6,.14,1,1.2,colors);box(.86,-.25,-.6,.14,1,1.2,colors);box(-.86,.65,-.45,1.72,.08,.9,['#292f3d','#242638','#413b48']);
+   const metal=wood?['#b8a67e','#716448','#d3bf8b']:['#d1ba78','#88744e','#e1c990'];
+   for(const x of [-.79,.64]){box(x,-.28,-.625,.15,1.07,1.25,metal);box(x,-.72,-.64,.15,.48,1.28,metal,true);}
+   box(-1,-.69,-.61,2,.43,1.22,colors,true);box(-1,-.74,-.49,2,.10,.98,[colors[2],colors[0],colors[2]],true);
+   box(-.16,-.32-opening*.23,-.72-opening*.14,.32,.38,.12,metal);
+   faces.sort((a,b)=>b.depth-a.depth);for(const face of faces){ctx.beginPath();face.points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();const shine=ctx.createLinearGradient(0,oy-unit,0,oy+unit);shine.addColorStop(0,face.color);shine.addColorStop(1,'#'+face.color.slice(1).match(/../g).map(n=>Math.round(parseInt(n,16)*.72).toString(16).padStart(2,'0')).join(''));ctx.fillStyle=shine;ctx.fill();ctx.strokeStyle='#182332';ctx.lineWidth=1.7;ctx.stroke();}
+   // Front straps are surface decals, so adjacent wall polygons cannot occlude them.
+   for(const x of [-.79,.64]){const pts=[[x,-.24,-.77],[x+.15,-.24,-.77],[x+.15,.74,-.77],[x,.74,-.77]].map(project);ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=metal[0];ctx.fill();ctx.strokeStyle=metal[1];ctx.stroke();}
+   // Rivets and boards follow the same projection as the box.
+   for(const x of [-.72,.72])for(const y of [-.12,.52]){const p=project([x,y,-.78]);ctx.fillStyle='#e4cc94';ctx.beginPath();ctx.arc(p[0],p[1],Math.max(1,unit*.028),0,7);ctx.fill();}
+   if(wood){ctx.strokeStyle='#3f322d60';for(const y of [.1,.36]){const a=project([-.97,y,-.78]),b=project([.97,y,-.78]);ctx.beginPath();ctx.moveTo(...a.slice(0,2));ctx.lineTo(...b.slice(0,2));ctx.stroke();}}
+   if(opening){const p=project([0,-.3,0]),glow=ctx.createRadialGradient(p[0],p[1],2,p[0],p[1],unit*.95);glow.addColorStop(0,`rgba(210,189,117,${opening*.42})`);glow.addColorStop(1,'#bb9b5300');ctx.fillStyle=glow;ctx.fillRect(p[0]-unit,p[1]-unit,unit*2,unit*2);}
+   ctx.restore();
+  }
+  kinds.forEach(chest);
+  if(opening&&!reduced){ctx.save();ctx.globalAlpha=opening*(1-flight)*.4;for(let i=0;i<5;i++){ctx.strokeStyle=['#88b6b8','#b9a677','#8e98b8'][i%3];ctx.lineWidth=i%2?1:2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.bezierCurveTo(cx-w*.42,cy-h*.12,cx+w*.5,cy-h*.22,cx+Math.sin(t+i)*w*.26,cy-h*.32);ctx.stroke();}ctx.restore();}
+  // Faceted stars rise out of the open chest, arc overhead, then rush toward the viewer.
+  const release=ease((t-4.15)/.7);if(release){const count=pattern.id==='rush'?15:pattern.id==='rainbow'?10:6;for(let i=0;i<count;i++){const angle=i*2.399+t*.24,orbit=(.15+flight*.55)*w,px=cx+Math.sin(angle)*orbit*release,py=cy-Math.sin(release*Math.PI*.55)*h*.19+Math.cos(angle)*orbit*.3-flight*h*.2,r=(5+i%3*2)*(1+flight*3),alpha=release*(1-ease((t-6.5)/.55));ctx.save();ctx.globalAlpha=alpha;ctx.translate(px,py);ctx.rotate(angle);const palette=pattern.id==='rainbow'||pattern.id==='rush'?['#a98bbf','#83bdb5','#c7ac72']:['#c9ab70','#c9ab70','#9bbed0'];ctx.strokeStyle=palette[i%3]+'55';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-Math.sin(angle)*flight*70,50*flight);ctx.stroke();for(let n=0;n<8;n++){const a=n*Math.PI/4,b=(n+1)*Math.PI/4,ra=n%2?r*.35:r,rb=(n+1)%2?r*.35:r;ctx.fillStyle=n%2?'#70889c':palette[i%3];ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(a)*ra,Math.sin(a)*ra);ctx.lineTo(Math.cos(b)*rb,Math.sin(b)*rb);ctx.fill();}ctx.restore();}}
+  const vignette=ctx.createRadialGradient(cx,cy,w*.2,cx,cy,h*.7);vignette.addColorStop(0,'#02061200');vignette.addColorStop(1,'#020612bb');ctx.fillStyle=vignette;ctx.fillRect(0,0,w,h);
+ };
+ const tick=now=>{if(stopped||!canvas.isConnected)return;paint(manual??now-start);frame=requestAnimationFrame(tick);};frame=requestAnimationFrame(tick);
+ return{paint(ms){manual=ms;paint(ms);},stop(){stopped=true;cancelAnimationFrame(frame);}};
+}
+pinkGachaV220=async function(pattern){
+ const ov=gachaSurfaceV219(),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ ov.innerHTML=`<section class="gacha-stage-v238" aria-label="ガチャ演出"><canvas aria-hidden="true"></canvas><div class="gacha-pink-v238"><img src="${player('pink').image}" alt="モブピンク"></div><div class="gacha-speech-v238">行ってくるであります‼</div></section>`;
+ const stage=$('.gacha-stage-v238',ov),scene=gachaSceneV238($('canvas',stage),pattern,reduced);
+ try{await fixedDelay(reduced?100:1700);stage.classList.add('found');$('.gacha-speech-v238',stage).textContent=pattern.line;await fixedDelay(reduced?450:1650);stage.classList.add('opening');await fixedDelay(reduced?150:3600);stage.classList.add('finish');await fixedDelay(reduced?80:350);}finally{scene.stop();}
+};
+const gachaResultBaseV238=showGachaResultV115;
+showGachaResultV115=function(...args){const pending=gachaResultBaseV238(...args),ov=ensureGachaOverlayV96();$('.gacha-result-v219',ov)?.classList.add('gacha-result-v238');$$('[data-result]',ov).forEach((el,i)=>el.style.setProperty('--reveal-delay',`${i*65}ms`));return pending;};
+window.__mobBuildVersion='v238';
+
+// UPDATE_V238_END
 })();
 </script>
 </body>
