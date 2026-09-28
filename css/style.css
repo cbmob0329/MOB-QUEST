@@ -5491,3 +5491,31 @@ img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radiu
 .nm-impact-v241.dark,.nm-impact-v241.thunder{background:#9d88bd}.nm-impact-v241.water{background:#76abbf}
 
 /* UPDATE_V241_END */
+/* UPDATE_V242_BEGIN */
+#trainingFeaturePanel .event-panel-v163 [data-nm-back]{display:inline-flex;align-items:center;justify-content:center;min-width:84px;min-height:44px;padding:10px 20px;margin-bottom:12px;background:#24364f!important;color:#fff!important;border:2px solid #8da9c8;border-radius:12px;font-weight:800;box-shadow:0 3px 8px #0003}
+#trainingFeaturePanel .event-panel-v163 [data-nm-back]:hover{background:#354f70!important}
+#trainingFeaturePanel .event-panel-v163 [data-nm-back]:focus-visible{outline:3px solid #eac770;outline-offset:3px}
+.nm-dash-trail-v242{position:absolute;inset:0;z-index:3;pointer-events:none}.nm-dash-trail-v242 img{position:absolute;object-fit:contain;filter:saturate(.35) sepia(.1)}
+.nm-shock-v242{position:absolute;z-index:6;width:95px;height:95px;transform:translate(-50%,-50%);pointer-events:none;color:#a4b7d5}
+.nm-shock-v242 i{position:absolute;inset:0;border:4px solid currentColor;border-radius:50%}.nm-shock-v242 i:nth-child(2){inset:15%;border-width:2px;transform:scaleX(1.8) rotate(-30deg)}.nm-shock-v242 i:nth-child(3){inset:-15%;border-width:2px;clip-path:polygon(0 0,70% 0,100% 40%,25% 100%)}.nm-shock-v242.fire{color:#b99062}.nm-shock-v242.water{color:#77b9ca}
+.nm-breath-v242{position:absolute;z-index:5;height:100px;transform:translateY(-50%) rotate(var(--angle));transform-origin:left center;pointer-events:none;opacity:0}
+.nm-breath-cone-v242{position:absolute;inset:-12px -25px;background:linear-gradient(90deg,#d8a649aa,#bf622acd 38%,#8b342c9c 85%,transparent);clip-path:polygon(0 46%,10% 40%,28% 30%,56% 13%,85% 0,100% 18%,92% 45%,100% 69%,86% 100%,49% 80%,22% 65%,0 55%)}
+.nm-breath-v242>img{position:absolute;left:0;width:110px;height:110px;object-fit:contain;opacity:0;filter:saturate(.8) brightness(.85)}
+.nm-stage-v239.dragon-breath-v242 .nm-background-v239{filter:brightness(.6) saturate(.7)}
+.nm-seal-v242{position:absolute;inset:0;z-index:6;pointer-events:none;color:#91bddd}
+.nm-sealing-v242 .nm-background-v239{filter:brightness(.38) saturate(.55);transition:filter 1s}
+.nm-seal-floor-v242{position:absolute;left:var(--seal-x);top:var(--seal-y);width:var(--seal-size);height:calc(var(--seal-size)*.4);transform:translate(-50%,-50%);opacity:0;filter:drop-shadow(0 0 6px #75a9d866)}
+.nm-seal-floor-v242>svg{width:100%;height:100%;overflow:visible}.nm-seal-floor-v242>svg>g{transform-origin:150px 150px;animation:nm-rune-spin-v242 32s linear infinite}
+.nm-seal-cage-v242{position:absolute;left:var(--seal-x);top:var(--seal-y);width:var(--seal-size);height:calc(var(--seal-size)*.9);transform:translate(-50%,-94%);transform-origin:50% 100%;opacity:0;border-radius:40%;background:linear-gradient(90deg,#527fa31a,transparent 25%,transparent 75%,#527fa31a)}
+.nm-seal-crown-v242{position:absolute;left:10%;right:10%;top:0;height:24%;transform:translateY(-30%)}.nm-seal-crown-v242 svg{width:100%;height:100%}.nm-seal-crown-v242 svg>g{transform-origin:150px 150px;animation:nm-rune-spin-v242 24s linear infinite reverse}
+.nm-seal-bands-v242{position:absolute;inset:10% 10% 3%}.nm-seal-bands-v242 i{position:absolute;left:0;right:0;height:24%;border:2px solid #a3bdd7;border-radius:50%;box-shadow:0 0 7px #85addb44;transform:rotate(-12deg)}.nm-seal-bands-v242 i:nth-child(1){top:15%}.nm-seal-bands-v242 i:nth-child(2){top:43%;transform:rotate(12deg)}.nm-seal-bands-v242 i:nth-child(3){top:73%}
+.nm-seal-lightning-v242{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 3px #6f9bd5)}
+.nm-seal-v242.binding .nm-seal-lightning-v242{animation:nm-binding-v242 1.4s ease-in-out infinite alternate}
+.nm-seal-v242.locked .nm-seal-bands-v242{filter:drop-shadow(0 0 4px #99bbe4)}
+.nm-seal-circuit-v242{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nm-seal-circuit-v242 path{fill:none;stroke:#9bbfe1;stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.nm-channel-v242{filter:drop-shadow(0 0 8px #77a9dd)!important}.nm-captive-v242{filter:saturate(.6) drop-shadow(0 0 8px #8eb3d6)!important}
+@keyframes nm-rune-spin-v242{to{rotate:360deg}}@keyframes nm-binding-v242{from{opacity:.5}to{opacity:.9}}
+@media(prefers-reduced-motion:reduce){.nm-seal-v242 *{animation:none!important}.nm-dash-trail-v242{display:none}}
+
+/* UPDATE_V242_END */
