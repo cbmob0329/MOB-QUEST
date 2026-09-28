@@ -5457,3 +5457,37 @@ img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radiu
 @media(prefers-reduced-motion:reduce){.nm-stage-v239 *{animation:none!important}.nm-result-v239{animation:none}}
 
 /* UPDATE_V239_END */
+/* UPDATE_V240_BEGIN */
+.ending-v157.ending-montage-v240{display:block;position:fixed;inset:0;background:#000;z-index:100001;overflow:hidden}
+.ending-montage-v240 .ending-slide-v240{position:absolute;inset:0;background:#000;opacity:0;overflow:hidden}
+.ending-montage-v240 img.ending-art-v240{position:absolute;inset:4%;width:92%;height:92%;max-width:none;max-height:none;margin:0;object-fit:contain;object-position:50% 50%;transform-origin:50% 50%;animation:ending-breathe-v240 36s linear forwards}
+@keyframes ending-breathe-v240{from{transform:scale(1)}to{transform:scale(1.025)}}
+.ending-caption-v157.ending-caption-v240{position:fixed!important;inset:0!important;z-index:100002!important;display:grid!important;place-items:center;background:#000!important;color:#eee9dd!important;padding:0!important;text-align:center;overflow:hidden}
+.ending-caption-v240 .ending-card-v240{width:86%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(24px,5vh,48px)}
+.ending-caption-v240 .ending-card-v240 p{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(18px,3.9vw,30px);font-weight:500;line-height:2.1;letter-spacing:.07em;margin:0;max-width:none;width:max-content;text-shadow:0 0 18px #d6c79b20;white-space:normal}
+.ending-caption-v240 p span{display:block;width:max-content;margin-inline:auto;white-space:nowrap}
+.ending-caption-v240 .ending-signature-v240 img{display:block;width:min(76vw,520px);height:auto;max-height:42vh;object-fit:contain;animation:none}
+.ending-caption-v240 .ending-signature-v240 p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(22px,5vw,34px);letter-spacing:.18em}
+@media(prefers-reduced-motion:reduce){.ending-montage-v240 img.ending-art-v240{animation:none}}
+
+/* UPDATE_V240_END */
+/* UPDATE_V241_BEGIN */
+.nm-actor-v239{width:calc(clamp(84px,25vw,142px)*var(--character-size,1));height:auto}
+.nm-actor-v239>img:not(.nm-barrier-art-v241){display:block}
+.nm-spell-v241{position:absolute;z-index:6;width:clamp(100px,34vw,205px);height:clamp(100px,34vw,205px);transform:translate(-50%,-50%);pointer-events:none;opacity:.82;filter:saturate(.8) brightness(.85)}
+.nm-spell-v241.planet{width:clamp(140px,46vw,270px);height:clamp(140px,46vw,270px)}
+.nm-spell-v241>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.nm-actor-v239>img.nm-barrier-art-v241{display:none;position:absolute;inset:-17%;width:134%;height:134%;object-fit:contain;opacity:.3;filter:saturate(.6);pointer-events:none}
+.nm-guard-v239>img.nm-barrier-art-v241,.nm-water-guard-v239>img.nm-barrier-art-v241{display:block}
+.nm-bubble-v239[hidden]{display:none!important}
+.nm-stage-v239.duel .nm-background-v239{filter:saturate(.8) brightness(.7)}
+.nm-strike-v241{position:absolute;z-index:5;height:28px;transform:translateY(-50%) rotate(var(--angle));transform-origin:left center;pointer-events:none;filter:drop-shadow(0 0 5px #af7d5955)}
+.nm-strike-v241 i{position:absolute;inset:0;background:linear-gradient(90deg,transparent,#a65032 18%,#d5a56e 75%,transparent);clip-path:polygon(0 40%,18% 15%,64% 35%,92% 0,100% 50%,75% 75%,30% 65%)}
+.nm-strike-v241 i:nth-child(2){inset:-10px 14% 12px 5%;opacity:.6;transform:rotate(4deg)}
+.nm-strike-v241 i:nth-child(3){inset:16px 7% -7px 15%;opacity:.5;transform:rotate(-3deg)}
+.nm-strike-v241.water i{background:linear-gradient(90deg,transparent,#306987,#84c2cf,transparent)}
+.nm-strike-v241.dark i,.nm-strike-v241.thunder i{background:linear-gradient(90deg,transparent,#594286,#b5a2ca,transparent)}
+.nm-impact-v241{position:absolute;z-index:7;width:100px;height:100px;transform:translate(-50%,-50%);pointer-events:none;background:#d3a075;clip-path:polygon(49% 0,57% 37%,88% 15%,67% 44%,100% 54%,65% 60%,83% 92%,55% 68%,42% 100%,38% 64%,4% 77%,30% 52%,0 32%,38% 37%)}
+.nm-impact-v241.dark,.nm-impact-v241.thunder{background:#9d88bd}.nm-impact-v241.water{background:#76abbf}
+
+/* UPDATE_V241_END */

@@ -1,0 +1,17 @@
+.nm-actor-v239{width:calc(clamp(84px,25vw,142px)*var(--character-size,1));height:auto}
+.nm-actor-v239>img:not(.nm-barrier-art-v241){display:block}
+.nm-spell-v241{position:absolute;z-index:6;width:clamp(100px,34vw,205px);height:clamp(100px,34vw,205px);transform:translate(-50%,-50%);pointer-events:none;opacity:.82;filter:saturate(.8) brightness(.85)}
+.nm-spell-v241.planet{width:clamp(140px,46vw,270px);height:clamp(140px,46vw,270px)}
+.nm-spell-v241>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.nm-actor-v239>img.nm-barrier-art-v241{display:none;position:absolute;inset:-17%;width:134%;height:134%;object-fit:contain;opacity:.3;filter:saturate(.6);pointer-events:none}
+.nm-guard-v239>img.nm-barrier-art-v241,.nm-water-guard-v239>img.nm-barrier-art-v241{display:block}
+.nm-bubble-v239[hidden]{display:none!important}
+.nm-stage-v239.duel .nm-background-v239{filter:saturate(.8) brightness(.7)}
+.nm-strike-v241{position:absolute;z-index:5;height:28px;transform:translateY(-50%) rotate(var(--angle));transform-origin:left center;pointer-events:none;filter:drop-shadow(0 0 5px #af7d5955)}
+.nm-strike-v241 i{position:absolute;inset:0;background:linear-gradient(90deg,transparent,#a65032 18%,#d5a56e 75%,transparent);clip-path:polygon(0 40%,18% 15%,64% 35%,92% 0,100% 50%,75% 75%,30% 65%)}
+.nm-strike-v241 i:nth-child(2){inset:-10px 14% 12px 5%;opacity:.6;transform:rotate(4deg)}
+.nm-strike-v241 i:nth-child(3){inset:16px 7% -7px 15%;opacity:.5;transform:rotate(-3deg)}
+.nm-strike-v241.water i{background:linear-gradient(90deg,transparent,#306987,#84c2cf,transparent)}
+.nm-strike-v241.dark i,.nm-strike-v241.thunder i{background:linear-gradient(90deg,transparent,#594286,#b5a2ca,transparent)}
+.nm-impact-v241{position:absolute;z-index:7;width:100px;height:100px;transform:translate(-50%,-50%);pointer-events:none;background:#d3a075;clip-path:polygon(49% 0,57% 37%,88% 15%,67% 44%,100% 54%,65% 60%,83% 92%,55% 68%,42% 100%,38% 64%,4% 77%,30% 52%,0 32%,38% 37%)}
+.nm-impact-v241.dark,.nm-impact-v241.thunder{background:#9d88bd}.nm-impact-v241.water{background:#76abbf}

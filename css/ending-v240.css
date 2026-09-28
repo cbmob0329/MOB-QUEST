@@ -1,0 +1,11 @@
+.ending-v157.ending-montage-v240{display:block;position:fixed;inset:0;background:#000;z-index:100001;overflow:hidden}
+.ending-montage-v240 .ending-slide-v240{position:absolute;inset:0;background:#000;opacity:0;overflow:hidden}
+.ending-montage-v240 img.ending-art-v240{position:absolute;inset:4%;width:92%;height:92%;max-width:none;max-height:none;margin:0;object-fit:contain;object-position:50% 50%;transform-origin:50% 50%;animation:ending-breathe-v240 36s linear forwards}
+@keyframes ending-breathe-v240{from{transform:scale(1)}to{transform:scale(1.025)}}
+.ending-caption-v157.ending-caption-v240{position:fixed!important;inset:0!important;z-index:100002!important;display:grid!important;place-items:center;background:#000!important;color:#eee9dd!important;padding:0!important;text-align:center;overflow:hidden}
+.ending-caption-v240 .ending-card-v240{width:86%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(24px,5vh,48px)}
+.ending-caption-v240 .ending-card-v240 p{font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-size:clamp(18px,3.9vw,30px);font-weight:500;line-height:2.1;letter-spacing:.07em;margin:0;max-width:none;width:max-content;text-shadow:0 0 18px #d6c79b20;white-space:normal}
+.ending-caption-v240 p span{display:block;width:max-content;margin-inline:auto;white-space:nowrap}
+.ending-caption-v240 .ending-signature-v240 img{display:block;width:min(76vw,520px);height:auto;max-height:42vh;object-fit:contain;animation:none}
+.ending-caption-v240 .ending-signature-v240 p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(22px,5vw,34px);letter-spacing:.18em}
+@media(prefers-reduced-motion:reduce){.ending-montage-v240 img.ending-art-v240{animation:none}}
