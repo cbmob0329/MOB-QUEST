@@ -1,0 +1,18 @@
+.memo-modal-v236{padding:0;border:3px solid #735236;border-radius:20px;background:#fff7e7;color:#3d291c;width:min(94vw,660px);max-width:94vw;max-height:92dvh;box-shadow:0 16px 64px #0009;overflow:hidden}
+.memo-modal-v236::backdrop{background:#17111bbf}
+.memo-modal-v236>section{display:flex;flex-direction:column;max-height:calc(92dvh - 6px)}
+.memo-modal-v236 header{padding:14px 18px 10px;border-bottom:1px solid #dbc6a2;flex:none}
+.memo-modal-v236 h2{font-size:clamp(16px,4.5vw,23px);margin:0;line-height:1.5;overflow-wrap:anywhere}
+.memo-body-v236{overflow:auto;overscroll-behavior:contain;padding:10px;min-height:0}
+.memo-image-v236{display:block;width:100%;height:auto;aspect-ratio:1;opacity:0;border-radius:10px;object-fit:contain}
+.memo-image-v236.ready{opacity:1}
+.memo-modal-v236 footer{padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid #dbc6a2;flex:none}
+.memo-modal-v236 button{border:2px solid #967044;background:#fff3d8;color:#49301d;border-radius:10px;padding:11px 18px;min-height:44px;font:inherit;cursor:pointer}
+.memo-modal-v236 button:focus-visible,.memo-text-v236 summary:focus-visible{outline:3px solid #347b93;outline-offset:2px}
+.memo-list-v236{display:grid;gap:10px;padding:16px}
+.memo-list-v236>button{text-align:left;line-height:1.6}
+.memo-text-v236{padding:12px 8px;font-size:15px;line-height:1.8}
+.memo-text-v236 summary{cursor:pointer;padding:6px}
+.memo-load-v236{text-align:center}
+.memo-load-v236 button{display:block;margin:12px auto}
+#homeScreen .brand-box #memoButtonV236{position:static;align-self:center;width:100%;max-width:160px;margin:5px 0 0;padding:6px 8px;min-height:30px;border:1px solid #f4d78a;border-radius:8px;background:#352d46e8;color:#fff4cb;font-size:11px;line-height:1.35;box-shadow:0 2px 6px #0005}

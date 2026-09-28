@@ -5379,6 +5379,28 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 .bandit-battle-v234 .enemy-count-5 .enemy-unit{width:100%!important;max-width:100%!important;min-width:0!important}
 
 /* UPDATE_V234_END */
+
+/* MEMOS_V236_BEGIN */
+.memo-modal-v236{padding:0;border:3px solid #735236;border-radius:20px;background:#fff7e7;color:#3d291c;width:min(94vw,660px);max-width:94vw;max-height:92dvh;box-shadow:0 16px 64px #0009;overflow:hidden}
+.memo-modal-v236::backdrop{background:#17111bbf}
+.memo-modal-v236>section{display:flex;flex-direction:column;max-height:calc(92dvh - 6px)}
+.memo-modal-v236 header{padding:14px 18px 10px;border-bottom:1px solid #dbc6a2;flex:none}
+.memo-modal-v236 h2{font-size:clamp(16px,4.5vw,23px);margin:0;line-height:1.5;overflow-wrap:anywhere}
+.memo-body-v236{overflow:auto;overscroll-behavior:contain;padding:10px;min-height:0}
+.memo-image-v236{display:block;width:100%;height:auto;aspect-ratio:1;opacity:0;border-radius:10px;object-fit:contain}
+.memo-image-v236.ready{opacity:1}
+.memo-modal-v236 footer{padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid #dbc6a2;flex:none}
+.memo-modal-v236 button{border:2px solid #967044;background:#fff3d8;color:#49301d;border-radius:10px;padding:11px 18px;min-height:44px;font:inherit;cursor:pointer}
+.memo-modal-v236 button:focus-visible,.memo-text-v236 summary:focus-visible{outline:3px solid #347b93;outline-offset:2px}
+.memo-list-v236{display:grid;gap:10px;padding:16px}
+.memo-list-v236>button{text-align:left;line-height:1.6}
+.memo-text-v236{padding:12px 8px;font-size:15px;line-height:1.8}
+.memo-text-v236 summary{cursor:pointer;padding:6px}
+.memo-load-v236{text-align:center}
+.memo-load-v236 button{display:block;margin:12px auto}
+#homeScreen .brand-box #memoButtonV236{position:static;align-self:center;width:100%;max-width:160px;margin:5px 0 0;padding:6px 8px;min-height:30px;border:1px solid #f4d78a;border-radius:8px;background:#352d46e8;color:#fff4cb;font-size:11px;line-height:1.35;box-shadow:0 2px 6px #0005}
+
+/* MEMOS_V236_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5882,7 +5904,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v235</div>
+      <div class="title-version">v236</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -14391,7 +14413,7 @@ const TURNTABLE_PATTERNS_V116={
 };
 const TURNTABLE_KILL_REWARD_V116={
   exp:{normal:{'sp-metal':1500},hard:{'sp-metal':2500,'sp-metal-coin':12000},veryhard:{'sp-metal':4000,'sp-metal-coin':18000,'sp-metal-king':50000},inferno:{'sp-metal-coin':25000,'sp-metal-king':80000}},
-  gold:{normal:{'sp-gold':1000},hard:{'sp-gold':2000,'sp-gold-coin':6000},veryhard:{'sp-gold':3000,'sp-gold-coin':10000,'sp-gold-king':30000},inferno:{'sp-gold-coin':15000,'sp-gold-king':60000}}
+  gold:{normal:{'sp-gold':1000},hard:{'sp-gold':3000,'sp-gold-coin':9000},veryhard:{'sp-gold':5000,'sp-gold-coin':16000,'sp-gold-king':50000},inferno:{'sp-gold-coin':25000,'sp-gold-king':100000}}
 };
 function turntableBaseLevelV116(difficulty){return Number(TURNTABLE_DIFFICULTIES[difficulty]?.recommended)||5;}
 function turntableKillValueV116(mode,difficulty,id){return Number(TURNTABLE_KILL_REWARD_V116?.[mode]?.[difficulty]?.[id]||0);}
@@ -23093,6 +23115,90 @@ superSubAction=async function(a,...args){if(statusStopsActionV235(a))return;if(a
 window.__mobBuildVersion='v235';
 
 // UPDATE_V235_END
+// UPDATE_V236_BEGIN
+const MEMOS_V236=[{"id":"status","title":"状態異常についてのメモ","image":"memo/status-memo-v235.png","rows":[["眠り","行動できない。攻撃を受けるまで続く。"],["混乱","行動を選べない。50%で味方を通常攻撃の50%の威力で攻撃。攻撃を受けると30%で回復。"],["やけど","ターン開始時、最大HPの3%ダメージ。やけど中はSPDが半分。"],["毒","ターン開始時、最大HPの2%ダメージ。攻撃が10%の確率で外れる。"],["マヒ","行動できない。回避率が0になる。"],["回復","毒・やけど・マヒは自然には治らない。回復アイテムで治そう！"]]},{"id":"combat","title":"会心・連撃についてのメモ","image":"memo/combat-memo-v235.png","rows":[["会心","基本ダメージは1.5倍。発生率や威力は、装備・特性・技の効果で変わる。"],["連撃・追撃","通常攻撃の後、確率で追加攻撃。発生率と威力は効果ごとに異なる。魔法の追撃は別の効果。"],["回避","攻撃をかわしてダメージを防ぐ。マヒ中の回避率は0。"],["相手の回避率ダウン","攻撃時に、相手がかわす確率を下げる効果。毒による10%のミスは別判定。"],["耐性・ダメージ軽減","属性耐性はその属性のダメージを軽減。状態異常耐性は、状態異常にかかる確率を下げる。"]]},{"id":"figures","title":"フィギュアについてのメモ","image":"memo/figures-v236.png","rows":[["装備","メインは4体まで。サブは4体まで装備でき、効果は30%。"],["タグ","タグの組み合わせで追加効果が発動。効果や発動タグは装備画面で確認しよう。"],["ソウルスキル","ソウルポイントを使って発動。1つのフィギュアにつき、1戦闘で1回まで。"],["棚に飾る","棚の効果は30%。上限はR9・SR7・SSR5・UR3・MOB1。棚ではタグとソウルスキルは発動しない。"]]},{"id":"tavern","title":"酒場についてのメモ","image":"memo/tavern-v236.png","rows":[["パーティー編成","仲間の並びを変え、戦いに向けて準備しよう。"],["役割を決める","MAIN・SUPER SUB・RESERVEの編成を確認しよう。"],["ドリンク購入","冒険で使うドリンクを購入できる。所持数と効果を確認して選ぼう。"],["フィギュアガチャ","解放されたガチャに挑戦できる。必要な通貨や排出内容を確認しよう。"]]},{"id":"camp","title":"キャンプについてのメモ","image":"memo/camp-v236.png","rows":[["テント","モブテントを1つ使い、生存中の仲間のHP・MPを全回復。"],["椅子・ドリンク","椅子でHP・MPを回復。ドリンクも使って冒険の準備を整えよう。"],["回数に注意","テント・椅子・ドリンクは、そのAREAでそれぞれ1回まで。"],["パーティー","編成・装備・持ち物・状態確認は、いつでも利用できる。"]]},{"id":"smith","title":"鍛冶屋についてのメモ","image":"memo/smith-v236.png","rows":[["武器購入","武器の性能・価格・装備できるキャラクターを確認して購入しよう。"],["メダル錬成","同じ武器を3つ消費してメダルを作る。武器の特性を引き継げる。"],["装備を売却","不要な武器や防具を売却できる。売る前に装備状況を確認しよう。"],["迷ったらHELP","詳しい説明は鍛冶屋のHELPでも確認できる。"]]},{"id":"adventure","title":"冒険についてのメモ","image":"memo/adventure-v236.png","rows":[["探索して進む","各地のAREAを探索し、出会った敵と戦いながら先へ進もう。"],["準備を整える","仲間の編成・装備・HP・MPを確認。必要なアイテムも用意しよう。"],["キャンプで休む","キャンプを活用して回復や装備変更を行おう。"],["王への報告","報告が必要になったら、お城の王の間へ向かおう。"]]},{"id":"program","title":"バトルプログラムについてのメモ","image":"memo/program-v236.png","rows":[["プログラムを選ぶ","シーズンごとに用意された戦闘へ挑戦できる。"],["仲間を育てる","敵のレベルや編成を確認し、パーティーに合う戦いを選ぼう。"],["新しいシーズン","冒険の進行に応じて、挑戦できるシーズンが増えていく。"]]},{"id":"subquest","title":"サブクエストについてのメモ","image":"memo/subquest-v236.png","rows":[["別の冒険へ","クリア済みエリアで、新たなクエストに挑戦できる。"],["出撃条件","クエストによって必要な仲間が異なる。条件を確認して編成しよう。"],["報酬を確認","内容や報酬を確認し、準備を整えて出発しよう。"]]},{"id":"journal","title":"冒険日記についてのメモ","image":"memo/journal-v236.png","rows":[["クリア済みエリアへ","探索とバトルをもう一度楽しみ、経験値やコインを獲得できる。"],["会話イベントなし","ストーリーの会話やイベントは再生されない。"],["AREA4の違い","中ボスは出現する。AREA4ではボスの代わりにエリアモンスター4体が出現。"]]},{"id":"exp","title":"経験値ターンテーブルについてのメモ","image":"memo/exp-v236.png","rows":[["経験値を獲得","仲間のレベル上げに向いた戦闘へ挑戦できる。"],["レコードを使う","参加には経験値レコードが必要。必要枚数を確認しよう。"],["難易度を選ぶ","推奨レベルを参考に、無理のない難易度を選ぼう。"]]},{"id":"gold","title":"ゴールドターンテーブルについてのメモ","image":"memo/gold-v236.png","rows":[["コインを獲得","買い物や冒険の準備に使うコインを集めよう。"],["レコードを使う","参加にはゴールドレコードが必要。必要枚数を確認しよう。"],["難易度を選ぶ","推奨レベルを確認し、パーティーの強さに合わせて挑戦しよう。"]]},{"id":"boss","title":"ボスターンテーブルについてのメモ","image":"memo/boss-v236.png","rows":[["撃破済みボスと再戦","これまでに倒したボスに挑戦できる。"],["レコードを使う","参加にはボスレコードが必要。必要枚数を確認しよう。"],["解放と報酬","メニューの解放条件や難易度、報酬を確認して挑もう。"]]},{"id":"event","title":"イベントクエストについてのメモ","image":"memo/event-v236.png","rows":[["3つの挑戦","イベントストーリー・ボス降臨・レジェンドボスへ挑もう。"],["解放条件","冒険の進行やクリア状況で、挑戦できる内容が増える。"],["条件を確認","難易度・出撃条件・報酬を確認してから出発しよう。"]]},{"id":"event-story","title":"イベントストーリーについてのメモ","image":"memo/event-story-v236.png","rows":[["仲間たちの物語","イベントならではの会話と戦闘を楽しもう。"],["編成に注意","イベントや難易度によって、出撃できる仲間が異なる。"],["クリアを目指す","各AREAを進めてクリアし、限定報酬を獲得しよう。"]]},{"id":"event-boss","title":"ボス降臨についてのメモ","image":"memo/event-boss-v236.png","rows":[["強敵に挑戦","冒険の進行で解放されたイベントボスと戦おう。"],["難易度を選ぶ","前の難易度をクリアすると、次の難易度に挑戦できる。"],["限定報酬","初回報酬やフィギュアの獲得条件は、挑戦画面で確認しよう。"]]},{"id":"legend","title":"レジェンドボスについてのメモ","image":"memo/legend-v236.png","rows":[["全員で挑む総力戦","全員で挑むレイドボス！総力戦だ！"],["助っ人を選ぶ","助っ人を2名選んで挑戦。助っ人は必殺技を使わない。"],["初回クリア報酬","初回撃破で、対応するフィギュアを確定で獲得できる。"]]}];
+// Player memos are collected only after their image has actually been displayed.
+let memoTailV236=Promise.resolve();
+const memoPendingV236=new Map();
+function memoSeenV236(id){return state.meta?.seenMemosV236?.[id]===true;}
+function memoIdleV236(){return !openingSequenceBusy&&!conversationInputLockedV171()&&$('#dialogOverlay')?.hidden!==false;}
+function memoModalV236(title){
+ const dialog=document.createElement('dialog');dialog.className='memo-modal-v236';
+ dialog.innerHTML='<section><header><h2></h2></header><div class="memo-body-v236"></div><footer><button type="button" data-memo-close>閉じる</button></footer></section>';
+ $('h2',dialog).textContent=title;$('h2',dialog).id='memo-title-v236';dialog.setAttribute('aria-labelledby','memo-title-v236');document.body.append(dialog);return dialog;
+}
+function showMemoV236(memo,{collect=false}={}){
+ return new Promise(resolve=>{
+  const dialog=memoModalV236(memo.title),body=$('.memo-body-v236',dialog),previous=document.activeElement,owner=state.meta;
+  const image=document.createElement('img');image.className='memo-image-v236';image.alt=memo.title;image.draggable=false;
+  const message=document.createElement('p');message.className='memo-load-v236';message.textContent='読み込み中…';message.setAttribute('role','status');body.append(message,image);
+  let done=false;
+  const finish=()=>{if(done)return;done=true;dialog.close();dialog.remove();if(previous?.isConnected)previous.focus({preventScroll:true});resolve();};
+  $('[data-memo-close]',dialog).onclick=finish;dialog.addEventListener('cancel',e=>{e.preventDefault();finish();});
+  image.onload=()=>{if(done)return;message.remove();image.classList.add('ready');if(collect&&owner===state.meta){state.meta.seenMemosV236={...state.meta.seenMemosV236,[memo.id]:true};saveMeta();}};
+  image.onerror=()=>{if(done)return;message.textContent='画像を読み込めませんでした。';const retry=document.createElement('button');retry.type='button';retry.textContent='再読み込み';retry.onclick=()=>{retry.remove();message.textContent='読み込み中…';image.src=memo.image+'?retry='+Date.now();};message.append(retry);};
+  if(memo.rows){const text=document.createElement('details');text.className='memo-text-v236';const summary=document.createElement('summary');summary.textContent='文章で読む';text.append(summary);for(const [heading,copy] of memo.rows){const p=document.createElement('p'),strong=document.createElement('strong');strong.textContent=heading;p.append(strong,document.createElement('br'),document.createTextNode(copy));text.append(p);}body.append(text);}
+  dialog.showModal();image.src=memo.image;
+ });
+}
+function firstMemoV236(id){
+ const memo=MEMOS_V236.find(m=>m.id===id),owner=state.meta;
+ if(!memo||memoSeenV236(id))return Promise.resolve();
+ if(memoPendingV236.get(id)?.owner===owner)return memoPendingV236.get(id).promise;
+ const entry={owner};
+ entry.promise=memoTailV236.catch(()=>{}).then(async()=>{
+  while(owner===state.meta&&!memoIdleV236())await new Promise(r=>setTimeout(r,120));
+  if(owner===state.meta&&!memoSeenV236(id))await showMemoV236(memo,{collect:true});
+ }).catch(e=>console.warn('[memo v236]',e)).finally(()=>{if(memoPendingV236.get(id)===entry)memoPendingV236.delete(id);});
+ memoPendingV236.set(id,entry);memoTailV236=entry.promise;return entry.promise;
+}
+function openMemoCollectionV236(){
+ if($('.memo-modal-v236'))return;
+ const dialog=memoModalV236('メモを見る'),body=$('.memo-body-v236',dialog),rows=MEMOS_V236.filter(m=>memoSeenV236(m.id));
+ body.classList.add('memo-list-v236');
+ if(!rows.length){const p=document.createElement('p');p.textContent='まだメモを見ていません。';body.append(p);}
+ for(const memo of rows){const b=document.createElement('button');b.type='button';b.textContent=memo.title;b.onclick=async()=>{dialog.close();dialog.remove();await showMemoV236(memo);openMemoCollectionV236();};body.append(b);}
+ const close=()=>{dialog.close();dialog.remove();$('#memoButtonV236')?.focus({preventScroll:true});};
+ $('[data-memo-close]',dialog).onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});dialog.showModal();
+}
+const memoAllowedTargetV236=conversationAllowedTargetV171;
+conversationAllowedTargetV171=target=>!!target?.closest?.('.memo-modal-v236')||memoAllowedTargetV236(target);
+const memoHomeRenderV236=renderHome;
+renderHome=function(...args){const result=memoHomeRenderV236(...args),brand=$('#homeScreen .brand-box');if(brand){let button=$('#memoButtonV236');if(!button){button=document.createElement('button');button.id='memoButtonV236';button.type='button';button.textContent='メモを見る';button.onclick=openMemoCollectionV236;}const shelf=$('#shelfButtonV218');if(shelf)shelf.after(button);else brand.append(button);}return result;};
+const memoGoHomeV236=goHome;
+let memoOpeningFlowV236=false;
+async function openingMemosV236(){await firstMemoV236('status');await firstMemoV236('combat');}
+goHome=async function(...args){const result=await memoGoHomeV236(...args);if(state.meta.openingCompleted&&!openingSequenceBusy&&!memoOpeningFlowV236)await openingMemosV236();return result;};
+const memoOpeningV236=runOpeningV74;
+runOpeningV74=async function(...args){memoOpeningFlowV236=true;try{await memoOpeningV236(...args);}finally{memoOpeningFlowV236=false;}if(state.meta.openingCompleted)await openingMemosV236();};
+const memoTavernV236=enterTavern;
+enterTavern=async function(...args){const result=await memoTavernV236(...args);await firstMemoV236('tavern');return result;};
+const memoSmithV236=openBlacksmithFacility;
+openBlacksmithFacility=async function(...args){const result=await memoSmithV236(...args);await firstMemoV236('smith');return result;};
+const memoCampV236=openCamp;
+openCamp=function(...args){const result=memoCampV236(...args);if(!$('#campOverlay').hidden)void firstMemoV236('camp');return result;};
+// This button was bound during boot, before the late update modules ran.
+$('#campBtn').onclick=()=>openCamp();
+// This button was bound during boot, before the late update modules ran.
+$('#campBtn').onclick=()=>openCamp();
+const memoAdventureV236=handleAdventureEntry;
+handleAdventureEntry=async function(...args){if(!state.adventure.awaitingReport)await firstMemoV236('adventure');return memoAdventureV236(...args);};
+const memoTrainingV236=setTrainingMode;
+setTrainingMode=async function(mode,...args){const result=await memoTrainingV236(mode,...args);if(['program','subquest','journal','exp','gold','boss','event'].includes(mode)&&state.training.mode===mode&&$('#trainingFeaturePopup')?.hidden===false)await firstMemoV236(mode);return result;};
+const memoEventV236=renderEventQuestsV163;
+renderEventQuestsV163=function(...args){const result=memoEventV236(...args),id={story:'event-story',boss:'event-boss',legend:'legend'}[eventViewV163];if(id&&screens.training.classList.contains('active')&&$('#trainingFeaturePopup')?.hidden===false)void firstMemoV236(id);return result;};
+const memoFigureChooseV236=openFigureChooseV220;
+openFigureChooseV220=function(...args){const result=memoFigureChooseV236(...args);void firstMemoV236('figures');return result;};
+const memoFigureRenderV236=renderFigureGroupV220;
+renderFigureGroupV220=function(...args){const result=memoFigureRenderV236(...args);if(screens.equipment.classList.contains('active'))void firstMemoV236('figures');return result;};
+const memoScreenV236=showScreen;
+showScreen=function(name,...args){const result=memoScreenV236(name,...args);if(name==='equipment'&&['figures','subfigures'].includes(equipmentTab))void firstMemoV236('figures');return result;};
+const memoFigureShopV236=openTavernFigureShopV98;
+openTavernFigureShopV98=async function(...args){const result=await memoFigureShopV236(...args);if($('#tavernFigurePopup')?.hidden===false)await firstMemoV236('figures');return result;};
+showTavernFigureShop=openTavernFigureShopV98;
+window.__mobBuildVersion='v236';
+
+// UPDATE_V236_END
 })();
 </script>
 </body>

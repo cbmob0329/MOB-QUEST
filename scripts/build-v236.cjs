@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),root=path.resolve(__dirname,'..');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8'),write=(p,s)=>fs.writeFileSync(path.join(root,p),s);
+let game=read('js/game.js');
+const block='// UPDATE_V236_BEGIN\nconst MEMOS_V236='+JSON.stringify(JSON.parse(read('js/memos-v236.json')))+';\n'+read('js/memos-v236.js')+'\n// UPDATE_V236_END';
+if(game.includes('// UPDATE_V236_BEGIN'))game=game.replace(/\/\/ UPDATE_V236_BEGIN[\s\S]*?\/\/ UPDATE_V236_END/,()=>block);else{const i=game.lastIndexOf('})();');if(i<0)throw Error('Game closure missing');game=game.slice(0,i)+block+'\n'+game.slice(i);}write('js/game.js',game);
+let css=read('css/style.css'),style='/* MEMOS_V236_BEGIN */\n'+read('css/memos-v236.css')+'\n/* MEMOS_V236_END */';
+if(css.includes('/* MEMOS_V236_BEGIN */'))css=css.replace(/\/\* MEMOS_V236_BEGIN \*\/[\s\S]*?\/\* MEMOS_V236_END \*\//,()=>style);else css+='\n'+style;write('css/style.css',css);
+write('index.html',read('index.html').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v236</div>'));
+const catalog=JSON.parse(read('js/memos-v236.json'));write('memo/prompts-v236.json',JSON.stringify({method:'built-in image_gen',style:read('memo/style-v236.txt'),images:catalog.filter(m=>m.image.endsWith('-v236.png'))},null,2)+'\n');
+require('./sync-inline.cjs');
