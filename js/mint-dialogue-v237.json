@@ -1,0 +1,14 @@
+{
+ "pre":[
+  [["shake","pink","やっぱり、\n不気味であります・・"],["say","nyoro","なんか寒いニョロ～"],["say","jessie","でも\n楽しいこともあるのよ"],["jump","denden","楽しいことでやんすか!?"],["say","jessie","ええ\n娯楽がちゃんとあるわ"],["say","nyoro","ニョロ～"],["summon","mint"],["say","mint237-mint","わわ！\nなんで人がいるの！？"],["say","denden","ま、魔王軍でやんすか！？"],["say","pink","いや！！"],["jump","pink","村の新しいボス！\nでありますね！？"],["say","jessie","どっちも違うわよ"],["say","mint237-mint","モブジェシー？\nどこ行ってたの！"],["say","jessie","元気そうね\n私は今勇者パーティーなの"],["say","mint237-mint","勇者様！？\nどれが！？"],["introduce"],["say","jessie","そういうことなの"],["say","mint237-mint","そっか\nちょっと寂しいな"],["say","denden","一緒に来ればいいでやんす♪"],["say","pink","仲間は、\n多い方がいいであります♪"],["say","jessie","そんな危ないこと\nこの子にさせられないわ"],["say","jessie","ねえモブミント、"],["say","jessie","ダイヤを\n少し分けてもらえないかしら？"],["say","mint237-mint","ダイヤを？"],["say","nyoro","ダイヤがあるニョロ？"],["say","denden","あるでやんすか！？"],["say","mint237-mint","え～\nう～ん"],["say","mint237-mint","モブジェシーの頼みなら\n断れないけど"],["say","mint237-mint","私と遊んでくれる？"],["say","pink","もちろんであります！"],["say","mint237-mint","じゃあ\n奥で待ってるね"],["exit"],["kiba",3],["say","pink","敵であります！！"],["say","nyoro","倒して\nモブミントを追いかけるニョロ！"]],
+  [["summon","mint"],["say","mint237-mint","早かったね\nじゃあ第一ゲームやるよ！"],["say","mint237-mint","問題！"],["double"],["say","mint237-mint","本物ど～っちだ！"]],
+  [["summon","mint"],["say","mint237-mint","次のゲーム行くよー！"],["say","denden","ほぅー！\nノッて来たでやんすね！"],["say","pink","負けないであります！"],["say","mint237-mint","じゃあ"],["say","mint237-mint","戦闘開始！"],["say","nyoro","ニョロ～！？"]],
+  [["summon","chess"],["say","mint237-mint","よし！最後のゲーム始めるよ！"],["say","denden","どんと来いでやんす！"],["say","pink","いざいざであります！"],["say","mint237-mint","行っくよー！"],["transform"],["say","nyoro","可愛いニョロ～！"],["say","mint237-ris","ラストゲーム、スタート！"]]
+ ],
+ "post":[
+  [["say","jessie","ああ見えて\nモブミントは強いのよ"],["say","denden","ゲーム楽しみでやんす♪"]],
+  [["say","jessie","モブピンクは素直なのね"],["jump","pink","悔しいであります！！"]],
+  [["summon","mint"],["say","jessie","相変わらず魔法が上手ね"],["say","pink","凄い能力であります！"],["say","mint237-mint","でも負けちゃった～！"],["say","denden","これで終わりでやんすか？"],["say","mint237-mint","次で最後！"],["exit"],["say","nyoro","元気な子だニョロ～"]],
+  [["summon","mint"],["jump","pink","僕らの勝利であります～！"],["jump","denden","勝利、勝利でやんす～！"],["say","nyoro","また遊ぶニョロ～！"],["say","jessie","ダイヤ、もらっていい？"],["say","mint237-mint","悔しいなー！\nでも楽しかった！"],["say","mint237-mint","これあげるね！"],["narrate","ダイヤを手に入れた！"],["say","pink","次は、フィギュアでバトル！\nやるであります！"],["say","mint237-mint","いいね！楽しみ！"],["say","jessie","また来るわね"]]
+ ]
+}

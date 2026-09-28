@@ -5401,6 +5401,34 @@ body:has(#trainingScreen.active #trainingFeaturePopup:not([hidden])) #facilityHe
 #homeScreen .brand-box #memoButtonV236{position:static;align-self:center;width:100%;max-width:160px;margin:5px 0 0;padding:6px 8px;min-height:30px;border:1px solid #f4d78a;border-radius:8px;background:#352d46e8;color:#fff4cb;font-size:11px;line-height:1.35;box-shadow:0 2px 6px #0005}
 
 /* MEMOS_V236_END */
+/* UPDATE_V237_BEGIN */
+.mint-story-v237 #storyGuestGroup{width:92%!important;left:4%!important;right:4%!important;bottom:39%!important;height:min(23vh,170px)!important;display:flex;align-items:flex-end;justify-content:center;gap:14px}
+.mint-story-v237 #storyGuestGroup[hidden]{display:none!important}
+.mint-story-v237 #storyGuestGroup .story-guest-multi{width:min(30vw,145px)!important;max-width:31%!important;height:100%!important;max-height:170px!important;flex:0 1 auto;display:flex;align-items:flex-end;justify-content:center}
+.mint-story-v237 #storyGuestGroup[data-count="4"] .story-guest-multi{max-width:22%!important}
+.mint-story-v237 #storyGuestGroup img{width:100%!important;height:100%!important;max-width:145px!important;max-height:170px!important;object-fit:contain;object-position:center bottom}
+.mint-preparing-v237 #storyGuestGroup .story-guest-multi{visibility:hidden!important}
+.mint-transition-v237 #fieldEvent,.mint-transition-v237 #adventureParty{visibility:hidden!important}
+.mint-battle-preparing-v237 #enemyArea .enemy-unit{visibility:hidden!important}
+.mint-battle-v237 .enemy-unit img.enemy-sprite{max-width:150px!important;max-height:min(24vh,175px)!important;object-fit:contain}
+.mint-fx-v237{position:absolute;inset:-10% -5%;pointer-events:none;z-index:20;overflow:visible}
+.mint-fx-v237 i{position:absolute;left:var(--x);bottom:0;width:var(--s);height:var(--s);border-radius:50%;border:2px solid #a2efe5b3;background:radial-gradient(circle at 30% 25%,#e9ffff80,transparent 40%,#54bde535);box-shadow:inset -2px -3px 5px #41b2bf44;animation:mint-bubble-v237 1.5s ease-out infinite;animation-delay:calc(var(--i)*-90ms)}
+.mint-ring-v237{position:absolute;left:12%;right:12%;bottom:0;height:18%;border:3px solid #8ee3dbc0;border-radius:50%;box-shadow:0 0 16px #41b2bf60;animation:mint-ring-v237 1s ease-in-out infinite alternate}
+.mint-fx-v237.chess .mint-ring-v237{height:30%;border-radius:8px;transform:perspective(200px) rotateX(55deg);background:repeating-conic-gradient(#87d9dd60 0 25%,#2d507060 0 50%) 0/28px 28px}
+.mint-fx-v237.aura i{border-color:#b39ad688;background:#5e368850;box-shadow:0 0 15px #794cad99}
+.mint-fx-v237.aura .mint-ring-v237{border-color:#a593c9a0;box-shadow:0 0 18px #573d7890}
+.mint-fx-v237.sweet i{border:2px solid #baedce;background:repeating-linear-gradient(45deg,#876149 0 4px,#d4f2dd 4px 10px);border-radius:25%;animation-duration:1s}
+.mint-fx-v237.sweet .mint-ring-v237{border-color:#aaf4d6;box-shadow:0 0 20px #84bd9f80}
+@keyframes mint-bubble-v237{from{opacity:0;translate:0 10px;scale:.4}25%{opacity:.8}to{opacity:0;translate:calc((var(--i) - 7)*4px) -140px;scale:1.1}}
+@keyframes mint-ring-v237{to{scale:1.1;opacity:.5}}
+.mint-answer-v237{position:absolute;top:20%;left:5%;right:5%;z-index:100;text-align:center;font-size:clamp(28px,9vw,46px);font-weight:1000;color:#c7ffe0;text-shadow:3px 3px #205844;background:#184a50da;border:3px solid #a5ecd4;border-radius:20px;padding:18px}
+.mint-answer-v237.wrong{color:#ffe0bd;background:#5e3838e8;border-color:#ddac90;text-shadow:3px 3px #422}
+.mint-result-v237{border:2px solid #8ce2d5;box-shadow:0 10px 45px #001b3070, inset 0 0 28px #76c7c520;animation:mint-result-v237 .6s ease-out both}
+@keyframes mint-result-v237{from{opacity:0;translate:0 18px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radius:50%;border:3px solid #88c9cd;background:radial-gradient(circle,#c6f3de,#437a91 65%,#d6c38e 68%,#628caf 76%);box-shadow:0 0 10px #a2e3d666;padding:4px;object-fit:contain}
+@media(prefers-reduced-motion:reduce){.mint-fx-v237 i,.mint-ring-v237{animation:none}.mint-result-v237{animation-duration:.01s}}
+
+/* UPDATE_V237_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -5904,7 +5932,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v236</div>
+      <div class="title-version">v237</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -10483,13 +10511,17 @@ async function beginBattle(config){
   if(config?.bookHeroPower){const y=allies.find(x=>x.id==='yusha');if(y){y.dead=false;y.hp=y.maxHp;y.mpNow=y.maxMp;y.transformed=true;y.allBuff=.20;y.allBuffTurns=99;y.bookHeroDamageCut=.70;y.bookHeroDamageBoost=.50;y.bookHeroStatusImmune=true;y.bookHeroNormalAoe=true;y.bookHeroAllAoe=true;y.bookHeroCrit100=true;}}
   state.noticeQueue=[];state.noticeBusy=false;setImage($('#battleBg'),bg,fallbackBg);$('#battleModeLabel').textContent=config.mode==='adventure'?(config.bossBattle?'BOSS / MID BOSS':'FIELD BATTLE'):config.mode==='story'?'EVENT BATTLE':config.mode==='quest'?'TRAINING QUEST':'TRAINING';$('#resultOverlay').hidden=true;$('#skillMenu').hidden=true;$('#autoBtn').classList.toggle('active',!!state.autoBattle);$('#autoBtn').textContent=state.autoBattle?'AUTO ON':'AUTO';$('#speedBtn').textContent=`×${state.speed}`;$('#battleBackBtn').disabled=config.mode==='story';$('#battleBackBtn').style.display=(config.mode==='training'?'':'none');
   const banditEntrance=config.storyV179==='bandits',battleScreen=$('#battleScreen');
+  const mintEntrance=config.storyV179==='mint';
+  battleScreen.classList.toggle('mint-battle-preparing-v237',mintEntrance);
+  battleScreen.classList.toggle('mint-battle-v237',mintEntrance);
   battleScreen.classList.toggle('bandit-wave-preparing-v233',banditEntrance);
   battleScreen.classList.toggle('bandit-battle-v234',banditEntrance);
   renderBattle();showScreen('battle');
   try{
     await actionCutin(`${enemies.map(e=>e.name).join('・')}が現れた！`,'danger',1000);
     if(banditEntrance)await banditBattleEntranceV234(state.battle);
-  }finally{battleScreen.classList.remove('bandit-wave-preparing-v233');}
+    if(mintEntrance)await mintBattleEntranceV237(state.battle);
+  }finally{battleScreen.classList.remove('bandit-wave-preparing-v233','mint-battle-preparing-v237');}
   await fixedDelay(100);startRound();
 }
 
@@ -23199,6 +23231,123 @@ showTavernFigureShop=openTavernFigureShopV98;
 window.__mobBuildVersion='v236';
 
 // UPDATE_V236_END
+// UPDATE_V237_BEGIN
+const MINT_FIGURES_V237=[{"image":"eventfig/61.png","name":"モブミント","rarity":"SSR","statsText":"MAG +5 & MND +5","traitText":"魔法追撃率+2%","tags":["18","27","31","33","36","37","46","53","58","60","65","73"],"adjacencyTags":["05","09","18"],"soul":{"cost":7,"name":"ミントマジック","text":"このターン、使用者が魔法を発動する時確定で魔法追撃を行う。"},"pieceSoul":{"1":{"name":"ミントベール","text":"味方全体のHPを5%アップする"},"5":{"name":"ミントベール","text":"味方全体のHPを10%アップする"},"10":{"name":"ミントベール","text":"味方全体のHPを15%アップし、DEFを5%アップする"}},"source":"figure_event_quest.txt"},{"image":"eventfig/62.png","name":"モブリスミント","rarity":"UR","statsText":"MAG +8 & MND +10","traitText":"魔法追撃率+4%","tags":["08","18","27","31","33","36","37","46","53","58","59","60","64","65","73","82"],"adjacencyTags":["05","09","18","34"],"soul":{"cost":8,"name":"ミントマジック","text":"このターン、自分含む味方が魔法を発動する時確定で魔法追撃を行う。"},"pieceSoul":{"1":{"name":"ミントベールMAX","text":"味方全体のHPを5%アップする"},"5":{"name":"ミントベールMAX","text":"味方全体のHPを10%アップする"},"10":{"name":"ミントベールMAX","text":"味方全体のHPを15%アップし、DEFを5%アップする"}},"source":"figure_event_quest.txt"}];
+const MINT_DIALOGUE_V237={"pre":[[["shake","pink","やっぱり、\n不気味であります・・"],["say","nyoro","なんか寒いニョロ～"],["say","jessie","でも\n楽しいこともあるのよ"],["jump","denden","楽しいことでやんすか!?"],["say","jessie","ええ\n娯楽がちゃんとあるわ"],["say","nyoro","ニョロ～"],["summon","mint"],["say","mint237-mint","わわ！\nなんで人がいるの！？"],["say","denden","ま、魔王軍でやんすか！？"],["say","pink","いや！！"],["jump","pink","村の新しいボス！\nでありますね！？"],["say","jessie","どっちも違うわよ"],["say","mint237-mint","モブジェシー？\nどこ行ってたの！"],["say","jessie","元気そうね\n私は今勇者パーティーなの"],["say","mint237-mint","勇者様！？\nどれが！？"],["introduce"],["say","jessie","そういうことなの"],["say","mint237-mint","そっか\nちょっと寂しいな"],["say","denden","一緒に来ればいいでやんす♪"],["say","pink","仲間は、\n多い方がいいであります♪"],["say","jessie","そんな危ないこと\nこの子にさせられないわ"],["say","jessie","ねえモブミント、"],["say","jessie","ダイヤを\n少し分けてもらえないかしら？"],["say","mint237-mint","ダイヤを？"],["say","nyoro","ダイヤがあるニョロ？"],["say","denden","あるでやんすか！？"],["say","mint237-mint","え～\nう～ん"],["say","mint237-mint","モブジェシーの頼みなら\n断れないけど"],["say","mint237-mint","私と遊んでくれる？"],["say","pink","もちろんであります！"],["say","mint237-mint","じゃあ\n奥で待ってるね"],["exit"],["kiba",3],["say","pink","敵であります！！"],["say","nyoro","倒して\nモブミントを追いかけるニョロ！"]],[["summon","mint"],["say","mint237-mint","早かったね\nじゃあ第一ゲームやるよ！"],["say","mint237-mint","問題！"],["double"],["say","mint237-mint","本物ど～っちだ！"]],[["summon","mint"],["say","mint237-mint","次のゲーム行くよー！"],["say","denden","ほぅー！\nノッて来たでやんすね！"],["say","pink","負けないであります！"],["say","mint237-mint","じゃあ"],["say","mint237-mint","戦闘開始！"],["say","nyoro","ニョロ～！？"]],[["summon","chess"],["say","mint237-mint","よし！最後のゲーム始めるよ！"],["say","denden","どんと来いでやんす！"],["say","pink","いざいざであります！"],["say","mint237-mint","行っくよー！"],["transform"],["say","nyoro","可愛いニョロ～！"],["say","mint237-ris","ラストゲーム、スタート！"]]],"post":[[["say","jessie","ああ見えて\nモブミントは強いのよ"],["say","denden","ゲーム楽しみでやんす♪"]],[["say","jessie","モブピンクは素直なのね"],["jump","pink","悔しいであります！！"]],[["summon","mint"],["say","jessie","相変わらず魔法が上手ね"],["say","pink","凄い能力であります！"],["say","mint237-mint","でも負けちゃった～！"],["say","denden","これで終わりでやんすか？"],["say","mint237-mint","次で最後！"],["exit"],["say","nyoro","元気な子だニョロ～"]],[["summon","mint"],["jump","pink","僕らの勝利であります～！"],["jump","denden","勝利、勝利でやんす～！"],["say","nyoro","また遊ぶニョロ～！"],["say","jessie","ダイヤ、もらっていい？"],["say","mint237-mint","悔しいなー！\nでも楽しかった！"],["say","mint237-mint","これあげるね！"],["narrate","ダイヤを手に入れた！"],["say","pink","次は、フィギュアでバトル！\nやるであります！"],["say","mint237-mint","いいね！楽しみ！"],["say","jessie","また来るわね"]]]};
+const MINT_PARTY_V237=['pink','jessie','denden','nyoro'];
+STORY179.mint={title:'部族村の伝統娯楽',world:'tribe',unlock:'tribe',unlockName:'部族村',image:'spenemy/89.png',diffs:[
+ {name:'ノーマル',level:45,coins:5000,diamonds:100,figures:[61]},
+ {name:'ハード',level:65,coins:10000,diamonds:200,figures:[],medal:'event-mint-medal'},
+ {name:'インフェルノ',level:90,coins:50000,diamonds:300,figures:[62]}
+]};
+const mintMedalV237={id:'event-mint-medal',name:'モブミント',image:'spenemy/89.png',type:'メダル',types:['メダル'],rarity:'UR',attribute:'水',stats:{mag:50,def:30},traits:[{kind:'mintRepeatV237',chance:.03,label:'連続魔法発動率+3%（同じ魔法・追加MP消費なし）'}],traitLabel:'魔法使用時、3%の確率で同じ魔法を再発動（追加MP消費なし）'};
+if(!weaponById(mintMedalV237.id))WEAPONS.push(mintMedalV237);
+for(const row of MINT_FIGURES_V237){const existing=figureByImageV96(row.image);if(existing)Object.assign(existing,row);else FIGURES.push({...row,id:'v218-'+row.image.replace(/[/.]/g,'-'),eventExclusiveV163:true});}
+for(const row of MINT_FIGURES_V237){const f=figureByImageV96(row.image),base=MOB_PIECE_BASE_V100[f.rarity];f.mobPieceV115??={cost:mobPieceCostV100(f),hp:base.life,attack:base.power,defense:base.defense,speed:base.speed};}
+const mintPartyBaseV237=partyV179;
+partyV179=function(key){return key==='mint'?MINT_PARTY_V237.map(id=>state.party.find(r=>canonicalPlayerId(r[0])===id)).filter(Boolean):mintPartyBaseV237(key);};
+const mintDisplayBaseV237=storyDisplayPartyIds;
+storyDisplayPartyIds=function(...args){return eventRunV174?.storyV179==='mint'?[...MINT_PARTY_V237,...(eventRunV174.area===0?['yusha']:[])]:mintDisplayBaseV237(...args);};
+const mintStartBaseV237=startV179;
+startV179=async function(key,d=0){if(key!=='mint')return mintStartBaseV237(key,d);if(eventRunV174||!openV179(key,d))return false;const party=partyV179(key);if(!party.length)return toast('出撃可能な仲間がいません');if(!await confirmStoryChallengeV179(STORY179.mint.title,STORY179.mint.diffs[d].name+'\n出撃：'+party.map(r=>player(r[0]).name).join(' / ')))return false;eventRunV174={storyV179:key,difficulty:d,area:0,vitals:{},rewarded:false};skipScopeV174='';skippedV174=false;$('#trainingFeaturePopup').hidden=true;state.meta.storyEventSeenV175??={};state.meta.storyEventSeenV175.mint=true;saveMeta();await startSavannaAreaV174();return true;};
+const mintMenuBaseV237=renderEventQuestsV163;
+renderEventQuestsV163=function(...args){const result=mintMenuBaseV237(...args);if(eventViewV163!=='story')return result;const panel=$('#trainingFeaturePanel .event-panel-v163');if(!panel)return result;
+ if(selectedStoryV179===null){const b=document.createElement('button');b.className='event-story-card-v174 mint-card-v237';b.dataset.story237='mint';b.innerHTML=`<small>STORY / 全4 AREA</small><strong>部族村の伝統娯楽</strong><img src="spenemy/89.png" class="${seenV179('mint')?'':'event-silhouette-v175'}" alt="${seenV179('mint')?'モブミント':'未遭遇のボス'}"><small>${worldCleared('tribe')||testAllQuestsV171()?'挑戦する':'部族村クリア後に解放'}</small>`;b.onclick=()=>{selectedStoryV179='mint';renderEventQuestsV163();};($('.event-story-list-v177',panel)||panel).append(b);}
+ if(selectedStoryV179==='mint'){const desc=$('.event-story-card-v174>small:last-child',panel);if(desc)desc.textContent='出撃可能：モブピンク / モブジェシー / モブデンデン / モブニョロ';$('[data-v179-start="mint:1"] .event-story-rewards-v174 img',panel)?.classList.add('mint-medal-v237');}
+ return result;
+};
+function mintTemplateV237(kind,d=0){
+ const kiba=kind==='kiba',ris=kind==='ris',level=(kiba?[45,55,90]:ris?[52,72,95]:[50,70,95])[d],base=kiba?baseByNameV179('モブキバ'):{};
+ return{...base,id:'mint237-'+kind,mintV237:kind,name:kiba?'モブキバ':ris?'モブリスミント':'モブミント',image:kiba?base.image:ris?'spenemy/90.png':'spenemy/89.png',category:kiba?'normal':'boss',attribute:kiba?'地':'水',levelMin:level,levelMax:level,noEscape:true,damageReduction:kiba?.10:.12,permanentDamageReduction:true,evasion:kiba?.10:0,actionCount:kiba?2:3,forceActionCount:true,v144ActionMin:kiba?2:3,v144ActionMax:kiba?2:3,specialOptions:kiba?[]:[{special:'ミント・テンゲン',kind:'single',skillType:'magic',skillElement:'水',power:1.3}]};
+}
+function mintWaveV237(area,d){const t=mintTemplateV237(area<2?'kiba':area===2?'mint':'ris',d);return Array.from({length:area===0?3:area===1?4:1},()=>({template:t,level:t.levelMin}));}
+const mintBuildBaseV237=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(t,...args){const e=mintBuildBaseV237(t,...args);if(t.mintV237){e.mintV237=t.mintV237;e.actionCount=e.v144ActionMin=e.v144ActionMax=t.mintV237==='kiba'?2:3;e.forceActionCount=true;e.damageReduction=t.damageReduction;e.permanentDamageReduction=true;e.evasion=t.evasion;}return e;};
+const mintSizeBaseV237=enemySizeClass;
+enemySizeClass=e=>e?.mintV237?'normal':mintSizeBaseV237(e);
+const mintActorBaseV237=storyActorInfo;
+storyActorInfo=function(key){if(String(key).startsWith('mint237-')){const kind=key.slice(8)==='copy'?'mint':key.slice(8),t=mintTemplateV237(kind,eventRunV174?.difficulty||0);return{...t,enemyTemplate:{...t,category:'normal'}};}return mintActorBaseV237(key);};
+function mintFxV237(host,kind='bubble'){
+ const layer=document.createElement('div');layer.className='mint-fx-v237 '+kind;layer.setAttribute('aria-hidden','true');
+ layer.innerHTML='<b class="mint-ring-v237"></b>'+Array.from({length:14},(_,i)=>`<i style="--i:${i};--x:${12+i*37%76}%;--s:${10+i%4*9}px"></i>`).join('');host.append(layer);return layer;
+}
+async function mintEnterV237(keys=['mint'],kind='bubble'){
+ const sc=$('#storyScene'),group=$('#storyGuestGroup');sc.classList.add('mint-preparing-v237');let fxLayer,actors=[];
+ try{await storyHideGuests();await storyShowGuests(keys.map(k=>'mint237-'+k));actors=[...group.children];actors.forEach(el=>el.style.opacity='0');fxLayer=mintFxV237(group,kind);await fixedDelay(320);
+  const jobs=actors.map((el,i)=>animateV157(el,[{opacity:0,scale:'.35',translate:'0 30px'},{opacity:.75,scale:'1.06',translate:'0 -12px',offset:.7},{opacity:1,scale:'1',translate:'0 0'}],900+i*70).then(()=>el.style.removeProperty('opacity')));
+  sc.classList.remove('mint-preparing-v237');await Promise.all(jobs);await fixedDelay(180);
+ }finally{fxLayer?.remove();sc.classList.remove('mint-preparing-v237');actors.forEach(el=>el.style.removeProperty('opacity'));}
+}
+async function mintExitV237(){const group=$('#storyGuestGroup');await Promise.all([...group.children].filter(el=>el.matches('[data-story-actor]')).map(el=>animateV157(el,[{translate:'0 0',opacity:1},{translate:'40vw -12px',opacity:.7,offset:.6},{translate:'90vw 0',opacity:0}],650)));await storyHideGuests();}
+async function mintTransformV237(){
+ const el=storyAnchor('mint237-mint'),img=el?.querySelector('img');if(!el||!img)return;await preloadAsset('spenemy/90.png','high');const layer=mintFxV237(el,'sweet');el.classList.add('mint-transforming-v237');
+ try{await animateV157(el,[{scale:'1'},{scale:'.9',rotate:'-5deg',offset:.5},{scale:'.6',opacity:0}],1400);el.style.opacity='0';await readyStoryImage(img,'spenemy/90.png');img.alt='モブリスミント';el.dataset.storyActor='mint237-ris';await animateV157(el,[{opacity:0,scale:'.6'},{opacity:1,scale:'1.12',offset:.6},{opacity:1,scale:'1'}],1600);}finally{el.style.removeProperty('opacity');el.classList.remove('mint-transforming-v237');layer.remove();}
+}
+async function mintIntroduceV237(){const pink=storyAnchor('pink'),hero=storyAnchor('yusha');if(!pink||!hero)return storySay('pink','この方でありますー！！');const p=pink.getBoundingClientRect(),h=hero.getBoundingClientRect(),dx=h.x-p.x+(p.x<h.x?-h.width:h.width)*.7;await animateV157(pink,[{translate:'0 0'},{translate:`${dx*.5}px -24px`,offset:.5},{translate:`${dx}px 0`}],650);pink.style.translate=`${dx}px 0`;try{await storySay('pink','この方でありますー！！');}finally{await animateV157(pink,[{translate:`${dx}px 0`},{translate:'0 -18px',offset:.7},{translate:'0 0'}],550);pink.style.removeProperty('translate');}}
+async function mintStepsV237(steps){for(const [op,a,b]of steps){if(skipConversationV224())break;if(op==='say')await storySay(a,b);else if(op==='jump')await jumpSayV179(a,b);else if(op==='shake')await shakeSayV179(a,b);else if(op==='summon')await mintEnterV237(['mint'],a==='chess'?'chess':'bubble');else if(op==='exit')await mintExitV237();else if(op==='kiba')await mintEnterV237(Array(a).fill('kiba'),'aura');else if(op==='double')await mintEnterV237(['mint','copy']);else if(op==='transform')await mintTransformV237();else if(op==='introduce')await mintIntroduceV237();else if(op==='narrate')await storyNarrate(a);}}
+async function mintQuizV237(){
+ // Skipping dialogue must never choose an answer or bypass the quiz battle.
+ const group=$('#storyGuestGroup');if(group.hidden||!group.classList.contains('visible')||group.children.length!==2||!group.querySelector('[data-story-actor="mint237-copy"]'))await mintEnterV237(['mint','copy']);
+ const answer=await narrationDialog('本物ど～っちだ！',[['左','left','primary'],['右','right']]);const correct=answer==='left';eventRunV174.mintCorrectV237=correct;
+ await scopedConversationV224(async()=>{await storySay('pink',correct?'左であります！':'右であります！');const badge=document.createElement('div');badge.className='mint-answer-v237 '+(correct?'correct':'wrong');badge.textContent=correct?'正解！':'不正解！';$('#storyScene').append(badge);try{await animateV157(badge,[{scale:'.5',opacity:0},{scale:'1.1',opacity:1,offset:.6},{scale:'1',opacity:1}],450);await fixedDelay(650);}finally{badge.remove();}
+ await storySay('mint237-mint',correct?'正解！':'残念！');const copy=storyAnchor('mint237-copy');if(copy){await animateV157(copy,[{opacity:1},{opacity:0,scale:'.4'}],450);copy.remove();$('#storyGuestGroup').dataset.count='1';}
+ await storySay('mint237-mint',correct?'次のエリアで待ってるね！':'また奥で待ってるね！');await mintExitV237();if(!correct)await mintEnterV237(Array(4).fill('kiba'),'aura');},[]);
+ return correct;
+}
+async function mintSceneV237(phase){
+ const r=eventRunV174,sc=$('#storyScene');$('#adventureScreen').classList.add('mint-transition-v237');showScreen('adventure');storyBusy=true;
+ try{sc.classList.add('mint-story-v237');await openStoryScene('tribe',r.area);$('#adventureStageTitle').textContent=STORY179.mint.title;$('#adventureProgress').textContent=`AREA ${r.area+1} / ${STORY179.mint.diffs[r.difficulty].name}`;await scopedConversationV224(()=>mintStepsV237(MINT_DIALOGUE_V237[phase][r.area]),[]);if(phase==='pre'&&r.area===1)return await mintQuizV237();}
+ finally{try{await closeStoryScene(false);}finally{sc.classList.remove('mint-story-v237','mint-preparing-v237');storyBusy=false;}}
+ return false;
+}
+async function mintBattleEntranceV237(b){
+ const screen=$('#battleScreen'),host=$('#enemyArea'),actors=b.enemies.map(e=>enemyVisual(e.uid)?.closest('.enemy-unit')).filter(Boolean),layer=mintFxV237(host,b.enemies[0]?.mintV237==='kiba'?'aura':'bubble');actors.forEach(el=>el.style.opacity='0');
+ try{const jobs=actors.map(el=>animateV157(el,[{opacity:0,scale:'.45',translate:'0 28px'},{opacity:1,scale:'1.05',translate:'0 -8px',offset:.75},{opacity:1,scale:'1',translate:'0 0'}],800).then(()=>el.style.removeProperty('opacity')));screen.classList.remove('mint-battle-preparing-v237');await Promise.all(jobs);}finally{layer.remove();screen.classList.remove('mint-battle-preparing-v237');actors.forEach(el=>el.style.removeProperty('opacity'));}
+}
+const mintAreaBaseV237=startSavannaAreaV174;
+startSavannaAreaV174=async function(...args){const r=eventRunV174;if(r?.storyV179!=='mint')return mintAreaBaseV237(...args);eventOverlayV163().hidden=true;try{const correct=await mintSceneV237('pre');if(r.area===1&&correct){showResultV179(true,null,true);return;}const bg=storySceneBg('tribe',r.area);await startBattleLoaded({mode:'eventStory174',storyEventV174:true,storyV179:'mint',worldId:'tribe',returnScreen:'training',party:partyV179('mint'),questVitals:r.vitals,enemyConfigs:mintWaveV237(r.area,r.difficulty),bg:bg.bg,fallbackBg:bg.fallback});$('#battleModeLabel').textContent=`${STORY179.mint.title} / ${STORY179.mint.diffs[r.difficulty].name} / AREA ${r.area+1}`;$('#battleBackBtn').style.display='';}catch(e){console.error('[mint237]',e);returnSavannaV174();toast('準備に失敗しました。もう一度お試しください。');}};
+const mintFinishBaseV237=finishSavannaV174;
+finishSavannaV174=async function(b,win){const r=eventRunV174;if(r?.storyV179!=='mint')return mintFinishBaseV237(b,win);if(b.finished)return;b.finished=true;b.auto=false;setCommandDisabled(true);$('#battleScreen').classList.add('mint-battle-preparing-v237');let reward=null;if(win){for(const a of b.allies)r.vitals[a.id]={hp:a.hp,mp:a.mpNow,dead:a.dead,status:{...a.status}};applyProgressRewards(b,r.vitals);await mintSceneV237('post');if(r.area===3)reward=rewardV179();}showResultV179(win,reward);};
+const mintResultBaseV237=showResultV179;
+showResultV179=function(win,reward,noBattle){const r=eventRunV174;if(r?.storyV179==='mint')$('#battleScreen').classList.add('mint-battle-preparing-v237');const result=mintResultBaseV237(win,reward,noBattle);if(r?.storyV179==='mint'){const card=$('.event-result-v163',eventOverlayV163());card?.classList.add('mint-result-v237');if(reward?.medal)$$('img',card).forEach(img=>img.classList.add('mint-medal-v237'));if(noBattle)showScreen('adventure');}return result;};
+const mintReturnBaseV237=returnSavannaV174;
+returnSavannaV174=function(...args){const result=mintReturnBaseV237(...args);$('#adventureScreen').classList.remove('mint-transition-v237');$('#battleScreen').classList.remove('mint-battle-preparing-v237','mint-battle-v237');return result;};
+window.__mobBuildVersion='v237';
+
+async function mintEnemyHitV237(e,power,all=false,type='magic',debuff=false){
+ const b=state.battle,oldCrit=enemyCriticalV163,oldAoe=enemyAoeV163,targets=all?livingField():[pick(livingMain().length?livingMain():livingField())].filter(Boolean);let total=0;
+ try{enemyAoeV163=all;await beginEnemyLunge(e.uid);for(const a of targets){enemyCriticalV163=e.mintV237!=='kiba'&&Math.random()<.10;const n=await damageAlly(a,power*(e.mintV237==='ris'&&type==='magic'?1.11:1),type,isSuper(a),e.attribute);total+=n;if(n>0&&debuff){a.atkDebuff=Math.max(a.atkDebuff||0,.20);a.atkDebuffTurns=Math.max(a.atkDebuffTurns||0,rint(2,3));notice(`${a.name} ATK -20%`,'status',550);}}}finally{enemyCriticalV163=oldCrit;enemyAoeV163=oldAoe;endEnemyLunge();}return total;
+}
+const mintEnemyActionBaseV237=enemyAction;
+enemyAction=async function(index=1,uid){const b=state.battle,e=enemyByUid(uid)||actingEnemy()||b?.enemy;if(!e?.mintV237)return mintEnemyActionBaseV237(index,uid);if(!b||b.finished||e.hp<=0||statusStopsActionV235(e))return;if(e.status.confuse>0)return confusedActionV235(e,true);const previous=b.actingEnemyId,oldEnemy=b.enemy;b.actingEnemyId=e.uid;b.enemy=e;
+ try{if(e.mintV237==='kiba'){const type=index===1?'physical':'magic',all=Math.random()<.40;await actionCutin(type==='magic'?'地属性の魔法！':'地属性の特技！','danger',500);await mintEnemyHitV237(e,1,all,type);return;}
+  const ultimate=index===1,all=index===2;await actionCutin(ultimate?'ミント・テンゲン':all?'水属性の全体魔法！':'水属性の魔法！','danger',600);const layer=mintFxV237($('#enemyArea'));try{await fixedDelay(280);await mintEnemyHitV237(e,ultimate?1.3:all?.85:1,all,'magic',ultimate);}finally{layer.remove();}
+  if(!b.finished&&e.hp>0&&livingField().length&&Math.random()<.50){if(!b.mintGameSpokenV237){b.mintGameSpokenV237=true;await enemyStoryCutin(e,'守りは慎重に！攻めは積極的に！');}await reactionV177(e,'ミントゲーム','水魔法で追撃！');await mintEnemyHitV237(e,.8,false,'magic');}
+ }finally{b.actingEnemyId=previous;b.enemy=oldEnemy;renderBattle();}
+};
+const mintCritBaseV237=calcDamage;
+calcDamage=function(a,type,power,crit=0,e=targetEnemy()){const result=mintCritBaseV237(a,type,power,crit,e);if(e?.mintV237&&e.mintV237!=='kiba'&&result?.crit&&Math.random()<.80){result.value=Math.max(1,Math.round(result.value/TEMP_BALANCE.critPower));result.crit=false;}return result;};
+const mintParseBaseV237=parseFigureEffectText;
+parseFigureEffectText=function(text){const source=String(text||'').normalize('NFKC'),chance=+(source.match(/魔法追撃率\s*\+\s*(\d+(?:\.\d+)?)%/)?.[1]||0)/100;return{...mintParseBaseV237(source.replace(/魔法追撃率\s*\+\s*\d+(?:\.\d+)?%/g,'')),mintMagicFollowV237:chance};};
+const mintMergeBaseV237=mergeFigureEffects;
+mergeFigureEffects=function(a,b){const chance=(a.mintMagicFollowV237||0)+(b?.mintMagicFollowV237||0);return Object.assign(mintMergeBaseV237(a,b),{mintMagicFollowV237:chance});};
+const mintEffectMarkupBaseV237=figureEffectStatusMarkup;
+figureEffectStatusMarkup=function(pid){const chance=figureEffectsFor(pid).mintMagicFollowV237;return mintEffectMarkupBaseV237(pid)+(chance?`<section class="figure-extra-effects-v163"><span>魔法追撃率<b>+${figurePercentText(chance)}</b></span></section>`:'');};
+const mintSoulBaseV237=applySoulTextV218;
+applySoulTextV218=async function(f,a,own,enemies,text,piece=false){if(!piece&&['eventfig/61.png','eventfig/62.png'].includes(f.image)){for(const target of f.image==='eventfig/61.png'?[a]:own.filter(t=>t.hp>0&&!t.dead))target.mintGuaranteedTurnV237=state.battle.turn;notice('ミントマジック / このターン魔法追撃確定','buff',700);renderBattle();return 0;}return mintSoulBaseV237(f,a,own,enemies,text,piece);};
+const mintMagicBaseV237=performMagic;
+let mintRepeatingV237=false;
+performMagic=async function(a,skill=null,...args){
+ const b=state.battle,chosen=skill?.id?skill:defaultMagicFor(a),result=await mintMagicBaseV237(a,skill,...args);
+ if(result===false||!chosen||!b||state.battle!==b||b.finished||a.dead||a.hp<=0||mintRepeatingV237||!livingEnemies().length)return result;
+ const effects=a.figureEffects||figureEffectsFor(a.id),chance=1-(1-clamp(effects.mintMagicFollowV237||0,0,1))*(1-combinedTraitChance(a,'mintRepeatV237')),guaranteed=a.mintGuaranteedTurnV237===b.turn;
+ if(!guaranteed&&!(chance>0&&Math.random()<chance))return result;
+ mintRepeatingV237=true;const previousDouble=doubleMagicV221,mp=a.mpNow;doubleMagicV221=true;
+ try{await actionCutin('ミントマジック / 追撃魔法！','buff',600);if(state.battle===b&&!b.finished&&!a.dead&&livingEnemies().length)await mintMagicBaseV237(a,{...chosen,cost:0},...args);}finally{a.mpNow=mp;doubleMagicV221=previousDouble;mintRepeatingV237=false;renderBattle();}
+ return result;
+};
+
+// UPDATE_V237_END
 })();
 </script>
 </body>

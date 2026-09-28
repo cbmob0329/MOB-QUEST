@@ -1,0 +1,25 @@
+.mint-story-v237 #storyGuestGroup{width:92%!important;left:4%!important;right:4%!important;bottom:39%!important;height:min(23vh,170px)!important;display:flex;align-items:flex-end;justify-content:center;gap:14px}
+.mint-story-v237 #storyGuestGroup[hidden]{display:none!important}
+.mint-story-v237 #storyGuestGroup .story-guest-multi{width:min(30vw,145px)!important;max-width:31%!important;height:100%!important;max-height:170px!important;flex:0 1 auto;display:flex;align-items:flex-end;justify-content:center}
+.mint-story-v237 #storyGuestGroup[data-count="4"] .story-guest-multi{max-width:22%!important}
+.mint-story-v237 #storyGuestGroup img{width:100%!important;height:100%!important;max-width:145px!important;max-height:170px!important;object-fit:contain;object-position:center bottom}
+.mint-preparing-v237 #storyGuestGroup .story-guest-multi{visibility:hidden!important}
+.mint-transition-v237 #fieldEvent,.mint-transition-v237 #adventureParty{visibility:hidden!important}
+.mint-battle-preparing-v237 #enemyArea .enemy-unit{visibility:hidden!important}
+.mint-battle-v237 .enemy-unit img.enemy-sprite{max-width:150px!important;max-height:min(24vh,175px)!important;object-fit:contain}
+.mint-fx-v237{position:absolute;inset:-10% -5%;pointer-events:none;z-index:20;overflow:visible}
+.mint-fx-v237 i{position:absolute;left:var(--x);bottom:0;width:var(--s);height:var(--s);border-radius:50%;border:2px solid #a2efe5b3;background:radial-gradient(circle at 30% 25%,#e9ffff80,transparent 40%,#54bde535);box-shadow:inset -2px -3px 5px #41b2bf44;animation:mint-bubble-v237 1.5s ease-out infinite;animation-delay:calc(var(--i)*-90ms)}
+.mint-ring-v237{position:absolute;left:12%;right:12%;bottom:0;height:18%;border:3px solid #8ee3dbc0;border-radius:50%;box-shadow:0 0 16px #41b2bf60;animation:mint-ring-v237 1s ease-in-out infinite alternate}
+.mint-fx-v237.chess .mint-ring-v237{height:30%;border-radius:8px;transform:perspective(200px) rotateX(55deg);background:repeating-conic-gradient(#87d9dd60 0 25%,#2d507060 0 50%) 0/28px 28px}
+.mint-fx-v237.aura i{border-color:#b39ad688;background:#5e368850;box-shadow:0 0 15px #794cad99}
+.mint-fx-v237.aura .mint-ring-v237{border-color:#a593c9a0;box-shadow:0 0 18px #573d7890}
+.mint-fx-v237.sweet i{border:2px solid #baedce;background:repeating-linear-gradient(45deg,#876149 0 4px,#d4f2dd 4px 10px);border-radius:25%;animation-duration:1s}
+.mint-fx-v237.sweet .mint-ring-v237{border-color:#aaf4d6;box-shadow:0 0 20px #84bd9f80}
+@keyframes mint-bubble-v237{from{opacity:0;translate:0 10px;scale:.4}25%{opacity:.8}to{opacity:0;translate:calc((var(--i) - 7)*4px) -140px;scale:1.1}}
+@keyframes mint-ring-v237{to{scale:1.1;opacity:.5}}
+.mint-answer-v237{position:absolute;top:20%;left:5%;right:5%;z-index:100;text-align:center;font-size:clamp(28px,9vw,46px);font-weight:1000;color:#c7ffe0;text-shadow:3px 3px #205844;background:#184a50da;border:3px solid #a5ecd4;border-radius:20px;padding:18px}
+.mint-answer-v237.wrong{color:#ffe0bd;background:#5e3838e8;border-color:#ddac90;text-shadow:3px 3px #422}
+.mint-result-v237{border:2px solid #8ce2d5;box-shadow:0 10px 45px #001b3070, inset 0 0 28px #76c7c520;animation:mint-result-v237 .6s ease-out both}
+@keyframes mint-result-v237{from{opacity:0;translate:0 18px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radius:50%;border:3px solid #88c9cd;background:radial-gradient(circle,#c6f3de,#437a91 65%,#d6c38e 68%,#628caf 76%);box-shadow:0 0 10px #a2e3d666;padding:4px;object-fit:contain}
+@media(prefers-reduced-motion:reduce){.mint-fx-v237 i,.mint-ring-v237{animation:none}.mint-result-v237{animation-duration:.01s}}
