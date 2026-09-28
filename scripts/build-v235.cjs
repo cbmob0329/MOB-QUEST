@@ -1,0 +1,22 @@
+const fs=require('node:fs'),path=require('node:path'),root=path.resolve(__dirname,'..');
+require('./import-story-v231.cjs');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8'),write=(p,s)=>fs.writeFileSync(path.join(root,p),s);
+let source=read('js/update-v179.js').replaceAll('カスタード・クロス','カスタード・コモク');
+source=source.replace(/(  (?:custard|riscustard):[^\n]+)actionCount:2,forceActionCount:true,v144ActionMin:2,v144ActionMax:3/g,'$1actionCount:3,forceActionCount:true,v144ActionMin:3,v144ActionMax:3');write('js/update-v179.js',source);
+let game=read('js/game.js');
+game=game.replace(/\/\/ UPDATE_V179_BEGIN[\s\S]*?\/\/ UPDATE_V179_END/,()=>'// UPDATE_V179_BEGIN\n'+source+'\n// UPDATE_V179_END');
+const story='const STORY_V231='+JSON.stringify(JSON.parse(read('js/story-v231.json')))+';';
+game=game.replace(/const STORY_V231=.*?;\r?\n/,()=>story+'\n');
+// Periodic damage never consumes the saved ailment flags, and never wakes sleepers.
+game=game.replaceAll('Math.round(e.maxHp*.025)','Math.round(e.maxHp*(k===\'burn\'?.03:.02))').replaceAll('Math.round(a.maxHp*.025)','Math.round(a.maxHp*(k===\'burn\'?.03:.02))');
+game=game.replaceAll('e.status[k]--;floatNumber(d,','floatNumber(d,').replaceAll('a.status[k]--;floatNumber(d,','floatNumber(d,');
+game=game.replaceAll('a.status.sleep--;','');
+game=game.replace("if(enemyAoeV163&&Math.random()<Number(fe.aoeEvade||0))","if(a?.status?.paralyze<=0&&enemyAoeV163&&Math.random()<Number(fe.aoeEvade||0))");
+game=game.replace(/if\(a.hp<=0\)a.dead=true;\r?\n  renderBattle\(\);pulseAllyDamage\(a.id\);/,"if(a.hp<=0)a.dead=true;\n  if(d>0)recoverOnHitV235(a);\n  renderBattle();pulseAllyDamage(a.id);");
+if(!game.includes('if(d>0)recoverOnHitV235(a);'))throw Error('Missing ally hit recovery hook');
+const queueHook='renderBattle();if(b.auto)setTimeout(autoAct,100);return;';
+if(!game.includes('await confusedActionV235(a);advanceUltimateCooldowns(a)'))game=game.replace(queueHook,"if(a.status.confuse>0){b.busy=true;try{await confusedActionV235(a);advanceUltimateCooldowns(a);}finally{b.busy=false;}b.queuePos++;await checkBattleHpDialogue();if(!livingRoster().length)return finishBattle(false);if(!livingEnemies().length&&await handleEnemyWaveClear())return;continue;}"+queueHook);
+const block='// UPDATE_V235_BEGIN\n'+read('js/status-v235.js')+'\n// UPDATE_V235_END';
+if(game.includes('// UPDATE_V235_BEGIN'))game=game.replace(/\/\/ UPDATE_V235_BEGIN[\s\S]*?\/\/ UPDATE_V235_END/,()=>block);else{const i=game.lastIndexOf('})();');game=game.slice(0,i)+block+'\n'+game.slice(i);}write('js/game.js',game);
+write('index.html',read('index.html').replace(/<div class="title-version">v\d+<\/div>/,'<div class="title-version">v235</div>'));
+require('./sync-inline.cjs');

@@ -56,6 +56,7 @@ for(const raw of fs.readFileSync(path.join(root,'冒険 ネオン街Ⅱから.tx
  if(line.startsWith('モブネオンマスターの全ステータス')||line.startsWith('モブネオンマスターのダメージ軽減')){flush();continue;}
  if(/フェードアウト/.test(line)){flush();push(['hideGuests']);push(['hideGuest']);continue;}
  if(line.startsWith('画面は暗め')){flush();push(['darkPulse']);continue;}
+ if(/^(中ボス表示|中ボスを表示|ボス表示)$/.test(line))continue;
  if((!speaker&&ignored.test(line))||line.startsWith('※')||/ enemy\/\d+\.png$/.test(line)||/^(モブ|ミラモブ).+(表示|召喚表示)$/.test(line)||/^モブミラアース、モブミラカラミと先に/.test(line)||/^(ネオン|ひょこひょこ|溶岩風|燃え盛り|ゆっくり歩いて|桜吹雪|魂が舞う|大地の召喚|炎の召喚|斬撃の召喚|タイムマジック召喚)/.test(line)){flush();continue;}
  if(!speaker){if(names[line]){speaker=names[line];continue;}if(line==='？？？'){speaker='???';continue;}if(line.startsWith('ナレーション')){speaker='narrate';continue;}throw Error('Unmapped '+key+': '+line);}
  lines.push(line);
