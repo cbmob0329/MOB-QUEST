@@ -5519,3 +5519,13 @@ img.mint-medal-v237,#weaponPickerOverlay img[src*="spenemy/89.png"]{border-radiu
 @media(prefers-reduced-motion:reduce){.nm-seal-v242 *{animation:none!important}.nm-dash-trail-v242{display:none}}
 
 /* UPDATE_V242_END */
+/* UPDATE_V245_BEGIN */
+.four-rematch-card-v245>div,.four-rematch-portraits-v245{display:flex;justify-content:center;align-items:center;width:100%;min-height:100px;gap:3px}.four-rematch-card-v245>div img,.four-rematch-portraits-v245 img{width:23%!important;height:100px!important;object-fit:contain!important;filter:drop-shadow(0 4px 5px #0008)}.four-rematch-detail-v245{text-align:center}.four-rematch-detail-v245 p{line-height:1.8}
+.four-stage-v245 .nm-background-v239{background:linear-gradient(#23112b33,#19142444),url('../back/sabaku4.png') center/cover}
+.four-stage-v245 [data-nm-actor^="d2-"]{width:30%;max-width:165px}.four-stage-v245 [data-nm-actor="desert"],.four-stage-v245 [data-nm-actor="nyoro"]{width:24%}
+.four-summon-v245{position:absolute;left:50%;top:35%;width:80%;aspect-ratio:1;transform:translate(-50%,-50%);z-index:4;pointer-events:none}.four-summon-rune-v245{position:absolute;inset:0;color:#b6a3cd;filter:drop-shadow(0 0 7px #8471ae77)}.four-summon-rune-v245 svg{width:100%;height:100%;animation:four-orbit-v245 1s linear infinite}.four-summon-v245>i{position:absolute;inset:0;rotate:var(--orbit);animation:four-orbit-v245 .7s linear infinite}.four-summon-v245>i span{position:absolute;left:44%;top:-3%;width:19%;height:19%;border-radius:50%;background:#8d80b8;box-shadow:0 0 12px #8d80b877}.four-summon-v245 .fire span{background:#c8793b;clip-path:polygon(50% 0,70% 32%,100% 20%,88% 85%,50% 100%,5% 78%,0 40%,30% 53%)}.four-summon-v245 .earth span{background:#9d8769;clip-path:polygon(20% 0,80% 5%,100% 75%,65% 100%,0 78%)}.four-summon-v245 .water span{background:#589caf;border:3px solid #8bbec9;border-radius:65% 35% 60% 40%}.four-summon-v245 .time span{border:4px double #bfb0e0;background:#6c568c88}
+.four-pyramid-v245{position:absolute;z-index:5;transform:translate(-50%,-100%);transform-origin:center bottom;pointer-events:none;filter:drop-shadow(0 0 5px #c5a66766)}.four-pyramid-v245 svg{width:100%;height:100%;overflow:visible}.four-pyramid-v245 path{fill:#94724f55;stroke:#d3b77e;stroke-width:2}.four-pyramid-v245 path+path{fill:none;stroke:#d7c6a3}
+.four-result-v245{background:linear-gradient(140deg,#3c2b22,#252239)!important;animation:nm-result-v239 1s ease-out both;border-color:#d0b37a!important}
+@keyframes four-orbit-v245{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.four-summon-v245 *{animation:none!important}}
+
+/* UPDATE_V245_END */
