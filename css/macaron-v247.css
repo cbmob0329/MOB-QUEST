@@ -1,0 +1,17 @@
+.macaron-stage-v247 .nm-actor-v239{width:22%!important;max-width:120px!important;--character-size:1!important}
+.macaron-stage-v247 .nm-actor-v239[data-nm-actor^="macaron247"]{width:28%!important;max-width:145px!important}
+.macaron-stage-v247 .nm-actor-v239[data-nm-actor^="macaron247-kiba"]{width:23%!important;max-width:115px!important}
+.macaron-stage-v247 .nm-background-v239{background-size:cover;background-position:center}
+.macaron-fx-v247{position:absolute;inset:22% 12% 43%;z-index:15;pointer-events:none}
+#enemyArea>.macaron-fx-v247{inset:0}
+.macaron-fx-v247 i{position:absolute;left:var(--x);top:var(--y);width:38px;height:30px;border-radius:65% 65% 45% 45%;background:radial-gradient(ellipse at 35% 20%,#fff4e6,#f5bddb 65%,#c782a4);box-shadow:0 5px 14px #702c6350;animation:macaron-float-v247 1.1s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-83ms)}
+.macaron-fx-v247 i:nth-child(even){width:8px;height:20px;border-radius:5px;background:hsl(var(--h) 72% 68%);transform:rotate(calc(var(--i)*31deg))}
+.macaron-fx-v247.lava i{background:linear-gradient(#fbaa43,#bc381f);box-shadow:0 3px 12px #bb431f70;border-radius:70% 15% 55% 20%}
+.macaron-answer-v247{position:absolute;left:50%;top:40%;translate:-50% -50%;font-size:100px;font-weight:900;color:#ffdeb5;text-shadow:0 4px 0 #85374e;z-index:90}
+.macaron-card-v247{background:linear-gradient(145deg,#743b43,#32202e)!important;border-color:#eab493!important}
+.macaron-medal-v247{border-radius:50%;border:3px solid #e6bd63;background:radial-gradient(circle,#fff0bd,#be7828);box-shadow:0 0 0 3px #6a4724,0 0 15px #edbf6540}
+.macaron-result-v247{background:linear-gradient(150deg,#603d50,#211f35)!important;border-color:#edb0cf!important}
+@keyframes macaron-float-v247{from{translate:0 18px;scale:.8}to{translate:0 -20px;scale:1.08}}
+@media(prefers-reduced-motion:reduce){.macaron-fx-v247 i{animation:none}}
+body:has(.macaron-stage-v247) #dialogOverlay{z-index:2001!important}
+body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important;width:100%!important} body:has(.macaron-stage-v247) #dialogChoices button{min-width:0!important;padding:12px 4px!important;min-height:48px!important;font-size:18px!important}
