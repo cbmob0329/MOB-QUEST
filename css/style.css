@@ -5549,3 +5549,26 @@ body:has(.macaron-stage-v247) #dialogOverlay{z-index:2001!important}
 body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important;width:100%!important} body:has(.macaron-stage-v247) #dialogChoices button{min-width:0!important;padding:12px 4px!important;min-height:48px!important;font-size:18px!important}
 
 /* UPDATE_V247_END */
+/* UPDATE_V248_BEGIN */
+.finale-inset-v248{position:absolute;right:4%;top:5%;width:34%;max-height:24%;object-fit:cover;border:3px solid #e7cb8b;border-radius:12px;box-shadow:0 5px 20px #0008;z-index:12;animation:finale-inset-v248 .5s ease-out both;pointer-events:none}
+@keyframes finale-inset-v248{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:none}}
+.finale-awaken-v248{filter:saturate(.8);opacity:.8}
+.finale-abyss-v248{filter:saturate(1.2);animation:finale-vortex-v248 4s ease-in-out both}
+@keyframes finale-vortex-v248{0%{transform:scale(.3) rotate(-45deg);opacity:0}40%{transform:scale(1) rotate(0);opacity:.85}85%{transform:scale(1.1);opacity:.8}100%{transform:scale(1.25);opacity:0}}
+.finale-explosion-v248{animation:finale-explosion-v248 5s ease-in both}
+@keyframes finale-explosion-v248{0%{opacity:.15;transform:scale(.4)}65%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(1.35)}}
+.finale-stage-v248{background-size:cover;background-position:center}
+.finale-stage-v248.black{background:#000!important}
+.finale-memories-v248{position:absolute;inset:3% 0 20%;z-index:0;overflow:hidden;pointer-events:none;opacity:.45}
+.finale-memories-v248 img{position:absolute;width:32%;height:24%;object-fit:cover;border-radius:12px;left:2%;top:6%;opacity:.45;animation:finale-memory-v248 14s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-2s)}
+.finale-memories-v248 img:nth-child(3n+1){left:2%}.finale-memories-v248 img:nth-child(3n+2){left:35%}.finale-memories-v248 img:nth-child(3n){left:68%}.finale-memories-v248 img:nth-child(-n+3){top:6%}.finale-memories-v248 img:nth-child(n+4){top:55%}
+@keyframes finale-memory-v248{from{translate:0 10px;rotate:-3deg}to{translate:0 -22px;rotate:3deg}}
+.finale-closeup-v248 .ending-person-v222{width:min(46%,220px)!important;top:49%!important}
+.finale-stage-v248 .ending-cast-v222{z-index:2;position:absolute;inset:0}
+.finale-stage-v248 .ending-bubble-v222{z-index:5;white-space:pre-line}
+
+@media(prefers-reduced-motion:reduce){.finale-memories-v248 img,.finale-abyss-v248,.finale-explosion-v248{animation:none}}
+.finale-stage-v248 .ending-bubble-v222 p{white-space:pre-line!important;overflow-wrap:normal;word-break:normal}.finale-slot-info-v248{color:#debf7f}
+
+
+/* UPDATE_V248_END */

@@ -1,0 +1,1558 @@
+{
+  "01　魔王城Ⅱ 到着": [
+    {
+      "op": "direction",
+      "text": "【演出】モブピンクが跳ねながら話す。"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "ついに\n最終決戦であります‼︎"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "長かった旅もここで終わりだ\n魔王を討つぞ！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "いーーーっぱい\n怒る理由はあるけど！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "私の友達と仲間\n傷つけたこと絶対許さないんだから！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "この時が来たでござる！"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "騎士団として\n魔王やっつけるぞ！"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "準備バッチリニョロ！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブデンデンが跳ねながら話す。"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "オイラ、\nいつでもやれるでやんす～！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "みんなで勝ちましょう！"
+    },
+    {
+      "op": "direction",
+      "text": "モブマニーが震えながら"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "私と友達の魔力\n思い知らせてやるわ！"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "さあ行きましょう！"
+    }
+  ],
+  "02-1　魔王城Ⅱ AREA1　戦闘前": [
+    {
+      "op": "direction",
+      "text": "【背景】back/maojo.png"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】薔薇の召喚演出からモブリリスが登場。"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "ようこそ、また会ったね"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "モブリリス！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "No.2がここで登場でござるか？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "レコードを揃えたんだね\n僕も揃えたかったな"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "大人しく道を開けなさい！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "君たちこそ、\n大人しく帰った方がいいよ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "今回は、容赦しない"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】薔薇の召喚演出。モブキリンリリス、モブヘルリリス、モブリリス、モブリヴァリリス、モブクフリリスを表示。\n※元の姿→覚醒バージョン姿に変身する演出も入れてください"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "さあ、遊ぼうか"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "これが薔薇の魔女か！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "俺の初陣にはピッタリの相手だな！"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "力を合わせるニョロ！"
+    },
+    {
+      "op": "narrate",
+      "text": "パーティーを2つに分けてください\nAグループとBグループで連戦します"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】【操作】パーティーをAグループ・Bグループに分ける。A/Bグループで連戦。"
+    },
+    {
+      "op": "narrate",
+      "text": "Aグループの戦闘を開始します"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘：Aグループ】使う技は変えず、レベルと軽減や耐性を調整しています\n覚醒モブヘルリリス Lv.88　画像：boss/44.png ダメージ軽減8% 回避率7% 火属性耐性50%\nモブリリス Lv.90　画像：boss/21.png ダメージ軽減12% 回避率8% 会心率8% 全属性耐性10%\n覚醒モブキリンリリス Lv.88　画像：boss/45.png ダメージ軽減8% 回避率7% 雷属性耐性50%"
+    }
+  ],
+  "AREA1　Aグループ撃破後・Bグループへ交代": [
+    {
+      "op": "say",
+      "id": "money",
+      "text": "このまま一気に倒すわよ！"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "モブリリス、覚悟でやんす！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "ハハッ！！最高の獲物だぜ！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "うるさいなー"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "怒るよ？"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】暗い波動の演出。Aグループの終了表示（約0.95秒）→Bグループの出陣表示（約1.7秒）。"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘：Bグループ】\n覚醒モブクフリリス Lv.85　画像：boss/47.png　ダメージ軽減8% 回避率7% 光属性耐性50%\nモブリリス Lv.90　画像：boss/21.png　ダメージ軽減12% 回避率8% 会心率8% 全属性耐性10%\n覚醒モブリヴァリリス Lv.85　画像：boss/46.png　ダメージ軽減8% 回避率7% 水属性耐性50%"
+    }
+  ],
+  "AREA1　討伐後": [
+    {
+      "op": "direction",
+      "text": "【演出】薔薇の召喚演出からモブリリスが登場。"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "あ～あ\nムカつくなぁ"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブリリスが薔薇の演出とともに消える。"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "モブリリスを追うでやんす！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "彼女を放っておくのは危険ネ"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "覚悟を決めた目であった\n皆、気を引き締めるでござる！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "追うぞ！"
+    },
+    {
+      "op": "narrate",
+      "text": "キャンプでパーティーを再編成出来ます"
+    }
+  ],
+  "02-2　魔王城Ⅱ AREA2　戦闘前": [
+    {
+      "op": "direction",
+      "text": "【背景】back/maojo2.png"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】薔薇の召喚演出からモブリリスが登場。"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "君たちもしつこいねー\nでも、さすがだね"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "少しは見直したでありますか？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "まあね"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "でも"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "来ない方が良かった"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "お前の目的はなんだ？\nなぜ魔王に加担する？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "僕の闇を抑えられるのは\n魔王様だけ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "闇は僕を食べようとしてる\n僕はまだ消えたくない"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "じゃあ戦いなさいよ！\nあんたはそんな弱虫じゃないでしょ！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "私も戦ったんだから！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "君とは境遇が似ているね\nネオン街の魔女"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "だから\nちょっとムカつく"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "モブリリス・・"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "まだ、間に合うぞ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "本当に、うるさいなー"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "もはや必要なのは言葉ではない\n戦うぞ！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "言ったでしょ？\n僕、強いよ"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】鏡・分身の召喚演出でモブリリス3体を表示。"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "長旅、お疲れ様"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘】\nモブリリス Lv.90 ×3　画像：boss/21.png ダメージ軽減12% 回避率8% 会心率8% 全属性耐性10%"
+    }
+  ],
+  "AREA2　討伐後": [
+    {
+      "op": "direction",
+      "text": "【演出】モブリリスを表示。"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "僕が、負けた、、\n僕は、、、"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブリリスが薔薇の演出とともに消える。"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "また会いましょう"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "あなたはまだやり直せる！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "モブリリス・・"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "好敵手でありました！"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "出会い方が違えば\n友達になれたかもね"
+    }
+  ],
+  "02-3　魔王城Ⅱ AREA3　戦闘前": [
+    {
+      "op": "direction",
+      "text": "【背景】back/maojo3.png"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】炎の召喚演出からモブ閻魔が登場。"
+    },
+    {
+      "op": "direction",
+      "text": "画面をシェイク"
+    },
+    {
+      "op": "say",
+      "id": "dc2-enma",
+      "text": "まさか、\nモブリリスがやられるとはな"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "こりゃ強そうなのが出て来たな"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "こいつ、危険\n地獄の番人"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "モブ閻魔"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "閻魔でやんすか！？"
+    },
+    {
+      "op": "say",
+      "id": "dc2-enma",
+      "text": "魔王の助っ人に来て正解だったな\nここから先へは通さない"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "誰が相手でも\n俺たちは引かない！"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "やるニョロー！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "閻魔が何よ！\n魔女の力見せてやるわ！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "最高の強者、楽しみでござる！"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘】\nモブ閻魔 Lv.92　画像：boss/30.png　使用する技はそのまま\nダメージ軽減12% 回避率6% 会心率10% 火属性無効　通常攻撃時、10%の確率でもう一度通常攻撃で追撃する"
+    }
+  ],
+  "AREA3　第二形態へ": [
+    {
+      "op": "say",
+      "id": "dc2-enma",
+      "text": "なるほど・・\nこれが勇者の力か！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-enma",
+      "text": "ならば"
+    },
+    {
+      "op": "say",
+      "id": "dc2-enma",
+      "text": "見せてやろう！真の力を！！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】炎・暗い波動による形態移行。形態名「モブ閻魔 第二形態」を表示。現状では移行時のセリフがカットインと敵の吹き出しの両方で表示される。"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘】\nモブ閻魔 第二形態 Lv.94　画像：boss/31.png 使用する技はそのまま\nダメージ軽減13% 回避率6% 会心率10% 火属性無効　通常攻撃時、20%の確率で通常攻撃の120%威力で追撃する"
+    }
+  ],
+  "AREA3　最終形態へ": [
+    {
+      "op": "say",
+      "id": "dc2-enma2",
+      "text": "地獄の業火に焼かれるがいい！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】炎・暗い波動による形態移行。形態名「モブ閻魔 最終形態」を表示。現状では移行時のセリフがカットインと敵の吹き出しの両方で表示される。"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘】\nモブ閻魔 最終形態 Lv.95　画像：boss/32.png 使用する技はそのまま\nダメージ軽減14% 回避率6% 会心率10% 火属性無効　通常攻撃時、20%の確率で通常攻撃の120%威力で追撃する ターン開始時、5%の確率でHPを5%回復する"
+    }
+  ],
+  "AREA3　討伐後": [
+    {
+      "op": "direction",
+      "text": "【演出】モブ閻魔 最終形態を表示。"
+    },
+    {
+      "op": "say",
+      "id": "dc2-enma3",
+      "text": "私は地獄の王・・\n滅びは・・しない・・"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブ閻魔 最終形態が炎の演出とともに消える。"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "地獄の番人\nこんな剣術が存在するとは"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "天晴でござる！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "力には\n正義も悪もない"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "難しいものだな"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "さあさあ！\n勝ったんだから！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "ついにここまで来たのよ！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブピンクが跳ねながら話す。"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "みなさん\n準備はいいですか？"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "バッチリでやんす！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "最後の戦いでス"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "しっかり準備して挑みましょう！"
+    }
+  ],
+  "02-4　魔王城Ⅱ AREA4　戦闘前": [
+    {
+      "op": "direction",
+      "text": "【背景】back/maojo4.png"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】闇の召喚演出からモブ魔王が登場。"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "よくぞここまで来た"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "勇者よ"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "あのヒーローの力を得たのだな"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "勇者様は無敵であります！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "あのヒーローは伝説の存在"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "私のモノにする日を\n心待ちにしていたぞ‼︎"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "それが狙いか"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "私は全てを超越する魔王"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "そして\n全てを支配する魔王"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "あんたなんかに渡すもんですか！"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "あなたを倒せば全て終わる！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "フハハハ・・\nお前達では不可能だ！"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "平和を取り戻すニョロ！"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "オイラ、やるんでやんす！"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "オラ、やる気だ！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "その他大勢が偉そうに"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "あのヒーローは俺の獲物だ！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "これで最後でス！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "もうよい\nかかって来るがいい"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "いざ！尋常に・・"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】仲間が跳ね、全員で「勝負！！」と発声。"
+    },
+    {
+      "op": "direction",
+      "text": "【戦闘】\nモブ魔王 Lv.95　画像：boss/22.png 使う技はそのままで\n3回～4回行動 ダメージ軽減14% 回避率6% 会心率10% 通常攻撃時、12%の確率で通常攻撃の120%威力で追撃する \n新パッシブ:5%の確率で魔法攻撃を吸収し、HPを5%回復する"
+    }
+  ],
+  "AREA4　モブ魔王撃破後・合体": [
+    {
+      "op": "direction",
+      "text": "【演出】表示：モブ魔王"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "フッ・・\nフハハハハ‼︎"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "何がおかしいのよ！"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "お前の負けでやんす！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】表示：モブ魔王、モブリリス"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "モブリリス！？"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "あんた！\n何をする気！！"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "さあ！今こそ闇を解き放つのだ！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "まずいぞ‼︎"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブ魔王とモブリリスが約3秒かけて黒いシルエットになり、紫の光を帯びて消える。"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】敵の表示を消す"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】闇の超演出召喚：ウルモブリリス"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "そうだ"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "僕が"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "闇の王"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "ウルモブリリス"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "闇と・・"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "仲良くなるんだよ・・！！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "モブリリス！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "妖気が溢れていまス・・！！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "全く別のモンスターだ‼︎"
+    },
+    {
+      "op": "direction",
+      "text": "モブピンクが跳ねる"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "恐れるなであります！！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "そうでござる！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "皆想いは様々\nしかし"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "魔王討伐が平和への道！！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "それだけは変わらないでござる！"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "・・・ほぅー！！！"
+    },
+    {
+      "op": "direction",
+      "text": "モブデンデンが超跳ねる"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "オイラは空海の国の護衛隊長\nモブデンデン‼︎"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "魔王を討伐し、\n平和を取り戻すでやんす！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "空海の国か\n魔王退治の後は空の観光だな！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "クライマックスじゃねえか！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "俺はこういうのに慣れてるんだ！\n暴れるぜ‼︎"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "全部"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "全部終わらせる"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "闇こそが正義\n闇こそが平和"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "僕は僕のために\n僕は君たちのために"
+    },
+    {
+      "op": "say",
+      "id": "dc2-ulrilis",
+      "text": "力は惜しまない"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "最終決戦、アチアチであります‼︎"
+    },
+    {
+      "op": "direction",
+      "text": "【最終戦】\nウルモブリリス Lv.99　画像：boss/36.png\n使う技はそのままで\n3回～4回行動 ダメージ軽減15% 回避率6% 会心率10% 通常攻撃時、12%の確率で通常攻撃の120%威力で追撃する \n新パッシブ:5%の確率で魔法攻撃を吸収し、HPを5%回復する"
+    }
+  ],
+  "03　ウルモブリリス撃破後": [
+    {
+      "op": "direction",
+      "text": "【演出】闇の召喚：ウルモブリリス"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】ウルモブリリスが発光（2回）"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】敵の表示を消す"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】表示：モブ魔王、モブリリス"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "馬鹿な・・\nこの私が"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "勇者などに・・‼︎"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "こん・・な・・"
+    },
+    {
+      "op": "say",
+      "id": "dc2-maou",
+      "text": "グオォオーー！！！！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】魔王が揺れ、輝きを強めながら約5秒かけて爆発・消滅"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】敵の表示を消す"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】表示：モブリリス"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "ウッ・・・"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "モブリリス！\n無事なの！？"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "あのヒーローの力だ\n悪を討ち、モブリリスを救った"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "良かったニョロ！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "僕だって悪だよ\n魔王軍のNo.2"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "モブリリスだ"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "いいえ\nあなたはやろうと思えば"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "私達をいつでも倒せたはず"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "ソウルフュージョンか"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "使われたら終わってたでやんす"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "買い被りすぎだよ\n使いたくなかっただけ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "僕にそんな資格はない"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "あなたはまだやり直せまス\nサクラ一族として"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "あなたを魔王に任命します"
+    },
+    {
+      "op": "say",
+      "id": "chorus",
+      "text": "！？"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "世界の秩序を守るには\nバランスが大切でス"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "全てのエリアに\n新たなボスが必要でス"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "新たなボス・・\nでありますか？"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "ええ\n世界とは、平和とは"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "バランスと制御でス"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "みなさん\n良く聞いてくださイ"
+    },
+    {
+      "op": "direction",
+      "text": "草原の背景を小さく出しながら"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "草原にはモブテツ"
+    },
+    {
+      "op": "direction",
+      "text": "砂漠の背景を小さく出しながら"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "砂漠にはモブデザート"
+    },
+    {
+      "op": "direction",
+      "text": "田舎町の背景を小さく出しながら"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "田舎町にはモブデンデン"
+    },
+    {
+      "op": "direction",
+      "text": "ネオン街の背景を小さく出しながら"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "ネオン街にはモブマニー"
+    },
+    {
+      "op": "direction",
+      "text": "マグマの背景を小さく出しながら"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "マグマにはモブニョロ"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "そして"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "魔王城にはモブリリス"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "これで世界は守られまス"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "拙者がボスでござるか？\n平和のためならやるでござる！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "砂漠は俺が守る\n安心しろ"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "オイラ、\nもう何も怖くないでやんす\n町を守るでやんす！"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "私が王・・\nいや無理でしょ！"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "私もサポートするから安心して"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "偉大なる王達に負けないように\n僕もっと強くなるニョロ！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "俺は元の世界に帰るぜ\nいいものを見せてもらった"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "また戦う時は\n呼んでくれよな！"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "あれ？オラは？"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "海底は王がまだいますかラ\nあなたは部族村を任せまス"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "部族村か\n楽しみだ！"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "ピッタリだと思うでやんす"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "僕は・・"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "はい！でしょ？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "うん、引き受けるよ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "魔王として世界を回ってみたい\nだから、\n君たちのパーティーに入っていいかな？"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "大歓迎よ！\n魔法いっぱい教えてね！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "まだまだ世界には\n危険なエリアがいっぱいであります！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "こんな心強い仲間は最高であります！"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "これは旅の終わりであり\n旅の始まりだな"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブリリスが加入"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "王様に報告へ行きましょう！"
+    },
+    {
+      "op": "narrate",
+      "text": "モブリリスが仲間になった！"
+    },
+    {
+      "op": "direction",
+      "text": "【進行】お城へ戻り、王の間で報告するとエンディングへ。"
+    },
+    {
+      "op": "direction",
+      "text": "移動でロードを入れてしっかり準備ロード"
+    }
+  ],
+  "04　王の間・最後の報告": [
+    {
+      "op": "direction",
+      "text": "【背景】王の間。モブピンクの単独演出に移るまでは黒背景にしない。"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】ギザギザの吹き出し・大きな文字。"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "皆のもの\nほんっっっとーに！"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "よくやった！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "みんなの力で成し遂げました！"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "うむ\n感謝するぞ"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "世界に平和が訪れた"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブスライムキングが跳ねる。"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "勇者よ\nお主に頼んで良かった！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "少しいいかな？"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "薔薇の魔女モブリリスか\n良い、話せ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "あの町を破壊した本当の理由\n王様は知っているのかな？"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "・・・うむ"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "そうか"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "悪いことしたね"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "どういうことでありますか？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "あの町は封印の町\n封印していたのは"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "モブマニー\nそして"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "影の世界へのゲート"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "影の世界！？"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "モブマニーの解放と共に\n影の世界のゲートも開いた"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "魔王様はその力を求めたんだ"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "なるほどな\n次は影の妖怪たちとの戦いか"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "うむ\n新たな戦いが始まるかもしれん"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "皆その時は頼むぞ！"
+    },
+    {
+      "op": "direction",
+      "text": "モブデンデンが跳ねながら"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "任せるでやんす♪"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "今日はゆっくり休むのじゃ！"
+    },
+    {
+      "op": "say",
+      "id": "king",
+      "text": "皆の者、最高～～じゃ！！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】モブスライムキングが大ジャンプ3回（約3秒）。"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】約0.9秒で暗転。モブピンクだけを中央に配置し、約0.9秒で姿を見せる。黒背景。モブピンクが3回跳ねる（約3秒）。"
+    }
+  ],
+  "05　モブピンク・別れの挨拶": [
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "我々の冒険は終わらないであります！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "でも"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "勇者様と魔王を倒す旅は"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "ここでひと段落でありますね"
+    },
+    {
+      "op": "direction",
+      "text": "各エリアの画像が背景に出てゆっくり浮遊する"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "ウキウキワクワクの"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "最高の旅でありました！"
+    },
+    {
+      "op": "direction",
+      "text": "2秒待つ"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】主人公パーティーを全員表示。モブピンクと勇者を中央の左右に並べ、それ以外の仲間は2人を囲む円形配置。"
+    },
+    {
+      "op": "direction",
+      "text": "1人ずつアップで表示していく"
+    },
+    {
+      "op": "say",
+      "id": "desert",
+      "text": "良い旅だった\nまたいずれな"
+    },
+    {
+      "op": "say",
+      "id": "denden",
+      "text": "ほぅー！！\nオイラ幸せでやんす♪"
+    },
+    {
+      "op": "say",
+      "id": "money",
+      "text": "友達いっぱいで最っ高！\nまた遊んでね！"
+    },
+    {
+      "op": "say",
+      "id": "nyoro",
+      "text": "怖かったけど\n思い出いっぱいニョロ～！"
+    },
+    {
+      "op": "say",
+      "id": "nekoku",
+      "text": "オラ、楽しかった"
+    },
+    {
+      "op": "say",
+      "id": "jessie",
+      "text": "本当に長い旅だったわ\nみんなありがとう！"
+    },
+    {
+      "op": "say",
+      "id": "tetsu",
+      "text": "皆、感謝いたす！"
+    },
+    {
+      "op": "say",
+      "id": "riro",
+      "text": "よく頑張りましたネ！\nお疲れ様でしタ！"
+    },
+    {
+      "op": "say",
+      "id": "kaijin",
+      "text": "たまには肩を貸すぜ！\nまた暴れような！"
+    },
+    {
+      "op": "say",
+      "id": "boss-lilith-castle",
+      "text": "きっと\nまたすぐ会えるよね"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "また\n大冒険に出かけましょう！"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "みなさん"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】全員が約3秒間跳ねる。"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】大きな文字・華やかな吹き出しで次のセリフを3秒間表示。"
+    },
+    {
+      "op": "say",
+      "id": "pink",
+      "text": "それまでお達者で！"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】約2秒かけて暗転。"
+    }
+  ],
+  "06　ポスターによるエンディング": [
+    {
+      "op": "direction",
+      "text": "【音楽】music/end.mp3（現在の音量設定：45%）"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】黒背景。文字・説明・スキップボタンは表示しない。画像は中央に、縦横比を維持して全体を収める。上下左右に4%の余白。各画像をゆっくり拡大（36秒で1倍→1.025倍）。"
+    },
+    {
+      "op": "direction",
+      "text": "【表示順】1枚につき1秒のフェードイン＋3秒の表示。次の画像へ移る。\nposter/01.png　4秒\nposter/02.png　4秒\nposter/03.png　4秒\nposter/04.png　4秒\nposter/05.png　4秒\nposter/06.png　4秒\nposter/07.png　4秒\nposter/08.png　4秒\nposter/09.png　4秒\nposter/10.png　4秒\nposter/11.png　4秒\nposter/12.png　4秒\nposter/13.png　4秒\nposter/14.png　4秒\nposter/15.png　4秒\nposter/16.png　4秒\nposter/17.png　4秒\nposter/18.png　4秒\nposter/19.png　4秒\nposter/20.png　4秒\nposter/21.png　4秒\nposter/22.png　4秒\nposter/23.png　4秒\nposter/24.png　4秒\nposter/25.png　4秒\nposter/26.png　4秒\nposter/27.png　4秒\nposter/28.png　4秒\nposter/29.png　4秒\nposter/30.png　4秒\nposter/31.png　最後の画像。最低4秒表示し、曲が続いていれば終了まで維持。"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】最初の画像を表示する時に曲を再生。画像31枚が終わり、曲も終了したら約1.6秒でフェードアウト。"
+    }
+  ],
+  "07　ポスター終了後のメッセージ": [
+    {
+      "op": "direction",
+      "text": "【演出】黒背景・中央配置・明朝系の文字。各メッセージは約1.5秒で下からわずかに浮かびながらフェードイン→3.4秒静止→約1.1秒でフェードアウト→0.35秒の間。「ですが、」のみ静止1.6秒。"
+    },
+    {
+      "op": "message",
+      "text": "ゲームクリアおめでとうございます！"
+    },
+    {
+      "op": "message",
+      "text": "影の世界へ行けるようになりました！"
+    },
+    {
+      "op": "message",
+      "text": "さらに、レベル上限が\n120まで解放されました！"
+    },
+    {
+      "op": "message",
+      "text": "さらに、メイン・サブ共にフィギュアが\n6体まで装備出来るようになりました！"
+    },
+    {
+      "op": "message",
+      "text": "新たな武器やフィギュアも\n追加されていきます！"
+    },
+    {
+      "op": "message",
+      "text": "冒険はまだまだ終わりません！"
+    },
+    {
+      "op": "message",
+      "text": "ですが、"
+    },
+    {
+      "op": "message",
+      "text": "ここまで遊んでくれて\nありがとうございました！"
+    }
+  ],
+  "08　タイトルロゴ・終了": [
+    {
+      "op": "direction",
+      "text": "【演出】タイトルロゴを約1.6秒でフェードイン。その下に「CB Memory」を約1.4秒でフェードイン。"
+    },
+    {
+      "op": "direction",
+      "text": "【表示文字】\nCB Memory"
+    },
+    {
+      "op": "direction",
+      "text": "【演出】3秒後、タイトル画面へ戻る。"
+    },
+    {
+      "op": "direction",
+      "text": "【システム】本編クリア・イベントクエスト・異世界／影の世界の解放状態を保存。"
+    }
+  ]
+}
