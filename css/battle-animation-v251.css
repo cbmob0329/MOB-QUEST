@@ -1,0 +1,9 @@
+.battle-sequence-v251{position:absolute;width:clamp(96px,27vw,175px);height:clamp(96px,27vw,175px);transform:translate(-50%,-50%);pointer-events:none;z-index:8;contain:strict;background-repeat:no-repeat;overflow:hidden}
+.battle-sequence-v251.weapon-greatsword{width:clamp(135px,36vw,220px);height:clamp(135px,36vw,220px)}
+.battle-sequence-v251.element-accent{width:clamp(65px,18vw,110px);height:clamp(65px,18vw,110px);z-index:9;opacity:.8;transform:translate(-35%,-30%)}
+.battle-sequence-v251.weapon-gun{width:105px;height:105px}
+.battle-sequence-v251.special{width:clamp(150px,42vw,250px);height:clamp(150px,42vw,250px)}
+.projectile-v251{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--tone);box-shadow:0 0 6px var(--tone);z-index:9;pointer-events:none}.projectile-v251.spear{width:7px;height:26px;rotate:35deg}
+.battle-sequence-v251.boss-charge{width:clamp(160px,42vw,260px);height:clamp(160px,42vw,260px)}
+.battle-sequence-v251.recovery{width:clamp(110px,30vw,185px);height:clamp(110px,30vw,185px)}
+@media(prefers-reduced-motion:reduce){.projectile-v251{box-shadow:none}}

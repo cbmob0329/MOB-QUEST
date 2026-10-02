@@ -5572,3 +5572,32 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 
 
 /* UPDATE_V248_END */
+/* UPDATE_V251_BEGIN */
+.battle-sequence-v251{position:absolute;width:clamp(96px,27vw,175px);height:clamp(96px,27vw,175px);transform:translate(-50%,-50%);pointer-events:none;z-index:8;contain:layout style}
+.battle-sequence-v251 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;filter:drop-shadow(0 2px 3px #0004)}
+.battle-sequence-v251.weapon-greatsword{width:clamp(135px,36vw,220px);height:clamp(135px,36vw,220px)}
+.battle-sequence-v251.weapon-katana img{transform:rotate(-35deg) scaleX(1.18)}
+.battle-sequence-v251.weapon-spear img{transform:rotate(40deg) scale(.6,1.25)}
+.battle-sequence-v251.weapon-gun{width:85px;height:85px}
+.battle-sequence-v251.weapon-staff img{transform:scale(.85)}
+.battle-sequence-v251.weapon-claw img{transform:rotate(15deg) scaleX(.85)}
+.battle-sequence-v251.special{width:clamp(130px,39vw,235px);height:clamp(130px,39vw,235px)}
+.projectile-v251{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--tone);box-shadow:0 0 6px var(--tone);z-index:9;pointer-events:none}.projectile-v251.spear{width:7px;height:26px;rotate:35deg}
+.boss-charge{width:clamp(120px,38vw,245px);height:clamp(120px,38vw,245px);color:var(--tone);animation:charge-v251 .44s ease-out both}
+.boss-charge .seal,.recovery .seal{position:absolute;inset:16%;border:3px solid currentColor;border-radius:50%;transform:rotateX(45deg);opacity:.75}
+.boss-charge .orbit{position:absolute;inset:5%;border:2px dashed currentColor;border-radius:50%;animation:orbit-v251 .5s ease-out both}
+.boss-charge .petal{position:absolute;left:44%;top:44%;width:12%;height:30%;border:2px solid currentColor;border-radius:80% 15%;transform-origin:50% 20%;transform:rotate(calc(var(--i)*45deg)) translateY(-65%);opacity:.8}
+.boss-charge.theme-pyramid .seal{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(140deg,transparent 35%,currentColor 36%,transparent 38%);transform:rotate(0)}
+.boss-charge.theme-pyramid .petal{border-radius:0;height:13%;transform:rotate(calc(var(--i)*45deg)) translateY(-120%)}
+.boss-charge.theme-dragon .petal,.boss-charge.theme-flame .petal{border-radius:90% 0 80% 0;height:42%;transform:rotate(calc(var(--i)*45deg)) translateY(-45%)}
+.boss-charge.theme-gun .petal{width:4%;height:20%;border-radius:0;transform:rotate(calc(var(--i)*45deg)) translateY(-170%)}
+.boss-charge.theme-tide .petal{border-radius:50%;width:17%;height:17%;transform:rotate(calc(var(--i)*45deg)) translateY(-150%)}
+.recovery{color:#93e4b0;animation:recovery-v251 .65s ease-out both}.recovery.buff{color:#dfbc72}
+.recovery b{position:absolute;left:calc(12% + var(--i)*16%);top:calc(45% + var(--i)*5%);font-size:24px;font-weight:800;animation:heal-rise-v251 .6s ease-out both;animation-delay:calc(var(--i)*.025s)}
+@keyframes charge-v251{0%{opacity:0;scale:.55}55%{opacity:.85;scale:1}100%{opacity:0;scale:1.12}}
+@keyframes orbit-v251{from{rotate:-70deg}to{rotate:30deg}}
+@keyframes recovery-v251{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+@keyframes heal-rise-v251{from{translate:0 15px;opacity:0}35%{opacity:1}to{translate:0 -45px;opacity:0}}
+@media(prefers-reduced-motion:reduce){.boss-charge,.recovery,.boss-charge .orbit,.recovery b{animation:none;opacity:.7}.projectile-v251{box-shadow:none}}
+
+/* UPDATE_V251_END
