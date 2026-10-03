@@ -1,0 +1,61 @@
+{
+  "version": "v253",
+  "quests": 14,
+  "newQuests": 10,
+  "waves": 48,
+  "maxVisiblePerPage": 4,
+  "maxSimultaneousEnemies": 2,
+  "balance": {
+    "runs": 126,
+    "wins": 126,
+    "neonPartySize": 5
+  },
+  "traits": {
+    "effects": 22,
+    "stacking": {
+      "hp": 0.05,
+      "mp": 0.02,
+      "actualHp": 500,
+      "actualMp": 9.419999999999987,
+      "maxMp": 471,
+      "duplicateHp": 200,
+      "capped": true
+    },
+    "status": "PASS"
+  },
+  "lifecycle": "PASS (all 14; defeat/abort/retry for all 10 new)",
+  "oldSaveCompatibility": "PASS",
+  "speech": {
+    "widths": [
+      320,
+      360,
+      390
+    ],
+    "checkedBubbles": 348,
+    "overflow": 0,
+    "missingArrow": 0,
+    "status": "PASS"
+  },
+  "dialogueBattleAreaRewardIntegration": "PASS (grass and sea)",
+  "medalPresentation": "PASS inventory/equipment/picker/reward, source PNGs unchanged",
+  "existingPass": [
+    "quest-access-v246.cjs",
+    "macaron-v247.cjs",
+    "boss-hp-v249.cjs",
+    "boss-edits-v250.cjs",
+    "battle-animation-v251.cjs",
+    "rush-compat-v252.cjs"
+  ],
+  "unchangedExistingFailures": [
+    "event-v174.cjs",
+    "story-balance-v244.cjs",
+    "enemy-abilities-v142.cjs"
+  ],
+  "newUnresolvedFailures": [],
+  "limitations": [
+    "No real-device touch/Safari testing",
+    "No exhaustive party/equipment combinations",
+    "No real user saves or simultaneous-tab writes"
+  ],
+  "published": false
+}

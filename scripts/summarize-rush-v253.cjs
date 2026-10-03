@@ -1,0 +1,7 @@
+const fs=require('node:fs'),assert=require('node:assert/strict'),data=require('../js/rush-v252.json'),runs=require('../artifacts/rush-v253/balance-results.json');
+assert.equal(runs.length,126);assert.equal(new Set(runs.map(r=>r.quest+':'+r.level+':'+r.seed)).size,126);
+for(const q of data.quests){const rows=runs.filter(r=>r.quest===q.id);assert.equal(rows.length,9);for(const r of rows){assert.equal(r.win,true);assert.equal(r.medals[q.reward],1);assert.equal(r.ends.length,q.areas.length);assert.equal(r.ends.every(e=>e.win),true);}}
+const summary=data.quests.map(q=>{const all=runs.filter(r=>r.quest===q.id);return {id:q.id,title:q.title,recommendedLevel:q.recommendedLevel,levels:[...new Set(all.map(r=>r.level))],wins:all.filter(r=>r.win).length,total:all.length,turns:[Math.min(...all.map(r=>r.ends.reduce((n,a)=>n+a.turn,0))),Math.max(...all.map(r=>r.ends.reduce((n,a)=>n+a.turn,0)))],minFinalHp:Math.round(100*Math.min(...all.flatMap(r=>r.final.map(a=>a.hp/a.maxHp)))),minFinalMp:Math.round(100*Math.min(...all.flatMap(r=>r.final.map(a=>a.mp/a.maxMp)))),finalDeaths:all.flatMap(r=>r.final).filter(a=>a.dead).length};});
+fs.writeFileSync('artifacts/rush-v253/balance-summary.json',JSON.stringify(summary,null,2));
+const table=['| クエスト | 検証Lv. | 勝利 | AREA合計ターン | 最終HP最低 | 最終MP最低 |','|---|---|---:|---|---:|---:|',...summary.map(q=>`| ${q.title} | ${q.levels.join(' / ')} | ${q.wins}/${q.total} | ${q.turns.join('〜')} | ${q.minFinalHp}% | ${q.minFinalMp}% |`)].join('\n');
+fs.writeFileSync('artifacts/rush-v253/balance-table.txt',table+'\n');console.log(table);

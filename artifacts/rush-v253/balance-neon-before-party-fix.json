@@ -1,0 +1,5301 @@
+[
+  {
+    "quest": "rush-neon-v252",
+    "level": 29,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 527,
+        "maxHp": 527,
+        "mp": 234,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 552,
+        "maxHp": 552,
+        "mp": 213,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 441,
+        "maxHp": 441,
+        "mp": 290,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 481,
+        "maxHp": 481,
+        "mp": 219,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 531,
+        "maxHp": 531,
+        "mp": 208,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 482,
+        "maxHp": 482,
+        "mp": 215,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 467,
+            "maxHp": 527,
+            "mp": 182,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 523,
+            "maxHp": 552,
+            "mp": 141,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 323,
+            "maxHp": 441,
+            "mp": 276,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 366,
+            "maxHp": 481,
+            "mp": 165,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 513,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 446,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 234,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 213,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 441,
+            "maxHp": 441,
+            "mp": 290,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 481,
+            "maxHp": 481,
+            "mp": 219,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 221,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 195,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 441,
+            "maxHp": 441,
+            "mp": 276,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 449,
+            "maxHp": 481,
+            "mp": 207,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 208,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 177,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 393,
+            "maxHp": 441,
+            "mp": 283,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 326,
+            "maxHp": 481,
+            "mp": 183,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 290
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 213
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 276
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 221
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 262
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 183
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 283
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 177
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 171,
+        "target": "nyoro"
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 290
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 159
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 467,
+        "maxHp": 527,
+        "mp": 182,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 523,
+        "maxHp": 552,
+        "mp": 141,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 323,
+        "maxHp": 441,
+        "mp": 276,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 366,
+        "maxHp": 481,
+        "mp": 165,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 513,
+        "maxHp": 531,
+        "mp": 208,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 446,
+        "maxHp": 482,
+        "mp": 215,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 5,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-184",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-184",
+          "action": 2
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 29,
+    "seed": 25202,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 527,
+        "maxHp": 527,
+        "mp": 234,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 552,
+        "maxHp": 552,
+        "mp": 213,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 441,
+        "maxHp": 441,
+        "mp": 290,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 481,
+        "maxHp": 481,
+        "mp": 219,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 531,
+        "maxHp": 531,
+        "mp": 208,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 482,
+        "maxHp": 482,
+        "mp": 215,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 415,
+            "maxHp": 527,
+            "mp": 182,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 520,
+            "maxHp": 552,
+            "mp": 159,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 322,
+            "maxHp": 441,
+            "mp": 220,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 334,
+            "maxHp": 481,
+            "mp": 159,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 512,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 441,
+            "maxHp": 482,
+            "mp": 202,
+            "maxMp": 215,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 234,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 213,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 441,
+            "maxHp": 441,
+            "mp": 290,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 481,
+            "maxHp": 481,
+            "mp": 219,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 221,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 195,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 441,
+            "maxHp": 441,
+            "mp": 276,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 445,
+            "maxHp": 481,
+            "mp": 207,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 481,
+            "maxHp": 527,
+            "mp": 195,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 177,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 394,
+            "maxHp": 441,
+            "mp": 248,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 402,
+            "maxHp": 481,
+            "mp": 183,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 290
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 213
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 276
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 221
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 262
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 183
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 248
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 177
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 171
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 234
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 415,
+        "maxHp": 527,
+        "mp": 182,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 520,
+        "maxHp": 552,
+        "mp": 159,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 322,
+        "maxHp": 441,
+        "mp": 220,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 334,
+        "maxHp": 481,
+        "mp": 159,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 512,
+        "maxHp": 531,
+        "mp": 208,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 441,
+        "maxHp": 482,
+        "mp": 202,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 4,
+      "queue": [
+        {
+          "type": "super",
+          "id": "denden"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-188",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-188",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 29,
+    "seed": 25203,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 527,
+        "maxHp": 527,
+        "mp": 234,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 552,
+        "maxHp": 552,
+        "mp": 213,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 441,
+        "maxHp": 441,
+        "mp": 290,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 481,
+        "maxHp": 481,
+        "mp": 219,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 531,
+        "maxHp": 531,
+        "mp": 208,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 482,
+        "maxHp": 482,
+        "mp": 215,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 495,
+            "maxHp": 527,
+            "mp": 195,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 408,
+            "maxHp": 552,
+            "mp": 159,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 380,
+            "maxHp": 441,
+            "mp": 255,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 451,
+            "maxHp": 481,
+            "mp": 159,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 521,
+            "maxHp": 531,
+            "mp": 194,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 464,
+            "maxHp": 482,
+            "mp": 202,
+            "maxMp": 215,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 234,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 213,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 441,
+            "maxHp": 441,
+            "mp": 290,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 481,
+            "maxHp": 481,
+            "mp": 219,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 221,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 552,
+            "maxHp": 552,
+            "mp": 195,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 415,
+            "maxHp": 441,
+            "mp": 276,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 481,
+            "maxHp": 481,
+            "mp": 207,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 215,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 527,
+            "maxHp": 527,
+            "mp": 208,
+            "maxMp": 234,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 462,
+            "maxHp": 552,
+            "mp": 177,
+            "maxMp": 213,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 415,
+            "maxHp": 441,
+            "mp": 248,
+            "maxMp": 290,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 481,
+            "maxHp": 481,
+            "mp": 183,
+            "maxMp": 219,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 531,
+            "maxHp": 531,
+            "mp": 208,
+            "maxMp": 208,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 482,
+            "maxHp": 482,
+            "mp": 202,
+            "maxMp": 215,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 290
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 213
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 276
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 221
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 195
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 262
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 183
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 248
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 177
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 171
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 269
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 495,
+        "maxHp": 527,
+        "mp": 195,
+        "maxMp": 234,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 408,
+        "maxHp": 552,
+        "mp": 159,
+        "maxMp": 213,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 380,
+        "maxHp": 441,
+        "mp": 255,
+        "maxMp": 290,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 451,
+        "maxHp": 481,
+        "mp": 159,
+        "maxMp": 219,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 521,
+        "maxHp": 531,
+        "mp": 194,
+        "maxMp": 208,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 464,
+        "maxHp": 482,
+        "mp": 202,
+        "maxMp": 215,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 4,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-192",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-192",
+          "action": 2
+        },
+        {
+          "type": "super",
+          "id": "desert"
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 32,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 561,
+        "maxHp": 561,
+        "mp": 249,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 586,
+        "maxHp": 586,
+        "mp": 227,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 470,
+        "maxHp": 470,
+        "mp": 308,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 511,
+        "maxHp": 511,
+        "mp": 232,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 564,
+        "maxHp": 564,
+        "mp": 223,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 512,
+        "maxHp": 512,
+        "mp": 229,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 459,
+            "maxHp": 561,
+            "mp": 210,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 556,
+            "maxHp": 586,
+            "mp": 191,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 375,
+            "maxHp": 470,
+            "mp": 238,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 385,
+            "maxHp": 511,
+            "mp": 172,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 547,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 480,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 249,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 227,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 308,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 232,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 236,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 227,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 294,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 220,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 519,
+            "maxHp": 561,
+            "mp": 223,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 209,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 443,
+            "maxHp": 470,
+            "mp": 266,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 441,
+            "maxHp": 511,
+            "mp": 196,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 232
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 308
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 249
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 220
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 294
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 236
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 227
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 280
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 196
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 266
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 223
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 209
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 184
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 252
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 459,
+        "maxHp": 561,
+        "mp": 210,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 556,
+        "maxHp": 586,
+        "mp": 191,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 375,
+        "maxHp": 470,
+        "mp": 238,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 385,
+        "maxHp": 511,
+        "mp": 172,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 547,
+        "maxHp": 564,
+        "mp": 223,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 480,
+        "maxHp": 512,
+        "mp": 229,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 3,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-196",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-196",
+          "action": 2
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 32,
+    "seed": 25202,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 561,
+        "maxHp": 561,
+        "mp": 249,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 586,
+        "maxHp": 586,
+        "mp": 227,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 470,
+        "maxHp": 470,
+        "mp": 308,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 511,
+        "maxHp": 511,
+        "mp": 232,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 564,
+        "maxHp": 564,
+        "mp": 223,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 512,
+        "maxHp": 512,
+        "mp": 229,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 460,
+            "maxHp": 561,
+            "mp": 210,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 557,
+            "maxHp": 586,
+            "mp": 173,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 408,
+            "maxHp": 470,
+            "mp": 238,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 340,
+            "maxHp": 511,
+            "mp": 172,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 548,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 472,
+            "maxHp": 512,
+            "mp": 216,
+            "maxMp": 229,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 249,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 227,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 308,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 232,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 236,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 209,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 294,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 477,
+            "maxHp": 511,
+            "mp": 220,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 519,
+            "maxHp": 561,
+            "mp": 223,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 191,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 266,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 401,
+            "maxHp": 511,
+            "mp": 196,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 232
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 308
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 249
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 227
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 220
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 294
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 236
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 209
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 280
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 196
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 266
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 223
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 191
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 184
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 252
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 460,
+        "maxHp": 561,
+        "mp": 210,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 557,
+        "maxHp": 586,
+        "mp": 173,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 408,
+        "maxHp": 470,
+        "mp": 238,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 340,
+        "maxHp": 511,
+        "mp": 172,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 548,
+        "maxHp": 564,
+        "mp": 223,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 472,
+        "maxHp": 512,
+        "mp": 216,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 4,
+      "queue": [
+        {
+          "type": "super",
+          "id": "denden"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-200",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-200",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 32,
+    "seed": 25203,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 561,
+        "maxHp": 561,
+        "mp": 249,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 586,
+        "maxHp": 586,
+        "mp": 227,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 470,
+        "maxHp": 470,
+        "mp": 308,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 511,
+        "maxHp": 511,
+        "mp": 232,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 564,
+        "maxHp": 564,
+        "mp": 223,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 512,
+        "maxHp": 512,
+        "mp": 229,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 531,
+            "maxHp": 561,
+            "mp": 210,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 456,
+            "maxHp": 586,
+            "mp": 173,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 412,
+            "maxHp": 470,
+            "mp": 275,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 483,
+            "maxHp": 511,
+            "mp": 172,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 556,
+            "maxHp": 564,
+            "mp": 209,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 494,
+            "maxHp": 512,
+            "mp": 216,
+            "maxMp": 229,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 249,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 227,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 470,
+            "maxHp": 470,
+            "mp": 308,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 232,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 236,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 586,
+            "maxHp": 586,
+            "mp": 209,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 446,
+            "maxHp": 470,
+            "mp": 294,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 220,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 229,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 561,
+            "maxHp": 561,
+            "mp": 223,
+            "maxMp": 249,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 505,
+            "maxHp": 586,
+            "mp": 191,
+            "maxMp": 227,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 446,
+            "maxHp": 470,
+            "mp": 266,
+            "maxMp": 308,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 511,
+            "mp": 196,
+            "maxMp": 232,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 564,
+            "maxHp": 564,
+            "mp": 223,
+            "maxMp": 223,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 512,
+            "mp": 216,
+            "maxMp": 229,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 232
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 308
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 249
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 227
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 220
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 294
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 236
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 209
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 208
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 280
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 196
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 266
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 223
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 191
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 184
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 289
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 531,
+        "maxHp": 561,
+        "mp": 210,
+        "maxMp": 249,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 456,
+        "maxHp": 586,
+        "mp": 173,
+        "maxMp": 227,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 412,
+        "maxHp": 470,
+        "mp": 275,
+        "maxMp": 308,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 483,
+        "maxHp": 511,
+        "mp": 172,
+        "maxMp": 232,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 556,
+        "maxHp": 564,
+        "mp": 209,
+        "maxMp": 223,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 494,
+        "maxHp": 512,
+        "mp": 216,
+        "maxMp": 229,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 4,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-204",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-204",
+          "action": 2
+        },
+        {
+          "type": "super",
+          "id": "desert"
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 35,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 595,
+        "maxHp": 595,
+        "mp": 264,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 621,
+        "maxHp": 621,
+        "mp": 240,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 498,
+        "maxHp": 498,
+        "mp": 325,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 542,
+        "maxHp": 542,
+        "mp": 246,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 597,
+        "maxHp": 597,
+        "mp": 237,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 543,
+        "maxHp": 543,
+        "mp": 242,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 541,
+            "maxHp": 595,
+            "mp": 217,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 579,
+            "maxHp": 621,
+            "mp": 210,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 409,
+            "maxHp": 498,
+            "mp": 311,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 414,
+            "maxHp": 542,
+            "mp": 177,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 583,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 512,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 264,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 240,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 325,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 246,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 247,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 240,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 311,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 231,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 234,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 602,
+            "maxHp": 621,
+            "mp": 225,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 473,
+            "maxHp": 498,
+            "mp": 325,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 470,
+            "maxHp": 542,
+            "mp": 207,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 246
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 325
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 264
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 231
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 311
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 247
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 240
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 325
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 225
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 192
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 541,
+        "maxHp": 595,
+        "mp": 217,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 579,
+        "maxHp": 621,
+        "mp": 210,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 409,
+        "maxHp": 498,
+        "mp": 311,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 414,
+        "maxHp": 542,
+        "mp": 177,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 583,
+        "maxHp": 597,
+        "mp": 237,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 512,
+        "maxHp": 543,
+        "mp": 242,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 2,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-208",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-208",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 35,
+    "seed": 25202,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 595,
+        "maxHp": 595,
+        "mp": 264,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 621,
+        "maxHp": 621,
+        "mp": 240,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 498,
+        "maxHp": 498,
+        "mp": 325,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 542,
+        "maxHp": 542,
+        "mp": 246,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 597,
+        "maxHp": 597,
+        "mp": 237,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 543,
+        "maxHp": 543,
+        "mp": 242,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 503,
+            "maxHp": 595,
+            "mp": 217,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 598,
+            "maxHp": 621,
+            "mp": 195,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 438,
+            "maxHp": 498,
+            "mp": 269,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 381,
+            "maxHp": 542,
+            "mp": 177,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 583,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 505,
+            "maxHp": 543,
+            "mp": 229,
+            "maxMp": 242,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 264,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 240,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 325,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 246,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 247,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 225,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 311,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 511,
+            "maxHp": 542,
+            "mp": 231,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 557,
+            "maxHp": 595,
+            "mp": 234,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 210,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 283,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 438,
+            "maxHp": 542,
+            "mp": 207,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 246
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 325
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 264
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 240
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 231
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 311
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 247
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 225
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 297
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 283
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 210
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 192
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 503,
+        "maxHp": 595,
+        "mp": 217,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 598,
+        "maxHp": 621,
+        "mp": 195,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 438,
+        "maxHp": 498,
+        "mp": 269,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 381,
+        "maxHp": 542,
+        "mp": 177,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 583,
+        "maxHp": 597,
+        "mp": 237,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 505,
+        "maxHp": 543,
+        "mp": 229,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 3,
+      "queue": [
+        {
+          "type": "super",
+          "id": "denden"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-212",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-212",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-neon-v252",
+    "level": 35,
+    "seed": 25203,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブレッド"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブピンク"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブパープル"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブミント"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブイエロー"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 595,
+        "maxHp": 595,
+        "mp": 264,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 621,
+        "maxHp": 621,
+        "mp": 240,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 498,
+        "maxHp": 498,
+        "mp": 325,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 542,
+        "maxHp": 542,
+        "mp": 246,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 597,
+        "maxHp": 597,
+        "mp": 237,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 543,
+        "maxHp": 543,
+        "mp": 242,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 568,
+            "maxHp": 595,
+            "mp": 217,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 506,
+            "maxHp": 621,
+            "mp": 195,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 444,
+            "maxHp": 498,
+            "mp": 308,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 515,
+            "maxHp": 542,
+            "mp": 177,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 589,
+            "maxHp": 597,
+            "mp": 223,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 526,
+            "maxHp": 543,
+            "mp": 229,
+            "maxMp": 242,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 264,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 240,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 498,
+            "maxHp": 498,
+            "mp": 325,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 246,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエナジー",
+            "hp": 524,
+            "atk": 75,
+            "mag": 84,
+            "level": 27
+          },
+          {
+            "name": "モブガラス",
+            "hp": 524,
+            "atk": 82,
+            "mag": 75,
+            "level": 27
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 247,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 621,
+            "maxHp": 621,
+            "mp": 225,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 476,
+            "maxHp": 498,
+            "mp": 311,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 231,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 242,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブネオゴーレム",
+            "hp": 1944,
+            "atk": 99,
+            "mag": 99,
+            "level": 29
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 595,
+            "maxHp": 595,
+            "mp": 234,
+            "maxMp": 264,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 550,
+            "maxHp": 621,
+            "mp": 210,
+            "maxMp": 240,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 476,
+            "maxHp": 498,
+            "mp": 283,
+            "maxMp": 325,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 542,
+            "maxHp": 542,
+            "mp": 207,
+            "maxMp": 246,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 597,
+            "maxHp": 597,
+            "mp": 237,
+            "maxMp": 237,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 543,
+            "maxHp": 543,
+            "mp": 229,
+            "maxMp": 242,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブエネチェイサー",
+            "hp": 1932,
+            "atk": 107,
+            "mag": 107,
+            "level": 32
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 246
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 325
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 264
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 240
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 231
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 311
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 247
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 225
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホノマ",
+        "mp": 219
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ミラマ",
+        "mp": 297
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 207
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 283
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 234
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 210
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 192
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 568,
+        "maxHp": 595,
+        "mp": 217,
+        "maxMp": 264,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 506,
+        "maxHp": 621,
+        "mp": 195,
+        "maxMp": 240,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 444,
+        "maxHp": 498,
+        "mp": 308,
+        "maxMp": 325,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 515,
+        "maxHp": 542,
+        "mp": 177,
+        "maxMp": 246,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 589,
+        "maxHp": 597,
+        "mp": 223,
+        "maxMp": 237,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 526,
+        "maxHp": 543,
+        "mp": 229,
+        "maxMp": 242,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-neon-medal-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 3,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-216",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-216",
+          "action": 2
+        },
+        {
+          "type": "super",
+          "id": "desert"
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "n-chaser",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  }
+]

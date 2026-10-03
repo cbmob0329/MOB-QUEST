@@ -1,0 +1,268 @@
+[
+  {
+    "id": "rush-grass-v252",
+    "title": "草原の連戦稽古",
+    "recommendedLevel": 10,
+    "levels": [
+      7,
+      10,
+      13
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      6,
+      10
+    ],
+    "minFinalHp": 16,
+    "minFinalMp": 33,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-rural-v252",
+    "title": "田舎町の見張り稽古",
+    "recommendedLevel": 23,
+    "levels": [
+      20,
+      23,
+      26
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      3,
+      3
+    ],
+    "minFinalHp": 52,
+    "minFinalMp": 61,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-magma-v252",
+    "title": "炎と氷の連戦稽古",
+    "recommendedLevel": 43,
+    "levels": [
+      40,
+      43,
+      46
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      7,
+      8
+    ],
+    "minFinalHp": 54,
+    "minFinalMp": 59,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-ember-v252",
+    "title": "灼熱の再挑戦",
+    "recommendedLevel": 80,
+    "levels": [
+      77,
+      80,
+      83
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      16,
+      25
+    ],
+    "minFinalHp": 71,
+    "minFinalMp": 51,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-sand-v252",
+    "title": "砂風と毒の試練",
+    "recommendedLevel": 17,
+    "levels": [
+      14,
+      17,
+      20
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      4,
+      6
+    ],
+    "minFinalHp": 58,
+    "minFinalMp": 53,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-neon-v252",
+    "title": "ネオン追跡訓練",
+    "recommendedLevel": 32,
+    "levels": [
+      29,
+      32,
+      35
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      3,
+      3
+    ],
+    "minFinalHp": 70,
+    "minFinalMp": 66,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-sea-v252",
+    "title": "深海の守り手",
+    "recommendedLevel": 50,
+    "levels": [
+      47,
+      50,
+      53
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      6,
+      8
+    ],
+    "minFinalHp": 67,
+    "minFinalMp": 45,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-lantern-v252",
+    "title": "草原の灯火",
+    "recommendedLevel": 57,
+    "levels": [
+      54,
+      57,
+      60
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      3,
+      4
+    ],
+    "minFinalHp": 65,
+    "minFinalMp": 72,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-endurance-v252",
+    "title": "部族の持久稽古",
+    "recommendedLevel": 63,
+    "levels": [
+      60,
+      63,
+      66
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      6,
+      8
+    ],
+    "minFinalHp": 49,
+    "minFinalMp": 61,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-dino-v252",
+    "title": "町外れの恐竜競走",
+    "recommendedLevel": 67,
+    "levels": [
+      64,
+      67,
+      70
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      3,
+      6
+    ],
+    "minFinalHp": 66,
+    "minFinalMp": 68,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-afterimage-v252",
+    "title": "ネオン残像勝負",
+    "recommendedLevel": 70,
+    "levels": [
+      67,
+      70,
+      73
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      4,
+      5
+    ],
+    "minFinalHp": 66,
+    "minFinalMp": 66,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-reflection-v252",
+    "title": "溶岩の反射稽古",
+    "recommendedLevel": 74,
+    "levels": [
+      71,
+      74,
+      77
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      9,
+      11
+    ],
+    "minFinalHp": 66,
+    "minFinalMp": 61,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-souls-v252",
+    "title": "砂宮の魂巡り",
+    "recommendedLevel": 80,
+    "levels": [
+      77,
+      80,
+      83
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      9,
+      12
+    ],
+    "minFinalHp": 65,
+    "minFinalMp": 40,
+    "finalDeaths": 0
+  },
+  {
+    "id": "rush-guard-v252",
+    "title": "魔城の近衛演習",
+    "recommendedLevel": 90,
+    "levels": [
+      87,
+      90,
+      93
+    ],
+    "wins": 9,
+    "total": 9,
+    "turns": [
+      7,
+      9
+    ],
+    "minFinalHp": 65,
+    "minFinalMp": 67,
+    "finalDeaths": 0
+  }
+]

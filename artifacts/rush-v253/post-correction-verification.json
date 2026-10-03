@@ -1,0 +1,35 @@
+[
+  {
+    "args": [
+      "tests/rush-balance-v253.cjs",
+      "--quest=5"
+    ],
+    "status": 0,
+    "stdout": "RUN 5 -3 25201\nrush-neon-v252 29 WIN actions=17 [[\"yusha\",473,182],[\"pink\",519,159],[\"money\",352,248],[\"desert\",419,144],[\"denden\",461,201]]\nRUN 5 -3 25202\nrush-neon-v252 29 WIN actions=18 [[\"yusha\",449,169],[\"pink\",534,159],[\"money\",361,220],[\"desert\",433,144],[\"denden\",461,214]]\nRUN 5 -3 25203\nrush-neon-v252 29 WIN actions=18 [[\"yusha\",438,182],[\"pink\",491,141],[\"money\",427,236],[\"desert\",500,144],[\"denden\",444,201]]\nRUN 5 0 25201\nrush-neon-v252 32 WIN actions=17 [[\"yusha\",510,197],[\"pink\",559,173],[\"money\",384,266],[\"desert\",461,159],[\"denden\",492,215]]\nRUN 5 0 25202\nrush-neon-v252 32 WIN actions=17 [[\"yusha\",490,197],[\"pink\",534,173],[\"money\",438,238],[\"desert\",487,159],[\"denden\",492,228]]\nRUN 5 0 25203\nrush-neon-v252 32 WIN actions=17 [[\"yusha\",479,197],[\"pink\",535,173],[\"money\",470,254],[\"desert\",536,159],[\"denden\",476,215]]\nRUN 5 3 25201\nrush-neon-v252 35 WIN actions=15 [[\"yusha\",522,217],[\"pink\",563,195],[\"money\",442,311],[\"desert\",516,164],[\"denden\",512,228]]\nRUN 5 3 25202\nrush-neon-v252 35 WIN actions=15 [[\"yusha\",417,217],[\"pink\",608,195],[\"money\",466,269],[\"desert\",572,164],[\"denden\",524,241]]\nRUN 5 3 25203\nrush-neon-v252 35 WIN actions=15 [[\"yusha\",492,217],[\"pink\",574,195],[\"money\",378,283],[\"desert\",571,164],[\"denden\",511,241]]\nDONE 126 real-engine runs\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tests/rush-data-v253.cjs"
+    ],
+    "status": 0,
+    "stdout": "PASS 14 quests / 48 waves, invalid-data guards, stable saves/stats/waves, unchanged non-rush code, inline build\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tests/rush-visual-v253.cjs"
+    ],
+    "status": 0,
+    "stdout": "speech width 320 pages 215\nspeech width 360 pages 222\nspeech width 390 pages 226\nPASS all 14 quests speech, 320/360/390 layouts, pagination, inventory/equipment/picker medals, dialogue HOME cancellation\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tests/rush-dialogue-flow-v253.cjs"
+    ],
+    "status": 1,
+    "stdout": "",
+    "stderr": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-rush-next]') to be visible\u001b[22m\n\n    at C:\\Users\\user\\Documents\\GitHub\\MOB-QUEST\\tests\\rush-dialogue-flow-v253.cjs:7:265 {\n  log: [ \"  - waiting for locator('[data-rush-next]') to be visible\" ],\n  name: 'TimeoutError'\n}\n"
+  }
+]

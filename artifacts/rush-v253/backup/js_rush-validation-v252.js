@@ -2,23 +2,18 @@
 function validateRushV252(data,context={}){
  const fail=message=>{throw new Error('[rush-v252] '+message);};
  if(data.schemaVersion!==1||data.completionLimit!==1||data.battleRewards!==false)fail('schema/reward policy');
- if(!Number.isInteger(data.maxVisible)||data.maxVisible<1||data.maxVisible>4||data.quests.length>24)fail('quest display cap');
+ if(!Number.isInteger(data.maxVisible)||data.maxVisible<1||data.maxVisible>4||data.quests.length>data.maxVisible)fail('quest display cap');
  if(!Number.isInteger(data.maxSimultaneous)||data.maxSimultaneous<1||data.maxSimultaneous>2)fail('enemy display cap');
  const ids=new Set(),rewards=new Set(),image=p=>{if(typeof p!=='string'||!/^[-\w/]+\.png$/.test(p)||p.includes('..'))fail('image path');if(context.assetExists&&!context.assetExists(p))fail('missing image '+p);};
  image(data.icon);
  const unique=id=>{if(typeof id!=='string'||!/^rush-[a-z0-9-]+-v252$/.test(id)||ids.has(id))fail('duplicate/invalid id '+id);ids.add(id);};
  for(const m of data.medals){unique(m.id);image(m.image);if(!m.name||m.type!=='メダル')fail('medal type/name');
   for(const [k,v] of Object.entries(m.stats)){if(!['atk','mag','def','res','spd','maxHp','maxMp'].includes(k)||!Number.isFinite(v)||v<0||v>(k.startsWith('max')?250:80))fail('medal stat '+m.id);}
-  if(!Array.isArray(m.traits)||!m.traits.length||m.traits.length>2||m.traitLabel!==m.traits.map(t=>t.label).join(' / '))fail('medal traits/description');
-  for(const t of m.traits){
-   if(!['resist','guardExtraCut','physicalCut','guardHpHeal','guardMpHeal','crit','evade','magicMpCut','poisonOnHit'].includes(t.kind)||!t.label)fail('trait '+m.id);
-   if(t.kind==='poisonOnHit'){if(!(t.chance>0&&t.chance<=.03))fail('poison chance');}else if(!(t.value>0&&t.value<=.05))fail('trait value '+m.id);
-   if(!t.label.includes(Number(((t.chance??t.value)*100).toFixed(4))+'%'))fail('trait percentage label '+m.id);
-   if(['resist','magicMpCut'].includes(t.kind)&&!['無','火','水','地','雷','風','光','闇'].includes(t.element))fail('trait element');
-  }
+  if(!Array.isArray(m.traits)||m.traits.length>2)fail('medal traits');
+  for(const t of m.traits)if(!['resist','guardExtraCut'].includes(t.kind)||!(t.value>0&&t.value<=.05)||!t.label||(t.kind==='resist'&&!['火','水','雷','地','風','光','闇','無'].includes(t.element)))fail('trait '+m.id);
  }
  for(const [id,e] of Object.entries(data.enemies)){if(e.id!==id||!e.name||!['normal','elite','boss'].includes(e.category))fail('enemy '+id);image(e.image);
-  if(!e.forceActionCount||!e.noEscape||![e.actionCount,e.v144ActionMin,e.v144ActionMax].every(n=>Number.isInteger(n)&&n>=1&&n<=3)||e.v144ActionMin>e.actionCount||e.actionCount>e.v144ActionMax)fail('actions '+id);
+  if(!e.forceActionCount||!e.noEscape||![e.actionCount,e.v144ActionMin,e.v144ActionMax].every(n=>Number.isInteger(n)&&n>=1&&n<=3)||e.v144ActionMin>e.v144ActionMax)fail('actions '+id);
   for(const k of ['evasion','damageReduction'])if(e[k]!==undefined&&!(e[k]>=0&&e[k]<=.3))fail('passive '+id);
   for(const [k,v] of Object.entries(e.mods||{}))if(!['hp','mp','atk','mag','def','res','spd'].includes(k)||!Number.isFinite(v)||v<.1||v>3)fail('enemy stat multiplier '+id);
  }
@@ -29,7 +24,7 @@ function validateRushV252(data,context={}){
   if(!Array.isArray(q.areas)||q.areas.length<1||q.areas.length>2)fail('AREA count');let waves=0;
   q.areas.forEach(a=>{if(!Array.isArray(a.waves)||!a.waves.length)fail('empty AREA');waves+=a.waves.length;
    for(const w of a.waves){if(!Array.isArray(w)||!w.length||w.length>data.maxSimultaneous)fail('wave cap');for(const row of w){if(!data.enemies[row.enemy]||!Number.isInteger(row.level)||row.level<1||row.level>120)fail('wave enemy/level');if(row.enemy==='v179-phoenix'&&(q.unlock.story!=='phoenix'||q.unlock.record!=='clear'))fail('phoenix spoiler gate');}}
-   for(const phase of ['pre','post']){if(!Array.isArray(a[phase]))fail('dialogue');for(const line of a[phase]){if(!['pink','desert','denden','money','nyoro','v179-phoenix'].includes(line.speaker)||typeof line.text!=='string'||!line.text.trim())fail('dialogue speaker/text');if(line.text.includes('。')||line.text.split('\n').some(s=>s.length<2||s.length>14||/^[、！？]/.test(s)))fail('dialogue punctuation/line length '+q.id);const order=['grassland','desert','rural','neon','magma','sea','grassland2','tribe','rural2','neon2','magma2','desert2','demonCastle','unfinishedBook','demonCastle2'],joined={pink:0,desert:1,denden:2,money:3,nyoro:4,'v179-phoenix':7};if(order.indexOf(q.unlock.world)<joined[line.speaker])fail('speaker progression gate '+q.id);}}
+   for(const phase of ['pre','post']){if(!Array.isArray(a[phase]))fail('dialogue');for(const line of a[phase])if(!['pink','denden','money','nyoro','v179-phoenix'].includes(line.speaker)||typeof line.text!=='string'||!line.text.trim())fail('dialogue speaker/text');}
   });if(waves<2||waves>4)fail('wave count');
  }
  return true;

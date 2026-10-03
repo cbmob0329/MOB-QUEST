@@ -1,0 +1,43 @@
+{
+  "locks": [
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "medals": {
+    "rush-savanna-v252": 1,
+    "rush-captain-v252": 1,
+    "rush-frezard-v252": 1,
+    "rush-golem-v252": 1
+  },
+  "story": {
+    "phoenix": {
+      "clear": true
+    },
+    "savanna": {
+      "0": true
+    }
+  },
+  "sentinel": "unchanged",
+  "eq": {
+    "main": "01",
+    "sub": null,
+    "armor": null,
+    "medals": [
+      "rush-savanna-v252",
+      null,
+      null
+    ]
+  }
+}
