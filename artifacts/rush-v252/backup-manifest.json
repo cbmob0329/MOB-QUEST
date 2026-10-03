@@ -1,0 +1,17 @@
+{
+  "baseline": "clean git status before task",
+  "files": [
+    {
+      "name": "css_style.css",
+      "sha256": "d4795935e83a6661ba46ae92822f2535590c0a367a0271578c640863561f5918"
+    },
+    {
+      "name": "index.html",
+      "sha256": "aa27de6edc78e2a56b58f177b0c1eb5ad0588b7f2aef271c5ca66d5521dfab11"
+    },
+    {
+      "name": "js_game.js",
+      "sha256": "44904cf13646dc12a005053cf677eadd1ceb58bbaeba63b34ce7c957aed9fad4"
+    }
+  ]
+}

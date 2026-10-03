@@ -1,0 +1,58 @@
+[
+  {
+    "file": "quest-access-v246.cjs",
+    "status": 0,
+    "seconds": 15,
+    "stdout": "savanna → bandits → hot → mochi → custard → macaron → phoenix → mint → magnet → fourRematch → nightmare\nPASS automatic test access, every difficulty including cleared stories and legends, nightmare launch, sorted menus, normal-mode gates restored.\n",
+    "stderr": ""
+  },
+  {
+    "file": "event-v174.cjs",
+    "status": 1,
+    "seconds": 13,
+    "stdout": "",
+    "stderr": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n330 !== 300\n\n    at C:\\Users\\user\\Documents\\GitHub\\MOB-QUEST\\tests\\event-v174.cjs:31:213\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: 330,\n  expected: 300,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "file": "macaron-v247.cjs",
+    "status": 0,
+    "seconds": 21,
+    "stdout": "PASS event: unlocks, three difficulties, both quiz branches, party, levels, rewards, medal\n",
+    "stderr": ""
+  },
+  {
+    "file": "story-balance-v244.cjs",
+    "status": 1,
+    "seconds": 8,
+    "stdout": "",
+    "stderr": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(Math.abs(gidora.hp/old.hp-1.3)<.001)\n\n    at C:\\Users\\user\\Documents\\GitHub\\MOB-QUEST\\tests\\story-balance-v244.cjs:22:48\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9) {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "file": "boss-hp-v249.cjs",
+    "status": 0,
+    "seconds": 12,
+    "stdout": "PASS 19 HP adjustments; other stats/catalog unchanged; tribe unchanged; preview/build/wave match; fractional starting HP and repeated builds\n[\n  {\n    \"id\": \"boss-dragon\",\n    \"old\": 5368,\n    \"hp\": 6978\n  },\n  {\n    \"id\": \"boss-nepu\",\n    \"old\": 8004,\n    \"hp\": 11206\n  },\n  {\n    \"id\": \"boss-umidenden\",\n    \"old\": 10709,\n    \"hp\": 19276\n  },\n  {\n    \"id\": \"boss-neomaster\",\n    \"old\": 13615,\n    \"hp\": 19061\n  },\n  {\n    \"id\": \"boss-dorafara\",\n    \"old\": 13055,\n    \"hp\": 19583\n  },\n  {\n    \"id\": \"boss-gladi\",\n    \"old\": 14058,\n    \"hp\": 17573\n  },\n  {\n    \"id\": \"boss-lilith-castle\",\n    \"old\": 14835,\n    \"hp\": 19286\n  },\n  {\n    \"id\": \"c-lilith-hell\",\n    \"old\": 6300,\n    \"hp\": 9450\n  },\n  {\n    \"id\": \"c-lilith-kirin\",\n    \"old\": 6300,\n    \"hp\": 9450\n  },\n  {\n    \"id\": \"c-lilith-kufu\",\n    \"old\": 6300,\n    \"hp\": 9450\n  },\n  {\n    \"id\": \"c-lilith-riva\",\n    \"old\": 6300,\n    \"hp\": 9450\n  },\n  {\n    \"id\": \"book-kaijin-boss\",\n    \"old\": 16176,\n    \"hp\": 21029\n  },\n  {\n    \"id\": \"dc2-hell\",\n    \"old\": 7252,\n    \"hp\": 10878\n  },\n  {\n    \"id\": \"dc2-kirin\",\n    \"old\": 7252,\n    \"hp\": 10878\n  },\n  {\n    \"id\": \"dc2-riva\",\n    \"old\": 6888,\n    \"hp\": 10332\n  },\n  {\n    \"id\": \"dc2-kufu\",\n    \"old\": 6888,\n    \"hp\": 10332\n  },\n  {\n    \"id\": \"dc2-lilith\",\n    \"old\": 16176,\n    \"hp\": 21029\n  },\n  {\n    \"id\": \"dc2-maou\",\n    \"old\": 17574,\n    \"hp\": 28118\n  },\n  {\n    \"id\": \"dc2-ulrilis\",\n    \"old\": 18734,\n    \"hp\": 31848\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "file": "boss-edits-v250.cjs",
+    "status": 0,
+    "seconds": 13,
+    "stdout": "PASS 12 edited story bosses, HP/cuts/evasion, seven fixed-action queues, repeated transform waves, non-HP stats and event isolation\n",
+    "stderr": ""
+  },
+  {
+    "file": "enemy-abilities-v142.cjs",
+    "status": 1,
+    "seconds": 1,
+    "stdout": "",
+    "stderr": "AssertionError [ERR_ASSERTION]: css/style.css must match inline source\n    at main (C:\\Users\\user\\Documents\\GitHub\\MOB-QUEST\\tests\\enemy-abilities-v142.cjs:15:12)\n    at Object.<anonymous> (C:\\Users\\user\\Documents\\GitHub\\MOB-QUEST\\tests\\enemy-abilities-v142.cjs:66:1)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+  },
+  {
+    "file": "battle-animation-v251.cjs",
+    "status": 0,
+    "seconds": 15,
+    "stdout": "PASS assets, normal sprites, boss motif, healing, canonical player spell reuse, no duplicate sprites, unchanged damage\n",
+    "stderr": ""
+  }
+]

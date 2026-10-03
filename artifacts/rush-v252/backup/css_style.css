@@ -5601,10 +5601,3 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 @media(prefers-reduced-motion:reduce){.boss-charge,.recovery,.boss-charge .orbit,.recovery b{animation:none;opacity:.7}.projectile-v251{box-shadow:none}}
 
 /* UPDATE_V251_END
-/* UPDATE_V252_BEGIN */
-.rush-door-v252{display:flex;align-items:center;gap:12px;width:100%;margin:12px 0;padding:10px;border:1px solid #cfa94e;border-radius:14px;background:linear-gradient(120deg,#182a38,#382b1a);color:#fff2d1;text-align:left}
-.rush-door-v252 img{width:76px;height:76px;object-fit:contain}.rush-door-v252 span{display:grid;gap:6px}.rush-door-v252 small{font-size:11px}
-.rush-result-v252 [data-rush-home]{background:#26394d;color:#f7e7bc;border:1px solid #bda16a;border-radius:12px;min-height:44px}
-.rush-panel-v252>p{font-size:12px;line-height:1.7;color:#d9e3ed}.rush-list-v252{display:grid;gap:12px}.rush-card-v252{display:flex;align-items:flex-start;gap:10px;border:1px solid #ad8c4b;border-radius:14px;padding:12px;background:linear-gradient(135deg,#243447,#171e29);color:#fff0d1}.rush-card-v252>div{min-width:0;flex:1}.rush-card-v252 h3{font-size:16px;margin:0 0 6px}.rush-card-v252 p{font-size:11px;line-height:1.65;margin:4px 0}.rush-card-v252 .rush-icon-v252{width:70px;height:70px;object-fit:contain;flex:none}.rush-card-v252 .rush-medal-v252{width:32px;height:32px;object-fit:contain;vertical-align:middle}.rush-card-v252 button{width:100%;margin-top:8px}.rush-card-v252 button:disabled{opacity:.5}.rush-result-v252 .rush-reward-v252{display:block;width:120px;height:120px;object-fit:contain;margin:auto}.rush-result-v252 [data-rush-home]{margin-top:10px}
-
-/* UPDATE_V252_END */

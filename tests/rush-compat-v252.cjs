@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{open,root}=require('./story-v172-harness.cjs');
+const injection=`window.rushCompatibility=()=>{
+ state.party=['yusha','pink','denden','money'].map(id=>[id,80]);state.meta.storyEventsV179={};state.meta.storyEventsV174={};state.meta.eventQuestsV163={};state.meta.medals={};state.test.enabled=false;worldCleared=()=>true;
+ const enemy=e=>({id:e.id,level:e.level,maxHp:e.maxHp,atk:e.atk,mag:e.mag,def:e.def,res:e.res,spd:e.spd,actions:e.actionCount,min:e.v144ActionMin,max:e.v144ActionMax,cut:e.damageReduction,evasion:e.evasion,passive:e.v142Passive,skills:enemySpecialSpec(e),statusResist:e.statusResist,elementResist:e.elementResist});
+ const region=['g-savanna','g-iwakiri','r-scouter','r-captain','m-golem','m-blizzard','m-flame','m-frezard'].map(id=>enemy(buildEnemyFromTemplate(trainingEnemyTemplate(id),trainingEnemyTemplate(id).levelMin)));
+ const phoenix=waveV179('phoenix',3,0).map(r=>enemy(buildEnemyFromTemplate(r.template,r.level)));
+ const bosses=EVENT_BOSSES_V163.filter(q=>['barion','freza','robe'].includes(q.key)).map(q=>enemy(buildEnemyFromTemplate(eventTemplateV163(q,0),q.levels[0])));
+ eventRunV174={difficulty:0,rewarded:false};const savanna=rewardSavannaV174();const savannaAgain=rewardSavannaV174();
+ eventRunV174={storyV179:'phoenix',difficulty:0,rewarded:false};const fire=rewardV179();const fireAgain=rewardV179();eventRunV174=null;
+ return {region,phoenix,bosses,savanna:{coins:savanna.coins,diamonds:savanna.diamonds,again:savannaAgain},fire:{coins:fire.coins,diamonds:fire.diamonds,medal:fire.medal,again:fireAgain},oldRecords:state.meta.storyEventsV179,oldMedals:state.meta.medals};
+};`;
+(async()=>{const x=await open(injection);try{await x.page.evaluate(()=>{Math.random=()=>.5;});const result=await x.page.evaluate(()=>rushCompatibility());assert.deepEqual(x.errors,[]);const file=path.join(root,'artifacts/rush-v252/compat-baseline.json');if(process.argv.includes('--write-baseline')){fs.writeFileSync(file,JSON.stringify(result,null,2));console.log('PASS captured pre-change enemy/event reward baseline');}else{assert.deepEqual(JSON.parse(JSON.stringify(result)),JSON.parse(fs.readFileSync(file,'utf8')));console.log('PASS unchanged regional enemies, phoenix/event bosses, savanna/phoenix rewards and duplicate guards against pre-change baseline');}}finally{await x.browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

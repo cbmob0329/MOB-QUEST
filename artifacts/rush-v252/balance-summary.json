@@ -1,0 +1,192 @@
+{
+  "mode": "isolated real-engine automated playthrough, not manual",
+  "runs": 36,
+  "wins": 36,
+  "phoenixModifiers": {
+    "hp": 0.3,
+    "atk": 0.75,
+    "mag": 0.75
+  },
+  "groups": [
+    {
+      "quest": "rush-grass-v252",
+      "title": "草原の連戦稽古",
+      "level": 7,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        9,
+        9,
+        9
+      ],
+      "finalMinimumHpPercent": 16,
+      "finalMinimumMpPercent": 33
+    },
+    {
+      "quest": "rush-grass-v252",
+      "title": "草原の連戦稽古",
+      "level": 10,
+      "recommended": true,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        8,
+        9,
+        10
+      ],
+      "finalMinimumHpPercent": 74,
+      "finalMinimumMpPercent": 37
+    },
+    {
+      "quest": "rush-grass-v252",
+      "title": "草原の連戦稽古",
+      "level": 13,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        6,
+        7,
+        7
+      ],
+      "finalMinimumHpPercent": 76,
+      "finalMinimumMpPercent": 58
+    },
+    {
+      "quest": "rush-rural-v252",
+      "title": "田舎町の見張り稽古",
+      "level": 20,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        3,
+        3,
+        3
+      ],
+      "finalMinimumHpPercent": 52,
+      "finalMinimumMpPercent": 61
+    },
+    {
+      "quest": "rush-rural-v252",
+      "title": "田舎町の見張り稽古",
+      "level": 23,
+      "recommended": true,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        3,
+        3,
+        3
+      ],
+      "finalMinimumHpPercent": 78,
+      "finalMinimumMpPercent": 64
+    },
+    {
+      "quest": "rush-rural-v252",
+      "title": "田舎町の見張り稽古",
+      "level": 26,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        3,
+        3,
+        3
+      ],
+      "finalMinimumHpPercent": 83,
+      "finalMinimumMpPercent": 66
+    },
+    {
+      "quest": "rush-magma-v252",
+      "title": "炎と氷の連戦稽古",
+      "level": 40,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        8,
+        8,
+        7
+      ],
+      "finalMinimumHpPercent": 54,
+      "finalMinimumMpPercent": 59
+    },
+    {
+      "quest": "rush-magma-v252",
+      "title": "炎と氷の連戦稽古",
+      "level": 43,
+      "recommended": true,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        7,
+        7,
+        7
+      ],
+      "finalMinimumHpPercent": 67,
+      "finalMinimumMpPercent": 61
+    },
+    {
+      "quest": "rush-magma-v252",
+      "title": "炎と氷の連戦稽古",
+      "level": 46,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        7,
+        7,
+        7
+      ],
+      "finalMinimumHpPercent": 70,
+      "finalMinimumMpPercent": 60
+    },
+    {
+      "quest": "rush-ember-v252",
+      "title": "灼熱の再挑戦",
+      "level": 77,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        24,
+        21,
+        25
+      ],
+      "finalMinimumHpPercent": 71,
+      "finalMinimumMpPercent": 51
+    },
+    {
+      "quest": "rush-ember-v252",
+      "title": "灼熱の再挑戦",
+      "level": 80,
+      "recommended": true,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        16,
+        17,
+        20
+      ],
+      "finalMinimumHpPercent": 74,
+      "finalMinimumMpPercent": 60
+    },
+    {
+      "quest": "rush-ember-v252",
+      "title": "灼熱の再挑戦",
+      "level": 83,
+      "recommended": false,
+      "wins": 3,
+      "runs": 3,
+      "turns": [
+        18,
+        17,
+        17
+      ],
+      "finalMinimumHpPercent": 71,
+      "finalMinimumMpPercent": 62
+    }
+  ]
+}

@@ -1,0 +1,2447 @@
+{
+  "enemies": [
+    {
+      "id": "g-slime",
+      "name": "モブスライム",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/01.png",
+      "symbol": "水",
+      "levelMin": 1,
+      "levelMax": 3,
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-rock",
+      "name": "モブロック",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "地",
+      "image": "enemy/02.png",
+      "symbol": "岩",
+      "levelMin": 2,
+      "levelMax": 3,
+      "mods": {
+        "hp": 1.18,
+        "def": 1.18,
+        "spd": 0.82
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.1,
+        "水": 0,
+        "雷": 0,
+        "地": 0.15,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.32999999999999996,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-jouro",
+      "name": "モブジョーロ",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/03.png",
+      "symbol": "雫",
+      "levelMin": 3,
+      "levelMax": 3,
+      "tempAi": "heal",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "キャンディ",
+          "kind": "enemyHeal",
+          "power": 0.09,
+          "skillElement": "無",
+          "skillType": "magic",
+          "v134Formal": true
+        },
+        {
+          "special": "ネプソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ],
+      "supportSkillsV109": [
+        "candy"
+      ]
+    },
+    {
+      "id": "g-tendevi",
+      "name": "モブテンデビ",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/04.png",
+      "symbol": "水",
+      "levelMin": 2,
+      "levelMax": 3,
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプ",
+          "kind": "single",
+          "power": 0.9,
+          "skillElement": "水",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-bird",
+      "name": "モブバード",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "風",
+      "image": "enemy/05.png",
+      "symbol": "翼",
+      "levelMin": 1,
+      "levelMax": 3,
+      "mods": {
+        "hp": 0.86,
+        "spd": 1.22
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0.15,
+        "光": -0.1,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "疾風斬り",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "風",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-piyo-green",
+      "name": "モブピヨミドリ",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "風",
+      "image": "enemy/06.png",
+      "symbol": "風",
+      "levelMin": 2,
+      "levelMax": 3,
+      "mods": {
+        "hp": 0.9,
+        "spd": 1.12
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0.15,
+        "光": -0.1,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "疾風斬り",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "風",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-piyo-red",
+      "name": "モブピヨレッド",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/07.png",
+      "symbol": "火",
+      "levelMin": 2,
+      "levelMax": 3,
+      "mods": {
+        "atk": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-beaver",
+      "name": "モブビーバー",
+      "stage": "草原",
+      "category": "normal",
+      "attribute": "地",
+      "image": "enemy/08.png",
+      "symbol": "木",
+      "levelMin": 2,
+      "levelMax": 2,
+      "mods": {
+        "hp": 1.08,
+        "def": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.1,
+        "水": 0,
+        "雷": 0,
+        "地": 0.15,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.32999999999999996,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "g-savanna",
+      "name": "モブサバンナ",
+      "stage": "草原",
+      "category": "elite",
+      "attribute": "地",
+      "image": "enemy/09.png",
+      "symbol": "砂",
+      "levelMin": 5,
+      "levelMax": 5,
+      "special": "サバンナダンス",
+      "kind": "single",
+      "power": 0.8,
+      "skillElement": "地",
+      "skillType": "physical",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.08,
+        "水": 0,
+        "雷": 0,
+        "地": 0.22,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.5800000000000001,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "g-iwakiri",
+      "name": "モブイワキリ",
+      "stage": "草原",
+      "category": "elite",
+      "attribute": "雷",
+      "image": "enemy/10.png",
+      "symbol": "雷",
+      "levelMin": 6,
+      "levelMax": 6,
+      "special": "イワキリサンダー",
+      "kind": "aoe",
+      "power": 0.66,
+      "skillElement": "雷",
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0.22,
+        "地": 0,
+        "風": -0.08,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.58,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "トルソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "雷",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "g-axe",
+      "name": "モブアックス",
+      "stage": "草原",
+      "category": "elite",
+      "attribute": "地",
+      "image": "enemy/13.png",
+      "symbol": "斧",
+      "levelMin": 6,
+      "levelMax": 6,
+      "special": "アックススクラッチ",
+      "kind": "single",
+      "power": 0.8,
+      "skillElement": "風",
+      "skillType": "physical",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.08,
+        "水": 0,
+        "雷": 0,
+        "地": 0.22,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.5800000000000001,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "boss-hawk",
+      "name": "モブホーク",
+      "stage": "草原",
+      "category": "boss",
+      "attribute": "風",
+      "image": "boss/01.png",
+      "symbol": "鷹",
+      "levelMin": 8,
+      "levelMax": 8,
+      "bossId": "hawk",
+      "special": "ホークダイブ",
+      "kind": "aoe",
+      "power": 0.66,
+      "skillType": "physical",
+      "normalAttackType": "physical",
+      "skillElement": "風",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0.28,
+        "光": -0.05,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.65,
+        "burn": 0.7,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.85,
+        "confuse": 0.75
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "疾風斬り",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "風",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "r-hitode",
+      "name": "モブヒトデヤリ",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/41.png",
+      "symbol": "槍",
+      "levelMin": 13,
+      "levelMax": 16,
+      "mods": {
+        "atk": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-knife",
+      "name": "モブナイフ",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "地",
+      "image": "enemy/42.png",
+      "symbol": "刃",
+      "levelMin": 13,
+      "levelMax": 16,
+      "mods": {
+        "atk": 1.1,
+        "spd": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.1,
+        "水": 0,
+        "雷": 0,
+        "地": 0.15,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.32999999999999996,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-purufu",
+      "name": "モブプルフ",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/43.png",
+      "symbol": "水",
+      "levelMin": 14,
+      "levelMax": 16,
+      "mods": {
+        "res": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-nullblue",
+      "name": "モブヌルブルー",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/44.png",
+      "symbol": "水",
+      "levelMin": 14,
+      "levelMax": 16,
+      "mods": {
+        "mag": 1.08
+      },
+      "normalAttackType": "magic",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプ",
+          "kind": "single",
+          "power": 0.9,
+          "skillElement": "水",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-adancer",
+      "name": "モブアダンサー",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/45.png",
+      "symbol": "舞",
+      "levelMin": 14,
+      "levelMax": 17,
+      "mods": {
+        "spd": 1.1
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-upa",
+      "name": "モブウパルーパー",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "水",
+      "image": "enemy/46.png",
+      "symbol": "水",
+      "levelMin": 14,
+      "levelMax": 17,
+      "mods": {
+        "hp": 1.1
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.15,
+        "雷": -0.1,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.25,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ネプソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-banken",
+      "name": "モブバンケン",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "地",
+      "image": "enemy/47.png",
+      "symbol": "犬",
+      "levelMin": 14,
+      "levelMax": 17,
+      "mods": {
+        "hp": 1.12,
+        "def": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": -0.1,
+        "水": 0,
+        "雷": 0,
+        "地": 0.15,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.32999999999999996,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-denchi",
+      "name": "モブデンチマーク",
+      "stage": "田舎町",
+      "category": "normal",
+      "attribute": "雷",
+      "image": "enemy/48.png",
+      "symbol": "電",
+      "levelMin": 14,
+      "levelMax": 17,
+      "mods": {
+        "mag": 1.08
+      },
+      "normalAttackType": "magic",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0.15,
+        "地": 0,
+        "風": -0.1,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.15,
+        "paralyze": 0.37,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "トル",
+          "kind": "single",
+          "power": 0.9,
+          "skillElement": "雷",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "r-dancer",
+      "name": "モブダンサー",
+      "stage": "田舎町",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/45.png",
+      "symbol": "舞",
+      "levelMin": 15,
+      "levelMax": 15,
+      "mods": {
+        "spd": 1.1
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "enemySkills": [
+        {
+          "special": "マグソード",
+          "kind": "single",
+          "power": 1.1,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ],
+      "v120ExtraSkills": [
+        {
+          "special": "マグソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "r-scouter",
+      "name": "モブスカウター",
+      "stage": "田舎町",
+      "category": "elite",
+      "attribute": "光",
+      "image": "enemy/52.png",
+      "symbol": "光",
+      "levelMin": 18,
+      "levelMax": 18,
+      "special": "スカウターライト",
+      "kind": "single",
+      "power": 0.8,
+      "skillElement": "光",
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0.22,
+        "闇": -0.08
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.44000000000000006
+      },
+      "statusDurationCap": 3,
+      "supportSkillsV109": [
+        "shoga-entry"
+      ],
+      "v120ExtraSkills": [
+        {
+          "special": "ネオソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "光",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "r-captain",
+      "name": "モブキャプテン",
+      "stage": "田舎町",
+      "category": "elite",
+      "attribute": "闇",
+      "image": "enemy/54.png",
+      "symbol": "船",
+      "levelMin": 18,
+      "levelMax": 18,
+      "special": "パイレーツボム",
+      "kind": "aoeStunChance",
+      "power": 0.68,
+      "chance": 0.03,
+      "skillType": "physical",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": -0.08,
+        "風": 0,
+        "光": 0,
+        "闇": 0.22
+      },
+      "statusResist": {
+        "poison": 0.52,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.44000000000000006
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ミラソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "r-dean",
+      "name": "モブディーン",
+      "stage": "田舎町",
+      "category": "elite",
+      "attribute": "雷",
+      "image": "enemy/56.png",
+      "symbol": "槍",
+      "levelMin": 18,
+      "levelMax": 18,
+      "special": "サンダースピア",
+      "kind": "single",
+      "power": 0.8,
+      "skillElement": "闇",
+      "skillType": "physical",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0.22,
+        "地": 0,
+        "風": -0.08,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.58,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "トルソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "雷",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "boss-guardian",
+      "name": "モブガーディアン",
+      "stage": "田舎町",
+      "category": "boss",
+      "attribute": "地",
+      "image": "boss/05.png",
+      "symbol": "盾",
+      "levelMin": 20,
+      "levelMax": 20,
+      "bossId": "guardian",
+      "special": "ガーディアンシールド",
+      "kind": "shield",
+      "power": 0,
+      "normalAttackType": "physical",
+      "skillType": "mental",
+      "elementResist": {
+        "無": 0,
+        "火": -0.05,
+        "水": 0,
+        "雷": 0,
+        "地": 0.28,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.65,
+        "burn": 0.7,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.99,
+        "confuse": 0.75
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "ゴレソード",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "地",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ],
+      "mods": {
+        "atk": 1.12
+      }
+    },
+    {
+      "id": "m-honoslime",
+      "name": "モブホノスライム",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/85.png",
+      "symbol": "火",
+      "levelMin": 30,
+      "levelMax": 32,
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-magrock",
+      "name": "モブマグロック",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/86.png",
+      "symbol": "岩",
+      "levelMin": 33,
+      "levelMax": 35,
+      "mods": {
+        "hp": 1.18,
+        "def": 1.18,
+        "spd": 0.82
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-magslime",
+      "name": "モブマグスライム",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/87.png",
+      "symbol": "火",
+      "levelMin": 30,
+      "levelMax": 35,
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-hinodevi",
+      "name": "モブヒノデビ",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/88.png",
+      "symbol": "炎",
+      "levelMin": 30,
+      "levelMax": 35,
+      "mods": {
+        "mag": 1.08
+      },
+      "normalAttackType": "magic",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "ホノマ",
+          "kind": "single",
+          "power": 0.9,
+          "skillElement": "火",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-lizard",
+      "name": "モブマグトカゲ",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/89.png",
+      "symbol": "蜥",
+      "levelMin": 33,
+      "levelMax": 35,
+      "mods": {
+        "spd": 1.12
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-heatrock",
+      "name": "モブヒートロック",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/90.png",
+      "symbol": "岩",
+      "levelMin": 33,
+      "levelMax": 35,
+      "mods": {
+        "hp": 1.16,
+        "def": 1.16,
+        "spd": 0.84
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-bombthrow",
+      "name": "モブボムスロー",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/91.png",
+      "symbol": "爆",
+      "levelMin": 33,
+      "levelMax": 35,
+      "tempAi": "aoe",
+      "normalAttackType": "magic",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "クラッシュボム",
+          "kind": "aoe",
+          "power": 0.62,
+          "skillElement": "無",
+          "skillType": "magic",
+          "v134Formal": true
+        },
+        {
+          "special": "ホノマ",
+          "kind": "single",
+          "power": 0.9,
+          "skillElement": "火",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-bomber",
+      "name": "モブボマー",
+      "stage": "マグマ",
+      "category": "normal",
+      "attribute": "火",
+      "image": "enemy/92.png",
+      "symbol": "爆",
+      "levelMin": 34,
+      "levelMax": 35,
+      "tempAi": "aoe",
+      "mods": {
+        "atk": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.15,
+        "水": -0.1,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.15,
+        "burn": 0.37,
+        "paralyze": 0.15,
+        "sleep": 0.15,
+        "stun": 0.15,
+        "confuse": 0.15
+      },
+      "statusDurationCap": 4,
+      "enemySkills": [
+        {
+          "special": "クラッシュボム",
+          "kind": "aoe",
+          "power": 0.62,
+          "skillElement": "無",
+          "skillType": "magic",
+          "v134Formal": true
+        },
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 0.94,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        }
+      ]
+    },
+    {
+      "id": "m-golem",
+      "name": "モブマグゴーレム",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/94.png",
+      "symbol": "拳",
+      "levelMin": 36,
+      "levelMax": 36,
+      "special": "マグマパワーパンチ",
+      "kind": "single",
+      "power": 1.18,
+      "skillType": "physical",
+      "mods": {
+        "hp": 1.12,
+        "def": 1.14,
+        "spd": 0.82
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "m-honotail",
+      "name": "モブホノテイル",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/100.png",
+      "symbol": "尾",
+      "levelMin": 36,
+      "levelMax": 36,
+      "mods": {
+        "spd": 1.08
+      },
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "enemySkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.1,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v134Formal": true
+        },
+        {
+          "special": "ファストビート",
+          "kind": "burnSingle",
+          "power": 0.78,
+          "chance": 0.25,
+          "skillElement": "火",
+          "skillType": "magic",
+          "v134Formal": true
+        }
+      ],
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "m-hinotabi",
+      "name": "モブヒノタビ",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/99.png",
+      "symbol": "炎",
+      "levelMin": 36,
+      "levelMax": 36,
+      "special": "フレイムマジック",
+      "kind": "aoe",
+      "power": 0.68,
+      "skillElement": "火",
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "supportSkillsV109": [
+        "shoga-entry"
+      ],
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "m-blizzard",
+      "name": "モブブリザード",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "水",
+      "image": "enemy/101.png",
+      "symbol": "氷",
+      "levelMin": 35,
+      "levelMax": 35,
+      "special": "ブリザードフラッシュ",
+      "kind": "single",
+      "power": 1.18,
+      "skillElement": "水",
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.22,
+        "雷": -0.08,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.45999999999999996,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ネプマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ローファイスプラッシュ",
+          "kind": "sleepSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "m-flame",
+      "name": "モブフレイム",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/102.png",
+      "symbol": "炎",
+      "levelMin": 35,
+      "levelMax": 35,
+      "special": "フレイムフラッシュ",
+      "kind": "aoe",
+      "power": 0.7,
+      "skillElement": "火",
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "m-frezard",
+      "name": "モブフレザード",
+      "stage": "マグマ",
+      "category": "elite",
+      "attribute": "水・火",
+      "image": "enemy/103.png",
+      "symbol": "双",
+      "levelMin": 37,
+      "levelMax": 37,
+      "specialOptions": [
+        {
+          "special": "ブリザードフラッシュ",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "水",
+          "skillType": "magic"
+        },
+        {
+          "special": "フレイムフラッシュ",
+          "kind": "aoe",
+          "power": 0.7,
+          "skillElement": "火",
+          "skillType": "magic"
+        }
+      ],
+      "mods": {
+        "hp": 1.22,
+        "atk": 1.08,
+        "mag": 1.1
+      },
+      "normalAttackType": "physical",
+      "actionCount": 2,
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": 0.22,
+        "雷": -0.08,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.45999999999999996,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ],
+      "damageReduction": 0.1,
+      "permanentDamageReduction": true,
+      "v142Passive": "フュージョンリフレクション"
+    },
+    {
+      "id": "boss-dragon",
+      "name": "モブドラゴン",
+      "stage": "マグマ",
+      "category": "boss",
+      "attribute": "火",
+      "image": "boss/09.png",
+      "symbol": "竜",
+      "levelMin": 40,
+      "levelMax": 40,
+      "bossId": "dragon",
+      "special": "ドラゴンフレイム",
+      "kind": "aoe",
+      "power": 1.48,
+      "skillType": "magic",
+      "normalAttackType": "physical",
+      "elementResist": {
+        "無": 0,
+        "火": 0.28,
+        "水": -0.05,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.65,
+        "burn": 0.9199999999999999,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.85,
+        "confuse": 0.75
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.96,
+          "chance": 0.22,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    }
+  ],
+  "medals": [
+    {
+      "id": "hot-fight",
+      "name": "モブファイト",
+      "image": "spenemy/39.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "SSR",
+      "attribute": "水",
+      "stats": {
+        "atk": 50,
+        "def": 50
+      },
+      "traits": [
+        {
+          "kind": "lowHpDamageCut",
+          "threshold": 0.5,
+          "value": 0.05,
+          "label": "HP50%以下でダメージ軽減+5%"
+        }
+      ],
+      "traitLabel": "HP50%以下でダメージ軽減+5%"
+    },
+    {
+      "id": "event-phoenix-medal",
+      "name": "モブフェニックス",
+      "image": "spenemy/41.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "火",
+      "stats": {
+        "atk": 30,
+        "maxHp": 150,
+        "maxMp": 250
+      },
+      "traits": [
+        {
+          "kind": "eventPhoenixDrainV179",
+          "chance": 0.3,
+          "value": 0.1,
+          "label": "30%で与ダメージの10% HP回復"
+        }
+      ],
+      "traitLabel": "30%の確率で与えたダメージの10% HPを回復する"
+    },
+    {
+      "id": "event-custard-medal",
+      "name": "モブカスタード",
+      "image": "spenemy/42.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "光",
+      "stats": {
+        "mag": 50,
+        "res": 50
+      },
+      "traits": [
+        {
+          "kind": "eventMagicCritV179",
+          "value": 0.04,
+          "label": "魔法会心率+4%"
+        }
+      ],
+      "traitLabel": "魔法会心率+4%"
+    },
+    {
+      "id": "event-horapue-medal",
+      "name": "モブホラプエ",
+      "image": "spenemy/85.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "水",
+      "stats": {
+        "spd": 80
+      },
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.05,
+          "power": 1.1,
+          "label": "5%で通常攻撃の110%で追撃"
+        }
+      ],
+      "traitLabel": "5%の確率で通常攻撃の110%で追撃する"
+    },
+    {
+      "id": "story-neomaster-medal",
+      "name": "モブネオンマスター",
+      "actor": "boss-neomaster",
+      "stats": {
+        "mag": 50,
+        "res": 50,
+        "maxMp": 200
+      },
+      "traits": [
+        {
+          "kind": "storyMagicCritV231",
+          "value": 0.05,
+          "label": "魔法会心率+5%"
+        }
+      ],
+      "image": "boss/18.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "魔法会心率+5%"
+    },
+    {
+      "id": "story-dragon-medal",
+      "name": "モブドラゴン",
+      "actor": "dragon",
+      "stats": {
+        "atk": 50,
+        "def": 50,
+        "maxHp": 200
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "火",
+          "value": 0.15,
+          "label": "火属性耐性+15%"
+        },
+        {
+          "kind": "resist",
+          "element": "闇",
+          "value": 0.15,
+          "label": "闇属性耐性+15%"
+        }
+      ],
+      "image": "boss/09.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "火属性耐性+15% / 闇属性耐性+15%"
+    },
+    {
+      "id": "story-mira-medal",
+      "name": "ミラモブ",
+      "actor": "boss-mira-d2",
+      "stats": {
+        "atk": 80,
+        "spd": 80
+      },
+      "traits": [
+        {
+          "kind": "darkMagicCritV231",
+          "value": 0.08,
+          "label": "闇属性魔法会心率+8%"
+        }
+      ],
+      "image": "boss/03.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "闇属性魔法会心率+8%"
+    },
+    {
+      "id": "event-mint-medal",
+      "name": "モブミント",
+      "image": "spenemy/89.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "水",
+      "stats": {
+        "mag": 50,
+        "def": 30
+      },
+      "traits": [
+        {
+          "kind": "mintRepeatV237",
+          "chance": 0.03,
+          "label": "連続魔法発動率+3%（同じ魔法・追加MP消費なし）"
+        }
+      ],
+      "traitLabel": "魔法使用時、3%の確率で同じ魔法を再発動（追加MP消費なし）"
+    },
+    {
+      "id": "event-macaron-medal",
+      "name": "モブマカロン",
+      "image": "spenemy/94.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "光",
+      "stats": {
+        "atk": 100
+      },
+      "traits": [
+        {
+          "kind": "macaronFollowV247",
+          "chance": 0.03,
+          "label": "特技使用時、連撃発動率+3%（通常攻撃の110%で追撃）"
+        }
+      ],
+      "traitLabel": "特技使用時、連撃発動率+3%（通常攻撃の110%で追撃）"
+    }
+  ],
+  "story": {
+    "phoenix": {
+      "title": "復活！モブフェニックス！",
+      "world": "magma",
+      "unlock": "tribe",
+      "unlockName": "部族村",
+      "image": "spenemy/41.png",
+      "oneTime": true,
+      "diffs": [
+        {
+          "name": "SPECIAL",
+          "level": "75～80",
+          "coins": 0,
+          "diamonds": 100,
+          "figures": [
+            23
+          ],
+          "medal": "event-phoenix-medal"
+        }
+      ]
+    },
+    "custard": {
+      "title": "小さな戦士とカスタードゲーム",
+      "world": "neon",
+      "unlock": "magma",
+      "unlockName": "マグマ",
+      "image": "spenemy/43.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 35,
+          "coins": 5000,
+          "diamonds": 10,
+          "figures": [
+            24
+          ]
+        },
+        {
+          "name": "ハード",
+          "level": 55,
+          "coins": 10000,
+          "diamonds": 30,
+          "figures": [],
+          "medal": "event-custard-medal"
+        },
+        {
+          "name": "インフェルノ",
+          "level": 90,
+          "coins": 50000,
+          "diamonds": 50,
+          "figures": [
+            25
+          ]
+        }
+      ]
+    },
+    "magnet": {
+      "title": "マグネットカーニバル！",
+      "world": "neon",
+      "unlock": "rural2",
+      "unlockName": "田舎町Ⅱ",
+      "image": "spenemy/47.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 60,
+          "coins": 5000,
+          "diamonds": 10,
+          "figures": [
+            26
+          ]
+        },
+        {
+          "name": "ハード",
+          "level": 75,
+          "coins": 10000,
+          "diamonds": 30,
+          "figures": [
+            27,
+            28
+          ]
+        },
+        {
+          "name": "インフェルノ",
+          "level": 90,
+          "coins": 50000,
+          "diamonds": 50,
+          "figures": [
+            29
+          ]
+        }
+      ]
+    },
+    "mochi": {
+      "title": "草原の餅つきの達人！？",
+      "world": "grassland",
+      "unlock": "neon",
+      "unlockName": "ネオン街",
+      "image": "spenemy/51.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 30,
+          "coins": 5000,
+          "diamonds": 10,
+          "figures": [
+            30
+          ]
+        },
+        {
+          "name": "ハード",
+          "level": 60,
+          "coins": 10000,
+          "diamonds": 30,
+          "figures": [
+            32
+          ]
+        },
+        {
+          "name": "インフェルノ",
+          "level": 90,
+          "coins": 50000,
+          "diamonds": 50,
+          "figures": [
+            33,
+            34
+          ]
+        }
+      ]
+    },
+    "bandits": {
+      "title": "砂漠の盗賊ファミリー！",
+      "world": "desert",
+      "unlock": "rural",
+      "unlockName": "田舎町",
+      "image": "spenemy/87.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 25,
+          "coins": 5000,
+          "diamonds": 50,
+          "figures": [
+            56,
+            57
+          ],
+          "unlock": "rural",
+          "unlockName": "田舎町",
+          "areas": 4
+        },
+        {
+          "name": "ハード",
+          "level": 45,
+          "coins": 10000,
+          "diamonds": 100,
+          "figures": [
+            58
+          ],
+          "medal": "event-horapue-medal",
+          "unlock": "sea",
+          "unlockName": "海底",
+          "areas": 3
+        },
+        {
+          "name": "インフェルノ",
+          "level": 65,
+          "coins": 50000,
+          "diamonds": 150,
+          "figures": [
+            59,
+            60
+          ],
+          "unlock": "rural2",
+          "unlockName": "田舎町Ⅱ",
+          "areas": 4
+        }
+      ]
+    },
+    "mint": {
+      "title": "部族村の伝統娯楽",
+      "world": "tribe",
+      "unlock": "tribe",
+      "unlockName": "部族村",
+      "image": "spenemy/89.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 45,
+          "coins": 5000,
+          "diamonds": 100,
+          "figures": [
+            61
+          ]
+        },
+        {
+          "name": "ハード",
+          "level": 65,
+          "coins": 10000,
+          "diamonds": 200,
+          "figures": [],
+          "medal": "event-mint-medal"
+        },
+        {
+          "name": "インフェルノ",
+          "level": 90,
+          "coins": 50000,
+          "diamonds": 300,
+          "figures": [
+            62
+          ]
+        }
+      ]
+    },
+    "nightmare": {
+      "title": "ネオン街の悪夢",
+      "world": "neon",
+      "oneTime": true,
+      "image": "back/neon4.png",
+      "diffs": [
+        {
+          "name": "追憶",
+          "level": 95,
+          "coins": 0,
+          "diamonds": 0,
+          "figures": []
+        }
+      ]
+    },
+    "fourRematch": {
+      "title": "ミラモブ4人衆再び",
+      "world": "desert",
+      "unlock": "desert2",
+      "unlockName": "砂漠Ⅱ",
+      "image": "enemy/40.png",
+      "diffs": [
+        {
+          "name": "ハード",
+          "level": 75,
+          "coins": 100000,
+          "diamonds": 150,
+          "figures": []
+        }
+      ]
+    },
+    "macaron": {
+      "title": "マグマを彩るワンピース",
+      "world": "magma",
+      "unlock": "magma",
+      "unlockName": "マグマ",
+      "image": "spenemy/94.png",
+      "diffs": [
+        {
+          "name": "ノーマル",
+          "level": 60,
+          "coins": 5000,
+          "diamonds": 10,
+          "figures": [
+            63
+          ]
+        },
+        {
+          "name": "ハード",
+          "level": 75,
+          "coins": 10000,
+          "diamonds": 50,
+          "figures": [],
+          "medal": "event-macaron-medal"
+        },
+        {
+          "name": "インフェルノ",
+          "level": 95,
+          "coins": 50000,
+          "diamonds": 100,
+          "figures": [
+            64
+          ]
+        }
+      ]
+    }
+  }
+}

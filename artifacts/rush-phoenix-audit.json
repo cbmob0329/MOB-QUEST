@@ -1,0 +1,18 @@
+{
+  "id": "v179-phoenix",
+  "name": "モブフェニックス",
+  "image": "spenemy/41.png",
+  "category": "boss",
+  "attribute": "火",
+  "levelMin": 75,
+  "levelMax": 75,
+  "damageReduction": 0.12,
+  "evasion": 0.05,
+  "actionCount": 2,
+  "forceActionCount": true,
+  "v144ActionMin": 2,
+  "v144ActionMax": 3,
+  "story179Kind": "phoenix",
+  "noEscape": true,
+  "permanentDamageReduction": true
+}

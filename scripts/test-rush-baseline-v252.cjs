@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path'),{spawnSync}=require('node:child_process');
+const root=path.resolve(__dirname,'..'),rows=[];
+for(const file of ['event-v174.cjs','story-balance-v244.cjs','enemy-abilities-v142.cjs']){console.log('BASELINE '+file);const r=spawnSync(process.execPath,['--require','./scripts/rush-baseline-v252.cjs','tests/'+file],{cwd:root,encoding:'utf8',timeout:180000,windowsHide:true});rows.push({file,status:r.status,stdout:r.stdout,stderr:r.stderr,error:r.error?.message});fs.writeFileSync(path.join(root,'artifacts/rush-v252/baseline-results.json'),JSON.stringify(rows,null,2));console.log('baseline exit '+r.status);}

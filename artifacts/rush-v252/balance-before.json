@@ -1,0 +1,5214 @@
+[
+  {
+    "quest": "rush-grass-v252",
+    "level": 10,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "MOBソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "MOBソード",
+        "armor": "ぷにモブグリーン"
+      }
+    ],
+    "shopSeason": 1,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 313,
+        "maxHp": 313,
+        "mp": 140,
+        "maxMp": 140,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 335,
+        "maxHp": 335,
+        "mp": 127,
+        "maxMp": 127,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 8,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 237,
+            "maxHp": 313,
+            "mp": 68,
+            "maxMp": 140,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 284,
+            "maxHp": 335,
+            "mp": 76,
+            "maxMp": 127,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 313,
+            "maxHp": 313,
+            "mp": 140,
+            "maxMp": 140,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 335,
+            "maxHp": 335,
+            "mp": 127,
+            "maxMp": 127,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブスライム",
+            "hp": 196,
+            "atk": 31,
+            "mag": 31,
+            "level": 7
+          },
+          {
+            "name": "モブロック",
+            "hp": 231,
+            "atk": 31,
+            "mag": 31,
+            "level": 7
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 307,
+            "maxHp": 313,
+            "mp": 124,
+            "maxMp": 140,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 335,
+            "maxHp": 335,
+            "mp": 110,
+            "maxMp": 127,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブサバンナ",
+            "hp": 656,
+            "atk": 47,
+            "mag": 47,
+            "level": 9
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 269,
+            "maxHp": 313,
+            "mp": 92,
+            "maxMp": 140,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 292,
+            "maxHp": 335,
+            "mp": 89,
+            "maxMp": 127,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブイワキリ",
+            "hp": 700,
+            "atk": 50,
+            "mag": 50,
+            "level": 10
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 140
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 127
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 132
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマ",
+        "mp": 120
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 124
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 110
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 116
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 103
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 4,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 108
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 4,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 96
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 5,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 100
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 92
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 89
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 6,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "星降りの一振り",
+        "mp": 84
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 6,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 82
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 7,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 84
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 7,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 82,
+        "target": "pink"
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 8,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオソード",
+        "mp": 76
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 237,
+        "maxHp": 313,
+        "mp": 68,
+        "maxMp": 140,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 284,
+        "maxHp": 335,
+        "mp": 76,
+        "maxMp": 127,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-savanna-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 8,
+      "busy": false,
+      "transition": false,
+      "queuePos": 0,
+      "queue": [
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-4",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-4",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "g-iwakiri",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-rural-v252",
+    "level": 23,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "MOBソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "MOBソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "desert",
+        "weapon": "MOBの太刀",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "denden",
+        "weapon": "MOBハンドガン",
+        "armor": "ぷにモブグリーン"
+      }
+    ],
+    "shopSeason": 1,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 460,
+        "maxHp": 460,
+        "mp": 204,
+        "maxMp": 204,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 483,
+        "maxHp": 483,
+        "mp": 186,
+        "maxMp": 186,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 464,
+        "maxHp": 464,
+        "mp": 179,
+        "maxMp": 179,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 419,
+        "maxHp": 419,
+        "mp": 186,
+        "maxMp": 186,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 424,
+            "maxHp": 460,
+            "mp": 165,
+            "maxMp": 204,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 468,
+            "maxHp": 483,
+            "mp": 165,
+            "maxMp": 186,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 464,
+            "maxHp": 464,
+            "mp": 114,
+            "maxMp": 179,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 350,
+            "maxHp": 419,
+            "mp": 146,
+            "maxMp": 186,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 460,
+            "maxHp": 460,
+            "mp": 204,
+            "maxMp": 204,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 483,
+            "maxHp": 483,
+            "mp": 186,
+            "maxMp": 186,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 464,
+            "maxHp": 464,
+            "mp": 179,
+            "maxMp": 179,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 419,
+            "maxHp": 419,
+            "mp": 186,
+            "maxMp": 186,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブナイフ",
+            "hp": 383,
+            "atk": 63,
+            "mag": 57,
+            "level": 19
+          },
+          {
+            "name": "モブデンチマーク",
+            "hp": 383,
+            "atk": 57,
+            "mag": 62,
+            "level": 19
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 441,
+            "maxHp": 460,
+            "mp": 191,
+            "maxMp": 204,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 483,
+            "maxHp": 483,
+            "mp": 179,
+            "maxMp": 186,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 464,
+            "maxHp": 464,
+            "mp": 166,
+            "maxMp": 179,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 419,
+            "maxHp": 419,
+            "mp": 178,
+            "maxMp": 186,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブスカウター",
+            "hp": 1256,
+            "atk": 78,
+            "mag": 78,
+            "level": 21
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 424,
+            "maxHp": 460,
+            "mp": 178,
+            "maxMp": 204,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 468,
+            "maxHp": 483,
+            "mp": 172,
+            "maxMp": 186,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 464,
+            "maxHp": 464,
+            "mp": 140,
+            "maxMp": 179,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 419,
+            "maxHp": 419,
+            "mp": 162,
+            "maxMp": 186,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブキャプテン",
+            "hp": 1370,
+            "atk": 83,
+            "mag": 83,
+            "level": 23
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "denden",
+        "kind": "special",
+        "skill": "トルソード",
+        "mp": 186
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "MOB斬り",
+        "mp": 179
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 204
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 186
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "denden",
+        "kind": "special",
+        "skill": "トルソード",
+        "mp": 178
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "MOB斬り",
+        "mp": 166
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 191
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 179
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "denden",
+        "kind": "special",
+        "skill": "トルソード",
+        "mp": 170
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "MOB斬り",
+        "mp": 153
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "denden",
+        "kind": "special",
+        "skill": "トルソード",
+        "mp": 162
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "MOB斬り",
+        "mp": 140
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "疾風斬り",
+        "mp": 178
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノソード",
+        "mp": 172
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "denden",
+        "kind": "special",
+        "skill": "トルソード",
+        "mp": 154
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "MOB斬り",
+        "mp": 127
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 424,
+        "maxHp": 460,
+        "mp": 165,
+        "maxMp": 204,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 468,
+        "maxHp": 483,
+        "mp": 165,
+        "maxMp": 186,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 464,
+        "maxHp": 464,
+        "mp": 114,
+        "maxMp": 179,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 350,
+        "maxHp": 419,
+        "mp": 146,
+        "maxMp": 186,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-captain-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 3,
+      "busy": false,
+      "transition": false,
+      "queuePos": 1,
+      "queue": [
+        {
+          "type": "ally",
+          "id": "denden"
+        },
+        {
+          "type": "ally",
+          "id": "desert"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-8",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-8",
+          "action": 1
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "r-captain",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-magma-v252",
+    "level": 43,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブグリーン"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 685,
+        "maxHp": 685,
+        "mp": 303,
+        "maxMp": 303,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 712,
+        "maxHp": 712,
+        "mp": 277,
+        "maxMp": 277,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 573,
+        "maxHp": 573,
+        "mp": 372,
+        "maxMp": 372,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 625,
+        "maxHp": 625,
+        "mp": 280,
+        "maxMp": 280,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 685,
+        "maxHp": 685,
+        "mp": 273,
+        "maxMp": 273,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 625,
+        "maxHp": 625,
+        "mp": 277,
+        "maxMp": 277,
+        "dead": false
+      }
+    ],
+    "win": true,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 554,
+            "maxHp": 685,
+            "mp": 269,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 686,
+            "maxHp": 712,
+            "mp": 247,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 529,
+            "maxHp": 573,
+            "mp": 318,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 562,
+            "maxHp": 625,
+            "mp": 228,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 259,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ]
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 4,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 589,
+            "maxHp": 685,
+            "mp": 201,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 549,
+            "maxHp": 712,
+            "mp": 202,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 476,
+            "maxHp": 573,
+            "mp": 372,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 420,
+            "maxHp": 625,
+            "mp": 188,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 663,
+            "maxHp": 685,
+            "mp": 245,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 604,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 303,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 712,
+            "maxHp": 712,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 573,
+            "maxHp": 573,
+            "mp": 372,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 280,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 273,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブマグゴーレム",
+            "hp": 2717,
+            "atk": 126,
+            "mag": 126,
+            "level": 39
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 612,
+            "maxHp": 685,
+            "mp": 286,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 686,
+            "maxHp": 712,
+            "mp": 262,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 529,
+            "maxHp": 573,
+            "mp": 344,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 258,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 259,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブブリザード",
+            "hp": 2500,
+            "atk": 129,
+            "mag": 129,
+            "level": 40
+          }
+        ]
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 554,
+            "maxHp": 685,
+            "mp": 269,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 686,
+            "maxHp": 712,
+            "mp": 247,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 529,
+            "maxHp": 573,
+            "mp": 318,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 562,
+            "maxHp": 625,
+            "mp": 228,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 259,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブフレイム",
+            "hp": 2576,
+            "atk": 131,
+            "mag": 131,
+            "level": 41
+          }
+        ]
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 511,
+            "maxHp": 685,
+            "mp": 252,
+            "maxMp": 303,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 584,
+            "maxHp": 712,
+            "mp": 232,
+            "maxMp": 277,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 529,
+            "maxHp": 573,
+            "mp": 335,
+            "maxMp": 372,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 501,
+            "maxHp": 625,
+            "mp": 206,
+            "maxMp": 280,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 685,
+            "maxHp": 685,
+            "mp": 259,
+            "maxMp": 273,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 625,
+            "maxHp": 625,
+            "mp": 277,
+            "maxMp": 277,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブフレザード",
+            "hp": 3330,
+            "atk": 148,
+            "mag": 150,
+            "level": 43
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 280
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 372
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 303
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 277
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 269
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 358
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 258
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "トルマ",
+        "mp": 344
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 286
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 262
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "special",
+        "skill": "マグマソード",
+        "mp": 243
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "トルマ",
+        "mp": 331
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 228
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 318
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 269
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 247
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 217
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマ",
+        "mp": 349
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホクマ",
+        "mp": 206
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "トルマ",
+        "mp": 335
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 252
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 232
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 194
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 3,
+        "actor": "money",
+        "kind": "ultimate",
+        "skill": "バブルネオン",
+        "mp": 367
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 235
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 3,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 217
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 4,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 194,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 1,
+        "turn": 4,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 218
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 589,
+        "maxHp": 685,
+        "mp": 201,
+        "maxMp": 303,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 549,
+        "maxHp": 712,
+        "mp": 202,
+        "maxMp": 277,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 476,
+        "maxHp": 573,
+        "mp": 372,
+        "maxMp": 372,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 420,
+        "maxHp": 625,
+        "mp": 188,
+        "maxMp": 280,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 663,
+        "maxHp": 685,
+        "mp": 245,
+        "maxMp": 273,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 604,
+        "maxHp": 625,
+        "mp": 277,
+        "maxMp": 277,
+        "dead": false
+      }
+    ],
+    "medals": {
+      "rush-frezard-v252": 1
+    },
+    "finished": true,
+    "debug": {
+      "turn": 4,
+      "busy": false,
+      "transition": false,
+      "queuePos": 3,
+      "queue": [
+        {
+          "type": "enemy",
+          "enemyId": "enemy-12",
+          "action": 1
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-12",
+          "action": 2
+        },
+        {
+          "type": "ally",
+          "id": "nyoro"
+        },
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "ally",
+          "id": "pink"
+        },
+        {
+          "type": "ally",
+          "id": "money"
+        }
+      ],
+      "enemies": [
+        {
+          "id": "m-frezard",
+          "hp": 0
+        }
+      ],
+      "pending": 0
+    }
+  },
+  {
+    "quest": "rush-ember-v252",
+    "level": 80,
+    "seed": 25201,
+    "party": [
+      {
+        "id": "yusha",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "pink",
+        "weapon": "モブウォーターソード",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "money",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "nyoro",
+        "weapon": "モブウォータースティック",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "desert",
+        "weapon": "モブ風の太刀",
+        "armor": "ぷにモブグリーン"
+      },
+      {
+        "id": "denden",
+        "weapon": "モブバブルガン",
+        "armor": "ぷにモブグリーン"
+      }
+    ],
+    "shopSeason": 2,
+    "initial": [
+      {
+        "id": "yusha",
+        "hp": 1101,
+        "maxHp": 1101,
+        "mp": 485,
+        "maxMp": 485,
+        "dead": false
+      },
+      {
+        "id": "pink",
+        "hp": 1135,
+        "maxHp": 1135,
+        "mp": 445,
+        "maxMp": 445,
+        "dead": false
+      },
+      {
+        "id": "money",
+        "hp": 923,
+        "maxHp": 923,
+        "mp": 590,
+        "maxMp": 590,
+        "dead": false
+      },
+      {
+        "id": "nyoro",
+        "hp": 1006,
+        "maxHp": 1006,
+        "mp": 446,
+        "maxMp": 446,
+        "dead": false
+      },
+      {
+        "id": "desert",
+        "hp": 1093,
+        "maxHp": 1093,
+        "mp": 447,
+        "maxMp": 447,
+        "dead": false
+      },
+      {
+        "id": "denden",
+        "hp": 1006,
+        "maxHp": 1006,
+        "mp": 445,
+        "maxMp": 445,
+        "dead": false
+      }
+    ],
+    "win": false,
+    "ends": [
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "win": true,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 867,
+            "maxHp": 1101,
+            "mp": 352,
+            "maxMp": 485,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 765,
+            "maxHp": 1135,
+            "mp": 364,
+            "maxMp": 445,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 626,
+            "maxHp": 923,
+            "mp": 470,
+            "maxMp": 590,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 852,
+            "maxHp": 1006,
+            "mp": 366,
+            "maxMp": 446,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 1039,
+            "maxHp": 1093,
+            "mp": 447,
+            "maxMp": 447,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 950,
+            "maxHp": 1006,
+            "mp": 422,
+            "maxMp": 445,
+            "dead": false
+          }
+        ]
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 80,
+        "win": false,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 0,
+            "maxHp": 1101,
+            "mp": 35,
+            "maxMp": 485,
+            "dead": true
+          },
+          {
+            "id": "pink",
+            "hp": 0,
+            "maxHp": 1135,
+            "mp": 1,
+            "maxMp": 445,
+            "dead": true
+          },
+          {
+            "id": "money",
+            "hp": 0,
+            "maxHp": 923,
+            "mp": 528,
+            "maxMp": 590,
+            "dead": true
+          },
+          {
+            "id": "nyoro",
+            "hp": 0,
+            "maxHp": 1006,
+            "mp": 2,
+            "maxMp": 446,
+            "dead": true
+          },
+          {
+            "id": "desert",
+            "hp": 0,
+            "maxHp": 1093,
+            "mp": 33,
+            "maxMp": 447,
+            "dead": true
+          },
+          {
+            "id": "denden",
+            "hp": 0,
+            "maxHp": 1006,
+            "mp": 151,
+            "maxMp": 445,
+            "dead": true
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 1101,
+            "maxHp": 1101,
+            "mp": 485,
+            "maxMp": 485,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 1135,
+            "maxHp": 1135,
+            "mp": 445,
+            "maxMp": 445,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 923,
+            "maxHp": 923,
+            "mp": 590,
+            "maxMp": 590,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 1006,
+            "maxHp": 1006,
+            "mp": 446,
+            "maxMp": 446,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 1093,
+            "maxHp": 1093,
+            "mp": 447,
+            "maxMp": 447,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 1006,
+            "maxHp": 1006,
+            "mp": 445,
+            "maxMp": 445,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブマグゴーレム",
+            "hp": 6061,
+            "atk": 216,
+            "mag": 216,
+            "level": 72
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 1051,
+            "maxHp": 1101,
+            "mp": 437,
+            "maxMp": 485,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 1046,
+            "maxHp": 1135,
+            "mp": 409,
+            "maxMp": 445,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 858,
+            "maxHp": 923,
+            "mp": 590,
+            "maxMp": 590,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 914,
+            "maxHp": 1006,
+            "mp": 424,
+            "maxMp": 446,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 1093,
+            "maxHp": 1093,
+            "mp": 447,
+            "maxMp": 447,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 1006,
+            "maxHp": 1006,
+            "mp": 445,
+            "maxMp": 445,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブフレイム",
+            "hp": 5520,
+            "atk": 219,
+            "mag": 219,
+            "level": 73
+          }
+        ]
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 980,
+            "maxHp": 1101,
+            "mp": 403,
+            "maxMp": 485,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 833,
+            "maxHp": 1135,
+            "mp": 394,
+            "maxMp": 445,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 782,
+            "maxHp": 923,
+            "mp": 542,
+            "maxMp": 590,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 852,
+            "maxHp": 1006,
+            "mp": 402,
+            "maxMp": 446,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 1039,
+            "maxHp": 1093,
+            "mp": 447,
+            "maxMp": 447,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 950,
+            "maxHp": 1006,
+            "mp": 445,
+            "maxMp": 445,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブフレザード",
+            "hp": 7000,
+            "atk": 242,
+            "mag": 247,
+            "level": 75
+          }
+        ]
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "allies": [
+          {
+            "id": "yusha",
+            "hp": 867,
+            "maxHp": 1101,
+            "mp": 352,
+            "maxMp": 485,
+            "dead": false
+          },
+          {
+            "id": "pink",
+            "hp": 731,
+            "maxHp": 1135,
+            "mp": 364,
+            "maxMp": 445,
+            "dead": false
+          },
+          {
+            "id": "money",
+            "hp": 626,
+            "maxHp": 923,
+            "mp": 470,
+            "maxMp": 590,
+            "dead": false
+          },
+          {
+            "id": "nyoro",
+            "hp": 852,
+            "maxHp": 1006,
+            "mp": 366,
+            "maxMp": 446,
+            "dead": false
+          },
+          {
+            "id": "desert",
+            "hp": 1039,
+            "maxHp": 1093,
+            "mp": 447,
+            "maxMp": 447,
+            "dead": false
+          },
+          {
+            "id": "denden",
+            "hp": 950,
+            "maxHp": 1006,
+            "mp": 422,
+            "maxMp": 445,
+            "dead": false
+          }
+        ],
+        "enemies": [
+          {
+            "name": "モブフェニックス",
+            "hp": 13552,
+            "atk": 344,
+            "mag": 344,
+            "level": 80
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 446
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 590
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 485
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 445
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 435
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 566
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 461
+      },
+      {
+        "area": 0,
+        "wave": 0,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "アノマウン",
+        "mp": 427
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 424
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 590
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 437
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 409
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 413
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 566
+      },
+      {
+        "area": 0,
+        "wave": 1,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 420
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホクマ",
+        "mp": 402
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 542
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 403
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 3,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 394
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 4,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホクマ",
+        "mp": 390
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 4,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 518
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 4,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 386
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 4,
+        "actor": "pink",
+        "kind": "special",
+        "skill": "アノマソード",
+        "mp": 379
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ホクマ",
+        "mp": 378
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 494
+      },
+      {
+        "area": 0,
+        "wave": 2,
+        "turn": 5,
+        "actor": "yusha",
+        "kind": "special",
+        "skill": "ネオマソード",
+        "mp": 369
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 366,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 541
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 1,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 360
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 574
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 2,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 3,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 349,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 3,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 550
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 3,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "星降りの一振り",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 3,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 4,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 343,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 4,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 512
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 4,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 4,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 5,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 337,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 5,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "キャンディネオンピース",
+        "mp": 474,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 5,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 5,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 6,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 331,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 6,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 452
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 6,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "特別だと信じる力",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 6,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "癒しのピンクボンボン",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 7,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 352
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 7,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 325
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 7,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 485
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 7,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 8,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 352,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 8,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 314,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 8,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 461
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 8,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 9,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 308,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 9,
+        "actor": "money",
+        "kind": "ultimate",
+        "skill": "バブルネオン",
+        "mp": 423
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 9,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "星降りの一振り",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 9,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "勇者のパートナー",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 10,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 302,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 10,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 470.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 10,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 10,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 11,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 296,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 11,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 432.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 11,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 11,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 12,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 290,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 12,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "キャンディネオンピース",
+        "mp": 465.2,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 12,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "エピソード・ジューマンジ",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 12,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 13,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 284,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 13,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 443.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 13,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 13,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 14,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 278,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 14,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 419.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 14,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 346,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 14,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 15,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 272,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 15,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 381.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 15,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "特別だと信じる力",
+        "mp": 340
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 15,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "癒しのピンクボンボン",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 16,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 340
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 16,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 266
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 16,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 414.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 16,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 17,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 340,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 17,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 255,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 17,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 461.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 17,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 18,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 334,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 18,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 249
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 18,
+        "actor": "money",
+        "kind": "ultimate",
+        "skill": "バブルネオン",
+        "mp": 423.2
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 18,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 19,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 328,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 19,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 249,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 19,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオマニプール",
+        "mp": 541.4
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 19,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 20,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 243,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 20,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "ネオンカスタード",
+        "mp": 517.4
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 20,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 322,
+        "target": "money"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 20,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 21,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 316,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 21,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 237,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 21,
+        "actor": "money",
+        "kind": "magic",
+        "skill": "キャンディネオンピース",
+        "mp": 550.4,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 21,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "勇者のパートナー",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 22,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 310
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 22,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 231
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 22,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 23,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 310,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 23,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 378
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 23,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 220,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 23,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 24,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 304,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 24,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 363
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 24,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 214,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 24,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 364
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 25,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 298,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 25,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 348
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 25,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 208
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 25,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 26,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 292,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 26,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 333
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 26,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 197,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 26,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 346
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 27,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 286,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 27,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 318
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 27,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 191,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 27,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 328,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 28,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 280,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 28,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 303
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 28,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 185,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 28,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 322,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 29,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 274,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 29,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 288
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 29,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 179,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 29,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 316
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 30,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 268,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 30,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "デザートブラウニー",
+        "mp": 273
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 30,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 173
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 30,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 298
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 31,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 262,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 31,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 273
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 31,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 173,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 31,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 298
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 32,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 256,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 32,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 258
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 32,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 167,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 32,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 280,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 33,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 250,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 33,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "ゴールドフィッシュ",
+        "mp": 243
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 33,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 161,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 33,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 274
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 34,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 244,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 34,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 243
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 34,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 155,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 34,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 256
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 35,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 238,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 35,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 228
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 35,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 149,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 35,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 256
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 36,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 232,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 36,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "サンドドラグーン",
+        "mp": 213
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 36,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 143,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 36,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 256
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 37,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 226,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 37,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 213
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 37,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 137,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 37,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 238
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 38,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 220,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 38,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 198
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 38,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 131,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 38,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 238
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 39,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 214,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 39,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "デザートブラウニー",
+        "mp": 183
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 39,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 125
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 39,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 220
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 40,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 208,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 40,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 183
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 40,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 125,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 40,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 220,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 41,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 202,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 41,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 168
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 41,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 119,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 41,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 214
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 42,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 196,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 42,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "ゴールドフィッシュ",
+        "mp": 153
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 42,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 113,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 42,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 196,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 43,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 190,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 43,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 153
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 43,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 107,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 43,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 190
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 44,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 184,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 44,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 138
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 44,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 101,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 44,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 172
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 45,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 178,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 45,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "サンドドラグーン",
+        "mp": 123
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 45,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 95,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 45,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 172,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 46,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 172,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 46,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 123
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 46,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 89,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 46,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 166
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 47,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 166,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 47,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 108
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 47,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 83,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 47,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 148,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 48,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 160,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 48,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "デザートブラウニー",
+        "mp": 93
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 48,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 77,
+        "target": "desert"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 48,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 142
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 49,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 154,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 49,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 93
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 49,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 71,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 49,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 124
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 50,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 148,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 50,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 78
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 50,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 65,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 50,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 124,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 51,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 142,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 51,
+        "actor": "desert",
+        "kind": "ultimate",
+        "skill": "ゴールドフィッシュ",
+        "mp": 63
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 51,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 59,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 51,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 118,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 52,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 136,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 52,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 63
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 52,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 53,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 52,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 112
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 53,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 130,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 53,
+        "actor": "desert",
+        "kind": "special",
+        "skill": "ネプマソード",
+        "mp": 48
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 53,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 47,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 53,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 94
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 54,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "星降りの一振り",
+        "mp": 124
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 54,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 41
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 54,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 94
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 55,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 124,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 55,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 238
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 55,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 41,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 55,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 94
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 56,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 118,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 56,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 226
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 56,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 35,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 56,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 94
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 57,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 112,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 57,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 214
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 57,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 29,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 57,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 76,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 58,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 106,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 58,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 202
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 58,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 23,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 58,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 70
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 59,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 100,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 59,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 190
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 59,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 17,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 59,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 52,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 60,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 94,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 60,
+        "actor": "denden",
+        "kind": "ultimate",
+        "skill": "マシンガングミ",
+        "mp": 178
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 60,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 11,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 60,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 46,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 61,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 88,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 61,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 178
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 61,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 61,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 40
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 62,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 82,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 62,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 166
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 62,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 62,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 22
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 63,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 76,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 63,
+        "actor": "denden",
+        "kind": "ultimate",
+        "skill": "イカシタイカヅチ",
+        "mp": 154
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 63,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "マグマケロ",
+        "mp": 49.6
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 63,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "シールドアタック",
+        "mp": 48.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 64,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 118.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 64,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 198.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 64,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 49.6,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 64,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 48.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 65,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 112.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 65,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 186.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 65,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 43.6,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 65,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 48.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 66,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 106.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 66,
+        "actor": "denden",
+        "kind": "ultimate",
+        "skill": "トリック・ザ・デンデン",
+        "mp": 174.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 66,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 37.6,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 66,
+        "actor": "pink",
+        "kind": "ultimate",
+        "skill": "癒しのピンクボンボン",
+        "mp": 30.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 67,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 100.5,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 67,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 174.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 67,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 31.6,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 67,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 30.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 68,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 94.5,
+        "target": "denden"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 68,
+        "actor": "denden",
+        "kind": "magic",
+        "skill": "ネプマ",
+        "mp": 162.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 68,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 25.6,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 68,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "スターマシュマロ",
+        "mp": 30.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 69,
+        "actor": "yusha",
+        "kind": "ultimate",
+        "skill": "星降りの一振り",
+        "mp": 88.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 69,
+        "actor": "nyoro",
+        "kind": "ultimate",
+        "skill": "ヒノフルカヨウ",
+        "mp": 19.6
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 69,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 12.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 70,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 88.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 70,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 19.6,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 70,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 12.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 71,
+        "actor": "yusha",
+        "kind": "attack",
+        "mp": 88.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 71,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 13.600000000000001,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 71,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 12.5,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 72,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 88.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 72,
+        "actor": "nyoro",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 7.600000000000001,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 72,
+        "actor": "pink",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 6.5,
+        "target": "pink"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 73,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 82.5,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 73,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 1.6000000000000014
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 73,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 0.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 74,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 76.5,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 74,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 1.6000000000000014
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 74,
+        "actor": "pink",
+        "kind": "attack",
+        "mp": 0.5
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 75,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 70.5,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 75,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 1.6000000000000014
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 76,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 64.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 76,
+        "actor": "nyoro",
+        "kind": "attack",
+        "mp": 1.6000000000000014
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 77,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 58.5,
+        "target": "nyoro"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 78,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 52.5,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 79,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 46.5,
+        "target": "yusha"
+      },
+      {
+        "area": 1,
+        "wave": 0,
+        "turn": 80,
+        "actor": "yusha",
+        "kind": "magic",
+        "skill": "キャンディ",
+        "mp": 40.5,
+        "target": "yusha"
+      }
+    ],
+    "final": [
+      {
+        "id": "yusha",
+        "hp": 0,
+        "maxHp": 1101,
+        "mp": 35,
+        "maxMp": 485,
+        "dead": true
+      },
+      {
+        "id": "pink",
+        "hp": 0,
+        "maxHp": 1135,
+        "mp": 1,
+        "maxMp": 445,
+        "dead": true
+      },
+      {
+        "id": "money",
+        "hp": 0,
+        "maxHp": 923,
+        "mp": 528,
+        "maxMp": 590,
+        "dead": true
+      },
+      {
+        "id": "nyoro",
+        "hp": 0,
+        "maxHp": 1006,
+        "mp": 2,
+        "maxMp": 446,
+        "dead": true
+      },
+      {
+        "id": "desert",
+        "hp": 0,
+        "maxHp": 1093,
+        "mp": 33,
+        "maxMp": 447,
+        "dead": true
+      },
+      {
+        "id": "denden",
+        "hp": 0,
+        "maxHp": 1006,
+        "mp": 151,
+        "maxMp": 445,
+        "dead": true
+      }
+    ],
+    "medals": {},
+    "finished": true,
+    "debug": {
+      "turn": 80,
+      "busy": false,
+      "queuePos": 3,
+      "queue": [
+        {
+          "type": "ally",
+          "id": "yusha"
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-16",
+          "action": 2
+        },
+        {
+          "type": "enemy",
+          "enemyId": "enemy-16",
+          "action": 1
+        }
+      ],
+      "enemies": [
+        {
+          "id": "v179-phoenix",
+          "hp": 9669
+        }
+      ],
+      "pending": 0
+    }
+  }
+]

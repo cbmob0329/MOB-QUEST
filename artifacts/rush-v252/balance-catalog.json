@@ -1,0 +1,5409 @@
+{
+  "players": [
+    {
+      "id": "yusha",
+      "name": "モブ勇者",
+      "weapon": "大剣・杖",
+      "learnset": {
+        "magic": [
+          {
+            "id": "neo",
+            "level": 1
+          },
+          {
+            "id": "hoku",
+            "level": 1
+          },
+          {
+            "id": "hono",
+            "level": 12
+          },
+          {
+            "id": "sugar-chair",
+            "level": 12
+          },
+          {
+            "id": "shoga-entry",
+            "level": 18
+          },
+          {
+            "id": "candy",
+            "level": 20
+          },
+          {
+            "id": "neoma",
+            "level": 24
+          },
+          {
+            "id": "hokuma",
+            "level": 28
+          },
+          {
+            "id": "honoma",
+            "level": 32
+          },
+          {
+            "id": "back-follow-call",
+            "level": 36
+          },
+          {
+            "id": "rainbow1990",
+            "level": 36
+          },
+          {
+            "id": "neomanipool",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "neosword",
+            "level": 1
+          },
+          {
+            "id": "shippugiri",
+            "level": 18
+          },
+          {
+            "id": "scratch-sword",
+            "level": 26
+          },
+          {
+            "id": "neomasword",
+            "level": 34
+          }
+        ]
+      }
+    },
+    {
+      "id": "pink",
+      "name": "モブピンク",
+      "weapon": "大剣",
+      "learnset": {
+        "magic": [
+          {
+            "id": "anoma",
+            "level": 1
+          },
+          {
+            "id": "sugar-chair",
+            "level": 1
+          },
+          {
+            "id": "candy",
+            "level": 8
+          },
+          {
+            "id": "gore",
+            "level": 12
+          },
+          {
+            "id": "neo",
+            "level": 18
+          },
+          {
+            "id": "party-backspin",
+            "level": 18
+          },
+          {
+            "id": "anomaun",
+            "level": 24
+          },
+          {
+            "id": "crash-bomb",
+            "level": 24
+          },
+          {
+            "id": "caramel-hello-back",
+            "level": 26
+          },
+          {
+            "id": "gorema",
+            "level": 30
+          },
+          {
+            "id": "neoma",
+            "level": 38
+          },
+          {
+            "id": "block-bronx",
+            "level": 40
+          },
+          {
+            "id": "star-marshmallow",
+            "level": 44
+          }
+        ],
+        "technique": [
+          {
+            "id": "anosword",
+            "level": 1
+          },
+          {
+            "id": "anomasword",
+            "level": 34
+          }
+        ]
+      }
+    },
+    {
+      "id": "desert",
+      "name": "モブデザート",
+      "weapon": "太刀",
+      "learnset": {
+        "magic": [
+          {
+            "id": "gore",
+            "level": 1
+          },
+          {
+            "id": "mira",
+            "level": 8
+          },
+          {
+            "id": "shoga-entry",
+            "level": 10
+          },
+          {
+            "id": "nepu",
+            "level": 12
+          },
+          {
+            "id": "sugar-chair",
+            "level": 16
+          },
+          {
+            "id": "gorema",
+            "level": 24
+          },
+          {
+            "id": "mirama",
+            "level": 28
+          },
+          {
+            "id": "wasabi-stomach",
+            "level": 30
+          },
+          {
+            "id": "nepuma",
+            "level": 32
+          },
+          {
+            "id": "goremagardy",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "goresword",
+            "level": 1
+          },
+          {
+            "id": "mirasword",
+            "level": 16
+          },
+          {
+            "id": "mobgiri",
+            "level": 18
+          },
+          {
+            "id": "goremasword",
+            "level": 34
+          },
+          {
+            "id": "intro-cross",
+            "level": 38
+          },
+          {
+            "id": "nepumasword",
+            "level": 42
+          }
+        ]
+      }
+    },
+    {
+      "id": "nyoro",
+      "name": "モブニョロ",
+      "weapon": "銃・杖",
+      "learnset": {
+        "magic": [
+          {
+            "id": "hono",
+            "level": 1
+          },
+          {
+            "id": "hoku",
+            "level": 8
+          },
+          {
+            "id": "nepu",
+            "level": 12
+          },
+          {
+            "id": "shoga-entry",
+            "level": 12
+          },
+          {
+            "id": "candy",
+            "level": 18
+          },
+          {
+            "id": "fast-beat",
+            "level": 18
+          },
+          {
+            "id": "honoma",
+            "level": 24
+          },
+          {
+            "id": "hokuma",
+            "level": 28
+          },
+          {
+            "id": "nepuma",
+            "level": 32
+          },
+          {
+            "id": "back-follow-call",
+            "level": 34
+          },
+          {
+            "id": "honomagma",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "magsword",
+            "level": 14
+          },
+          {
+            "id": "magmasword",
+            "level": 34
+          }
+        ]
+      }
+    },
+    {
+      "id": "nekoku",
+      "name": "モブネコクー",
+      "weapon": "槍",
+      "learnset": {
+        "magic": [
+          {
+            "id": "nepu",
+            "level": 1
+          },
+          {
+            "id": "candy",
+            "level": 1
+          },
+          {
+            "id": "sugar-chair",
+            "level": 8
+          },
+          {
+            "id": "hoku",
+            "level": 10
+          },
+          {
+            "id": "neo",
+            "level": 14
+          },
+          {
+            "id": "candy-neon",
+            "level": 16
+          },
+          {
+            "id": "chill-lofi",
+            "level": 18
+          },
+          {
+            "id": "star-marshmallow",
+            "level": 22
+          },
+          {
+            "id": "nepuma",
+            "level": 24
+          },
+          {
+            "id": "hokuma",
+            "level": 30
+          },
+          {
+            "id": "neoma",
+            "level": 34
+          },
+          {
+            "id": "candy-neon-piece",
+            "level": 34
+          },
+          {
+            "id": "nepumachun",
+            "level": 46
+          },
+          {
+            "id": "star-pokkin-marshmallow",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "nepusword",
+            "level": 16
+          },
+          {
+            "id": "nepumasword",
+            "level": 38
+          }
+        ]
+      }
+    },
+    {
+      "id": "jessie",
+      "name": "モブジェシー",
+      "weapon": "槍・銃",
+      "learnset": {
+        "magic": [
+          {
+            "id": "toru",
+            "level": 1
+          },
+          {
+            "id": "shoga-entry",
+            "level": 8
+          },
+          {
+            "id": "gore",
+            "level": 10
+          },
+          {
+            "id": "neo",
+            "level": 14
+          },
+          {
+            "id": "sugar-chair",
+            "level": 14
+          },
+          {
+            "id": "toruma",
+            "level": 24
+          },
+          {
+            "id": "back-follow-call",
+            "level": 24
+          },
+          {
+            "id": "gorema",
+            "level": 28
+          },
+          {
+            "id": "neoma",
+            "level": 32
+          },
+          {
+            "id": "gold-routine",
+            "level": 38
+          },
+          {
+            "id": "torumaden",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "best-selection",
+            "level": 28
+          },
+          {
+            "id": "long-scratch-cut",
+            "level": 36
+          }
+        ]
+      }
+    },
+    {
+      "id": "denden",
+      "name": "モブデンデン",
+      "weapon": "銃",
+      "learnset": {
+        "magic": [
+          {
+            "id": "toru",
+            "level": 1
+          },
+          {
+            "id": "nepu",
+            "level": 10
+          },
+          {
+            "id": "shoga-entry",
+            "level": 12
+          },
+          {
+            "id": "hoku",
+            "level": 14
+          },
+          {
+            "id": "long-scratch",
+            "level": 18
+          },
+          {
+            "id": "toruma",
+            "level": 24
+          },
+          {
+            "id": "nepuma",
+            "level": 28
+          },
+          {
+            "id": "wasabi-stomach",
+            "level": 28
+          },
+          {
+            "id": "hokuma",
+            "level": 32
+          },
+          {
+            "id": "torumaden",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "torusword",
+            "level": 14
+          },
+          {
+            "id": "torumasword",
+            "level": 34
+          }
+        ]
+      }
+    },
+    {
+      "id": "money",
+      "name": "モブマニー",
+      "weapon": "杖",
+      "learnset": {
+        "magic": [
+          {
+            "id": "neo",
+            "level": 1
+          },
+          {
+            "id": "mira",
+            "level": 1
+          },
+          {
+            "id": "candy",
+            "level": 1
+          },
+          {
+            "id": "toru",
+            "level": 8
+          },
+          {
+            "id": "candy-neon",
+            "level": 14
+          },
+          {
+            "id": "noise-scratch",
+            "level": 18
+          },
+          {
+            "id": "neoma",
+            "level": 20
+          },
+          {
+            "id": "back-follow-call",
+            "level": 20
+          },
+          {
+            "id": "mirama",
+            "level": 24
+          },
+          {
+            "id": "toruma",
+            "level": 28
+          },
+          {
+            "id": "gold-routine",
+            "level": 32
+          },
+          {
+            "id": "neon-custard",
+            "level": 38
+          },
+          {
+            "id": "candy-neon-piece",
+            "level": 44
+          },
+          {
+            "id": "neomanipool",
+            "level": 46
+          },
+          {
+            "id": "neo-meteor-power",
+            "level": 56
+          }
+        ],
+        "technique": [
+          {
+            "id": "neosword",
+            "level": 22
+          },
+          {
+            "id": "neomasword",
+            "level": 42
+          }
+        ]
+      }
+    },
+    {
+      "id": "riro",
+      "name": "モブリーロ",
+      "weapon": "槍・太刀",
+      "learnset": {
+        "magic": [
+          {
+            "id": "hoku",
+            "level": 1
+          },
+          {
+            "id": "candy",
+            "level": 1
+          },
+          {
+            "id": "mira",
+            "level": 10
+          },
+          {
+            "id": "sugar-chair",
+            "level": 10
+          },
+          {
+            "id": "neo",
+            "level": 14
+          },
+          {
+            "id": "star-marshmallow",
+            "level": 22
+          },
+          {
+            "id": "hokuma",
+            "level": 24
+          },
+          {
+            "id": "mirama",
+            "level": 28
+          },
+          {
+            "id": "party-backspin",
+            "level": 30
+          },
+          {
+            "id": "neoma",
+            "level": 32
+          },
+          {
+            "id": "star-pokkin-marshmallow",
+            "level": 44
+          },
+          {
+            "id": "hokumawing",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "mobgiri",
+            "level": 18
+          },
+          {
+            "id": "mirasword",
+            "level": 20
+          },
+          {
+            "id": "dorayaki-dance",
+            "level": 26
+          },
+          {
+            "id": "lofi-splash",
+            "level": 34
+          },
+          {
+            "id": "miramasword",
+            "level": 36
+          }
+        ]
+      }
+    },
+    {
+      "id": "tetsu",
+      "name": "モブテツ",
+      "weapon": "太刀",
+      "learnset": {
+        "magic": [
+          {
+            "id": "sugar-chair",
+            "level": 8
+          },
+          {
+            "id": "party-backspin",
+            "level": 18
+          },
+          {
+            "id": "caramel-hello-back",
+            "level": 28
+          },
+          {
+            "id": "mob-tetsu-walk",
+            "level": 32
+          }
+        ],
+        "technique": [
+          {
+            "id": "goresword",
+            "level": 1
+          },
+          {
+            "id": "anosword",
+            "level": 1
+          },
+          {
+            "id": "magsword",
+            "level": 12
+          },
+          {
+            "id": "mobgiri",
+            "level": 18
+          },
+          {
+            "id": "goremasword",
+            "level": 34
+          },
+          {
+            "id": "mob-windmill",
+            "level": 36
+          },
+          {
+            "id": "anomasword",
+            "level": 38
+          },
+          {
+            "id": "magmasword",
+            "level": 42
+          },
+          {
+            "id": "fast-beat-slash",
+            "level": 44
+          }
+        ]
+      }
+    },
+    {
+      "id": "lilith",
+      "name": "モブリリス",
+      "weapon": "杖",
+      "learnset": {
+        "magic": [
+          {
+            "id": "mira",
+            "level": 1
+          },
+          {
+            "id": "hoku",
+            "level": 1
+          },
+          {
+            "id": "hono",
+            "level": 1
+          },
+          {
+            "id": "candy-neon",
+            "level": 1
+          },
+          {
+            "id": "repeat-intro",
+            "level": 16
+          },
+          {
+            "id": "mirama",
+            "level": 18
+          },
+          {
+            "id": "caramel-hello-back",
+            "level": 18
+          },
+          {
+            "id": "hokuma",
+            "level": 24
+          },
+          {
+            "id": "honoma",
+            "level": 28
+          },
+          {
+            "id": "maple-air-chair",
+            "level": 30
+          },
+          {
+            "id": "gold-routine",
+            "level": 36
+          },
+          {
+            "id": "shichimi-suicide",
+            "level": 42
+          },
+          {
+            "id": "miramazone",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "mirasword",
+            "level": 18
+          },
+          {
+            "id": "miramasword",
+            "level": 38
+          }
+        ]
+      }
+    },
+    {
+      "id": "kaijin",
+      "name": "モブ怪人のボス",
+      "weapon": "大剣・太刀",
+      "learnset": {
+        "magic": [
+          {
+            "id": "mira",
+            "level": 1
+          },
+          {
+            "id": "shoga-entry",
+            "level": 1
+          },
+          {
+            "id": "toru",
+            "level": 12
+          },
+          {
+            "id": "wasabi-stomach",
+            "level": 22
+          },
+          {
+            "id": "mirama",
+            "level": 24
+          },
+          {
+            "id": "toruma",
+            "level": 32
+          },
+          {
+            "id": "shichimi-suicide",
+            "level": 42
+          },
+          {
+            "id": "miramazone",
+            "level": 46
+          }
+        ],
+        "technique": [
+          {
+            "id": "mirasword",
+            "level": 1
+          },
+          {
+            "id": "anosword",
+            "level": 1
+          },
+          {
+            "id": "torusword",
+            "level": 12
+          },
+          {
+            "id": "miramasword",
+            "level": 34
+          },
+          {
+            "id": "anomasword",
+            "level": 38
+          },
+          {
+            "id": "torumasword",
+            "level": 42
+          }
+        ]
+      }
+    }
+  ],
+  "weapons": [
+    {
+      "id": "01",
+      "name": "MOBソード",
+      "type": "大剣",
+      "attribute": "無",
+      "stats": {
+        "atk": 5
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/01.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "02",
+      "name": "MOBの太刀",
+      "type": "太刀",
+      "attribute": "無",
+      "stats": {
+        "atk": 4,
+        "spd": 1
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/02.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "03",
+      "name": "MOBスティック",
+      "type": "杖",
+      "attribute": "無",
+      "stats": {
+        "atk": 2,
+        "mag": 3
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/03.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "04",
+      "name": "MOBハンドガン",
+      "type": "銃",
+      "attribute": "無",
+      "stats": {
+        "atk": 5
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/04.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "05",
+      "name": "MOBスピア",
+      "type": "槍",
+      "attribute": "無",
+      "stats": {
+        "atk": 4
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/05.png",
+      "shop": true,
+      "traitLabel": "会心率+2%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "name": "モブファイアソード",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 9
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/06.png",
+      "shop": false,
+      "traitLabel": "火属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "火",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "name": "モブウォーターソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 8,
+        "def": 2
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/07.png",
+      "shop": false,
+      "traitLabel": "水属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "水",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "name": "モブサンダーソード",
+      "type": "大剣",
+      "attribute": "雷",
+      "stats": {
+        "atk": 8,
+        "spd": 2
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/08.png",
+      "shop": false,
+      "traitLabel": "雷属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "雷",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "name": "モブウィングソード",
+      "type": "大剣",
+      "attribute": "風",
+      "stats": {
+        "atk": 8,
+        "spd": 2
+      },
+      "price": 12000,
+      "season": 2,
+      "image": "wepon/09.png",
+      "shop": false,
+      "traitLabel": "回避率+3%",
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "モブウォータースティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/10.png",
+      "shop": false,
+      "traitLabel": "水属性魔法の消費MP-10%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "水",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "モブウィングスティック",
+      "type": "杖",
+      "attribute": "風",
+      "stats": {
+        "atk": 2,
+        "mag": 6
+      },
+      "price": 13000,
+      "season": 2,
+      "image": "wepon/11.png",
+      "shop": false,
+      "traitLabel": "風属性魔法使用時、30%の確率で威力50%の追撃魔法が発生",
+      "traits": [
+        {
+          "kind": "magicFollowup",
+          "element": "風",
+          "chance": 0.3,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "モブライトニングスティック",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 13000,
+      "season": 2,
+      "image": "wepon/12.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターに魔法でダメージを与えた時、自身のHP50回復",
+      "traits": [
+        {
+          "kind": "darkMagicHitHeal",
+          "amount": 50
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "モブアースロッド",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 15000,
+      "season": 2,
+      "image": "wepon/13.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、10%の確率で敵全体攻撃になる",
+      "traits": [
+        {
+          "kind": "normalAoe",
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "モブバブルガン",
+      "type": "銃",
+      "attribute": "水",
+      "stats": {
+        "atk": 10,
+        "spd": 1
+      },
+      "price": 14000,
+      "season": 2,
+      "image": "wepon/14.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、会心率+8%",
+      "traits": [
+        {
+          "kind": "weakCrit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "モブサンダーガン",
+      "type": "銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 9,
+        "spd": 3
+      },
+      "price": 16000,
+      "season": 2,
+      "image": "wepon/15.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、12%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.12,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "モブファイアガン",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 10
+      },
+      "price": 14000,
+      "season": 2,
+      "image": "wepon/16.png",
+      "shop": false,
+      "traitLabel": "HPが80%以上の時、ATK+5%",
+      "traits": [
+        {
+          "kind": "highHpAtk",
+          "threshold": 0.8,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "モブネオンブラスター",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 10,
+        "mag": 2
+      },
+      "price": 18000,
+      "season": 2,
+      "image": "wepon/17.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "モブライトスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 10,
+        "def": 2
+      },
+      "price": 16000,
+      "season": 2,
+      "image": "wepon/18.png",
+      "shop": false,
+      "traitLabel": "闇属性から受けるダメージ-8%",
+      "traits": [
+        {
+          "kind": "darkResist",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "モブロックスピア",
+      "type": "槍",
+      "attribute": "地",
+      "stats": {
+        "atk": 10,
+        "def": 3
+      },
+      "price": 18000,
+      "season": 2,
+      "image": "wepon/19.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、追加で被ダメージ-10%",
+      "traits": [
+        {
+          "kind": "guardExtraCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "モブサンドスピア",
+      "type": "槍",
+      "attribute": "地",
+      "stats": {
+        "atk": 11,
+        "def": 2
+      },
+      "price": 17000,
+      "season": 2,
+      "image": "wepon/20.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+8%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "モブスカイスピア",
+      "type": "槍",
+      "attribute": "雷",
+      "stats": {
+        "atk": 10,
+        "spd": 4
+      },
+      "price": 22000,
+      "season": 2,
+      "image": "wepon/21.png",
+      "shop": false,
+      "traitLabel": "会心率+4%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "モブ炎の太刀",
+      "type": "太刀",
+      "attribute": "火",
+      "stats": {
+        "atk": 12,
+        "spd": 2
+      },
+      "price": 20000,
+      "season": 2,
+      "image": "wepon/22.png",
+      "shop": false,
+      "traitLabel": "HP80%以上の時、会心率+6%",
+      "traits": [
+        {
+          "kind": "highHpCrit",
+          "threshold": 0.8,
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "name": "モブ風の太刀",
+      "type": "太刀",
+      "attribute": "風",
+      "stats": {
+        "atk": 11,
+        "spd": 4
+      },
+      "price": 19000,
+      "season": 2,
+      "image": "wepon/23.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、15%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.15,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "name": "モブスライムソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 17,
+        "def": 4
+      },
+      "price": 38000,
+      "season": 3,
+      "image": "wepon/24.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+10%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "name": "モブロックソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 18,
+        "def": 6
+      },
+      "price": 42000,
+      "season": 3,
+      "image": "wepon/25.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-7%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.07
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "name": "モブネオンソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 20,
+        "mag": 4
+      },
+      "price": 48000,
+      "season": 3,
+      "image": "wepon/26.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "name": "モブネプチューンソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 22,
+        "def": 4
+      },
+      "price": 55000,
+      "season": 3,
+      "image": "wepon/27.png",
+      "shop": false,
+      "traitLabel": "HP満タン時、与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "fullHpDamage",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "name": "モブパルスソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 22,
+        "spd": 6
+      },
+      "price": 60000,
+      "season": 3,
+      "image": "wepon/28.png",
+      "shop": false,
+      "traitLabel": "会心率+6%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "name": "モブスライムスティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 6,
+        "mag": 20
+      },
+      "price": 45000,
+      "season": 3,
+      "image": "wepon/29.png",
+      "shop": false,
+      "traitLabel": "水属性魔法の消費MP-15%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "水",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "name": "モブロックスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 7,
+        "mag": 22,
+        "def": 4
+      },
+      "price": 52000,
+      "season": 3,
+      "image": "wepon/30.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大MPの5%回復",
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "name": "モブネプチューンスティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 8,
+        "mag": 26
+      },
+      "price": 65000,
+      "season": 3,
+      "image": "wepon/31.png",
+      "shop": false,
+      "traitLabel": "水属性魔法使用時、15%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": "水",
+          "chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "name": "モブドワーフスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 10,
+        "mag": 28,
+        "def": 5
+      },
+      "price": 72000,
+      "season": 3,
+      "image": "wepon/32.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、魔法で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "lowHpMagicCut",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "name": "モブナイフスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 15,
+        "mag": 22,
+        "spd": 6
+      },
+      "price": 58000,
+      "season": 3,
+      "image": "wepon/33.png",
+      "shop": false,
+      "traitLabel": "通常攻撃の会心率+8%",
+      "traits": [
+        {
+          "kind": "normalCrit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "name": "モブホークガン",
+      "type": "銃",
+      "attribute": "風",
+      "stats": {
+        "atk": 26,
+        "spd": 6
+      },
+      "price": 68000,
+      "season": 3,
+      "image": "wepon/34.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "name": "モブネオンガン",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 28,
+        "mag": 5
+      },
+      "price": 70000,
+      "season": 3,
+      "image": "wepon/35.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+18%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.18
+        }
+      ]
+    },
+    {
+      "id": "36",
+      "name": "モブデンデンガン",
+      "type": "銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 27,
+        "spd": 7
+      },
+      "price": 74000,
+      "season": 3,
+      "image": "wepon/36.png",
+      "shop": false,
+      "traitLabel": "会心率+7%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.07
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "name": "モブティラガン",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 30
+      },
+      "price": 69000,
+      "season": 3,
+      "image": "wepon/37.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.7,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "name": "モブライトスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 28,
+        "def": 8
+      },
+      "price": 66000,
+      "season": 3,
+      "image": "wepon/38.png",
+      "shop": false,
+      "traitLabel": "闇属性から受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "darkResist",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "39",
+      "name": "モブデンデンスピア",
+      "type": "槍",
+      "attribute": "雷",
+      "stats": {
+        "atk": 28,
+        "spd": 7
+      },
+      "price": 78000,
+      "season": 3,
+      "image": "wepon/39.png",
+      "shop": false,
+      "traitLabel": "会心発生時、自身のHPを最大HPの3%回復",
+      "traits": [
+        {
+          "kind": "critHeal",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "name": "モブティラスピア",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 31,
+        "def": 4
+      },
+      "price": 80000,
+      "season": 3,
+      "image": "wepon/40.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "name": "モブエーススピア",
+      "type": "槍",
+      "attribute": "無",
+      "stats": {
+        "atk": 30,
+        "spd": 8
+      },
+      "price": 75000,
+      "season": 3,
+      "image": "wepon/41.png",
+      "shop": false,
+      "traitLabel": "戦闘開始から3ターンの間、SPD+10%",
+      "traits": [
+        {
+          "kind": "startSpd",
+          "turns": 3,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "42",
+      "name": "モブネプチューントライデント",
+      "type": "槍",
+      "attribute": "水",
+      "stats": {
+        "atk": 32,
+        "def": 8
+      },
+      "price": 90000,
+      "season": 3,
+      "image": "wepon/42.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大HPの5%回復",
+      "traits": [
+        {
+          "kind": "guardHpHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "name": "モブ海駅守護",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 30,
+        "def": 7,
+        "spd": 5
+      },
+      "price": 77000,
+      "season": 3,
+      "image": "wepon/43.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、被ダメージ-10%",
+      "traits": [
+        {
+          "kind": "lowHpDamageCut",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "44",
+      "name": "モブパーティー赤刀",
+      "type": "太刀",
+      "attribute": "火",
+      "stats": {
+        "atk": 32,
+        "spd": 8
+      },
+      "price": 82000,
+      "season": 3,
+      "image": "wepon/44.png",
+      "shop": false,
+      "traitLabel": "会心率+8%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "45",
+      "name": "モブパーティー青刀",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 31,
+        "def": 4,
+        "spd": 9
+      },
+      "price": 84000,
+      "season": 3,
+      "image": "wepon/45.png",
+      "shop": false,
+      "traitLabel": "回避率+5%",
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "46",
+      "name": "モブ三光の太刀",
+      "type": "太刀",
+      "attribute": "光",
+      "stats": {
+        "atk": 35,
+        "mag": 6,
+        "spd": 10
+      },
+      "price": 95000,
+      "season": 3,
+      "image": "wepon/46.png",
+      "shop": false,
+      "traitLabel": "光属性弱点を突いた時、与ダメージ+15% 会心率+5%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "element": "光",
+          "value": 0.15
+        },
+        {
+          "kind": "crit",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "47",
+      "name": "モブタフネスソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 39,
+        "def": 10
+      },
+      "price": 125000,
+      "season": 4,
+      "image": "wepon/47.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "name": "モブテツソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 42,
+        "def": 11
+      },
+      "price": 118000,
+      "season": 4,
+      "image": "wepon/48.png",
+      "shop": false,
+      "traitLabel": "地属性耐性+15%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "地",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "name": "モブエンジェルソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 44,
+        "mag": 10
+      },
+      "price": 142000,
+      "season": 4,
+      "image": "wepon/49.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "name": "モブPB2デュアルソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 44,
+        "spd": 13
+      },
+      "price": 180000,
+      "season": 4,
+      "image": "wepon/50.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "name": "モブPB2レッドソード",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 49,
+        "spd": 6
+      },
+      "price": 155000,
+      "season": 4,
+      "image": "wepon/51.png",
+      "shop": false,
+      "traitLabel": "HP80%以上の時、与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.8,
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "name": "モブPB2ブルーソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 48,
+        "def": 10
+      },
+      "price": 150000,
+      "season": 4,
+      "image": "wepon/52.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+15%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "name": "モブピンクスティック",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 11,
+        "mag": 44,
+        "spd": 6
+      },
+      "price": 138000,
+      "season": 4,
+      "image": "wepon/53.png",
+      "shop": false,
+      "traitLabel": "光属性魔法の消費MP-15%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "光",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "54",
+      "name": "モブパッションフレイムスティック",
+      "type": "杖",
+      "attribute": "火",
+      "stats": {
+        "atk": 13,
+        "mag": 49
+      },
+      "price": 160000,
+      "season": 4,
+      "image": "wepon/54.png",
+      "shop": false,
+      "traitLabel": "火属性魔法使用時、20%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": "火",
+          "chance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "name": "モブ星の杖",
+      "type": "杖",
+      "attribute": "無",
+      "stats": {
+        "atk": 17,
+        "mag": 48,
+        "spd": 10
+      },
+      "price": 152000,
+      "season": 4,
+      "image": "wepon/55.png",
+      "shop": false,
+      "traitLabel": "魔法使用時、10%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": null,
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "name": "モブ闇の宝石",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 13,
+        "mag": 53
+      },
+      "price": 172000,
+      "season": 4,
+      "image": "wepon/56.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、魔法与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "highHpMagicDamage",
+          "threshold": 0.7,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "57",
+      "name": "モブスティックガン",
+      "type": "杖・銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 33,
+        "mag": 33,
+        "spd": 8
+      },
+      "price": 185000,
+      "season": 4,
+      "image": "wepon/57.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率でMAG依存の追撃が発生 追撃威力50%",
+      "traits": [
+        {
+          "kind": "normalMagFollowup",
+          "chance": 0.2,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "name": "モブエンジェルガン",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 53,
+        "mag": 10
+      },
+      "price": 165000,
+      "season": 4,
+      "image": "wepon/58.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+22%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.22
+        }
+      ]
+    },
+    {
+      "id": "59",
+      "name": "モブスミスリボルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 52,
+        "spd": 8
+      },
+      "price": 175000,
+      "season": 4,
+      "image": "wepon/59.png",
+      "shop": false,
+      "traitLabel": "会心率+10%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "name": "モブマトリックスイーグル",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 51,
+        "spd": 11
+      },
+      "price": 205000,
+      "season": 4,
+      "image": "wepon/60.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、25%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.25,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "name": "モブグラディシルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 56,
+        "def": 5
+      },
+      "price": 190000,
+      "season": 4,
+      "image": "wepon/61.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "62",
+      "name": "モブ憤怒の槍",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 54,
+        "def": 11
+      },
+      "price": 200000,
+      "season": 4,
+      "image": "wepon/62.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "lowHpDamage",
+          "threshold": 0.5,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "63",
+      "name": "モブデジタルコードスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 52,
+        "mag": 11,
+        "spd": 10
+      },
+      "price": 210000,
+      "season": 4,
+      "image": "wepon/63.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、15%の確率で敵DEFを50%無視",
+      "traits": [
+        {
+          "kind": "defIgnore",
+          "chance": 0.15,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "64",
+      "name": "ミラモブの太刀",
+      "type": "太刀",
+      "attribute": "闇",
+      "stats": {
+        "atk": 57,
+        "spd": 13
+      },
+      "price": 225000,
+      "season": 4,
+      "image": "wepon/64.png",
+      "shop": false,
+      "traitLabel": "会心率+12% 攻撃したモンスターを10%の確率で毒状態にする",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.12
+        },
+        {
+          "kind": "poisonOnHit",
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "65",
+      "name": "モブテツ一文字",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 59,
+        "def": 10,
+        "spd": 8
+      },
+      "price": 215000,
+      "season": 4,
+      "image": "wepon/65.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "66",
+      "name": "モブスライムの一振り",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 61,
+        "spd": 10
+      },
+      "price": 220000,
+      "season": 4,
+      "image": "wepon/66.png",
+      "shop": false,
+      "traitLabel": "通常攻撃で与えたダメージの5%分HP回復",
+      "traits": [
+        {
+          "kind": "normalLifesteal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "67",
+      "name": "モブ魔王の大剣",
+      "type": "大剣",
+      "attribute": "闇",
+      "stats": {
+        "atk": 67,
+        "def": 8
+      },
+      "price": 330000,
+      "season": 5,
+      "image": "wepon/67.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、与ダメージ+18%",
+      "traits": [
+        {
+          "kind": "lowHpDamage",
+          "threshold": 0.5,
+          "value": 0.18
+        }
+      ]
+    },
+    {
+      "id": "68",
+      "name": "モブ魔女の大剣",
+      "type": "大剣",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 51,
+        "mag": 51,
+        "def": 8
+      },
+      "price": 390000,
+      "season": 5,
+      "image": "wepon/68.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "69",
+      "name": "モブアンロックソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 71,
+        "def": 13
+      },
+      "price": 320000,
+      "season": 5,
+      "image": "wepon/69.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "70",
+      "name": "モブデンデンソード",
+      "type": "大剣",
+      "attribute": "雷",
+      "stats": {
+        "atk": 72,
+        "spd": 13
+      },
+      "price": 360000,
+      "season": 5,
+      "image": "wepon/70.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "71",
+      "name": "モブニョロの大剣",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 68,
+        "spd": 8
+      },
+      "price": 345000,
+      "season": 5,
+      "image": "wepon/71.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.7,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "72",
+      "name": "ウルモブソード",
+      "type": "大剣",
+      "attribute": "闇",
+      "stats": {
+        "atk": 71,
+        "spd": 13
+      },
+      "price": 410000,
+      "season": 5,
+      "image": "wepon/72.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+25%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "73",
+      "name": "モブリリスの杖",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 17,
+        "mag": 74
+      },
+      "price": 340000,
+      "season": 5,
+      "image": "wepon/73.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、魔法与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "lowHpMagicDamage",
+          "threshold": 0.5,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "74",
+      "name": "モブリリススティック",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 18,
+        "mag": 71,
+        "spd": 8
+      },
+      "price": 385000,
+      "season": 5,
+      "image": "wepon/74.png",
+      "shop": false,
+      "traitLabel": "闇属性魔法使用時、25%の確率で威力50%の追撃魔法",
+      "traits": [
+        {
+          "kind": "magicFollowup",
+          "element": "闇",
+          "chance": 0.25,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "75",
+      "name": "モブ魔女の杖",
+      "type": "杖",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 23,
+        "mag": 75,
+        "def": 8
+      },
+      "price": 450000,
+      "season": 5,
+      "image": "wepon/75.png",
+      "shop": false,
+      "traitLabel": "弱点を魔法で突いた時、与ダメージ+25%",
+      "traits": [
+        {
+          "kind": "magicWeakDamage",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "76",
+      "name": "モブマニーの杖",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 18,
+        "mag": 80,
+        "spd": 10
+      },
+      "price": 420000,
+      "season": 5,
+      "image": "wepon/76.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "77",
+      "name": "モブテツの杖",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 28,
+        "mag": 89,
+        "def": 11
+      },
+      "price": 480000,
+      "season": 5,
+      "image": "wepon/77.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大MPの10%回復",
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "78",
+      "name": "モブ魔女ハンドガン",
+      "type": "銃",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 67,
+        "mag": 44,
+        "spd": 11
+      },
+      "price": 400000,
+      "season": 5,
+      "image": "wepon/78.png",
+      "shop": false,
+      "traitLabel": "敵の弱点属性を突いた時、会心率+15%",
+      "traits": [
+        {
+          "kind": "weakCrit",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "79",
+      "name": "モブマニーブラスター",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 77,
+        "mag": 10
+      },
+      "price": 405000,
+      "season": 5,
+      "image": "wepon/79.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "name": "モブネオンパルスショット",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 80,
+        "spd": 15
+      },
+      "price": 460000,
+      "season": 5,
+      "image": "wepon/80.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、25%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.25,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "name": "モブアンティークリボルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 83,
+        "spd": 11
+      },
+      "price": 445000,
+      "season": 5,
+      "image": "wepon/81.png",
+      "shop": false,
+      "traitLabel": "会心率+15%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "name": "モブアンティークスピア",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 78,
+        "def": 15
+      },
+      "price": 430000,
+      "season": 5,
+      "image": "wepon/82.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "83",
+      "name": "モブローズスピア",
+      "type": "槍",
+      "attribute": "闇",
+      "stats": {
+        "atk": 81,
+        "def": 10,
+        "spd": 11
+      },
+      "price": 470000,
+      "season": 5,
+      "image": "wepon/83.png",
+      "shop": false,
+      "traitLabel": "通常攻撃で与えたダメージの5%分HP回復",
+      "traits": [
+        {
+          "kind": "normalLifesteal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "84",
+      "name": "モブマニースピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 84,
+        "def": 11
+      },
+      "price": 415000,
+      "season": 5,
+      "image": "wepon/84.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "85",
+      "name": "モブタフネス二ノ型",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 83,
+        "def": 13,
+        "spd": 17
+      },
+      "price": 455000,
+      "season": 5,
+      "image": "wepon/85.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-12% 会心率+8%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.08
+        },
+        {
+          "kind": "physicalCut",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "86",
+      "name": "モブネオン妖刀の一",
+      "type": "太刀",
+      "attribute": "光",
+      "stats": {
+        "atk": 85,
+        "mag": 10,
+        "spd": 18
+      },
+      "price": 490000,
+      "season": 5,
+      "image": "wepon/86.png",
+      "shop": false,
+      "traitLabel": "会心率+12% 会心発生時、最大HPの5%回復",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.12
+        },
+        {
+          "kind": "critHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "87",
+      "name": "モブテツ一輪の花",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 87,
+        "def": 15,
+        "spd": 13
+      },
+      "price": 475000,
+      "season": 5,
+      "image": "wepon/87.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "88",
+      "name": "モブ海王の太刀",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 89,
+        "spd": 18
+      },
+      "price": 500000,
+      "season": 5,
+      "image": "wepon/88.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+30% 会心率+15%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.3
+        },
+        {
+          "kind": "crit",
+          "value": 0.15
+        }
+      ]
+    }
+  ],
+  "armors": [
+    {
+      "id": "01",
+      "name": "ぷにモブグリーン",
+      "price": 5000,
+      "image": "bogu/01.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 1,
+        "atk": 2,
+        "def": 3,
+        "spd": 3,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "風耐性+2%",
+      "traitsText": [
+        "風耐性+2%"
+      ]
+    },
+    {
+      "id": "02",
+      "name": "ぷにモブレッド",
+      "price": 5000,
+      "image": "bogu/02.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 1,
+        "atk": 3,
+        "def": 3,
+        "spd": 2,
+        "mag": 2,
+        "res": 2
+      },
+      "traitLabel": "風耐性+2%",
+      "traitsText": [
+        "風耐性+2%"
+      ]
+    },
+    {
+      "id": "03",
+      "name": "ぷにモブピンク",
+      "price": 5000,
+      "image": "bogu/03.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 1,
+        "atk": 2,
+        "def": 2,
+        "spd": 2,
+        "mag": 4,
+        "res": 4
+      },
+      "traitLabel": "光耐性+2%",
+      "traitsText": [
+        "光耐性+2%"
+      ]
+    },
+    {
+      "id": "04",
+      "name": "ぷにモブパープル",
+      "price": 5000,
+      "image": "bogu/04.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 3,
+        "atk": 2,
+        "def": 2,
+        "spd": 2,
+        "mag": 4,
+        "res": 2
+      },
+      "traitLabel": "毒耐性+5%",
+      "traitsText": [
+        "毒耐性+5%"
+      ]
+    },
+    {
+      "id": "05",
+      "name": "ぷにモブミント",
+      "price": 5000,
+      "image": "bogu/05.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 2,
+        "atk": 2,
+        "def": 2,
+        "spd": 4,
+        "mag": 4,
+        "res": 2
+      },
+      "traitLabel": "風耐性+2%",
+      "traitsText": [
+        "風耐性+2%"
+      ]
+    },
+    {
+      "id": "06",
+      "name": "ぷにモブイエロー",
+      "price": 5000,
+      "image": "bogu/06.png",
+      "stats": {
+        "maxHp": 3,
+        "maxMp": 3,
+        "atk": 2,
+        "def": 3,
+        "spd": 2,
+        "mag": 2,
+        "res": 3
+      },
+      "traitLabel": "光耐性+2%",
+      "traitsText": [
+        "光耐性+2%"
+      ]
+    },
+    {
+      "id": "07",
+      "name": "ぷにモブカモフラ",
+      "price": 5000,
+      "image": "bogu/07.png",
+      "stats": {
+        "maxHp": 3,
+        "maxMp": 3,
+        "atk": 1,
+        "def": 4,
+        "spd": 2,
+        "mag": 2,
+        "res": 3
+      },
+      "traitLabel": "地耐性+2%",
+      "traitsText": [
+        "地耐性+2%"
+      ]
+    },
+    {
+      "id": "08",
+      "name": "フェザーグリーン",
+      "price": 10000,
+      "image": "bogu/08.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 3,
+        "atk": 3,
+        "def": 2,
+        "spd": 4,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "風耐性+3% / ひるみ耐性+1%",
+      "traitsText": [
+        "風耐性+3%",
+        "ひるみ耐性+1%"
+      ]
+    },
+    {
+      "id": "09",
+      "name": "フェザーブルー",
+      "price": 10000,
+      "image": "bogu/09.png",
+      "stats": {
+        "maxHp": 3,
+        "maxMp": 4,
+        "atk": 2,
+        "def": 3,
+        "spd": 4,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "水耐性+3% / ひるみ耐性+1%",
+      "traitsText": [
+        "水耐性+3%",
+        "ひるみ耐性+1%"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "ケロライトブルー",
+      "price": 10000,
+      "image": "bogu/10.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 4,
+        "atk": 4,
+        "def": 2,
+        "spd": 2,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "水耐性+3% / 水属性物理ダメージ軽減+2%",
+      "traitsText": [
+        "水耐性+3%",
+        "水属性物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "11",
+      "name": "ぽよフェザーアクア",
+      "price": 10000,
+      "image": "bogu/11.png",
+      "stats": {
+        "maxHp": 2,
+        "maxMp": 3,
+        "atk": 2,
+        "def": 2,
+        "spd": 4,
+        "mag": 4,
+        "res": 2
+      },
+      "traitLabel": "風耐性+3% / 水耐性+2%",
+      "traitsText": [
+        "風耐性+3%",
+        "水耐性+2%"
+      ]
+    },
+    {
+      "id": "12",
+      "name": "ぷにモブホワイト",
+      "price": 10000,
+      "image": "bogu/12.png",
+      "stats": {
+        "maxHp": 5,
+        "maxMp": 3,
+        "atk": 3,
+        "def": 2,
+        "spd": 3,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "光耐性+3% / 闇耐性+2%",
+      "traitsText": [
+        "光耐性+3%",
+        "闇耐性+2%"
+      ]
+    },
+    {
+      "id": "13",
+      "name": "ぷにモブピンクゴールド",
+      "price": 10000,
+      "image": "bogu/13.png",
+      "stats": {
+        "maxHp": 5,
+        "maxMp": 3,
+        "atk": 3,
+        "def": 2,
+        "spd": 3,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "光耐性+5%",
+      "traitsText": [
+        "光耐性+5%"
+      ]
+    },
+    {
+      "id": "14",
+      "name": "ぷにモブブロンズ",
+      "price": 10000,
+      "image": "bogu/14.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 3,
+        "atk": 3,
+        "def": 2,
+        "spd": 3,
+        "mag": 3,
+        "res": 4
+      },
+      "traitLabel": "光耐性+3% / ひるみ耐性+25%",
+      "traitsText": [
+        "光耐性+3%",
+        "ひるみ耐性+25%"
+      ]
+    },
+    {
+      "id": "15",
+      "name": "ミイラホワイト",
+      "price": 10000,
+      "image": "bogu/15.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 5,
+        "atk": 3,
+        "def": 2,
+        "spd": 3,
+        "mag": 3,
+        "res": 2
+      },
+      "traitLabel": "闇耐性+4%",
+      "traitsText": [
+        "闇耐性+4%"
+      ]
+    },
+    {
+      "id": "16",
+      "name": "ミイラベージュブラウン",
+      "price": 10000,
+      "image": "bogu/16.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 4,
+        "atk": 3,
+        "def": 2,
+        "spd": 3,
+        "mag": 4,
+        "res": 4
+      },
+      "traitLabel": "闇耐性+3% / 毒耐性+2%",
+      "traitsText": [
+        "闇耐性+3%",
+        "毒耐性+2%"
+      ]
+    },
+    {
+      "id": "17",
+      "name": "エジプトアドベンチャー",
+      "price": 10000,
+      "image": "bogu/17.png",
+      "stats": {
+        "maxHp": 4,
+        "maxMp": 3,
+        "atk": 3,
+        "def": 3,
+        "spd": 3,
+        "mag": 3,
+        "res": 3
+      },
+      "traitLabel": "闇耐性+4% / ひるみ耐性+2%",
+      "traitsText": [
+        "闇耐性+4%",
+        "ひるみ耐性+2%"
+      ]
+    },
+    {
+      "id": "18",
+      "name": "ロックアーマー",
+      "price": 10000,
+      "image": "bogu/18.png",
+      "stats": {
+        "maxHp": 7,
+        "maxMp": 2,
+        "atk": 3,
+        "def": 5,
+        "spd": 2,
+        "mag": 2,
+        "res": 2
+      },
+      "traitLabel": "地耐性+5%",
+      "traitsText": [
+        "地耐性+5%"
+      ]
+    },
+    {
+      "id": "19",
+      "name": "スピードブルー",
+      "price": 10000,
+      "image": "bogu/19.png",
+      "stats": {
+        "maxHp": 5,
+        "maxMp": 5,
+        "atk": 3,
+        "def": 2,
+        "spd": 5,
+        "mag": 1,
+        "res": 2
+      },
+      "traitLabel": "水耐性+5%",
+      "traitsText": [
+        "水耐性+5%"
+      ]
+    },
+    {
+      "id": "20",
+      "name": "エレガントオレンジ",
+      "price": 10000,
+      "image": "bogu/20.png",
+      "stats": {
+        "maxHp": 5,
+        "maxMp": 5,
+        "atk": 2,
+        "def": 2,
+        "spd": 2,
+        "mag": 2,
+        "res": 6
+      },
+      "traitLabel": "火耐性+3% / マヒ耐性+2%",
+      "traitsText": [
+        "火耐性+3%",
+        "マヒ耐性+2%"
+      ]
+    },
+    {
+      "id": "21",
+      "name": "ウォーターライン",
+      "price": 30000,
+      "image": "bogu/21.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 8,
+        "atk": 5,
+        "def": 5,
+        "spd": 5,
+        "mag": 7,
+        "res": 7
+      },
+      "traitLabel": "水耐性+5% / 水魔法ダメージ軽減+2%",
+      "traitsText": [
+        "水耐性+5%",
+        "水魔法ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "22",
+      "name": "グリーンマジシャン",
+      "price": 30000,
+      "image": "bogu/22.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 8,
+        "atk": 5,
+        "def": 7,
+        "spd": 7,
+        "mag": 5,
+        "res": 5
+      },
+      "traitLabel": "風耐性+5% / 風魔法ダメージ軽減+2%",
+      "traitsText": [
+        "風耐性+5%",
+        "風魔法ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "23",
+      "name": "クラシックミント",
+      "price": 30000,
+      "image": "bogu/23.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 5,
+        "def": 6,
+        "spd": 5,
+        "mag": 6,
+        "res": 6
+      },
+      "traitLabel": "毒耐性+5% / 風物理ダメージ軽減+2%",
+      "traitsText": [
+        "毒耐性+5%",
+        "風物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "24",
+      "name": "クラシックイエロー",
+      "price": 30000,
+      "image": "bogu/24.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 6,
+        "def": 5,
+        "spd": 5,
+        "mag": 6,
+        "res": 6
+      },
+      "traitLabel": "ひるみ耐性+5% / 光物理ダメージ軽減+2%",
+      "traitsText": [
+        "ひるみ耐性+5%",
+        "光物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "25",
+      "name": "クラシックオレンジ",
+      "price": 30000,
+      "image": "bogu/25.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 6,
+        "def": 6,
+        "spd": 5,
+        "mag": 5,
+        "res": 6
+      },
+      "traitLabel": "マヒ耐性+5% / 光魔法ダメージ軽減+2%",
+      "traitsText": [
+        "マヒ耐性+5%",
+        "光魔法ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "26",
+      "name": "クラシックピンク",
+      "price": 30000,
+      "image": "bogu/26.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 5,
+        "def": 6,
+        "spd": 5,
+        "mag": 6,
+        "res": 6
+      },
+      "traitLabel": "やけど耐性+5% / 無属性ダメージ軽減+2%",
+      "traitsText": [
+        "やけど耐性+5%",
+        "無属性ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "27",
+      "name": "キャットネオンパープル",
+      "price": 30000,
+      "image": "bogu/27.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 5,
+        "def": 5,
+        "spd": 5,
+        "mag": 5,
+        "res": 7
+      },
+      "traitLabel": "光属性耐性+5% / 光物理ダメージ軽減+2%",
+      "traitsText": [
+        "光属性耐性+5%",
+        "光物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "28",
+      "name": "マグマスライムオレンジ",
+      "price": 30000,
+      "image": "bogu/28.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 7,
+        "def": 6,
+        "spd": 5,
+        "mag": 5,
+        "res": 5
+      },
+      "traitLabel": "火属性耐性+5% / 火物理ダメージ軽減+2%",
+      "traitsText": [
+        "火属性耐性+5%",
+        "火物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "29",
+      "name": "ネオンパープルハード",
+      "price": 30000,
+      "image": "bogu/29.png",
+      "stats": {
+        "maxHp": 15,
+        "maxMp": 10,
+        "atk": 5,
+        "def": 6,
+        "spd": 5,
+        "mag": 7,
+        "res": 5
+      },
+      "traitLabel": "闇属性耐性+5% / 闇物理ダメージ軽減+2%",
+      "traitsText": [
+        "闇属性耐性+5%",
+        "闇物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "30",
+      "name": "マグマブルー",
+      "price": 50000,
+      "image": "bogu/30.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 5,
+        "def": 8,
+        "spd": 5,
+        "mag": 8,
+        "res": 6
+      },
+      "traitLabel": "火属性耐性+5% / 火物理ダメージ軽減+2%",
+      "traitsText": [
+        "火属性耐性+5%",
+        "火物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "31",
+      "name": "マグマレッド",
+      "price": 50000,
+      "image": "bogu/31.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 8,
+        "def": 5,
+        "spd": 7,
+        "mag": 6,
+        "res": 6
+      },
+      "traitLabel": "火属性耐性+5% / 火魔法ダメージ軽減+2%",
+      "traitsText": [
+        "火属性耐性+5%",
+        "火魔法ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "32",
+      "name": "アビスブルー",
+      "price": 50000,
+      "image": "bogu/32.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 5,
+        "def": 6,
+        "spd": 7,
+        "mag": 7,
+        "res": 7
+      },
+      "traitLabel": "水属性耐性+5% / 水物理ダメージ軽減+2%",
+      "traitsText": [
+        "水属性耐性+5%",
+        "水物理ダメージ軽減+2%"
+      ]
+    },
+    {
+      "id": "33",
+      "name": "キャプテンコート",
+      "price": 50000,
+      "image": "bogu/33.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 7,
+        "def": 7,
+        "spd": 8,
+        "mag": 5,
+        "res": 5
+      },
+      "traitLabel": "水属性耐性+5% / 混乱耐性+4%",
+      "traitsText": [
+        "水属性耐性+5%",
+        "混乱耐性+4%"
+      ]
+    },
+    {
+      "id": "34",
+      "name": "スライムコート",
+      "price": 50000,
+      "image": "bogu/34.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 5,
+        "def": 9,
+        "spd": 7,
+        "mag": 6,
+        "res": 5
+      },
+      "traitLabel": "水属性耐性+5% / 物理ダメージ軽減+1%",
+      "traitsText": [
+        "水属性耐性+5%",
+        "物理ダメージ軽減+1%"
+      ]
+    },
+    {
+      "id": "35",
+      "name": "ネオンハードコート",
+      "price": 50000,
+      "image": "bogu/35.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 5,
+        "def": 7,
+        "spd": 6,
+        "mag": 7,
+        "res": 7
+      },
+      "traitLabel": "光属性耐性+5% / マヒ耐性+4%",
+      "traitsText": [
+        "光属性耐性+5%",
+        "マヒ耐性+4%"
+      ]
+    },
+    {
+      "id": "36",
+      "name": "ソーサラーコート",
+      "price": 50000,
+      "image": "bogu/36.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 5,
+        "def": 7,
+        "spd": 7,
+        "mag": 8,
+        "res": 5
+      },
+      "traitLabel": "闇属性耐性+5% / 魔法会心率+2%",
+      "traitsText": [
+        "闇属性耐性+5%",
+        "魔法会心率+2%"
+      ]
+    },
+    {
+      "id": "37",
+      "name": "ケロキンググリーン",
+      "price": 50000,
+      "image": "bogu/37.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 10,
+        "def": 7,
+        "spd": 5,
+        "mag": 5,
+        "res": 5
+      },
+      "traitLabel": "水属性耐性+5% / ひるみ耐性+4%",
+      "traitsText": [
+        "水属性耐性+5%",
+        "ひるみ耐性+4%"
+      ]
+    },
+    {
+      "id": "38",
+      "name": "ホーングリーン",
+      "price": 50000,
+      "image": "bogu/38.png",
+      "stats": {
+        "maxHp": 20,
+        "maxMp": 15,
+        "atk": 9,
+        "def": 9,
+        "spd": 5,
+        "mag": 4,
+        "res": 4
+      },
+      "traitLabel": "地属性耐性+5% / 風属性耐性+2%",
+      "traitsText": [
+        "地属性耐性+5%",
+        "風属性耐性+2%"
+      ]
+    },
+    {
+      "id": "39",
+      "name": "パープルイルカ",
+      "price": 80000,
+      "image": "bogu/39.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 8,
+        "def": 10,
+        "spd": 8,
+        "mag": 8,
+        "res": 10
+      },
+      "traitLabel": "水属性耐性+7% / 会心率+2%",
+      "traitsText": [
+        "水属性耐性+7%",
+        "会心率+2%"
+      ]
+    },
+    {
+      "id": "40",
+      "name": "ミュージックオレンジ",
+      "price": 80000,
+      "image": "bogu/40.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 8,
+        "spd": 10,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "地属性耐性+7% / 混乱耐性+5%",
+      "traitsText": [
+        "地属性耐性+7%",
+        "混乱耐性+5%"
+      ]
+    },
+    {
+      "id": "41",
+      "name": "ウェーブ＆ミュージック",
+      "price": 80000,
+      "image": "bogu/41.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 8,
+        "spd": 8,
+        "mag": 10,
+        "res": 8
+      },
+      "traitLabel": "水属性耐性+7% / マヒ耐性+5%",
+      "traitsText": [
+        "水属性耐性+7%",
+        "マヒ耐性+5%"
+      ]
+    },
+    {
+      "id": "42",
+      "name": "チルミュージック",
+      "price": 80000,
+      "image": "bogu/42.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 10,
+        "spd": 8,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "光属性耐性+7% / 眠り耐性+5%",
+      "traitsText": [
+        "光属性耐性+7%",
+        "眠り耐性+5%"
+      ]
+    },
+    {
+      "id": "43",
+      "name": "ハードオレンジアーマー",
+      "price": 80000,
+      "image": "bogu/43.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 8,
+        "def": 8,
+        "spd": 8,
+        "mag": 10,
+        "res": 10
+      },
+      "traitLabel": "風属性耐性+7% / マヒ耐性+5%",
+      "traitsText": [
+        "風属性耐性+7%",
+        "マヒ耐性+5%"
+      ]
+    },
+    {
+      "id": "44",
+      "name": "ハードレッドアーマー",
+      "price": 80000,
+      "image": "bogu/44.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 10,
+        "spd": 8,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "火属性耐性+12%",
+      "traitsText": [
+        "火属性耐性+12%"
+      ]
+    },
+    {
+      "id": "45",
+      "name": "ラプチーブルー",
+      "price": 80000,
+      "image": "bogu/45.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 8,
+        "def": 8,
+        "spd": 10,
+        "mag": 10,
+        "res": 8
+      },
+      "traitLabel": "水属性耐性+7% / 水属性与ダメージ+5%",
+      "traitsText": [
+        "水属性耐性+7%",
+        "水属性与ダメージ+5%"
+      ]
+    },
+    {
+      "id": "46",
+      "name": "ティラレッド",
+      "price": 80000,
+      "image": "bogu/46.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 8,
+        "spd": 10,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "火属性耐性+7% / 火属性与ダメージ+5%",
+      "traitsText": [
+        "火属性耐性+7%",
+        "火属性与ダメージ+5%"
+      ]
+    },
+    {
+      "id": "47",
+      "name": "シーパワーブルー",
+      "price": 80000,
+      "image": "bogu/47.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 10,
+        "def": 10,
+        "spd": 8,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "水属性ダメージ軽減+3% / 水属性与ダメージ+5%",
+      "traitsText": [
+        "水属性ダメージ軽減+3%",
+        "水属性与ダメージ+5%"
+      ]
+    },
+    {
+      "id": "48",
+      "name": "ネオンブルーコート",
+      "price": 80000,
+      "image": "bogu/48.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 25,
+        "atk": 8,
+        "def": 8,
+        "spd": 8,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "水属性耐性+7% / 光属性与ダメージ+5%",
+      "traitsText": [
+        "水属性耐性+7%",
+        "光属性与ダメージ+5%"
+      ]
+    },
+    {
+      "id": "49",
+      "name": "ムギワラウミコート",
+      "price": 80000,
+      "image": "bogu/49.png",
+      "stats": {
+        "maxHp": 25,
+        "maxMp": 18,
+        "atk": 8,
+        "def": 8,
+        "spd": 8,
+        "mag": 8,
+        "res": 8
+      },
+      "traitLabel": "水属性耐性+10% / 水属性与ダメージ+5%",
+      "traitsText": [
+        "水属性耐性+10%",
+        "水属性与ダメージ+5%"
+      ]
+    },
+    {
+      "id": "50",
+      "name": "タフネスホーン",
+      "price": 100000,
+      "image": "bogu/50.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 25,
+        "atk": 12,
+        "def": 15,
+        "spd": 12,
+        "mag": 12,
+        "res": 15
+      },
+      "traitLabel": "地属性耐性+10% / 会心率+3%",
+      "traitsText": [
+        "地属性耐性+10%",
+        "会心率+3%"
+      ]
+    },
+    {
+      "id": "51",
+      "name": "マグマホーン",
+      "price": 100000,
+      "image": "bogu/51.png",
+      "stats": {
+        "maxHp": 35,
+        "maxMp": 25,
+        "atk": 13,
+        "def": 13,
+        "spd": 14,
+        "mag": 12,
+        "res": 13
+      },
+      "traitLabel": "火属性耐性+10% / 物理ダメージ軽減+3%",
+      "traitsText": [
+        "火属性耐性+10%",
+        "物理ダメージ軽減+3%"
+      ]
+    },
+    {
+      "id": "52",
+      "name": "ドラゴンコート",
+      "price": 120000,
+      "image": "bogu/52.png",
+      "stats": {
+        "maxHp": 38,
+        "maxMp": 25,
+        "atk": 15,
+        "def": 15,
+        "spd": 15,
+        "mag": 12,
+        "res": 12
+      },
+      "traitLabel": "マグマエリア会心率+10% / マグマエリアダメージ軽減+5%",
+      "traitsText": [
+        "マグマエリア会心率+10%",
+        "マグマエリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "53",
+      "name": "ネオンバルスコート",
+      "price": 120000,
+      "image": "bogu/53.png",
+      "stats": {
+        "maxHp": 38,
+        "maxMp": 25,
+        "atk": 12,
+        "def": 15,
+        "spd": 12,
+        "mag": 15,
+        "res": 15
+      },
+      "traitLabel": "ネオン街エリア会心率+10% / ネオン街エリアダメージ軽減+5%",
+      "traitsText": [
+        "ネオン街エリア会心率+10%",
+        "ネオン街エリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "54",
+      "name": "ネプチューンコート",
+      "price": 120000,
+      "image": "bogu/54.png",
+      "stats": {
+        "maxHp": 38,
+        "maxMp": 25,
+        "atk": 16,
+        "def": 15,
+        "spd": 16,
+        "mag": 10,
+        "res": 12
+      },
+      "traitLabel": "海底エリア会心率+10% / 海底エリアダメージ軽減+5%",
+      "traitsText": [
+        "海底エリア会心率+10%",
+        "海底エリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "55",
+      "name": "デザートコート",
+      "price": 120000,
+      "image": "bogu/55.png",
+      "stats": {
+        "maxHp": 38,
+        "maxMp": 25,
+        "atk": 15,
+        "def": 14,
+        "spd": 15,
+        "mag": 13,
+        "res": 12
+      },
+      "traitLabel": "砂漠エリア会心率+10% / 砂漠エリアダメージ軽減+5%",
+      "traitsText": [
+        "砂漠エリア会心率+10%",
+        "砂漠エリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "56",
+      "name": "デンデンコート",
+      "price": 120000,
+      "image": "bogu/56.png",
+      "stats": {
+        "maxHp": 35,
+        "maxMp": 28,
+        "atk": 15,
+        "def": 13,
+        "spd": 15,
+        "mag": 13,
+        "res": 15
+      },
+      "traitLabel": "田舎町エリア会心率+10% / 田舎町エリアダメージ軽減+5%",
+      "traitsText": [
+        "田舎町エリア会心率+10%",
+        "田舎町エリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "57",
+      "name": "ネコクーコート",
+      "price": 120000,
+      "image": "bogu/57.png",
+      "stats": {
+        "maxHp": 35,
+        "maxMp": 25,
+        "atk": 10,
+        "def": 12,
+        "spd": 12,
+        "mag": 12,
+        "res": 12
+      },
+      "traitLabel": "回復量+20% / ダメージ軽減+5%",
+      "traitsText": [
+        "回復量+20%",
+        "ダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "58",
+      "name": "ニョロコート",
+      "price": 120000,
+      "image": "bogu/58.png",
+      "stats": {
+        "maxHp": 35,
+        "maxMp": 25,
+        "atk": 13,
+        "def": 13,
+        "spd": 13,
+        "mag": 13,
+        "res": 13
+      },
+      "traitLabel": "会心率+5% / やけど無効",
+      "traitsText": [
+        "会心率+5%",
+        "やけど無効"
+      ]
+    },
+    {
+      "id": "59",
+      "name": "ジェシーコート",
+      "price": 120000,
+      "image": "bogu/59.png",
+      "stats": {
+        "maxHp": 38,
+        "maxMp": 25,
+        "atk": 13,
+        "def": 13,
+        "spd": 17,
+        "mag": 13,
+        "res": 14
+      },
+      "traitLabel": "部族村エリア会心率+10% / 部族村エリアダメージ軽減+5%",
+      "traitsText": [
+        "部族村エリア会心率+10%",
+        "部族村エリアダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "60",
+      "name": "ピンクコート",
+      "price": 120000,
+      "image": "bogu/60.png",
+      "stats": {
+        "maxHp": 30,
+        "maxMp": 20,
+        "atk": 15,
+        "def": 14,
+        "spd": 15,
+        "mag": 13,
+        "res": 12
+      },
+      "traitLabel": "必殺技CT-1 / ダメージ軽減+5%",
+      "traitsText": [
+        "必殺技CT-1",
+        "ダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "61",
+      "name": "勇者コート",
+      "price": 120000,
+      "image": "bogu/61.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 25,
+        "atk": 16,
+        "def": 16,
+        "spd": 12,
+        "mag": 16,
+        "res": 12
+      },
+      "traitLabel": "会心率+7% / ダメージ軽減+5%",
+      "traitsText": [
+        "会心率+7%",
+        "ダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "62",
+      "name": "リーロコート",
+      "price": 120000,
+      "image": "bogu/62.png",
+      "stats": {
+        "maxHp": 35,
+        "maxMp": 25,
+        "atk": 13,
+        "def": 14,
+        "spd": 13,
+        "mag": 12,
+        "res": 12
+      },
+      "traitLabel": "毒無効 / ボス与ダメージ+10%",
+      "traitsText": [
+        "毒無効",
+        "ボス与ダメージ+10%"
+      ]
+    },
+    {
+      "id": "63",
+      "name": "ヒーローコート",
+      "price": 150000,
+      "image": "bogu/63.png",
+      "stats": {
+        "maxHp": 45,
+        "maxMp": 35,
+        "atk": 16,
+        "def": 16,
+        "spd": 16,
+        "mag": 16,
+        "res": 16
+      },
+      "traitLabel": "通常攻撃が全体攻撃になる",
+      "traitsText": [
+        "通常攻撃が全体攻撃になる"
+      ]
+    },
+    {
+      "id": "64",
+      "name": "リリスコート",
+      "price": 150000,
+      "image": "bogu/64.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 40,
+        "atk": 10,
+        "def": 14,
+        "spd": 13,
+        "mag": 18,
+        "res": 18
+      },
+      "traitLabel": "全ての魔法が全体攻撃になる",
+      "traitsText": [
+        "全ての魔法が全体攻撃になる"
+      ]
+    },
+    {
+      "id": "65",
+      "name": "タロアートモデル",
+      "price": 120000,
+      "image": "bogu/65.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 25,
+        "atk": 15,
+        "def": 15,
+        "spd": 15,
+        "mag": 15,
+        "res": 15
+      },
+      "traitLabel": "状態異常耐性+20% / ダメージ軽減+5%",
+      "traitsText": [
+        "状態異常耐性+20%",
+        "ダメージ軽減+5%"
+      ]
+    },
+    {
+      "id": "66",
+      "name": "タロアートモデルⅡ",
+      "price": 120000,
+      "image": "bogu/66.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 25,
+        "atk": 15,
+        "def": 15,
+        "spd": 15,
+        "mag": 15,
+        "res": 15
+      },
+      "traitLabel": "状態異常耐性+20% / 魔法ダメージ軽減+10%",
+      "traitsText": [
+        "状態異常耐性+20%",
+        "魔法ダメージ軽減+10%"
+      ]
+    },
+    {
+      "id": "67",
+      "name": "タロアートモデルⅢ",
+      "price": 120000,
+      "image": "bogu/67.png",
+      "stats": {
+        "maxHp": 40,
+        "maxMp": 25,
+        "atk": 15,
+        "def": 15,
+        "spd": 15,
+        "mag": 15,
+        "res": 15
+      },
+      "traitLabel": "状態異常耐性+20% / 物理ダメージ軽減+10%",
+      "traitsText": [
+        "状態異常耐性+20%",
+        "物理ダメージ軽減+10%"
+      ]
+    }
+  ],
+  "magic": [
+    {
+      "id": "hono",
+      "name": "ホノ",
+      "element": "火",
+      "tier": "small",
+      "cost": 6,
+      "power": 1.05,
+      "target": "single",
+      "frames": [
+        "skill/01.png",
+        "skill/02.png",
+        "skill/03.png",
+        "skill/04.png"
+      ]
+    },
+    {
+      "id": "honoma",
+      "name": "ホノマ",
+      "element": "火",
+      "tier": "medium",
+      "cost": 12,
+      "power": 1.55,
+      "target": "single",
+      "frames": [
+        "skill/05.png",
+        "skill/06.png",
+        "skill/07.png",
+        "skill/08.png",
+        "skill/04.png"
+      ]
+    },
+    {
+      "id": "honomagma",
+      "name": "ホノマグマ",
+      "element": "火",
+      "tier": "large",
+      "cost": 22,
+      "power": 1.978,
+      "target": "single",
+      "frames": [
+        "skill/09.png",
+        "skill/10.png",
+        "skill/11.png",
+        "skill/12.png",
+        "skill/05.png",
+        "skill/06.png"
+      ]
+    },
+    {
+      "id": "nepu",
+      "name": "ネプ",
+      "element": "水",
+      "tier": "small",
+      "cost": 6,
+      "power": 1.05,
+      "target": "single",
+      "frames": [
+        "skill/13.png",
+        "skill/14.png",
+        "skill/15.png",
+        "skill/16.png"
+      ]
+    },
+    {
+      "id": "nepuma",
+      "name": "ネプマ",
+      "element": "水",
+      "tier": "medium",
+      "cost": 12,
+      "power": 1.55,
+      "target": "single",
+      "frames": [
+        "skill/17.png",
+        "skill/18.png",
+        "skill/19.png",
+        "skill/17.png"
+      ]
+    },
+    {
+      "id": "nepumachun",
+      "name": "ネプマチューン",
+      "element": "水",
+      "tier": "large",
+      "cost": 22,
+      "power": 1.978,
+      "target": "single",
+      "frames": [
+        "skill/20.png",
+        "skill/21.png",
+        "skill/22.png",
+        "skill/23.png",
+        "skill/22.png",
+        "skill/21.png"
+      ]
+    },
+    {
+      "id": "toru",
+      "name": "トル",
+      "element": "雷",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.08,
+      "target": "single",
+      "frames": [
+        "skill/24.png",
+        "skill/25.png",
+        "skill/26.png",
+        "skill/27.png"
+      ]
+    },
+    {
+      "id": "toruma",
+      "name": "トルマ",
+      "element": "雷",
+      "tier": "medium",
+      "cost": 13,
+      "power": 1.58,
+      "target": "single",
+      "frames": [
+        "skill/29.png",
+        "skill/30.png",
+        "skill/31.png"
+      ]
+    },
+    {
+      "id": "torumaden",
+      "name": "トルマデン",
+      "element": "雷",
+      "tier": "large",
+      "cost": 23,
+      "power": 2.0056,
+      "target": "single",
+      "frames": [
+        "skill/32.png",
+        "skill/33.png",
+        "skill/34.png",
+        "skill/30.png",
+        "skill/28.png"
+      ]
+    },
+    {
+      "id": "gore",
+      "name": "ゴレ",
+      "element": "地",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.08,
+      "target": "single",
+      "frames": [
+        "skill/35.png",
+        "skill/36.png",
+        "skill/37.png",
+        "skill/38.png"
+      ]
+    },
+    {
+      "id": "gorema",
+      "name": "ゴレマ",
+      "element": "地",
+      "tier": "medium",
+      "cost": 13,
+      "power": 1.58,
+      "target": "single",
+      "frames": [
+        "skill/39.png",
+        "skill/40.png",
+        "skill/41.png",
+        "skill/42.png"
+      ]
+    },
+    {
+      "id": "goremagardy",
+      "name": "ゴレマガーディ",
+      "element": "地",
+      "tier": "large",
+      "cost": 23,
+      "power": 2.0056,
+      "target": "single",
+      "frames": [
+        "skill/43.png",
+        "skill/40.png",
+        "skill/41.png",
+        "skill/42.png",
+        "skill/44.png"
+      ],
+      "mode": "earthLargeFastV141"
+    },
+    {
+      "id": "hoku",
+      "name": "ホク",
+      "element": "風",
+      "tier": "small",
+      "cost": 6,
+      "power": 1.05,
+      "target": "single",
+      "frames": [
+        "skill/45.png",
+        "skill/46.png",
+        "skill/47.png",
+        "skill/48.png"
+      ]
+    },
+    {
+      "id": "hokuma",
+      "name": "ホクマ",
+      "element": "風",
+      "tier": "medium",
+      "cost": 12,
+      "power": 1.55,
+      "target": "single",
+      "frames": [
+        "skill/49.png",
+        "skill/50.png",
+        "skill/51.png",
+        "skill/52.png"
+      ]
+    },
+    {
+      "id": "hokumawing",
+      "name": "ホクマウィング",
+      "element": "風",
+      "tier": "large",
+      "cost": 22,
+      "power": 1.978,
+      "target": "single",
+      "frames": [
+        "skill/51.png",
+        "skill/53.png",
+        "skill/52.png"
+      ],
+      "mode": "windLargeV79"
+    },
+    {
+      "id": "neo",
+      "name": "ネオ",
+      "element": "光",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.1,
+      "target": "single",
+      "frames": [
+        "skill/54.png",
+        "skill/55.png",
+        "skill/56.png"
+      ],
+      "mode": "lightSmallV79"
+    },
+    {
+      "id": "neoma",
+      "name": "ネオマ",
+      "element": "光",
+      "tier": "medium",
+      "cost": 14,
+      "power": 1.62,
+      "target": "single",
+      "frames": [
+        "skill/54.png",
+        "skill/55.png",
+        "skill/57.png",
+        "skill/58.png",
+        "skill/56.png"
+      ]
+    },
+    {
+      "id": "neomanipool",
+      "name": "ネオマニプール",
+      "element": "光",
+      "tier": "large",
+      "cost": 24,
+      "power": 2.0424,
+      "target": "single",
+      "frames": [
+        "skill/55.png",
+        "skill/57.png",
+        "skill/58.png",
+        "skill/59.png",
+        "skill/60.png"
+      ],
+      "mode": "lightLargeFastV141"
+    },
+    {
+      "id": "mira",
+      "name": "ミラ",
+      "element": "闇",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.1,
+      "target": "single",
+      "frames": [
+        "skill/61.png",
+        "skill/62.png",
+        "skill/63.png",
+        "skill/64.png"
+      ]
+    },
+    {
+      "id": "mirama",
+      "name": "ミラマ",
+      "element": "闇",
+      "tier": "medium",
+      "cost": 14,
+      "power": 1.62,
+      "target": "single",
+      "frames": [
+        "skill/65.png",
+        "skill/66.png",
+        "skill/67.png",
+        "skill/68.png"
+      ]
+    },
+    {
+      "id": "miramazone",
+      "name": "ミラマゾーン",
+      "element": "闇",
+      "tier": "large",
+      "cost": 24,
+      "power": 2.0424,
+      "target": "single",
+      "frames": [
+        "skill/69.png",
+        "skill/70.png",
+        "skill/71.png",
+        "skill/72.png"
+      ]
+    },
+    {
+      "id": "anoma",
+      "name": "アノマ",
+      "element": "無",
+      "tier": "medium",
+      "cost": 10,
+      "power": 1.25,
+      "target": "single",
+      "frames": [
+        "skill/127.png",
+        "skill/130.png"
+      ]
+    },
+    {
+      "id": "anomaun",
+      "name": "アノマウン",
+      "element": "無",
+      "tier": "large",
+      "cost": 18,
+      "power": 1.748,
+      "target": "single",
+      "frames": [
+        "skill/131.png",
+        "skill/134.png"
+      ]
+    },
+    {
+      "id": "garagaranotabi",
+      "name": "ガラガラノタビ",
+      "element": "地",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/193.png",
+        "skill2/194.png",
+        "skill2/195.png",
+        "skill2/196.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に地属性中～大ダメージ"
+    },
+    {
+      "id": "kumanokomiteitanoaberto",
+      "name": "クマノコ・ミテイタ・アノベルト",
+      "element": "闇",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/133.png",
+        "skill2/134.png",
+        "skill2/135.png",
+        "skill2/136.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に闇属性中～大ダメージ"
+    },
+    {
+      "id": "keronoishou",
+      "name": "ケロノイショウ",
+      "element": "水",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/110.png",
+        "skill2/111.png",
+        "skill2/112.png",
+        "skill2/113.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に水属性中～大ダメージ"
+    },
+    {
+      "id": "kizutsukukitsutsuki",
+      "name": "キズツクキツツキ",
+      "element": "雷",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/201.png",
+        "skill2/202.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に雷属性中～大ダメージ"
+    },
+    {
+      "id": "kakashitokomugi",
+      "name": "カカシトコムギ",
+      "element": "風",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/114.png",
+        "skill2/115.png",
+        "skill2/116.png",
+        "skill2/117.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に風属性中～大ダメージ"
+    },
+    {
+      "id": "watashinomirai",
+      "name": "ワタシノミライ",
+      "element": "光",
+      "tier": "all",
+      "cost": 38,
+      "power": 1.85,
+      "target": "all",
+      "frames": [
+        "skill2/125.png",
+        "skill2/126.png",
+        "skill2/127.png",
+        "skill2/128.png"
+      ],
+      "recordMagic": true,
+      "effectText": "敵全体に光属性中～大ダメージ"
+    },
+    {
+      "id": "sugar-chair",
+      "name": "シュガーチェアー",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "defBuff",
+      "cost": 7,
+      "ratio": 0.1,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のDEFを10%アップ / 3ターン"
+    },
+    {
+      "id": "caramel-hello-back",
+      "name": "カラメルハローバック",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "defBuff",
+      "cost": 14,
+      "ratio": 0.18,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のDEFを18%アップ / 3ターン"
+    },
+    {
+      "id": "maple-air-chair",
+      "name": "メープルエアチェアー",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "defBuff",
+      "cost": 25,
+      "ratio": 0.28,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のDEFを28%アップ / 3ターン"
+    },
+    {
+      "id": "shoga-entry",
+      "name": "ショウガエントリー",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "atkBuff",
+      "cost": 7,
+      "ratio": 0.1,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のATKを10%アップ / 3ターン"
+    },
+    {
+      "id": "wasabi-stomach",
+      "name": "ワサビストマック",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "atkBuff",
+      "cost": 14,
+      "ratio": 0.18,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のATKを18%アップ / 3ターン"
+    },
+    {
+      "id": "shichimi-suicide",
+      "name": "シチミスーサイド",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "atkBuff",
+      "cost": 25,
+      "ratio": 0.28,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方単体のATKを28%アップ / 3ターン"
+    },
+    {
+      "id": "back-follow-call",
+      "name": "バックフォローコール",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partyAtkBuff",
+      "cost": 20,
+      "ratio": 0.08,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方全体のATKを8%アップ / 3ターン"
+    },
+    {
+      "id": "gold-routine",
+      "name": "ゴールドルーティーン",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partyAtkBuff",
+      "cost": 34,
+      "ratio": 0.15,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方全体のATKを15%アップ / 3ターン"
+    },
+    {
+      "id": "party-backspin",
+      "name": "パーティーバックスピン",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partyDefBuff",
+      "cost": 18,
+      "ratio": 0.08,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方全体のDEFを8%アップ / 3ターン"
+    },
+    {
+      "id": "block-bronx",
+      "name": "ブロックブロンクス",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partyDefBuff",
+      "cost": 32,
+      "ratio": 0.15,
+      "turns": 3,
+      "power": 0,
+      "effectText": "味方全体のDEFを15%アップ / 3ターン"
+    },
+    {
+      "id": "mob-tetsu-walk",
+      "name": "モブテツウォーク",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partySpdEvade",
+      "cost": 28,
+      "ratio": 0.1,
+      "evasion": 0.03,
+      "turns": 3,
+      "power": 0,
+      "exclusive": "tetsu",
+      "effectText": "味方全体のSPDを10%アップ＋回避率3%アップ / 3ターン"
+    },
+    {
+      "id": "neon-custard",
+      "name": "ネオンカスタード",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "partyHealCleanse",
+      "cost": 38,
+      "heal": 0.3,
+      "cleanseChance": 0.5,
+      "power": 0,
+      "exclusive": "money",
+      "effectText": "味方全体を中回復＋状態異常を各50%で解除"
+    },
+    {
+      "id": "candy",
+      "name": "キャンディ",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "healSingle",
+      "cost": 6,
+      "heal": 0.22,
+      "power": 0,
+      "effectText": "味方単体を小回復"
+    },
+    {
+      "id": "candy-neon",
+      "name": "キャンディネオン",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "healSingle",
+      "cost": 12,
+      "heal": 0.38,
+      "power": 0,
+      "effectText": "味方単体を中回復"
+    },
+    {
+      "id": "candy-neon-piece",
+      "name": "キャンディネオンピース",
+      "element": "無",
+      "tier": "support",
+      "target": "ally",
+      "support": true,
+      "supportKind": "healSingle",
+      "cost": 22,
+      "heal": 0.6,
+      "power": 0,
+      "effectText": "味方単体を大回復"
+    },
+    {
+      "id": "star-marshmallow",
+      "name": "スターマシュマロ",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "healParty",
+      "cost": 18,
+      "heal": 0.18,
+      "power": 0,
+      "effectText": "味方全体を小回復"
+    },
+    {
+      "id": "star-pokkin-marshmallow",
+      "name": "スターポッキンマシュマロ",
+      "element": "無",
+      "tier": "support",
+      "target": "party",
+      "support": true,
+      "supportKind": "healParty",
+      "cost": 32,
+      "heal": 0.32,
+      "power": 0,
+      "effectText": "味方全体を中回復"
+    },
+    {
+      "id": "noise-scratch",
+      "name": "ノイズスクラッチ",
+      "element": "無",
+      "kind": "statusMagic",
+      "status": "confuse",
+      "cost": 12,
+      "power": 0,
+      "chance": 0.6,
+      "target": "single",
+      "tier": "status",
+      "frames": [
+        "skill/46.png"
+      ],
+      "mode": "statusNoiseV79",
+      "effectText": "敵単体を混乱にする"
+    },
+    {
+      "id": "chill-lofi",
+      "name": "チルローファイ",
+      "element": "無",
+      "kind": "statusMagic",
+      "status": "sleep",
+      "cost": 13,
+      "power": 0,
+      "chance": 0.6,
+      "target": "single",
+      "tier": "status",
+      "frames": [
+        "skill/48.png"
+      ],
+      "mode": "statusChillV79",
+      "effectText": "敵単体を眠りにする"
+    },
+    {
+      "id": "fast-beat",
+      "name": "ファストビート",
+      "element": "火",
+      "kind": "statusMagic",
+      "status": "burn",
+      "cost": 12,
+      "power": 0,
+      "chance": 0.65,
+      "target": "single",
+      "tier": "status",
+      "frames": [
+        "skill/76.png"
+      ],
+      "mode": "statusFastV79",
+      "effectText": "敵単体をやけど状態にする"
+    },
+    {
+      "id": "repeat-intro",
+      "name": "リピートイントロ",
+      "element": "闇",
+      "kind": "statusMagic",
+      "status": "poison",
+      "cost": 13,
+      "power": 0,
+      "chance": 0.65,
+      "target": "single",
+      "tier": "status",
+      "frames": [
+        "skill/103.png",
+        "skill/104.png",
+        "skill/105.png",
+        "skill/106.png",
+        "skill/103.png"
+      ],
+      "mode": "statusRepeatV79",
+      "effectText": "敵単体を毒状態にする"
+    },
+    {
+      "id": "long-scratch",
+      "name": "ロングスクラッチ",
+      "element": "雷",
+      "kind": "statusMagic",
+      "status": "paralyze",
+      "cost": 16,
+      "power": 0,
+      "chance": 0.45,
+      "target": "single",
+      "tier": "status",
+      "frames": [
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png"
+      ],
+      "mode": "statusLongV79",
+      "effectText": "敵単体をマヒにする"
+    },
+    {
+      "id": "crash-bomb",
+      "name": "クラッシュボム",
+      "element": "無",
+      "tier": "medium",
+      "cost": 24,
+      "power": 1.38,
+      "target": "all",
+      "frames": [
+        "skill2/243.png",
+        "skill2/244.png",
+        "skill2/245.png",
+        "skill2/246.png"
+      ],
+      "effectText": "敵全体に無属性小～中ダメージ"
+    },
+    {
+      "id": "rainbow1990",
+      "name": "レインボー1990",
+      "element": "光",
+      "tier": "medium",
+      "cost": 32,
+      "power": 1.58,
+      "target": "all",
+      "kind": "aoeStatusMagic",
+      "status": "stun",
+      "chance": 0.1,
+      "frames": [
+        "skill2/247.png",
+        "skill2/248.png",
+        "skill2/249.png",
+        "skill2/249-1.png"
+      ],
+      "effectText": "敵全体に光属性中ダメージ＋10%でひるみ"
+    },
+    {
+      "id": "neo-meteor-power",
+      "name": "ネオメテオパワー",
+      "element": "無",
+      "tier": "large",
+      "cost": 44,
+      "power": 1.794,
+      "target": "all",
+      "frames": [
+        "skill2/268.png",
+        "skill2/269.png",
+        "skill2/270.png",
+        "skill2/271.png"
+      ],
+      "effectText": "敵全体に無属性中～大ダメージ"
+    },
+    {
+      "id": "soul-energy",
+      "name": "ソウルエネルギー",
+      "element": "無",
+      "tier": "large",
+      "cost": 25,
+      "power": 1.794,
+      "target": "single",
+      "frames": [
+        "skill2/273.png",
+        "skill2/274.png",
+        "skill2/275.png",
+        "skill2/276.png"
+      ],
+      "effectText": "敵単体に無属性中～大ダメージ"
+    },
+    {
+      "id": "mira-mob-poison",
+      "name": "デザート・ミラモブ・ポイズン",
+      "element": "闇",
+      "tier": "medium",
+      "cost": 26,
+      "power": 1.7,
+      "target": "all",
+      "kind": "damageStatusMagic",
+      "status": "poison",
+      "chance": 0.7,
+      "crit": 0.1,
+      "exclusive": "desert",
+      "eventOnly": true,
+      "chargeImage": "icon/68.png",
+      "frames": [
+        "skill/66.png",
+        "skill/67.png",
+        "skill/68.png",
+        "skill/69.png"
+      ],
+      "effectText": "敵全体に闇属性中ダメージ＋会心率10%＋70%で毒"
+    }
+  ],
+  "tech": [
+    {
+      "id": "magsword",
+      "name": "マグソード",
+      "element": "火",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.196,
+      "frames": [
+        "skill/73.png",
+        "skill/74.png",
+        "skill/75.png",
+        "skill/76.png"
+      ]
+    },
+    {
+      "id": "magmasword",
+      "name": "マグマソード",
+      "element": "火",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 15,
+      "power": 1.8512,
+      "frames": [
+        "skill/77.png",
+        "skill/78.png",
+        "skill/79.png",
+        "skill/80.png"
+      ]
+    },
+    {
+      "id": "nepusword",
+      "name": "ネプソード",
+      "element": "水",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.196,
+      "frames": [
+        "skill/81.png",
+        "skill/82.png",
+        "skill/83.png",
+        "skill/84.png"
+      ]
+    },
+    {
+      "id": "nepumasword",
+      "name": "ネプマソード",
+      "element": "水",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 15,
+      "power": 1.8512,
+      "frames": [
+        "skill/81.png",
+        "skill/82.png",
+        "skill/85.png",
+        "skill/86.png"
+      ]
+    },
+    {
+      "id": "torusword",
+      "name": "トルソード",
+      "element": "雷",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 8,
+      "power": 1.2272,
+      "frames": [
+        "skill/87.png",
+        "skill/88.png",
+        "skill/89.png",
+        "skill/90.png"
+      ]
+    },
+    {
+      "id": "torumasword",
+      "name": "トルマソード",
+      "element": "雷",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 16,
+      "power": 1.8928,
+      "frames": [
+        "skill/91.png",
+        "skill/92.png",
+        "skill/93.png",
+        "skill/94.png"
+      ]
+    },
+    {
+      "id": "goresword",
+      "name": "ゴレソード",
+      "element": "地",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 8,
+      "power": 1.2272,
+      "frames": [
+        "skill/120.png",
+        "skill/121.png",
+        "skill/122.png",
+        "skill/123.png"
+      ]
+    },
+    {
+      "id": "goremasword",
+      "name": "ゴレマソード",
+      "element": "地",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 16,
+      "power": 1.8928,
+      "frames": [
+        "skill/124.png",
+        "skill/125.png",
+        "skill/126.png",
+        "skill/123.png"
+      ]
+    },
+    {
+      "id": "neosword",
+      "name": "ネオソード",
+      "element": "光",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 8,
+      "power": 1.248,
+      "frames": [
+        "skill/112.png",
+        "skill/113.png",
+        "skill/114.png",
+        "skill/115.png"
+      ]
+    },
+    {
+      "id": "neomasword",
+      "name": "ネオマソード",
+      "element": "光",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 17,
+      "power": 1.9344,
+      "frames": [
+        "skill/116.png",
+        "skill/117.png",
+        "skill/118.png",
+        "skill/119.png"
+      ]
+    },
+    {
+      "id": "mirasword",
+      "name": "ミラソード",
+      "element": "闇",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 8,
+      "power": 1.248,
+      "frames": [
+        "skill/103.png",
+        "skill/104.png",
+        "skill/105.png",
+        "skill/106.png"
+      ]
+    },
+    {
+      "id": "miramasword",
+      "name": "ミラマソード",
+      "element": "闇",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 17,
+      "power": 1.9344,
+      "frames": [
+        "skill/108.png",
+        "skill/109.png",
+        "skill/110.png",
+        "skill/111.png"
+      ]
+    },
+    {
+      "id": "anosword",
+      "name": "アノソード",
+      "element": "無",
+      "kind": "slash",
+      "tier": "small",
+      "cost": 7,
+      "power": 1.1648,
+      "frames": [
+        "skill/95.png",
+        "skill/96.png",
+        "skill/97.png",
+        "skill/98.png"
+      ]
+    },
+    {
+      "id": "anomasword",
+      "name": "アノマソード",
+      "element": "無",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 15,
+      "power": 1.7888,
+      "frames": [
+        "skill/99.png",
+        "skill/100.png",
+        "skill/101.png",
+        "skill/102.png"
+      ]
+    },
+    {
+      "id": "mobgiri",
+      "name": "MOB斬り",
+      "element": "地・風",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 13,
+      "power": 1.6848,
+      "frames": [
+        "skill2/09.png",
+        "skill2/10.png",
+        "skill2/11.png",
+        "skill2/12.png"
+      ],
+      "elements": [
+        "地",
+        "風"
+      ],
+      "v120Advanced": true,
+      "effectText": "敵単体に地・風属性中ダメージ"
+    },
+    {
+      "id": "shippugiri",
+      "name": "疾風斬り",
+      "element": "風",
+      "kind": "slash",
+      "tier": "large",
+      "cost": 13,
+      "power": 1.6848,
+      "priorityChance": 0.4,
+      "frames": [
+        "skill2/13.png",
+        "skill2/14.png",
+        "skill2/15.png",
+        "skill2/16.png"
+      ]
+    },
+    {
+      "id": "scratch-sword",
+      "name": "スクラッチソード",
+      "element": "光",
+      "kind": "statusTechnique",
+      "status": "confuse",
+      "cost": 14,
+      "power": 1.4352,
+      "chance": 0.45,
+      "tier": "medium",
+      "attackFrames": [
+        "skill/112.png",
+        "skill/113.png",
+        "skill/114.png",
+        "skill/115.png"
+      ],
+      "statusFrames": [
+        "skill/76.png"
+      ],
+      "statusMode": "statusFastV79",
+      "frames": [
+        "skill/112.png",
+        "skill/113.png",
+        "skill/114.png",
+        "skill/115.png",
+        "skill/76.png"
+      ],
+      "effectText": "敵単体に小～中ダメージ＋混乱"
+    },
+    {
+      "id": "lofi-splash",
+      "name": "ローファイスプラッシュ",
+      "element": "水",
+      "kind": "statusTechnique",
+      "status": "sleep",
+      "cost": 14,
+      "power": 1.4352,
+      "chance": 0.45,
+      "tier": "medium",
+      "attackFrames": [
+        "skill/81.png",
+        "skill/82.png",
+        "skill/83.png",
+        "skill/84.png"
+      ],
+      "statusFrames": [
+        "skill/48.png"
+      ],
+      "statusMode": "statusChillV79",
+      "frames": [
+        "skill/81.png",
+        "skill/82.png",
+        "skill/83.png",
+        "skill/84.png",
+        "skill/48.png"
+      ],
+      "effectText": "敵単体に小～中ダメージ＋眠り"
+    },
+    {
+      "id": "fast-beat-slash",
+      "name": "ファストビートスラッシュ",
+      "element": "火",
+      "kind": "statusTechnique",
+      "status": "burn",
+      "cost": 14,
+      "power": 1.456,
+      "chance": 0.55,
+      "tier": "medium",
+      "attackFrames": [
+        "skill/73.png",
+        "skill/74.png",
+        "skill/75.png",
+        "skill/76.png"
+      ],
+      "statusFrames": [
+        "skill/46.png"
+      ],
+      "statusMode": "statusNoiseV79",
+      "frames": [
+        "skill/73.png",
+        "skill/74.png",
+        "skill/75.png",
+        "skill/76.png",
+        "skill/46.png"
+      ],
+      "effectText": "敵単体に小～中ダメージ＋やけど"
+    },
+    {
+      "id": "intro-cross",
+      "name": "イントロクロス",
+      "element": "雷",
+      "kind": "statusTechnique",
+      "status": "poison",
+      "cost": 15,
+      "power": 1.4768,
+      "chance": 0.5,
+      "tier": "medium",
+      "attackFrames": [
+        "skill/87.png",
+        "skill/88.png",
+        "skill/89.png",
+        "skill/90.png"
+      ],
+      "statusFrames": [
+        "skill/103.png"
+      ],
+      "statusMode": "statusRepeatV79",
+      "frames": [
+        "skill/87.png",
+        "skill/88.png",
+        "skill/89.png",
+        "skill/90.png",
+        "skill/103.png"
+      ],
+      "effectText": "敵単体に小～中ダメージ＋毒"
+    },
+    {
+      "id": "long-scratch-cut",
+      "name": "ロングスクラッチカット",
+      "element": "無",
+      "kind": "statusTechnique",
+      "status": "paralyze",
+      "cost": 17,
+      "power": 1.4768,
+      "chance": 0.35,
+      "tier": "medium",
+      "attackFrames": [
+        "skill/95.png",
+        "skill/96.png"
+      ],
+      "statusFrames": [
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png"
+      ],
+      "statusMode": "statusLongV79",
+      "frames": [
+        "skill/95.png",
+        "skill/96.png",
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png",
+        "skill/28.png",
+        "skill/27.png"
+      ],
+      "effectText": "敵単体に小～中ダメージ＋マヒ"
+    },
+    {
+      "id": "best-selection",
+      "name": "ベストセレクション",
+      "element": "光・水",
+      "elements": [
+        "光",
+        "水"
+      ],
+      "kind": "advanced",
+      "cost": 16,
+      "power": 1.664,
+      "tier": "large",
+      "frames": [
+        "skill2/121.png",
+        "skill2/122.png",
+        "skill2/123.png",
+        "skill2/124.png"
+      ],
+      "effectText": "敵単体に光・水属性中ダメージ"
+    },
+    {
+      "id": "dorayaki-dance",
+      "name": "どら焼きの舞",
+      "element": "風・無",
+      "elements": [
+        "風",
+        "無"
+      ],
+      "kind": "advanced",
+      "cost": 17,
+      "power": 1.6432,
+      "tier": "large",
+      "crit": 0.1,
+      "metalCrit": 0.3,
+      "frames": [
+        "skill2/129.png",
+        "skill2/130.png",
+        "skill2/131.png",
+        "skill2/132.png"
+      ],
+      "effectText": "敵単体に風・無属性中ダメージ / 会心10% / メタル系30%"
+    },
+    {
+      "id": "mob-windmill",
+      "name": "MOBウィンドミル",
+      "element": "風・無",
+      "elements": [
+        "風",
+        "無"
+      ],
+      "kind": "advanced",
+      "cost": 30,
+      "power": 1.6848,
+      "tier": "large",
+      "target": "all",
+      "frames": [
+        "skill2/260.png",
+        "skill2/261.png",
+        "skill2/262.png",
+        "skill2/263.png"
+      ],
+      "effectText": "敵全体に風・無属性物理中ダメージ"
+    }
+  ]
+}
