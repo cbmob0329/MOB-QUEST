@@ -1,0 +1,728 @@
+{
+  "rows": [
+    {
+      "id": "rush-grass-v252",
+      "tier": 0,
+      "first": 6000,
+      "replay": 6000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-grass-v252",
+      "tier": 1,
+      "first": 14500,
+      "replay": 14500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-grass-v252",
+      "tier": 2,
+      "first": 29000,
+      "replay": 29000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 0,
+      "first": 12000,
+      "replay": 12000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 1,
+      "first": 23000,
+      "replay": 23000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 2,
+      "first": 42000,
+      "replay": 42000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 0,
+      "first": 28000,
+      "replay": 28000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 1,
+      "first": 49000,
+      "replay": 49000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 2,
+      "first": 82500,
+      "replay": 82500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-ember-v252",
+      "tier": 0,
+      "first": 50000,
+      "replay": 50000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-ember-v252",
+      "tier": 1,
+      "first": 82000,
+      "replay": 82000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-ember-v252",
+      "tier": 2,
+      "first": 131000,
+      "replay": 131000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 0,
+      "first": 9000,
+      "replay": 9000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 1,
+      "first": 19000,
+      "replay": 19000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 2,
+      "first": 36000,
+      "replay": 36000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 0,
+      "first": 16000,
+      "replay": 16000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 1,
+      "first": 29500,
+      "replay": 29500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 2,
+      "first": 51000,
+      "replay": 51000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 0,
+      "first": 32000,
+      "replay": 32000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 1,
+      "first": 55000,
+      "replay": 55000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 2,
+      "first": 91500,
+      "replay": 91500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-lantern-v252",
+      "tier": 0,
+      "first": 27000,
+      "replay": 27000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-lantern-v252",
+      "tier": 1,
+      "first": 46000,
+      "replay": 46000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-lantern-v252",
+      "tier": 2,
+      "first": 75500,
+      "replay": 75500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 0,
+      "first": 30000,
+      "replay": 30000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 1,
+      "first": 50000,
+      "replay": 50000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 2,
+      "first": 81500,
+      "replay": 81500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-dino-v252",
+      "tier": 0,
+      "first": 31500,
+      "replay": 31500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-dino-v252",
+      "tier": 1,
+      "first": 53000,
+      "replay": 53000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-dino-v252",
+      "tier": 2,
+      "first": 85500,
+      "replay": 85500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-afterimage-v252",
+      "tier": 0,
+      "first": 33000,
+      "replay": 33000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-afterimage-v252",
+      "tier": 1,
+      "first": 55000,
+      "replay": 55000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-afterimage-v252",
+      "tier": 2,
+      "first": 88500,
+      "replay": 88500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-reflection-v252",
+      "tier": 0,
+      "first": 46500,
+      "replay": 46500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-reflection-v252",
+      "tier": 1,
+      "first": 77000,
+      "replay": 77000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-reflection-v252",
+      "tier": 2,
+      "first": 123000,
+      "replay": 123000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-souls-v252",
+      "tier": 0,
+      "first": 50000,
+      "replay": 50000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-souls-v252",
+      "tier": 1,
+      "first": 82000,
+      "replay": 82000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-souls-v252",
+      "tier": 2,
+      "first": 131000,
+      "replay": 131000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 0,
+      "first": 56000,
+      "replay": 56000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 1,
+      "first": 91000,
+      "replay": 91000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 2,
+      "first": 144500,
+      "replay": 144500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rockaxe-v252",
+      "tier": 0,
+      "first": 7000,
+      "replay": 7000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rockaxe-v252",
+      "tier": 1,
+      "first": 16000,
+      "replay": 16000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-rockaxe-v252",
+      "tier": 2,
+      "first": 31000,
+      "replay": 31000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sandwall-v252",
+      "tier": 0,
+      "first": 10000,
+      "replay": 10000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sandwall-v252",
+      "tier": 1,
+      "first": 20500,
+      "replay": 20500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-sandwall-v252",
+      "tier": 2,
+      "first": 38000,
+      "replay": 38000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-waterside-v252",
+      "tier": 0,
+      "first": 13000,
+      "replay": 13000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-waterside-v252",
+      "tier": 1,
+      "first": 24500,
+      "replay": 24500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-waterside-v252",
+      "tier": 2,
+      "first": 44000,
+      "replay": 44000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-circuit-v252",
+      "tier": 0,
+      "first": 17000,
+      "replay": 17000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-circuit-v252",
+      "tier": 1,
+      "first": 30500,
+      "replay": 30500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-circuit-v252",
+      "tier": 2,
+      "first": 53000,
+      "replay": 53000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crater-v252",
+      "tier": 0,
+      "first": 22000,
+      "replay": 22000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crater-v252",
+      "tier": 1,
+      "first": 38000,
+      "replay": 38000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crater-v252",
+      "tier": 2,
+      "first": 63500,
+      "replay": 63500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-tides-v252",
+      "tier": 0,
+      "first": 26000,
+      "replay": 26000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-tides-v252",
+      "tier": 1,
+      "first": 44000,
+      "replay": 44000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-tides-v252",
+      "tier": 2,
+      "first": 72500,
+      "replay": 72500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-returnfield-v252",
+      "tier": 0,
+      "first": 28000,
+      "replay": 28000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-returnfield-v252",
+      "tier": 1,
+      "first": 47500,
+      "replay": 47500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-returnfield-v252",
+      "tier": 2,
+      "first": 77500,
+      "replay": 77500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fangs-v252",
+      "tier": 0,
+      "first": 31000,
+      "replay": 31000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fangs-v252",
+      "tier": 1,
+      "first": 51500,
+      "replay": 51500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fangs-v252",
+      "tier": 2,
+      "first": 83500,
+      "replay": 83500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-snipers-v252",
+      "tier": 0,
+      "first": 32500,
+      "replay": 32500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-snipers-v252",
+      "tier": 1,
+      "first": 54000,
+      "replay": 54000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-snipers-v252",
+      "tier": 2,
+      "first": 87500,
+      "replay": 87500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-beasts-v252",
+      "tier": 0,
+      "first": 34500,
+      "replay": 34500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-beasts-v252",
+      "tier": 1,
+      "first": 57000,
+      "replay": 57000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-beasts-v252",
+      "tier": 2,
+      "first": 91500,
+      "replay": 91500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crossfire-v252",
+      "tier": 0,
+      "first": 35500,
+      "replay": 35500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crossfire-v252",
+      "tier": 1,
+      "first": 59000,
+      "replay": 59000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-crossfire-v252",
+      "tier": 2,
+      "first": 94500,
+      "replay": 94500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fourknights-v252",
+      "tier": 0,
+      "first": 38500,
+      "replay": 38500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fourknights-v252",
+      "tier": 1,
+      "first": 63000,
+      "replay": 63000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-fourknights-v252",
+      "tier": 2,
+      "first": 100500,
+      "replay": 100500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-castlearmy-v252",
+      "tier": 0,
+      "first": 42500,
+      "replay": 42500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-castlearmy-v252",
+      "tier": 1,
+      "first": 69000,
+      "replay": 69000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-castlearmy-v252",
+      "tier": 2,
+      "first": 109000,
+      "replay": 109000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-hawkdrill-v252",
+      "tier": 0,
+      "first": 8500,
+      "replay": 8500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-hawkdrill-v252",
+      "tier": 1,
+      "first": 18000,
+      "replay": 18000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-hawkdrill-v252",
+      "tier": 2,
+      "first": 34000,
+      "replay": 34000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-seaking-v252",
+      "tier": 0,
+      "first": 27500,
+      "replay": 27500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-seaking-v252",
+      "tier": 1,
+      "first": 47000,
+      "replay": 47000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-seaking-v252",
+      "tier": 2,
+      "first": 76500,
+      "replay": 76500,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-veterans-v252",
+      "tier": 0,
+      "first": 44000,
+      "replay": 44000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-veterans-v252",
+      "tier": 1,
+      "first": 71000,
+      "replay": 71000,
+      "defeat": 0,
+      "abort": 0
+    },
+    {
+      "id": "rush-veterans-v252",
+      "tier": 2,
+      "first": 112000,
+      "replay": 112000,
+      "defeat": 0,
+      "abort": 0
+    }
+  ],
+  "unchangedContent": true,
+  "reloadNoDuplicate": true,
+  "legacyReplay": true,
+  "checkpointNoDuplicate": true
+}

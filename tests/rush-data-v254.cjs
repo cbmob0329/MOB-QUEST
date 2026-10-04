@@ -3,6 +3,9 @@ const read=p=>fs.readFileSync(p,'utf8'),data=JSON.parse(read('js/rush-v254.json'
 const context={worldIds:vm.runInNewContext(read('js/data.js')+'\nMOB_DATA.adventureWorlds.map(w=>w.id)'),assetExists:p=>fs.existsSync(p)};
 assert.equal(validate(data,context),true);
 const mutations=[
+ d=>d.quests[0].clearCoins=[0,1,2],
+ d=>d.quests[0].clearCoins=[6000,6000,29000],
+ d=>d.quests[0].clearCoins=[6000,14500,999999],
  d=>d.quests[0].areas[0].waves[0].splice(1),
  d=>d.quests[0].areas[0].waves[0].push(...d.quests[0].areas[0].waves[0]),
  d=>delete d.enemies['g-slime'].rushPassive,

@@ -43,4 +43,5 @@ for(const q of d.quests)for(const [i,a] of q.areas.entries()){
 for(const m of d.medals){m.traitLabel=m.traits.map(t=>t.label).join(' / ');m.design??='中ボスの特性を小さな補助効果として装備する';m.tiers=d.difficulties.map((diff,i)=>{const traits=m.traits.map(t=>{const v=Number(((t.chance??t.value)*(1+i*.2)).toFixed(4));return {...t,[t.chance===undefined?'value':'chance']:v,label:t.label.replace(/\d+(?:\.\d+)?%/g,Number((v*100).toFixed(2))+'%')};});return {stats:Object.fromEntries(Object.entries(m.stats).map(([k,v])=>[k,Math.round(v*diff.medalScale/10)*10])),traits,traitLabel:traits.map(t=>t.label).join(' / ')};});}
 d.narrator.defeat=[{"speaker":"holo","text":"敗北データを解析っちゃ\n編成を見直すっちゃ"}];
 d.narrator.messages={"alreadyClaimed":"受領済みのため追加報酬なし","upgraded":"所持メダルを強化したっちゃ","received":"メダルを1枚受領したっちゃ","continueArea":"HP・MPを引き継いで進むっちゃ","noReward":"報酬は未受領っちゃ"};
+for(const q of d.quests){const waves=q.areas.reduce((n,a)=>n+a.waves.length,0);q.clearCoins=d.difficulties.map((t,i)=>Math.round((1500+(q.recommendedLevel+t.levelOffset)*450)*(waves/3)*[1,1.5,2.2][i]/500)*500);}
 fs.writeFileSync('js/rush-v254.json',JSON.stringify(d,null,2)+'\n');console.log('Created 30 stages / 3 difficulties');

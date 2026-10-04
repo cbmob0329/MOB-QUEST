@@ -1,7 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto'),{open,root}=require('./story-v172-harness.cjs');
 const d=require('../js/rush-v254.json'),before=JSON.parse(fs.readFileSync(path.join(root,'artifacts/rush-v254/backup/pre-hakase-js_rush-v254.json')));
-const withoutImage=x=>{const y=structuredClone(x);delete y.narrator.image;return y;};
-assert.deepEqual(withoutImage(d),withoutImage(before),'Only narrator image may change');
+const withoutImage=x=>{const y=structuredClone(x);delete y.narrator.image;for(const q of y.quests)delete q.clearCoins;return y;};
+assert.deepEqual(withoutImage(d),withoutImage(before),'Only narrator image and separately tested completion coins may change');
 const hash=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,d.narrator.image))).digest('hex');
 assert.equal(hash,'1d2767b3c4640fbeb1d362026c146ccd9cb2efef17f098a426e3201f3ff57f3d');
 const injection=`window.holoCheck={async show(){const r=eventRunV174={rushV252:RUSH_DATA_V252.quests[0].id,tier:0,area:0};await rushDialogueV252(RUSH_DATA_V252.quests[0].areas[0].pre,r);eventRunV174=null;holoCheck.done=true;}};`;

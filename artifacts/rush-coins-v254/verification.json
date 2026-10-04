@@ -1,0 +1,26 @@
+[
+  {
+    "args": [
+      "tests/rush-ui-v254.cjs"
+    ],
+    "status": 0,
+    "stdout": "NARRATION 320 93\nNARRATION 390 93\nPASS 30-stage pagination, difficulty gates, all doctor narration at 320/390, HOME, real narration/battle/reward flow\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "scripts/test-rush-regression-v254.cjs"
+    ],
+    "status": 0,
+    "stdout": "RUN quest-access-v246.cjs\nPASS quest-access-v246.cjs\nRUN event-v174.cjs\nFAIL event-v174.cjs\nRUN macaron-v247.cjs\nPASS macaron-v247.cjs\nRUN story-balance-v244.cjs\nFAIL story-balance-v244.cjs\nRUN boss-hp-v249.cjs\nPASS boss-hp-v249.cjs\nRUN boss-edits-v250.cjs\nPASS boss-edits-v250.cjs\nRUN enemy-abilities-v142.cjs\nFAIL enemy-abilities-v142.cjs\nRUN battle-animation-v251.cjs\nPASS battle-animation-v251.cjs\nRUN rush-compat-v252.cjs\nPASS rush-compat-v252.cjs\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "tests/rush-holo-v254.cjs"
+    ],
+    "status": 0,
+    "stdout": "PASS approved image, unchanged 30x3 data, missing image fallback and dialogue completion\n",
+    "stderr": ""
+  }
+]

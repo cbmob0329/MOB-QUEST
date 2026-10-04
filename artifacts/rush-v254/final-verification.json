@@ -2,7 +2,7 @@
   "stages": 30,
   "difficulties": 3,
   "waves": 96,
-  "negativeCases": 14,
+  "negativeCases": 17,
   "nonRushUnchanged": true,
   "embeddedSourcesIdentical": true,
   "balanceWins": 270,
@@ -71,5 +71,14 @@
       "opacity": "1"
     },
     "missingImageDialogueCompletes": true
+  },
+  "completionCoinRewards": {
+    "firstAndReplayCases": 180,
+    "defeatCases": 90,
+    "abortCases": 90,
+    "min": 6000,
+    "max": 144500,
+    "report": "artifacts/rush-coins-v254/results.json",
+    "oldRewardsSuperseded": true
   }
 }
