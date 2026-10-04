@@ -1,0 +1,4738 @@
+{
+  "weapons": [
+    {
+      "id": "01",
+      "name": "MOBソード",
+      "type": "大剣",
+      "attribute": "無",
+      "stats": {
+        "atk": 5
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/01.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "02",
+      "name": "MOBの太刀",
+      "type": "太刀",
+      "attribute": "無",
+      "stats": {
+        "atk": 4,
+        "spd": 1
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/02.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "03",
+      "name": "MOBスティック",
+      "type": "杖",
+      "attribute": "無",
+      "stats": {
+        "atk": 2,
+        "mag": 3
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/03.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "04",
+      "name": "MOBハンドガン",
+      "type": "銃",
+      "attribute": "無",
+      "stats": {
+        "atk": 5
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/04.png",
+      "shop": true,
+      "traitLabel": "",
+      "traits": []
+    },
+    {
+      "id": "05",
+      "name": "MOBスピア",
+      "type": "槍",
+      "attribute": "無",
+      "stats": {
+        "atk": 4
+      },
+      "price": 5000,
+      "season": 1,
+      "image": "wepon/05.png",
+      "shop": true,
+      "traitLabel": "会心率+2%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "name": "モブファイアソード",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 9
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/06.png",
+      "shop": false,
+      "traitLabel": "火属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "火",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "name": "モブウォーターソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 8,
+        "def": 2
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/07.png",
+      "shop": false,
+      "traitLabel": "水属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "水",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "name": "モブサンダーソード",
+      "type": "大剣",
+      "attribute": "雷",
+      "stats": {
+        "atk": 8,
+        "spd": 2
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/08.png",
+      "shop": false,
+      "traitLabel": "雷属性耐性+5%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "雷",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "09",
+      "name": "モブウィングソード",
+      "type": "大剣",
+      "attribute": "風",
+      "stats": {
+        "atk": 8,
+        "spd": 2
+      },
+      "price": 12000,
+      "season": 2,
+      "image": "wepon/09.png",
+      "shop": false,
+      "traitLabel": "回避率+3%",
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "モブウォータースティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 10000,
+      "season": 2,
+      "image": "wepon/10.png",
+      "shop": false,
+      "traitLabel": "水属性魔法の消費MP-10%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "水",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "モブウィングスティック",
+      "type": "杖",
+      "attribute": "風",
+      "stats": {
+        "atk": 2,
+        "mag": 6
+      },
+      "price": 13000,
+      "season": 2,
+      "image": "wepon/11.png",
+      "shop": false,
+      "traitLabel": "風属性魔法使用時、30%の確率で威力50%の追撃魔法が発生",
+      "traits": [
+        {
+          "kind": "magicFollowup",
+          "element": "風",
+          "chance": 0.3,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "モブライトニングスティック",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 13000,
+      "season": 2,
+      "image": "wepon/12.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターに魔法でダメージを与えた時、自身のHP50回復",
+      "traits": [
+        {
+          "kind": "darkMagicHitHeal",
+          "amount": 50
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "モブアースロッド",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 3,
+        "mag": 6
+      },
+      "price": 15000,
+      "season": 2,
+      "image": "wepon/13.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、10%の確率で敵全体攻撃になる",
+      "traits": [
+        {
+          "kind": "normalAoe",
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "モブバブルガン",
+      "type": "銃",
+      "attribute": "水",
+      "stats": {
+        "atk": 10,
+        "spd": 1
+      },
+      "price": 14000,
+      "season": 2,
+      "image": "wepon/14.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、会心率+8%",
+      "traits": [
+        {
+          "kind": "weakCrit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "モブサンダーガン",
+      "type": "銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 9,
+        "spd": 3
+      },
+      "price": 16000,
+      "season": 2,
+      "image": "wepon/15.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、12%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.12,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "モブファイアガン",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 10
+      },
+      "price": 14000,
+      "season": 2,
+      "image": "wepon/16.png",
+      "shop": false,
+      "traitLabel": "HPが80%以上の時、ATK+5%",
+      "traits": [
+        {
+          "kind": "highHpAtk",
+          "threshold": 0.8,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "モブネオンブラスター",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 10,
+        "mag": 2
+      },
+      "price": 18000,
+      "season": 2,
+      "image": "wepon/17.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "モブライトスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 10,
+        "def": 2
+      },
+      "price": 16000,
+      "season": 2,
+      "image": "wepon/18.png",
+      "shop": false,
+      "traitLabel": "闇属性から受けるダメージ-8%",
+      "traits": [
+        {
+          "kind": "darkResist",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "モブロックスピア",
+      "type": "槍",
+      "attribute": "地",
+      "stats": {
+        "atk": 10,
+        "def": 3
+      },
+      "price": 18000,
+      "season": 2,
+      "image": "wepon/19.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、追加で被ダメージ-10%",
+      "traits": [
+        {
+          "kind": "guardExtraCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "モブサンドスピア",
+      "type": "槍",
+      "attribute": "地",
+      "stats": {
+        "atk": 11,
+        "def": 2
+      },
+      "price": 17000,
+      "season": 2,
+      "image": "wepon/20.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+8%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "モブスカイスピア",
+      "type": "槍",
+      "attribute": "雷",
+      "stats": {
+        "atk": 10,
+        "spd": 4
+      },
+      "price": 22000,
+      "season": 2,
+      "image": "wepon/21.png",
+      "shop": false,
+      "traitLabel": "会心率+4%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "モブ炎の太刀",
+      "type": "太刀",
+      "attribute": "火",
+      "stats": {
+        "atk": 12,
+        "spd": 2
+      },
+      "price": 20000,
+      "season": 2,
+      "image": "wepon/22.png",
+      "shop": false,
+      "traitLabel": "HP80%以上の時、会心率+6%",
+      "traits": [
+        {
+          "kind": "highHpCrit",
+          "threshold": 0.8,
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "name": "モブ風の太刀",
+      "type": "太刀",
+      "attribute": "風",
+      "stats": {
+        "atk": 11,
+        "spd": 4
+      },
+      "price": 19000,
+      "season": 2,
+      "image": "wepon/23.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、15%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.15,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "name": "モブスライムソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 17,
+        "def": 4
+      },
+      "price": 38000,
+      "season": 3,
+      "image": "wepon/24.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+10%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "name": "モブロックソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 18,
+        "def": 6
+      },
+      "price": 42000,
+      "season": 3,
+      "image": "wepon/25.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-7%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.07
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "name": "モブネオンソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 20,
+        "mag": 4
+      },
+      "price": 48000,
+      "season": 3,
+      "image": "wepon/26.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "name": "モブネプチューンソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 22,
+        "def": 4
+      },
+      "price": 55000,
+      "season": 3,
+      "image": "wepon/27.png",
+      "shop": false,
+      "traitLabel": "HP満タン時、与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "fullHpDamage",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "name": "モブパルスソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 22,
+        "spd": 6
+      },
+      "price": 60000,
+      "season": 3,
+      "image": "wepon/28.png",
+      "shop": false,
+      "traitLabel": "会心率+6%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.06
+        }
+      ]
+    },
+    {
+      "id": "29",
+      "name": "モブスライムスティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 6,
+        "mag": 20
+      },
+      "price": 45000,
+      "season": 3,
+      "image": "wepon/29.png",
+      "shop": false,
+      "traitLabel": "水属性魔法の消費MP-15%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "水",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "30",
+      "name": "モブロックスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 7,
+        "mag": 22,
+        "def": 4
+      },
+      "price": 52000,
+      "season": 3,
+      "image": "wepon/30.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大MPの5%回復",
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "31",
+      "name": "モブネプチューンスティック",
+      "type": "杖",
+      "attribute": "水",
+      "stats": {
+        "atk": 8,
+        "mag": 26
+      },
+      "price": 65000,
+      "season": 3,
+      "image": "wepon/31.png",
+      "shop": false,
+      "traitLabel": "水属性魔法使用時、15%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": "水",
+          "chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "32",
+      "name": "モブドワーフスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 10,
+        "mag": 28,
+        "def": 5
+      },
+      "price": 72000,
+      "season": 3,
+      "image": "wepon/32.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、魔法で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "lowHpMagicCut",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "33",
+      "name": "モブナイフスティック",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 15,
+        "mag": 22,
+        "spd": 6
+      },
+      "price": 58000,
+      "season": 3,
+      "image": "wepon/33.png",
+      "shop": false,
+      "traitLabel": "通常攻撃の会心率+8%",
+      "traits": [
+        {
+          "kind": "normalCrit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "34",
+      "name": "モブホークガン",
+      "type": "銃",
+      "attribute": "風",
+      "stats": {
+        "atk": 26,
+        "spd": 6
+      },
+      "price": 68000,
+      "season": 3,
+      "image": "wepon/34.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "35",
+      "name": "モブネオンガン",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 28,
+        "mag": 5
+      },
+      "price": 70000,
+      "season": 3,
+      "image": "wepon/35.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+18%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.18
+        }
+      ]
+    },
+    {
+      "id": "36",
+      "name": "モブデンデンガン",
+      "type": "銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 27,
+        "spd": 7
+      },
+      "price": 74000,
+      "season": 3,
+      "image": "wepon/36.png",
+      "shop": false,
+      "traitLabel": "会心率+7%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.07
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "name": "モブティラガン",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 30
+      },
+      "price": 69000,
+      "season": 3,
+      "image": "wepon/37.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.7,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "38",
+      "name": "モブライトスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 28,
+        "def": 8
+      },
+      "price": 66000,
+      "season": 3,
+      "image": "wepon/38.png",
+      "shop": false,
+      "traitLabel": "闇属性から受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "darkResist",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "39",
+      "name": "モブデンデンスピア",
+      "type": "槍",
+      "attribute": "雷",
+      "stats": {
+        "atk": 28,
+        "spd": 7
+      },
+      "price": 78000,
+      "season": 3,
+      "image": "wepon/39.png",
+      "shop": false,
+      "traitLabel": "会心発生時、自身のHPを最大HPの3%回復",
+      "traits": [
+        {
+          "kind": "critHeal",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "40",
+      "name": "モブティラスピア",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 31,
+        "def": 4
+      },
+      "price": 80000,
+      "season": 3,
+      "image": "wepon/40.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+10%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "41",
+      "name": "モブエーススピア",
+      "type": "槍",
+      "attribute": "無",
+      "stats": {
+        "atk": 30,
+        "spd": 8
+      },
+      "price": 75000,
+      "season": 3,
+      "image": "wepon/41.png",
+      "shop": false,
+      "traitLabel": "戦闘開始から3ターンの間、SPD+10%",
+      "traits": [
+        {
+          "kind": "startSpd",
+          "turns": 3,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "42",
+      "name": "モブネプチューントライデント",
+      "type": "槍",
+      "attribute": "水",
+      "stats": {
+        "atk": 32,
+        "def": 8
+      },
+      "price": 90000,
+      "season": 3,
+      "image": "wepon/42.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大HPの5%回復",
+      "traits": [
+        {
+          "kind": "guardHpHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "43",
+      "name": "モブ海駅守護",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 30,
+        "def": 7,
+        "spd": 5
+      },
+      "price": 77000,
+      "season": 3,
+      "image": "wepon/43.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、被ダメージ-10%",
+      "traits": [
+        {
+          "kind": "lowHpDamageCut",
+          "threshold": 0.5,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "44",
+      "name": "モブパーティー赤刀",
+      "type": "太刀",
+      "attribute": "火",
+      "stats": {
+        "atk": 32,
+        "spd": 8
+      },
+      "price": 82000,
+      "season": 3,
+      "image": "wepon/44.png",
+      "shop": false,
+      "traitLabel": "会心率+8%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "45",
+      "name": "モブパーティー青刀",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 31,
+        "def": 4,
+        "spd": 9
+      },
+      "price": 84000,
+      "season": 3,
+      "image": "wepon/45.png",
+      "shop": false,
+      "traitLabel": "回避率+5%",
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "46",
+      "name": "モブ三光の太刀",
+      "type": "太刀",
+      "attribute": "光",
+      "stats": {
+        "atk": 35,
+        "mag": 6,
+        "spd": 10
+      },
+      "price": 95000,
+      "season": 3,
+      "image": "wepon/46.png",
+      "shop": false,
+      "traitLabel": "光属性弱点を突いた時、与ダメージ+15% 会心率+5%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "element": "光",
+          "value": 0.15
+        },
+        {
+          "kind": "crit",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "47",
+      "name": "モブタフネスソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 39,
+        "def": 10
+      },
+      "price": 125000,
+      "season": 4,
+      "image": "wepon/47.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "name": "モブテツソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 42,
+        "def": 11
+      },
+      "price": 118000,
+      "season": 4,
+      "image": "wepon/48.png",
+      "shop": false,
+      "traitLabel": "地属性耐性+15%",
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "地",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "49",
+      "name": "モブエンジェルソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 44,
+        "mag": 10
+      },
+      "price": 142000,
+      "season": 4,
+      "image": "wepon/49.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "name": "モブPB2デュアルソード",
+      "type": "大剣",
+      "attribute": "光",
+      "stats": {
+        "atk": 44,
+        "spd": 13
+      },
+      "price": 180000,
+      "season": 4,
+      "image": "wepon/50.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "51",
+      "name": "モブPB2レッドソード",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 49,
+        "spd": 6
+      },
+      "price": 155000,
+      "season": 4,
+      "image": "wepon/51.png",
+      "shop": false,
+      "traitLabel": "HP80%以上の時、与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.8,
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "52",
+      "name": "モブPB2ブルーソード",
+      "type": "大剣",
+      "attribute": "水",
+      "stats": {
+        "atk": 48,
+        "def": 10
+      },
+      "price": 150000,
+      "season": 4,
+      "image": "wepon/52.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、DEF+15%",
+      "traits": [
+        {
+          "kind": "lowHpDef",
+          "threshold": 0.5,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "53",
+      "name": "モブピンクスティック",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 11,
+        "mag": 44,
+        "spd": 6
+      },
+      "price": 138000,
+      "season": 4,
+      "image": "wepon/53.png",
+      "shop": false,
+      "traitLabel": "光属性魔法の消費MP-15%",
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "element": "光",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "54",
+      "name": "モブパッションフレイムスティック",
+      "type": "杖",
+      "attribute": "火",
+      "stats": {
+        "atk": 13,
+        "mag": 49
+      },
+      "price": 160000,
+      "season": 4,
+      "image": "wepon/54.png",
+      "shop": false,
+      "traitLabel": "火属性魔法使用時、20%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": "火",
+          "chance": 0.2
+        }
+      ]
+    },
+    {
+      "id": "55",
+      "name": "モブ星の杖",
+      "type": "杖",
+      "attribute": "無",
+      "stats": {
+        "atk": 17,
+        "mag": 48,
+        "spd": 10
+      },
+      "price": 152000,
+      "season": 4,
+      "image": "wepon/55.png",
+      "shop": false,
+      "traitLabel": "魔法使用時、10%の確率で消費MP0",
+      "traits": [
+        {
+          "kind": "magicFree",
+          "element": null,
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "56",
+      "name": "モブ闇の宝石",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 13,
+        "mag": 53
+      },
+      "price": 172000,
+      "season": 4,
+      "image": "wepon/56.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、魔法与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "highHpMagicDamage",
+          "threshold": 0.7,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "57",
+      "name": "モブスティックガン",
+      "type": "杖・銃",
+      "attribute": "雷",
+      "stats": {
+        "atk": 33,
+        "mag": 33,
+        "spd": 8
+      },
+      "price": 185000,
+      "season": 4,
+      "image": "wepon/57.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率でMAG依存の追撃が発生 追撃威力50%",
+      "traits": [
+        {
+          "kind": "normalMagFollowup",
+          "chance": 0.2,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "58",
+      "name": "モブエンジェルガン",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 53,
+        "mag": 10
+      },
+      "price": 165000,
+      "season": 4,
+      "image": "wepon/58.png",
+      "shop": false,
+      "traitLabel": "闇属性モンスターへの与ダメージ+22%",
+      "traits": [
+        {
+          "kind": "darkDamage",
+          "value": 0.22
+        }
+      ]
+    },
+    {
+      "id": "59",
+      "name": "モブスミスリボルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 52,
+        "spd": 8
+      },
+      "price": 175000,
+      "season": 4,
+      "image": "wepon/59.png",
+      "shop": false,
+      "traitLabel": "会心率+10%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "60",
+      "name": "モブマトリックスイーグル",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 51,
+        "spd": 11
+      },
+      "price": 205000,
+      "season": 4,
+      "image": "wepon/60.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、25%の確率で威力50%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.25,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "61",
+      "name": "モブグラディシルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 56,
+        "def": 5
+      },
+      "price": 190000,
+      "season": 4,
+      "image": "wepon/61.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+12%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "62",
+      "name": "モブ憤怒の槍",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 54,
+        "def": 11
+      },
+      "price": 200000,
+      "season": 4,
+      "image": "wepon/62.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "lowHpDamage",
+          "threshold": 0.5,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "63",
+      "name": "モブデジタルコードスピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 52,
+        "mag": 11,
+        "spd": 10
+      },
+      "price": 210000,
+      "season": 4,
+      "image": "wepon/63.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、15%の確率で敵DEFを50%無視",
+      "traits": [
+        {
+          "kind": "defIgnore",
+          "chance": 0.15,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "64",
+      "name": "ミラモブの太刀",
+      "type": "太刀",
+      "attribute": "闇",
+      "stats": {
+        "atk": 57,
+        "spd": 13
+      },
+      "price": 225000,
+      "season": 4,
+      "image": "wepon/64.png",
+      "shop": false,
+      "traitLabel": "会心率+12% 攻撃したモンスターを10%の確率で毒状態にする",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.12
+        },
+        {
+          "kind": "poisonOnHit",
+          "chance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "65",
+      "name": "モブテツ一文字",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 59,
+        "def": 10,
+        "spd": 8
+      },
+      "price": 215000,
+      "season": 4,
+      "image": "wepon/65.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "66",
+      "name": "モブスライムの一振り",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 61,
+        "spd": 10
+      },
+      "price": 220000,
+      "season": 4,
+      "image": "wepon/66.png",
+      "shop": false,
+      "traitLabel": "通常攻撃で与えたダメージの5%分HP回復",
+      "traits": [
+        {
+          "kind": "normalLifesteal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "67",
+      "name": "モブ魔王の大剣",
+      "type": "大剣",
+      "attribute": "闇",
+      "stats": {
+        "atk": 67,
+        "def": 8
+      },
+      "price": 330000,
+      "season": 5,
+      "image": "wepon/67.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、与ダメージ+18%",
+      "traits": [
+        {
+          "kind": "lowHpDamage",
+          "threshold": 0.5,
+          "value": 0.18
+        }
+      ]
+    },
+    {
+      "id": "68",
+      "name": "モブ魔女の大剣",
+      "type": "大剣",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 51,
+        "mag": 51,
+        "def": 8
+      },
+      "price": 390000,
+      "season": 5,
+      "image": "wepon/68.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "69",
+      "name": "モブアンロックソード",
+      "type": "大剣",
+      "attribute": "地",
+      "stats": {
+        "atk": 71,
+        "def": 13
+      },
+      "price": 320000,
+      "season": 5,
+      "image": "wepon/69.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "70",
+      "name": "モブデンデンソード",
+      "type": "大剣",
+      "attribute": "雷",
+      "stats": {
+        "atk": 72,
+        "spd": 13
+      },
+      "price": 360000,
+      "season": 5,
+      "image": "wepon/70.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、20%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.2,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "71",
+      "name": "モブニョロの大剣",
+      "type": "大剣",
+      "attribute": "火",
+      "stats": {
+        "atk": 68,
+        "spd": 8
+      },
+      "price": 345000,
+      "season": 5,
+      "image": "wepon/71.png",
+      "shop": false,
+      "traitLabel": "HP70%以上の時、与ダメージ+15%",
+      "traits": [
+        {
+          "kind": "highHpDamage",
+          "threshold": 0.7,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "72",
+      "name": "ウルモブソード",
+      "type": "大剣",
+      "attribute": "闇",
+      "stats": {
+        "atk": 71,
+        "spd": 13
+      },
+      "price": 410000,
+      "season": 5,
+      "image": "wepon/72.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+25%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "73",
+      "name": "モブリリスの杖",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 17,
+        "mag": 74
+      },
+      "price": 340000,
+      "season": 5,
+      "image": "wepon/73.png",
+      "shop": false,
+      "traitLabel": "HP50%以下の時、魔法与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "lowHpMagicDamage",
+          "threshold": 0.5,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "74",
+      "name": "モブリリススティック",
+      "type": "杖",
+      "attribute": "闇",
+      "stats": {
+        "atk": 18,
+        "mag": 71,
+        "spd": 8
+      },
+      "price": 385000,
+      "season": 5,
+      "image": "wepon/74.png",
+      "shop": false,
+      "traitLabel": "闇属性魔法使用時、25%の確率で威力50%の追撃魔法",
+      "traits": [
+        {
+          "kind": "magicFollowup",
+          "element": "闇",
+          "chance": 0.25,
+          "power": 0.5
+        }
+      ]
+    },
+    {
+      "id": "75",
+      "name": "モブ魔女の杖",
+      "type": "杖",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 23,
+        "mag": 75,
+        "def": 8
+      },
+      "price": 450000,
+      "season": 5,
+      "image": "wepon/75.png",
+      "shop": false,
+      "traitLabel": "弱点を魔法で突いた時、与ダメージ+25%",
+      "traits": [
+        {
+          "kind": "magicWeakDamage",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "76",
+      "name": "モブマニーの杖",
+      "type": "杖",
+      "attribute": "光",
+      "stats": {
+        "atk": 18,
+        "mag": 80,
+        "spd": 10
+      },
+      "price": 420000,
+      "season": 5,
+      "image": "wepon/76.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "77",
+      "name": "モブテツの杖",
+      "type": "杖",
+      "attribute": "地",
+      "stats": {
+        "atk": 28,
+        "mag": 89,
+        "def": 11
+      },
+      "price": 480000,
+      "season": 5,
+      "image": "wepon/77.png",
+      "shop": false,
+      "traitLabel": "防御コマンド使用時、最大MPの10%回復",
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "78",
+      "name": "モブ魔女ハンドガン",
+      "type": "銃",
+      "attribute": "光・闇",
+      "stats": {
+        "atk": 67,
+        "mag": 44,
+        "spd": 11
+      },
+      "price": 400000,
+      "season": 5,
+      "image": "wepon/78.png",
+      "shop": false,
+      "traitLabel": "敵の弱点属性を突いた時、会心率+15%",
+      "traits": [
+        {
+          "kind": "weakCrit",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "79",
+      "name": "モブマニーブラスター",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 77,
+        "mag": 10
+      },
+      "price": 405000,
+      "season": 5,
+      "image": "wepon/79.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "80",
+      "name": "モブネオンパルスショット",
+      "type": "銃",
+      "attribute": "光",
+      "stats": {
+        "atk": 80,
+        "spd": 15
+      },
+      "price": 460000,
+      "season": 5,
+      "image": "wepon/80.png",
+      "shop": false,
+      "traitLabel": "通常攻撃時、25%の確率で威力60%の追撃",
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.25,
+          "power": 0.6
+        }
+      ]
+    },
+    {
+      "id": "81",
+      "name": "モブアンティークリボルバー",
+      "type": "銃",
+      "attribute": "火",
+      "stats": {
+        "atk": 83,
+        "spd": 11
+      },
+      "price": 445000,
+      "season": 5,
+      "image": "wepon/81.png",
+      "shop": false,
+      "traitLabel": "会心率+15%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "82",
+      "name": "モブアンティークスピア",
+      "type": "槍",
+      "attribute": "火",
+      "stats": {
+        "atk": 78,
+        "def": 15
+      },
+      "price": 430000,
+      "season": 5,
+      "image": "wepon/82.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-10%",
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "83",
+      "name": "モブローズスピア",
+      "type": "槍",
+      "attribute": "闇",
+      "stats": {
+        "atk": 81,
+        "def": 10,
+        "spd": 11
+      },
+      "price": 470000,
+      "season": 5,
+      "image": "wepon/83.png",
+      "shop": false,
+      "traitLabel": "通常攻撃で与えたダメージの5%分HP回復",
+      "traits": [
+        {
+          "kind": "normalLifesteal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "84",
+      "name": "モブマニースピア",
+      "type": "槍",
+      "attribute": "光",
+      "stats": {
+        "atk": 84,
+        "def": 11
+      },
+      "price": 415000,
+      "season": 5,
+      "image": "wepon/84.png",
+      "shop": false,
+      "traitLabel": "戦闘勝利時の獲得G+20%",
+      "traits": [
+        {
+          "kind": "goldBonus",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "85",
+      "name": "モブタフネス二ノ型",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 83,
+        "def": 13,
+        "spd": 17
+      },
+      "price": 455000,
+      "season": 5,
+      "image": "wepon/85.png",
+      "shop": false,
+      "traitLabel": "物理攻撃で受けるダメージ-12% 会心率+8%",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.08
+        },
+        {
+          "kind": "physicalCut",
+          "value": 0.12
+        }
+      ]
+    },
+    {
+      "id": "86",
+      "name": "モブネオン妖刀の一",
+      "type": "太刀",
+      "attribute": "光",
+      "stats": {
+        "atk": 85,
+        "mag": 10,
+        "spd": 18
+      },
+      "price": 490000,
+      "season": 5,
+      "image": "wepon/86.png",
+      "shop": false,
+      "traitLabel": "会心率+12% 会心発生時、最大HPの5%回復",
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.12
+        },
+        {
+          "kind": "critHeal",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "87",
+      "name": "モブテツ一輪の花",
+      "type": "太刀",
+      "attribute": "地",
+      "stats": {
+        "atk": 87,
+        "def": 15,
+        "spd": 13
+      },
+      "price": 475000,
+      "season": 5,
+      "image": "wepon/87.png",
+      "shop": false,
+      "traitLabel": "ボスモンスターへの与ダメージ+20%",
+      "traits": [
+        {
+          "kind": "bossDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "88",
+      "name": "モブ海王の太刀",
+      "type": "太刀",
+      "attribute": "水",
+      "stats": {
+        "atk": 89,
+        "spd": 18
+      },
+      "price": 500000,
+      "season": 5,
+      "image": "wepon/88.png",
+      "shop": false,
+      "traitLabel": "弱点を突いた時、与ダメージ+30% 会心率+15%",
+      "traits": [
+        {
+          "kind": "weakDamage",
+          "value": 0.3
+        },
+        {
+          "kind": "crit",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "hot-fight",
+      "name": "モブファイト",
+      "image": "spenemy/39.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "SSR",
+      "attribute": "水",
+      "stats": {
+        "atk": 50,
+        "def": 50
+      },
+      "traits": [
+        {
+          "kind": "lowHpDamageCut",
+          "threshold": 0.5,
+          "value": 0.05,
+          "label": "HP50%以下でダメージ軽減+5%"
+        }
+      ],
+      "traitLabel": "HP50%以下でダメージ軽減+5%"
+    },
+    {
+      "id": "event-phoenix-medal",
+      "name": "モブフェニックス",
+      "image": "spenemy/41.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "火",
+      "stats": {
+        "atk": 30,
+        "maxHp": 150,
+        "maxMp": 250
+      },
+      "traits": [
+        {
+          "kind": "eventPhoenixDrainV179",
+          "chance": 0.3,
+          "value": 0.1,
+          "label": "30%で与ダメージの10% HP回復"
+        }
+      ],
+      "traitLabel": "30%の確率で与えたダメージの10% HPを回復する"
+    },
+    {
+      "id": "event-custard-medal",
+      "name": "モブカスタード",
+      "image": "spenemy/42.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "光",
+      "stats": {
+        "mag": 50,
+        "res": 50
+      },
+      "traits": [
+        {
+          "kind": "eventMagicCritV179",
+          "value": 0.04,
+          "label": "魔法会心率+4%"
+        }
+      ],
+      "traitLabel": "魔法会心率+4%"
+    },
+    {
+      "id": "event-horapue-medal",
+      "name": "モブホラプエ",
+      "image": "spenemy/85.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "水",
+      "stats": {
+        "spd": 80
+      },
+      "traits": [
+        {
+          "kind": "normalFollowup",
+          "chance": 0.05,
+          "power": 1.1,
+          "label": "5%で通常攻撃の110%で追撃"
+        }
+      ],
+      "traitLabel": "5%の確率で通常攻撃の110%で追撃する"
+    },
+    {
+      "id": "story-neomaster-medal",
+      "name": "モブネオンマスター",
+      "actor": "boss-neomaster",
+      "stats": {
+        "mag": 50,
+        "res": 50,
+        "maxMp": 200
+      },
+      "traits": [
+        {
+          "kind": "storyMagicCritV231",
+          "value": 0.05,
+          "label": "魔法会心率+5%"
+        }
+      ],
+      "image": "boss/18.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "魔法会心率+5%"
+    },
+    {
+      "id": "story-dragon-medal",
+      "name": "モブドラゴン",
+      "actor": "dragon",
+      "stats": {
+        "atk": 50,
+        "def": 50,
+        "maxHp": 200
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "火",
+          "value": 0.15,
+          "label": "火属性耐性+15%"
+        },
+        {
+          "kind": "resist",
+          "element": "闇",
+          "value": 0.15,
+          "label": "闇属性耐性+15%"
+        }
+      ],
+      "image": "boss/09.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "火属性耐性+15% / 闇属性耐性+15%"
+    },
+    {
+      "id": "story-mira-medal",
+      "name": "ミラモブ",
+      "actor": "boss-mira-d2",
+      "stats": {
+        "atk": 80,
+        "spd": 80
+      },
+      "traits": [
+        {
+          "kind": "darkMagicCritV231",
+          "value": 0.08,
+          "label": "闇属性魔法会心率+8%"
+        }
+      ],
+      "image": "boss/03.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "無",
+      "traitLabel": "闇属性魔法会心率+8%"
+    },
+    {
+      "id": "event-mint-medal",
+      "name": "モブミント",
+      "image": "spenemy/89.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "水",
+      "stats": {
+        "mag": 50,
+        "def": 30
+      },
+      "traits": [
+        {
+          "kind": "mintRepeatV237",
+          "chance": 0.03,
+          "label": "連続魔法発動率+3%（同じ魔法・追加MP消費なし）"
+        }
+      ],
+      "traitLabel": "魔法使用時、3%の確率で同じ魔法を再発動（追加MP消費なし）"
+    },
+    {
+      "id": "event-macaron-medal",
+      "name": "モブマカロン",
+      "image": "spenemy/94.png",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "rarity": "UR",
+      "attribute": "光",
+      "stats": {
+        "atk": 100
+      },
+      "traits": [
+        {
+          "kind": "macaronFollowV247",
+          "chance": 0.03,
+          "label": "特技使用時、連撃発動率+3%（通常攻撃の110%で追撃）"
+        }
+      ],
+      "traitLabel": "特技使用時、連撃発動率+3%（通常攻撃の110%で追撃）"
+    },
+    {
+      "id": "rush-savanna-v252",
+      "name": "モブサバンナ・連戦の証",
+      "image": "enemy/09.png",
+      "rarity": "SR",
+      "attribute": "地",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 30,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "地",
+          "value": 0.03,
+          "label": "地属性耐性+3%"
+        },
+        {
+          "kind": "physicalCut",
+          "value": 0.02,
+          "label": "草原の構え：物理ダメージ2%軽減"
+        }
+      ],
+      "traitLabel": "地属性耐性+3% / 草原の構え：物理ダメージ2%軽減",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "def": 30,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "地",
+              "value": 0.03,
+              "label": "地属性耐性+3%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.02,
+              "label": "草原の構え：物理ダメージ2%軽減"
+            }
+          ],
+          "traitLabel": "地属性耐性+3% / 草原の構え：物理ダメージ2%軽減"
+        },
+        {
+          "stats": {
+            "def": 40,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "地",
+              "value": 0.036,
+              "label": "地属性耐性+3.6%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.024,
+              "label": "草原の構え：物理ダメージ2.4%軽減"
+            }
+          ],
+          "traitLabel": "地属性耐性+3.6% / 草原の構え：物理ダメージ2.4%軽減"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "地",
+              "value": 0.042,
+              "label": "地属性耐性+4.2%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.028,
+              "label": "草原の構え：物理ダメージ2.8%軽減"
+            }
+          ],
+          "traitLabel": "地属性耐性+4.2% / 草原の構え：物理ダメージ2.8%軽減"
+        }
+      ]
+    },
+    {
+      "id": "rush-captain-v252",
+      "name": "モブキャプテン・連戦の証",
+      "image": "enemy/54.png",
+      "rarity": "SR",
+      "attribute": "闇",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 40,
+        "maxMp": 100
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "闇",
+          "value": 0.05,
+          "label": "闇属性耐性+5%"
+        },
+        {
+          "kind": "crit",
+          "value": 0.02,
+          "label": "隊長の眼：会心率+2%"
+        }
+      ],
+      "traitLabel": "闇属性耐性+5% / 隊長の眼：会心率+2%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 40,
+            "maxMp": 100
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "闇",
+              "value": 0.05,
+              "label": "闇属性耐性+5%"
+            },
+            {
+              "kind": "crit",
+              "value": 0.02,
+              "label": "隊長の眼：会心率+2%"
+            }
+          ],
+          "traitLabel": "闇属性耐性+5% / 隊長の眼：会心率+2%"
+        },
+        {
+          "stats": {
+            "atk": 50,
+            "maxMp": 130
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "闇",
+              "value": 0.06,
+              "label": "闇属性耐性+6%"
+            },
+            {
+              "kind": "crit",
+              "value": 0.024,
+              "label": "隊長の眼：会心率+2.4%"
+            }
+          ],
+          "traitLabel": "闇属性耐性+6% / 隊長の眼：会心率+2.4%"
+        },
+        {
+          "stats": {
+            "atk": 60,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "闇",
+              "value": 0.07,
+              "label": "闇属性耐性+7%"
+            },
+            {
+              "kind": "crit",
+              "value": 0.028,
+              "label": "隊長の眼：会心率+2.8%"
+            }
+          ],
+          "traitLabel": "闇属性耐性+7% / 隊長の眼：会心率+2.8%"
+        }
+      ]
+    },
+    {
+      "id": "rush-frezard-v252",
+      "name": "モブフレザード・連戦の証",
+      "image": "enemy/103.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "res": 40
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "element": "火",
+          "value": 0.05,
+          "label": "火属性耐性+5%"
+        },
+        {
+          "kind": "resist",
+          "element": "水",
+          "value": 0.05,
+          "label": "水属性耐性+5%"
+        }
+      ],
+      "traitLabel": "火属性耐性+5% / 水属性耐性+5%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "res": 40
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "火",
+              "value": 0.05,
+              "label": "火属性耐性+5%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.05,
+              "label": "水属性耐性+5%"
+            }
+          ],
+          "traitLabel": "火属性耐性+5% / 水属性耐性+5%"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "res": 50
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "火",
+              "value": 0.06,
+              "label": "火属性耐性+6%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.06,
+              "label": "水属性耐性+6%"
+            }
+          ],
+          "traitLabel": "火属性耐性+6% / 水属性耐性+6%"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "res": 60
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "element": "火",
+              "value": 0.07,
+              "label": "火属性耐性+7%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.07,
+              "label": "水属性耐性+7%"
+            }
+          ],
+          "traitLabel": "火属性耐性+7% / 水属性耐性+7%"
+        }
+      ]
+    },
+    {
+      "id": "rush-golem-v252",
+      "name": "モブマグゴーレム・連戦の証",
+      "image": "enemy/94.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 50,
+        "maxHp": 200
+      },
+      "traits": [
+        {
+          "kind": "guardExtraCut",
+          "value": 0.05,
+          "label": "防御時の追加ダメージ軽減+5%"
+        },
+        {
+          "kind": "guardHpHeal",
+          "value": 0.02,
+          "label": "溶岩の構え：防御時HP2%回復"
+        }
+      ],
+      "traitLabel": "防御時の追加ダメージ軽減+5% / 溶岩の構え：防御時HP2%回復",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "def": 50,
+            "maxHp": 200
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.05,
+              "label": "防御時の追加ダメージ軽減+5%"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.02,
+              "label": "溶岩の構え：防御時HP2%回復"
+            }
+          ],
+          "traitLabel": "防御時の追加ダメージ軽減+5% / 溶岩の構え：防御時HP2%回復"
+        },
+        {
+          "stats": {
+            "def": 60,
+            "maxHp": 250
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.06,
+              "label": "防御時の追加ダメージ軽減+6%"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.024,
+              "label": "溶岩の構え：防御時HP2.4%回復"
+            }
+          ],
+          "traitLabel": "防御時の追加ダメージ軽減+6% / 溶岩の構え：防御時HP2.4%回復"
+        },
+        {
+          "stats": {
+            "def": 80,
+            "maxHp": 300
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.07,
+              "label": "防御時の追加ダメージ軽減+7%"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.028,
+              "label": "溶岩の構え：防御時HP2.8%回復"
+            }
+          ],
+          "traitLabel": "防御時の追加ダメージ軽減+7% / 溶岩の構え：防御時HP2.8%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "name": "モブポイズン・連戦の証",
+      "image": "enemy/30.png",
+      "rarity": "SR",
+      "attribute": "闇",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 20,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "poisonOnHit",
+          "chance": 0.03,
+          "label": "毒の爪：通常攻撃後3%で毒付与判定"
+        }
+      ],
+      "traitLabel": "毒の爪：通常攻撃後3%で毒付与判定",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 20,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "poisonOnHit",
+              "chance": 0.03,
+              "label": "毒の爪：通常攻撃後3%で毒付与判定"
+            }
+          ],
+          "traitLabel": "毒の爪：通常攻撃後3%で毒付与判定"
+        },
+        {
+          "stats": {
+            "atk": 30,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "poisonOnHit",
+              "chance": 0.036,
+              "label": "毒の爪：通常攻撃後3.6%で毒付与判定"
+            }
+          ],
+          "traitLabel": "毒の爪：通常攻撃後3.6%で毒付与判定"
+        },
+        {
+          "stats": {
+            "atk": 30,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "poisonOnHit",
+              "chance": 0.042,
+              "label": "毒の爪：通常攻撃後4.2%で毒付与判定"
+            }
+          ],
+          "traitLabel": "毒の爪：通常攻撃後4.2%で毒付与判定"
+        }
+      ]
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "name": "モブエネチェイサー・連戦の証",
+      "image": "enemy/77.png",
+      "rarity": "SR",
+      "attribute": "地",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "spd": 30,
+        "maxMp": 100
+      },
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.03,
+          "label": "追跡の足取り：回避率+3%"
+        }
+      ],
+      "traitLabel": "追跡の足取り：回避率+3%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "spd": 30,
+            "maxMp": 100
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.03,
+              "label": "追跡の足取り：回避率+3%"
+            }
+          ],
+          "traitLabel": "追跡の足取り：回避率+3%"
+        },
+        {
+          "stats": {
+            "spd": 40,
+            "maxMp": 130
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.036,
+              "label": "追跡の足取り：回避率+3.6%"
+            }
+          ],
+          "traitLabel": "追跡の足取り：回避率+3.6%"
+        },
+        {
+          "stats": {
+            "spd": 50,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.042,
+              "label": "追跡の足取り：回避率+4.2%"
+            }
+          ],
+          "traitLabel": "追跡の足取り：回避率+4.2%"
+        }
+      ]
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "name": "モブウェイブ・連戦の証",
+      "image": "enemy/120.png",
+      "rarity": "SSR",
+      "attribute": "水",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "res": 40,
+        "maxMp": 100
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "深海の衣：水耐性+5%",
+          "element": "水"
+        },
+        {
+          "kind": "guardMpHeal",
+          "value": 0.02,
+          "label": "波の呼吸：防御時MP2%回復"
+        }
+      ],
+      "traitLabel": "深海の衣：水耐性+5% / 波の呼吸：防御時MP2%回復",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "res": 40,
+            "maxMp": 100
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "深海の衣：水耐性+5%",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.02,
+              "label": "波の呼吸：防御時MP2%回復"
+            }
+          ],
+          "traitLabel": "深海の衣：水耐性+5% / 波の呼吸：防御時MP2%回復"
+        },
+        {
+          "stats": {
+            "res": 50,
+            "maxMp": 130
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "深海の衣：水耐性+6%",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.024,
+              "label": "波の呼吸：防御時MP2.4%回復"
+            }
+          ],
+          "traitLabel": "深海の衣：水耐性+6% / 波の呼吸：防御時MP2.4%回復"
+        },
+        {
+          "stats": {
+            "res": 60,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "深海の衣：水耐性+7%",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.028,
+              "label": "波の呼吸：防御時MP2.8%回復"
+            }
+          ],
+          "traitLabel": "深海の衣：水耐性+7% / 波の呼吸：防御時MP2.8%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "name": "モブメラケロ・連戦の証",
+      "image": "enemy/16.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "蛙の灯火：火魔法の消費MP5%軽減",
+          "element": "火"
+        }
+      ],
+      "traitLabel": "蛙の灯火：火魔法の消費MP5%軽減",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "蛙の灯火：火魔法の消費MP5%軽減",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "蛙の灯火：火魔法の消費MP5%軽減"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "蛙の灯火：火魔法の消費MP6%軽減",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "蛙の灯火：火魔法の消費MP6%軽減"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "蛙の灯火：火魔法の消費MP7%軽減",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "蛙の灯火：火魔法の消費MP7%軽減"
+        }
+      ]
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "name": "モブタフネス・連戦の証",
+      "image": "enemy/126.png",
+      "rarity": "SSR",
+      "attribute": "地",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 40,
+        "maxHp": 150
+      },
+      "traits": [
+        {
+          "kind": "guardHpHeal",
+          "value": 0.03,
+          "label": "不屈の呼吸：防御時HP3%回復"
+        }
+      ],
+      "traitLabel": "不屈の呼吸：防御時HP3%回復",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "def": 40,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.03,
+              "label": "不屈の呼吸：防御時HP3%回復"
+            }
+          ],
+          "traitLabel": "不屈の呼吸：防御時HP3%回復"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "maxHp": 190
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.036,
+              "label": "不屈の呼吸：防御時HP3.6%回復"
+            }
+          ],
+          "traitLabel": "不屈の呼吸：防御時HP3.6%回復"
+        },
+        {
+          "stats": {
+            "def": 60,
+            "maxHp": 230
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.042,
+              "label": "不屈の呼吸：防御時HP4.2%回復"
+            }
+          ],
+          "traitLabel": "不屈の呼吸：防御時HP4.2%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "name": "モブラプチー・連戦の証",
+      "image": "enemy/57.png",
+      "rarity": "SSR",
+      "attribute": "水",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 40,
+        "spd": 20
+      },
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.03,
+          "label": "恐竜の勘：会心率+3%"
+        }
+      ],
+      "traitLabel": "恐竜の勘：会心率+3%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 40,
+            "spd": 20
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.03,
+              "label": "恐竜の勘：会心率+3%"
+            }
+          ],
+          "traitLabel": "恐竜の勘：会心率+3%"
+        },
+        {
+          "stats": {
+            "atk": 50,
+            "spd": 30
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.036,
+              "label": "恐竜の勘：会心率+3.6%"
+            }
+          ],
+          "traitLabel": "恐竜の勘：会心率+3.6%"
+        },
+        {
+          "stats": {
+            "atk": 60,
+            "spd": 30
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.042,
+              "label": "恐竜の勘：会心率+4.2%"
+            }
+          ],
+          "traitLabel": "恐竜の勘：会心率+4.2%"
+        }
+      ]
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "name": "モブネオタイガー・連戦の証",
+      "image": "enemy/76.png",
+      "rarity": "SSR",
+      "attribute": "地",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "spd": 40,
+        "atk": 20
+      },
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.04,
+          "label": "虎の残像：回避率+4%"
+        }
+      ],
+      "traitLabel": "虎の残像：回避率+4%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "spd": 40,
+            "atk": 20
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.04,
+              "label": "虎の残像：回避率+4%"
+            }
+          ],
+          "traitLabel": "虎の残像：回避率+4%"
+        },
+        {
+          "stats": {
+            "spd": 50,
+            "atk": 30
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.048,
+              "label": "虎の残像：回避率+4.8%"
+            }
+          ],
+          "traitLabel": "虎の残像：回避率+4.8%"
+        },
+        {
+          "stats": {
+            "spd": 60,
+            "atk": 30
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.056,
+              "label": "虎の残像：回避率+5.6%"
+            }
+          ],
+          "traitLabel": "虎の残像：回避率+5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "name": "モブヨーガンスライム・連戦の証",
+      "image": "enemy/93.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "res": 40,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.03,
+          "label": "溶岩の膜：物理ダメージ3%軽減"
+        },
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "溶岩の膜：火耐性+5%",
+          "element": "火"
+        }
+      ],
+      "traitLabel": "溶岩の膜：物理ダメージ3%軽減 / 溶岩の膜：火耐性+5%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "res": 40,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.03,
+              "label": "溶岩の膜：物理ダメージ3%軽減"
+            },
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "溶岩の膜：火耐性+5%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "溶岩の膜：物理ダメージ3%軽減 / 溶岩の膜：火耐性+5%"
+        },
+        {
+          "stats": {
+            "res": 50,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.036,
+              "label": "溶岩の膜：物理ダメージ3.6%軽減"
+            },
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "溶岩の膜：火耐性+6%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "溶岩の膜：物理ダメージ3.6%軽減 / 溶岩の膜：火耐性+6%"
+        },
+        {
+          "stats": {
+            "res": 60,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.042,
+              "label": "溶岩の膜：物理ダメージ4.2%軽減"
+            },
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "溶岩の膜：火耐性+7%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "溶岩の膜：物理ダメージ4.2%軽減 / 溶岩の膜：火耐性+7%"
+        }
+      ]
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "name": "モブミラバスター・連戦の証",
+      "image": "enemy/36.png",
+      "rarity": "SSR",
+      "attribute": "闇",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "maxMp": 100
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "魂の循環：闇魔法の消費MP5%軽減",
+          "element": "闇"
+        },
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "魂の衣：闇耐性+5%",
+          "element": "闇"
+        }
+      ],
+      "traitLabel": "魂の循環：闇魔法の消費MP5%軽減 / 魂の衣：闇耐性+5%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "maxMp": 100
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "魂の循環：闇魔法の消費MP5%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "魂の衣：闇耐性+5%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魂の循環：闇魔法の消費MP5%軽減 / 魂の衣：闇耐性+5%"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "maxMp": 130
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "魂の循環：闇魔法の消費MP6%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "魂の衣：闇耐性+6%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魂の循環：闇魔法の消費MP6%軽減 / 魂の衣：闇耐性+6%"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "魂の循環：闇魔法の消費MP7%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "魂の衣：闇耐性+7%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魂の循環：闇魔法の消費MP7%軽減 / 魂の衣：闇耐性+7%"
+        }
+      ]
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "name": "モブキラウィッチ・連戦の証",
+      "image": "enemy/146.png",
+      "rarity": "SSR",
+      "attribute": "闇",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "res": 40
+      },
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.03,
+          "label": "魔女の息継ぎ：防御時MP3%回復"
+        },
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "近衛の衣：闇耐性+5%",
+          "element": "闇"
+        }
+      ],
+      "traitLabel": "魔女の息継ぎ：防御時MP3%回復 / 近衛の衣：闇耐性+5%",
+      "design": "中ボスの特性を小さな補助効果として装備する",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "res": 40
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.03,
+              "label": "魔女の息継ぎ：防御時MP3%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "近衛の衣：闇耐性+5%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魔女の息継ぎ：防御時MP3%回復 / 近衛の衣：闇耐性+5%"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "res": 50
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.036,
+              "label": "魔女の息継ぎ：防御時MP3.6%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "近衛の衣：闇耐性+6%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魔女の息継ぎ：防御時MP3.6%回復 / 近衛の衣：闇耐性+6%"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "res": 60
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.042,
+              "label": "魔女の息継ぎ：防御時MP4.2%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "近衛の衣：闇耐性+7%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "魔女の息継ぎ：防御時MP4.2%回復 / 近衛の衣：闇耐性+7%"
+        }
+      ]
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "name": "モブアックス・岩斧の挟撃の証",
+      "image": "enemy/13.png",
+      "rarity": "SR",
+      "attribute": "地",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 30,
+        "def": 40
+      },
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.025,
+          "label": "岩斧の構え：物理ダメージ2.5%軽減"
+        },
+        {
+          "kind": "guardExtraCut",
+          "value": 0.03,
+          "label": "踏ん張り：防御時追加軽減3%"
+        }
+      ],
+      "design": "防御で立て直す耐久型",
+      "traitLabel": "岩斧の構え：物理ダメージ2.5%軽減 / 踏ん張り：防御時追加軽減3%",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 30,
+            "def": 40
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.025,
+              "label": "岩斧の構え：物理ダメージ2.5%軽減"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.03,
+              "label": "踏ん張り：防御時追加軽減3%"
+            }
+          ],
+          "traitLabel": "岩斧の構え：物理ダメージ2.5%軽減 / 踏ん張り：防御時追加軽減3%"
+        },
+        {
+          "stats": {
+            "atk": 40,
+            "def": 50
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.03,
+              "label": "岩斧の構え：物理ダメージ3%軽減"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.036,
+              "label": "踏ん張り：防御時追加軽減3.6%"
+            }
+          ],
+          "traitLabel": "岩斧の構え：物理ダメージ3%軽減 / 踏ん張り：防御時追加軽減3.6%"
+        },
+        {
+          "stats": {
+            "atk": 50,
+            "def": 60
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.035,
+              "label": "岩斧の構え：物理ダメージ3.5%軽減"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.042,
+              "label": "踏ん張り：防御時追加軽減4.2%"
+            }
+          ],
+          "traitLabel": "岩斧の構え：物理ダメージ3.5%軽減 / 踏ん張り：防御時追加軽減4.2%"
+        }
+      ]
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "name": "モブシャーティー・砂岩の二重壁の証",
+      "image": "enemy/29.png",
+      "rarity": "SR",
+      "attribute": "光",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 40,
+        "maxHp": 150
+      },
+      "traits": [
+        {
+          "kind": "guardHpHeal",
+          "value": 0.02,
+          "label": "防御時HP2%回復"
+        },
+        {
+          "kind": "resist",
+          "element": "光",
+          "value": 0.04,
+          "label": "光耐性+4%"
+        }
+      ],
+      "design": "防御で立て直す耐久型",
+      "traitLabel": "防御時HP2%回復 / 光耐性+4%",
+      "tiers": [
+        {
+          "stats": {
+            "def": 40,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.02,
+              "label": "防御時HP2%回復"
+            },
+            {
+              "kind": "resist",
+              "element": "光",
+              "value": 0.04,
+              "label": "光耐性+4%"
+            }
+          ],
+          "traitLabel": "防御時HP2%回復 / 光耐性+4%"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "maxHp": 190
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.024,
+              "label": "防御時HP2.4%回復"
+            },
+            {
+              "kind": "resist",
+              "element": "光",
+              "value": 0.048,
+              "label": "光耐性+4.8%"
+            }
+          ],
+          "traitLabel": "防御時HP2.4%回復 / 光耐性+4.8%"
+        },
+        {
+          "stats": {
+            "def": 60,
+            "maxHp": 230
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.028,
+              "label": "防御時HP2.8%回復"
+            },
+            {
+              "kind": "resist",
+              "element": "光",
+              "value": 0.056,
+              "label": "光耐性+5.6%"
+            }
+          ],
+          "traitLabel": "防御時HP2.8%回復 / 光耐性+5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "name": "モブスカウター・水辺の包囲の証",
+      "image": "enemy/52.png",
+      "rarity": "SR",
+      "attribute": "光",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "spd": 40,
+        "atk": 20
+      },
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.02,
+          "label": "見張りの眼：会心率+2%"
+        },
+        {
+          "kind": "evade",
+          "value": 0.02,
+          "label": "水際の足取り：回避率+2%"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "見張りの眼：会心率+2% / 水際の足取り：回避率+2%",
+      "tiers": [
+        {
+          "stats": {
+            "spd": 40,
+            "atk": 20
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.02,
+              "label": "見張りの眼：会心率+2%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.02,
+              "label": "水際の足取り：回避率+2%"
+            }
+          ],
+          "traitLabel": "見張りの眼：会心率+2% / 水際の足取り：回避率+2%"
+        },
+        {
+          "stats": {
+            "spd": 50,
+            "atk": 30
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.024,
+              "label": "見張りの眼：会心率+2.4%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.024,
+              "label": "水際の足取り：回避率+2.4%"
+            }
+          ],
+          "traitLabel": "見張りの眼：会心率+2.4% / 水際の足取り：回避率+2.4%"
+        },
+        {
+          "stats": {
+            "spd": 60,
+            "atk": 30
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.028,
+              "label": "見張りの眼：会心率+2.8%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.028,
+              "label": "水際の足取り：回避率+2.8%"
+            }
+          ],
+          "traitLabel": "見張りの眼：会心率+2.8% / 水際の足取り：回避率+2.8%"
+        }
+      ]
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "name": "モブネオゴーレム・光と闇の回路の証",
+      "image": "enemy/75.png",
+      "rarity": "SR",
+      "attribute": "光",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 30,
+        "maxMp": 150
+      },
+      "traits": [
+        {
+          "kind": "guardMpHeal",
+          "value": 0.02,
+          "label": "蓄電休止：防御時MP2%回復"
+        },
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "光の外殻：光耐性+5%",
+          "element": "光"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "蓄電休止：防御時MP2%回復 / 光の外殻：光耐性+5%",
+      "tiers": [
+        {
+          "stats": {
+            "def": 30,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.02,
+              "label": "蓄電休止：防御時MP2%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "光の外殻：光耐性+5%",
+              "element": "光"
+            }
+          ],
+          "traitLabel": "蓄電休止：防御時MP2%回復 / 光の外殻：光耐性+5%"
+        },
+        {
+          "stats": {
+            "def": 40,
+            "maxMp": 190
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.024,
+              "label": "蓄電休止：防御時MP2.4%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "光の外殻：光耐性+6%",
+              "element": "光"
+            }
+          ],
+          "traitLabel": "蓄電休止：防御時MP2.4%回復 / 光の外殻：光耐性+6%"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "maxMp": 230
+          },
+          "traits": [
+            {
+              "kind": "guardMpHeal",
+              "value": 0.028,
+              "label": "蓄電休止：防御時MP2.8%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "光の外殻：光耐性+7%",
+              "element": "光"
+            }
+          ],
+          "traitLabel": "蓄電休止：防御時MP2.8%回復 / 光の外殻：光耐性+7%"
+        }
+      ]
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "name": "モブフレイム・火口の三重奏の証",
+      "image": "enemy/102.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 50,
+        "res": 20
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "火口の灯：火魔法の消費MP5%軽減",
+          "element": "火"
+        },
+        {
+          "kind": "resist",
+          "value": 0.04,
+          "label": "耐熱膜：火耐性+4%",
+          "element": "火"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "火口の灯：火魔法の消費MP5%軽減 / 耐熱膜：火耐性+4%",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 50,
+            "res": 20
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "火口の灯：火魔法の消費MP5%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "resist",
+              "value": 0.04,
+              "label": "耐熱膜：火耐性+4%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "火口の灯：火魔法の消費MP5%軽減 / 耐熱膜：火耐性+4%"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "res": 30
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "火口の灯：火魔法の消費MP6%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "resist",
+              "value": 0.048,
+              "label": "耐熱膜：火耐性+4.8%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "火口の灯：火魔法の消費MP6%軽減 / 耐熱膜：火耐性+4.8%"
+        },
+        {
+          "stats": {
+            "mag": 80,
+            "res": 30
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "火口の灯：火魔法の消費MP7%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "resist",
+              "value": 0.056,
+              "label": "耐熱膜：火耐性+5.6%",
+              "element": "火"
+            }
+          ],
+          "traitLabel": "火口の灯：火魔法の消費MP7%軽減 / 耐熱膜：火耐性+5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "name": "モブジョーンズ・潮騒の追撃の証",
+      "image": "enemy/118.png",
+      "rarity": "SSR",
+      "attribute": "水",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 50,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.025,
+          "label": "会心率+2.5%"
+        },
+        {
+          "kind": "resist",
+          "element": "水",
+          "value": 0.04,
+          "label": "水耐性+4%"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "会心率+2.5% / 水耐性+4%",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 50,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.025,
+              "label": "会心率+2.5%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.04,
+              "label": "水耐性+4%"
+            }
+          ],
+          "traitLabel": "会心率+2.5% / 水耐性+4%"
+        },
+        {
+          "stats": {
+            "atk": 60,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.03,
+              "label": "会心率+3%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.048,
+              "label": "水耐性+4.8%"
+            }
+          ],
+          "traitLabel": "会心率+3% / 水耐性+4.8%"
+        },
+        {
+          "stats": {
+            "atk": 80,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.035,
+              "label": "会心率+3.5%"
+            },
+            {
+              "kind": "resist",
+              "element": "水",
+              "value": 0.056,
+              "label": "水耐性+5.6%"
+            }
+          ],
+          "traitLabel": "会心率+3.5% / 水耐性+5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "name": "モブツルガンナー・草原再訪の群れの証",
+      "image": "enemy/14.png",
+      "rarity": "SSR",
+      "attribute": "風",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 30,
+        "spd": 40
+      },
+      "traits": [
+        {
+          "kind": "crit",
+          "value": 0.02,
+          "label": "照準：会心率+2%"
+        },
+        {
+          "kind": "evade",
+          "value": 0.025,
+          "label": "狙撃手の退避：回避率+2.5%"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "照準：会心率+2% / 狙撃手の退避：回避率+2.5%",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 30,
+            "spd": 40
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.02,
+              "label": "照準：会心率+2%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.025,
+              "label": "狙撃手の退避：回避率+2.5%"
+            }
+          ],
+          "traitLabel": "照準：会心率+2% / 狙撃手の退避：回避率+2.5%"
+        },
+        {
+          "stats": {
+            "atk": 40,
+            "spd": 50
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.024,
+              "label": "照準：会心率+2.4%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.03,
+              "label": "狙撃手の退避：回避率+3%"
+            }
+          ],
+          "traitLabel": "照準：会心率+2.4% / 狙撃手の退避：回避率+3%"
+        },
+        {
+          "stats": {
+            "atk": 50,
+            "spd": 60
+          },
+          "traits": [
+            {
+              "kind": "crit",
+              "value": 0.028,
+              "label": "照準：会心率+2.8%"
+            },
+            {
+              "kind": "evade",
+              "value": 0.035,
+              "label": "狙撃手の退避：回避率+3.5%"
+            }
+          ],
+          "traitLabel": "照準：会心率+2.8% / 狙撃手の退避：回避率+3.5%"
+        }
+      ]
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "name": "モブククリ・部族の双牙の証",
+      "image": "enemy/125.png",
+      "rarity": "SSR",
+      "attribute": "風",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "spd": 40,
+        "maxHp": 120
+      },
+      "traits": [
+        {
+          "kind": "evade",
+          "value": 0.035,
+          "label": "双牙の歩法：回避率+3.5%"
+        },
+        {
+          "kind": "resist",
+          "value": 0.04,
+          "label": "風切り：風耐性+4%",
+          "element": "風"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "双牙の歩法：回避率+3.5% / 風切り：風耐性+4%",
+      "tiers": [
+        {
+          "stats": {
+            "spd": 40,
+            "maxHp": 120
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.035,
+              "label": "双牙の歩法：回避率+3.5%"
+            },
+            {
+              "kind": "resist",
+              "value": 0.04,
+              "label": "風切り：風耐性+4%",
+              "element": "風"
+            }
+          ],
+          "traitLabel": "双牙の歩法：回避率+3.5% / 風切り：風耐性+4%"
+        },
+        {
+          "stats": {
+            "spd": 50,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.042,
+              "label": "双牙の歩法：回避率+4.2%"
+            },
+            {
+              "kind": "resist",
+              "value": 0.048,
+              "label": "風切り：風耐性+4.8%",
+              "element": "風"
+            }
+          ],
+          "traitLabel": "双牙の歩法：回避率+4.2% / 風切り：風耐性+4.8%"
+        },
+        {
+          "stats": {
+            "spd": 60,
+            "maxHp": 180
+          },
+          "traits": [
+            {
+              "kind": "evade",
+              "value": 0.049,
+              "label": "双牙の歩法：回避率+4.9%"
+            },
+            {
+              "kind": "resist",
+              "value": 0.056,
+              "label": "風切り：風耐性+5.6%",
+              "element": "風"
+            }
+          ],
+          "traitLabel": "双牙の歩法：回避率+4.9% / 風切り：風耐性+5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "name": "モブティラ・恐竜と狙撃の証",
+      "image": "enemy/58.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 50,
+        "def": 20
+      },
+      "traits": [
+        {
+          "kind": "physicalCut",
+          "value": 0.02,
+          "label": "恐竜の鱗：物理ダメージ2%軽減"
+        },
+        {
+          "kind": "crit",
+          "value": 0.03,
+          "label": "狙い澄まし：会心率+3%"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "恐竜の鱗：物理ダメージ2%軽減 / 狙い澄まし：会心率+3%",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 50,
+            "def": 20
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.02,
+              "label": "恐竜の鱗：物理ダメージ2%軽減"
+            },
+            {
+              "kind": "crit",
+              "value": 0.03,
+              "label": "狙い澄まし：会心率+3%"
+            }
+          ],
+          "traitLabel": "恐竜の鱗：物理ダメージ2%軽減 / 狙い澄まし：会心率+3%"
+        },
+        {
+          "stats": {
+            "atk": 60,
+            "def": 30
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.024,
+              "label": "恐竜の鱗：物理ダメージ2.4%軽減"
+            },
+            {
+              "kind": "crit",
+              "value": 0.036,
+              "label": "狙い澄まし：会心率+3.6%"
+            }
+          ],
+          "traitLabel": "恐竜の鱗：物理ダメージ2.4%軽減 / 狙い澄まし：会心率+3.6%"
+        },
+        {
+          "stats": {
+            "atk": 80,
+            "def": 30
+          },
+          "traits": [
+            {
+              "kind": "physicalCut",
+              "value": 0.028,
+              "label": "恐竜の鱗：物理ダメージ2.8%軽減"
+            },
+            {
+              "kind": "crit",
+              "value": 0.042,
+              "label": "狙い澄まし：会心率+4.2%"
+            }
+          ],
+          "traitLabel": "恐竜の鱗：物理ダメージ2.8%軽減 / 狙い澄まし：会心率+4.2%"
+        }
+      ]
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "name": "モブパレットレオン・雷光の獣列の証",
+      "image": "enemy/82.png",
+      "rarity": "SSR",
+      "attribute": "光",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "spd": 30
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "光彩の毛皮：光耐性+5%",
+          "element": "光"
+        },
+        {
+          "kind": "crit",
+          "value": 0.03,
+          "label": "獣の勘：会心率+3%"
+        }
+      ],
+      "design": "速さと会心を支える攻撃型",
+      "traitLabel": "光彩の毛皮：光耐性+5% / 獣の勘：会心率+3%",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "spd": 30
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "光彩の毛皮：光耐性+5%",
+              "element": "光"
+            },
+            {
+              "kind": "crit",
+              "value": 0.03,
+              "label": "獣の勘：会心率+3%"
+            }
+          ],
+          "traitLabel": "光彩の毛皮：光耐性+5% / 獣の勘：会心率+3%"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "spd": 40
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "光彩の毛皮：光耐性+6%",
+              "element": "光"
+            },
+            {
+              "kind": "crit",
+              "value": 0.036,
+              "label": "獣の勘：会心率+3.6%"
+            }
+          ],
+          "traitLabel": "光彩の毛皮：光耐性+6% / 獣の勘：会心率+3.6%"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "spd": 50
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "光彩の毛皮：光耐性+7%",
+              "element": "光"
+            },
+            {
+              "kind": "crit",
+              "value": 0.042,
+              "label": "獣の勘：会心率+4.2%"
+            }
+          ],
+          "traitLabel": "光彩の毛皮：光耐性+7% / 獣の勘：会心率+4.2%"
+        }
+      ]
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "name": "モブサラマンダー・炎氷の交差の証",
+      "image": "enemy/95.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "res": 40
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "炎の調律：火魔法の消費MP5%軽減",
+          "element": "火"
+        },
+        {
+          "kind": "guardMpHeal",
+          "value": 0.015,
+          "label": "熱交換：防御時MP1.5%回復"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "炎の調律：火魔法の消費MP5%軽減 / 熱交換：防御時MP1.5%回復",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "res": 40
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "炎の調律：火魔法の消費MP5%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.015,
+              "label": "熱交換：防御時MP1.5%回復"
+            }
+          ],
+          "traitLabel": "炎の調律：火魔法の消費MP5%軽減 / 熱交換：防御時MP1.5%回復"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "res": 50
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "炎の調律：火魔法の消費MP6%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.018,
+              "label": "熱交換：防御時MP1.8%回復"
+            }
+          ],
+          "traitLabel": "炎の調律：火魔法の消費MP6%軽減 / 熱交換：防御時MP1.8%回復"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "res": 60
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "炎の調律：火魔法の消費MP7%軽減",
+              "element": "火"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.021,
+              "label": "熱交換：防御時MP2.1%回復"
+            }
+          ],
+          "traitLabel": "炎の調律：火魔法の消費MP7%軽減 / 熱交換：防御時MP2.1%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "name": "モブミラナイト・砂宮の四騎の証",
+      "image": "enemy/39.png",
+      "rarity": "SSR",
+      "attribute": "水",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 40,
+        "res": 40
+      },
+      "traits": [
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "砂宮の封印：闇耐性+5%",
+          "element": "闇"
+        },
+        {
+          "kind": "guardExtraCut",
+          "value": 0.04,
+          "label": "騎士の構え：防御時追加軽減4%"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "砂宮の封印：闇耐性+5% / 騎士の構え：防御時追加軽減4%",
+      "tiers": [
+        {
+          "stats": {
+            "def": 40,
+            "res": 40
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "砂宮の封印：闇耐性+5%",
+              "element": "闇"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.04,
+              "label": "騎士の構え：防御時追加軽減4%"
+            }
+          ],
+          "traitLabel": "砂宮の封印：闇耐性+5% / 騎士の構え：防御時追加軽減4%"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "res": 50
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "砂宮の封印：闇耐性+6%",
+              "element": "闇"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.048,
+              "label": "騎士の構え：防御時追加軽減4.8%"
+            }
+          ],
+          "traitLabel": "砂宮の封印：闇耐性+6% / 騎士の構え：防御時追加軽減4.8%"
+        },
+        {
+          "stats": {
+            "def": 60,
+            "res": 60
+          },
+          "traits": [
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "砂宮の封印：闇耐性+7%",
+              "element": "闇"
+            },
+            {
+              "kind": "guardExtraCut",
+              "value": 0.056,
+              "label": "騎士の構え：防御時追加軽減5.6%"
+            }
+          ],
+          "traitLabel": "砂宮の封印：闇耐性+7% / 騎士の構え：防御時追加軽減5.6%"
+        }
+      ]
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "name": "モブララウィッチ・魔城の混成隊の証",
+      "image": "enemy/147.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 50,
+        "maxHp": 100
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "魔女の調律：闇魔法の消費MP5%軽減",
+          "element": "闇"
+        },
+        {
+          "kind": "guardHpHeal",
+          "value": 0.02,
+          "label": "魔城の休息：防御時HP2%回復"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "魔女の調律：闇魔法の消費MP5%軽減 / 魔城の休息：防御時HP2%回復",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 50,
+            "maxHp": 100
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "魔女の調律：闇魔法の消費MP5%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.02,
+              "label": "魔城の休息：防御時HP2%回復"
+            }
+          ],
+          "traitLabel": "魔女の調律：闇魔法の消費MP5%軽減 / 魔城の休息：防御時HP2%回復"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "maxHp": 130
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "魔女の調律：闇魔法の消費MP6%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.024,
+              "label": "魔城の休息：防御時HP2.4%回復"
+            }
+          ],
+          "traitLabel": "魔女の調律：闇魔法の消費MP6%軽減 / 魔城の休息：防御時HP2.4%回復"
+        },
+        {
+          "stats": {
+            "mag": 80,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "魔女の調律：闇魔法の消費MP7%軽減",
+              "element": "闇"
+            },
+            {
+              "kind": "guardHpHeal",
+              "value": 0.028,
+              "label": "魔城の休息：防御時HP2.8%回復"
+            }
+          ],
+          "traitLabel": "魔女の調律：闇魔法の消費MP7%軽減 / 魔城の休息：防御時HP2.8%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "name": "モブイワキリ・草原王の演習の証",
+      "image": "enemy/10.png",
+      "rarity": "SR",
+      "attribute": "雷",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "def": 40,
+        "maxHp": 150
+      },
+      "traits": [
+        {
+          "kind": "guardExtraCut",
+          "value": 0.04,
+          "label": "王の盾：防御時追加軽減4%"
+        },
+        {
+          "kind": "physicalCut",
+          "value": 0.025,
+          "label": "岩切の構え：物理ダメージ2.5%軽減"
+        }
+      ],
+      "design": "防御で立て直す耐久型",
+      "traitLabel": "王の盾：防御時追加軽減4% / 岩切の構え：物理ダメージ2.5%軽減",
+      "tiers": [
+        {
+          "stats": {
+            "def": 40,
+            "maxHp": 150
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.04,
+              "label": "王の盾：防御時追加軽減4%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.025,
+              "label": "岩切の構え：物理ダメージ2.5%軽減"
+            }
+          ],
+          "traitLabel": "王の盾：防御時追加軽減4% / 岩切の構え：物理ダメージ2.5%軽減"
+        },
+        {
+          "stats": {
+            "def": 50,
+            "maxHp": 190
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.048,
+              "label": "王の盾：防御時追加軽減4.8%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.03,
+              "label": "岩切の構え：物理ダメージ3%軽減"
+            }
+          ],
+          "traitLabel": "王の盾：防御時追加軽減4.8% / 岩切の構え：物理ダメージ3%軽減"
+        },
+        {
+          "stats": {
+            "def": 60,
+            "maxHp": 230
+          },
+          "traits": [
+            {
+              "kind": "guardExtraCut",
+              "value": 0.056,
+              "label": "王の盾：防御時追加軽減5.6%"
+            },
+            {
+              "kind": "physicalCut",
+              "value": 0.035,
+              "label": "岩切の構え：物理ダメージ3.5%軽減"
+            }
+          ],
+          "traitLabel": "王の盾：防御時追加軽減5.6% / 岩切の構え：物理ダメージ3.5%軽減"
+        }
+      ]
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "name": "モブソーサラー・深海王の演習の証",
+      "image": "enemy/113.png",
+      "rarity": "SSR",
+      "attribute": "雷",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "mag": 40,
+        "maxMp": 150
+      },
+      "traits": [
+        {
+          "kind": "magicMpCut",
+          "value": 0.05,
+          "label": "深海の調律：水魔法の消費MP5%軽減",
+          "element": "水"
+        },
+        {
+          "kind": "guardMpHeal",
+          "value": 0.015,
+          "label": "深呼吸：防御時MP1.5%回復"
+        }
+      ],
+      "design": "属性魔法の継戦を支える魔法型",
+      "traitLabel": "深海の調律：水魔法の消費MP5%軽減 / 深呼吸：防御時MP1.5%回復",
+      "tiers": [
+        {
+          "stats": {
+            "mag": 40,
+            "maxMp": 150
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.05,
+              "label": "深海の調律：水魔法の消費MP5%軽減",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.015,
+              "label": "深呼吸：防御時MP1.5%回復"
+            }
+          ],
+          "traitLabel": "深海の調律：水魔法の消費MP5%軽減 / 深呼吸：防御時MP1.5%回復"
+        },
+        {
+          "stats": {
+            "mag": 50,
+            "maxMp": 190
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.06,
+              "label": "深海の調律：水魔法の消費MP6%軽減",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.018,
+              "label": "深呼吸：防御時MP1.8%回復"
+            }
+          ],
+          "traitLabel": "深海の調律：水魔法の消費MP6%軽減 / 深呼吸：防御時MP1.8%回復"
+        },
+        {
+          "stats": {
+            "mag": 60,
+            "maxMp": 230
+          },
+          "traits": [
+            {
+              "kind": "magicMpCut",
+              "value": 0.07,
+              "label": "深海の調律：水魔法の消費MP7%軽減",
+              "element": "水"
+            },
+            {
+              "kind": "guardMpHeal",
+              "value": 0.021,
+              "label": "深呼吸：防御時MP2.1%回復"
+            }
+          ],
+          "traitLabel": "深海の調律：水魔法の消費MP7%軽減 / 深呼吸：防御時MP2.1%回復"
+        }
+      ]
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "name": "モブヘルリリス・魔城の歴戦演習の証",
+      "image": "boss/40.png",
+      "rarity": "SSR",
+      "attribute": "火",
+      "type": "メダル",
+      "types": [
+        "メダル"
+      ],
+      "stats": {
+        "atk": 40,
+        "def": 40
+      },
+      "traits": [
+        {
+          "kind": "guardHpHeal",
+          "value": 0.03,
+          "label": "歴戦の休息：防御時HP3%回復"
+        },
+        {
+          "kind": "resist",
+          "value": 0.05,
+          "label": "近衛の鎧：闇耐性+5%",
+          "element": "闇"
+        }
+      ],
+      "design": "防御で立て直す耐久型",
+      "traitLabel": "歴戦の休息：防御時HP3%回復 / 近衛の鎧：闇耐性+5%",
+      "tiers": [
+        {
+          "stats": {
+            "atk": 40,
+            "def": 40
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.03,
+              "label": "歴戦の休息：防御時HP3%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.05,
+              "label": "近衛の鎧：闇耐性+5%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "歴戦の休息：防御時HP3%回復 / 近衛の鎧：闇耐性+5%"
+        },
+        {
+          "stats": {
+            "atk": 50,
+            "def": 50
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.036,
+              "label": "歴戦の休息：防御時HP3.6%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.06,
+              "label": "近衛の鎧：闇耐性+6%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "歴戦の休息：防御時HP3.6%回復 / 近衛の鎧：闇耐性+6%"
+        },
+        {
+          "stats": {
+            "atk": 60,
+            "def": 60
+          },
+          "traits": [
+            {
+              "kind": "guardHpHeal",
+              "value": 0.042,
+              "label": "歴戦の休息：防御時HP4.2%回復"
+            },
+            {
+              "kind": "resist",
+              "value": 0.07,
+              "label": "近衛の鎧：闇耐性+7%",
+              "element": "闇"
+            }
+          ],
+          "traitLabel": "歴戦の休息：防御時HP4.2%回復 / 近衛の鎧：闇耐性+7%"
+        }
+      ]
+    }
+  ],
+  "normalize": "function normalizeEquipmentRecord(v){const x=(v&&typeof v==='object')?v:{};return{main:x.main||null,sub:x.sub||null,armor:x.armor||null,medals:Array.from({length:3},(_,i)=>Array.isArray(x.medals)?(x.medals[i]||null):null)};}",
+  "traitEntries": "function(a){const seen=new Set();return rushTraitEntriesBaseV253(a).filter(entry=>{if(!rushMedalV253(entry.weapon?.id))return true;const key=entry.weapon.id+':'+entry.weapon.traits.indexOf(entry.trait);if(seen.has(key))return false;seen.add(key);return true;});}",
+  "stats": "function weaponStatBonus(eq){\n  eq=normalizeEquipmentRecord(eq);const out={atk:0,mag:0,def:0,res:0,spd:0,maxHp:0,maxMp:0};\n  const add=(id,scale)=>{const w=weaponById(id);if(!w)return;for(const [k,v] of Object.entries(w.stats||{}))if(k in out)out[k]+=Number(v||0)*scale;};\n  add(eq.main,1);add(eq.sub,.5);for(const id of eq.medals)add(id,.1);return out;\n}"
+}

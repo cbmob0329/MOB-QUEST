@@ -1,0 +1,46 @@
+{
+  "tests": [
+    {
+      "file": "tests/rush-medals-v254.cjs",
+      "status": 0
+    },
+    {
+      "file": "tests/rush-v255.cjs",
+      "status": 0
+    },
+    {
+      "file": "tests/equipment-v256.cjs",
+      "status": 0
+    },
+    {
+      "file": "tests/equipment-combat-v256.cjs",
+      "status": 0
+    },
+    {
+      "file": "scripts/test-equipment-regression-v256.cjs",
+      "status": 0
+    },
+    {
+      "file": "tests/equipment-ui-v256.cjs",
+      "status": 0
+    }
+  ],
+  "scalingSets": 254,
+  "monsterMainRejections": 39,
+  "uiWidths": [
+    320,
+    375,
+    390
+  ],
+  "camp": true,
+  "rushTiers": 90,
+  "oldTraitActivations": 162,
+  "pending": [
+    {
+      "id": "event-mint-medal",
+      "reason": "Awaiting clarification for nonnumeric repeat magic in sub socket",
+      "recommendation": "3% to 1%, preserve repeat effect and no extra MP"
+    }
+  ],
+  "noCommitPushPublish": true
+}

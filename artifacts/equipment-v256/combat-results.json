@@ -1,0 +1,17 @@
+{
+  "fireBefore": 574,
+  "fireAfter": 563,
+  "physicalBefore": 590,
+  "physicalAfter": 572,
+  "guardHeal": 200,
+  "mpUsed": 21,
+  "mpExpected": 21,
+  "critBefore": false,
+  "critAfter": true,
+  "macaronPower": 0.55,
+  "macaronChance": 0.010000000000000009,
+  "mixedSubPower": 0.55,
+  "mixedFigurePower": 1.1,
+  "speedTurn1": 194.25,
+  "speedTurn2": 185
+}

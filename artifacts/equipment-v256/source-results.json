@@ -1,0 +1,5 @@
+{
+  "rushAndOtherSourcePreserved": true,
+  "bootstrapMigration": true,
+  "embeddedSourcesMatch": true
+}
