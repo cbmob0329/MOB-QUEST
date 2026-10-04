@@ -5648,6 +5648,10 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 .equipment-slots:has(.socket-v256),.camp-equip-slots:has(.socket-v256){grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.equipment-slots:has(.socket-v256)>.equipment-slot,.camp-equip-slots:has(.socket-v256)>.equipment-slot{grid-row:auto!important;min-width:0;padding:12px 8px}.equipment-slots:has(.socket-v256)>.armor,.camp-equip-slots:has(.socket-v256)>.armor{grid-column:1/-1}.equipment-slot.socket-v256 b{font-size:12px!important}.equipment-slot.socket-v256 small{font-size:10px!important}.equipment-slot.socket-v256 em,.equipment-slot.socket-v256>span:not(.socket-disk-v256):not(.socket-empty-v256){font-size:11px!important;line-height:1.7}.equipment-slots:has(.socket-v256)>.equipment-slot.main b,.equipment-slots:has(.socket-v256)>.equipment-slot.sub b{font-size:12px}.equipment-slots:has(.socket-v256)>.equipment-slot.medal b{font-size:11px!important}
 
 /* UPDATE_V256_END */
+/* UPDATE_V257_BEGIN */
+#storySoundSettingsV257{display:grid;gap:10px}#storySoundSettingsV257 label{display:grid;grid-template-columns:1fr auto;gap:8px}#storySeVolumeV257{grid-column:1/-1;width:100%;accent-color:#65d7ed}#storySoundSettingsV257>div{display:flex;gap:8px;flex-wrap:wrap}#storySoundSettingsV257 button{padding:10px 14px;border:1px solid #56869c;border-radius:10px;background:#213e50;color:#fff;touch-action:manipulation}#storySoundSettingsV257 button:disabled{opacity:.45}#storySoundSettingsV257 small{line-height:1.6;color:#afc7d5}
+
+/* UPDATE_V257_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -6151,7 +6155,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v256</div>
+      <div class="title-version">v257</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -24849,6 +24853,188 @@ performSpecial=async function(a,tech=null,...args){const b=state.battle,chosen=t
 window.__mobBuildVersion='v256';
 
 // UPDATE_V256_END
+// UPDATE_V257_BEGIN
+const STORY_AUDIO_V257=(()=>{
+// Original deterministic PCM synthesis. No downloads, network calls, or game state.
+const ATTRIBUTES=['火','水','雷','地','風','光','闇','無'];
+const CUES={select:'選択',confirm:'決定',back:'戻る',navigate:'画面移動',error:'エラー',deckAdd:'デッキ追加',deckRemove:'デッキ削除',deckArrange:'自動編成・整理',starter:'スターター',reward:'報酬・交換',start:'戦闘開始',draw:'ドロー',summon:'召喚',attack:'攻撃',hit:'被弾',guard:'防御・無効化',skill:'スキル',fusion:'ソウルフュージョン',defeat:'撃破',turn:'ターン開始',battle:'バトルフェイズ',end:'ターン終了',win:'勝利',lose:'敗北',move:'位置変更',gachaOpen:'ガチャ確認',gachaGather:'ガチャ集結',gachaCue:'ガチャ予兆',gachaAssemble:'ガチャ組立',gachaInk:'ガチャ彩色',gachaReveal:'ガチャ出現'};
+const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+const E=(u,a,d)=>u<0?0:(1-Math.exp(-u/a))*Math.exp(-u/d);
+const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
+function random(seed){let s=seed||1;return ()=>{s^=s<<13;s^=s>>>17;s^=s<<5;return (s>>>0)/4294967296;};}
+const attributesOf=value=>{const parts=[...new Set(String(value||'無').split('/').filter(a=>ATTRIBUTES.includes(a)))];return parts.length?parts:['無'];};
+const strengthOf=n=>['small','medium','large'].includes(n)?n:'medium';
+function cueSpec(cue,options={}){
+ const strength=strengthOf(options.strength),level={small:0,medium:1,large:2}[strength],attribute=attributesOf(options.attribute).join('/');
+ const ui=['select','confirm','back','navigate','error','deckAdd','deckRemove','deckArrange','move'].includes(cue);
+ let duration=ui?({error:.23,deckArrange:.3}[cue]||.1):({draw:.22,summon:.65,hit:.26,guard:.32,defeat:.4,turn:.3,battle:.3,end:.2,start:.85,win:1.3,lose:1.05,starter:.8,reward:.65,gachaOpen:.22,gachaGather:.7,gachaCue:.6,gachaAssemble:.6,gachaInk:.55,gachaReveal:1.15}[cue]||.65);
+ if(['attack','skill','fusion'].includes(cue))duration=attribute.includes('火')?[.82,1.6,3.2][level]:[.48,.78,1.25][level];
+ if(cue==='fusion')duration=Math.max(duration,1.05+level*.25);
+ if(Number.isFinite(options.durationLimit))duration=Math.min(duration,Math.max(.08,options.durationLimit));
+ duration=Math.round(duration*1000)/1000;
+ return {cue,strength,level,attribute,attackType:options.attackType==='物理'?'物理':'魔法',special:!!options.special,healing:!!options.healing,duration,priority:ui?(cue==='error'?2:0):['start','win','lose','fusion','gachaReveal','starter'].includes(cue)?3:2};
+}
+const cueKey=(cue,options)=>JSON.stringify(cueSpec(cue,options));
+function tone(out,sr,start,duration,f0,f1,gain,type='sine',decay=.12){let phase=0;const first=Math.max(0,Math.floor(start*sr)),last=Math.min(out.length,Math.ceil((start+duration)*sr));for(let i=first;i<last;i++){const u=i/sr-start,progress=clamp(u/duration);phase+=2*Math.PI*(f0*Math.pow(Math.max(1,f1)/Math.max(1,f0),progress))/sr;let v=Math.sin(phase);if(type==='triangle')v=2/Math.PI*Math.asin(v);if(type==='bell')v+=.32*Math.sin(phase*2.76)+.12*Math.sin(phase*4.21);out[i]+=gain*E(u,.003,decay)*v;}}
+function noise(out,sr,start,duration,low,high,gain,rng,attack=.004,decay=.15,flutter=0){let lp=0,hpLow=0;const a=1-Math.exp(-2*Math.PI*Math.min(high,sr*.42)/sr),b=1-Math.exp(-2*Math.PI*low/sr);for(let i=Math.max(0,Math.floor(start*sr));i<Math.min(out.length,(start+duration)*sr);i++){const u=i/sr-start;lp+=a*(rng()*2-1-lp);hpLow+=b*(lp-hpLow);out[i]+=(lp-hpLow)*gain*E(u,attack,decay)*(1+flutter*Math.sin(2*Math.PI*37*u));}}
+function fire(out,sr,level,rng){
+ // Timing/layering inspired by the supplied fire recipe. This is an original approximation,
+ // not the inaccessible reference WAV or its sixth-order Butterworth reconstruction.
+ const nominal=[.82,1.6,3.2][level],scale=out.length/sr/nominal;
+ const S=(start,span,freq,gain,decay,attack)=>{
+  const centers=[100,200,400,800,1600,3200,6400],states=centers.map(c=>({l:0,h:0,a:1-Math.exp(-2*Math.PI*Math.min(sr*.42,c*1.7)/sr),b:1-Math.exp(-2*Math.PI*c*.55/sr)}));
+  start*=scale;span*=scale;decay*=scale;attack*=scale;
+  for(let i=Math.floor(start*sr);i<out.length;i++){const u=i/sr-start,x=clamp(u/span),k=x<.4?0:1,v=k===0?x/.4:(x-.4)/.6,f=freq[k]*Math.pow(freq[k+1]/freq[k],v);let sum=0;for(let j=0;j<centers.length;j++){const q=states[j];q.l+=q.a*(rng()*2-1-q.l);q.h+=q.b*(q.l-q.h);sum+=(q.l-q.h)*.62*Math.exp(-.5*Math.pow(Math.log2(f/centers[j])/.78,2));}out[i]+=sum*gain*E(u,attack,decay)*(1+.38*Math.sin(u*2*Math.PI*38));}
+ };
+ const B=(start,gain,f0,f1,decay)=>{start*=scale;for(let i=Math.floor(start*sr);i<out.length;i++){const u=i/sr-start,p=2*Math.PI*(f1*u+(f0-f1)*.085*scale*(1-Math.exp(-u/(.085*scale))));out[i]+=gain*E(u,.004*scale,decay*scale)*(Math.sin(p)+.12*Math.sin(2.017*p));}};
+ if(level===0){S(.006,.23,[3600,1250,420],.60,.115,.006);S(.055,.30,[1400,600,220],.30,.16,.008);B(.025,.39,210,79,.12);noise(out,sr,.045*scale,.6*scale,600,6500,.095,rng,.018*scale,.185*scale);}
+ if(level===1){S(.004,.25,[550,1700,4000],.11,.12,.09);S(.178,.48,[4200,1500,250],.68,.30,.006);S(.235,.70,[1700,650,160],.40,.34,.013);B(.187,.54,147,46,.25);B(.277,.20,95,41,.24);noise(out,sr,.205*scale,1.2*scale,340,5000,.19,rng,.011*scale,.43*scale,.5);}
+ if(level===2){S(0,.93,[200,750,4300],.16,.5,.13);tone(out,sr,0,.9*scale,90,280,.075,'bell',.7*scale);S(.908,.73,[5000,1200,160],.89,.46,.007);S(.971,.95,[2100,580,95],.61,.56,.015);B(.914,.73,118,34,.39);B(1.013,.30,85,31,.51);noise(out,sr,.95*scale,2.2*scale,65,520,.25,rng,.02*scale,.58*scale);noise(out,sr,.963*scale,2.2*scale,340,5800,.22,rng,.024*scale,.57*scale,.62);}
+ const count=[7,15,28][level],first=[.085,.22,.99][level],last=[.47,1.18,2.61][level];for(let j=0;j<count;j++){const at=(first+(last-first)*j/count)*scale;noise(out,sr,at,.05*scale,1400+rng()*900,5000+rng()*5500,.19*(1-.8*j/count),rng,.0007,.00266+rng()*.00551);}
+}
+function element(out,sr,attribute,s,rng){const d=out.length/sr,k=s.level,attack=s.cue==='attack',fusion=s.cue==='fusion',skill=s.cue==='skill';
+ if(attribute==='火')fire(out,sr,k,rng);
+ if(attribute==='水'){noise(out,sr,0,d,240,2700,.7,rng,.018,d*.27);for(let j=0;j<7+k*3;j++)tone(out,sr,j*d*.065,d*.22,450+j*95,1200+j*150,.18,'sine',d*.06);}
+ if(attribute==='雷'){for(let j=0;j<4+k*2;j++){noise(out,sr,j*d*.075,d*.15,1800,11000,.9,rng,.001,d*.025);tone(out,sr,j*d*.075,d*.13,2300,110,.16,'triangle',d*.025);}}
+ if(attribute==='地'){noise(out,sr,0,d,35,700,1.1,rng,.003,d*.24);tone(out,sr,0,d,120,32,.65,'sine',d*.24);for(let j=1;j<5;j++)noise(out,sr,d*j*.11,d*.16,600,2400,.32,rng,.001,d*.025);}
+ if(attribute==='風'){noise(out,sr,0,d,550,5000,.8,rng,d*.1,d*.3,.22);tone(out,sr,d*.03,d*.6,280,1700,.1,'sine',d*.26);}
+ if(attribute==='光'){for(let j=0;j<5;j++)tone(out,sr,j*d*.08,d*.62,880*Math.pow(1.2599,j),880*Math.pow(1.2599,j),.22,'bell',d*.19);noise(out,sr,0,d,6000,12000,.16,rng,.01,d*.15);}
+ if(attribute==='闇'){tone(out,sr,0,d,140,45,.6,'sine',d*.33);tone(out,sr,d*.03,d*.87,217,66,.21,'triangle',d*.3);noise(out,sr,0,d,70,1300,.6,rng,d*.13,d*.28);}
+ if(attribute==='無'){noise(out,sr,0,d,500,3200,.4,rng,.003,d*.13);tone(out,sr,0,d,420,130,.4,'triangle',d*.18);}
+ if(attack&&s.attackType==='物理'){noise(out,sr,0,d*.19,130,1900,.6,rng,.001,d*.025);tone(out,sr,0,d*.3,180,45,.4,'sine',d*.055);}
+ if(skill||s.attackType==='魔法')for(let j=0;j<3;j++)tone(out,sr,j*d*.07,d*.6,520*(1+j*.5),800*(1+j*.5),.065,'bell',d*.19);
+ if(fusion){for(let j=0;j<4;j++)tone(out,sr,j*d*.1,d*.65,165*Math.pow(1.26,j),440*Math.pow(1.26,j),.16,'bell',d*.25);tone(out,sr,d*.45,d*.5,100,45,.24,'sine',d*.15);}
+ if(s.special)tone(out,sr,d*.35,d*.6,1320,1760,.14,'bell',d*.25);
+ if(s.healing)for(let j=0;j<3;j++)tone(out,sr,d*(.2+j*.1),d*.5,660*(1+j*.25),660*(1+j*.25),.15,'bell',d*.2);
+}
+function synthesizeCue(cue,options={},sampleRate=48000){
+ if(!CUES[cue])throw Error('Unknown sound cue: '+cue);
+ const s=cueSpec(cue,options),out=new Float32Array(Math.ceil(s.duration*sampleRate)),rng=random(hash(cueKey(cue,options))),d=s.duration,sr=sampleRate;
+ if(['attack','skill','fusion'].includes(cue)){const attrs=attributesOf(s.attribute);for(const a of attrs){const layer=new Float32Array(out.length);element(layer,sr,a,s,rng);for(let i=0;i<out.length;i++)out[i]+=layer[i]/Math.sqrt(attrs.length);}}
+ else if(['hit','guard','defeat'].includes(cue)){noise(out,sr,0,d,cue==='guard'?1700:100,cue==='guard'?7000:2600,.6,rng,.001,d*.19);tone(out,sr,0,d,cue==='guard'?1200:150,cue==='guard'?950:40,.4,cue==='guard'?'bell':'sine',d*.25);}
+ else{const notes={select:[700],confirm:[660,990],back:[700,450],navigate:[540,720],error:[180,150],deckAdd:[620,930],deckRemove:[600,360],deckArrange:[440,550,660],draw:[800,1100],summon:[220,440,880],starter:[440,554,660,880],reward:[660,880,1320],start:[220,330,440],turn:[420,630],battle:[330,440],end:[550,360],win:[523,659,784,1047],lose:[392,330,261],move:[580,850],gachaOpen:[450,660],gachaGather:[180,270,405,610],gachaCue:[330,660,990],gachaAssemble:[500,700,950,1200],gachaInk:[440,660,880],gachaReveal:[523,659,784,1047,1568]}[cue]||[440];for(let j=0;j<notes.length;j++)tone(out,sr,j*d*.13,d*(1-j*.1),notes[j],notes[j]*(cue==='draw'?1.2:1),.4,cue==='error'?'triangle':'bell',d*.24);if(['draw','summon','gachaGather','gachaAssemble'].includes(cue))noise(out,sr,0,d,800,6000,.2,rng,.002,d*.23);}
+ // DC removal, mild saturation, short edge fades and conservative per-cue peaks.
+ let low=0,mean=0;const hp=1-Math.exp(-2*Math.PI*27/sr);for(let i=0;i<out.length;i++){low+=hp*(out[i]-low);out[i]=Math.tanh((out[i]-low)*1.15);mean+=out[i];}mean/=out.length;
+ let peak=0;const tail=Math.min(d*.25,.18);for(let i=0;i<out.length;i++){const t=i/sr,fade=Math.sin(clamp(t/.003)*Math.PI/2)**2*Math.sin(clamp((d-t)/tail)*Math.PI/2)**2;out[i]=(out[i]-mean)*fade;peak=Math.max(peak,Math.abs(out[i]));}
+ const target=s.priority===0?.13:cue==='error'?.2:10**(-[8,6.5,5.5][s.level]/20);if(peak)for(let i=0;i<out.length;i++)out[i]*=target/peak;
+ return {samples:out,sampleRate,duration:d,spec:s};
+}
+
+const KEY='mob-story:se:v1';
+function createSoundSystem({host=globalThis,storage,now=()=>Date.now()}={}){
+ let context=null,master=null,limiter=null,initialized=false,unlocked=false,saveFailed=false,scopeSerial=0,voiceSerial=0,hushUntil=0,lastUi=-Infinity;
+ let settings={volume:.55,muted:false};const voices=new Map(),cache=new Map(),scopes=new Set(),recent=new Map(),seen=new Set(),history=[];
+ const stats={played:0,suppressed:0,errors:0,maxVoices:0};
+ const store=()=>storage===undefined?host.localStorage:storage;
+ const init=(legacySound)=>{if(initialized)return;initialized=true;try{const raw=JSON.parse(store()?.getItem(KEY)||'null');if(raw&&raw.version===1){settings={volume:typeof raw.volume==='number'&&Number.isFinite(raw.volume)?Math.max(0,Math.min(1,raw.volume)):.55,muted:raw.muted===true};}else if(legacySound===false)settings.muted=true;}catch{saveFailed=true;}};
+ function stopVoice(v){if(!v)return;voices.delete(v.id);try{v.source.onended=null;v.source.stop();}catch{}try{v.source.disconnect();}catch{}try{v.gain.disconnect();}catch{}}
+ function stopAll(){for(const v of [...voices.values()])stopVoice(v);}
+ function stopScope(scope){for(const v of [...voices.values()])if(v.scope===scope)stopVoice(v);}
+ function endScope(scope){stopScope(scope);scopes.delete(scope);for(const key of seen)if(key.startsWith(scope+'|'))seen.delete(key);}
+ function beginScope(label){const scope=label+':'+(++scopeSerial);scopes.add(scope);return scope;}
+ function setSettings(patch){init();if(typeof patch.muted==='boolean')settings.muted=patch.muted;if(typeof patch.volume==='number'&&Number.isFinite(patch.volume))settings.volume=Math.max(0,Math.min(1,patch.volume));if(settings.muted||!settings.volume)stopAll();try{master?.gain.setTargetAtTime(settings.muted?0:settings.volume*.62,context.currentTime,.015);}catch{}try{store()?.setItem(KEY,JSON.stringify({version:1,...settings}));saveFailed=false;}catch{saveFailed=true;}return {...settings};}
+ async function unlock(){init();if(host.document?.hidden||settings.muted)return false;try{if(!context||context.state==='closed'){const Context=host.AudioContext||host.webkitAudioContext;if(!Context)return false;context=new Context();master=context.createGain();master.gain.value=settings.volume*.62;limiter=context.createDynamicsCompressor();limiter.threshold.value=-12;limiter.knee.value=8;limiter.ratio.value=12;limiter.attack.value=.003;limiter.release.value=.12;master.connect(limiter);limiter.connect(context.destination);cache.clear();}if(context.state!=='running')await context.resume();unlocked=context.state==='running';return unlocked;}catch{stats.errors++;return false;}}
+ function play(cue,options={}){let pendingVoice=null;
+  init();try{
+   if(!CUES[cue]||settings.muted||settings.volume===0||host.document?.hidden||!context||context.state!=='running')return false;
+   const scope=options.scope||'ui';if(scope!=='ui'&&!scopes.has(scope))return false;
+   const spec=cueSpec(cue,options),time=now(),dedup=options.eventId===undefined?null:scope+'|'+options.eventId,key=cueKey(cue,options),cooldownKey=scope+'|'+cue+'|'+spec.attribute;
+   if(dedup&&seen.has(dedup)||time-(recent.get(cooldownKey)??-Infinity)<(spec.priority===0?100:90)||spec.priority===0&&(time<hushUntil||time-lastUi<65)){stats.suppressed++;return false;}
+   if(spec.priority>=2){hushUntil=time+160;for(const v of [...voices.values()])if(v.priority===0)stopVoice(v);}else lastUi=time;
+   if(voices.size>=4){const lowest=[...voices.values()].sort((a,b)=>a.priority-b.priority||a.id-b.id)[0];if(lowest.priority>spec.priority){stats.suppressed++;return false;}stopVoice(lowest);}
+   let buffer=cache.get(key);if(!buffer){const pcm=synthesizeCue(cue,options,24000);buffer=context.createBuffer(1,pcm.samples.length,pcm.sampleRate);buffer.copyToChannel(pcm.samples,0);cache.set(key,buffer);if(cache.size>40)cache.delete(cache.keys().next().value);}else{cache.delete(key);cache.set(key,buffer);}
+   // Synthesis is synchronous; re-check current context time before scheduling.
+   const source=context.createBufferSource(),gain=context.createGain(),id=++voiceSerial;source.buffer=buffer;gain.gain.value=1;source.connect(gain);gain.connect(master);
+   const voice={id,source,gain,scope,priority:spec.priority};pendingVoice=voice;voices.set(id,voice);source.onended=()=>{voices.delete(id);try{source.disconnect();gain.disconnect();}catch{}};
+   source.start(context.currentTime+.002);const playedAt=now();recent.set(cooldownKey,playedAt);if(spec.priority>=2)hushUntil=playedAt+160;if(recent.size>160)recent.delete(recent.keys().next().value);if(dedup){seen.add(dedup);if(seen.size>512)seen.delete(seen.values().next().value);}
+   stats.played++;stats.maxVoices=Math.max(stats.maxVoices,voices.size);history.push({cue,duration:spec.duration,attribute:spec.attribute,strength:spec.strength,attackType:spec.attackType,scope,eventId:options.eventId});if(history.length>100)history.shift();return true;
+  }catch{if(pendingVoice)stopVoice(pendingVoice);stats.errors++;return false;}
+ }
+ function background(){stopAll();try{context?.suspend()?.catch(()=>{});}catch{}}
+ function foreground(){if(unlocked&&!settings.muted)void unlock();}
+ function dispose(){stopAll();scopes.clear();seen.clear();cache.clear();try{context?.close()?.catch(()=>{});}catch{}context=null;master=null;limiter=null;}
+ return {init,unlock,play,stopAll,stopScope,beginScope,endScope,setSettings,background,foreground,dispose,getSettings:()=>{init();return {...settings};},debug:()=>({...stats,voices:voices.size,cache:cache.size,scopes:scopes.size,state:context?.state||'locked',saveFailed,supported:!!(host.AudioContext||host.webkitAudioContext),history:[...history]})};
+}
+
+return {createSoundSystem,synthesizeCue,CUES};})();
+// Local STORY integration. Audio never changes battle state or awaits playback.
+const storySoundV257=STORY_AUDIO_V257.createSoundSystem();
+storySoundV257.init();
+window.MOB_STORY_SOUND=storySoundV257;
+let soundScopeV257=storySoundV257.beginScope('screen'),soundScreenV257='',soundHushV257=0;
+function seV257(cue,options={}){if(performance.now()<soundHushV257)return false;return storySoundV257.play(cue,{scope:soundScopeV257,...options,durationLimit:Math.max(.12,(options.durationLimit||.8)/Math.max(1,state.speed||1))});}
+function battleSeV257(cue,options={}){if(!screens.battle.classList.contains('active')||!state.battle||state.battle.finished)return false;return seV257(cue,options);}
+function stopSeV257(){storySoundV257.endScope(soundScopeV257);storySoundV257.stopAll();soundScopeV257=storySoundV257.beginScope('screen');}
+const screenSeBaseV257=showScreen;
+showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
+document.addEventListener('pointerdown',()=>{void storySoundV257.unlock();},{capture:true,passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')void storySoundV257.unlock();},true);
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopSeV257();storySoundV257.background();}else storySoundV257.foreground();});
+window.addEventListener('pagehide',()=>{stopSeV257();storySoundV257.background();});
+document.addEventListener('click',e=>{const b=e.target.closest?.('button,[role=button]');if(!b||b.closest('#storySoundSettingsV257')||b.closest('.nm-stage-v239,.rush-holo-overlay-v254'))return;const label=(b.getAttribute('aria-label')||b.textContent||'').trim(),id=b.id||'';if(/skip|abort/i.test(id)||b.matches('[data-rush-fx-skip],[data-rush-fx-abort],[data-rush-home]')||/スキップ/.test(label)){stopSeV257();soundHushV257=performance.now()+180;return;}if(b.disabled||b.getAttribute('aria-disabled')==='true'){seV257('error');return;}if(/Close|Back|Home/i.test(id)||/^(戻る|閉じる|キャンセル|HOME|×|←)/.test(label)){stopSeV257();seV257('back');return;}if(storyBusy||b.matches('[data-socket-medal],[data-equip-slot]'))return;seV257(/^(決定|開始|挑戦|出発|はい|購入|交換|受け取)/.test(label)?'confirm':'select');},true);
+const equipSeBaseV257=setPlayerEquipment;
+setPlayerEquipment=function(...args){const before=JSON.stringify(equipmentFor(args[0])),r=equipSeBaseV257(...args);if(r===false)seV257('error');else if(before!==JSON.stringify(equipmentFor(args[0])))seV257(args[3]?'deckAdd':'deckRemove');return r;};
+const partySeBaseV257=saveParty;let partySeSnapshotV257=JSON.stringify(state.party);
+saveParty=function(...args){const s=JSON.stringify(state.party),r=partySeBaseV257(...args);if(s!==partySeSnapshotV257&&screens.tavern.classList.contains('active'))seV257('deckArrange');partySeSnapshotV257=s;return r;};
+const toastSeBaseV257=toast;
+toast=function(text,...args){if(/足り|できません|失敗|必要|不可|未解放/.test(text))seV257('error');return toastSeBaseV257(text,...args);};
+const normalSeBaseV257=normalSequenceV251;
+normalSequenceV251=function(a,target,weapon,element,...args){battleSeV257('attack',{attribute:element||a?.attribute,attackType:'物理',strength:'small'});return normalSeBaseV257(a,target,weapon,element,...args);};
+const projectileSeBaseV257=projectileV251;
+projectileV251=function(a,target,element,kind,...args){if(kind==='special')battleSeV257('skill',{attribute:element||a?.attribute,strength:'small'});return projectileSeBaseV257(a,target,element,kind,...args);};
+const spriteSeBaseV257=skillSprite;
+skillSprite=function(frames,...args){const skill=[...(MOB_DATA.magicCatalog||[]),...(MOB_DATA.techniqueCatalog||[])].find(s=>s.frames?.length&&s.frames[0]===frames?.[0]);battleSeV257('skill',{attribute:skill?.element||state.battle?.weaponAttackContext?.element||activeAlly()?.attribute,strength:'small'});return spriteSeBaseV257(frames,...args);};
+const ultimateSeBaseV257=playUltimatePostAnimation;
+playUltimatePostAnimation=function(a,u,...args){battleSeV257('fusion',{attribute:u?.attackElement||a?.attribute,attackType:u?.type==='physical'?'物理':'魔法',strength:'large'});return ultimateSeBaseV257(a,u,...args);};
+const pulseSeBaseV257=pulseAllyDamage;
+pulseAllyDamage=function(...args){battleSeV257('hit');return pulseSeBaseV257(...args);};
+const enemyPulseSeBaseV257=pulseEnemy;
+pulseEnemy=function(kind,...args){if(kind==='cast')battleSeV257('skill',{attribute:actingEnemy()?.attribute,strength:'small'});else if(kind==='hit')battleSeV257('hit');return enemyPulseSeBaseV257(kind,...args);};
+const critSeBaseV257=showCriticalBeat;
+showCriticalBeat=function(...args){battleSeV257('guard',{special:true});return critSeBaseV257(...args);};
+const missSeBaseV257=showMiss;
+showMiss=function(...args){battleSeV257('back');return missSeBaseV257(...args);};
+const healSeBaseV257=heal;
+heal=function(...args){const r=healSeBaseV257(...args);if(r>0)battleSeV257('skill',{attribute:'光',healing:true,strength:'small',durationLimit:.35});return r;};
+const fxSeBaseV257=fx;
+fx=function(kind,...args){if(kind==='buff'||kind==='break')battleSeV257(kind==='buff'?'summon':'guard',{durationLimit:.3});return fxSeBaseV257(kind,...args);};
+const cutinSeBaseV257=actionCutin;
+actionCutin=function(text,tone,...args){if(/防御|身を守/.test(text))battleSeV257('guard');else if(tone==='status')battleSeV257('skill',{attribute:'闇',strength:'small'});return cutinSeBaseV257(text,tone,...args);};
+const noticeSeBaseV257=notice;
+notice=function(text,tone,...args){if(/回避/.test(text))battleSeV257('back');else if(/バリア.*無効/.test(text))battleSeV257('guard');else if(/足りない|未習得/.test(text))battleSeV257('error');else if(tone==='status')battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return noticeSeBaseV257(text,tone,...args);};
+const defeatSeBaseV257=recordEnemyDefeat;
+recordEnemyDefeat=function(e,...args){if(e&&!e.seDownV257){e.seDownV257=true;battleSeV257('defeat');}return defeatSeBaseV257(e,...args);};
+const statusSeBaseV257=applyEnemyStatusTo;
+applyEnemyStatusTo=function(...args){const r=statusSeBaseV257(...args);if(r)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+const allyStatusSeBaseV257=inflictAllyStatus;
+inflictAllyStatus=async function(...args){const b=state.battle,r=await allyStatusSeBaseV257(...args);if(r&&state.battle===b)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+const progressRewardSeBaseV257=applyProgressRewards;
+applyProgressRewards=function(...args){const r=progressRewardSeBaseV257(...args);if(r?.coin>0)seV257('reward');return r;};
+const exploreSeBaseV257=showExplorePhase;
+showExplorePhase=function(title,...args){seV257(/獲得|発見|宝|コイン|手に入/.test(title)?'reward':'navigate');return exploreSeBaseV257(title,...args);};
+const rushFxSeBaseV257=rushFxV255;
+rushFxV255=function(kind,...args){if(['win','defeat'].includes(kind)&&state.battle)state.battle.seResultV257=true;stopSeV257();seV257(({start:'start',boss:'summon',win:'win',defeat:'lose',abort:'back'})[kind]||'navigate');return rushFxSeBaseV257(kind,...args);};
+const clearRushSeBaseV257=clearRushV252;
+clearRushV252=function(...args){stopSeV257();return clearRushSeBaseV257(...args);};
+// Replace the old independent nightmare oscillator so SE mute/volume also governs it.
+nmSoundV239=function(kind){seV257('attack',{attribute:({water:'水',thunder:'雷',fire:'火',dark:'闇'})[kind]||'無',strength:'small'});};
+// Result presentation covers ordinary battles and event/rush overlays without altering reward paths.
+const resultSeenSeV257=new WeakMap();
+const resultObserverSeV257=new MutationObserver(()=>{for(const el of [$('#resultOverlay'),$('#eventOverlayV163')]){if(!el)continue;if(el.hidden){resultSeenSeV257.delete(el);continue;}if(!screens.battle.classList.contains('active'))continue;const title=el.querySelector('h2,#resultTitle')?.textContent||'';if(!/VICTORY|DEFEAT|CLEAR|勝利|敗北/.test(title)||(resultSeenSeV257.get(el)?.title===title&&resultSeenSeV257.get(el)?.battle===state.battle))continue;resultSeenSeV257.set(el,{title,battle:state.battle});if(state.battle?.seResultV257)continue;if(state.battle)state.battle.seResultV257=true;stopSeV257();seV257(/DEFEAT|敗北/.test(title)?'lose':'win');}});
+resultObserverSeV257.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
+const progressionSeBaseV257=renderResultProgression;
+renderResultProgression=function(changes,...args){const r=progressionSeBaseV257(changes,...args);if(changes?.length)seV257('starter');return r;};
+const medalSeBaseV257=addMedal;
+addMedal=function(id,n=1,...args){const r=medalSeBaseV257(id,n,...args);if(n>0)seV257('reward');return r;};
+const rushRewardSeBaseV257=rewardRushV252;
+rewardRushV252=function(...args){const r=rushRewardSeBaseV257(...args);if(r)seV257('reward');return r;};
+function renderSoundSettingsV257(){let el=$('#storySoundSettingsV257');if(!el){el=document.createElement('section');el.id='storySoundSettingsV257';el.className='settings-section';el.innerHTML='<h3>効果音（SE）</h3><label>音量 <output id="storySeValueV257"></output><input id="storySeVolumeV257" type="range" min="0" max="100" step="1" aria-label="効果音の音量"></label><div><button id="storySeMuteV257" type="button"></button><button id="storySePreviewV257" type="button">試聴</button></div><small>SEのみ調整します。エンディング曲は従来どおりです。</small>';$('#settingsOverlay .settings-head')?.after(el);$('#storySeVolumeV257',el).oninput=e=>{storySoundV257.setSettings({volume:Number(e.target.value)/100});renderSoundSettingsV257();};$('#storySeMuteV257',el).onclick=()=>{storySoundV257.setSettings({muted:!storySoundV257.getSettings().muted});void storySoundV257.unlock();renderSoundSettingsV257();};$('#storySePreviewV257',el).onclick=async()=>{if(await storySoundV257.unlock())seV257('confirm');};}const s=storySoundV257.getSettings();$('#storySeVolumeV257').value=Math.round(s.volume*100);$('#storySeValueV257').textContent=Math.round(s.volume*100)+'%';$('#storySeMuteV257').textContent=s.muted?'消音中：解除':'効果音ON：消音';$('#storySeMuteV257').setAttribute('aria-pressed',String(s.muted));$('#storySePreviewV257').disabled=s.muted||s.volume===0;}
+const settingsSeBaseV257=renderSettings;
+renderSettings=function(...args){const r=settingsSeBaseV257(...args);renderSoundSettingsV257();return r;};
+renderSoundSettingsV257();
+window.__mobBuildVersion='v257';
+
+// UPDATE_V257_END
 })();
 </script>
 </body>

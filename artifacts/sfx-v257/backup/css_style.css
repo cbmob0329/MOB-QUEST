@@ -5636,7 +5636,3 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 .equipment-slots:has(.socket-v256),.camp-equip-slots:has(.socket-v256){grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.equipment-slots:has(.socket-v256)>.equipment-slot,.camp-equip-slots:has(.socket-v256)>.equipment-slot{grid-row:auto!important;min-width:0;padding:12px 8px}.equipment-slots:has(.socket-v256)>.armor,.camp-equip-slots:has(.socket-v256)>.armor{grid-column:1/-1}.equipment-slot.socket-v256 b{font-size:12px!important}.equipment-slot.socket-v256 small{font-size:10px!important}.equipment-slot.socket-v256 em,.equipment-slot.socket-v256>span:not(.socket-disk-v256):not(.socket-empty-v256){font-size:11px!important;line-height:1.7}.equipment-slots:has(.socket-v256)>.equipment-slot.main b,.equipment-slots:has(.socket-v256)>.equipment-slot.sub b{font-size:12px}.equipment-slots:has(.socket-v256)>.equipment-slot.medal b{font-size:11px!important}
 
 /* UPDATE_V256_END */
-/* UPDATE_V257_BEGIN */
-#storySoundSettingsV257{display:grid;gap:10px}#storySoundSettingsV257 label{display:grid;grid-template-columns:1fr auto;gap:8px}#storySeVolumeV257{grid-column:1/-1;width:100%;accent-color:#65d7ed}#storySoundSettingsV257>div{display:flex;gap:8px;flex-wrap:wrap}#storySoundSettingsV257 button{padding:10px 14px;border:1px solid #56869c;border-radius:10px;background:#213e50;color:#fff;touch-action:manipulation}#storySoundSettingsV257 button:disabled{opacity:.45}#storySoundSettingsV257 small{line-height:1.6;color:#afc7d5}
-
-/* UPDATE_V257_END */

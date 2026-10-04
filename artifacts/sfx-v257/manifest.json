@@ -1,0 +1,38 @@
+{
+  "version": "v257",
+  "files": [
+    {
+      "path": "js/audio/synthesis-v257.js",
+      "bytes": 10088,
+      "sha256": "c427ce0a6fa5e5838eca2bcfb48d12735abad350fec572d39771e4b5f32f490d"
+    },
+    {
+      "path": "js/audio/engine-v257.js",
+      "bytes": 5657,
+      "sha256": "46a3b0fa0405d308f4cafd85481b89ccb25544e14c4b6631057cafb338d5356f"
+    },
+    {
+      "path": "js/audio/story-v257.js",
+      "bytes": 10785,
+      "sha256": "4ab3a51d2246d83274c4dfc5e7b4f289c9d1a45cadce9e5b38434b2126ff1956"
+    }
+  ],
+  "runtimeAudioFiles": 0,
+  "bgmAdded": false,
+  "battleRepositoryWritten": false,
+  "tests": [
+    "tests/sfx-v257.cjs",
+    "tests/sfx-source-v257.cjs",
+    "tests/sfx-browser-v257.cjs",
+    "tests/equipment-mint-v256.cjs",
+    "tests/rush-v255.cjs",
+    "tests/battle-animation-v251.cjs",
+    "tests/rush-compat-v252.cjs"
+  ],
+  "notVerified": [
+    "Human listening through speakers/headphones",
+    "Physical mobile Safari",
+    "Every unique event animation"
+  ],
+  "noCommitPushPublish": true
+}

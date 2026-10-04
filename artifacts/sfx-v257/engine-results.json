@@ -1,0 +1,58 @@
+{
+  "attributes": [
+    {
+      "attribute": "火",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.06682491347393815
+    },
+    {
+      "attribute": "水",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.09233306146504928
+    },
+    {
+      "attribute": "雷",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.07013473458250073
+    },
+    {
+      "attribute": "地",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.1067442366061966
+    },
+    {
+      "attribute": "風",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.09099380505060473
+    },
+    {
+      "attribute": "光",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.10148201954564205
+    },
+    {
+      "attribute": "闇",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.12767400663358308
+    },
+    {
+      "attribute": "無",
+      "duration": 0.6,
+      "peak": 0.4731512665748596,
+      "rms": 0.06870834951873175
+    }
+  ],
+  "voiceCap": 4,
+  "mutePersistence": true,
+  "scopeCancellation": true,
+  "backgroundStops": true,
+  "unsupportedSafe": true,
+  "humanListening": false
+}

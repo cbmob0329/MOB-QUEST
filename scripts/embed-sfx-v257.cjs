@@ -1,0 +1,5 @@
+const fs=require('node:fs'),read=p=>fs.readFileSync(p,'utf8');
+const synthesis=read('js/audio/synthesis-v257.js').replace(/export /g,'');
+const audio='const STORY_AUDIO_V257=(()=>{\n'+synthesis+'\n'+read('js/audio/engine-v257.js')+'\nreturn {createSoundSystem,synthesizeCue,CUES};})();\n';
+const block='// UPDATE_V257_BEGIN\n'+audio+read('js/audio/story-v257.js')+'\n// UPDATE_V257_END';let game=read('js/game.js');game=game.includes('// UPDATE_V257_BEGIN')?game.replace(/\/\/ UPDATE_V257_BEGIN[\s\S]*?\/\/ UPDATE_V257_END/,()=>block):game.replace(/\}\)\(\);\s*$/,()=>block+'\n})();\n');fs.writeFileSync('js/game.js',game);
+const css='/* UPDATE_V257_BEGIN */\n'+read('css/sfx-v257.css')+'\n/* UPDATE_V257_END */';let style=read('css/style.css');style=style.includes('/* UPDATE_V257_BEGIN */')?style.replace(/\/\* UPDATE_V257_BEGIN \*\/[\s\S]*?\/\* UPDATE_V257_END \*\//,()=>css):style+'\n'+css;fs.writeFileSync('css/style.css',style);fs.writeFileSync('index.html',read('index.html').replace(/title-version">v\d+/,'title-version">v257'));

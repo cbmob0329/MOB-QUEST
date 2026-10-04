@@ -1,0 +1,196 @@
+{
+  "cues": [
+    "start",
+    "attack",
+    "skill",
+    "skill",
+    "hit",
+    "guard",
+    "guard",
+    "back",
+    "skill",
+    "reward",
+    "defeat",
+    "win",
+    "win",
+    "lose"
+  ],
+  "debug": {
+    "played": 19,
+    "suppressed": 0,
+    "errors": 0,
+    "maxVoices": 4,
+    "voices": 0,
+    "cache": 15,
+    "scopes": 1,
+    "state": "running",
+    "saveFailed": false,
+    "supported": true,
+    "history": [
+      {
+        "cue": "confirm",
+        "duration": 0.1,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:1"
+      },
+      {
+        "cue": "start",
+        "duration": 0.8,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "attack",
+        "duration": 0.48,
+        "attribute": "水",
+        "strength": "small",
+        "attackType": "物理",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "hit",
+        "duration": 0.26,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "skill",
+        "duration": 0.8,
+        "attribute": "火",
+        "strength": "small",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "hit",
+        "duration": 0.26,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "skill",
+        "duration": 0.35,
+        "attribute": "光",
+        "strength": "small",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "hit",
+        "duration": 0.26,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "guard",
+        "duration": 0.32,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "guard",
+        "duration": 0.32,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "back",
+        "duration": 0.1,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "skill",
+        "duration": 0.3,
+        "attribute": "闇",
+        "strength": "small",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "reward",
+        "duration": 0.65,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "defeat",
+        "duration": 0.4,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:2"
+      },
+      {
+        "cue": "win",
+        "duration": 0.8,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:3"
+      },
+      {
+        "cue": "win",
+        "duration": 0.8,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:4"
+      },
+      {
+        "cue": "lose",
+        "duration": 0.8,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:5"
+      },
+      {
+        "cue": "start",
+        "duration": 0.8,
+        "attribute": "無",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:6"
+      },
+      {
+        "cue": "skill",
+        "duration": 0.16,
+        "attribute": "水",
+        "strength": "medium",
+        "attackType": "魔法",
+        "scope": "screen:8"
+      }
+    ]
+  },
+  "muteReload": true,
+  "homeStops": true,
+  "rushSkipStops": true,
+  "fastSoundDuration": true,
+  "naturalVoiceCleanup": true,
+  "lateBattleSilent": true,
+  "widths": [
+    320,
+    375,
+    390
+  ],
+  "audiblyListened": false
+}
