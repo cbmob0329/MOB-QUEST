@@ -1,0 +1,61 @@
+{
+  "stages": 30,
+  "difficulties": 3,
+  "waves": 96,
+  "negativeCases": 14,
+  "nonRushUnchanged": true,
+  "embeddedSourcesIdentical": true,
+  "balanceWins": 270,
+  "lifecycleClears": 90,
+  "replays": 30,
+  "actualTraitChecks": 162,
+  "narrationScreens": 186,
+  "viewportWidths": [
+    320,
+    390
+  ],
+  "doctorImageConnected": false,
+  "regression": [
+    {
+      "file": "quest-access-v246.cjs",
+      "status": 0
+    },
+    {
+      "file": "event-v174.cjs",
+      "status": 1
+    },
+    {
+      "file": "macaron-v247.cjs",
+      "status": 0
+    },
+    {
+      "file": "story-balance-v244.cjs",
+      "status": 1
+    },
+    {
+      "file": "boss-hp-v249.cjs",
+      "status": 0
+    },
+    {
+      "file": "boss-edits-v250.cjs",
+      "status": 0
+    },
+    {
+      "file": "enemy-abilities-v142.cjs",
+      "status": 1
+    },
+    {
+      "file": "battle-animation-v251.cjs",
+      "status": 0
+    },
+    {
+      "file": "rush-compat-v252.cjs",
+      "status": 0
+    }
+  ],
+  "remaining": [
+    "Approved professor PNG transfer and connection",
+    "Real device touch and Safari",
+    "All party/equipment combinations and concurrent tabs"
+  ]
+}

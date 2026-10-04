@@ -1,0 +1,2434 @@
+{
+  "rows": [
+    {
+      "id": "rush-savanna-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 557,
+      "expected": 557
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 0,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 578,
+      "expected": 578
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 0,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 300,
+      "expected": 300
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 0,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5200,
+      "expected": 200
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 0,
+      "kind": "poisonOnHit",
+      "before": 0,
+      "after": 3
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 0,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 0,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 244.92,
+      "expected": 9.42
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 0,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5300,
+      "expected": 300
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 0,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 0,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 572,
+      "expected": 572
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 0,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 249.63,
+      "expected": 14.129999999999999
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 0,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 575,
+      "expected": 575
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 0,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 306,
+      "expected": 307
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 0,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5200,
+      "expected": 200
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 551,
+      "expected": 551
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 0,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 0,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 244.92,
+      "expected": 9.42
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 551,
+      "expected": 551
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 551,
+      "expected": 551
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 0,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 0,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 551,
+      "expected": 551
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 0,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 578,
+      "expected": 578
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 0,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 0,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 242.565,
+      "expected": 7.0649999999999995
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 0,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 303,
+      "expected": 303
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 0,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5200,
+      "expected": 200
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 0,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 303,
+      "expected": 303
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 0,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 575,
+      "expected": 575
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 0,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 0,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 242.565,
+      "expected": 7.0649999999999995
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 0,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5300,
+      "expected": 300
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 0,
+      "kind": "resist",
+      "before": 574,
+      "after": 545,
+      "expected": 545
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 553,
+      "expected": 553
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 1,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 576,
+      "expected": 576
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 1,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 297,
+      "expected": 297
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 1,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5240,
+      "expected": 240
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 1,
+      "kind": "poisonOnHit",
+      "before": 0,
+      "after": 3
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 1,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 1,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 246.804,
+      "expected": 11.304
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 1,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5360,
+      "expected": 360
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 1,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 1,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 569,
+      "expected": 569
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 1,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 252.456,
+      "expected": 16.956
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 1,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 572,
+      "expected": 572
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 1,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 304,
+      "expected": 305
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 1,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5240,
+      "expected": 240
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 546,
+      "expected": 546
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 1,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 1,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 246.804,
+      "expected": 11.304
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 546,
+      "expected": 546
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 546,
+      "expected": 546
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 1,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 1,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 546,
+      "expected": 546
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 1,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 576,
+      "expected": 576
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 1,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 1,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 243.978,
+      "expected": 8.478
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 1,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 301,
+      "expected": 301
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 1,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5240,
+      "expected": 240
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 1,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 301,
+      "expected": 301
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 1,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 572,
+      "expected": 572
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 1,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 1,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 243.978,
+      "expected": 8.478
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 1,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5360,
+      "expected": 360
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 1,
+      "kind": "resist",
+      "before": 574,
+      "after": 540,
+      "expected": 540
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 550,
+      "expected": 550
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 2,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 573,
+      "expected": 573
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 2,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 294,
+      "expected": 294
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 2,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5280,
+      "expected": 280
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 2,
+      "kind": "poisonOnHit",
+      "before": 0,
+      "after": 3
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 2,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 2,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 248.688,
+      "expected": 13.188
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 2,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5420,
+      "expected": 420
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 2,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 2,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 565,
+      "expected": 565
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 2,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 255.282,
+      "expected": 19.782
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 2,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 569,
+      "expected": 569
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 2,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 302,
+      "expected": 303
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 2,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5280,
+      "expected": 280
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 542,
+      "expected": 542
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 2,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 2,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 248.688,
+      "expected": 13.188
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 542,
+      "expected": 542
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 542,
+      "expected": 542
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 2,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 2,
+      "kind": "evade",
+      "before": 35,
+      "after": 0
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 542,
+      "expected": 542
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 2,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 573,
+      "expected": 573
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 2,
+      "kind": "crit",
+      "before": false,
+      "after": true
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 2,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 245.391,
+      "expected": 9.891
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 2,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 298,
+      "expected": 298
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 24,
+      "after": 23,
+      "expected": 23
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 2,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5280,
+      "expected": 280
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 2,
+      "kind": "guardExtraCut",
+      "before": 316,
+      "after": 298,
+      "expected": 298
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 2,
+      "kind": "physicalCut",
+      "before": 590,
+      "after": 569,
+      "expected": 569
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 2,
+      "kind": "magicMpCut",
+      "before": 22,
+      "after": 21,
+      "expected": 21
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 2,
+      "kind": "guardMpHeal",
+      "before": 235.5,
+      "after": 245.391,
+      "expected": 9.891
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 2,
+      "kind": "guardHpHeal",
+      "before": 5000,
+      "after": 5420,
+      "expected": 420
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 2,
+      "kind": "resist",
+      "before": 574,
+      "after": 534,
+      "expected": 534
+    }
+  ],
+  "stats": [
+    {
+      "id": "rush-savanna-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 3,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 4,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 10
+      }
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 20,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 2,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 3,
+        "maxHp": 0,
+        "maxMp": 10
+      }
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 10
+      }
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 4,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 2,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 2,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 10
+      }
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 2,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 3,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 2,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 12,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 2,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 0,
+        "spd": 3,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 4,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 10,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 0,
+        "mag": 4,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 0,
+      "bonus": {
+        "atk": 4,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 13
+      }
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 25,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 0,
+        "maxMp": 13
+      }
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 13
+      }
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 19,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 3,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 13
+      }
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 4,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 19,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 4,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 19
+      }
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 3,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 6,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 4,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 6,
+        "mag": 0,
+        "def": 3,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 0,
+        "spd": 4,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 5,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 13,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 19,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 0,
+        "mag": 5,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 19
+      }
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 1,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-savanna-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-captain-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 6,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-frezard-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-golem-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 8,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 30,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sand-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-neon-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-sea-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-lantern-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-endurance-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 23,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-dino-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 6,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 3,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-afterimage-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 6,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-reflection-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-souls-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 15
+      }
+    },
+    {
+      "id": "rush-guard-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-rockaxe-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-sandwall-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 23,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-waterside-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 3,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 6,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-circuit-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 5,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 23
+      }
+    },
+    {
+      "id": "rush-crater-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 8,
+        "def": 0,
+        "res": 3,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-tides-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 8,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-returnfield-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 5,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 6,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fangs-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 0,
+        "res": 0,
+        "spd": 6,
+        "maxHp": 18,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-snipers-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 8,
+        "mag": 0,
+        "def": 3,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-beasts-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 0,
+        "spd": 5,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-crossfire-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-fourknights-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 6,
+        "res": 6,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-castlearmy-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 8,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 15,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-hawkdrill-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 23,
+        "maxMp": 0
+      }
+    },
+    {
+      "id": "rush-seaking-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 0,
+        "mag": 6,
+        "def": 0,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 23
+      }
+    },
+    {
+      "id": "rush-veterans-medal-v252",
+      "tier": 2,
+      "bonus": {
+        "atk": 6,
+        "mag": 0,
+        "def": 6,
+        "res": 0,
+        "spd": 0,
+        "maxHp": 0,
+        "maxMp": 0
+      }
+    }
+  ],
+  "checkpoint": "PASS"
+}

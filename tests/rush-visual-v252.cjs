@@ -1,2 +1,1 @@
-// Legacy command forwards to current speech-bubble and medal checks.
-require('./rush-visual-v253.cjs');
+require('./rush-ui-v254.cjs');

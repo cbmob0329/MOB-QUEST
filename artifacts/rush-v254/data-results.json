@@ -1,0 +1,9 @@
+{
+  "stages": 30,
+  "difficulties": 3,
+  "waves": 96,
+  "negativeCases": 14,
+  "nonRushUnchanged": true,
+  "embeddedSourcesIdentical": true,
+  "balanceWins": 270
+}
