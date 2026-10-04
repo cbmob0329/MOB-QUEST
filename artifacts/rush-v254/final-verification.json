@@ -14,7 +14,7 @@
     320,
     390
   ],
-  "doctorImageConnected": false,
+  "doctorImageConnected": true,
   "regression": [
     {
       "file": "quest-access-v246.cjs",
@@ -54,8 +54,22 @@
     }
   ],
   "remaining": [
-    "Approved professor PNG transfer and connection",
     "Real device touch and Safari",
     "All party/equipment combinations and concurrent tabs"
-  ]
+  ],
+  "doctorImageVerification": {
+    "hash": "1d2767b3c4640fbeb1d362026c146ccd9cb2efef17f098a426e3201f3ff57f3d",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "dataPreserved": true,
+    "missingImage": {
+      "naturalWidth": 0,
+      "visibility": "hidden",
+      "display": "block",
+      "opacity": "1"
+    },
+    "missingImageDialogueCompletes": true
+  }
 }
