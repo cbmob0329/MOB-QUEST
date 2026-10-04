@@ -1,5 +1,5 @@
 /* Short, finite monster rushes. Isolated from existing event clear/drop records. */
-validateRushV252(RUSH_DATA_V252,{worldIds:MOB_DATA.adventureWorlds.map(w=>w.id),storyIds:Object.keys(STORY179)});
+validateRushV252(RUSH_DATA_V252,{worldIds:MOB_DATA.adventureWorlds.map(w=>w.id),storyIds:Object.keys(STORY179),playerIds:MOB_DATA.players.map(p=>p.id)});
 for(const medal of RUSH_DATA_V252.medals){if(weaponById(medal.id))throw Error('Duplicate rush medal '+medal.id);WEAPONS.push(clone(medal));}
 let rushStartingV252=false;
 const rushQuestV252=id=>RUSH_DATA_V252.quests.find(q=>q.id===id);

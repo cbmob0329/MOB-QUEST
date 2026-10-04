@@ -1,0 +1,15 @@
+{
+  "widths": [
+    320,
+    390
+  ],
+  "boss": true,
+  "start": true,
+  "win": true,
+  "defeat": true,
+  "abortDuringIntro": true,
+  "homeDuringNarration": true,
+  "reduced": true,
+  "partyPreserved": true,
+  "coins": 18000
+}

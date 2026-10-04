@@ -9113,9 +9113,7 @@
         6000,
         14500,
         29000
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-rural-v252",
@@ -9179,9 +9177,7 @@
         12000,
         23000,
         42000
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
+      ]
     },
     {
       "id": "rush-magma-v252",
@@ -9271,9 +9267,7 @@
         28000,
         49000,
         82500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-ember-v252",
@@ -9365,9 +9359,7 @@
         50000,
         82000,
         131000
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-sand-v252",
@@ -9431,9 +9423,7 @@
         9000,
         19000,
         36000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
+      ]
     },
     {
       "id": "rush-neon-v252",
@@ -9497,9 +9487,7 @@
         16000,
         29500,
         51000
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
+      ]
     },
     {
       "id": "rush-sea-v252",
@@ -9589,9 +9577,7 @@
         32000,
         55000,
         91500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-lantern-v252",
@@ -9655,9 +9641,7 @@
         27000,
         46000,
         75500
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-endurance-v252",
@@ -9721,9 +9705,7 @@
         30000,
         50000,
         81500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-dino-v252",
@@ -9787,9 +9769,7 @@
         31500,
         53000,
         85500
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
+      ]
     },
     {
       "id": "rush-afterimage-v252",
@@ -9853,9 +9833,7 @@
         33000,
         55000,
         88500
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
+      ]
     },
     {
       "id": "rush-reflection-v252",
@@ -9945,9 +9923,7 @@
         46500,
         77000,
         123000
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-souls-v252",
@@ -10037,9 +10013,7 @@
         50000,
         82000,
         131000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
+      ]
     },
     {
       "id": "rush-guard-v252",
@@ -10129,9 +10103,7 @@
         56000,
         91000,
         144500
-      ],
-      "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-rockaxe-v252",
@@ -10195,9 +10167,7 @@
         7000,
         16000,
         31000
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-sandwall-v252",
@@ -10261,9 +10231,7 @@
         10000,
         20500,
         38000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
+      ]
     },
     {
       "id": "rush-waterside-v252",
@@ -10331,9 +10299,7 @@
         13000,
         24500,
         44000
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
+      ]
     },
     {
       "id": "rush-circuit-v252",
@@ -10401,9 +10367,7 @@
         17000,
         30500,
         53000
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
+      ]
     },
     {
       "id": "rush-crater-v252",
@@ -10471,9 +10435,7 @@
         22000,
         38000,
         63500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-tides-v252",
@@ -10557,9 +10519,7 @@
         26000,
         44000,
         72500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-returnfield-v252",
@@ -10643,9 +10603,7 @@
         28000,
         47500,
         77500
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-fangs-v252",
@@ -10729,9 +10687,7 @@
         31000,
         51500,
         83500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-snipers-v252",
@@ -10815,9 +10771,7 @@
         32500,
         54000,
         87500
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
+      ]
     },
     {
       "id": "rush-beasts-v252",
@@ -10901,9 +10855,7 @@
         34500,
         57000,
         91500
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
+      ]
     },
     {
       "id": "rush-crossfire-v252",
@@ -10987,9 +10939,7 @@
         35500,
         59000,
         94500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-fourknights-v252",
@@ -11073,9 +11023,7 @@
         38500,
         63000,
         100500
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
+      ]
     },
     {
       "id": "rush-castlearmy-v252",
@@ -11159,9 +11107,7 @@
         42500,
         69000,
         109000
-      ],
-      "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-hawkdrill-v252",
@@ -11225,9 +11171,7 @@
         8500,
         18000,
         34000
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     },
     {
       "id": "rush-seaking-v252",
@@ -11307,9 +11251,7 @@
         27500,
         47000,
         76500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
+      ]
     },
     {
       "id": "rush-veterans-v252",
@@ -11389,9 +11331,7 @@
         44000,
         71000,
         112000
-      ],
-      "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      ]
     }
   ],
   "minSimultaneous": 2,
@@ -11402,9 +11342,7 @@
       "levelOffset": 0,
       "hp": 1,
       "attack": 1,
-      "medalScale": 1,
-      "minLevel": 1,
-      "unlock": "region"
+      "medalScale": 1
     },
     {
       "id": "hard",
@@ -11412,9 +11350,7 @@
       "levelOffset": 8,
       "hp": 1.12,
       "attack": 1.08,
-      "medalScale": 1.25,
-      "minLevel": 50,
-      "unlock": "allPreviousTier"
+      "medalScale": 1.25
     },
     {
       "id": "inferno",
@@ -11422,9 +11358,7 @@
       "levelOffset": 16,
       "hp": 1.25,
       "attack": 1.16,
-      "medalScale": 1.5,
-      "minLevel": 80,
-      "unlock": "allPreviousTier"
+      "medalScale": 1.5
     }
   ],
   "narrator": {
@@ -11445,22 +11379,5 @@
       "continueArea": "HP・MPを引き継いで進むっちゃ",
       "noReward": "報酬は未受領っちゃ"
     }
-  },
-  "partyRule": {
-    "size": 4,
-    "requiredCount": 1,
-    "freeCount": 3,
-    "rosterHelp": "仲間が4人必要です。冒険を田舎町まで進め、モブデザートとモブデンデンを仲間にしてください"
-  },
-  "presentation": {
-    "startMs": 1800,
-    "endMs": 1600,
-    "bossMs": 2400,
-    "reducedMs": 450,
-    "start": "仮想領域を構築っちゃ",
-    "win": "解析完了・転送するっちゃ",
-    "defeat": "敗北記録を転送っちゃ",
-    "abort": "接続終了・帰還するっちゃ",
-    "boss": "強敵反応・警戒するっちゃ"
   }
 }

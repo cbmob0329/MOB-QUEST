@@ -1,0 +1,32 @@
+[
+  {
+    "file": "tests/rush-v255.cjs",
+    "status": 0,
+    "stdout": "0 rush-grass-v252\n0 rush-rural-v252\n0 rush-magma-v252\n0 rush-ember-v252\n0 rush-sand-v252\n0 rush-neon-v252\n0 rush-sea-v252\n0 rush-lantern-v252\n0 rush-endurance-v252\n0 rush-dino-v252\n0 rush-afterimage-v252\n0 rush-reflection-v252\n0 rush-souls-v252\n0 rush-guard-v252\n0 rush-rockaxe-v252\n0 rush-sandwall-v252\n0 rush-waterside-v252\n0 rush-circuit-v252\n0 rush-crater-v252\n0 rush-tides-v252\n0 rush-returnfield-v252\n0 rush-fangs-v252\n0 rush-snipers-v252\n0 rush-beasts-v252\n0 rush-crossfire-v252\n0 rush-fourknights-v252\n0 rush-castlearmy-v252\n0 rush-hawkdrill-v252\n0 rush-seaking-v252\n0 rush-veterans-v252\n1 rush-grass-v252\n1 rush-rural-v252\n1 rush-magma-v252\n1 rush-ember-v252\n1 rush-sand-v252\n1 rush-neon-v252\n1 rush-sea-v252\n1 rush-lantern-v252\n1 rush-endurance-v252\n1 rush-dino-v252\n1 rush-afterimage-v252\n1 rush-reflection-v252\n1 rush-souls-v252\n1 rush-guard-v252\n1 rush-rockaxe-v252\n1 rush-sandwall-v252\n1 rush-waterside-v252\n1 rush-circuit-v252\n1 rush-crater-v252\n1 rush-tides-v252\n1 rush-returnfield-v252\n1 rush-fangs-v252\n1 rush-snipers-v252\n1 rush-beasts-v252\n1 rush-crossfire-v252\n1 rush-fourknights-v252\n1 rush-castlearmy-v252\n1 rush-hawkdrill-v252\n1 rush-seaking-v252\n1 rush-veterans-v252\n2 rush-grass-v252\n2 rush-rural-v252\n2 rush-magma-v252\n2 rush-ember-v252\n2 rush-sand-v252\n2 rush-neon-v252\n2 rush-sea-v252\n2 rush-lantern-v252\n2 rush-endurance-v252\n2 rush-dino-v252\n2 rush-afterimage-v252\n2 rush-reflection-v252\n2 rush-souls-v252\n2 rush-guard-v252\n2 rush-rockaxe-v252\n2 rush-sandwall-v252\n2 rush-waterside-v252\n2 rush-circuit-v252\n2 rush-crater-v252\n2 rush-tides-v252\n2 rush-returnfield-v252\n2 rush-fangs-v252\n2 rush-snipers-v252\n2 rush-beasts-v252\n2 rush-crossfire-v252\n2 rush-fourknights-v252\n2 rush-castlearmy-v252\n2 rush-hawkdrill-v252\n2 rush-seaking-v252\n2 rush-veterans-v252\nPASS 90 tiers, global gates, four-only, defeats/aborts/replays/coins/medals, old saves\n",
+    "stderr": ""
+  },
+  {
+    "file": "scripts/test-rush-regression-v255.cjs",
+    "status": 0,
+    "stdout": "RUN quest-access-v246.cjs\nPASS quest-access-v246.cjs\nRUN event-v174.cjs\nFAIL event-v174.cjs\nRUN macaron-v247.cjs\nPASS macaron-v247.cjs\nRUN story-balance-v244.cjs\nFAIL story-balance-v244.cjs\nRUN boss-hp-v249.cjs\nPASS boss-hp-v249.cjs\nRUN boss-edits-v250.cjs\nPASS boss-edits-v250.cjs\nRUN enemy-abilities-v142.cjs\nFAIL enemy-abilities-v142.cjs\nRUN battle-animation-v251.cjs\nPASS battle-animation-v251.cjs\nRUN rush-compat-v252.cjs\nPASS rush-compat-v252.cjs\n",
+    "stderr": ""
+  },
+  {
+    "file": "tests/rush-medals-v254.cjs",
+    "status": 0,
+    "stdout": "PASS 162 trait activations, 90 stat sets, duplicate/unequip and checkpoint preservation\n",
+    "stderr": ""
+  },
+  {
+    "file": "tests/rush-data-v255.cjs",
+    "status": 0,
+    "stdout": "PASS data, floors, eight invalid edits, 90 real four-person wins, non-rush preservation\n",
+    "stderr": ""
+  },
+  {
+    "file": "tests/rush-ui-v255.cjs",
+    "status": 0,
+    "stdout": "PASS real formation/start/boss/end/reward/defeat/abort/reduced at 320/390\n",
+    "stderr": ""
+  }
+]

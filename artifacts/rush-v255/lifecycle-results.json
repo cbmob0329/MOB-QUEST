@@ -1,0 +1,547 @@
+{
+  "rows": [
+    {
+      "quest": "rush-grass-v252",
+      "tier": 0,
+      "coins": 6000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rural-v252",
+      "tier": 0,
+      "coins": 12000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-magma-v252",
+      "tier": 0,
+      "coins": 28000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-ember-v252",
+      "tier": 0,
+      "coins": 50000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sand-v252",
+      "tier": 0,
+      "coins": 9000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-neon-v252",
+      "tier": 0,
+      "coins": 16000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sea-v252",
+      "tier": 0,
+      "coins": 32000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-lantern-v252",
+      "tier": 0,
+      "coins": 27000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-endurance-v252",
+      "tier": 0,
+      "coins": 30000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-dino-v252",
+      "tier": 0,
+      "coins": 31500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-afterimage-v252",
+      "tier": 0,
+      "coins": 33000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-reflection-v252",
+      "tier": 0,
+      "coins": 46500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-souls-v252",
+      "tier": 0,
+      "coins": 50000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-guard-v252",
+      "tier": 0,
+      "coins": 56000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rockaxe-v252",
+      "tier": 0,
+      "coins": 7000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sandwall-v252",
+      "tier": 0,
+      "coins": 10000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-waterside-v252",
+      "tier": 0,
+      "coins": 13000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-circuit-v252",
+      "tier": 0,
+      "coins": 17000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crater-v252",
+      "tier": 0,
+      "coins": 22000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-tides-v252",
+      "tier": 0,
+      "coins": 26000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-returnfield-v252",
+      "tier": 0,
+      "coins": 28000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fangs-v252",
+      "tier": 0,
+      "coins": 31000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-snipers-v252",
+      "tier": 0,
+      "coins": 32500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-beasts-v252",
+      "tier": 0,
+      "coins": 34500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crossfire-v252",
+      "tier": 0,
+      "coins": 35500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fourknights-v252",
+      "tier": 0,
+      "coins": 38500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-castlearmy-v252",
+      "tier": 0,
+      "coins": 42500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-hawkdrill-v252",
+      "tier": 0,
+      "coins": 8500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-seaking-v252",
+      "tier": 0,
+      "coins": 27500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-veterans-v252",
+      "tier": 0,
+      "coins": 44000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-grass-v252",
+      "tier": 1,
+      "coins": 14500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rural-v252",
+      "tier": 1,
+      "coins": 23000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-magma-v252",
+      "tier": 1,
+      "coins": 49000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-ember-v252",
+      "tier": 1,
+      "coins": 82000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sand-v252",
+      "tier": 1,
+      "coins": 19000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-neon-v252",
+      "tier": 1,
+      "coins": 29500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sea-v252",
+      "tier": 1,
+      "coins": 55000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-lantern-v252",
+      "tier": 1,
+      "coins": 46000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-endurance-v252",
+      "tier": 1,
+      "coins": 50000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-dino-v252",
+      "tier": 1,
+      "coins": 53000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-afterimage-v252",
+      "tier": 1,
+      "coins": 55000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-reflection-v252",
+      "tier": 1,
+      "coins": 77000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-souls-v252",
+      "tier": 1,
+      "coins": 82000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-guard-v252",
+      "tier": 1,
+      "coins": 91000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rockaxe-v252",
+      "tier": 1,
+      "coins": 16000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sandwall-v252",
+      "tier": 1,
+      "coins": 20500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-waterside-v252",
+      "tier": 1,
+      "coins": 24500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-circuit-v252",
+      "tier": 1,
+      "coins": 30500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crater-v252",
+      "tier": 1,
+      "coins": 38000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-tides-v252",
+      "tier": 1,
+      "coins": 44000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-returnfield-v252",
+      "tier": 1,
+      "coins": 47500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fangs-v252",
+      "tier": 1,
+      "coins": 51500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-snipers-v252",
+      "tier": 1,
+      "coins": 54000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-beasts-v252",
+      "tier": 1,
+      "coins": 57000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crossfire-v252",
+      "tier": 1,
+      "coins": 59000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fourknights-v252",
+      "tier": 1,
+      "coins": 63000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-castlearmy-v252",
+      "tier": 1,
+      "coins": 69000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-hawkdrill-v252",
+      "tier": 1,
+      "coins": 18000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-seaking-v252",
+      "tier": 1,
+      "coins": 47000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-veterans-v252",
+      "tier": 1,
+      "coins": 71000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-grass-v252",
+      "tier": 2,
+      "coins": 29000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rural-v252",
+      "tier": 2,
+      "coins": 42000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-magma-v252",
+      "tier": 2,
+      "coins": 82500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-ember-v252",
+      "tier": 2,
+      "coins": 131000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sand-v252",
+      "tier": 2,
+      "coins": 36000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-neon-v252",
+      "tier": 2,
+      "coins": 51000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sea-v252",
+      "tier": 2,
+      "coins": 91500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-lantern-v252",
+      "tier": 2,
+      "coins": 75500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-endurance-v252",
+      "tier": 2,
+      "coins": 81500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-dino-v252",
+      "tier": 2,
+      "coins": 85500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-afterimage-v252",
+      "tier": 2,
+      "coins": 88500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-reflection-v252",
+      "tier": 2,
+      "coins": 123000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-souls-v252",
+      "tier": 2,
+      "coins": 131000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-guard-v252",
+      "tier": 2,
+      "coins": 144500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-rockaxe-v252",
+      "tier": 2,
+      "coins": 31000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-sandwall-v252",
+      "tier": 2,
+      "coins": 38000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-waterside-v252",
+      "tier": 2,
+      "coins": 44000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-circuit-v252",
+      "tier": 2,
+      "coins": 53000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crater-v252",
+      "tier": 2,
+      "coins": 63500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-tides-v252",
+      "tier": 2,
+      "coins": 72500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-returnfield-v252",
+      "tier": 2,
+      "coins": 77500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fangs-v252",
+      "tier": 2,
+      "coins": 83500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-snipers-v252",
+      "tier": 2,
+      "coins": 87500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-beasts-v252",
+      "tier": 2,
+      "coins": 91500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-crossfire-v252",
+      "tier": 2,
+      "coins": 94500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-fourknights-v252",
+      "tier": 2,
+      "coins": 100500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-castlearmy-v252",
+      "tier": 2,
+      "coins": 109000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-hawkdrill-v252",
+      "tier": 2,
+      "coins": 34000,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-seaking-v252",
+      "tier": 2,
+      "coins": 76500,
+      "fourOnly": true
+    },
+    {
+      "quest": "rush-veterans-v252",
+      "tier": 2,
+      "coins": 112000,
+      "fourOnly": true
+    }
+  ],
+  "invalidParties": 4,
+  "partyUnchanged": true,
+  "legacyPreserved": true
+}
