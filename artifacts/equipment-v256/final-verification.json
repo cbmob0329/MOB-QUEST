@@ -23,6 +23,10 @@
     {
       "file": "tests/equipment-ui-v256.cjs",
       "status": 0
+    },
+    {
+      "file": "tests/equipment-mint-v256.cjs",
+      "status": 0
     }
   ],
   "scalingSets": 254,
@@ -35,12 +39,13 @@
   "camp": true,
   "rushTiers": 90,
   "oldTraitActivations": 162,
-  "pending": [
-    {
-      "id": "event-mint-medal",
-      "reason": "Awaiting clarification for nonnumeric repeat magic in sub socket",
-      "recommendation": "3% to 1%, preserve repeat effect and no extra MP"
-    }
-  ],
-  "noCommitPushPublish": true
+  "pending": [],
+  "noCommitPushPublish": true,
+  "mintApproved": {
+    "subChance": 0.01,
+    "oldChance": 0.03,
+    "sameMagic": true,
+    "noAdditionalMp": true,
+    "verification": "mint-results.json"
+  }
 }

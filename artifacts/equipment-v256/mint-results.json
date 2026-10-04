@@ -1,0 +1,94 @@
+{
+  "ui": true,
+  "reloadTwice": true,
+  "stockStable": true,
+  "sourceUnchanged": true,
+  "mainRejected": true,
+  "combat": [
+    {
+      "slot": "none",
+      "roll": 0.005,
+      "hits": [
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        }
+      ],
+      "mp": 22,
+      "cost": 22,
+      "chance": 0
+    },
+    {
+      "slot": "subMedal",
+      "roll": 0.005,
+      "hits": [
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        },
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        }
+      ],
+      "mp": 22,
+      "cost": 22,
+      "chance": 0.010000000000000009
+    },
+    {
+      "slot": "subMedal",
+      "roll": 0.02,
+      "hits": [
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        }
+      ],
+      "mp": 22,
+      "cost": 22,
+      "chance": 0.010000000000000009
+    },
+    {
+      "slot": "medal",
+      "roll": 0.02,
+      "hits": [
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        },
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        }
+      ],
+      "mp": 22,
+      "cost": 22,
+      "chance": 0.030000000000000027
+    },
+    {
+      "slot": "subMedal",
+      "roll": 0,
+      "hits": [
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        },
+        {
+          "power": 1.978,
+          "type": "magic",
+          "element": "火"
+        }
+      ],
+      "mp": 22,
+      "cost": 22,
+      "chance": 0.010000000000000009
+    }
+  ]
+}

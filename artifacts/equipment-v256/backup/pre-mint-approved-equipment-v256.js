@@ -1,19 +1,20 @@
 /* Additional sockets only; old three medals and weapon multipliers are unchanged. */
 const MEDAL_SOCKETS_V256={mainMedal:{name:'メインメダル',stat:2,trait:1,host:'main'},subMedal:{name:'副武器メダル',stat:.5,trait:.5,host:'sub'}};
 const monsterMedalV256=w=>!!w&&(w.type==='メダル'||w.types?.includes('メダル'));
+const pendingMedalV256=w=>weaponTraits(w).some(t=>t.kind==='mintRepeatV237');
 const normalizeBaseV256=normalizeEquipmentRecord;
 normalizeEquipmentRecord=function(raw){const n=normalizeBaseV256(raw);for(const key of Object.keys(MEDAL_SOCKETS_V256)){const id=raw?.[key],w=weaponById(id);n[key]=w&&(key!=='mainMedal'||!monsterMedalV256(w))?id:null;}return n;};
 const equipmentBaseV256=equipmentFor;
 equipmentFor=function(pid){const eq=equipmentBaseV256(pid);for(const key of Object.keys(MEDAL_SOCKETS_V256))if(eq[key]&&medalOwned(eq[key])<1)eq[key]=null;return eq;};
 const assignedMedalBaseV256=assignedMedalCount;
 assignedMedalCount=function(id,exclude=null){let n=assignedMedalBaseV256(id,exclude);for(const [pid,raw] of Object.entries(state.meta.equipment||{}))for(const key of Object.keys(MEDAL_SOCKETS_V256))if(normalizeEquipmentRecord(raw)[key]===id&&!(exclude?.pid===pid&&exclude.slot===key))n++;return n;};
-function socketReasonV256(pid,key,id){const spec=MEDAL_SOCKETS_V256[key],eq=equipmentFor(pid),w=weaponById(id);if(!spec||!player(pid))return '装備枠がありません';if(!id)return '';if(!w)return 'メダルが見つかりません';if(key==='mainMedal'&&monsterMedalV256(w))return 'モンスターメダルは装着不可';if(!weaponById(eq[spec.host]))return `${spec.host==='main'?'メイン':'副'}武器を先に装備`;if(freeMedalCount(id,{pid,slot:key})<1)return '所持分は他の枠で装着中';return '';}
+function socketReasonV256(pid,key,id){const spec=MEDAL_SOCKETS_V256[key],eq=equipmentFor(pid),w=weaponById(id);if(!spec||!player(pid))return '装備枠がありません';if(!id)return '';if(!w)return 'メダルが見つかりません';if(key==='mainMedal'&&monsterMedalV256(w))return 'モンスターメダルは装着不可';if(key==='subMedal'&&pendingMedalV256(w))return '追加魔法の半減仕様を確認中';if(!weaponById(eq[spec.host]))return `${spec.host==='main'?'メイン':'副'}武器を先に装備`;if(freeMedalCount(id,{pid,slot:key})<1)return '所持分は他の枠で装着中';return '';}
 const setEquipmentBaseV256=setPlayerEquipment;
 setPlayerEquipment=function(pid,kind,index,id){pid=canonicalPlayerId(pid);if(!MEDAL_SOCKETS_V256[kind])return setEquipmentBaseV256(pid,kind,index,id);if(socketReasonV256(pid,kind,id))return false;const eq=equipmentFor(pid);eq[kind]=id||null;state.meta.equipment[pid]=eq;saveMeta();return true;};
 const floorMedalV256=n=>Math.floor(Number(n)+1e-9);
 function socketStatsV256(w,key){const out={};for(const [k,v] of Object.entries(w?.stats||{}))out[k]=floorMedalV256(v*.1*MEDAL_SOCKETS_V256[key].stat);return out;}
 function socketTraitsV256(w,key){return weaponTraits(w).map(original=>{const t={...original};if(key==='subMedal'){if(t.kind==='macaronFollowV247')t.power??=1.1;for(const k of ['value','chance','power'])if(typeof t[k]==='number')t[k]=floorMedalV256(t[k]*100*.5)/100;for(const k of ['amount','turns'])if(typeof t[k]==='number')t[k]=floorMedalV256(t[k]*.5);delete t.label;}return t;});}
-function activeSocketV256(eq,key){const w=weaponById(eq[key]);return w&&weaponById(eq[MEDAL_SOCKETS_V256[key].host])&&!(key==='subMedal'&&(monsterMedalV256(w)&&eq.medals.includes(w.id)))?w:null;}
+function activeSocketV256(eq,key){const w=weaponById(eq[key]);return w&&weaponById(eq[MEDAL_SOCKETS_V256[key].host])&&!(key==='subMedal'&&(pendingMedalV256(w)||monsterMedalV256(w)&&eq.medals.includes(w.id)))?w:null;}
 const statBonusBaseV256=weaponStatBonus;
 weaponStatBonus=function(raw){const n=normalizeEquipmentRecord(raw),out=statBonusBaseV256(n);for(const key of Object.keys(MEDAL_SOCKETS_V256)){const w=activeSocketV256(n,key);if(w)for(const [k,v] of Object.entries(socketStatsV256(w,key)))if(k in out)out[k]+=v;}return out;};
 const traitEntriesBaseV256=weaponTraitEntries;
