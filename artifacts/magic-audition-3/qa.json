@@ -1,0 +1,108 @@
+{
+  "humanListening": false,
+  "sourceUnchanged": true,
+  "spells": [
+    {
+      "id": "hono",
+      "name": "ホノ",
+      "oldRms": 0.06999999998437932,
+      "newRms": 0.07000000003371863,
+      "oldPeak": 0.44590187072753906,
+      "newPeak": 0.5903711915016174,
+      "firstNonzeroMs": 0.2916666666666667,
+      "eventsMs": [
+        0,
+        94,
+        188,
+        282,
+        421
+      ],
+      "frameHashes": [
+        {
+          "path": "skill/01.png",
+          "sha256": "f237e2d2eaefb2aaeb38431ba91670b22b6da7d06d908b459f88e5eed5a7b26e"
+        },
+        {
+          "path": "skill/02.png",
+          "sha256": "5eb60976b6975f77037e481c7e741c633537b0a75c6915efe5bb10b5a2b057f6"
+        },
+        {
+          "path": "skill/03.png",
+          "sha256": "acde681de7f88264ae81691b1b39d90eed69017bda0b895fd2cdc13a08c8b3bd"
+        },
+        {
+          "path": "skill/04.png",
+          "sha256": "96c9d5638560fb9521f8fadc81076df1987c0266efa2fe59d8d65316c684ea58"
+        }
+      ]
+    },
+    {
+      "id": "nepu",
+      "name": "ネプ",
+      "oldRms": 0.07000000006620981,
+      "newRms": 0.07000000006909654,
+      "oldPeak": 0.5399050116539001,
+      "newPeak": 0.5505892038345337,
+      "firstNonzeroMs": 0.20833333333333334,
+      "eventsMs": [
+        0,
+        94,
+        188,
+        282,
+        421
+      ],
+      "frameHashes": [
+        {
+          "path": "skill/13.png",
+          "sha256": "ed82813e0a641c58c714480a6c6c57809e79bb42dc93d41cf9e375d8275f57d7"
+        },
+        {
+          "path": "skill/14.png",
+          "sha256": "519af1a0cf3012a29b945cb7a7faf2a0c163ba8f14dd4e79203324b3fee3c280"
+        },
+        {
+          "path": "skill/15.png",
+          "sha256": "211201ac1610edcb5a4f299c98e221573b521c5fe055ae6762e9331c58bd0c20"
+        },
+        {
+          "path": "skill/16.png",
+          "sha256": "dc2f3242ba03a47297f95c1b6e5b43956d28384e773bb88edbac76d75aa631df"
+        }
+      ]
+    },
+    {
+      "id": "toru",
+      "name": "トル",
+      "oldRms": 0.041931442032085306,
+      "newRms": 0.04193144206949251,
+      "oldPeak": 0.39175403118133545,
+      "newPeak": 0.6499999761581421,
+      "firstNonzeroMs": 0.16666666666666666,
+      "eventsMs": [
+        0,
+        94,
+        188,
+        282,
+        421
+      ],
+      "frameHashes": [
+        {
+          "path": "skill/24.png",
+          "sha256": "9125207610c3cbe024c893e836f86e1c1f28d5445e3627cd9ea714dcc1eb2d85"
+        },
+        {
+          "path": "skill/25.png",
+          "sha256": "d74085796248c61e269d35f06f2022f42b632e9b011bf1eb3c8dfc72ff53ec0d"
+        },
+        {
+          "path": "skill/26.png",
+          "sha256": "72ba279f48a5d0e1bbfcba9e4cacae90fdef0397f987827629cac4f89418a300"
+        },
+        {
+          "path": "skill/27.png",
+          "sha256": "80611d538212d9a31f5e50a23bb22e4d0035374b98906028c6d315af5ea63a4e"
+        }
+      ]
+    }
+  ]
+}

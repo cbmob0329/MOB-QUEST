@@ -1,0 +1,223 @@
+{
+  "runs": [
+    {
+      "spell": 0,
+      "mode": "old",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "old",
+          "spell": "hono",
+          "at": 582.3999999985099
+        },
+        {
+          "type": "frame",
+          "src": "frames/01.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/02.png",
+          "ms": 99.70000000298023
+        },
+        {
+          "type": "frame",
+          "src": "frames/03.png",
+          "ms": 195
+        },
+        {
+          "type": "frame",
+          "src": "frames/04.png",
+          "ms": 299.70000000298023
+        },
+        {
+          "type": "impact/end",
+          "ms": 441.5
+        }
+      ]
+    },
+    {
+      "spell": 0,
+      "mode": "improved",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "improved",
+          "spell": "hono",
+          "at": 1647.7999999970198
+        },
+        {
+          "type": "frame",
+          "src": "frames/01.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/02.png",
+          "ms": 100.40000000596046
+        },
+        {
+          "type": "frame",
+          "src": "frames/03.png",
+          "ms": 200.20000000298023
+        },
+        {
+          "type": "frame",
+          "src": "frames/04.png",
+          "ms": 295.1000000014901
+        },
+        {
+          "type": "impact/end",
+          "ms": 437.40000000596046
+        }
+      ]
+    },
+    {
+      "spell": 1,
+      "mode": "old",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "old",
+          "spell": "nepu",
+          "at": 3047.7000000029802
+        },
+        {
+          "type": "frame",
+          "src": "frames/13.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/14.png",
+          "ms": 100.69999999552965
+        },
+        {
+          "type": "frame",
+          "src": "frames/15.png",
+          "ms": 199.59999999403954
+        },
+        {
+          "type": "frame",
+          "src": "frames/16.png",
+          "ms": 300.09999999403954
+        },
+        {
+          "type": "impact/end",
+          "ms": 446.5
+        }
+      ]
+    },
+    {
+      "spell": 1,
+      "mode": "improved",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "improved",
+          "spell": "nepu",
+          "at": 4030.7999999970198
+        },
+        {
+          "type": "frame",
+          "src": "frames/13.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/14.png",
+          "ms": 100
+        },
+        {
+          "type": "frame",
+          "src": "frames/15.png",
+          "ms": 200.30000000447035
+        },
+        {
+          "type": "frame",
+          "src": "frames/16.png",
+          "ms": 300
+        },
+        {
+          "type": "impact/end",
+          "ms": 449.30000000447035
+        }
+      ]
+    },
+    {
+      "spell": 2,
+      "mode": "old",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "old",
+          "spell": "toru",
+          "at": 5197.10000000149
+        },
+        {
+          "type": "frame",
+          "src": "frames/24.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/25.png",
+          "ms": 100.19999999552965
+        },
+        {
+          "type": "frame",
+          "src": "frames/26.png",
+          "ms": 200.10000000149012
+        },
+        {
+          "type": "frame",
+          "src": "frames/27.png",
+          "ms": 295.1000000014901
+        },
+        {
+          "type": "impact/end",
+          "ms": 450.29999999701977
+        }
+      ]
+    },
+    {
+      "spell": 2,
+      "mode": "improved",
+      "log": [
+        {
+          "type": "audio",
+          "mode": "improved",
+          "spell": "toru",
+          "at": 6280.10000000149
+        },
+        {
+          "type": "frame",
+          "src": "frames/24.png",
+          "ms": 0
+        },
+        {
+          "type": "frame",
+          "src": "frames/25.png",
+          "ms": 98.10000000149012
+        },
+        {
+          "type": "frame",
+          "src": "frames/26.png",
+          "ms": 200.19999999552965
+        },
+        {
+          "type": "frame",
+          "src": "frames/27.png",
+          "ms": 299.79999999701977
+        },
+        {
+          "type": "impact/end",
+          "ms": 450.29999999701977
+        }
+      ]
+    }
+  ],
+  "stop": true,
+  "mobileWidth": 375,
+  "humanListening": false
+}
