@@ -2917,7 +2917,7 @@ async function skillSprite(frames,target='enemy',mode='default'){
   const clear=()=>{wrap.classList.remove('earth-shake','light-shake','status-noise','status-chill','status-fast','status-repeat');for(const img of wrap.querySelectorAll('img'))img.classList.remove('active','skill-fade-v79');};
   const showFrame=async(src,ms,fade=false)=>{for(const img of nodeMap.values()){img.classList.remove('active','skill-fade-v79');img.style.removeProperty('--skill-fade-ms-v88');}const img=nodeMap.get(src);if(!img)return;img.classList.add('active');if(fade){img.style.setProperty('--skill-fade-ms-v88',`${Math.max(120,Number(ms)||700)}ms`);img.classList.add('skill-fade-v79');}await fixedDelay(ms);};
   try{
-    await Promise.all([...wrap.querySelectorAll('img')].map(img=>ensureDomImageReady(img,img.src,1200)));wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';await nextPaint(2);
+    await Promise.all([...wrap.querySelectorAll('img')].map(img=>ensureDomImageReady(img,img.src,1200)));wrap.hidden=false;wrap.style.display='block';wrap.style.opacity='1';const audioSkill=[...MOB_DATA.magicCatalog,...MOB_DATA.techniqueCatalog].find(s=>s.frames?.[0]===frames[0]);battleSeV257(audioSkill?.heal?'heal':'skill',{attribute:audioSkill?.element||'無'});await nextPaint(2);
     if(mode==='earthLargeV79'){
       wrap.classList.add('earth-shake');await showFrame(frames[0],1000);wrap.classList.remove('earth-shake');for(const src of frames.slice(1,-1))await showFrame(src,180);await showFrame(frames.at(-1),700,true);
     }else if(mode==='windLargeV79'||mode==='lightSmallV79'){
@@ -16516,9 +16516,9 @@ function elementRowV251(element){const row=['火','水','雷','地','風','光',
 function enemyWeaponV251(e){const name=e?.name||'';if(/グラディ|ジェシー|エース|マグナム|ガン|バレット/.test(name))return'gun';if(/リリス|ミラ|魔王|閻魔|マジック|ソーサラー/.test(name)||e?.normalAttackType==='magic')return'staff';if(/ナイト|ソード|騎士/.test(name))return'sword';if(/槍|ランス|ネプチューン/.test(name))return'spear';if(/デンデン|ゴーレム|ロック|バーサク/.test(name))return'greatsword';return'claw';}
 function enemyThemeV251(e){const n=e?.name||'';return /リリス/.test(n)?'rose':/ドラゴン|ギドラ/.test(n)?'dragon':/ミラ|魔王|ファラオ/.test(n)?'pyramid':/グラディ|マグナム|ジェシー|エース/.test(n)?'gun':/ネプ|ウミ|マリン/.test(n)?'tide':/閻魔|フェニックス/.test(n)?'flame':'orbit';}
 function fxNodeV251(target,kind,element){const layer=$('#battleFxLayer');if(!layer)return null;const el=document.createElement('div');el.className='battle-sequence-v251 '+kind;el.setAttribute('aria-hidden','true');el.style.setProperty('--tone',FX_COLORS_V251[fxElementV251(element)]||FX_COLORS_V251.無);positionEffect(el,target);layer.append(el);return el;}
-async function atlasSequenceV251(atlas,row,target,kind='normal',element='無',quick=false,frameCount=4){const b=state.battle;await loadAtlasV251(atlas);if(state.battle!==b)return;const el=fxNodeV251(target,kind,element);if(!el)return;el.style.backgroundImage=`url("${atlas.src}")`;el.style.backgroundSize=`400% ${atlas.rows*100}%`;el.dataset.atlas=atlas.src;el.dataset.ready='1';try{for(let i=0;i<frameCount;i++){if(state.battle!==b)break;atlasFrameStyleV251(el,atlas,row,i);el.dataset.frame=String(i+1);await delay(quick?65:100);}await delay(25);}finally{el.remove();}}
+async function atlasSequenceV251(atlas,row,target,kind='normal',element='無',quick=false,frameCount=4){const b=state.battle;await loadAtlasV251(atlas);if(state.battle!==b)return;const el=fxNodeV251(target,kind,element);if(!el)return;el.style.backgroundImage=`url("${atlas.src}")`;el.style.backgroundSize=`400% ${atlas.rows*100}%`;el.dataset.atlas=atlas.src;el.dataset.ready='1';if(kind.startsWith('normal')&&!/(gun|spear)$/.test(kind))battleSeV257('attack',{attribute:element});else if(kind==='heal')battleSeV257('heal');try{for(let i=0;i<frameCount;i++){if(state.battle!==b)break;atlasFrameStyleV251(el,atlas,row,i);el.dataset.frame=String(i+1);await delay(quick?65:100);}await delay(25);}finally{el.remove();}}
 async function normalSequenceV251(actor,target,kind,element,quick=false){const row=Math.max(0,['sword','greatsword','katana','spear','gun','staff','claw'].indexOf(kind));if(kind==='gun'||kind==='spear')await projectileV251(actor,target,element,kind);await Promise.all([atlasSequenceV251(FX_ATLASES_V251.weapons,row,target,'normal weapon-'+kind,element,quick),atlasSequenceV251(FX_ATLASES_V251.elements,elementRowV251(element),target,'element-accent',element,quick)]);}
-async function projectileV251(actor,target,element,kind){const from=actor.uid?battlePointPx('enemy:'+actor.uid):battlePointPx(actor.id),to=battlePointPx(target),layer=$('#battleFxLayer');if(!layer)return;const el=document.createElement('i');el.className='projectile-v251 '+kind;el.style.left=from.x+'px';el.style.top=from.y+'px';el.style.setProperty('--tone',FX_COLORS_V251[fxElementV251(element)]||'#e3eaf1');layer.append(el);try{const a=el.animate([{transform:'translate(0,0) scale(.5)',opacity:.3},{transform:`translate(${to.x-from.x}px,${to.y-from.y}px) scale(1)`,opacity:1}],{duration:180/Math.max(1,state.speed),fill:'forwards'});await a.finished;}finally{el.remove();}}
+async function projectileV251(actor,target,element,kind){const from=actor.uid?battlePointPx('enemy:'+actor.uid):battlePointPx(actor.id),to=battlePointPx(target),layer=$('#battleFxLayer');if(!layer)return;const el=document.createElement('i');el.className='projectile-v251 '+kind;el.style.left=from.x+'px';el.style.top=from.y+'px';el.style.setProperty('--tone',FX_COLORS_V251[fxElementV251(element)]||'#e3eaf1');layer.append(el);battleSeV257(kind==='special'?'skill':'attack',{attribute:element});try{const a=el.animate([{transform:'translate(0,0) scale(.5)',opacity:.3},{transform:`translate(${to.x-from.x}px,${to.y-from.y}px) scale(1)`,opacity:1}],{duration:180/Math.max(1,state.speed),fill:'forwards'});await a.finished;}finally{el.remove();}}
 weaponElementAttackFx=async function(a,{quick=false}={}){return normalSequenceV251(a,'enemy',weaponKind(a),weaponCombatElement(a),quick);};
 async function bossChargeV251(e,ctx){if(!e||ctx.charged||!(e.isBoss||e.isElite||e.category==='boss'))return;ctx.charged=true;const theme=enemyThemeV251(e),row=['rose','dragon','pyramid','gun','tide','flame'].indexOf(theme);await atlasSequenceV251(row<0?FX_ATLASES_V251.elements:FX_ATLASES_V251.bosses,row<0?elementRowV251(e.attribute):row,'enemy:'+e.uid,'boss-charge theme-'+theme,e.attribute,false,2);}
 async function inEnemyFxV251(e,spec,normal,run){const old=enemyFxContextV251;const ctx={enemy:e,normal,name:spec?.special||spec?.name||'',spec:spec||{},skill:sharedSkillV251(spec?.special||spec?.name||''),played:new Set(),charged:false};const health=new Map((state.battle?.enemies||[]).map(x=>[x.uid,x.hp]));enemyFxContextV251=ctx;try{return await run(ctx);}finally{for(const x of state.battle?.enemies||[])if(x.hp>(health.get(x.uid)??x.hp))healingSequenceV251("enemy:"+x.uid);enemyFxContextV251=old;}}
@@ -16867,40 +16867,35 @@ function synthesizeCue(cue,options={},sampleRate=48000){
  return {samples:out,sampleRate,duration:d,spec:s};
 }
 
-const KEY='mob-story:se:v1';
-function createSoundSystem({host=globalThis,storage,now=()=>Date.now()}={}){
- let context=null,master=null,limiter=null,initialized=false,unlocked=false,saveFailed=false,scopeSerial=0,voiceSerial=0,hushUntil=0,lastUi=-Infinity;
- let settings={volume:.55,muted:false};const voices=new Map(),cache=new Map(),scopes=new Set(),recent=new Map(),seen=new Set(),history=[];
- const stats={played:0,suppressed:0,errors:0,maxVoices:0};
+// User-provided recordings. No generated replacement tones; missing 008 remains unmapped.
+function createSoundSystem({host=globalThis,storage,now=()=>Date.now(),key='mob-story:se:v1',base='audio/user/'}={}){
+ const files={select:'013.wav',confirm:'013.wav',back:'003.wav',error:'004.wav',attack:'054.mp3',hit:'053.mp3',critical:'62.wav',heal:'038.wav',buff:'007.mp3',debuff:'066.wav',guard:'019.wav',win:'005.mp3',lose:'004.wav',defeat:'019.wav',reward:'005.mp3',start:'006.mp3',summon:'101.wav',fusion:'055.mp3',navigate:'006.mp3',deckAdd:'013.wav',deckRemove:'003.wav',deckArrange:'013.wav',starter:'007.mp3',dialogue:'100.wav'};
+ const elementFiles={'火':'031.mp3','水':'037.mp3','雷':'045.wav','地':'035.mp3','風':'027.mp3','光':'049.mp3','闇':'033.mp3','無':'028.mp3'};
+ let ctx,master,bgmGain,bgmSource=null,bgmWanted=false,bgmEpoch=0,initialized=false,serial=0,epoch=0,unlocked=false,saveFailed=false,scopeSerial=0;
+ let settings={volume:.55,muted:false,bgmVolume:.3,bgmMuted:false};const voices=new Map(),cache=new Map(),loading=new Map(),scopes=new Set(),recent=new Map(),seen=new Set(),history=[];const stats={played:0,suppressed:0,errors:0,maxVoices:0,lateDropped:0};
  const store=()=>storage===undefined?host.localStorage:storage;
- const init=(legacySound)=>{if(initialized)return;initialized=true;try{const raw=JSON.parse(store()?.getItem(KEY)||'null');if(raw&&raw.version===1){settings={volume:typeof raw.volume==='number'&&Number.isFinite(raw.volume)?Math.max(0,Math.min(1,raw.volume)):.55,muted:raw.muted===true};}else if(legacySound===false)settings.muted=true;}catch{saveFailed=true;}};
- function stopVoice(v){if(!v)return;voices.delete(v.id);try{v.source.onended=null;v.source.stop();}catch{}try{v.source.disconnect();}catch{}try{v.gain.disconnect();}catch{}}
- function stopAll(){for(const v of [...voices.values()])stopVoice(v);}
- function stopScope(scope){for(const v of [...voices.values()])if(v.scope===scope)stopVoice(v);}
- function endScope(scope){stopScope(scope);scopes.delete(scope);for(const key of seen)if(key.startsWith(scope+'|'))seen.delete(key);}
- function beginScope(label){const scope=label+':'+(++scopeSerial);scopes.add(scope);return scope;}
- function setSettings(patch){init();if(typeof patch.muted==='boolean')settings.muted=patch.muted;if(typeof patch.volume==='number'&&Number.isFinite(patch.volume))settings.volume=Math.max(0,Math.min(1,patch.volume));if(settings.muted||!settings.volume)stopAll();try{master?.gain.setTargetAtTime(settings.muted?0:settings.volume*.62,context.currentTime,.015);}catch{}try{store()?.setItem(KEY,JSON.stringify({version:1,...settings}));saveFailed=false;}catch{saveFailed=true;}return {...settings};}
- async function unlock(){init();if(host.document?.hidden||settings.muted)return false;try{if(!context||context.state==='closed'){const Context=host.AudioContext||host.webkitAudioContext;if(!Context)return false;context=new Context();master=context.createGain();master.gain.value=settings.volume*.62;limiter=context.createDynamicsCompressor();limiter.threshold.value=-12;limiter.knee.value=8;limiter.ratio.value=12;limiter.attack.value=.003;limiter.release.value=.12;master.connect(limiter);limiter.connect(context.destination);cache.clear();}if(context.state!=='running')await context.resume();unlocked=context.state==='running';return unlocked;}catch{stats.errors++;return false;}}
- function play(cue,options={}){let pendingVoice=null;
-  init();try{
-   if(!CUES[cue]||settings.muted||settings.volume===0||host.document?.hidden||!context||context.state!=='running')return false;
-   const scope=options.scope||'ui';if(scope!=='ui'&&!scopes.has(scope))return false;
-   const spec=cueSpec(cue,options),time=now(),dedup=options.eventId===undefined?null:scope+'|'+options.eventId,key=cueKey(cue,options),cooldownKey=scope+'|'+cue+'|'+spec.attribute;
-   if(dedup&&seen.has(dedup)||time-(recent.get(cooldownKey)??-Infinity)<(spec.priority===0?100:90)||spec.priority===0&&(time<hushUntil||time-lastUi<65)){stats.suppressed++;return false;}
-   if(spec.priority>=2){hushUntil=time+160;for(const v of [...voices.values()])if(v.priority===0)stopVoice(v);}else lastUi=time;
-   if(voices.size>=4){const lowest=[...voices.values()].sort((a,b)=>a.priority-b.priority||a.id-b.id)[0];if(lowest.priority>spec.priority){stats.suppressed++;return false;}stopVoice(lowest);}
-   let buffer=cache.get(key);if(!buffer){const pcm=synthesizeCue(cue,options,24000);buffer=context.createBuffer(1,pcm.samples.length,pcm.sampleRate);buffer.copyToChannel(pcm.samples,0);cache.set(key,buffer);if(cache.size>40)cache.delete(cache.keys().next().value);}else{cache.delete(key);cache.set(key,buffer);}
-   // Synthesis is synchronous; re-check current context time before scheduling.
-   const source=context.createBufferSource(),gain=context.createGain(),id=++voiceSerial;source.buffer=buffer;gain.gain.value=1;source.connect(gain);gain.connect(master);
-   const voice={id,source,gain,scope,priority:spec.priority};pendingVoice=voice;voices.set(id,voice);source.onended=()=>{voices.delete(id);try{source.disconnect();gain.disconnect();}catch{}};
-   source.start(context.currentTime+.002);const playedAt=now();recent.set(cooldownKey,playedAt);if(spec.priority>=2)hushUntil=playedAt+160;if(recent.size>160)recent.delete(recent.keys().next().value);if(dedup){seen.add(dedup);if(seen.size>512)seen.delete(seen.values().next().value);}
-   stats.played++;stats.maxVoices=Math.max(stats.maxVoices,voices.size);history.push({cue,duration:spec.duration,attribute:spec.attribute,strength:spec.strength,attackType:spec.attackType,scope,eventId:options.eventId});if(history.length>100)history.shift();return true;
-  }catch{if(pendingVoice)stopVoice(pendingVoice);stats.errors++;return false;}
- }
- function background(){stopAll();try{context?.suspend()?.catch(()=>{});}catch{}}
- function foreground(){if(unlocked&&!settings.muted)void unlock();}
- function dispose(){stopAll();scopes.clear();seen.clear();cache.clear();try{context?.close()?.catch(()=>{});}catch{}context=null;master=null;limiter=null;}
- return {init,unlock,play,stopAll,stopScope,beginScope,endScope,setSettings,background,foreground,dispose,getSettings:()=>{init();return {...settings};},debug:()=>({...stats,voices:voices.size,cache:cache.size,scopes:scopes.size,state:context?.state||'locked',saveFailed,supported:!!(host.AudioContext||host.webkitAudioContext),history:[...history]})};
+ function init(legacySound){if(initialized)return;initialized=true;try{const s=JSON.parse(store()?.getItem(key)||'null');if(s?.version===1)for(const k of Object.keys(settings)){if(typeof s[k]===typeof settings[k])settings[k]=typeof s[k]==='number'?Math.max(0,Math.min(1,s[k])):s[k];}else if(legacySound===false)settings.muted=true;}catch{saveFailed=true;}}
+ function stopVoice(v){voices.delete(v.id);try{v.source.onended=null;v.source.stop();v.source.disconnect();v.gain.disconnect();}catch{}}
+ function stopAll(){epoch++;for(const v of [...voices.values()])stopVoice(v);}
+ function stopScope(s){epoch++;for(const v of [...voices.values()])if(v.scope===s)stopVoice(v);}
+ function beginScope(label){const s=label+':'+(++scopeSerial);scopes.add(s);return s;}
+ function endScope(s){stopScope(s);scopes.delete(s);for(const k of seen)if(k.startsWith(s+'|'))seen.delete(k);}
+ function stopBgm(){bgmEpoch++;if(bgmSource){try{bgmSource.stop();bgmSource.disconnect();}catch{}bgmSource=null;}}
+ function setSettings(patch){init();for(const k of Object.keys(settings))if(typeof patch[k]===typeof settings[k]&&(typeof patch[k]!=='number'||Number.isFinite(patch[k])))settings[k]=typeof patch[k]==='number'?Math.max(0,Math.min(1,patch[k])):patch[k];if(settings.muted||!settings.volume)stopAll();if(settings.bgmMuted||!settings.bgmVolume)stopBgm();try{master?.gain.setTargetAtTime(settings.muted?0:settings.volume*.6,ctx.currentTime,.015);bgmGain?.gain.setTargetAtTime(settings.bgmMuted?0:settings.bgmVolume*.55,ctx.currentTime,.04);store()?.setItem(key,JSON.stringify({version:1,...settings}));saveFailed=false;}catch{saveFailed=true;}if(bgmWanted&&!bgmSource)void startBgm();return{...settings};}
+ async function load(file){if(cache.has(file))return cache.get(file);if(loading.has(file))return loading.get(file);if(!ctx)return null;const own=ctx;const task=(async()=>{try{const r=await host.fetch(base+file);if(!r.ok)throw Error('audio unavailable');const b=await own.decodeAudioData(await r.arrayBuffer());if(own!==ctx)return null;if(file==='grassland.mp3'){// Short endpoint fades prevent an abrupt sample discontinuity; no claim of musical seamlessness.
+ for(let ch=0;ch<b.numberOfChannels;ch++){const x=b.getChannelData(ch),n=Math.min(Math.round(b.sampleRate*.01),x.length>>1);for(let i=0;i<n;i++){x[i]*=i/n;x[x.length-1-i]*=i/n;}}}cache.set(file,b);return b;}catch{stats.errors++;return null;}finally{loading.delete(file);}})();loading.set(file,task);return task;}
+ async function preload(){const all=[...new Set([...Object.values(files),...Object.values(elementFiles)])];let i=0;await Promise.all(Array.from({length:4},async()=>{while(i<all.length)await load(all[i++]);}));}
+ async function unlock(){init();if(host.document?.hidden)return false;try{if(!ctx||ctx.state==='closed'){const C=host.AudioContext||host.webkitAudioContext;if(!C)return false;ctx=new C();master=ctx.createGain();bgmGain=ctx.createGain();master.gain.value=settings.muted?0:settings.volume*.6;bgmGain.gain.value=settings.bgmMuted?0:settings.bgmVolume*.55;const limiter=ctx.createDynamicsCompressor();limiter.threshold.value=-10;limiter.ratio.value=10;master.connect(limiter);bgmGain.connect(limiter);limiter.connect(ctx.destination);}if(ctx.state!=='running')await ctx.resume();unlocked=ctx.state==='running';void preload();if(bgmWanted)void startBgm();return unlocked;}catch{stats.errors++;return false;}}
+ function resolve(cue,o){if(cue==='skill')return o.healing?files.heal:elementFiles[o.attribute]||elementFiles['無'];return cue==='guard'&&o.special?files.critical:files[cue];}
+ function play(cue,o={}){init();const file=resolve(cue,o),scope=o.scope||'ui';if(!file||!ctx||ctx.state!=='running'||settings.muted||!settings.volume||host.document?.hidden||scope!=='ui'&&!scopes.has(scope))return false;const t=now(),id=o.eventId==null?null:scope+'|'+o.eventId,k=scope+'|'+file;if(id&&seen.has(id)||t-(recent.get(k)??-Infinity)<80){stats.suppressed++;return false;}recent.set(k,t);if(recent.size>256)recent.delete(recent.keys().next().value);if(id){seen.add(id);if(seen.size>512)seen.delete(seen.values().next().value);}const mark=epoch;
+ const start=b=>{if(!b)return false;if(mark!==epoch||host.document?.hidden||scope!=='ui'&&!scopes.has(scope)||ctx.state!=='running'||settings.muted){stats.lateDropped++;return false;}if(voices.size>=4)stopVoice(voices.values().next().value);const source=ctx.createBufferSource(),gain=ctx.createGain(),n=++serial,at=ctx.currentTime+.002,duration=Math.min(b.duration,Math.max(.12,o.durationLimit||2.5));source.buffer=b;source.connect(gain);gain.connect(master);gain.gain.setValueAtTime(1,at);gain.gain.setValueAtTime(1,at+Math.max(0,duration-.025));gain.gain.linearRampToValueAtTime(0,at+duration);const v={id:n,scope,source,gain};voices.set(n,v);source.onended=()=>{voices.delete(n);try{source.disconnect();gain.disconnect()}catch{}};source.start(at,0,duration);stats.played++;stats.maxVoices=Math.max(stats.maxVoices,voices.size);history.push({cue,file,scope,duration,time:now(),attribute:o.attribute,eventId:o.eventId});if(history.length>100)history.shift();return true;};
+ if(cache.has(file))return start(cache.get(file));void load(file).then(b=>{if(now()-t<=180)start(b);else stats.lateDropped++;});return false;}
+ async function startBgm(){if(!bgmWanted||bgmSource||!ctx||ctx.state!=='running'||host.document?.hidden||settings.bgmMuted||!settings.bgmVolume)return;const mark=++bgmEpoch,b=await load('grassland.mp3');if(!b||mark!==bgmEpoch||!bgmWanted||host.document?.hidden||settings.bgmMuted||!settings.bgmVolume)return;const s=ctx.createBufferSource();s.buffer=b;s.loop=true;s.loopStart=0;s.loopEnd=b.duration;s.connect(bgmGain);s.start();bgmSource=s;}
+ function setBgm(active){bgmWanted=!!active;if(!active)stopBgm();else if(!bgmSource)void startBgm();}
+ function background(){stopAll();stopBgm();try{ctx?.suspend()?.catch(()=>{})}catch{}}
+ function foreground(){if(unlocked)void unlock();}
+ function dispose(){stopAll();bgmWanted=false;stopBgm();cache.clear();scopes.clear();try{ctx?.close()?.catch(()=>{})}catch{}ctx=null;}
+ return{init,unlock,preload,play,stopAll,stopScope,beginScope,endScope,setSettings,getSettings:()=>{init();return{...settings}},setBgm,stopBgm,background,foreground,dispose,debug:()=>({...stats,voices:voices.size,cache:cache.size,scopes:scopes.size,state:ctx?.state||'locked',saveFailed,bgmPlaying:!!bgmSource,bgmWanted,history:[...history]})};
 }
 
 return {createSoundSystem,synthesizeCue,CUES};})();
@@ -16913,7 +16908,7 @@ function seV257(cue,options={}){if(performance.now()<soundHushV257)return false;
 function battleSeV257(cue,options={}){if(!screens.battle.classList.contains('active')||!state.battle||state.battle.finished)return false;return seV257(cue,options);}
 function stopSeV257(){storySoundV257.endScope(soundScopeV257);storySoundV257.stopAll();soundScopeV257=storySoundV257.beginScope('screen');}
 const screenSeBaseV257=showScreen;
-showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
+showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);storySoundV257.setBgm(name==='battle'&&state.battle?.config?.mode==='adventure'&&(state.battle.config.worldId||currentWorld()?.id)==='grassland');if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
 document.addEventListener('pointerdown',()=>{void storySoundV257.unlock();},{capture:true,passive:true});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')void storySoundV257.unlock();},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopSeV257();storySoundV257.background();}else storySoundV257.foreground();});
@@ -16926,11 +16921,11 @@ saveParty=function(...args){const s=JSON.stringify(state.party),r=partySeBaseV25
 const toastSeBaseV257=toast;
 toast=function(text,...args){if(/足り|できません|失敗|必要|不可|未解放/.test(text))seV257('error');return toastSeBaseV257(text,...args);};
 const normalSeBaseV257=normalSequenceV251;
-normalSequenceV251=function(a,target,weapon,element,...args){battleSeV257('attack',{attribute:element||a?.attribute,attackType:'物理',strength:'small'});return normalSeBaseV257(a,target,weapon,element,...args);};
+normalSequenceV251=function(a,target,weapon,element,...args){return normalSeBaseV257(a,target,weapon,element,...args);};
 const projectileSeBaseV257=projectileV251;
-projectileV251=function(a,target,element,kind,...args){if(kind==='special')battleSeV257('skill',{attribute:element||a?.attribute,strength:'small'});return projectileSeBaseV257(a,target,element,kind,...args);};
+projectileV251=function(a,target,element,kind,...args){return projectileSeBaseV257(a,target,element,kind,...args);};
 const spriteSeBaseV257=skillSprite;
-skillSprite=function(frames,...args){const skill=[...(MOB_DATA.magicCatalog||[]),...(MOB_DATA.techniqueCatalog||[])].find(s=>s.frames?.length&&s.frames[0]===frames?.[0]);battleSeV257('skill',{attribute:skill?.element||state.battle?.weaponAttackContext?.element||activeAlly()?.attribute,strength:'small'});return spriteSeBaseV257(frames,...args);};
+skillSprite=function(frames,...args){const skill=[...(MOB_DATA.magicCatalog||[]),...(MOB_DATA.techniqueCatalog||[])].find(s=>s.frames?.length&&s.frames[0]===frames?.[0]);return spriteSeBaseV257(frames,...args);};
 const ultimateSeBaseV257=playUltimatePostAnimation;
 playUltimatePostAnimation=function(a,u,...args){battleSeV257('fusion',{attribute:u?.attackElement||a?.attribute,attackType:u?.type==='physical'?'物理':'魔法',strength:'large'});return ultimateSeBaseV257(a,u,...args);};
 const pulseSeBaseV257=pulseAllyDamage;
@@ -16942,9 +16937,9 @@ showCriticalBeat=function(...args){battleSeV257('guard',{special:true});return c
 const missSeBaseV257=showMiss;
 showMiss=function(...args){battleSeV257('back');return missSeBaseV257(...args);};
 const healSeBaseV257=heal;
-heal=function(...args){const r=healSeBaseV257(...args);if(r>0)battleSeV257('skill',{attribute:'光',healing:true,strength:'small',durationLimit:.35});return r;};
+heal=function(...args){const r=healSeBaseV257(...args);if(r>0)battleSeV257('heal',{attribute:'光',healing:true,strength:'small',durationLimit:.35});return r;};
 const fxSeBaseV257=fx;
-fx=function(kind,...args){if(kind==='buff'||kind==='break')battleSeV257(kind==='buff'?'summon':'guard',{durationLimit:.3});return fxSeBaseV257(kind,...args);};
+fx=function(kind,...args){if(kind==='buff'||kind==='break')battleSeV257(kind==='buff'?'buff':'debuff',{durationLimit:.3});return fxSeBaseV257(kind,...args);};
 const cutinSeBaseV257=actionCutin;
 actionCutin=function(text,tone,...args){if(/防御|身を守/.test(text))battleSeV257('guard');else if(tone==='status')battleSeV257('skill',{attribute:'闇',strength:'small'});return cutinSeBaseV257(text,tone,...args);};
 const noticeSeBaseV257=notice;
@@ -16952,22 +16947,22 @@ notice=function(text,tone,...args){if(/回避/.test(text))battleSeV257('back');e
 const defeatSeBaseV257=recordEnemyDefeat;
 recordEnemyDefeat=function(e,...args){if(e&&!e.seDownV257){e.seDownV257=true;battleSeV257('defeat');}return defeatSeBaseV257(e,...args);};
 const statusSeBaseV257=applyEnemyStatusTo;
-applyEnemyStatusTo=function(...args){const r=statusSeBaseV257(...args);if(r)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+applyEnemyStatusTo=function(...args){const r=statusSeBaseV257(...args);if(r)battleSeV257('debuff',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
 const allyStatusSeBaseV257=inflictAllyStatus;
-inflictAllyStatus=async function(...args){const b=state.battle,r=await allyStatusSeBaseV257(...args);if(r&&state.battle===b)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+inflictAllyStatus=async function(...args){const b=state.battle,r=await allyStatusSeBaseV257(...args);if(r&&state.battle===b)battleSeV257('debuff',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
 const progressRewardSeBaseV257=applyProgressRewards;
 applyProgressRewards=function(...args){const r=progressRewardSeBaseV257(...args);if(r?.coin>0)seV257('reward');return r;};
 const exploreSeBaseV257=showExplorePhase;
 showExplorePhase=function(title,...args){seV257(/獲得|発見|宝|コイン|手に入/.test(title)?'reward':'navigate');return exploreSeBaseV257(title,...args);};
 const rushFxSeBaseV257=rushFxV255;
-rushFxV255=function(kind,...args){if(['win','defeat'].includes(kind)&&state.battle)state.battle.seResultV257=true;stopSeV257();seV257(({start:'start',boss:'summon',win:'win',defeat:'lose',abort:'back'})[kind]||'navigate');return rushFxSeBaseV257(kind,...args);};
+rushFxV255=function(kind,...args){if(['win','defeat'].includes(kind)&&state.battle)state.battle.seResultV257=true;stopSeV257();if(['win','defeat','abort'].includes(kind))storySoundV257.setBgm(false);seV257(({start:'start',boss:'summon',win:'win',defeat:'lose',abort:'back'})[kind]||'navigate');return rushFxSeBaseV257(kind,...args);};
 const clearRushSeBaseV257=clearRushV252;
 clearRushV252=function(...args){stopSeV257();return clearRushSeBaseV257(...args);};
 // Replace the old independent nightmare oscillator so SE mute/volume also governs it.
 nmSoundV239=function(kind){seV257('attack',{attribute:({water:'水',thunder:'雷',fire:'火',dark:'闇'})[kind]||'無',strength:'small'});};
 // Result presentation covers ordinary battles and event/rush overlays without altering reward paths.
 const resultSeenSeV257=new WeakMap();
-const resultObserverSeV257=new MutationObserver(()=>{for(const el of [$('#resultOverlay'),$('#eventOverlayV163')]){if(!el)continue;if(el.hidden){resultSeenSeV257.delete(el);continue;}if(!screens.battle.classList.contains('active'))continue;const title=el.querySelector('h2,#resultTitle')?.textContent||'';if(!/VICTORY|DEFEAT|CLEAR|勝利|敗北/.test(title)||(resultSeenSeV257.get(el)?.title===title&&resultSeenSeV257.get(el)?.battle===state.battle))continue;resultSeenSeV257.set(el,{title,battle:state.battle});if(state.battle?.seResultV257)continue;if(state.battle)state.battle.seResultV257=true;stopSeV257();seV257(/DEFEAT|敗北/.test(title)?'lose':'win');}});
+const resultObserverSeV257=new MutationObserver(()=>{for(const el of [$('#resultOverlay'),$('#eventOverlayV163')]){if(!el)continue;if(el.hidden){resultSeenSeV257.delete(el);continue;}if(!screens.battle.classList.contains('active'))continue;const title=el.querySelector('h2,#resultTitle')?.textContent||'';if(!/VICTORY|DEFEAT|CLEAR|勝利|敗北/.test(title)||(resultSeenSeV257.get(el)?.title===title&&resultSeenSeV257.get(el)?.battle===state.battle))continue;resultSeenSeV257.set(el,{title,battle:state.battle});if(state.battle?.seResultV257)continue;if(state.battle)state.battle.seResultV257=true;stopSeV257();storySoundV257.setBgm(false);seV257(/DEFEAT|敗北/.test(title)?'lose':'win');}});
 resultObserverSeV257.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
 const progressionSeBaseV257=renderResultProgression;
 renderResultProgression=function(changes,...args){const r=progressionSeBaseV257(changes,...args);if(changes?.length)seV257('starter');return r;};
@@ -16980,6 +16975,8 @@ const settingsSeBaseV257=renderSettings;
 renderSettings=function(...args){const r=settingsSeBaseV257(...args);renderSoundSettingsV257();return r;};
 renderSoundSettingsV257();
 window.__mobBuildVersion='v257';
+
+const userBgmSettingsBase=renderSoundSettingsV257;renderSoundSettingsV257=function(){userBgmSettingsBase();const root=$('#storySoundSettingsV257');root.querySelector('small').textContent='ユーザー音源SE・草原戦闘BGM。既存エンディング曲は保持。';let box=$('#userBgmSettings');if(!box){box=document.createElement('div');box.id='userBgmSettings';box.innerHTML='<label>BGM音量 <input id="userBgmVolume" aria-label="BGM音量" type="range" min="0" max="100"></label><button id="userBgmMute"></button>';root.append(box);$('#userBgmVolume').oninput=e=>storySoundV257.setSettings({bgmVolume:Number(e.target.value)/100});$('#userBgmMute').onclick=()=>{storySoundV257.setSettings({bgmMuted:!storySoundV257.getSettings().bgmMuted});void storySoundV257.unlock();renderSoundSettingsV257()};}const s=storySoundV257.getSettings();$('#userBgmVolume').value=Math.round(s.bgmVolume*100);$('#userBgmMute').textContent=s.bgmMuted?'BGM消音中：解除':'BGM ON：消音';$('#userBgmMute').setAttribute('aria-pressed',String(s.bgmMuted));};renderSoundSettingsV257();
 
 // UPDATE_V257_END
 })();

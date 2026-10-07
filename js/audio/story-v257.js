@@ -7,7 +7,7 @@ function seV257(cue,options={}){if(performance.now()<soundHushV257)return false;
 function battleSeV257(cue,options={}){if(!screens.battle.classList.contains('active')||!state.battle||state.battle.finished)return false;return seV257(cue,options);}
 function stopSeV257(){storySoundV257.endScope(soundScopeV257);storySoundV257.stopAll();soundScopeV257=storySoundV257.beginScope('screen');}
 const screenSeBaseV257=showScreen;
-showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
+showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);storySoundV257.setBgm(name==='battle'&&state.battle?.config?.mode==='adventure'&&(state.battle.config.worldId||currentWorld()?.id)==='grassland');if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
 document.addEventListener('pointerdown',()=>{void storySoundV257.unlock();},{capture:true,passive:true});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')void storySoundV257.unlock();},true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){stopSeV257();storySoundV257.background();}else storySoundV257.foreground();});
@@ -20,11 +20,11 @@ saveParty=function(...args){const s=JSON.stringify(state.party),r=partySeBaseV25
 const toastSeBaseV257=toast;
 toast=function(text,...args){if(/足り|できません|失敗|必要|不可|未解放/.test(text))seV257('error');return toastSeBaseV257(text,...args);};
 const normalSeBaseV257=normalSequenceV251;
-normalSequenceV251=function(a,target,weapon,element,...args){battleSeV257('attack',{attribute:element||a?.attribute,attackType:'物理',strength:'small'});return normalSeBaseV257(a,target,weapon,element,...args);};
+normalSequenceV251=function(a,target,weapon,element,...args){return normalSeBaseV257(a,target,weapon,element,...args);};
 const projectileSeBaseV257=projectileV251;
-projectileV251=function(a,target,element,kind,...args){if(kind==='special')battleSeV257('skill',{attribute:element||a?.attribute,strength:'small'});return projectileSeBaseV257(a,target,element,kind,...args);};
+projectileV251=function(a,target,element,kind,...args){return projectileSeBaseV257(a,target,element,kind,...args);};
 const spriteSeBaseV257=skillSprite;
-skillSprite=function(frames,...args){const skill=[...(MOB_DATA.magicCatalog||[]),...(MOB_DATA.techniqueCatalog||[])].find(s=>s.frames?.length&&s.frames[0]===frames?.[0]);battleSeV257('skill',{attribute:skill?.element||state.battle?.weaponAttackContext?.element||activeAlly()?.attribute,strength:'small'});return spriteSeBaseV257(frames,...args);};
+skillSprite=function(frames,...args){const skill=[...(MOB_DATA.magicCatalog||[]),...(MOB_DATA.techniqueCatalog||[])].find(s=>s.frames?.length&&s.frames[0]===frames?.[0]);return spriteSeBaseV257(frames,...args);};
 const ultimateSeBaseV257=playUltimatePostAnimation;
 playUltimatePostAnimation=function(a,u,...args){battleSeV257('fusion',{attribute:u?.attackElement||a?.attribute,attackType:u?.type==='physical'?'物理':'魔法',strength:'large'});return ultimateSeBaseV257(a,u,...args);};
 const pulseSeBaseV257=pulseAllyDamage;
@@ -36,9 +36,9 @@ showCriticalBeat=function(...args){battleSeV257('guard',{special:true});return c
 const missSeBaseV257=showMiss;
 showMiss=function(...args){battleSeV257('back');return missSeBaseV257(...args);};
 const healSeBaseV257=heal;
-heal=function(...args){const r=healSeBaseV257(...args);if(r>0)battleSeV257('skill',{attribute:'光',healing:true,strength:'small',durationLimit:.35});return r;};
+heal=function(...args){const r=healSeBaseV257(...args);if(r>0)battleSeV257('heal',{attribute:'光',healing:true,strength:'small',durationLimit:.35});return r;};
 const fxSeBaseV257=fx;
-fx=function(kind,...args){if(kind==='buff'||kind==='break')battleSeV257(kind==='buff'?'summon':'guard',{durationLimit:.3});return fxSeBaseV257(kind,...args);};
+fx=function(kind,...args){if(kind==='buff'||kind==='break')battleSeV257(kind==='buff'?'buff':'debuff',{durationLimit:.3});return fxSeBaseV257(kind,...args);};
 const cutinSeBaseV257=actionCutin;
 actionCutin=function(text,tone,...args){if(/防御|身を守/.test(text))battleSeV257('guard');else if(tone==='status')battleSeV257('skill',{attribute:'闇',strength:'small'});return cutinSeBaseV257(text,tone,...args);};
 const noticeSeBaseV257=notice;
@@ -46,22 +46,22 @@ notice=function(text,tone,...args){if(/回避/.test(text))battleSeV257('back');e
 const defeatSeBaseV257=recordEnemyDefeat;
 recordEnemyDefeat=function(e,...args){if(e&&!e.seDownV257){e.seDownV257=true;battleSeV257('defeat');}return defeatSeBaseV257(e,...args);};
 const statusSeBaseV257=applyEnemyStatusTo;
-applyEnemyStatusTo=function(...args){const r=statusSeBaseV257(...args);if(r)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+applyEnemyStatusTo=function(...args){const r=statusSeBaseV257(...args);if(r)battleSeV257('debuff',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
 const allyStatusSeBaseV257=inflictAllyStatus;
-inflictAllyStatus=async function(...args){const b=state.battle,r=await allyStatusSeBaseV257(...args);if(r&&state.battle===b)battleSeV257('skill',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
+inflictAllyStatus=async function(...args){const b=state.battle,r=await allyStatusSeBaseV257(...args);if(r&&state.battle===b)battleSeV257('debuff',{attribute:'闇',strength:'small',durationLimit:.3});return r;};
 const progressRewardSeBaseV257=applyProgressRewards;
 applyProgressRewards=function(...args){const r=progressRewardSeBaseV257(...args);if(r?.coin>0)seV257('reward');return r;};
 const exploreSeBaseV257=showExplorePhase;
 showExplorePhase=function(title,...args){seV257(/獲得|発見|宝|コイン|手に入/.test(title)?'reward':'navigate');return exploreSeBaseV257(title,...args);};
 const rushFxSeBaseV257=rushFxV255;
-rushFxV255=function(kind,...args){if(['win','defeat'].includes(kind)&&state.battle)state.battle.seResultV257=true;stopSeV257();seV257(({start:'start',boss:'summon',win:'win',defeat:'lose',abort:'back'})[kind]||'navigate');return rushFxSeBaseV257(kind,...args);};
+rushFxV255=function(kind,...args){if(['win','defeat'].includes(kind)&&state.battle)state.battle.seResultV257=true;stopSeV257();if(['win','defeat','abort'].includes(kind))storySoundV257.setBgm(false);seV257(({start:'start',boss:'summon',win:'win',defeat:'lose',abort:'back'})[kind]||'navigate');return rushFxSeBaseV257(kind,...args);};
 const clearRushSeBaseV257=clearRushV252;
 clearRushV252=function(...args){stopSeV257();return clearRushSeBaseV257(...args);};
 // Replace the old independent nightmare oscillator so SE mute/volume also governs it.
 nmSoundV239=function(kind){seV257('attack',{attribute:({water:'水',thunder:'雷',fire:'火',dark:'闇'})[kind]||'無',strength:'small'});};
 // Result presentation covers ordinary battles and event/rush overlays without altering reward paths.
 const resultSeenSeV257=new WeakMap();
-const resultObserverSeV257=new MutationObserver(()=>{for(const el of [$('#resultOverlay'),$('#eventOverlayV163')]){if(!el)continue;if(el.hidden){resultSeenSeV257.delete(el);continue;}if(!screens.battle.classList.contains('active'))continue;const title=el.querySelector('h2,#resultTitle')?.textContent||'';if(!/VICTORY|DEFEAT|CLEAR|勝利|敗北/.test(title)||(resultSeenSeV257.get(el)?.title===title&&resultSeenSeV257.get(el)?.battle===state.battle))continue;resultSeenSeV257.set(el,{title,battle:state.battle});if(state.battle?.seResultV257)continue;if(state.battle)state.battle.seResultV257=true;stopSeV257();seV257(/DEFEAT|敗北/.test(title)?'lose':'win');}});
+const resultObserverSeV257=new MutationObserver(()=>{for(const el of [$('#resultOverlay'),$('#eventOverlayV163')]){if(!el)continue;if(el.hidden){resultSeenSeV257.delete(el);continue;}if(!screens.battle.classList.contains('active'))continue;const title=el.querySelector('h2,#resultTitle')?.textContent||'';if(!/VICTORY|DEFEAT|CLEAR|勝利|敗北/.test(title)||(resultSeenSeV257.get(el)?.title===title&&resultSeenSeV257.get(el)?.battle===state.battle))continue;resultSeenSeV257.set(el,{title,battle:state.battle});if(state.battle?.seResultV257)continue;if(state.battle)state.battle.seResultV257=true;stopSeV257();storySoundV257.setBgm(false);seV257(/DEFEAT|敗北/.test(title)?'lose':'win');}});
 resultObserverSeV257.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
 const progressionSeBaseV257=renderResultProgression;
 renderResultProgression=function(changes,...args){const r=progressionSeBaseV257(changes,...args);if(changes?.length)seV257('starter');return r;};
@@ -74,3 +74,5 @@ const settingsSeBaseV257=renderSettings;
 renderSettings=function(...args){const r=settingsSeBaseV257(...args);renderSoundSettingsV257();return r;};
 renderSoundSettingsV257();
 window.__mobBuildVersion='v257';
+
+const userBgmSettingsBase=renderSoundSettingsV257;renderSoundSettingsV257=function(){userBgmSettingsBase();const root=$('#storySoundSettingsV257');root.querySelector('small').textContent='ユーザー音源SE・草原戦闘BGM。既存エンディング曲は保持。';let box=$('#userBgmSettings');if(!box){box=document.createElement('div');box.id='userBgmSettings';box.innerHTML='<label>BGM音量 <input id="userBgmVolume" aria-label="BGM音量" type="range" min="0" max="100"></label><button id="userBgmMute"></button>';root.append(box);$('#userBgmVolume').oninput=e=>storySoundV257.setSettings({bgmVolume:Number(e.target.value)/100});$('#userBgmMute').onclick=()=>{storySoundV257.setSettings({bgmMuted:!storySoundV257.getSettings().bgmMuted});void storySoundV257.unlock();renderSoundSettingsV257()};}const s=storySoundV257.getSettings();$('#userBgmVolume').value=Math.round(s.bgmVolume*100);$('#userBgmMute').textContent=s.bgmMuted?'BGM消音中：解除':'BGM ON：消音';$('#userBgmMute').setAttribute('aria-pressed',String(s.bgmMuted));};renderSoundSettingsV257();
