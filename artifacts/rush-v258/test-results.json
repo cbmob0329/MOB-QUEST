@@ -1,0 +1,132 @@
+{
+  "rows": [
+    {
+      "id": "rush-grass-v252",
+      "tier": 0,
+      "coins": 6000
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 0,
+      "coins": 9000
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 0,
+      "coins": 12000
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 0,
+      "coins": 16000
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 0,
+      "coins": 28000
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 0,
+      "coins": 32000
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 0,
+      "coins": 30000
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 0,
+      "coins": 56000
+    },
+    {
+      "id": "rush-grass-v252",
+      "tier": 1,
+      "coins": 14500
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 1,
+      "coins": 19000
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 1,
+      "coins": 23000
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 1,
+      "coins": 29500
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 1,
+      "coins": 49000
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 1,
+      "coins": 55000
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 1,
+      "coins": 50000
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 1,
+      "coins": 91000
+    },
+    {
+      "id": "rush-grass-v252",
+      "tier": 2,
+      "coins": 29000
+    },
+    {
+      "id": "rush-sand-v252",
+      "tier": 2,
+      "coins": 36000
+    },
+    {
+      "id": "rush-rural-v252",
+      "tier": 2,
+      "coins": 42000
+    },
+    {
+      "id": "rush-neon-v252",
+      "tier": 2,
+      "coins": 51000
+    },
+    {
+      "id": "rush-magma-v252",
+      "tier": 2,
+      "coins": 82500
+    },
+    {
+      "id": "rush-sea-v252",
+      "tier": 2,
+      "coins": 91500
+    },
+    {
+      "id": "rush-endurance-v252",
+      "tier": 2,
+      "coins": 81500
+    },
+    {
+      "id": "rush-guard-v252",
+      "tier": 2,
+      "coins": 144500
+    }
+  ],
+  "replayRewardBlocked": true,
+  "oldSavePreserved": true,
+  "mobile": [
+    320,
+    390,
+    430
+  ],
+  "errors": []
+}

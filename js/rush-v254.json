@@ -9115,7 +9115,88 @@
         29000
       ],
       "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      "requiredCharacterHelp": "冒険開始時に加入",
+      "stage": 1,
+      "legacyIds": [
+        "rush-grass-v252",
+        "rush-lantern-v252",
+        "rush-rockaxe-v252",
+        "rush-returnfield-v252",
+        "rush-hawkdrill-v252"
+      ]
+    },
+    {
+      "id": "rush-sand-v252",
+      "title": "砂風と毒の試練",
+      "world": "desert",
+      "recommendedLevel": 17,
+      "unlock": {
+        "world": "desert",
+        "label": "砂漠クリア"
+      },
+      "reward": "rush-sand-medal-v252",
+      "areas": [
+        {
+          "waves": [
+            [
+              {
+                "enemy": "d-mummy",
+                "level": 13
+              },
+              {
+                "enemy": "d-yamikamen",
+                "level": 13
+              }
+            ],
+            [
+              {
+                "enemy": "d-sharty",
+                "level": 15
+              },
+              {
+                "enemy": "d-mummy",
+                "level": 11
+              }
+            ],
+            [
+              {
+                "enemy": "d-poison",
+                "level": 17
+              },
+              {
+                "enemy": "d-mummy",
+                "level": 13
+              }
+            ]
+          ],
+          "pre": [
+            {
+              "speaker": "holo",
+              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
+            }
+          ],
+          "post": [
+            {
+              "speaker": "holo",
+              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
+            }
+          ]
+        }
+      ],
+      "clearCoins": [
+        9000,
+        19000,
+        36000
+      ],
+      "requiredCharacter": "desert",
+      "requiredCharacterHelp": "砂漠の冒険で加入",
+      "stage": 2,
+      "legacyIds": [
+        "rush-sand-v252",
+        "rush-souls-v252",
+        "rush-sandwall-v252",
+        "rush-fourknights-v252"
+      ]
     },
     {
       "id": "rush-rural-v252",
@@ -9181,7 +9262,87 @@
         42000
       ],
       "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
+      "requiredCharacterHelp": "田舎町の冒険で加入",
+      "stage": 3,
+      "legacyIds": [
+        "rush-rural-v252",
+        "rush-dino-v252",
+        "rush-waterside-v252",
+        "rush-snipers-v252"
+      ]
+    },
+    {
+      "id": "rush-neon-v252",
+      "title": "ネオン追跡訓練",
+      "world": "neon",
+      "recommendedLevel": 32,
+      "unlock": {
+        "world": "neon",
+        "label": "ネオン街クリア"
+      },
+      "reward": "rush-neon-medal-v252",
+      "areas": [
+        {
+          "waves": [
+            [
+              {
+                "enemy": "n-energy",
+                "level": 27
+              },
+              {
+                "enemy": "n-glass",
+                "level": 27
+              }
+            ],
+            [
+              {
+                "enemy": "n-golem",
+                "level": 29
+              },
+              {
+                "enemy": "n-energy",
+                "level": 25
+              }
+            ],
+            [
+              {
+                "enemy": "n-chaser",
+                "level": 32
+              },
+              {
+                "enemy": "n-energy",
+                "level": 28
+              }
+            ]
+          ],
+          "pre": [
+            {
+              "speaker": "holo",
+              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
+            }
+          ],
+          "post": [
+            {
+              "speaker": "holo",
+              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
+            }
+          ]
+        }
+      ],
+      "clearCoins": [
+        16000,
+        29500,
+        51000
+      ],
+      "requiredCharacter": "money",
+      "requiredCharacterHelp": "ネオン街の冒険で加入",
+      "stage": 4,
+      "legacyIds": [
+        "rush-neon-v252",
+        "rush-afterimage-v252",
+        "rush-circuit-v252",
+        "rush-beasts-v252"
+      ]
     },
     {
       "id": "rush-magma-v252",
@@ -9273,233 +9434,15 @@
         82500
       ],
       "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-ember-v252",
-      "title": "灼熱の再挑戦",
-      "world": "magma",
-      "recommendedLevel": 80,
-      "unlock": {
-        "world": "tribe",
-        "story": "phoenix",
-        "record": "clear",
-        "label": "部族村と「復活！モブフェニックス！」クリア"
-      },
-      "reward": "rush-golem-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m-golem",
-                "level": 72
-              },
-              {
-                "enemy": "m-lizard",
-                "level": 68
-              }
-            ],
-            [
-              {
-                "enemy": "m-flame",
-                "level": 73
-              },
-              {
-                "enemy": "m-lizard",
-                "level": 69
-              }
-            ],
-            [
-              {
-                "enemy": "m-frezard",
-                "level": 75
-              },
-              {
-                "enemy": "m-lizard",
-                "level": 71
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "v179-phoenix",
-                "level": 80
-              },
-              {
-                "enemy": "m-lizard",
-                "level": 76
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        50000,
-        82000,
-        131000
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-sand-v252",
-      "title": "砂風と毒の試練",
-      "world": "desert",
-      "recommendedLevel": 17,
-      "unlock": {
-        "world": "desert",
-        "label": "砂漠クリア"
-      },
-      "reward": "rush-sand-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d-mummy",
-                "level": 13
-              },
-              {
-                "enemy": "d-yamikamen",
-                "level": 13
-              }
-            ],
-            [
-              {
-                "enemy": "d-sharty",
-                "level": 15
-              },
-              {
-                "enemy": "d-mummy",
-                "level": 11
-              }
-            ],
-            [
-              {
-                "enemy": "d-poison",
-                "level": 17
-              },
-              {
-                "enemy": "d-mummy",
-                "level": 13
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        9000,
-        19000,
-        36000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
-    },
-    {
-      "id": "rush-neon-v252",
-      "title": "ネオン追跡訓練",
-      "world": "neon",
-      "recommendedLevel": 32,
-      "unlock": {
-        "world": "neon",
-        "label": "ネオン街クリア"
-      },
-      "reward": "rush-neon-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "n-energy",
-                "level": 27
-              },
-              {
-                "enemy": "n-glass",
-                "level": 27
-              }
-            ],
-            [
-              {
-                "enemy": "n-golem",
-                "level": 29
-              },
-              {
-                "enemy": "n-energy",
-                "level": 25
-              }
-            ],
-            [
-              {
-                "enemy": "n-chaser",
-                "level": 32
-              },
-              {
-                "enemy": "n-energy",
-                "level": 28
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        16000,
-        29500,
-        51000
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
+      "requiredCharacterHelp": "マグマの冒険で加入",
+      "stage": 5,
+      "legacyIds": [
+        "rush-magma-v252",
+        "rush-ember-v252",
+        "rush-reflection-v252",
+        "rush-crater-v252",
+        "rush-crossfire-v252"
+      ]
     },
     {
       "id": "rush-sea-v252",
@@ -9591,73 +9534,13 @@
         91500
       ],
       "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-lantern-v252",
-      "title": "草原の灯火",
-      "world": "grassland2",
-      "recommendedLevel": 57,
-      "unlock": {
-        "world": "grassland2",
-        "label": "草原Ⅱクリア"
-      },
-      "reward": "rush-lantern-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "g2-jouro",
-                "level": 51
-              },
-              {
-                "enemy": "g2-piyo-red",
-                "level": 51
-              }
-            ],
-            [
-              {
-                "enemy": "g2-tsuru",
-                "level": 54
-              },
-              {
-                "enemy": "g2-rock",
-                "level": 50
-              }
-            ],
-            [
-              {
-                "enemy": "g2-merakero",
-                "level": 57
-              },
-              {
-                "enemy": "g2-rock",
-                "level": 53
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        27000,
-        46000,
-        75500
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      "requiredCharacterHelp": "マグマの冒険で加入",
+      "stage": 6,
+      "legacyIds": [
+        "rush-sea-v252",
+        "rush-tides-v252",
+        "rush-seaking-v252"
+      ]
     },
     {
       "id": "rush-endurance-v252",
@@ -9723,323 +9606,12 @@
         81500
       ],
       "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-dino-v252",
-      "title": "町外れの恐竜競走",
-      "world": "rural2",
-      "recommendedLevel": 67,
-      "unlock": {
-        "world": "rural2",
-        "label": "田舎町Ⅱクリア"
-      },
-      "reward": "rush-dino-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "r2-banken",
-                "level": 61
-              },
-              {
-                "enemy": "r2-denchi",
-                "level": 61
-              }
-            ],
-            [
-              {
-                "enemy": "r2-tira",
-                "level": 65
-              },
-              {
-                "enemy": "r2-denchi",
-                "level": 61
-              }
-            ],
-            [
-              {
-                "enemy": "r2-rapty",
-                "level": 67
-              },
-              {
-                "enemy": "r2-denchi",
-                "level": 63
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        31500,
-        53000,
-        85500
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
-    },
-    {
-      "id": "rush-afterimage-v252",
-      "title": "ネオン残像勝負",
-      "world": "neon2",
-      "recommendedLevel": 70,
-      "unlock": {
-        "world": "neon2",
-        "label": "ネオン街Ⅱクリア"
-      },
-      "reward": "rush-afterimage-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "n2-naga",
-                "level": 64
-              },
-              {
-                "enemy": "n2-darknaga",
-                "level": 64
-              }
-            ],
-            [
-              {
-                "enemy": "n2-tama",
-                "level": 67
-              },
-              {
-                "enemy": "n2-naga",
-                "level": 63
-              }
-            ],
-            [
-              {
-                "enemy": "n2-tiger",
-                "level": 70
-              },
-              {
-                "enemy": "n2-naga",
-                "level": 66
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        33000,
-        55000,
-        88500
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
-    },
-    {
-      "id": "rush-reflection-v252",
-      "title": "溶岩の反射稽古",
-      "world": "magma2",
-      "recommendedLevel": 74,
-      "unlock": {
-        "world": "magma2",
-        "label": "マグマⅡクリア"
-      },
-      "reward": "rush-reflection-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m2-honoslime",
-                "level": 68
-              },
-              {
-                "enemy": "m2-magrock",
-                "level": 68
-              }
-            ],
-            [
-              {
-                "enemy": "m2-buster",
-                "level": 70
-              },
-              {
-                "enemy": "m2-magrock",
-                "level": 66
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m2-salamander",
-                "level": 72
-              },
-              {
-                "enemy": "m2-magrock",
-                "level": 68
-              }
-            ],
-            [
-              {
-                "enemy": "m2-yogan",
-                "level": 74
-              },
-              {
-                "enemy": "m2-magrock",
-                "level": 70
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        46500,
-        77000,
-        123000
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-souls-v252",
-      "title": "砂宮の魂巡り",
-      "world": "desert2",
-      "recommendedLevel": 80,
-      "unlock": {
-        "world": "desert2",
-        "label": "砂漠Ⅱクリア"
-      },
-      "reward": "rush-souls-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d2-yamikamen",
-                "level": 72
-              },
-              {
-                "enemy": "d2-gimmick",
-                "level": 72
-              }
-            ],
-            [
-              {
-                "enemy": "d2-slamummy",
-                "level": 75
-              },
-              {
-                "enemy": "d2-mummy",
-                "level": 71
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d2-miraearth",
-                "level": 77
-              },
-              {
-                "enemy": "d2-mummy",
-                "level": 73
-              }
-            ],
-            [
-              {
-                "enemy": "d2-mirabuster",
-                "level": 80
-              },
-              {
-                "enemy": "d2-mummy",
-                "level": 76
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        50000,
-        82000,
-        131000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
+      "requiredCharacterHelp": "マグマの冒険で加入",
+      "stage": 7,
+      "legacyIds": [
+        "rush-endurance-v252",
+        "rush-fangs-v252"
+      ]
     },
     {
       "id": "rush-guard-v252",
@@ -10131,1267 +9703,13 @@
         144500
       ],
       "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
-    },
-    {
-      "id": "rush-rockaxe-v252",
-      "title": "岩斧の挟撃",
-      "world": "grassland",
-      "recommendedLevel": 12,
-      "unlock": {
-        "world": "grassland",
-        "label": "草原クリア"
-      },
-      "reward": "rush-rockaxe-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "g-rock",
-                "level": 7
-              },
-              {
-                "enemy": "g-beaver",
-                "level": 7
-              }
-            ],
-            [
-              {
-                "enemy": "g-axe",
-                "level": 10
-              },
-              {
-                "enemy": "g-rock",
-                "level": 8
-              }
-            ],
-            [
-              {
-                "enemy": "g-iwakiri",
-                "level": 12
-              },
-              {
-                "enemy": "g-beaver",
-                "level": 9
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        7000,
-        16000,
-        31000
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
-    },
-    {
-      "id": "rush-sandwall-v252",
-      "title": "砂岩の二重壁",
-      "world": "desert",
-      "recommendedLevel": 19,
-      "unlock": {
-        "world": "desert",
-        "label": "砂漠クリア"
-      },
-      "reward": "rush-sandwall-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d-akarock",
-                "level": 14
-              },
-              {
-                "enemy": "g-rock",
-                "level": 14
-              }
-            ],
-            [
-              {
-                "enemy": "d-sharty",
-                "level": 17
-              },
-              {
-                "enemy": "d-akarock",
-                "level": 15
-              }
-            ],
-            [
-              {
-                "enemy": "d-deathhead",
-                "level": 19
-              },
-              {
-                "enemy": "g-rock",
-                "level": 16
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        10000,
-        20500,
-        38000
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
-    },
-    {
-      "id": "rush-waterside-v252",
-      "title": "水辺の包囲",
-      "world": "rural",
-      "recommendedLevel": 25,
-      "unlock": {
-        "world": "rural",
-        "label": "田舎町クリア"
-      },
-      "reward": "rush-waterside-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "r-hitode",
-                "level": 20
-              },
-              {
-                "enemy": "g-jouro",
-                "level": 20
-              },
-              {
-                "enemy": "g-jouro",
-                "level": 19
-              }
-            ],
-            [
-              {
-                "enemy": "r-scouter",
-                "level": 23
-              },
-              {
-                "enemy": "r-hitode",
-                "level": 21
-              }
-            ],
-            [
-              {
-                "enemy": "r-dean",
-                "level": 25
-              },
-              {
-                "enemy": "g-jouro",
-                "level": 22
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        13000,
-        24500,
-        44000
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
-    },
-    {
-      "id": "rush-circuit-v252",
-      "title": "光と闇の回路",
-      "world": "neon",
-      "recommendedLevel": 34,
-      "unlock": {
-        "world": "neon",
-        "label": "ネオン街クリア"
-      },
-      "reward": "rush-circuit-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "n-naga",
-                "level": 29
-              },
-              {
-                "enemy": "n-darknaga",
-                "level": 29
-              },
-              {
-                "enemy": "n-darknaga",
-                "level": 28
-              }
-            ],
-            [
-              {
-                "enemy": "n-golem",
-                "level": 32
-              },
-              {
-                "enemy": "n-naga",
-                "level": 30
-              }
-            ],
-            [
-              {
-                "enemy": "n-trainer",
-                "level": 34
-              },
-              {
-                "enemy": "n-darknaga",
-                "level": 31
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        17000,
-        30500,
-        53000
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
-    },
-    {
-      "id": "rush-crater-v252",
-      "title": "火口の三重奏",
-      "world": "magma",
-      "recommendedLevel": 45,
-      "unlock": {
-        "world": "magma",
-        "label": "マグマクリア"
-      },
-      "reward": "rush-crater-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m-golem",
-                "level": 40
-              },
-              {
-                "enemy": "n-energy",
-                "level": 40
-              },
-              {
-                "enemy": "n-energy",
-                "level": 39
-              }
-            ],
-            [
-              {
-                "enemy": "m-flame",
-                "level": 43
-              },
-              {
-                "enemy": "m-golem",
-                "level": 41
-              }
-            ],
-            [
-              {
-                "enemy": "m-blizzard",
-                "level": 45
-              },
-              {
-                "enemy": "n-energy",
-                "level": 42
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        22000,
-        38000,
-        63500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-tides-v252",
-      "title": "潮騒の追撃",
-      "world": "sea",
-      "recommendedLevel": 54,
-      "unlock": {
-        "world": "sea",
-        "label": "海底クリア"
-      },
-      "reward": "rush-tides-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "s-ninja",
-                "level": 49
-              },
-              {
-                "enemy": "r-hitode",
-                "level": 49
-              },
-              {
-                "enemy": "r-hitode",
-                "level": 48
-              }
-            ],
-            [
-              {
-                "enemy": "s-jones",
-                "level": 52
-              },
-              {
-                "enemy": "s-ninja",
-                "level": 50
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "s-uminight",
-                "level": 54
-              },
-              {
-                "enemy": "r-hitode",
-                "level": 51
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        26000,
-        44000,
-        72500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-returnfield-v252",
-      "title": "草原再訪の群れ",
-      "world": "grassland2",
-      "recommendedLevel": 59,
-      "unlock": {
-        "world": "grassland2",
-        "label": "草原Ⅱクリア"
-      },
-      "reward": "rush-returnfield-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "g2-bird",
-                "level": 54
-              },
-              {
-                "enemy": "g2-piyo-red",
-                "level": 54
-              },
-              {
-                "enemy": "g2-piyo-red",
-                "level": 53
-              }
-            ],
-            [
-              {
-                "enemy": "g2-tsuru",
-                "level": 57
-              },
-              {
-                "enemy": "g2-bird",
-                "level": 55
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "g2-tsunoleon",
-                "level": 59
-              },
-              {
-                "enemy": "g2-piyo-red",
-                "level": 56
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        28000,
-        47500,
-        77500
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
-    },
-    {
-      "id": "rush-fangs-v252",
-      "title": "部族の双牙",
-      "world": "tribe",
-      "recommendedLevel": 65,
-      "unlock": {
-        "world": "tribe",
-        "label": "部族村クリア"
-      },
-      "reward": "rush-fangs-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "t-warrior",
-                "level": 60
-              },
-              {
-                "enemy": "g2-axe",
-                "level": 60
-              },
-              {
-                "enemy": "g2-axe",
-                "level": 59
-              }
-            ],
-            [
-              {
-                "enemy": "t-kukuri",
-                "level": 63
-              },
-              {
-                "enemy": "t-warrior",
-                "level": 61
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "t-hisui",
-                "level": 65
-              },
-              {
-                "enemy": "g2-axe",
-                "level": 62
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        31000,
-        51500,
-        83500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-snipers-v252",
-      "title": "恐竜と狙撃",
-      "world": "rural2",
-      "recommendedLevel": 69,
-      "unlock": {
-        "world": "rural2",
-        "label": "田舎町Ⅱクリア"
-      },
-      "reward": "rush-snipers-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "r2-denchi",
-                "level": 64
-              },
-              {
-                "enemy": "g2-tsuru",
-                "level": 64
-              },
-              {
-                "enemy": "g2-tsuru",
-                "level": 63
-              }
-            ],
-            [
-              {
-                "enemy": "r2-tira",
-                "level": 67
-              },
-              {
-                "enemy": "r2-denchi",
-                "level": 65
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "r2-rapty",
-                "level": 69
-              },
-              {
-                "enemy": "g2-tsuru",
-                "level": 66
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        32500,
-        54000,
-        87500
-      ],
-      "requiredCharacter": "denden",
-      "requiredCharacterHelp": "田舎町の冒険で加入"
-    },
-    {
-      "id": "rush-beasts-v252",
-      "title": "雷光の獣列",
-      "world": "neon2",
-      "recommendedLevel": 73,
-      "unlock": {
-        "world": "neon2",
-        "label": "ネオン街Ⅱクリア"
-      },
-      "reward": "rush-beasts-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "n2-energy",
-                "level": 68
-              },
-              {
-                "enemy": "r2-banken",
-                "level": 68
-              },
-              {
-                "enemy": "r2-banken",
-                "level": 67
-              }
-            ],
-            [
-              {
-                "enemy": "n2-palette",
-                "level": 71
-              },
-              {
-                "enemy": "n2-energy",
-                "level": 69
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "n2-tiger",
-                "level": 73
-              },
-              {
-                "enemy": "r2-banken",
-                "level": 70
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        34500,
-        57000,
-        91500
-      ],
-      "requiredCharacter": "money",
-      "requiredCharacterHelp": "ネオン街の冒険で加入"
-    },
-    {
-      "id": "rush-crossfire-v252",
-      "title": "炎氷の交差",
-      "world": "magma2",
-      "recommendedLevel": 76,
-      "unlock": {
-        "world": "magma2",
-        "label": "マグマⅡクリア"
-      },
-      "reward": "rush-crossfire-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m2-bomber",
-                "level": 71
-              },
-              {
-                "enemy": "s-mist",
-                "level": 71
-              },
-              {
-                "enemy": "s-mist",
-                "level": 70
-              }
-            ],
-            [
-              {
-                "enemy": "m2-salamander",
-                "level": 74
-              },
-              {
-                "enemy": "m2-bomber",
-                "level": 72
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "m2-blizzard",
-                "level": 76
-              },
-              {
-                "enemy": "s-mist",
-                "level": 73
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        35500,
-        59000,
-        94500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-fourknights-v252",
-      "title": "砂宮の四騎",
-      "world": "desert2",
-      "recommendedLevel": 82,
-      "unlock": {
-        "world": "desert2",
-        "label": "砂漠Ⅱクリア"
-      },
-      "reward": "rush-fourknights-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d2-miraearth",
-                "level": 77
-              },
-              {
-                "enemy": "d2-mirakarami",
-                "level": 77
-              },
-              {
-                "enemy": "d2-mirakarami",
-                "level": 76
-              }
-            ],
-            [
-              {
-                "enemy": "d2-miranight",
-                "level": 80
-              },
-              {
-                "enemy": "d2-miraearth",
-                "level": 78
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "d2-miratime",
-                "level": 82
-              },
-              {
-                "enemy": "d2-mirakarami",
-                "level": 79
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        38500,
-        63000,
-        100500
-      ],
-      "requiredCharacter": "desert",
-      "requiredCharacterHelp": "砂漠の冒険で加入"
-    },
-    {
-      "id": "rush-castlearmy-v252",
-      "title": "魔城の混成隊",
-      "world": "demonCastle",
-      "recommendedLevel": 91,
-      "unlock": {
-        "world": "demonCastle",
-        "label": "魔王城クリア"
-      },
-      "reward": "rush-castlearmy-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "c-metasword",
-                "level": 86
-              },
-              {
-                "enemy": "d2-nekomummy",
-                "level": 86
-              },
-              {
-                "enemy": "d2-nekomummy",
-                "level": 85
-              }
-            ],
-            [
-              {
-                "enemy": "c-succubus",
-                "level": 89
-              },
-              {
-                "enemy": "c-metasword",
-                "level": 87
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "c-killwitch",
-                "level": 91
-              },
-              {
-                "enemy": "d2-nekomummy",
-                "level": 88
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        42500,
-        69000,
-        109000
-      ],
-      "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
-    },
-    {
-      "id": "rush-hawkdrill-v252",
-      "title": "草原王の演習",
-      "world": "grassland",
-      "recommendedLevel": 15,
-      "unlock": {
-        "world": "grassland",
-        "label": "草原クリア"
-      },
-      "reward": "rush-hawkdrill-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "g-piyo-green",
-                "level": 10
-              },
-              {
-                "enemy": "g-slime",
-                "level": 10
-              }
-            ],
-            [
-              {
-                "enemy": "g-iwakiri",
-                "level": 13
-              },
-              {
-                "enemy": "g-piyo-green",
-                "level": 11
-              }
-            ],
-            [
-              {
-                "enemy": "boss-hawk",
-                "level": 15
-              },
-              {
-                "enemy": "g-slime",
-                "level": 12
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        8500,
-        18000,
-        34000
-      ],
-      "requiredCharacter": "pink",
-      "requiredCharacterHelp": "冒険開始時に加入"
-    },
-    {
-      "id": "rush-seaking-v252",
-      "title": "深海王の演習",
-      "world": "sea",
-      "recommendedLevel": 58,
-      "unlock": {
-        "world": "sea",
-        "label": "海底クリア"
-      },
-      "reward": "rush-seaking-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "s-hamon",
-                "level": 53
-              },
-              {
-                "enemy": "s-doctor",
-                "level": 53
-              }
-            ],
-            [
-              {
-                "enemy": "s-sorcerer",
-                "level": 56
-              },
-              {
-                "enemy": "s-hamon",
-                "level": 54
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "boss-nepu",
-                "level": 58
-              },
-              {
-                "enemy": "s-doctor",
-                "level": 55
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        27500,
-        47000,
-        76500
-      ],
-      "requiredCharacter": "nyoro",
-      "requiredCharacterHelp": "マグマの冒険で加入"
-    },
-    {
-      "id": "rush-veterans-v252",
-      "title": "魔城の歴戦演習",
-      "world": "demonCastle",
-      "recommendedLevel": 94,
-      "unlock": {
-        "world": "demonCastle",
-        "label": "魔王城クリア"
-      },
-      "reward": "rush-veterans-medal-v252",
-      "areas": [
-        {
-          "waves": [
-            [
-              {
-                "enemy": "c-assassin",
-                "level": 89
-              },
-              {
-                "enemy": "c-deathspear",
-                "level": 89
-              }
-            ],
-            [
-              {
-                "enemy": "c-lilith-hell",
-                "level": 92
-              },
-              {
-                "enemy": "c-assassin",
-                "level": 90
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "編成データを受信っちゃ\n連戦テストを開始っちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "前半の解析完了っちゃ\nHPとMPを維持するっちゃ"
-            }
-          ]
-        },
-        {
-          "waves": [
-            [
-              {
-                "enemy": "boss-gladi",
-                "level": 94
-              },
-              {
-                "enemy": "c-deathspear",
-                "level": 91
-              }
-            ]
-          ],
-          "pre": [
-            {
-              "speaker": "holo",
-              "text": "後半の計測を開始っちゃ\n残りの力を使うっちゃ"
-            }
-          ],
-          "post": [
-            {
-              "speaker": "holo",
-              "text": "全WAVEの解析完了っちゃ\n成果を記録したっちゃ"
-            }
-          ]
-        }
-      ],
-      "clearCoins": [
-        44000,
-        71000,
-        112000
-      ],
-      "requiredCharacter": "yusha",
-      "requiredCharacterHelp": "冒険開始時に加入"
+      "requiredCharacterHelp": "冒険開始時に加入",
+      "stage": 8,
+      "legacyIds": [
+        "rush-guard-v252",
+        "rush-castlearmy-v252",
+        "rush-veterans-v252"
+      ]
     }
   ],
   "minSimultaneous": 2,
@@ -11462,5 +9780,159 @@
     "defeat": "敗北記録を転送っちゃ",
     "abort": "接続終了・帰還するっちゃ",
     "boss": "強敵反応・警戒するっちゃ"
-  }
+  },
+  "legacyQuests": [
+    {
+      "id": "rush-grass-v252",
+      "reward": "rush-savanna-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-rural-v252",
+      "reward": "rush-captain-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-magma-v252",
+      "reward": "rush-frezard-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-ember-v252",
+      "reward": "rush-golem-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-sand-v252",
+      "reward": "rush-sand-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-neon-v252",
+      "reward": "rush-neon-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-sea-v252",
+      "reward": "rush-sea-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-lantern-v252",
+      "reward": "rush-lantern-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-endurance-v252",
+      "reward": "rush-endurance-medal-v252",
+      "replacement": "rush-endurance-v252"
+    },
+    {
+      "id": "rush-dino-v252",
+      "reward": "rush-dino-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-afterimage-v252",
+      "reward": "rush-afterimage-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-reflection-v252",
+      "reward": "rush-reflection-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-souls-v252",
+      "reward": "rush-souls-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-guard-v252",
+      "reward": "rush-guard-medal-v252",
+      "replacement": "rush-guard-v252"
+    },
+    {
+      "id": "rush-rockaxe-v252",
+      "reward": "rush-rockaxe-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-sandwall-v252",
+      "reward": "rush-sandwall-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-waterside-v252",
+      "reward": "rush-waterside-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-circuit-v252",
+      "reward": "rush-circuit-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-crater-v252",
+      "reward": "rush-crater-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-tides-v252",
+      "reward": "rush-tides-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-returnfield-v252",
+      "reward": "rush-returnfield-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-fangs-v252",
+      "reward": "rush-fangs-medal-v252",
+      "replacement": "rush-endurance-v252"
+    },
+    {
+      "id": "rush-snipers-v252",
+      "reward": "rush-snipers-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-beasts-v252",
+      "reward": "rush-beasts-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-crossfire-v252",
+      "reward": "rush-crossfire-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-fourknights-v252",
+      "reward": "rush-fourknights-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-castlearmy-v252",
+      "reward": "rush-castlearmy-medal-v252",
+      "replacement": "rush-guard-v252"
+    },
+    {
+      "id": "rush-hawkdrill-v252",
+      "reward": "rush-hawkdrill-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-seaking-v252",
+      "reward": "rush-seaking-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-veterans-v252",
+      "reward": "rush-veterans-medal-v252",
+      "replacement": "rush-guard-v252"
+    }
+  ],
+  "layoutVersion": 258,
+  "totalQuests": 24
 }

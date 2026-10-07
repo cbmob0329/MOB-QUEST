@@ -1,0 +1,159 @@
+{
+  "oldBaseStages": 30,
+  "newBaseStages": 8,
+  "totalQuests": 24,
+  "oldWaves": 288,
+  "newWaves": 81,
+  "mapping": [
+    {
+      "id": "rush-grass-v252",
+      "reward": "rush-savanna-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-rural-v252",
+      "reward": "rush-captain-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-magma-v252",
+      "reward": "rush-frezard-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-ember-v252",
+      "reward": "rush-golem-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-sand-v252",
+      "reward": "rush-sand-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-neon-v252",
+      "reward": "rush-neon-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-sea-v252",
+      "reward": "rush-sea-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-lantern-v252",
+      "reward": "rush-lantern-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-endurance-v252",
+      "reward": "rush-endurance-medal-v252",
+      "replacement": "rush-endurance-v252"
+    },
+    {
+      "id": "rush-dino-v252",
+      "reward": "rush-dino-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-afterimage-v252",
+      "reward": "rush-afterimage-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-reflection-v252",
+      "reward": "rush-reflection-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-souls-v252",
+      "reward": "rush-souls-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-guard-v252",
+      "reward": "rush-guard-medal-v252",
+      "replacement": "rush-guard-v252"
+    },
+    {
+      "id": "rush-rockaxe-v252",
+      "reward": "rush-rockaxe-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-sandwall-v252",
+      "reward": "rush-sandwall-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-waterside-v252",
+      "reward": "rush-waterside-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-circuit-v252",
+      "reward": "rush-circuit-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-crater-v252",
+      "reward": "rush-crater-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-tides-v252",
+      "reward": "rush-tides-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-returnfield-v252",
+      "reward": "rush-returnfield-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-fangs-v252",
+      "reward": "rush-fangs-medal-v252",
+      "replacement": "rush-endurance-v252"
+    },
+    {
+      "id": "rush-snipers-v252",
+      "reward": "rush-snipers-medal-v252",
+      "replacement": "rush-rural-v252"
+    },
+    {
+      "id": "rush-beasts-v252",
+      "reward": "rush-beasts-medal-v252",
+      "replacement": "rush-neon-v252"
+    },
+    {
+      "id": "rush-crossfire-v252",
+      "reward": "rush-crossfire-medal-v252",
+      "replacement": "rush-magma-v252"
+    },
+    {
+      "id": "rush-fourknights-v252",
+      "reward": "rush-fourknights-medal-v252",
+      "replacement": "rush-sand-v252"
+    },
+    {
+      "id": "rush-castlearmy-v252",
+      "reward": "rush-castlearmy-medal-v252",
+      "replacement": "rush-guard-v252"
+    },
+    {
+      "id": "rush-hawkdrill-v252",
+      "reward": "rush-hawkdrill-medal-v252",
+      "replacement": "rush-grass-v252"
+    },
+    {
+      "id": "rush-seaking-v252",
+      "reward": "rush-seaking-medal-v252",
+      "replacement": "rush-sea-v252"
+    },
+    {
+      "id": "rush-veterans-v252",
+      "reward": "rush-veterans-medal-v252",
+      "replacement": "rush-guard-v252"
+    }
+  ]
+}

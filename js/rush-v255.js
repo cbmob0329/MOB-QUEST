@@ -1,7 +1,7 @@
 /* Rush-only formation, global tier gates and cancellable hologram presentations. */
 const rushQuestLevelV255=(q,t)=>Math.max(RUSH_DATA_V252.difficulties[t].minLevel,q.recommendedLevel+RUSH_DATA_V252.difficulties[t].levelOffset);
 const rushTierCountV255=t=>RUSH_DATA_V252.quests.filter(q=>rushTierV254(q,t)).length;
-function rushTierGateLabelV255(t){return t?`${RUSH_DATA_V252.difficulties[t-1].name}全30件クリアで解放（${rushTierCountV255(t-1)}/30）`:'地域条件で解放';}
+function rushTierGateLabelV255(t){return t?`${RUSH_DATA_V252.difficulties[t-1].name}全8件クリアで解放（${rushTierCountV255(t-1)}/8）`:'地域条件で解放';}
 rushTierOpenV254=(q,t=rushDifficultyV254)=>!!q&&rushUnlockedV252(q)&&(t===0||RUSH_DATA_V252.quests.every(row=>rushTierV254(row,t-1)));
 function rushPartyErrorV255(q,rows){if(!Array.isArray(rows)||rows.length!==4)return '4人ちょうどを選んでください';const ids=rows.map(row=>row?.[0]);if(new Set(ids).size!==4)return '同じ仲間は重複できません';if(!ids.includes(q.requiredCharacter))return `${player(q.requiredCharacter)?.name}が必須です`;if(rows.some(row=>!state.party.some(p=>p[0]===row[0]&&p[1]===row[1])))return '加入済みの仲間を選んでください';return '';}
 function rushFormationV255(q){let el=$('#rushFormationV255');if(!el){el=document.createElement('div');el.id='rushFormationV255';el.className='rush-formation-v255';document.body.append(el);}el.hidden=false;const roster=state.party.filter(row=>player(row[0])),required=roster.find(row=>row[0]===q.requiredCharacter),free=roster.filter(row=>row[0]!==q.requiredCharacter);
