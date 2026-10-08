@@ -6,8 +6,8 @@
   "heal": "038.wav",
   "buff": "007.mp3",
   "debuff": {
-    "file": "066.wav",
-    "reason": "008欠番。用途表の状態異常音を使用"
+    "file": "066.mp3",
+    "reason": "正常履歴版と一致する既存066音をMP3化。原WAV保持"
   },
   "bgm": {
     "title": "004",
@@ -134,11 +134,66 @@
       "decode": "FFmpeg full decode passed"
     }
   ],
-  "seUpdateBlocked": [
-    "052.mp3",
-    "065.wav",
-    "066.wav",
-    "067.wav"
-  ],
-  "seUpdateReason": "最新版の4ファイルはデコード失敗。既存SEファイルと割当を維持"
+  "seRecovery": {
+    "commit": "a22caa9",
+    "via": "MOB-PIECE-BATTLE verified runtime",
+    "sourceOriginalsRemainDamaged": true,
+    "old066MatchesRecoveredWav": true,
+    "files": [
+      {
+        "source": "素材集/sound effect/052.mp3",
+        "sourceCurrentlyDecodable": false,
+        "currentSourceSha256": "3078cbab742313431c4da971535d7b826df5e15cf0010e34142bd0b9578962f9",
+        "runtime": "public/assets/audio/user-20261007/052.mp3",
+        "runtimeSha256": "d266a799bd41fdd0d789fa6c8121a4be2d22ac1d0392bd5476712315c5a5031a",
+        "recoveryCommit": "a22caa9",
+        "use": "167 ドラゴンブレス",
+        "ourRuntime": "052.mp3",
+        "ourSha256": "d266a799bd41fdd0d789fa6c8121a4be2d22ac1d0392bd5476712315c5a5031a",
+        "decode": "passed"
+      },
+      {
+        "source": "素材集/sound effect/065.wav",
+        "sourceCurrentlyDecodable": false,
+        "currentSourceSha256": "0b1e6e6c5bda0d08a8954b24ac1772a41b2e2ba9f263a96b270ef348eeb9547c",
+        "runtime": "public/assets/audio/user-20261007/065.wav",
+        "runtimeSha256": "51fa23ed881d77d131a36c3424376144a479dfaa5c20af2aaffbc32ab92be518",
+        "recoveryCommit": "a22caa9",
+        "use": "208 地獄の斬撃",
+        "ourRuntime": "065.mp3",
+        "ourSha256": "434f5fb68ae14a08801f8fca8a6d707cbd704e2b088e4f070caf8146eeecdf7d",
+        "decode": "passed"
+      },
+      {
+        "source": "素材集/sound effect/066.wav",
+        "sourceCurrentlyDecodable": false,
+        "currentSourceSha256": "0b1e6e6c5bda0d08a8954b24ac1772a41b2e2ba9f263a96b270ef348eeb9547c",
+        "runtime": "public/assets/audio/user-20261007/066.wav",
+        "runtimeSha256": "876efd7b35a3ffeeffb3f72f6655eaecd103e2d75f206a63b02ea99f0e2943ef",
+        "recoveryCommit": "a22caa9",
+        "use": "debuff skill",
+        "ourRuntime": "066.mp3",
+        "ourSha256": "ffb761d72cc4bc0e983836c216b2f25e2488710ede48dc7579d4b6c46a12c172",
+        "decode": "passed"
+      },
+      {
+        "source": "素材集/sound effect/067.wav",
+        "sourceCurrentlyDecodable": false,
+        "currentSourceSha256": "b27e637eee7b3febce7fda0962b7ce35f6086b2aa18bfdb144aedb7da1867895",
+        "runtime": "public/assets/audio/user-20261007/067.wav",
+        "runtimeSha256": "22c01b46919459062828b3c167e7123451f1d3cb2913bb83f5fc294bdeabed67",
+        "recoveryCommit": "a22caa9",
+        "use": "mq:eventfig/10 ポーションシャワー",
+        "ourRuntime": "067.mp3",
+        "ourSha256": "f0478dd0a7dfcfb752fefa04dd434d8c7f079223be730a6b23fab423d99d042d",
+        "decode": "passed"
+      }
+    ]
+  },
+  "seExtra": {
+    "breath": "052.mp3",
+    "areaSlash": "065.mp3",
+    "status": "066.mp3",
+    "item": "067.mp3"
+  }
 }

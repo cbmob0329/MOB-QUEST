@@ -4,7 +4,7 @@ storySoundV257.init();
 window.MOB_STORY_SOUND=storySoundV257;
 let soundScopeV257=storySoundV257.beginScope('screen'),soundScreenV257='',soundHushV257=0;
 function seV257(cue,options={}){if(performance.now()<soundHushV257)return false;return storySoundV257.play(cue,{scope:soundScopeV257,...options,durationLimit:Math.max(.12,(options.durationLimit||.8)/Math.max(1,state.speed||1))});}
-function battleSeV257(cue,options={}){if(!screens.battle.classList.contains('active')||!state.battle||state.battle.finished)return false;return seV257(cue,options);}
+function battleSeV257(cue,options={}){if(!screens.battle.classList.contains('active')||!state.battle||state.battle.finished)return false;const e=typeof enemyFxContextV251!=='undefined'?enemyFxContextV251:null;if(e&&['attack','skill'].includes(cue))options={name:e.name,all:!!(e.spec?.all||e.spec?.kind==='aoe'),attackType:e.spec?.skillType||e.spec?.type,...options};return seV257(cue,options);}
 function stopSeV257(){storySoundV257.endScope(soundScopeV257);storySoundV257.stopAll();soundScopeV257=storySoundV257.beginScope('screen');}
 const screenSeBaseV257=showScreen;
 showScreen=function(name,...args){if(name!==soundScreenV257){stopSeV257();soundScreenV257=name;}const r=screenSeBaseV257(name,...args);refreshStoryBgmV259(name);if(name==='battle'&&state.battle&&!state.battle.finished){const b=state.battle;if(!b.seStartedV257){b.seStartedV257=true;seV257(b.config?.bossBattle?'summon':'start');}}return r;};
@@ -84,3 +84,8 @@ const storyRoundBgmV259=startRound;startRound=async function(...args){refreshSto
 refreshStoryBgmV259();
 
 const endingBgmBaseV259=endingMontageV157;endingMontageV157=async function(...args){storySoundV257.setBgm(false);try{return await endingBgmBaseV259(...args)}finally{refreshStoryBgmV259()}};
+
+// Successful item consumption only; target selection/cancel does not play item SE.
+const inventoryItemAudioV259=useInventoryItemOn;useInventoryItemOn=function(id,...args){const n=itemCount(id),r=inventoryItemAudioV259(id,...args);if(itemCount(id)<n)seV257('item');return r;};
+const fieldItemAudioV259=useFieldItemOn;useFieldItemOn=function(id,...args){const n=itemCount(id),r=fieldItemAudioV259(id,...args);if(itemCount(id)<n)seV257('item');return r;};
+const battleItemAudioV259=performBattleItem;performBattleItem=async function(a,p,...args){const n=itemCount(p?.id),r=await battleItemAudioV259(a,p,...args);if(itemCount(p?.id)<n)battleSeV257('item');return r;};
