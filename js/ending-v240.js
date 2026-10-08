@@ -46,7 +46,7 @@ endingCaptionV157=async function(text){
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  if(text==='CB Memory'){
   card.classList.add('ending-signature-v240');
-  const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB QUEST';
+  const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB STORY';
   await decodeImageBoundedV217(logo);
   card.append(logo);
   const label=document.createElement('p');label.textContent=text;label.style.opacity='0';card.append(label);

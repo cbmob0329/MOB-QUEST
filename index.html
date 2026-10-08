@@ -7,7 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="format-detection" content="telephone=no">
-  <title>MOB QUEST</title>
+  <title>MOB STORY</title>
+  <meta name="application-name" content="MOB STORY">
+  <meta name="apple-mobile-web-app-title" content="MOB STORY">
 
   <style id="mobQuestInlineStyle">
 :root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--ink:#f7f9fc;--muted:#aeb9c8;--panel:rgba(10,16,25,.86);--panel2:rgba(22,31,44,.91);--line:rgba(255,255,255,.14);--blue:#4e8fd0;--blue2:#2d5d92;--purple:#7f5aaa;--green:#5eaa78;--red:#c75e67;--gold:#e2bd62}
@@ -6170,8 +6172,8 @@ body.story-event-v179-active #storySkipV174{
     <div class="bg-overlay home-overlay"></div>
     <header class="home-top safe-top">
       <div class="brand-box">
-        <img src="icon/01.png" class="brand-logo" alt="MOB QUEST">
-        <b class="brand-fallback">MOB QUEST</b>
+        <img src="icon/01.png" class="brand-logo" alt="MOB STORY">
+        <b class="brand-fallback">MOB STORY</b>
       </div>
       <div class="wallet"><span>COIN <b id="coinValue">0</b></span><span>◆ <b id="diamondValue">0</b></span></div>
     </header>
@@ -6195,7 +6197,7 @@ body.story-event-v179-active #storySkipV174{
     <img class="screen-bg bg-cover" src="back2/01.png" data-fallback-src="back/rpgmain.png" alt="">
     <div class="bg-overlay loading-overlay"></div>
     <div class="loading-box loading-guide-box-v123">
-      <div class="loading-guide-head-v123"><small>MOB QUEST GUIDE</small><b id="loadingGuideCountV123">1 / 4</b></div>
+      <div class="loading-guide-head-v123"><small>MOB STORY GUIDE</small><b id="loadingGuideCountV123">1 / 4</b></div>
       <article id="loadingGuideCardV123" class="loading-guide-card-v123" aria-live="polite">
         <h1 id="loadingGuideTitleV123">スーパーサブ</h1>
         <div id="loadingGuideBodyV123" class="loading-guide-body-v123"></div>
@@ -6563,7 +6565,7 @@ body.story-event-v179-active #storySkipV174{
   </div>
 
   <div id="toast" class="toast"></div>
-  <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB QUEST はスマホ縦画面専用です</span></div>
+  <div id="orientationLock" class="orientation-lock"><b>縦画面でプレイしてください</b><span>MOB STORY はスマホ縦画面専用です</span></div>
 </main>
 <script id="mobQuestInlineData">
 // MOB QUEST v165
@@ -19222,7 +19224,7 @@ endingMontageV157=async function(){
     while(!ended&&!audio.ended&&!audio.error&&!audio.paused)await fixedDelay(250);await animateV157(root,[{opacity:1},{opacity:0}],1400);
   }finally{audio.pause();audio.removeAttribute('src');audio.load();root.remove();}
 };
-const captionBaseV169=endingCaptionV157;endingCaptionV157=async function(text){if(text!=='CB Memory')return captionBaseV169(text);const el=document.querySelector('.ending-caption-v157');if(!el)return;el.replaceChildren();const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB QUEST';logo.className='ending-logo-v169';const label=document.createElement('b');label.textContent='CB Memory';el.append(logo,label);await animateV157(el,[{opacity:0},{opacity:1}],1000);};
+const captionBaseV169=endingCaptionV157;endingCaptionV157=async function(text){if(text!=='CB Memory')return captionBaseV169(text);const el=document.querySelector('.ending-caption-v157');if(!el)return;el.replaceChildren();const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB STORY';logo.className='ending-logo-v169';const label=document.createElement('b');label.textContent='CB Memory';el.append(logo,label);await animateV157(el,[{opacity:0},{opacity:1}],1000);};
 const finalEndingBaseV169=finalEndingV89Final;finalEndingV89Final=async function(){if(endingBusyV169)return;endingBusyV169=true;document.body.classList.add('ending-report-v169');try{return await finalEndingBaseV169();}finally{endingBusyV169=false;document.body.classList.remove('ending-report-v169');}};
 const facilityBaseV169=facilityTalk;facilityTalk=async function(text,...args){const shout=text.includes('ほんっっっとーに');document.body.classList.toggle('king-shout-v169',shout);try{return await facilityBaseV169(text,...args);}finally{document.body.classList.remove('king-shout-v169');}};
 
@@ -22746,7 +22748,7 @@ async function endingJumpV222(stage,id,times=1){const actors=id?[stage.querySele
 async function endingLineV222(stage,id,text,style='',auto=false){const bubble=stage.querySelector('.ending-bubble-v222');bubble.className='ending-bubble-v222 '+style;bubble.hidden=false;bubble.replaceChildren();const name=document.createElement('b'),line=document.createElement('p');name.textContent=endingActorV222(id).name;line.textContent=text;bubble.append(name,line);stage.querySelectorAll('.ending-person-v222').forEach(el=>el.classList.toggle('speaking',el.dataset.actor===id));if(style==='jump')await endingJumpV222(stage,id);if(auto){await fixedDelay(3000);return;}await new Promise(resolve=>{const finish=()=>{stage.removeEventListener('click',finish);stage.removeEventListener('keydown',key);resolve();},key=e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();finish();}};stage.addEventListener('click',finish);stage.addEventListener('keydown',key);stage.focus({preventScroll:true});});}
 preloadEndingV157=async()=>{await Promise.all([1,2].map(loadEndingFrameV217));};
 endingMontageV157=async function(){const root=document.createElement('div');root.className='ending-v157 ending-montage-v222';root.setAttribute('aria-label','エンディング');document.body.append(root);const audio=new Audio('music/end.mp3');audio.volume=.45;let deadline;const done=new Promise(resolve=>{audio.onended=audio.onerror=resolve;});try{audio.play()?.catch(()=>{});let previous;for(let n=1;n<=31;n++){const frame=await loadEndingFrameV217(n);if(!(frame instanceof HTMLImageElement))frame.replaceChildren();frame.className='ending-frame-v222';root.append(frame);for(let next=n+1;next<=Math.min(31,n+2);next++)void loadEndingFrameV217(next);await animateV157(frame,[{opacity:0},{opacity:1}],800);frame.style.opacity='1';previous?.remove();previous=frame;endingFramesV217.delete(n-1);await fixedDelay(3200);}if(!audio.ended&&!audio.error&&!audio.paused){const remaining=Number.isFinite(audio.duration)?Math.max(0,audio.duration-audio.currentTime)*1000+2000:180000;await Promise.race([done,new Promise(resolve=>{deadline=setTimeout(resolve,remaining);})]);}await animateV157(root,[{opacity:1},{opacity:0}],1200);}finally{clearTimeout(deadline);audio.pause();audio.removeAttribute('src');audio.load();root.remove();endingFramesV217.clear();}};
-endingCaptionV157=async function(text){let el=document.querySelector('.ending-caption-v157');if(!el){el=document.createElement('div');el.className='ending-caption-v157 ending-caption-v222';document.body.append(el);}el.replaceChildren();if(text==='CB Memory'){const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB QUEST';el.append(logo);await animateV157(logo,[{opacity:0},{opacity:1}],1200);const label=document.createElement('p');label.textContent=text;el.append(label);await animateV157(label,[{opacity:0},{opacity:1}],1400);return;}const p=document.createElement('p');p.textContent=text;el.append(p);p.style.fontSize='24px';const width=el.clientWidth-40;p.style.fontSize=Math.min(24,24*width/Math.max(width,p.scrollWidth))+'px';await animateV157(p,[{opacity:0},{opacity:1}],900);await fixedDelay(3200);await animateV157(p,[{opacity:1},{opacity:0}],700);};
+endingCaptionV157=async function(text){let el=document.querySelector('.ending-caption-v157');if(!el){el=document.createElement('div');el.className='ending-caption-v157 ending-caption-v222';document.body.append(el);}el.replaceChildren();if(text==='CB Memory'){const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB STORY';el.append(logo);await animateV157(logo,[{opacity:0},{opacity:1}],1200);const label=document.createElement('p');label.textContent=text;el.append(label);await animateV157(label,[{opacity:0},{opacity:1}],1400);return;}const p=document.createElement('p');p.textContent=text;el.append(p);p.style.fontSize='24px';const width=el.clientWidth-40;p.style.fontSize=Math.min(24,24*width/Math.max(width,p.scrollWidth))+'px';await animateV157(p,[{opacity:0},{opacity:1}],900);await fixedDelay(3200);await animateV157(p,[{opacity:1},{opacity:0}],700);};
 finalEndingV89Final=async function(){if(endingBusyV169)return;endingBusyV169=true;state.meta.pendingFinalEndingV217=true;saveMeta();document.body.classList.add('ending-report-v169');const stage=document.createElement('section');stage.className='ending-stage-v222';stage.tabIndex=0;stage.setAttribute('aria-label','王の間');stage.innerHTML='<div class="ending-cast-v222"></div><div class="ending-bubble-v222" hidden></div>';document.body.append(stage);try{void preloadEndingV157();for(const [id,text,style]of ENDING_DIALOGUE_V222){endingCastV222(stage,id==='king'?['king','pink']:['king',id]);await endingLineV222(stage,id,text,style);}stage.querySelector('.ending-bubble-v222').hidden=true;await endingJumpV222(stage,'king',3);await endingSoloTransitionV225(stage);for(const text of ENDING_PINK_V222)await endingLineV222(stage,'pink',text);stage.querySelector('.ending-bubble-v222').hidden=true;endingCastV222(stage,['pink','yusha',...MOB_DATA.players.map(p=>p.id).filter(id=>!['pink','yusha'].includes(id))],true);await endingJumpV222(stage,null,3);await endingLineV222(stage,'pink','それまでお達者で！','farewell',true);await animateV157(stage,[{opacity:1},{opacity:0}],2000);stage.remove();await endingMontageV157();for(const text of ENDING_MESSAGES_V222)await endingCaptionV157(text);await endingCaptionV157('CB Memory');Object.assign(state.meta,{gameCleared:true,eventQuestUnlocked:true,otherWorldUnlocked:true,shadowWorldUnlocked:true});delete state.meta.pendingFinalEndingV217;saveMeta();await fixedDelay(3000);document.querySelector('.ending-caption-v157')?.remove();await showTitle();}finally{stage.remove();document.querySelectorAll('.ending-v157,.ending-caption-v157,.ending-loading-v169').forEach(e=>e.remove());endingBusyV169=false;document.body.classList.remove('ending-report-v169');}};
 const adventurePresentationBaseV222=renderAdventure;renderAdventure=function(...args){const r=adventurePresentationBaseV222(...args);if(state.adventure?.awaitingReport?.worldId==='demonCastle2'||state.adventure?.pendingPostStory?.key==='post:demonCastle2:3'){for(const selector of ['#areaDescription','#adventureProgress','#fieldBattleHint']){const el=$(selector);if(el&&/クリア|CLEAR|報告/.test(el.textContent))el.textContent='';}}return r;};
 
@@ -23790,7 +23792,7 @@ endingCaptionV157=async function(text){
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  if(text==='CB Memory'){
   card.classList.add('ending-signature-v240');
-  const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB QUEST';
+  const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB STORY';
   await decodeImageBoundedV217(logo);
   card.append(logo);
   const label=document.createElement('p');label.textContent=text;label.style.opacity='0';card.append(label);
@@ -24559,7 +24561,7 @@ let enemyFxContextV251=null;
 const FX_COLORS_V251={火:'#ff925a',水:'#65cfff',雷:'#e9cc55',地:'#d8ae72',風:'#80dcb5',光:'#ffe6a1',闇:'#bc8be7',無:'#dce8ed'};
 function fxElementV251(value){return String(value||'無').split(/[・/]/)[0];}
 function sharedSkillV251(name){return [...MOB_DATA.magicCatalog,...MOB_DATA.techniqueCatalog].filter(s=>s.name&&String(name).includes(s.name)).sort((a,b)=>b.name.length-a.name.length)[0]||null;}
-const FX_ATLASES_V251={weapons:{src:'skill4/v251/weapons.png',rows:7},elements:{src:'skill4/v251/elements.png',rows:8},bosses:{src:'skill4/v251/bosses.png',rows:6},recovery:{src:'skill4/v251/recovery.png',rows:2}};
+const FX_ATLASES_V251={weapons:{src:'skill4-restored/v251/weapons.png',rows:7},elements:{src:'skill4-restored/v251/elements.png',rows:8},bosses:{src:'skill4-restored/v251/bosses.png',rows:6},recovery:{src:'skill4-restored/v251/recovery.png',rows:2}};
 const FX_RECTS_V251={"weapons":{"width":948,"height":1659,"rects":[[[2,2,233,233],[239,2,233,233],[476,2,237,233],[717,2,229,233]],[[2,239,217,233],[223,239,249,233],[476,239,245,233],[725,239,221,233]],[[2,476,233,233],[239,476,233,233],[476,476,244,233],[724,476,222,233]],[[2,713,213,215],[219,713,253,215],[476,713,246,215],[726,713,220,215]],[[2,932,233,210],[239,932,233,210],[476,932,233,210],[713,932,233,210]],[[2,1146,233,235],[239,1146,231,235],[474,1146,235,235],[713,1146,233,235]],[[2,1385,232,272],[238,1385,234,272],[476,1385,241,272],[721,1385,225,272]]]},"elements":{"width":887,"height":1774,"rects":[[[2,2,218,218],[224,2,217,218],[445,2,218,218],[667,2,218,218]],[[2,224,218,217],[224,224,212,217],[440,224,223,217],[667,224,218,217]],[[2,445,218,218],[224,445,217,218],[445,445,218,218],[667,445,218,218]],[[2,667,218,218],[224,667,214,218],[442,667,221,218],[667,667,218,218]],[[2,889,218,215],[224,889,213,215],[441,889,222,215],[667,889,218,215]],[[2,1108,218,220],[224,1108,217,220],[445,1108,218,220],[667,1108,218,220]],[[2,1332,218,214],[224,1332,217,214],[445,1332,218,214],[667,1332,218,214]],[[2,1550,218,222],[224,1550,202,222],[430,1550,233,222],[667,1550,218,222]]]},"bosses":{"width":1024,"height":1536,"rects":[[[2,2,247,262],[253,2,257,262],[514,2,252,262],[770,2,252,262]],[[2,268,194,242],[200,268,308,242],[512,268,254,242],[770,268,252,242]],[[2,514,244,252],[250,514,260,252],[514,514,252,252],[770,514,252,252]],[[2,770,227,252],[233,770,277,252],[514,770,252,252],[770,770,252,252]],[[2,1026,215,243],[221,1026,287,243],[512,1026,262,243],[778,1026,244,243]],[[2,1273,214,261],[220,1273,290,261],[514,1273,252,261],[770,1273,252,261]]]},"recovery":{"width":1774,"height":887,"rects":[[[2,2,439,439],[445,2,440,439],[889,2,439,439],[1332,2,440,439]],[[2,445,439,440],[445,445,440,440],[889,445,439,440],[1332,445,440,440]]]}};
 for(const [name,a] of Object.entries(FX_ATLASES_V251))Object.assign(a,FX_RECTS_V251[name]);
 function atlasFrameStyleV251(el,atlas,row,frame){const [x,y,w,h]=atlas.rects[row][frame];el.style.backgroundSize=`${atlas.width/w*100}% ${atlas.height/h*100}%`;el.style.backgroundPosition=`${x/(atlas.width-w)*100}% ${y/(atlas.height-h)*100}%`;}
