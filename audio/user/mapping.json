@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "source": "ユーザー提供 素材集/効果音.txt",
+  "version": 2,
+  "source": "ユーザー提供 素材集/BGM.txt・sound effect/効果音.txt",
   "attack": "054.mp3",
   "impact": "053.mp3",
   "heal": "038.wav",
@@ -10,11 +10,21 @@
     "reason": "008欠番。用途表の状態異常音を使用"
   },
   "bgm": {
-    "file": "grassland.mp3",
-    "original": "002.mp3",
-    "area": "草原",
-    "sameRecordingAs": "001.wav",
-    "wavOriginalPreserved": true
+    "title": "004",
+    "normalBattle": "010",
+    "eventOrArenaBattle": "009",
+    "specialBossOrLab": "015",
+    "regionalBosses": {
+      "grassland": "002",
+      "rural": "006",
+      "demonCastle": "007",
+      "sea": "008",
+      "desert": "011",
+      "neon": "012"
+    },
+    "castle": "004",
+    "tavern": "013",
+    "readingBookFinal": "005"
   },
   "files": [
     "013.wav",
@@ -42,5 +52,93 @@
     "028.mp3"
   ],
   "humanListening": false,
-  "loop": "Decoded AudioBuffer loop, 10ms endpoint fades; musical seam not auditioned"
+  "loop": "WebAudio loop; decoded PCM 80ms end/head overlap; 400ms track crossfade. Musical seam not auditioned.",
+  "previousBgm": {
+    "file": "grassland.mp3",
+    "original": "002.mp3",
+    "area": "草原",
+    "sameRecordingAs": "001.wav",
+    "wavOriginalPreserved": true
+  },
+  "bgmFiles": [
+    {
+      "file": "bgm-002.mp3",
+      "source": "002.mp3",
+      "sha256": "dcfb4a8ce3fc247b32806c4d457e15dbcd827eefbfdabc877f069bf7687211f1",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-004.mp3",
+      "source": "004.mp3",
+      "sha256": "ad4263162a385ae86aa0dcddca242840b4d2328ab73d4b4d2c1dae0a2452f69d",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-005.mp3",
+      "source": "005.mp3",
+      "sha256": "54a72e0a830f1c068b1e4656cf77a51d56ec972d67ba4fd25fde92bba14405df",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-006.mp3",
+      "source": "006.mp3",
+      "sha256": "72041ef5db17137b1c9849c27bbeed2c8a57bafbf299482e415de17e44b29299",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-007.mp3",
+      "source": "007.mp3",
+      "sha256": "c2aee2aaaee2ac614d53194bf2ec684d53e413800d3407379099aa3ab37ba2b1",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-008.mp3",
+      "source": "008.mp3",
+      "sha256": "2ac7c97841f156e1db04f154f0db83e17750c099ac7bde85c99a2f3dc25fb2d0",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-009.mp3",
+      "source": "009.mp3",
+      "sha256": "dccd13d04c6e0851d8e70de6ea4339c7bbbc87691718f2da4a1fd98b5e56cb03",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-010.mp3",
+      "source": "010.mp3",
+      "sha256": "ca183f236f16a697bf0613e68e0b6564b8459c3754b9ee49ecd382088f046cd6",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-011.mp3",
+      "source": "011.mp3",
+      "sha256": "5398cd3a953559a146167e1eff1cd429b1e256e5d5edc34bada6bd93f4940631",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-012.mp3",
+      "source": "012.mp3",
+      "sha256": "9ba23b20755e8fbd8567af861e218ce25a2a2ab6eedbf63fa6fdb725ecee6137",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-013.mp3",
+      "source": "013.mp3",
+      "sha256": "c6ac98d0329d073d397732ff51497b1c6d6f7785b46d5125465b4e15c8c3adb4",
+      "decode": "FFmpeg full decode passed"
+    },
+    {
+      "file": "bgm-015.mp3",
+      "source": "015.mp3",
+      "sha256": "0ab42e2c9a8f8e4acbb62e892e255af1963b442d8024592841b75ec8104b0137",
+      "decode": "FFmpeg full decode passed"
+    }
+  ],
+  "seUpdateBlocked": [
+    "052.mp3",
+    "065.wav",
+    "066.wav",
+    "067.wav"
+  ],
+  "seUpdateReason": "最新版の4ファイルはデコード失敗。既存SEファイルと割当を維持"
 }
