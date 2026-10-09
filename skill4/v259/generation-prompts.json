@@ -1,0 +1,22 @@
+{
+  "mode": "built-in image_gen",
+  "transparent_background": true,
+  "prompts": [
+    {
+      "name": "food",
+      "prompt": "Use case: stylized-concept. Production TRANSPARENT PNG sprite atlas for a cartoon RPG. Exact 4 columns and 8 rows, equal square cells. Each row FOUR successive animation frames: small windup, traveling curved slash, impact burst, dissipating fragments. Flat bold cartoon ink outlines, saturated cel shading, playful squash and stretch. Cutout effects ONLY, no character or weapon. All pixels outside effects genuinely transparent. Every effect must fit within central 70% of its cell, large empty transparent gutters, never overlap a neighbor cell. No text, labels, borders, background, glow haze, gradients or panel colors. Rows from top: 1 red chili powder curved slash with pepper flakes; 2 blue translucent jelly curved slash with bouncing jelly cubes; 3 green unripe plum wind slash; 4 yellow popping candy lightning slash; 5 brown chocolate tree trunk blades erupting upward from earth, chocolate bark chunks; 6 golden konpeito spiky sugar candy slash; 7 dark violet cocoa bean chocolate slash; 8 silver-white fizzy soda bubble slash. Make the edible theme unmistakable yet clearly an attack."
+    },
+    {
+      "name": "sweep",
+      "prompt": "Use case: stylized-concept. Production TRANSPARENT PNG sprite atlas for a cartoon RPG. Exact 4 columns and 8 rows, equal square cells. Each row FOUR successive animation frames: small windup, traveling curved slash, impact burst, dissipating fragments. Flat bold cartoon ink outlines, saturated cel shading, playful squash and stretch. Cutout effects ONLY, no character or weapon. All pixels outside effects genuinely transparent. Every effect must fit within central 70% of its cell, large empty transparent gutters, never overlap a neighbor cell. No text, labels, borders, background, glow haze, gradients or panel colors. Each attack has a broad horizontal silhouette for hitting a group. Rows top to bottom: 1 orange cartoon flame drifting wave; 2 blue surfing water slide; 3 yellow cotton candy lightning sweeping trail; 4 mint green whirlwind with leaf ribbons; 5 chocolate-brown rocky ground crest; 6 golden star carousel sweep; 7 purple crescent shadow ribbon; 8 silver comic spiral shockwave. Four chronological frames per row."
+    },
+    {
+      "name": "slash",
+      "prompt": "Use case: stylized-concept. Production TRANSPARENT PNG sprite atlas for a cartoon RPG. Exact 4 columns and 8 rows, equal square cells. Each row FOUR successive animation frames: small windup, traveling curved slash, impact burst, dissipating fragments. Flat bold cartoon ink outlines, saturated cel shading, playful squash and stretch. Cutout effects ONLY, no character or weapon. All pixels outside effects genuinely transparent. Every effect must fit within central 70% of its cell, large empty transparent gutters, never overlap a neighbor cell. No text, labels, borders, background, glow haze, gradients or panel colors. Medium strength sword slash effects, each row distinct elemental motion. Rows top to bottom: 1 orange ember crescent; 2 blue water blade crescent; 3 gold zigzag lightning blade; 4 brown rock shard cleave; 5 green leaf wind crescent; 6 gold star blade; 7 violet shadow blade; 8 silver impact arc. Four chronological frames per row."
+    },
+    {
+      "name": "fire",
+      "prompt": "Use case: stylized-concept. Production TRANSPARENT PNG sprite atlas for a cartoon RPG. Exact 4 columns and 3 rows, equal square cells. Each row FOUR successive animation frames: small windup, traveling curved slash, impact burst, dissipating fragments. Flat bold cartoon ink outlines, saturated cel shading, playful squash and stretch. Cutout effects ONLY, no character or weapon. All pixels outside effects genuinely transparent. Every effect must fit within central 70% of its cell, large empty transparent gutters, never overlap a neighbor cell. No text, labels, borders, background, glow haze, gradients or panel colors. Three increasing FIRE MAGIC animations. Row1 little orange flame puff evolving into a small comic flame impact. Row2 twirling orange fireball evolving into a big swirling flame burst. Row3 tall crimson-orange volcanic fire spiral evolving into a grand erupting fire crown, then falling embers. The four phases each row: winding up, growth, explosive impact, aftermath. Keep white core tiny and avoid eye-searing flashes."
+    }
+  ]
+}

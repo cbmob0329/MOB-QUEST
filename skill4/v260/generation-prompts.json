@@ -1,0 +1,18 @@
+[
+  {
+    "name": "attacks",
+    "prompt": "Transparent PNG game VFX sprite atlas for a playful cartoon Japanese RPG. EXACT 4 columns, 8 rows, equal cells. Each row four sequential animation stages: windup, motion, impact, fragments. Flat vivid cel shading, thick dark ink outlines, controlled tiny highlights. Every effect stays inside central 65% of cell with wide empty alpha gutters. No backdrop, atmospheric glow, background colors, words or grid. Effects only, no humanoid characters. Rows: 1 two crossing gold sword arcs; 2 orange-and-white clownfish silhouette sweeping as an earth-colored blade, NO facial detail; 3 violet desert crescent that returns into a healing droplet; 4 flaming net spreading horizontally; 5 blue cat-shaped water rocket impact; 6 green snowflake whirlwind; 7 yellow flickering electrical dart barrage; 8 black-purple villain claw cross with red speed streaks."
+  },
+  {
+    "name": "support",
+    "prompt": "Transparent PNG game VFX sprite atlas for a playful cartoon Japanese RPG. EXACT 4 columns, 6 rows, equal cells. Each row four sequential animation stages: windup, motion, impact, fragments. Flat vivid cel shading, thick dark ink outlines, controlled tiny highlights. Every effect stays inside central 65% of cell with wide empty alpha gutters. No backdrop, atmospheric glow, background colors, words or grid. Effects only, no humanoid characters. Rows: 1 pink bonbon candy heart healing ring; 2 golden royal crown with pink rejuvenating ribbons; 3 twin gold coins orbiting a violet magic orb; 4 cyan and gold neon protective dome; 5 orange fiery roadway under a rising banner-shaped arc; 6 blue bear-shaped protective bubble. Chronological stages appear-grow-complete-dissolve."
+  },
+  {
+    "name": "tetsu",
+    "prompt": "Transparent PNG game VFX sprite atlas for a playful cartoon Japanese RPG. EXACT 4 columns, 4 rows, equal cells. Each row four sequential animation stages: windup, motion, impact, fragments. Flat vivid cel shading, thick dark ink outlines, controlled tiny highlights. Every effect stays inside central 65% of cell with wide empty alpha gutters. No backdrop, atmospheric glow, background colors, words or grid. Effects only, no humanoid characters. Four samurai martial techniques. Rows: 1 two sequential powerful steel-orange sword slashes; 2 mint-green parry circle bursting into silver critical star rays; 3 brown and gold shield absorbing sparks then releasing several steel blades; 4 paired green wind slash and brown rocky earth slash intersecting. Four frames per row. Energetic manga motion, no text."
+  },
+  {
+    "name": "finishers",
+    "prompt": "Transparent PNG game VFX sprite atlas for a playful cartoon Japanese RPG. EXACT 4 columns, 4 rows, equal cells. Each row four sequential animation stages: windup, motion, impact, fragments. Flat vivid cel shading, thick dark ink outlines, controlled tiny highlights. Every effect stays inside central 65% of cell with wide empty alpha gutters. No backdrop, atmospheric glow, background colors, words or grid. Effects only, no humanoid characters. Rows: 1 grand interlocking gold-light and orange-fire fate sword impact; 2 broad neon cyan lightning plus gold light thunderstorm; 3 dark red villain meteor fist burst with intimidating black crescent; 4 elegant violet rose and thorn petals exploding then falling into a crimson healing droplet. All four frames of each row must be distinct chronological stages, not identical icons."
+  }
+]

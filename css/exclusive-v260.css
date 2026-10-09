@@ -1,0 +1,5 @@
+.exclusive-cutin-v260{position:absolute;inset:24% 2% auto;min-height:125px;z-index:30;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-block:3px solid #e3be63;background:linear-gradient(100deg,#152238ee,#253952f2);box-shadow:0 5px 20px #0007;pointer-events:none;animation:exclusive-enter-v260 .25s ease-out both}
+.exclusive-cutin-v260 img{width:90px;height:110px;object-fit:contain;filter:drop-shadow(0 3px 3px #0007)}
+.exclusive-cutin-v260 strong{font-size:clamp(17px,5vw,25px);color:#fff3c5;text-shadow:2px 2px #442e24;line-height:1.4;word-break:normal}
+@keyframes exclusive-enter-v260{from{transform:translateX(-20px);opacity:0}to{transform:translateX(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.exclusive-cutin-v260{animation:none}}

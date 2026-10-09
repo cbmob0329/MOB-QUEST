@@ -3169,7 +3169,7 @@ async function performAttack(a,auto=false){
   await actionCutin(`${a.name}の攻撃！`,'system',480);
   let crit=a.bookHeroCrit100?1:TEMP_BALANCE.critRate,denPassive=false;
   if(a.id==='denden'&&passiveChance(.10)){await passiveBeat(a,'デンデン・ムキムキ・カナリツヨイ！');crit=1;denPassive=true;}
-  const targetBefore=targetEnemy(),bookHeroAoe=!!a.bookHeroNormalAoe&&livingEnemies().length>1,nyoroAoe=a.id==='nyoro'&&livingEnemies().length>1&&passiveChance(.70),armorAoe=livingEnemies().length>1&&!!(a.figureEffects||figureEffectsFor(a.id)).normalAoe,weaponAoe=livingEnemies().length>1&&Math.random()<weaponNormalAoeChance(a);
+  const targetBefore=targetEnemy(),bookHeroAoe=!!a.bookHeroNormalAoe&&livingEnemies().length>1,nyoroAoe=false,armorAoe=livingEnemies().length>1&&!!(a.figureEffects||figureEffectsFor(a.id)).normalAoe,weaponAoe=livingEnemies().length>1&&Math.random()<weaponNormalAoeChance(a);
   if(nyoroAoe)await passiveBeat(a,'マグマスイミング！');else if(weaponAoe)notice('武器特性 / 通常攻撃が全体化！','buff',620);
   const prev=state.battle.weaponAttackContext;state.battle.weaponAttackContext={normal:true,element:weaponCombatElement(a)};
   let dealt=0,last=null;
@@ -3446,7 +3446,8 @@ async function act(kind,payload){
   b.busy=true;setCommandDisabled(true);b.currentActionKind=kind;b.criticalCtReducedThisAction=false;
   let consumed=true;
   try{
-    if(kind==='attack')await performAttack(a);
+    if(kind==='stance260')await resolveTetsuStanceV260(a);
+    else if(kind==='attack')await performAttack(a);
     else if(kind==='magic')consumed=await performMagic(a,payload);
     else if(kind==='special')consumed=await performSpecial(a,payload);
     else if(kind==='ultimate')consumed=await performUltimate(a,payload);
@@ -16537,7 +16538,7 @@ actionCutin=async function(text,...args){const ctx=enemyFxContextV251;if(ctx&&!c
 const skillSpriteFxBaseV251=skillSprite;
 skillSprite=async function(frames,target='enemy',mode='default'){const ctx=enemyFxContextV251;if(ctx&&frames?.length)ctx.played.add(String(target));return skillSpriteFxBaseV251(frames,target,mode);};
 const damageFxBaseV251=damageAlly;
-damageAlly=async function(a,power,type='physical',superHit=false,element,...args){const e=actingEnemy()||state.battle?.enemy,ctx=enemyFxContextV251||{enemy:e,normal:true};if(e&&a&&a.hp>0&&ctx&&ctx.enemy?.uid===e.uid){if(ctx.normal)await normalSequenceV251(e,a.id,enemyWeaponV251(e),element||e.attribute);else if(!ctx.played.delete(String(a.id))){if(ctx.skill?.frames?.length)await skillSpriteFxBaseV251(ctx.skill.frames,a.id,ctx.skill.mode);else{await bossChargeV251(e,ctx);const theme=enemyThemeV251(e),row=['rose','dragon','pyramid','gun','tide','flame'].indexOf(theme),tone=element||ctx.spec.skillElement||ctx.spec.element||e.attribute;await projectileV251(e,a.id,tone,'special');await atlasSequenceV251(row<0?FX_ATLASES_V251.elements:FX_ATLASES_V251.bosses,row<0?elementRowV251(tone):row,a.id,'special theme-'+theme,tone,true);}}}return damageFxBaseV251(a,power,type,superHit,element,...args);};
+damageAlly=async function(a,power,type='physical',superHit=false,element,...args){const e=actingEnemy()||state.battle?.enemy,ctx=enemyFxContextV251||{enemy:e,normal:true};if(e&&a&&a.hp>0&&ctx&&ctx.enemy?.uid===e.uid){if(ctx.normal)await normalSequenceV251(e,a.id,enemyWeaponV251(e),element||e.attribute);else if(!ctx.played.delete(String(a.id))){if(ctx.skill?.frames?.length)await skillSprite(ctx.skill.frames,a.id,ctx.skill.mode);else{await bossChargeV251(e,ctx);const theme=enemyThemeV251(e),row=['rose','dragon','pyramid','gun','tide','flame'].indexOf(theme),tone=element||ctx.spec.skillElement||ctx.spec.element||e.attribute;await projectileV251(e,a.id,tone,'special');await atlasSequenceV251(row<0?FX_ATLASES_V251.elements:FX_ATLASES_V251.bosses,row<0?elementRowV251(tone):row,a.id,'special theme-'+theme,tone,true);}}}return damageFxBaseV251(a,power,type,superHit,element,...args);};
 // Heal numbers and support pulses can originate from passives as well as selected spells.
 const healingFxActiveV251=new Map();
 function healingSequenceV251(target,kind='heal'){if(healingFxActiveV251.has(target))return healingFxActiveV251.get(target);const job=atlasSequenceV251(FX_ATLASES_V251.recovery,kind==='heal'?0:1,target,'recovery '+kind,'風').finally(()=>healingFxActiveV251.delete(target));healingFxActiveV251.set(target,job);return job;}
@@ -17000,4 +17001,183 @@ const fieldItemAudioV259=useFieldItemOn;useFieldItemOn=function(id,...args){cons
 const battleItemAudioV259=performBattleItem;performBattleItem=async function(a,p,...args){const n=itemCount(p?.id),r=await battleItemAudioV259(a,p,...args);if(itemCount(p?.id)<n)battleSeV257('item');return r;};
 
 // UPDATE_V257_END
+// UPDATE_V259_BEGIN
+const SKILL_ATLASES_V259={"food":{"src":"skill4/v259/food.png","rows":8,"width":1024,"height":1536,"rects":[[[3,3,245,186],[254,3,255,186],[515,3,257,186],[778,3,243,186]],[[3,195,249,186],[258,195,251,186],[515,195,250,186],[771,195,250,186]],[[3,387,250,186],[259,387,250,186],[515,387,250,186],[771,387,250,186]],[[3,579,233,184],[242,579,267,184],[515,579,252,184],[773,579,248,184]],[[3,769,232,188],[241,769,268,188],[515,769,266,188],[787,769,234,188]],[[3,963,235,181],[244,963,266,181],[516,963,252,181],[774,963,247,181]],[[3,1150,247,191],[256,1150,253,191],[515,1150,252,191],[773,1150,248,191]],[[3,1347,250,186],[259,1347,250,186],[515,1347,250,186],[771,1347,250,186]]]},"sweep":{"src":"skill4/v259/sweep.png","rows":8,"width":1024,"height":1536,"rects":[[[2,2,232,188],[238,2,272,188],[514,2,271,188],[789,2,233,188]],[[2,194,234,188],[240,194,270,188],[514,194,269,188],[787,194,235,188]],[[2,386,234,188],[240,386,283,188],[527,386,259,188],[790,386,232,188]],[[2,578,234,188],[240,578,280,188],[524,578,266,188],[794,578,228,188]],[[2,770,232,186],[238,770,284,186],[526,770,267,186],[797,770,225,186]],[[2,960,234,183],[240,960,280,183],[524,960,250,183],[778,960,244,183]],[[2,1147,225,176],[231,1147,279,176],[514,1147,274,176],[792,1147,230,176]],[[2,1327,223,207],[229,1327,281,207],[514,1327,278,207],[796,1327,226,207]]]},"slash":{"src":"skill4/v259/slash.png","rows":8,"width":887,"height":1774,"rects":[[[2,2,218,218],[224,2,217,218],[445,2,218,218],[667,2,218,218]],[[2,224,218,217],[224,224,218,217],[446,224,217,217],[667,224,218,217]],[[2,445,218,218],[224,445,224,218],[452,445,211,218],[667,445,218,218]],[[2,667,218,218],[224,667,217,218],[445,667,218,218],[667,667,218,218]],[[2,889,218,218],[224,889,222,218],[450,889,213,218],[667,889,218,218]],[[2,1111,218,217],[224,1111,217,217],[445,1111,218,217],[667,1111,218,217]],[[2,1332,212,218],[218,1332,223,218],[445,1332,218,218],[667,1332,218,218]],[[2,1554,213,218],[219,1554,222,218],[445,1554,218,218],[667,1554,218,218]]]},"fire":{"src":"skill4/v259/fire.png","rows":3,"width":1448,"height":1086,"rects":[[[2,2,358,352],[364,2,358,352],[726,2,358,352],[1088,2,358,352]],[[2,358,358,335],[364,358,358,335],[726,358,358,335],[1088,358,358,335]],[[2,697,358,387],[364,697,358,387],[726,697,363,387],[1093,697,353,387]]]}};
+// Sprite atlases are clipped to inspected frame rectangles, never shown as whole sheets.
+async function cartoonSpriteV259(skill,target){
+ const spec=skill.cartoonV259,atlas=SKILL_ATLASES_V259[spec.atlas],b=state.battle;
+ await loadAtlasV251(atlas);if(!b||state.battle!==b)return;
+ const group=target==='enemy-all',el=fxNodeV251(target,'cartoon-skill-v259 '+(group?'group ':''),skill.element);if(!el)return;
+ el.dataset.skill=skill.id;el.dataset.target=target;el.style.backgroundImage=`url("${atlas.src}")`;
+ const size=(spec.atlas==='fire'?180:155)*(spec.boost||1);el.style.width=group?'min(92%, 480px)':`clamp(120px,${size/4}vw,${size}px)`;el.style.height=`clamp(120px,${size/4}vw,${size}px)`;
+ battleSeV257('skill',{attribute:skill.element,strength:spec.boost>1?'large':'small'});
+ try{for(let i=0;i<4;i++){if(state.battle!==b||b.finished)break;atlasFrameStyleV251(el,atlas,spec.row,i);el.dataset.frame=String(i+1);el.style.setProperty('--cartoon-scale',String([.86,1.04,1,.92][i]));await delay([90,105,125,90][i]);}}
+ finally{el.remove();}
+}
+const spriteBaseV259=skillSprite;
+skillSprite=async function(frames,target='enemy',mode='default'){
+ const id=String(mode).startsWith('cartoon259:')?String(mode).slice(11):enemyFxContextV251?.skill?.cartoonV259?enemyFxContextV251.skill.id:null;
+ const skill=id?[...MOB_DATA.magicCatalog,...MOB_DATA.techniqueCatalog].find(s=>s.id===id):null;
+ if(!skill?.cartoonV259)return spriteBaseV259(frames,target,mode);
+ if(enemyFxContextV251)enemyFxContextV251.played.add(String(target));
+ return cartoonSpriteV259(skill,target);
+};
+// Wrap the common advanced-technique entry so existing repeat attacks, equipment and figures still run.
+const advancedTechniqueBaseV259=performAdvancedTechniqueV120;
+performAdvancedTechniqueV120=async function(a,t){
+ if(!t.selfBuffV259)return advancedTechniqueBaseV259(a,t);
+ const b=state.battle;if(!b||b.finished||!targetEnemy())return false;
+ const result=await advancedTechniqueBaseV259(a,t);
+ if(result===false||state.battle!==b||a.dead||a.hp<=0)return result;
+ const buff=t.selfBuffV259,tag='food259:'+buff.family,bonus=Number((a.figureEffects||figureEffectsFor(a.id)).buffEffectV230||0),value=buff.value*(1+bonus);
+ // Recasting refreshes this family; it never accumulates with itself or its upper version.
+ const previous=(a.soulEffectsV218||[]).find(e=>e.sourceV259===tag&&e.until>b.turn);
+ a.soulEffectsV218=(a.soulEffectsV218||[]).filter(e=>e.sourceV259!==tag);
+ a.soulEffectsV218.push({key:buff.key,value:Math.max(value,previous?.value||0),until:b.turn+buff.turns,sourceV259:tag});
+ supportMagicFxV109(buff.key,a.id);battleSeV257('buff');
+ await atlasSequenceV251(FX_ATLASES_V251.recovery,1,a.id,'recovery buff','光',true);
+ notice(`${a.name} ${buff.label}+${Math.round(Math.max(value,previous?.value||0)*100)}% / 2ターン`,'system',750);renderBattle();return result;
+};
+const clearBuffsBaseV259=clearPlayerBuffsV142;
+clearPlayerBuffsV142=function(a){const r=clearBuffsBaseV259(a);a.soulEffectsV218=(a.soulEffectsV218||[]).filter(e=>!e.sourceV259);return r;};
+const effectSummaryBaseV259=battleEffectSummary;
+battleEffectSummary=function(kind,item){return kind==='special'&&item?.effectText?item.effectText:effectSummaryBaseV259(kind,item);};
+// Refresh skill descriptions in the menu using the actual effect text.
+const skillMenuBaseV259=openSkillMenu;
+openSkillMenu=function(type){const r=skillMenuBaseV259(type);if(type==='special'){const list=$('#skillMenuList');for(const btn of $$('[data-tech-id]',list)){const t=MOB_DATA.techniqueCatalog.find(s=>s.id===btn.dataset.techId);if(t?.effectText&&$('small',btn))$('small',btn).textContent=t.effectText;}}return r;};
+window.__mobBuildVersion='v259';
+
+// UPDATE_V259_END
+// UPDATE_V260_BEGIN
+const EXCLUSIVE_ATLASES_V260={"exclusive-attacks":{"src":"skill4/v260/attacks.png","rows":8,"width":1024,"height":1536,"rects":[[[3,3,250,186],[259,3,250,186],[515,3,250,186],[771,3,250,186]],[[3,195,250,186],[259,195,250,186],[515,195,250,186],[771,195,250,186]],[[3,387,250,171],[259,387,250,171],[515,387,250,171],[771,387,250,171]],[[3,564,244,177],[253,564,238,177],[497,564,284,177],[787,564,234,177]],[[3,747,249,188],[258,747,251,188],[515,747,250,188],[771,747,250,188]],[[3,941,250,192],[259,941,250,192],[515,941,250,192],[771,941,250,192]],[[3,1139,250,172],[259,1139,250,172],[515,1139,250,172],[771,1139,250,172]],[[3,1317,250,216],[259,1317,250,216],[515,1317,250,216],[771,1317,250,216]]]},"exclusive-support":{"src":"skill4/v260/support.png","rows":6,"width":1024,"height":1536,"rects":[[[3,3,250,250],[259,3,250,250],[515,3,250,250],[771,3,250,250]],[[3,259,250,250],[259,259,250,250],[515,259,250,250],[771,259,250,250]],[[3,515,250,250],[259,515,250,250],[515,515,250,250],[771,515,250,250]],[[3,771,250,226],[259,771,250,226],[515,771,252,226],[773,771,248,226]],[[3,1003,250,266],[259,1003,244,266],[509,1003,275,266],[790,1003,231,266]],[[3,1275,250,258],[259,1275,250,258],[515,1275,259,258],[780,1275,241,258]]]},"exclusive-tetsu":{"src":"skill4/v260/tetsu.png","rows":4,"width":1448,"height":1086,"rects":[[[3,3,356,265],[365,3,356,265],[727,3,356,265],[1089,3,356,265]],[[3,274,356,266],[365,274,356,266],[727,274,356,266],[1089,274,356,266]],[[3,546,356,265],[365,546,356,265],[727,546,356,265],[1089,546,356,265]],[[3,817,356,266],[365,817,356,266],[727,817,356,266],[1089,817,356,266]]]},"exclusive-finishers":{"src":"skill4/v260/finishers.png","rows":4,"width":1448,"height":1086,"rects":[[[3,3,356,269],[365,3,356,269],[727,3,356,269],[1089,3,356,269]],[[3,278,356,262],[365,278,356,262],[727,278,356,262],[1089,278,356,262]],[[3,546,356,265],[365,546,356,265],[727,546,356,265],[1089,546,356,265]],[[3,817,356,266],[365,817,356,266],[727,817,356,266],[1089,817,356,266]]]}};
+Object.assign(SKILL_ATLASES_V259,EXCLUSIVE_ATLASES_V260);
+const exclusiveByIdV260=id=>MOB_DATA.techniqueCatalog.find(s=>s.id===id&&s.exclusiveV260);
+function exclusiveRemainingV260(a,s){return Math.min(2,Math.max(0,(a.exclusiveReadyV260?.[s.id]||0)-(state.battle?.turn||1)));}
+function exclusiveCostV260(a,s){return Math.ceil(s.cost*(1-clamp(Number((a.figureEffects||figureEffectsFor(a.id)).mpCut||0),0,.8)));}
+function exclusiveErrorV260(a,s){if(s.owner!==a.id||a.helperV218)return'このキャラクターの専用技ではありません';if(a.level<s.level&&!state.test?.allSkills)return`Lv.${s.level}で習得します`;if(exclusiveRemainingV260(a,s))return`次の使用可能まで${exclusiveRemainingV260(a,s)}ターン`;if(a.mpNow<exclusiveCostV260(a,s))return'MPが足りない！';if(figureSoulV218(a)<1)return'ソウルが足りない！';return'';}
+function uniqueBuffV260(a,key,value,turns,source,start=state.battle.turn){a.soulEffectsV218=(a.soulEffectsV218||[]).filter(e=>e.sourceV260!==source||e.key!==key);a.soulEffectsV218.push({key,value,until:start+turns,startV260:start,sourceV260:source});}
+const effectValueBaseV260=soulEffectValueV218;
+soulEffectValueV218=function(a,key){const all=a?.soulEffectsV218;if(!all)return effectValueBaseV260(a||{},key);return all.filter(e=>e.key===key&&e.until>(state.battle?.turn||0)&&(!e.startV260||e.startV260<=state.battle.turn)).reduce((v,e)=>v+e.value,0);};
+async function exclusiveCutinV260(a,name){const el=document.createElement('div');el.className='exclusive-cutin-v260';el.innerHTML=`<img src="${versionedPlay(a.image)}" alt=""><strong></strong>`;$('strong',el).textContent=name;$('#battleFxLayer')?.append(el);try{await delay(650);}finally{el.remove();}}
+async function exclusiveArtV260(s,target,row){const sk=row==null?s:{...s,cartoonV259:{...s.cartoonV259,row}};return cartoonSpriteV259(sk,target);}
+async function exclusiveHitV260(a,s,power,{all=false,normal=false,crit=TEMP_BALANCE.critRate,element=s.element,row=null}={}){
+ const b=state.battle,old=b.weaponAttackContext,oldElements=a.multiElementsV221,elements=String(element).split(/[・/]/);b.weaponAttackContext={normal,element,sure:crit===1};if(elements.length>1)a.multiElementsV221=elements;
+ try{await exclusiveArtV260(s,all?'enemy-all':'enemy',row);if(state.battle!==b||b.finished)return 0;if(all)return await playerAoeDamage(a,power,s.damageType,crit);const e=targetEnemy();return e?applyEnemyDamageTo(a,e,power,s.damageType,crit,false)?.value||0:0;}finally{b.weaponAttackContext=old;if(oldElements===undefined)delete a.multiElementsV221;else a.multiElementsV221=oldElements;}
+}
+async function exclusivePartyV260(a,s,healRate,buffs,self=false){const targets=self?[a]:livingField();await Promise.all(targets.map(t=>exclusiveArtV260(s,t.id)));for(const t of targets){if(healRate)heal(t,t.maxHp*healRate);for(const [key,value]of buffs)uniqueBuffV260(t,key,value,2,s.id);}}
+async function performExclusiveV260(a,s){
+ const b=state.battle;if(!b||b.finished)return false;const error=exclusiveErrorV260(a,s);if(error){notice(error,'danger');return false;}
+ let form=Number(s.formV260)||0;if(s.action==='stance'&&!form){const answer=await narrationDialog('モブテツの型',[['壱式：次ターンATK+50%・通常攻撃2回','1','primary'],['弐式：今ターン回避・次ターン全体会心','2'],['参式：今ターンかばう・次ターン反撃','3'],['戻る','cancel']]);if(answer==='cancel')return false;form=Number(answer);}
+ if(s.action==='stance'&&![1,2,3].includes(form))return false;if(state.battle!==b||b.finished||exclusiveErrorV260(a,s))return false;
+ a.mpNow-=exclusiveCostV260(a,s);a.soulPointsV220=figureSoulV218(a)-1;(a.exclusiveReadyV260??={})[s.id]=b.turn+3;updateSoulBadgesV220();
+ await exclusiveCutinV260(a,s.action==='stance'?`モブテツの型 ${['','壱','弐','参'][form]}式！！`:s.name);
+ const hit=(power,opts)=>exclusiveHitV260(a,s,power,opts),buff=(key,value,turns=2,start=b.turn)=>uniqueBuffV260(a,key,value,turns,s.id,start);
+ switch(s.action){
+ case'twin':for(let i=0;i<2&&livingEnemies().length;i++)await hit(.9,{normal:true});break;
+ case'fate':await hit(Math.random()<.3?3.5:2.2);break;
+ case'pinkHeal':await exclusivePartyV260(a,s,.18,[['damageCut',.05]]);break;
+ case'kingHeal':await exclusivePartyV260(a,s,.32,[]);buff('damageCut',.05);break;
+ case'double':buff('mag',.10);a.doubleMagicTurnV260=b.turn+1;await exclusiveArtV260(s,a.id);break;
+ case'field':await exclusivePartyV260(a,s,0,[['res',.30]]);a.magicCritTurnV260=b.turn+1;break;
+ case'nimo':await hit(1.4);buff('crit',.10,1,b.turn+1);break;
+ case'force':await hit(1.6);heal(a,a.maxHp*.10);fx('heal',a.id);break;
+ case'net':await hit(1.4,{all:true});for(const e of livingEnemies())applyEnemyStatusTo(e,'stun',.15,1);break;
+ case'road':await exclusivePartyV260(a,s,0,[['atk',.25],['def',.25]]);break;
+ case'bear':await exclusivePartyV260(a,s,0,[['damageCut',.07]]);break;
+ case'launcher':await hit(1.6);if(livingEnemies().length)await hit(1.4,{all:true});break;
+ case'blizzard':await hit(1.6,{all:true});buff('crit',.20);buff('spd',.50);break;
+ case'organize':await exclusiveArtV260(s,'enemy-all');for(const e of livingEnemies())uniqueBuffV260(e,'damageCut',-.10,2,s.id);break;
+ case'stance':a.stanceV260={form,turn:b.turn,due:b.turn+1,hits:0};await exclusiveArtV260(s,a.id,form-1);break;
+ case'zero':await hit(1.6,{element:'風'});if(livingEnemies().length)await hit(1.6,{element:'地'});break;
+ case'flicker':for(let i=0,n=rint(2,3);i<n&&livingEnemies().length;i++)await hit(1.4);break;
+ case'thunder':await hit(2.2,{all:true});break;
+ case'claw':await hit(1.6);buff('atk',.15);break;
+ case'dominion':await hit(2.2,{all:true});buff('damageCut',.10);break;
+ case'drain':await hit(1.6);heal(a,a.maxHp*.15);fx('heal',a.id);break;
+ case'tempest':await hit(2.2,{all:true});for(const e of livingEnemies())uniqueBuffV260(e,'res',-.15,2,s.id);break;
+ }
+ renderBattle();return true;
+}
+const exclusiveActionV260=banditWrapActionV230(performExclusiveV260),specialBaseV260=performSpecial;
+performSpecial=async function(a,s,...args){return s?.exclusiveV260?exclusiveActionV260(a,s):specialBaseV260(a,s,...args);};
+const magicBaseV260=performMagic;
+performMagic=async function(a,s=null,...args){const b=state.battle,chosen=s?.id?s:defaultMagicFor(a),result=await magicBaseV260(a,s,...args);if(result!==false&&b&&state.battle===b&&!b.finished&&!a.dead&&a.doubleMagicTurnV260===b.turn&&!a.repeatingMagicV260){a.repeatingMagicV260=true;try{await actionCutin('ダブルマニー','buff',400);await magicBaseV260(a,{...chosen,cost:0},...args);}finally{a.repeatingMagicV260=false;}}return result;};
+const damageCalcBaseV260=calcDamage;
+calcDamage=function(a,type,power,crit=0,...args){if(type==='magic'&&a.magicCritTurnV260===state.battle?.turn)crit+=.30;return damageCalcBaseV260(a,type,power,crit,...args);};
+async function resolveTetsuStanceV260(a){const b=state.battle,stance=a.stanceV260;if(!stance||stance.due!==b.turn)return false;a.stanceV260=null;const s={...exclusiveByIdV260('exclusive-tetsu-form'),cartoonV259:{atlas:'exclusive-tetsu',row:stance.form-1,boost:1.18}};await exclusiveCutinV260(a,`モブテツの型 ${['','壱','弐','参'][stance.form]}式！！`);
+ if(stance.form===1){uniqueBuffV260(a,'atk',.5,1,'tetsu-release260');for(let i=0;i<2&&livingEnemies().length;i++)await exclusiveHitV260(a,s,1,{normal:true,element:weaponCombatElement(a)});}
+ if(stance.form===2)await exclusiveHitV260(a,s,1,{all:true,normal:true,crit:1,element:weaponCombatElement(a)});
+ if(stance.form===3)for(let i=0;i<stance.hits&&livingEnemies().length;i++)await exclusiveHitV260(a,s,1,{normal:true,element:weaponCombatElement(a)});
+ return true;
+}
+const queueBaseV260=processQueue;
+processQueue=async function(...args){await queueBaseV260(...args);const b=state.battle,a=activeAlly();if(b&&!b.finished&&!b.busy&&a?.stanceV260?.due===b.turn)await act('stance260');};
+const roundBaseV260=startRound;
+startRound=async function(...args){for(const a of state.battle?.allies||[])if(a.stanceV260&&a.stanceV260.due<(state.battle?.turn||0))a.stanceV260=null;return roundBaseV260(...args);};
+const allyDamageBaseV260=damageAlly;
+damageAlly=async function(a,...args){const b=state.battle;if(!b)return allyDamageBaseV260(a,...args);const guard=livingField().find(t=>t.id==='tetsu'&&t.stanceV260?.form===3&&t.stanceV260.turn===b.turn);if(guard)a=guard;
+ if(a?.stanceV260?.form===2&&a.stanceV260.turn===b.turn){await exclusiveArtV260({...exclusiveByIdV260('exclusive-tetsu-form'),cartoonV259:{atlas:'exclusive-tetsu',row:1}},a.id);floatNumber('MISS','miss',a.id);return 0;}
+ const d=await allyDamageBaseV260(a,...args);if(guard&&d>0&&guard.stanceV260)guard.stanceV260.hits++;
+ if(d>0&&a.id==='nyoro'&&!a.dead&&state.battle===b&&!b.finished&&!b.nyoroCounterV260&&livingEnemies().length&&passiveChance(.10)){b.nyoroCounterV260=true;try{await reactivePassiveBeat(a,'ニョロは空を飛ぶ！');await exclusiveHitV260(a,exclusiveByIdV260('exclusive-magma-net'),.9,{all:true,normal:true});}finally{b.nyoroCounterV260=false;}}
+ return d;
+};
+PASSIVE_DESCRIPTIONS_V172.nyoro='攻撃を受けた時、10%の確率で敵全体に火属性物理・通常攻撃の90%で反撃。';
+PASSIVE_EFFECTS_V175.nyoro='敵全体に火属性物理・通常攻撃の90%で反撃';
+const skillsAvailableBaseV260=availableTechniqueSkillsV104;
+availableTechniqueSkillsV104=function(a){return skillsAvailableBaseV260(a).filter(s=>!s.exclusiveV260||s.owner===a.id&&!a.helperV218);};
+const exclusiveMenuBaseV260=openSkillMenu;
+openSkillMenu=function(type){const result=exclusiveMenuBaseV260(type),a=activeAlly();if(type!=='special'||!a)return result;for(const btn of $$('[data-tech-id]',$('#skillMenuList'))){const s=exclusiveByIdV260(btn.dataset.techId);if(!s)continue;if(s.owner!==a.id||a.helperV218){btn.remove();continue;}const error=exclusiveErrorV260(a,s),cd=exclusiveRemainingV260(a,s);btn.classList.toggle('disabled',!!error);$('em',btn).textContent=cd?`次の使用可能まで${cd}ターン`:`MP ${exclusiveCostV260(a,s)} / ソウル1`;
+ btn.onclick=async()=>{const why=exclusiveErrorV260(a,s);if(why)return notice(why,'danger');if(!await confirmBattleSkillUse('special',s,a))return;$('#skillMenu').hidden=true;await act('special',s);};}return result;};
+const clearBaseV260=clearPlayerBuffsV142;
+clearPlayerBuffsV142=function(a){const result=clearBaseV260(a);a.soulEffectsV218=(a.soulEffectsV218||[]).filter(e=>!e.sourceV260);a.doubleMagicTurnV260=a.magicCritTurnV260=0;return result;};
+window.__mobBuildVersion='v260';
+
+// Add variety at an existing ordinary attack slot; never add an action or replace a scripted phase.
+function bossSkillPoolV260(e){if(!e||!(e.isBoss||e.isElite||['boss','elite'].includes(e.category)||['boss','midboss'].includes(e.encounterRole)||e.legendV218||e.eventV163))return[];
+ const element=fxElementV251(e.attribute),level=Number(e.level||e.levelMin)||1;
+ return MOB_DATA.techniqueCatalog.filter(s=>s.cartoonV259&&!s.exclusiveV260&&s.element===element&&(!s.selfBuffV259||s.tier===(level>=45?'medium':'small'))&&(s.target!=='all'||level>=25)&&!(s.kind==='slash'&&s.tier==='medium'&&level<18)).map(s=>s.id);
+}
+const bossBuildBaseV260=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(...args){const e=bossBuildBaseV260(...args);if(e)e.extraSkillsV260=bossSkillPoolV260(e);return e;};
+function chooseBossSkillV260(e,all=false){const b=state.battle;if(!e||!b||b.finished||b.turn<2||e.extraSkillTurnV260===b.turn||e.hp<=0)return null;
+ const hash=[...String(e.id)].reduce((n,c)=>n+c.charCodeAt(0),0);if(!b.forceNewSkillV260&&(b.turn+hash)%3!==0)return null;
+ // Retain the guaranteed normal opening of final bosses and authored phase attacks.
+ if(e.finaleV248?.follow&&b.enemySlotV260===1)return null;
+ const ids=e.extraSkillsV260?.length?e.extraSkillsV260:bossSkillPoolV260(e),pool=ids.map(id=>MOB_DATA.techniqueCatalog.find(s=>s.id===id)).filter(s=>s&&(all?s.target==='all':s.target!=='all'));if(!pool.length)return null;
+ return pool[(Math.floor(b.turn/3)+hash)%pool.length];
+}
+async function useBossSkillV260(e,s){const b=state.battle,oldId=b.actingEnemyId,old=b.enemy,oldAoe=enemyAoeV163,oldCrit=enemyCriticalV163;e.extraSkillTurnV260=b.turn;b.actingEnemyId=e.uid;b.enemy=e;enemyAoeV163=s.target==='all';
+ try{await inEnemyFxV251(e,{special:s.name},false,async()=>{await actionCutin(`${e.name}の${s.name}！`,'danger',620);const targets=s.target==='all'?livingField():[pick(livingMain().length?livingMain():livingField())].filter(Boolean);for(const a of targets){if(b.finished||e.hp<=0)break;await skillSprite(s.frames,a.id,s.mode);enemyCriticalV163=Math.random()<Math.min(.35,(e.eventV163?.crit||e.critChanceV245||0)+soulEffectValueV218(e,'crit'));await damageAlly(a,s.power*(enemyCriticalV163?TEMP_BALANCE.critPower:1),'physical',isSuper(a),s.element);}
+  if(e.hp>0&&s.selfBuffV259){const f=s.selfBuffV259;uniqueBuffV260(e,f.key,f.value,2,'enemy-food260:'+f.family);await healingSequenceV251('enemy:'+e.uid,'buff');}
+  if(e.hp>0&&e.banditV230==='onbu'){e.banditAttacksV230=(e.banditAttacksV230||0)+1;if(e.banditAttacksV230%5===0){eventHealV163(e,.08);notice('オンブ・ト・オンプ / HP回復','heal');}}
+ });}finally{b.actingEnemyId=oldId;b.enemy=old;enemyAoeV163=oldAoe;enemyCriticalV163=oldCrit;renderBattle();}
+}
+const enemyActionBaseV260=enemyAction;
+function directBossSlotV260(e,index){
+ if(!e||index<=1)return null;
+ if(e.legendV218)return index<=e.legendV218.aoe;
+ if(e.mochiV218!==undefined)return index===2||(index===3&&Math.random()<.5);
+ if(e.extraBossV218&&e.extraBossV218!=='barion'){const q=EVENT_BOSSES_V163.find(q=>q.key===e.extraBossV218);return index<=1+(e.aoeV218??q?.aoe??0);}
+ if(e.hotKindV177==='passion')return false;
+ if(e.hotKindV177==='iwakiri')return Math.random()<.5;
+ if(index===2&&['custard','riscustard','magM','magO','magB','magMOB'].includes(e.story179Kind))return true;
+ return null;
+}
+enemyAction=async function(index=1,uid){const b=state.battle;if(!b)return;const old=b.enemySlotV260;b.enemySlotV260=index;try{const e=enemyByUid(uid)||actingEnemy(),all=directBossSlotV260(e,index);if(all!==null&&!['sleep','stun','paralyze','confuse'].some(k=>e.status?.[k]>0)){const s=chooseBossSkillV260(e,all);if(s){await useBossSkillV260(e,s);if(e.legendV218)saveLegendV218(b);await drainReactionsV177();await checkSpecialRevives();if(!livingRoster().length)finishBattle(false);return;}}return await enemyActionBaseV260(index,uid);}finally{b.enemySlotV260=old;}};
+const bossNormalBaseV260=bossNormal;
+bossNormal=async function(...args){const e=actingEnemy()||state.battle?.enemy,s=chooseBossSkillV260(e);return s?useBossSkillV260(e,s):bossNormalBaseV260(...args);};
+const bossSpecialBaseV260=bossSpecial;
+bossSpecial=async function(spec){const e=actingEnemy()||state.battle?.enemy,chosen=spec||enemySpecialSpec(e),safe=['single','damage','aoe','singleDamage','aoeDamage'].includes(chosen?.kind),s=safe?chooseBossSkillV260(e,/aoe/i.test(chosen.kind)):null;return s?useBossSkillV260(e,s):bossSpecialBaseV260(chosen);};
+const eventAttackBaseV260=eventAttackV163;
+eventAttackV163=async function(e,s){const safe=!s.buff&&!s.summon&&!s.status&&!s.hpCost&&!s.debuff&&!s.chance&&(s.hits||1)===1,chosen=safe?chooseBossSkillV260(e,!!s.all):null;return chosen?useBossSkillV260(e,chosen):eventAttackBaseV260(e,s);};
+const eventSpecialBaseV260=eventSpecialV218;
+eventSpecialV218=async function(e,s){const safe=!s.heal&&!s.buff&&!s.atk&&!s.debuff&&!s.status?.length&&!s.chance&&(s.hits||1)===1,chosen=safe?chooseBossSkillV260(e,!!s.all):null;return chosen?useBossSkillV260(e,chosen):eventSpecialBaseV260(e,s);};
+const macaronHitBaseV260=macaronHitV247;
+macaronHitV247=async function(e,s,all=false,ultimate=false){const chosen=!ultimate?chooseBossSkillV260(e,all):null;return chosen?useBossSkillV260(e,chosen):macaronHitBaseV260(e,s,all,ultimate);};
+const mintHitBaseV260=mintEnemyHitV237;
+mintEnemyHitV237=async function(e,power,all=false,type='magic',debuff=false,spell=null){const chosen=!debuff?chooseBossSkillV260(e,all):null;return chosen?useBossSkillV260(e,chosen):mintHitBaseV260(e,power,all,type,debuff,spell);};
+const banditHitBaseV260=banditHitV230;
+banditHitV230=async function(e,power=1,all=false,element=e.attribute,crit=0,hits=1,confuse=0){const chosen=!confuse&&hits===1?chooseBossSkillV260(e,all):null;return chosen?useBossSkillV260(e,chosen):banditHitBaseV260(e,power,all,element,crit,hits,confuse);};
+
+// UPDATE_V260_END
 })();
