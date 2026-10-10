@@ -1,5 +1,7 @@
 (()=>{
  const rows=[
+ ['denden','denden-thunder-whip','デンデン・サンダーウィップ',15,34,'雷','physical','dendenWhip','attacks',6,'敵全体に雷属性物理中ダメージ / 敵1体につき技の会心率7%（最大35%）'],
+ ['denden','denden-storm','デンデン・ゴロゴロ・ドッカーン!!',60,62,'雷','physical','dendenCharge','finishers',1,'今ターン回避率0%・被ダメージ10%増加 / 次ターン自動で雷物理全体→雷魔法全体→雷物理単体の3連撃'],
  ['yusha','twin-sword','モブツインソード',15,28,'光','physical','twin','attacks',0,'敵単体に通常攻撃の90%で2回攻撃'],
  ['yusha','fate-hit','運命の一撃',60,58,'光・火','physical','fate','finishers',0,'敵単体に光・火属性大ダメージ / 30%で極大ダメージ'],
  ['pink','pink-bonbon','ピンクボンボン',15,30,'光','magic','pinkHeal','support',0,'味方全体HP小回復 / 味方全体ダメージ軽減+5%（2ターン）'],

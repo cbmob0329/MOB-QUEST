@@ -21,6 +21,8 @@ async function performExclusiveV260(a,s){
  await exclusiveCutinV260(a,s.action==='stance'?`モブテツの型 ${['','壱','弐','参'][form]}式！！`:s.name);
  const hit=(power,opts)=>exclusiveHitV260(a,s,power,opts),buff=(key,value,turns=2,start=b.turn)=>uniqueBuffV260(a,key,value,turns,s.id,start);
  switch(s.action){
+ case'dendenWhip':await hit(1.6,{all:true,crit:Math.min(.35,livingEnemies().length*.07)});break;
+ case'dendenCharge':a.dendenChargeV261={turn:b.turn,due:b.turn+1};await exclusiveArtV260(s,a.id);notice('雷をためている！ 次ターンに3連撃','buff',800);break;
  case'twin':for(let i=0;i<2&&livingEnemies().length;i++)await hit(.9,{normal:true});break;
  case'fate':await hit(Math.random()<.3?3.5:2.2);break;
  case'pinkHeal':await exclusivePartyV260(a,s,.18,[['damageCut',.05]]);break;

@@ -5667,6 +5667,27 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 @media(prefers-reduced-motion:reduce){.exclusive-cutin-v260{animation:none}}
 
 /* UPDATE_V260_END */
+/* UPDATE_V261_BEGIN */
+#skillMenu.skill-menu-v261 .sheet-card{background:linear-gradient(155deg,#1b3048,#0c1628 65%);border:1px solid #6985a2;border-radius:22px 22px 0 0;box-shadow:0 -12px 45px #0008;max-height:88dvh;display:flex;flex-direction:column;overflow:hidden;padding:16px}
+#skillMenu.skill-menu-v261 .sheet-head{flex-shrink:0;padding-bottom:12px;border-bottom:1px solid #ffffff25}
+#skillMenu.skill-menu-v261 .skill-list{overflow-y:auto;min-height:0;padding:10px 2px 16px;display:grid;gap:10px}
+#skillMenu.skill-menu-v261 .skill-item{display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px 12px;padding:13px!important;background:linear-gradient(120deg,#253b55,#142337);border:1px solid #536981;border-left:3px solid var(--skill-color,#9bc8ef);border-radius:13px;text-align:left;color:#f7faff;box-shadow:0 3px 8px #0004}
+#skillMenu.skill-menu-v261 .skill-item[hidden]{display:none!important}
+#skillMenu.skill-menu-v261 .skill-symbol{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#0c1a2a;border:1px solid var(--skill-color,#9bc8ef);color:var(--skill-color,#9bc8ef);font-size:15px}
+#skillMenu.skill-menu-v261 .skill-item b{font-size:16px;color:#fff}
+#skillMenu.skill-menu-v261 .skill-item small{font-size:12px!important;color:#c4d3e3;line-height:1.55!important;margin-top:5px}
+#skillMenu.skill-menu-v261 .skill-item em{grid-column:2;justify-self:start;font-style:normal;font-weight:700;font-size:12px;background:#0d1b2c;border-radius:6px;padding:4px 9px;color:#9ddaff;white-space:normal}
+#skillMenu.skill-menu-v261 .skill-item[data-exclusive-v261="true"]{border-color:#b29b61;background:linear-gradient(120deg,#3a3540,#182638)}
+#skillMenu.skill-menu-v261 .skill-item.disabled{opacity:.55}
+#skillMenu.skill-menu-v261 button:focus-visible{outline:2px solid #ffe298;outline-offset:2px}
+.skill-filters-v261{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:12px;flex-shrink:0}
+.skill-filters-v261>button{border:1px solid #658099;background:#14253a;color:#bfcfe0;padding:11px 5px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+.skill-filters-v261>button[aria-pressed="true"]{background:#d9b770;border-color:#ffe5a8;color:#1d2636;box-shadow:0 2px 10px #d9b77030}
+.skill-empty-v261{grid-column:1/-1;color:#c4d3e3;font-size:13px;text-align:center}
+#skillMenu.skill-menu-v261 .skill-list{grid-auto-rows:max-content;align-content:start}
+#skillMenu.skill-menu-v261 .skill-item{height:max-content!important;min-height:max-content!important;max-height:none!important}
+
+/* UPDATE_V261_END */
 </style>
   <script>
   window.__mobBootReady=false;
@@ -6170,7 +6191,7 @@ body.story-event-v179-active #storySkipV174{
     <div class="title-shade"></div>
     <div class="title-content safe-top safe-bottom">
       <img class="title-logo" src="icon/01.png" alt="MOB STORY">
-      <div class="title-version">v260</div>
+      <div class="title-version">v261</div>
       <div class="title-actions">
         <button id="titleNewBtn" type="button"><b>NEW</b><small>はじめから</small></button>
         <button id="titleContinueBtn" type="button"><b>CONTINUE</b><small>つづきから</small></button>
@@ -8106,6 +8127,8 @@ for(const [element,id] of Object.entries(_v73Middle)){
 // EXCLUSIVE_DATA_V260_BEGIN
 (()=>{
  const rows=[
+ ['denden','denden-thunder-whip','デンデン・サンダーウィップ',15,34,'雷','physical','dendenWhip','attacks',6,'敵全体に雷属性物理中ダメージ / 敵1体につき技の会心率7%（最大35%）'],
+ ['denden','denden-storm','デンデン・ゴロゴロ・ドッカーン!!',60,62,'雷','physical','dendenCharge','finishers',1,'今ターン回避率0%・被ダメージ10%増加 / 次ターン自動で雷物理全体→雷魔法全体→雷物理単体の3連撃'],
  ['yusha','twin-sword','モブツインソード',15,28,'光','physical','twin','attacks',0,'敵単体に通常攻撃の90%で2回攻撃'],
  ['yusha','fate-hit','運命の一撃',60,58,'光・火','physical','fate','finishers',0,'敵単体に光・火属性大ダメージ / 30%で極大ダメージ'],
  ['pink','pink-bonbon','ピンクボンボン',15,30,'光','magic','pinkHeal','support',0,'味方全体HP小回復 / 味方全体ダメージ軽減+5%（2ターン）'],
@@ -11587,7 +11610,8 @@ async function act(kind,payload){
   b.busy=true;setCommandDisabled(true);b.currentActionKind=kind;b.criticalCtReducedThisAction=false;
   let consumed=true;
   try{
-    if(kind==='stance260')await resolveTetsuStanceV260(a);
+    if(kind==='denden261')await resolveDendenV261(a);
+    else if(kind==='stance260')await resolveTetsuStanceV260(a);
     else if(kind==='attack')await performAttack(a);
     else if(kind==='magic')consumed=await performMagic(a,payload);
     else if(kind==='special')consumed=await performSpecial(a,payload);
@@ -25214,6 +25238,8 @@ async function performExclusiveV260(a,s){
  await exclusiveCutinV260(a,s.action==='stance'?`モブテツの型 ${['','壱','弐','参'][form]}式！！`:s.name);
  const hit=(power,opts)=>exclusiveHitV260(a,s,power,opts),buff=(key,value,turns=2,start=b.turn)=>uniqueBuffV260(a,key,value,turns,s.id,start);
  switch(s.action){
+ case'dendenWhip':await hit(1.6,{all:true,crit:Math.min(.35,livingEnemies().length*.07)});break;
+ case'dendenCharge':a.dendenChargeV261={turn:b.turn,due:b.turn+1};await exclusiveArtV260(s,a.id);notice('雷をためている！ 次ターンに3連撃','buff',800);break;
  case'twin':for(let i=0;i<2&&livingEnemies().length;i++)await hit(.9,{normal:true});break;
  case'fate':await hit(Math.random()<.3?3.5:2.2);break;
  case'pinkHeal':await exclusivePartyV260(a,s,.18,[['damageCut',.05]]);break;
@@ -25321,6 +25347,54 @@ const banditHitBaseV260=banditHitV230;
 banditHitV230=async function(e,power=1,all=false,element=e.attribute,crit=0,hits=1,confuse=0){const chosen=!confuse&&hits===1?chooseBossSkillV260(e,all):null;return chosen?useBossSkillV260(e,chosen):banditHitBaseV260(e,power,all,element,crit,hits,confuse);};
 
 // UPDATE_V260_END
+// UPDATE_V261_BEGIN
+async function resolveDendenV261(a){
+ const b=state.battle,charge=a.dendenChargeV261;if(!b||!charge||charge.due!==b.turn||a.dead||a.hp<=0)return false;
+ a.dendenChargeV261=null;const s=exclusiveByIdV260('exclusive-denden-storm');
+ for(const [name,type,power,all]of [['デンデン','physical',1.3,true],['ゴロゴロ','magic',1.3,true],['ドッカーン!!','physical',1.9,false]]){
+  if(state.battle!==b||b.finished||a.dead||a.hp<=0||!livingEnemies().length)break;
+  await exclusiveCutinV260(a,name);await exclusiveHitV260(a,{...s,damageType:type},power,{all});
+ }
+ renderBattle();return true;
+}
+const dendenQueueBaseV261=processQueue;
+processQueue=async function(...args){await dendenQueueBaseV261(...args);const b=state.battle,a=activeAlly();if(b&&!b.finished&&!b.busy&&a?.dendenChargeV261?.due===b.turn)await act('denden261');};
+const dendenRoundBaseV261=startRound;
+startRound=async function(...args){for(const a of state.battle?.allies||[])if(a.dendenChargeV261&&(a.dead||a.hp<=0||a.dendenChargeV261.due<state.battle.turn))a.dendenChargeV261=null;return dendenRoundBaseV261(...args);};
+const dendenEvadeBaseV261=incomingEvadeV232;
+incomingEvadeV232=a=>a?.dendenChargeV261?.turn===state.battle?.turn?0:dendenEvadeBaseV261(a);
+const dendenDamageBaseV261=calcEnemyDamage;
+calcEnemyDamage=function(a,...args){const damage=dendenDamageBaseV261(a,...args);return a?.dendenChargeV261?.turn===state.battle?.turn?Math.round(damage*1.1):damage;};
+// Keep existing callbacks, confirmation dialogs and support-target selection intact.
+let magicCategoryV261='attack';
+const menuBaseV261=openSkillMenu;
+openSkillMenu=function(type){
+ document.querySelector('#skillFiltersV261')?.remove();
+ const result=menuBaseV261(type),menu=$('#skillMenu'),list=$('#skillMenuList');
+ menu.classList.toggle('skill-menu-v261',['magic','special'].includes(type));
+ if(!['magic','special'].includes(type))return result;
+ for(const btn of $$('[data-magic-id],[data-tech-id]',list)){
+  const s=(type==='magic'?MOB_DATA.magicCatalog:MOB_DATA.techniqueCatalog).find(s=>s.id===(btn.dataset.magicId||btn.dataset.techId));if(!s)continue;
+  btn.dataset.categoryV261=s.support?'support':'attack';btn.dataset.exclusiveV261=String(!!s.exclusiveV260);
+  btn.style.setProperty('--skill-color',({'火':'#ff9677','水':'#72d8ff','風':'#98e9b4','雷':'#ffe27b','地':'#eac090','光':'#fff0b0','闇':'#d7a9ff'})[s.element]||'#bad6ff');
+  const symbol=$('.skill-symbol',btn);if(symbol)symbol.textContent=s.support?'補':s.element||'技';
+ }
+ if(type==='magic'){
+  const filters=document.createElement('div');filters.id='skillFiltersV261';filters.className='skill-filters-v261';filters.setAttribute('role','group');filters.setAttribute('aria-label','魔法の分類');
+  filters.innerHTML='<button type="button" data-category="attack">攻撃魔法</button><button type="button" data-category="support">補助魔法</button><p class="skill-empty-v261" hidden>この分類の魔法はまだ習得していません。</p>';
+  list.before(filters);
+  const update=()=>{let count=0;for(const btn of $$('[data-magic-id]',list)){btn.hidden=btn.dataset.categoryV261!==magicCategoryV261;if(!btn.hidden)count++;}for(const btn of $$('[data-category]',filters)){const selected=btn.dataset.category===magicCategoryV261;btn.setAttribute('aria-pressed',String(selected));const n=$$('[data-magic-id]',list).filter(b=>b.dataset.categoryV261===btn.dataset.category).length;btn.textContent=(btn.dataset.category==='attack'?'攻撃魔法':'補助魔法')+' ('+n+')';}$('.skill-empty-v261',filters).hidden=count>0;list.scrollTop=0;};
+  for(const btn of $$('[data-category]',filters))btn.onclick=()=>{magicCategoryV261=btn.dataset.category;update();};update();
+ }
+ return result;
+};
+const supportTargetBaseV261=renderSupportTargetMenuV109;
+renderSupportTargetMenuV109=function(...args){$('#skillFiltersV261')?.remove();return supportTargetBaseV261(...args);};
+window.__mobBuildVersion='v261';
+const switchMenuBaseV261=openSwitchMenu;
+openSwitchMenu=function(...args){$('#skillFiltersV261')?.remove();$('#skillMenu').classList.remove('skill-menu-v261');return switchMenuBaseV261(...args);};
+
+// UPDATE_V261_END
 })();
 </script>
 </body>
