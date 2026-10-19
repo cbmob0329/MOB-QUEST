@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..');
+let game=fs.readFileSync(path.join(root,'js/game.js'),'utf8');
+const begin='// UPDATE_V262_BEGIN',end='// UPDATE_V262_END';
+if(game.includes(begin))game=game.slice(0,game.indexOf(begin))+game.slice(game.indexOf(end)+end.length);
+const old='Math.max(0,Number(state.meta.exp[id])||0)+reward.exp;',next='Math.max(0,Number(state.meta.exp[id])||0)+Math.round(reward.exp*partyExpRateV262(b,id));';
+if(!game.includes(old)&&!game.includes(next))throw Error('EXP reward boundary missing');game=game.replace(old,next);
+const patch=['story','ending','nightmare'].map(n=>fs.readFileSync(path.join(root,'js',n+'-v262.js'),'utf8')).join('\n');
+const last=game.lastIndexOf('})();');if(last<0)throw Error('IIFE missing');game=game.slice(0,last)+begin+'\n'+patch+'\n'+end+'\n'+game.slice(last);fs.writeFileSync(path.join(root,'js/game.js'),game);
+const file=path.join(root,'css/style.css'),css=fs.readFileSync(file,'utf8').split('/* UPDATE_V262_BEGIN */')[0];
+fs.writeFileSync(file,css+'/* UPDATE_V262_BEGIN */\n'+fs.readFileSync(path.join(root,'css/cinema-v262.css'),'utf8'));
+require('./sync-inline.cjs');

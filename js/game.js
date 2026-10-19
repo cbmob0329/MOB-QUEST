@@ -3560,7 +3560,7 @@ function enemyReward(e){
 }
 function calcBattleRewards(b){let exp=0,coin=0;for(const e of b?.defeatedEnemies||[]){const r=enemyReward(e);exp+=r.exp;coin+=r.coin;}return{exp,coin};}
 function learnedBetween(p,oldLv,newLv){const out=[],req=ULT_UNLOCK_LEVELS;for(let i=0;i<Math.min(4,p.ults?.length||0);i++)if(oldLv<req[i]&&newLv>=req[i])out.push(p.ults[i].name);return out;}
-function applyProgressRewards(b,vitalsObj=null,buff=null){let reward=calcBattleRewards(b);if(buff?.exp)reward.exp=Math.round(reward.exp*(1+buff.exp));if(buff?.gold)reward.coin=Math.round(reward.coin*(1+buff.gold));const weaponGold=Math.max(0,...(b?.allies||[]).map(a=>weaponGoldBonus(a)));if(weaponGold>0)reward.coin=Math.round(reward.coin*(1+weaponGold));const figureExp=partyFigureRewardBonus('expBonus'),figureGold=partyFigureRewardBonus('goldBonus');if(figureExp>0)reward.exp=Math.round(reward.exp*(1+figureExp));if(figureGold>0)reward.coin=Math.round(reward.coin*(1+figureGold));if(state.test?.enabled&&state.test?.exp3)reward.exp=Math.round(reward.exp*3);const changes=[];state.coins+=reward.coin;state.meta.coins=state.coins;if(!state.meta.exp)state.meta.exp={};const cap=playerLevelCap();for(const slot of state.party){const id=slot[0],p=player(id);if(!p)continue;const startLv=slot[1],oldStats=baseStats(p,startLv);let lv=startLv,xp=Math.max(0,Number(state.meta.exp[id])||0)+reward.exp;while(lv<cap&&xp>=expToNextRequiredV159(lv)){xp-=expToNextRequiredV159(lv);lv++;}state.meta.exp[id]=xp;if(lv>startLv){slot[1]=lv;const ns=baseStats(p,lv),learned=learnedBetween(p,startLv,lv);changes.push({id,name:p.name,image:p.image,oldLevel:startLv,newLevel:lv,stats:{HP:ns.maxHp-oldStats.maxHp,MP:ns.maxMp-oldStats.maxMp,ATK:ns.atk-oldStats.atk,MAG:ns.mag-oldStats.mag,DEF:ns.def-oldStats.def,MND:ns.res-oldStats.res,SPD:ns.spd-oldStats.spd},learned});const v=vitalsObj?.[id];if(v&&!v.dead){v.hp=Math.min(ns.maxHp,Math.max(0,Number(v.hp)||0)+(ns.maxHp-oldStats.maxHp));v.mp=Math.min(ns.maxMp,Math.max(0,Number(v.mp)||0)+(ns.maxMp-oldStats.maxMp));}}}saveParty();saveMeta();return{...reward,changes};}
+function applyProgressRewards(b,vitalsObj=null,buff=null){let reward=calcBattleRewards(b);if(buff?.exp)reward.exp=Math.round(reward.exp*(1+buff.exp));if(buff?.gold)reward.coin=Math.round(reward.coin*(1+buff.gold));const weaponGold=Math.max(0,...(b?.allies||[]).map(a=>weaponGoldBonus(a)));if(weaponGold>0)reward.coin=Math.round(reward.coin*(1+weaponGold));const figureExp=partyFigureRewardBonus('expBonus'),figureGold=partyFigureRewardBonus('goldBonus');if(figureExp>0)reward.exp=Math.round(reward.exp*(1+figureExp));if(figureGold>0)reward.coin=Math.round(reward.coin*(1+figureGold));if(state.test?.enabled&&state.test?.exp3)reward.exp=Math.round(reward.exp*3);const changes=[];state.coins+=reward.coin;state.meta.coins=state.coins;if(!state.meta.exp)state.meta.exp={};const cap=playerLevelCap();for(const slot of state.party){const id=slot[0],p=player(id);if(!p)continue;const startLv=slot[1],oldStats=baseStats(p,startLv);let lv=startLv,xp=Math.max(0,Number(state.meta.exp[id])||0)+Math.round(reward.exp*partyExpRateV262(b,id));while(lv<cap&&xp>=expToNextRequiredV159(lv)){xp-=expToNextRequiredV159(lv);lv++;}state.meta.exp[id]=xp;if(lv>startLv){slot[1]=lv;const ns=baseStats(p,lv),learned=learnedBetween(p,startLv,lv);changes.push({id,name:p.name,image:p.image,oldLevel:startLv,newLevel:lv,stats:{HP:ns.maxHp-oldStats.maxHp,MP:ns.maxMp-oldStats.maxMp,ATK:ns.atk-oldStats.atk,MAG:ns.mag-oldStats.mag,DEF:ns.def-oldStats.def,MND:ns.res-oldStats.res,SPD:ns.spd-oldStats.spd},learned});const v=vitalsObj?.[id];if(v&&!v.dead){v.hp=Math.min(ns.maxHp,Math.max(0,Number(v.hp)||0)+(ns.maxHp-oldStats.maxHp));v.mp=Math.min(ns.maxMp,Math.max(0,Number(v.mp)||0)+(ns.maxMp-oldStats.maxMp));}}}saveParty();saveMeta();return{...reward,changes};}
 function applyAdventureRewards(b){const out=applyProgressRewards(b,state.adventure.vitals,state.adventure.areaBuff);saveAdventure();return out;}
 function applyQuestRewards(b){return applyProgressRewards(b,state.quest?.vitals,null);}
 function randomRecordId(){return pick(state.meta?.gameCleared?['36','37','38']:['36','37']);}
@@ -17231,4 +17231,141 @@ const switchMenuBaseV261=openSwitchMenu;
 openSwitchMenu=function(...args){$('#skillFiltersV261')?.remove();$('#skillMenu').classList.remove('skill-menu-v261');return switchMenuBaseV261(...args);};
 
 // UPDATE_V261_END
+
+
+
+// UPDATE_V262_BEGIN
+// Story continuity and participation rewards.
+function partyExpRateV262(b,id){
+ const main=b?.mainIds||state.party.slice(0,4).map(x=>x[0]);
+ const sub=b?.superIds||state.party.slice(4,6).map(x=>x[0]);
+ return main.includes(id)?1:sub.includes(id)?.7:.5;
+}
+{
+ const magma=STORY_EVENTS['arrival:magma'],grass=STORY_EVENTS['arrival:grassland2'];
+ const introduction=grass.steps.slice(1).map(s=>[...s]);
+ // Nekoku has not joined yet in magma. Preserve his question through Desert.
+ for(const s of introduction)if(s[1]==='nekoku'){s[1]='desert';s[2]='お前、オトナシの国出身だな？\n同じ匂いを知っている';}
+ introduction.splice(introduction.findIndex(s=>s[0]==='dashGuestV172')+1,0,['guests',['nyoro','tetsu']]);
+ const at=introduction.findIndex(s=>s[0]==='say'&&s[1]==='tetsu');
+ introduction.splice(at+1,0,['say','tetsu','行く先に迷っていたところ'],['say','tetsu','この者に出会い行動を共にしていたでござる！'],['say','nyoro','そんな感じニョロ♪']);
+ const nyoroJoin=magma.steps.pop();
+ magma.steps.push(...introduction.filter(s=>s[0]!=='join'),nyoroJoin,['join','tetsu','モブテツが仲間に加わった！']);
+ grass.steps=grass.steps.slice(0,1);
+ for(const [key,event]of Object.entries(STORY_EVENTS))if(key.includes('grassland2'))for(const s of event.steps||[]){
+  if(s[2]==='初陣でござる！')s[2]='いざ、参るでござる！';
+  if(s[2]==='仲間が増えたぞ')s[2]='みんな、強くなったぞ';
+ }
+}
+function migrateTetsuV262(){
+ if(storyDone('arrival:magma')&&state.party.some(s=>s[0]==='nyoro')&&!state.party.some(s=>s[0]==='tetsu'))storyJoinSilent('tetsu');
+}
+const homeBaseV262=renderHome;
+renderHome=function(...args){migrateTetsuV262();return homeBaseV262(...args);};
+window.__mobBuildVersion='v262';
+
+// Poster cues follow the music clock rather than accumulating decoding/fade time.
+endingMontageV157=async function(){
+ endConversationV224(conversationV224);
+ storySoundV257.setBgm(false);
+ const root=document.createElement('div');root.className='ending-v157 ending-montage-v240 ending-montage-v262';root.setAttribute('aria-label','エンディング');document.body.append(root);
+ const audio=new Audio('music/end.mp3');audio.volume=.45;audio.preload='auto';
+ let previous,started=performance.now(),lastProgress=started,lastTime=0,silent=false;
+ const preload=n=>loadEndingFrameV217(n);
+ const waitUntil=async cue=>{
+  while(true){
+   const now=performance.now();
+   if(audio.currentTime>lastTime+.01){lastTime=audio.currentTime;lastProgress=now;}
+   if(!silent&&(audio.error||audio.ended||now-lastProgress>2500)){silent=true;started=now-lastTime*1000;}
+   const elapsed=silent?(now-started)/1000:audio.currentTime;
+   if(elapsed>=cue)return;
+   await fixedDelay(Math.min(80,(cue-elapsed)*1000));
+  }
+ };
+ try{
+  await Promise.all([preload(1),preload(2),preload(3)]);
+  started=lastProgress=performance.now();audio.play()?.catch(()=>{silent=true;started=performance.now();});
+  for(let n=1;n<=31;n++){
+   await waitUntil((n-1)*4);
+   const artwork=await preload(n),slide=document.createElement('div');slide.className='ending-slide-v240';
+   if(artwork instanceof HTMLImageElement){artwork.className='ending-art-v240';slide.append(artwork);}
+   root.append(slide);
+   for(let next=n+1;next<=Math.min(31,n+3);next++)void preload(next);
+   await animateV157(slide,[{opacity:0},{opacity:1}],1200);slide.style.opacity='1';previous?.remove();previous=slide;endingFramesV217.delete(n-1);
+  }
+  // Keep the last image through the musical tail, including natural silence.
+  await waitUntil(124);
+  if(!silent&&Number.isFinite(audio.duration))await waitUntil(Math.max(124,audio.duration));
+  await fixedDelay(900);
+  await animateV157(root,[{opacity:1},{opacity:0}],2400);
+  await fixedDelay(700);
+ }finally{audio.pause();audio.removeAttribute('src');audio.load();root.remove();endingFramesV217.clear();}
+};
+// Authored content and line breaks remain unchanged.
+endingCaptionV157=async function(text){
+ let root=document.querySelector('.ending-caption-v157');
+ if(!root){root=document.createElement('div');root.className='ending-caption-v157 ending-caption-v240';document.body.append(root);}
+ root.replaceChildren();
+ const card=document.createElement('div');card.className='ending-card-v240';root.append(card);
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(text==='CB Memory'){
+  card.classList.add('ending-signature-v240');
+  const logo=new Image();logo.src=$('.title-logo')?.getAttribute('src')||'icon/01.png';logo.alt='MOB STORY';
+  await decodeImageBoundedV217(logo);
+  card.append(logo);
+  const label=document.createElement('p');label.textContent=text;label.style.opacity='0';card.append(label);
+  await animateV157(card,[{opacity:0},{opacity:1}],2000);
+  await animateV157(label,[{opacity:0},{opacity:1}],1700);label.style.opacity='1';return;
+ }
+ const p=document.createElement('p');card.append(p);
+ for(const line of ENDING_LINES_V240[text]||[text]){const span=document.createElement('span');span.textContent=line;p.append(span);}
+ // Preserve intentional sentence breaks; fit each complete line on small screens.
+ const available=root.clientWidth*.86;
+ const natural=Math.max(...Array.from(p.children,el=>el.getBoundingClientRect().width));
+ if(natural>available)p.style.fontSize=parseFloat(getComputedStyle(p).fontSize)*available/natural+'px';
+ await animateV157(card,[{opacity:0,transform:reduced?'none':'translateY(9px)'},{opacity:1,transform:'translateY(0)'}],1900);
+ await fixedDelay(text==='ですが、'?1900:text.includes('ありがとうございました')?5200:Math.max(3400,Math.min(4600,text.length*110)));
+ await animateV157(card,[{opacity:1},{opacity:0}],1500);
+ card.style.opacity='0';await fixedDelay(650);
+};
+
+const NM_ATLAS_V262='skill4/nightmare-v262/cinema.png';
+let nmAtlasReadyV262;
+function nmLoadAtlasV262(){return nmAtlasReadyV262||=(async()=>{const i=new Image();i.src=NM_ATLAS_V262;await decodeImageBoundedV217(i);return i;})();}
+function nmFrameV262(el,row,frame){el.style.backgroundPosition=`${frame*100/3}% ${row*100/5}%`;el.dataset.frame=String(row*4+frame);}
+function nmSpriteV262(row,frame,size){const el=document.createElement('div');el.className='nm-atlas-v262';el.style.setProperty('--size',size+'px');nmFrameV262(el,row,frame);return el;}
+async function nmAtlasPlayV262(point,row,ms=650,size=240){
+ if(skipConversationV224())return;await nmLoadAtlasV262();const stage=nmStageV239;if(!stage?.isConnected)return;
+ const p=typeof point==='string'?nmPointV239(point):point,el=nmSpriteV262(row,0,size);el.style.left=p.x+'px';el.style.top=p.y+'px';stage.append(el);
+ try{for(let f=0;f<4;f++){if(skipConversationV224())break;nmFrameV262(el,row,f);await fixedDelay(ms/4);}}finally{el.remove();}
+}
+nmSpellV241=async function(key,kind,ms=650){return nmAtlasPlayV262(key,({fire:0,water:1,thunder:5,dark:3,planet:4})[kind]??3,ms,Math.min(nmStageV239.clientWidth*.72,310));};
+const nmGuardOldV262=nmGuardV239;
+nmGuardV239=function(key,water=false){nmGuardOldV262(key,water);const actor=nmElV239(key);if(!actor)return;actor.querySelector('.nm-barrier-art-v241')?.remove();if(!actor.querySelector('.nm-barrier-new-v262')){const art=nmSpriteV262(1,1,Math.min(actor.clientWidth*1.5,260));art.classList.add('nm-barrier-new-v262');actor.append(art);}};
+nmBreathV242=async function(from='dragon',to='king'){
+ if(skipConversationV224())return;await nmLoadAtlasV262();
+ const stage=nmStageV239,actor=nmElV239(from),a=nmPointV239(from),b=nmPointV239(to),direction=Math.sign(b.x-a.x)||1;
+ const layer=document.createElement('div');layer.className='nm-depth-v262 nm-breath-v242';layer.style.cssText='left:0;top:0;width:100%;height:100%;transform:none';stage.append(layer);nmGuardV239(to);
+ try{
+  await nmMotionV242(actor,[{scale:'1',rotate:'0deg'},{scale:'1.06',rotate:`${-direction*8}deg`},{scale:'1',rotate:'0deg'}],360,'ease-in');
+  nmSoundV239('fire');
+  const bolts=Array.from({length:5},(_,i)=>{const e=nmSpriteV262(0,Math.min(i,3),Math.min(stage.clientWidth*.57,280));e.style.left=a.x+'px';e.style.top=a.y+'px';e.style.zIndex=String(10+i);layer.append(e);return e;});
+  await Promise.all(bolts.map(async(e,i)=>{
+   await fixedDelay(i*95);if(skipConversationV224())return;
+   await nmMotionV242(e,[{translate:'0 0',scale:`${direction*.35} .35`,opacity:0},{translate:`${(b.x-a.x)*.3}px ${(b.y-a.y)*.3-18}px`,scale:`${direction*.75} .75`,opacity:.7,offset:.35},{translate:`${b.x-a.x}px ${b.y-a.y}px`,scale:`${direction*1.15} 1.15`,opacity:.8,offset:.78},{translate:`${b.x-a.x+direction*14}px ${b.y-a.y}px`,scale:`${direction*1.35} 1.35`,opacity:0}],620,'ease-in');
+  }));
+  await Promise.all([nmAtlasPlayV262(to,4,440,300),nmMotionV242(nmElV239(to),[{translate:'0 0'},{translate:`${direction*18}px -6px`,offset:.16},{translate:`${direction*6}px 2px`,offset:.5},{translate:'0 0'}],450),nmShakeV239()]);
+ }finally{layer.remove();nmElV239(to)?.classList.remove('nm-guard-v239','nm-water-guard-v239');}
+};
+const nmSealOldV262=nmSealV242;
+nmSealV242=async function(){
+ await nmLoadAtlasV262();const stage=nmStageV239,p=nmPointV239('yami'),target=nmElV239('yami');if(!target||skipConversationV224())return;
+ const art=nmSpriteV262(2,0,Math.min(stage.clientWidth*.78,330));art.classList.add('nm-seal-art-v262');art.style.left=p.x+'px';art.style.top=(p.y+target.clientHeight*.35)+'px';stage.append(art);
+ let alive=true;const animate=(async()=>{for(let f=0;f<4&&alive;f++){nmFrameV262(art,2,f);await fixedDelay(950);}})();
+ try{await nmSealOldV262();}finally{alive=false;await animate;const seal=stage.querySelector('.nm-seal-v242');if(seal&&!skipConversationV224())seal.append(art);else art.remove();}
+};
+const nmSceneOldV262=nmSceneV239;
+nmSceneV239=async function(...args){await nmLoadAtlasV262();return nmSceneOldV262(...args);};
+
+// UPDATE_V262_END
 })();

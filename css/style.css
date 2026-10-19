@@ -5674,3 +5674,18 @@ body:has(.macaron-stage-v247) #dialogChoices{display:grid!important;grid-templat
 #skillMenu.skill-menu-v261 .skill-item{height:max-content!important;min-height:max-content!important;max-height:none!important}
 
 /* UPDATE_V261_END */
+
+
+/* UPDATE_V262_BEGIN */
+/* Large, centered recollection behind the actors; dialogue stays in front. */
+.finale-inset-v248{left:5%;right:auto;top:5%;width:90%;height:48%;max-height:none;object-fit:contain;background:#111421;border:2px solid #cfbb8c;z-index:2;box-shadow:0 12px 36px #0008;animation:finale-memory-v262 .8s ease-out both}
+@keyframes finale-memory-v262{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.ending-montage-v262 .ending-art-v240{inset:5%;width:90%;height:90%;object-position:center;animation:ending-drift-v262 40s linear both;transform-origin:center}
+@keyframes ending-drift-v262{from{transform:scale(1)}to{transform:scale(1.025)}}
+.ending-caption-v240 .ending-card-v240{filter:drop-shadow(0 2px 14px #b8c6dd22)}
+.nm-atlas-v262{position:absolute;width:var(--size,240px);height:var(--size,240px);margin-left:calc(var(--size,240px)/-2);margin-top:calc(var(--size,240px)/-2);pointer-events:none;z-index:15;overflow:hidden;opacity:.85;contain:paint;background-repeat:no-repeat;background-image:url('../skill4/nightmare-v262/cinema.png');background-size:400% 600%;mix-blend-mode:normal;mask-image:radial-gradient(ellipse at center,#000 44%,#000b 62%,transparent 72%)}
+.nm-depth-v262{position:absolute;inset:0;pointer-events:none;z-index:14;overflow:hidden;perspective:700px}
+.nm-barrier-new-v262{left:50%;top:50%;--size:190px;z-index:3;opacity:0;transition:opacity .18s;transform:scale(1.2)}
+.nm-guard-v239 .nm-barrier-new-v262{opacity:.65}
+.nm-seal-art-v262{z-index:1;opacity:.65;filter:saturate(.85)}
+@media(prefers-reduced-motion:reduce){.ending-montage-v262 .ending-art-v240{animation:none}.finale-inset-v248{animation:none}}
