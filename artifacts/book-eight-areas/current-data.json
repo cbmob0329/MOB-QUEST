@@ -1,0 +1,809 @@
+{
+  "world": {
+    "id": "unfinishedBook",
+    "name": "読みかけの本",
+    "fieldFallback": "back2/09.png",
+    "normalIds": [],
+    "oneBattlePerArea": true,
+    "noRandomEncounter": true,
+    "areas": [
+      {
+        "name": "AREA 1",
+        "bg": "back/yomi1.png",
+        "boss": [
+          {
+            "id": "book-minion",
+            "level": 75,
+            "qty": 2
+          },
+          {
+            "id": "book-captain",
+            "level": 80
+          }
+        ]
+      },
+      {
+        "name": "AREA 2",
+        "bg": "back/yomi2.png",
+        "boss": [
+          {
+            "id": "book-exec-blue",
+            "level": 83
+          },
+          {
+            "id": "book-exec-red",
+            "level": 83
+          }
+        ],
+        "nextWave": [
+          {
+            "id": "book-exec-blue2",
+            "level": 87
+          },
+          {
+            "id": "book-exec-red2",
+            "level": 87
+          }
+        ]
+      },
+      {
+        "name": "AREA 3",
+        "bg": "back/yomi3.png",
+        "boss": [
+          {
+            "id": "book-kaijin-boss",
+            "level": 90,
+            "actionCount": 3,
+            "forceActionCount": true
+          }
+        ]
+      },
+      {
+        "name": "AREA 4",
+        "bg": "back/yomi4.png",
+        "boss": [
+          {
+            "id": "book-captain",
+            "level": 80,
+            "qty": 2
+          },
+          {
+            "id": "book-kaijin-boss",
+            "level": 90
+          }
+        ]
+      }
+    ],
+    "recommendedLevel": 80
+  },
+  "enemies": [
+    {
+      "id": "book-minion",
+      "name": "モブ怪人の手下",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "闇",
+      "image": "enemy/148.png",
+      "symbol": "怪",
+      "levelMin": 75,
+      "levelMax": 75,
+      "special": "ポイズンアタック",
+      "kind": "poisonSingle",
+      "power": 1.45,
+      "chance": 0.7,
+      "skillElement": "闇",
+      "skillType": "physical",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "specialOptions": [
+        {
+          "special": "ポイズンアタック",
+          "kind": "poisonSingle",
+          "power": 1.45,
+          "chance": 0.7,
+          "skillElement": "闇",
+          "skillType": "physical"
+        },
+        {
+          "special": "フラッシュパンチ",
+          "kind": "stunSingle",
+          "power": 1.45,
+          "chance": 0.4,
+          "skillElement": "無",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": -0.08,
+        "風": 0,
+        "光": 0,
+        "闇": 0.22
+      },
+      "statusResist": {
+        "poison": 0.52,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.44000000000000006
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ミラマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "イントロクロス",
+          "kind": "poisonSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-captain",
+      "name": "モブ怪人の隊長",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "闇",
+      "image": "enemy/149.png",
+      "symbol": "隊",
+      "levelMin": 80,
+      "levelMax": 80,
+      "special": "キーキー連撃",
+      "kind": "v88MultiRandom",
+      "hits": 3,
+      "power": 0.92,
+      "skillElement": "無",
+      "skillType": "physical",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": -0.08,
+        "風": 0,
+        "光": 0,
+        "闇": 0.22
+      },
+      "statusResist": {
+        "poison": 0.52,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.44000000000000006
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ミラマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "イントロクロス",
+          "kind": "poisonSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-exec-blue",
+      "name": "モブ怪人幹部青",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "水",
+      "image": "enemy/150.png",
+      "symbol": "青",
+      "levelMin": 83,
+      "levelMax": 83,
+      "special": "アクノウォールウェーブ",
+      "kind": "aoe",
+      "power": 1.32,
+      "skillElement": "水",
+      "skillType": "magic",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "specialOptions": [
+        {
+          "special": "アクノウォールウェーブ",
+          "kind": "aoe",
+          "power": 1.32,
+          "skillElement": "水",
+          "skillType": "magic"
+        },
+        {
+          "special": "キーキー連撃",
+          "kind": "v88MultiRandomStun",
+          "hits": 3,
+          "power": 0.92,
+          "chance": 0.3,
+          "skillElement": "無",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.22,
+        "雷": -0.08,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.45999999999999996,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ネプマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ローファイスプラッシュ",
+          "kind": "sleepSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-exec-red",
+      "name": "モブ怪人幹部赤",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "火",
+      "image": "enemy/151.png",
+      "symbol": "赤",
+      "levelMin": 83,
+      "levelMax": 83,
+      "special": "アクノフレイムソード",
+      "kind": "single",
+      "power": 1.82,
+      "skillElement": "火",
+      "skillType": "physical",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "specialOptions": [
+        {
+          "special": "アクノフレイムソード",
+          "kind": "single",
+          "power": 1.82,
+          "skillElement": "火",
+          "skillType": "physical"
+        },
+        {
+          "special": "キーキー連撃",
+          "kind": "v88MultiRandomConfuse",
+          "hits": 3,
+          "power": 0.92,
+          "chance": 0.3,
+          "skillElement": "無",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-exec-blue2",
+      "name": "モブ怪人幹部青・覚醒",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "水",
+      "image": "boss/56.png",
+      "symbol": "青",
+      "levelMin": 87,
+      "levelMax": 87,
+      "special": "アクノウォールウェーブ",
+      "kind": "aoe",
+      "power": 1.38,
+      "skillElement": "水",
+      "skillType": "magic",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "mods": {
+        "hp": 1.12,
+        "atk": 1.08,
+        "mag": 1.08
+      },
+      "specialOptions": [
+        {
+          "special": "アクノウォールウェーブ",
+          "kind": "aoe",
+          "power": 1.38,
+          "skillElement": "水",
+          "skillType": "magic"
+        },
+        {
+          "special": "キーキー連撃",
+          "kind": "v88MultiRandomStun",
+          "hits": 3,
+          "power": 0.98,
+          "chance": 0.3,
+          "skillElement": "無",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0.22,
+        "雷": -0.08,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.34,
+        "paralyze": 0.36,
+        "sleep": 0.45999999999999996,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "ネプマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ローファイスプラッシュ",
+          "kind": "sleepSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "水",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-exec-red2",
+      "name": "モブ怪人幹部赤・覚醒",
+      "stage": "読みかけの本",
+      "category": "elite",
+      "attribute": "火",
+      "image": "boss/55.png",
+      "symbol": "赤",
+      "levelMin": 87,
+      "levelMax": 87,
+      "special": "アクノフレイムソード",
+      "kind": "single",
+      "power": 1.9,
+      "skillElement": "火",
+      "skillType": "physical",
+      "actionCount": 2,
+      "forceActionCount": true,
+      "mods": {
+        "hp": 1.12,
+        "atk": 1.08,
+        "mag": 1.08
+      },
+      "specialOptions": [
+        {
+          "special": "アクノフレイムソード",
+          "kind": "single",
+          "power": 1.9,
+          "skillElement": "火",
+          "skillType": "physical"
+        },
+        {
+          "special": "キーキー連撃",
+          "kind": "v88MultiRandomConfuse",
+          "hits": 3,
+          "power": 0.98,
+          "chance": 0.3,
+          "skillElement": "無",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0.22,
+        "水": -0.08,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0,
+        "闇": 0
+      },
+      "statusResist": {
+        "poison": 0.34,
+        "burn": 0.56,
+        "paralyze": 0.36,
+        "sleep": 0.36,
+        "stun": 0.4,
+        "confuse": 0.34
+      },
+      "statusDurationCap": 3,
+      "v120ExtraSkills": [
+        {
+          "special": "マグマソード",
+          "kind": "single",
+          "power": 1.02,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "ファストビートスラッシュ",
+          "kind": "burnSingle",
+          "power": 0.86,
+          "chance": 0.28,
+          "skillElement": "火",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-kaijin-boss",
+      "name": "モブ怪人のボス",
+      "stage": "読みかけの本",
+      "category": "boss",
+      "attribute": "闇・無",
+      "image": "boss/37.png",
+      "symbol": "怪",
+      "levelMin": 90,
+      "levelMax": 90,
+      "bossId": "kaijinBoss",
+      "special": "パーフェクトスマイル",
+      "kind": "aoeSleepChance",
+      "power": 1.95,
+      "chance": 0.3,
+      "skillElement": "闇",
+      "skillType": "physical",
+      "actionCount": 3,
+      "forceActionCount": true,
+      "damageReduction": 0.2,
+      "permanentDamageReduction": true,
+      "specialOptions": [
+        {
+          "special": "パーフェクトスマイル",
+          "kind": "aoeSleepChance",
+          "power": 1.95,
+          "chance": 0.3,
+          "skillElement": "闇",
+          "skillType": "physical"
+        },
+        {
+          "special": "アクノソシキ",
+          "kind": "stunSingle",
+          "power": 2.65,
+          "chance": 0.8,
+          "skillElement": "闇",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0.28,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": -0.05,
+        "風": 0,
+        "光": 0,
+        "闇": 0.28
+      },
+      "statusResist": {
+        "poison": 0.8300000000000001,
+        "burn": 0.7,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.85,
+        "confuse": 0.85
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "ミラマソード",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        },
+        {
+          "special": "イントロクロス",
+          "kind": "poisonSingle",
+          "power": 0.96,
+          "chance": 0.22,
+          "skillElement": "闇",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-navi",
+      "name": "モブナビ",
+      "stage": "読みかけの本",
+      "category": "boss",
+      "attribute": "光",
+      "image": "boss/52.png",
+      "symbol": "導",
+      "levelMin": 90,
+      "levelMax": 90,
+      "bossId": "mobNavi",
+      "special": "振り回した小さな手",
+      "kind": "v88AoeSpdDown",
+      "power": 1.88,
+      "debuff": 0.1,
+      "skillElement": "光",
+      "skillType": "physical",
+      "actionCount": 3,
+      "forceActionCount": true,
+      "damageReduction": 0.8,
+      "permanentDamageReduction": true,
+      "specialOptions": [
+        {
+          "special": "振り回した小さな手",
+          "kind": "v88AoeSpdDown",
+          "power": 1.88,
+          "debuff": 0.1,
+          "skillElement": "光",
+          "skillType": "physical"
+        },
+        {
+          "special": "石ころを靴に乗せたケンケンパ",
+          "kind": "v88MultiSingle",
+          "hits": 3,
+          "power": 1.15,
+          "skillElement": "光",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0.28,
+        "闇": -0.05
+      },
+      "statusResist": {
+        "poison": 0.65,
+        "burn": 0.7,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.85,
+        "confuse": 0.85
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "ネオマニプール",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "光",
+          "skillType": "magic",
+          "v120Supplement": true
+        },
+        {
+          "special": "スクラッチソード",
+          "kind": "confuseSingle",
+          "power": 0.96,
+          "chance": 0.22,
+          "skillElement": "光",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    },
+    {
+      "id": "book-navi-master",
+      "name": "モブナビマスター",
+      "stage": "読みかけの本",
+      "category": "boss",
+      "attribute": "光",
+      "image": "boss/53.png",
+      "symbol": "神",
+      "levelMin": 90,
+      "levelMax": 90,
+      "bossId": "mobNaviMaster",
+      "special": "振り回した小さな手",
+      "kind": "v88AoeSpdDown",
+      "power": 1.88,
+      "debuff": 0.1,
+      "skillElement": "光",
+      "skillType": "physical",
+      "actionCount": 3,
+      "forceActionCount": true,
+      "damageReduction": 0.8,
+      "permanentDamageReduction": false,
+      "naviBarrier": true,
+      "specialOptions": [
+        {
+          "special": "振り回した小さな手",
+          "kind": "v88AoeSpdDown",
+          "power": 1.88,
+          "debuff": 0.1,
+          "skillElement": "光",
+          "skillType": "physical"
+        },
+        {
+          "special": "石ころを靴に乗せたケンケンパ",
+          "kind": "v88MultiSingle",
+          "hits": 3,
+          "power": 1.15,
+          "skillElement": "光",
+          "skillType": "physical"
+        }
+      ],
+      "elementResist": {
+        "無": 0,
+        "火": 0,
+        "水": 0,
+        "雷": 0,
+        "地": 0,
+        "風": 0,
+        "光": 0.28,
+        "闇": -0.05
+      },
+      "statusResist": {
+        "poison": 0.65,
+        "burn": 0.7,
+        "paralyze": 1,
+        "sleep": 0.8,
+        "stun": 0.85,
+        "confuse": 0.85
+      },
+      "statusDurationCap": 2,
+      "paralyzeImmune": true,
+      "v120ExtraSkills": [
+        {
+          "special": "ネオマニプール",
+          "kind": "single",
+          "power": 1.18,
+          "skillElement": "光",
+          "skillType": "magic",
+          "v120Supplement": true
+        },
+        {
+          "special": "スクラッチソード",
+          "kind": "confuseSingle",
+          "power": 0.96,
+          "chance": 0.22,
+          "skillElement": "光",
+          "skillType": "physical",
+          "v120Supplement": true
+        }
+      ]
+    }
+  ],
+  "players": [
+    {
+      "id": "yusha",
+      "name": "モブ勇者"
+    },
+    {
+      "id": "pink",
+      "name": "モブピンク"
+    },
+    {
+      "id": "desert",
+      "name": "モブデザート"
+    },
+    {
+      "id": "nyoro",
+      "name": "モブニョロ"
+    },
+    {
+      "id": "nekoku",
+      "name": "モブネコクー"
+    },
+    {
+      "id": "jessie",
+      "name": "モブジェシー"
+    },
+    {
+      "id": "denden",
+      "name": "モブデンデン"
+    },
+    {
+      "id": "money",
+      "name": "モブマニー"
+    },
+    {
+      "id": "riro",
+      "name": "モブリーロ"
+    },
+    {
+      "id": "tetsu",
+      "name": "モブテツ"
+    },
+    {
+      "id": "lilith",
+      "name": "モブリリス"
+    },
+    {
+      "id": "kaijin",
+      "name": "モブ怪人のボス"
+    }
+  ],
+  "solo": "async function startBookNaviSoloV89Final(){const bg=storySceneBg('unfinishedBook',3);return new Promise(async resolve=>{scriptedBattleResolve=resolve;await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs:[{id:'book-navi',level:90}],party:[levelRowV89Final('yusha')],bg:bg.bg,fallbackBg:bg.fallback,bossBattle:true,scriptedTurnLimit:3,scriptedImmortalEnemy:true,scriptedImmortalParty:true,bookHeroPower:true,storyLabel:'モブナビ EVENT BATTLE'});});}",
+  "master": "async function startBookNaviMasterV161(){\n  const party=state.party.slice(0,10).map(x=>[x[0],Number(x[1])||1]);\n  const k=player('kaijin');\n  if(k){\n    state.meta.ultimateCooldowns=state.meta.ultimateCooldowns||{};\n    state.meta.ultimateCooldowns.kaijin=(k.ults||[]).map(()=>0);\n    saveMeta();\n  }\n  const bg=storySceneBg('unfinishedBook',3);\n  return new Promise(async resolve=>{\n    scriptedBattleResolve=resolve;\n    await startBattleLoaded({mode:'story',returnScreen:'adventure',enemyConfigs:[{id:'book-navi-master',level:90}],party,bg:bg.bg,fallbackBg:bg.fallback,bossBattle:true,scriptedImmortalParty:false,bookHeroPower:true,bookNaviMasterFinal:true,storyLabel:'モブナビマスター FINAL BATTLE'});\n  });\n}"
+}
