@@ -1,0 +1,192 @@
+{
+  "sheets": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "results": [
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/contact-sheet-01.png",
+          "file_id": "file_0000000057a4820cad761fe29dc5145b",
+          "library_file_id": "libfile_c1756685e0c481918a2a3d490ee83858",
+          "file_name": "contact-sheet-01.png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "image",
+          "file_size_bytes": 1163504
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/contact-sheet-02.png",
+          "file_id": "file_00000000e95881f5a5f9e93a207d3757",
+          "library_file_id": "libfile_dd23c38b470081918b3e23319c915414",
+          "file_name": "contact-sheet-02.png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "image",
+          "file_size_bytes": 1058140
+        }
+      ],
+      "warnings": [],
+      "external_connectors_accessed": false
+    },
+    "isError": false
+  },
+  "deliverables": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "results": [
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/MOB-STORY-enemy-remake-batch01.zip",
+          "file_id": "file_00000000d12081f495955c54c9f9ec6d",
+          "library_file_id": "libfile_e0f5a42d08908191b78e9f5868419ed9",
+          "file_name": "MOB-STORY-enemy-remake-batch01.zip",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "application/zip",
+          "library_artifact_type": "other",
+          "file_size_bytes": 3013729
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/batch01-preview.png",
+          "file_id": "file_0000000077fc81f5944da195c2232bdc",
+          "library_file_id": "libfile_a9ea985652988191b4405da5a40b4d78",
+          "file_name": "batch01-preview.png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 286426
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/01(20261020-011058).png",
+          "file_id": "file_000000000df0820c9e7cda37d08f391f",
+          "library_file_id": "libfile_f5934baf48c48191b64756328848226d",
+          "file_name": "01(20261020-011058).png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 218042
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/02(20261020-011059).png",
+          "file_id": "file_00000000dac081fb8528f9910572fd7d",
+          "library_file_id": "libfile_3a6aa0d473ec8191b4870995af8f3ba8",
+          "file_name": "02(20261020-011059).png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 305350
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/03(20261020-011102).png",
+          "file_id": "file_000000000c60820eaa78d3655677515c",
+          "library_file_id": "libfile_dabe3178cc1c8191a89a9f84515598ec",
+          "file_name": "03(20261020-011102).png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 1787577
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/04(20261020-011104).png",
+          "file_id": "file_00000000a46481f48edbc2f0b480236d",
+          "library_file_id": "libfile_0c92d59d1070819191915f8ccaf42c41",
+          "file_name": "04(20261020-011104).png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 617699
+        }
+      ],
+      "warnings": [],
+      "external_connectors_accessed": false
+    },
+    "isError": false
+  }
+}

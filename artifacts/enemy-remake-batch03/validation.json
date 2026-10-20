@@ -1,0 +1,106 @@
+[
+  {
+    "filename": "09.png",
+    "width": 1187,
+    "height": 1205,
+    "original_bbox": [
+      0,
+      0,
+      1187,
+      1205
+    ],
+    "final_alpha": {
+      "x": 0,
+      "y": 0,
+      "width": 1187,
+      "height": 1204,
+      "transparent": 639906,
+      "partial": 786763,
+      "opaque": 3666
+    },
+    "width_ratio": 1.0,
+    "height_ratio": 0.9992,
+    "generated_canvas": [
+      1245,
+      1263
+    ]
+  },
+  {
+    "filename": "10.png",
+    "width": 1185,
+    "height": 1177,
+    "original_bbox": [
+      0,
+      0,
+      1185,
+      1177
+    ],
+    "final_alpha": {
+      "x": 1,
+      "y": 0,
+      "width": 1183,
+      "height": 1177,
+      "transparent": 528650,
+      "partial": 860723,
+      "opaque": 5372
+    },
+    "width_ratio": 0.9983,
+    "height_ratio": 1.0,
+    "generated_canvas": [
+      1261,
+      1247
+    ]
+  },
+  {
+    "filename": "11.png",
+    "width": 599,
+    "height": 672,
+    "original_bbox": [
+      1,
+      2,
+      596,
+      668
+    ],
+    "final_alpha": {
+      "x": 4,
+      "y": 2,
+      "width": 588,
+      "height": 660,
+      "transparent": 169056,
+      "partial": 229973,
+      "opaque": 3499
+    },
+    "width_ratio": 0.9866,
+    "height_ratio": 0.988,
+    "generated_canvas": [
+      1184,
+      1328
+    ]
+  },
+  {
+    "filename": "12.png",
+    "width": 595,
+    "height": 588,
+    "original_bbox": [
+      3,
+      4,
+      588,
+      580
+    ],
+    "final_alpha": {
+      "x": 3,
+      "y": 6,
+      "width": 587,
+      "height": 572,
+      "transparent": 145045,
+      "partial": 201157,
+      "opaque": 3658
+    },
+    "width_ratio": 0.9983,
+    "height_ratio": 0.9862,
+    "generated_canvas": [
+      1261,
+      1247
+    ]
+  }
+]

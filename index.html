@@ -25547,6 +25547,62 @@ const nmSceneOldV262=nmSceneV239;
 nmSceneV239=async function(...args){await nmLoadAtlasV262();return nmSceneOldV262(...args);};
 
 // UPDATE_V262_END
+// UPDATE_V263_BEGIN
+// Role budgets redistribute existing stats rather than adding encounter-wide power.
+// Keep authored HP, move sets, resistances, rewards and action schedules intact.
+const ENEMY_ROLES_V263 = {
+ 'd2-miraearth': {role:'重装・地属性物理',maxHp:1.18,atk:1.18,mag:.85,def:1.18,res:.94,spd:.85},
+ 'd2-mirakarami': {role:'火属性魔法火力',maxHp:.95,atk:.90,mag:1.16,def:.90,res:1.06,spd:.97},
+ 'd2-miranight': {role:'水属性魔法・耐久',maxHp:1.02,atk:1.02,mag:1.08,def:1.04,res:1.12,spd:1.02},
+ 'd2-miratime': {role:'高速・妨害',maxHp:.85,atk:.90,mag:1.00,def:.88,res:.94,spd:1.16},
+ 'g-iwakiri': {role:'雷魔法・守備',maxHp:1.03,atk:.92,mag:1.10,def:1.08,res:1.04,spd:.94},
+ 'g-axe': {role:'地属性物理',maxHp:.97,atk:1.08,mag:.90,def:.92,res:.96,spd:1.06},
+ 'd-sharty': {role:'蘇生支援・耐久',maxHp:1.10,atk:.90,mag:1.00,def:1.03,res:1.10,spd:.90},
+ 'd-poison': {role:'高速・毒の物理攻撃',maxHp:.92,atk:1.10,mag:.90,def:.94,res:.92,spd:1.14},
+ 'd-deathhead': {role:'闇魔法火力',maxHp:.98,atk:1.00,mag:1.10,def:1.03,res:.98,spd:.96},
+ 'r-scouter': {role:'光魔法・先制',maxHp:.92,atk:.92,mag:1.12,def:.94,res:1.04,spd:1.12},
+ 'r-captain': {role:'全体物理・耐久',maxHp:1.10,atk:1.04,mag:.96,def:1.08,res:1.00,spd:.90},
+ 'r-dean': {role:'雷属性物理',maxHp:.98,atk:1.04,mag:.92,def:.98,res:.96,spd:.98},
+ 'm-blizzard': {role:'水魔法・守備',maxHp:1.04,atk:1.00,mag:.96,def:1.04,res:1.06,spd:.95},
+ 'm-flame': {role:'火魔法・攻勢',maxHp:.96,atk:1.00,mag:1.04,def:.96,res:.94,spd:1.05},
+ 's-jones': {role:'水魔法・強襲',maxHp:.95,atk:.94,mag:1.10,def:.94,res:1.04,spd:1.08},
+ 's-uminight': {role:'水属性物理・重装',maxHp:1.05,atk:1.06,mag:.90,def:1.06,res:.96,spd:.92},
+ 's-sorcerer': {role:'魔法火力',maxHp:.94,atk:.90,mag:1.08,def:.92,res:1.06,spd:1.02},
+ 's-wave': {role:'水魔法・持久',maxHp:1.06,atk:1.10,mag:.92,def:1.08,res:.94,spd:.98},
+ 'd2-slamummy': {role:'物理・前衛',maxHp:1.08,atk:1.08,mag:.90,def:1.08,res:.94,spd:.94},
+ 'd2-twinsoul': {role:'雷魔法・高速',maxHp:.92,atk:.92,mag:1.10,def:.92,res:1.06,spd:1.06},
+ 'd2-mirabuster': {role:'全体魔法・重砲',maxHp:1.06,atk:.92,mag:1.10,def:1.02,res:1.00,spd:.90},
+ 'c-killwitch': {role:'毒魔法・高速',maxHp:.96,atk:1.00,mag:.96,def:.96,res:1.04,spd:1.08},
+ 'c-succubus': {role:'火魔法・火力',maxHp:1.04,atk:1.00,mag:1.04,def:1.04,res:.96,spd:.92},
+ 'c-lilith-hell': {role:'火魔法火力',maxHp:.96,atk:.90,mag:1.14,def:.92,res:1.04,spd:.98},
+ 'c-lilith-kirin': {role:'高速・雷魔法妨害',maxHp:.88,atk:.94,mag:1.04,def:.92,res:.96,spd:1.15},
+ 'c-lilith-kufu': {role:'光魔法・防衛',maxHp:1.08,atk:.96,mag:1.00,def:1.02,res:1.12,spd:.92},
+ 'c-lilith-riva': {role:'水属性物理・前衛',maxHp:1.08,atk:1.20,mag:.82,def:1.14,res:.88,spd:.95}
+};
+const ENEMY_ROLE_ALIASES_V263 = {
+ 'four245-earth':'d2-miraearth','four245-fire':'d2-mirakarami',
+ 'four245-water':'d2-miranight','four245-time':'d2-miratime',
+ 'dc2-hell':'c-lilith-hell','dc2-kirin':'c-lilith-kirin',
+ 'dc2-kufu':'c-lilith-kufu','dc2-riva':'c-lilith-riva'
+};
+function enemyRoleV263(t){
+ return ENEMY_ROLES_V263[ENEMY_ROLE_ALIASES_V263[t?.id]||t?.id]||null;
+}
+const enemyRolePreviewBaseV263=enemyStatPreview;
+enemyStatPreview=function(t,...args){
+ const stats=enemyRolePreviewBaseV263(t,...args),role=enemyRoleV263(t);
+ if(!role)return stats;
+ const next={...stats};
+ for(const key of ['maxHp','atk','mag','def','res','spd']){
+  // A deliberately fixed encounter HP takes precedence over a role multiplier.
+  if(key==='maxHp'&&t.fixedHp!=null)continue;
+  if(Number.isFinite(stats[key]))next[key]=Math.max(1,Math.round(stats[key]*role[key]));
+ }
+ return next;
+};
+window.__mobBuildVersion='v263';
+// UPDATE_V263_END
+
 })();
 </script>
 </body>

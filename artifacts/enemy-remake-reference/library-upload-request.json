@@ -1,0 +1,39 @@
+{
+  "uploads": [
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\contact-sheet-01.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\contact-sheet-02.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\01.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\02.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\03.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\04.png"
+    },
+    {
+      "library_artifact_type": "other",
+      "purpose": "create_library_file",
+      "local_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\MOB-STORY-reference-first4.zip"
+    }
+  ]
+}

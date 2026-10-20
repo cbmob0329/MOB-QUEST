@@ -1,0 +1,78 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "results": [
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/batch04-comparison.png",
+          "file_id": "file_000000007d208230bdf4ad24a5aadd08",
+          "library_file_id": "libfile_e2a1f08465848191ba6db82bede8e98b",
+          "file_name": "batch04-comparison.png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 1184305
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/batch04-preview.png",
+          "file_id": "file_00000000e1cc8230b0190a2ced990fa8",
+          "library_file_id": "libfile_2328af742734819191bbfd5d375e284d",
+          "file_name": "batch04-preview.png",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "image/png",
+          "library_artifact_type": "other",
+          "file_size_bytes": 397214
+        },
+        {
+          "operation": "create_library_file",
+          "status": "succeeded",
+          "path": "/MOB-STORY-enemy-remake-batch04.zip",
+          "file_id": "file_0000000092e881f5842fd36cee4cf2ef",
+          "library_file_id": "libfile_926243fbd8348191acded2f69c20c4f9",
+          "file_name": "MOB-STORY-enemy-remake-batch04.zip",
+          "current_version_number": 0,
+          "restored_from_version_number": null,
+          "xattrs": [
+            {
+              "name": "user.library-file-version",
+              "value": "0"
+            }
+          ],
+          "directory_id": "libdir_ffc7eff4ea60819189b0460edb15fd50",
+          "mime_type": "application/zip",
+          "library_artifact_type": "other",
+          "file_size_bytes": 7651099
+        }
+      ],
+      "warnings": [],
+      "external_connectors_accessed": false
+    },
+    "isError": false
+  },
+  "local_xattrs": "Not applied: known Windows os.setxattr unsupported; no retry."
+}

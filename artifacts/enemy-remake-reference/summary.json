@@ -1,0 +1,672 @@
+{
+  "count": 150,
+  "sizes": [
+    {
+      "Name": "223, 401",
+      "Count": 1
+    },
+    {
+      "Name": "240, 338",
+      "Count": 1
+    },
+    {
+      "Name": "248, 398",
+      "Count": 1
+    },
+    {
+      "Name": "267, 367",
+      "Count": 1
+    },
+    {
+      "Name": "312, 222",
+      "Count": 1
+    },
+    {
+      "Name": "334, 563",
+      "Count": 1
+    },
+    {
+      "Name": "337, 297",
+      "Count": 1
+    },
+    {
+      "Name": "338, 454",
+      "Count": 1
+    },
+    {
+      "Name": "348, 367",
+      "Count": 1
+    },
+    {
+      "Name": "352, 319",
+      "Count": 1
+    },
+    {
+      "Name": "354, 377",
+      "Count": 1
+    },
+    {
+      "Name": "366, 346",
+      "Count": 1
+    },
+    {
+      "Name": "389, 402",
+      "Count": 1
+    },
+    {
+      "Name": "394, 290",
+      "Count": 1
+    },
+    {
+      "Name": "402, 492",
+      "Count": 1
+    },
+    {
+      "Name": "404, 540",
+      "Count": 1
+    },
+    {
+      "Name": "414, 301",
+      "Count": 1
+    },
+    {
+      "Name": "419, 513",
+      "Count": 1
+    },
+    {
+      "Name": "431, 316",
+      "Count": 1
+    },
+    {
+      "Name": "439, 333",
+      "Count": 1
+    },
+    {
+      "Name": "447, 389",
+      "Count": 1
+    },
+    {
+      "Name": "452, 558",
+      "Count": 1
+    },
+    {
+      "Name": "456, 348",
+      "Count": 1
+    },
+    {
+      "Name": "460, 391",
+      "Count": 1
+    },
+    {
+      "Name": "464, 337",
+      "Count": 1
+    },
+    {
+      "Name": "473, 400",
+      "Count": 1
+    },
+    {
+      "Name": "475, 343",
+      "Count": 1
+    },
+    {
+      "Name": "475, 484",
+      "Count": 1
+    },
+    {
+      "Name": "480, 345",
+      "Count": 1
+    },
+    {
+      "Name": "482, 522",
+      "Count": 1
+    },
+    {
+      "Name": "485, 500",
+      "Count": 1
+    },
+    {
+      "Name": "496, 434",
+      "Count": 1
+    },
+    {
+      "Name": "502, 723",
+      "Count": 1
+    },
+    {
+      "Name": "503, 564",
+      "Count": 1
+    },
+    {
+      "Name": "507, 570",
+      "Count": 1
+    },
+    {
+      "Name": "516, 544",
+      "Count": 1
+    },
+    {
+      "Name": "525, 448",
+      "Count": 1
+    },
+    {
+      "Name": "529, 566",
+      "Count": 1
+    },
+    {
+      "Name": "529, 594",
+      "Count": 1
+    },
+    {
+      "Name": "530, 531",
+      "Count": 1
+    },
+    {
+      "Name": "531, 539",
+      "Count": 1
+    },
+    {
+      "Name": "533, 784",
+      "Count": 1
+    },
+    {
+      "Name": "537, 557",
+      "Count": 1
+    },
+    {
+      "Name": "538, 449",
+      "Count": 1
+    },
+    {
+      "Name": "546, 606",
+      "Count": 1
+    },
+    {
+      "Name": "553, 528",
+      "Count": 1
+    },
+    {
+      "Name": "556, 515",
+      "Count": 1
+    },
+    {
+      "Name": "556, 599",
+      "Count": 1
+    },
+    {
+      "Name": "559, 425",
+      "Count": 1
+    },
+    {
+      "Name": "563, 541",
+      "Count": 1
+    },
+    {
+      "Name": "565, 740",
+      "Count": 1
+    },
+    {
+      "Name": "566, 517",
+      "Count": 1
+    },
+    {
+      "Name": "568, 561",
+      "Count": 1
+    },
+    {
+      "Name": "572, 421",
+      "Count": 1
+    },
+    {
+      "Name": "574, 536",
+      "Count": 1
+    },
+    {
+      "Name": "574, 576",
+      "Count": 1
+    },
+    {
+      "Name": "575, 562",
+      "Count": 1
+    },
+    {
+      "Name": "579, 478",
+      "Count": 1
+    },
+    {
+      "Name": "581, 579",
+      "Count": 1
+    },
+    {
+      "Name": "582, 544",
+      "Count": 1
+    },
+    {
+      "Name": "583, 590",
+      "Count": 1
+    },
+    {
+      "Name": "583, 748",
+      "Count": 1
+    },
+    {
+      "Name": "588, 627",
+      "Count": 1
+    },
+    {
+      "Name": "592, 471",
+      "Count": 1
+    },
+    {
+      "Name": "595, 588",
+      "Count": 1
+    },
+    {
+      "Name": "597, 562",
+      "Count": 1
+    },
+    {
+      "Name": "599, 440",
+      "Count": 1
+    },
+    {
+      "Name": "599, 672",
+      "Count": 1
+    },
+    {
+      "Name": "611, 908",
+      "Count": 1
+    },
+    {
+      "Name": "612, 605",
+      "Count": 1
+    },
+    {
+      "Name": "614, 559",
+      "Count": 1
+    },
+    {
+      "Name": "626, 685",
+      "Count": 1
+    },
+    {
+      "Name": "628, 566",
+      "Count": 1
+    },
+    {
+      "Name": "628, 577",
+      "Count": 1
+    },
+    {
+      "Name": "634, 896",
+      "Count": 1
+    },
+    {
+      "Name": "635, 511",
+      "Count": 1
+    },
+    {
+      "Name": "637, 890",
+      "Count": 1
+    },
+    {
+      "Name": "640, 501",
+      "Count": 1
+    },
+    {
+      "Name": "648, 638",
+      "Count": 1
+    },
+    {
+      "Name": "651, 542",
+      "Count": 1
+    },
+    {
+      "Name": "656, 726",
+      "Count": 1
+    },
+    {
+      "Name": "660, 659",
+      "Count": 1
+    },
+    {
+      "Name": "660, 852",
+      "Count": 1
+    },
+    {
+      "Name": "661, 690",
+      "Count": 1
+    },
+    {
+      "Name": "666, 865",
+      "Count": 1
+    },
+    {
+      "Name": "671, 538",
+      "Count": 1
+    },
+    {
+      "Name": "687, 389",
+      "Count": 1
+    },
+    {
+      "Name": "693, 729",
+      "Count": 1
+    },
+    {
+      "Name": "697, 725",
+      "Count": 1
+    },
+    {
+      "Name": "698, 745",
+      "Count": 1
+    },
+    {
+      "Name": "700, 467",
+      "Count": 1
+    },
+    {
+      "Name": "705, 684",
+      "Count": 1
+    },
+    {
+      "Name": "708, 826",
+      "Count": 1
+    },
+    {
+      "Name": "714, 678",
+      "Count": 1
+    },
+    {
+      "Name": "716, 569",
+      "Count": 1
+    },
+    {
+      "Name": "723, 648",
+      "Count": 1
+    },
+    {
+      "Name": "732, 659",
+      "Count": 1
+    },
+    {
+      "Name": "743, 699",
+      "Count": 1
+    },
+    {
+      "Name": "771, 868",
+      "Count": 1
+    },
+    {
+      "Name": "778, 622",
+      "Count": 1
+    },
+    {
+      "Name": "797, 773",
+      "Count": 1
+    },
+    {
+      "Name": "815, 971",
+      "Count": 1
+    },
+    {
+      "Name": "821, 679",
+      "Count": 1
+    },
+    {
+      "Name": "827, 593",
+      "Count": 1
+    },
+    {
+      "Name": "842, 1203",
+      "Count": 1
+    },
+    {
+      "Name": "866, 831",
+      "Count": 1
+    },
+    {
+      "Name": "904, 958",
+      "Count": 1
+    },
+    {
+      "Name": "932, 833",
+      "Count": 1
+    },
+    {
+      "Name": "940, 860",
+      "Count": 1
+    },
+    {
+      "Name": "943, 887",
+      "Count": 1
+    },
+    {
+      "Name": "959, 1111",
+      "Count": 1
+    },
+    {
+      "Name": "961, 625",
+      "Count": 1
+    },
+    {
+      "Name": "977, 831",
+      "Count": 1
+    },
+    {
+      "Name": "982, 775",
+      "Count": 1
+    },
+    {
+      "Name": "986, 1232",
+      "Count": 1
+    },
+    {
+      "Name": "1001, 1166",
+      "Count": 1
+    },
+    {
+      "Name": "1013, 903",
+      "Count": 1
+    },
+    {
+      "Name": "1020, 997",
+      "Count": 1
+    },
+    {
+      "Name": "1049, 1125",
+      "Count": 1
+    },
+    {
+      "Name": "1052, 908",
+      "Count": 1
+    },
+    {
+      "Name": "1066, 1106",
+      "Count": 1
+    },
+    {
+      "Name": "1068, 1146",
+      "Count": 1
+    },
+    {
+      "Name": "1075, 1137",
+      "Count": 1
+    },
+    {
+      "Name": "1083, 1072",
+      "Count": 1
+    },
+    {
+      "Name": "1098, 1168",
+      "Count": 1
+    },
+    {
+      "Name": "1107, 1051",
+      "Count": 1
+    },
+    {
+      "Name": "1107, 1117",
+      "Count": 1
+    },
+    {
+      "Name": "1111, 1067",
+      "Count": 1
+    },
+    {
+      "Name": "1115, 916",
+      "Count": 1
+    },
+    {
+      "Name": "1125, 1219",
+      "Count": 1
+    },
+    {
+      "Name": "1138, 834",
+      "Count": 1
+    },
+    {
+      "Name": "1155, 1115",
+      "Count": 1
+    },
+    {
+      "Name": "1159, 1164",
+      "Count": 1
+    },
+    {
+      "Name": "1159, 1216",
+      "Count": 1
+    },
+    {
+      "Name": "1168, 1213",
+      "Count": 1
+    },
+    {
+      "Name": "1168, 1235",
+      "Count": 1
+    },
+    {
+      "Name": "1170, 1038",
+      "Count": 1
+    },
+    {
+      "Name": "1171, 1156",
+      "Count": 1
+    },
+    {
+      "Name": "1172, 1225",
+      "Count": 1
+    },
+    {
+      "Name": "1183, 1204",
+      "Count": 1
+    },
+    {
+      "Name": "1185, 1177",
+      "Count": 1
+    },
+    {
+      "Name": "1187, 1038",
+      "Count": 1
+    },
+    {
+      "Name": "1187, 1205",
+      "Count": 1
+    },
+    {
+      "Name": "1192, 1211",
+      "Count": 1
+    },
+    {
+      "Name": "1209, 1251",
+      "Count": 1
+    },
+    {
+      "Name": "1215, 1198",
+      "Count": 1
+    },
+    {
+      "Name": "1230, 1174",
+      "Count": 1
+    },
+    {
+      "Name": "1232, 1225",
+      "Count": 1
+    },
+    {
+      "Name": "1251, 1247",
+      "Count": 1
+    },
+    {
+      "Name": "1254, 1111",
+      "Count": 1
+    }
+  ],
+  "exact_duplicate_groups": [],
+  "contact_sheets": [
+    "contact-sheet-01.png",
+    "contact-sheet-02.png"
+  ],
+  "first_four": [
+    {
+      "index": 1,
+      "filename": "01.png",
+      "width": 431,
+      "height": 316,
+      "transparent_pixels": 45295,
+      "semitransparent_pixels": 3240,
+      "opaque_pixels": 87661,
+      "bbox_x": 6,
+      "bbox_y": 0,
+      "bbox_width": 420,
+      "bbox_height": 311,
+      "sha256": "B7BF3E8468B0E9B59BF7BB2CF6FCA1589DADD600A02D5E888EA3AA5FEC5E3A20",
+      "cache_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\01.png"
+    },
+    {
+      "index": 2,
+      "filename": "02.png",
+      "width": 460,
+      "height": 391,
+      "transparent_pixels": 57484,
+      "semitransparent_pixels": 5026,
+      "opaque_pixels": 117350,
+      "bbox_x": 6,
+      "bbox_y": 5,
+      "bbox_width": 448,
+      "bbox_height": 380,
+      "sha256": "582C9DAE20CB86727E9463E44E7EB61FA9900438403EF3B8DF68FDE8E4AB8677",
+      "cache_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\02.png"
+    },
+    {
+      "index": 3,
+      "filename": "03.png",
+      "width": 1230,
+      "height": 1174,
+      "transparent_pixels": 528476,
+      "semitransparent_pixels": 912919,
+      "opaque_pixels": 2625,
+      "bbox_x": 0,
+      "bbox_y": 0,
+      "bbox_width": 1230,
+      "bbox_height": 1174,
+      "sha256": "758AD3F0231BAFA8968B8E8A837C32EE712DC34B6C8317ED4BE23112015A6F26",
+      "cache_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\03.png"
+    },
+    {
+      "index": 4,
+      "filename": "04.png",
+      "width": 961,
+      "height": 625,
+      "transparent_pixels": 291255,
+      "semitransparent_pixels": 10056,
+      "opaque_pixels": 299314,
+      "bbox_x": 0,
+      "bbox_y": 0,
+      "bbox_width": 961,
+      "bbox_height": 625,
+      "sha256": "3C995177B07C4D8CB576BD4500364F8AE1A215EF995795CC9983AFE85ACE6F1B",
+      "cache_path": "C:\\Users\\CB-Me\\Documents\\GitHub\\MOB-QUEST\\artifacts\\enemy-remake-reference\\originals\\04.png"
+    }
+  ]
+}
