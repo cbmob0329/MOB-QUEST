@@ -1,0 +1,43 @@
+{
+  "status": "PASS_INDEPENDENT_PRODUCTION_COMPOSITION_STATIC",
+  "candidate": "/workspace/scratch/f7102a0fad56/mugen_resume_20261025/candidates/harpy_normal_production_v1/harpy_normal_jus",
+  "base": "/workspace/scratch/f7102a0fad56/mugen_resume_20261025/candidates/harpy_normal_u1_full_v2_airzero/harpy_normal_jus",
+  "rekey_mapping": {
+    "33000": 29500,
+    "33600": 29501,
+    "33610": 29502,
+    "33611": 29503,
+    "33612": 29504,
+    "33613": 29505
+  },
+  "active_sff_group_fields_only": 84,
+  "sff_inverse_byte_exact": true,
+  "all312_indices_palettes_rgba_axes_exact": true,
+  "original273_sprite_payload_preserved": true,
+  "air_rekey_lines_only": 60,
+  "air_inverse_byte_exact": true,
+  "cns_changed_statedefs": [
+    1000,
+    1100,
+    1200
+  ],
+  "cns_contact_source_exact": true,
+  "cns_inverse_byte_exact": true,
+  "controller_delta": 2,
+  "statedef_delta": 0,
+  "six_U1_fade_cleanup_blocks_exact": true,
+  "untouched_ACT_CMD_common_SND_DEF_exact": true,
+  "files": {
+    "harpy_normal.cns": "06e662247043676d87f4dd12074d37fb0da98d7a5411fef4502c4deafb9427d8",
+    "README_\u65e5\u672c\u8a9e.txt": "39b5bba711f82915986241213bc92779f4fcb2c44cd60437f998b2d541bee2f8",
+    "harpy_normal.air": "ef96daf61dd2080a79a13bd4922ba0124926dc0f9b54afaab933e1e703d21c48",
+    "harpy_normal.snd": "57c3dd631f278fac52520688e2c9864e90b1d3135ca43c320563ecb524adba4e",
+    "harpy_normal.act": "bb2dcf7e2927693513c43bfbea6647ff261aaac84e0f57d2341c516b49a71901",
+    "harpy_normal.cmd": "5e1c311425b9f57e84252fd79b9a0d491b30e0f12bc6cf7b4ceff261477a6a7e",
+    "harpy_normal_common.cns": "ad1dc249557a2fe7af814b7426c59495c0f565e829570b7cfbd258e12cc1d5e7",
+    "harpy_normal.sff": "dd31c06f0aea70820f55c172ff7a3dfe9ad53475882998eee770f80b5133773a",
+    "harpy_normal_jus.def": "256fe99c9d7dd16f378e98975fb7ace088a3f19d46eeee9341376f9d38106200"
+  },
+  "runtime_tested": false,
+  "note": "Rekey is a reversible compatibility precaution, not proof high IDs caused native defect. Geometry and nominal damage/clock still follow original candidate gate."
+}

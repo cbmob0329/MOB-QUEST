@@ -1,0 +1,21 @@
+; Static-reviewed candidate; user runtime testing required.
+[Info]
+name = "DevilZoa JUS"
+displayname = "DevilZoa"
+versiondate = 10,23,2026
+mugenversion = 1.0
+author = "User-directed original JUS project"
+pal.defaults = 1
+localcoord = 512,384
+
+[Files]
+cmd = DevilZoa_JUS.cmd
+cns = DevilZoa_JUS_constants.cns
+st = DevilZoa_JUS_states.cns
+stcommon = DevilZoa_JUS_common.cns
+sprite = DevilZoa_JUS.sff
+anim = DevilZoa_JUS.air
+sound = DevilZoa_JUS.snd
+; SFF2 internal palettes and original procedural sound bank.
+
+[Arcade]

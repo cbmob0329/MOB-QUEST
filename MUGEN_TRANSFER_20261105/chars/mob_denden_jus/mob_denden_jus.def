@@ -1,0 +1,19 @@
+; FIRST ENGINE TEST PROFILE, NOT FINAL: temporary standing intro; air-cross disabled.
+[Info]
+name = "mob_denden_jus"
+displayname = "MOB DENDEN JUS TEST"
+versiondate = 10,25,2026
+mugenversion = 1.1
+author = "Original MOB DENDEN development"
+localcoord = 320,240
+[Files]
+cmd = mob_denden_jus.cmd
+cns = constants.cns
+st = states.cns
+st1 = projectiles.cns
+st2 = ai.cns
+st3 = throw.cns
+stcommon = common1.cns
+sprite = mob_denden_jus.sff
+anim = mob_denden_jus.air
+sound = mob_denden_jus.snd ; Original PCM only; technical roundtrip, NOT auditioned.

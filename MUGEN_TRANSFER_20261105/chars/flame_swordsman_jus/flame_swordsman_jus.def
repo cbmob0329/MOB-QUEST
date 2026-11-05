@@ -1,0 +1,20 @@
+[Info]
+name = "Flame Swordsman JUS"
+displayname = "Flame Swordsman JUS"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = flame_swordsman_jus.cmd
+cns = flame_swordsman_jus.cns
+st = flame_swordsman_jus.cns
+stcommon = common1.cns
+sprite = flame_swordsman_jus.sff
+anim = flame_swordsman_jus.air
+sound = flame_swordsman_jus.snd
+pal1 = flame_swordsman_jus.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

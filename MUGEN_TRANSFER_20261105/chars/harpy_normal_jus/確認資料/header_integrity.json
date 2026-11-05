@@ -1,0 +1,6 @@
+{
+  "status": "PASS_STATIC_HEADER_PATTERN_ONLY",
+  "fixtures": 6,
+  "files": 3,
+  "findings": []
+}

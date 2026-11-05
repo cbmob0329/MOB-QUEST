@@ -1,0 +1,5 @@
+﻿2026-10-26 今回の反映と確認範囲
+実機起動時Error parsing HitDef State210/Expected int value and read floatを再現。受領元sparkxyに入っていた小数21箇所を最近接整数へ修正し通常読込・Match loop init・本体表示を確認。5050不足を既存5030と同じ画像/時間/判定で補完し、ハーピィの実HitDefから被投げ解放された際のAnim5050/描画/fall1を確認。投げ解放811のfall1と、千年竜の被投げAnim15020選択も専用実接触試験で確認。
+
+証跡はjus_updates_work/serizawa_revision/phase3b/dot_girl_harpy_load（旧版エラー）、dot_girl_fixed_load（修正版通常読込）、dot_baby_harpy_load、dot_release_a、dot_release_b_v2。実画面PNGとengine.log保存。A:ENTRYmask7 CTRLmask7 RELAN5050 FALL1、B:GIRL811FALL1 BABYan15020 BABY811FALL1 GIRLan5020 FORM1 PREform1。専用fixtureは強制技開始/フォーム/配置を設定する実接触試験であり、製品には計測コードを含めない。最初のBはSelfState後の試験VarSetへ到達せずFORM0だったためfixtureの設定tickを分け、製品を変更せず再試験。
+既存技/変身/common/CMD/画像/パレットを保持。通常入力による全投げ、HP50%変身境界、KO/割込/全相手、瞬間消失全般、全被弾やサイズ統一は未完。Harpyの必須AIR欠番5件とBaby common5900のRemapPal source/dest1,1警告が既存残件。千年竜は実表示が大きく、JUS寸法の再評価が必要。今回の限定修正を全画像/全モーション完成とは呼ばない。

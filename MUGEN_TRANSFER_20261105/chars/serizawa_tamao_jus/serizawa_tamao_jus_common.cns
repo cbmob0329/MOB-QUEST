@@ -1,0 +1,999 @@
+; Audited generic common state infrastructure, re-bound to new Serizawa art. NOT ENGINE TESTED.
+
+[Statedef 0]
+type = S
+movetype = I
+physics = S
+ctrl = 1
+anim = 0
+velset = 0,0
+[State 0, Finish automatic turn]
+type = ChangeAnim
+trigger1 = Anim = 5 && AnimTime = 0
+value = 0
+[State 0, PosSet 1]
+type = PosSet
+trigger1 = 1
+y = 0
+
+[Statedef 10]
+type = C
+movetype = I
+physics = S
+ctrl = 0
+anim = 10
+velset = 0,0
+[State 10, ChangeState 3]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 11]
+type = C
+movetype = I
+physics = S
+ctrl = 1
+anim = 11
+velset = 0,0
+
+[State 11, Finish automatic crouch turn]
+type = ChangeAnim
+trigger1 = Anim = 6 && AnimTime = 0
+value = 11
+
+[Statedef 12]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 12
+velset = 0,0
+[State 12, ChangeState 6]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 20]
+type = S
+movetype = I
+physics = S
+ctrl = 1
+anim = 20
+[State 20, ChangeAnim 8]
+type = ChangeAnim
+triggerall = Anim != 21
+trigger1 = command = "holdback"
+value = 21
+[State 20, ChangeAnim 9]
+type = ChangeAnim
+triggerall = Anim != 20
+trigger1 = command = "holdfwd"
+value = 20
+[State 20, VelSet 10]
+type = VelSet
+trigger1 = command = "holdfwd"
+x = const(velocity.walk.fwd.x) * ifelse(var(0),1.2,1)
+[State 20, VelSet 11]
+type = VelSet
+trigger1 = command = "holdback"
+x = const(velocity.walk.back.x) * ifelse(var(0),1.2,1)
+[State 20, ChangeState 12]
+type = ChangeState
+trigger1 = command != "holdfwd" && command != "holdback"
+value = 0
+ctrl = 1
+
+[Statedef 40]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 40
+velset = 0,0
+[State 40, ChangeState 14]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 45
+ctrl = 1
+
+[Statedef 45]
+type = A
+movetype = I
+physics = N
+ctrl = 1
+anim = 41
+[State 45, VelSet 16]
+type = VelSet
+trigger1 = Time = 0
+y = const(velocity.jump.y) * ifelse(var(0),1.095445115,1)
+x = ifelse(command = "holdfwd",const(velocity.jump.fwd.x),ifelse(command = "holdback",const(velocity.jump.back.x),0)) * ifelse(var(0),1.2,1)
+
+[State 45, Consume actual upward edge]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = 1
+[State 45, ChangeState 17]
+type = ChangeState
+trigger1 = Time = 0
+value = 50
+ctrl = 1
+
+[Statedef 50]
+type = A
+movetype = I
+physics = N
+ctrl = 1
+anim = 41
+[State 50, ChangeAnim 19]
+type = ChangeAnim
+trigger1 = Vel Y >= 0
+triggerall = Anim != 42
+value = 42
+[State 50, VelAdd 20]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 50, ChangeState 21]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+
+[Statedef 51]
+type = A
+movetype = I
+physics = N
+ctrl = 1
+anim = 44
+[State 51, VarAdd 23]
+type = VarAdd
+trigger1 = Time = 0
+v = 10
+value = 1
+[State 51, VelSet 24]
+type = VelSet
+trigger1 = Time = 0
+y = const(velocity.airjump.y) * ifelse(var(0),1.095445115,1)
+x = ifelse(command = "holdfwd",const(velocity.airjump.fwd.x) * ifelse(var(0),1.2,1),ifelse(command = "holdback",const(velocity.airjump.back.x) * ifelse(var(0),1.2,1),Vel X))
+
+[State 51, Extra jump actual gravity while tuck plays]
+type = VelAdd
+trigger1 = Time > 0
+y = const(movement.yaccel)
+
+[State 51, Extra jump real floor exit]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 51, Consume actual upward edge]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = 1
+[State 51, ChangeState 25]
+type = ChangeState
+trigger1 = Time >= 5
+value = 50
+ctrl = 1
+
+[Statedef 52]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 47
+velset = 0,0
+[State 52, PosSet 27]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 52, ChangeState 28]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 100]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 100
+[State 100, Real forward burst]
+type = VelSet
+trigger1 = Time < 13
+x = 7.2 * ifelse(var(0),1.2,1)
+y = 0
+[State 100, Brief run invulnerability]
+type = NotHitBy
+trigger1 = Time < 6
+value = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
+ignorehitpause = 1
+
+[State 100, Short dash trail]
+type = AfterImage
+trigger1 = Time = 0
+time = 8
+length = 3
+timegap = 2
+framegap = 1
+palbright = 0,0,0
+palcontrast = 160,160,160
+trans = add
+[State 100, End burst]
+type = ChangeState
+trigger1 = Time >= 14
+value = 0
+ctrl = 1
+
+[Statedef 101]
+type = S
+movetype = I
+physics = S
+ctrl = 1
+anim = 100
+[State 101, VelSet 33]
+type = VelSet
+trigger1 = 1
+x = const(velocity.run.fwd.x) * ifelse(var(0),1.2,1)
+[State 101, ChangeState 34]
+type = ChangeState
+trigger1 = P2BodyDist X <= 35 || Time >= 24
+value = 0
+ctrl = 1
+
+[Statedef 105]
+type = A
+movetype = I
+physics = N
+ctrl = 0
+anim = 43
+[State 105, VelSet 36]
+type = VelSet
+trigger1 = Time = 0
+x = const(velocity.run.back.x) * ifelse(var(0),1.2,1)
+y = const(velocity.run.back.y) * ifelse(var(0),1.095445115,1)
+[State 105, VelAdd 37]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 105, ChangeState 38]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+
+[Statedef 120]
+type = S
+movetype = I
+physics = S
+ctrl = 1
+anim = 120
+[State 120, ChangeState 40]
+type = ChangeState
+trigger1 = Time >= 1
+value = 130
+ctrl = 1
+
+[Statedef 130]
+type = S
+movetype = I
+physics = S
+ctrl = 1
+anim = 120
+
+[State 130, Live held-back guard height]
+type = ChangeState
+trigger1 = (AILevel = 0 && command = "holddown") || (AILevel > 0 && var(25))
+value = 131
+ctrl = 1
+[State 130, ChangeState 42]
+type = ChangeState
+trigger1 = command != "holdback" && AILevel = 0
+value = 0
+ctrl = 1
+[State 130, ChangeState 43]
+type = ChangeState
+trigger1 = AILevel > 0 && var(21) = 0
+value = 0
+ctrl = 1
+
+[Statedef 131]
+type = C
+movetype = I
+physics = C
+ctrl = 1
+anim = 130
+
+[State 131, Live held-back guard height]
+type = ChangeState
+trigger1 = (AILevel = 0 && command != "holddown") || (AILevel > 0 && !var(25))
+value = 130
+ctrl = 1
+[State 131, ChangeState 45]
+type = ChangeState
+trigger1 = command != "holdback" && AILevel = 0
+value = 11
+ctrl = 1
+[State 131, ChangeState 46]
+type = ChangeState
+trigger1 = AILevel > 0 && var(21) = 0
+value = 11
+ctrl = 1
+
+[Statedef 132]
+type = A
+movetype = I
+physics = N
+ctrl = 1
+anim = 140
+[State 132, VelAdd 48]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 132, ChangeState 49]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+
+[State 132, AI leaves air guard after sampled threat]
+type = ChangeState
+trigger1 = AILevel > 0 && !var(21)
+value = 50
+ctrl = 1
+[State 132, ChangeState 50]
+type = ChangeState
+trigger1 = command != "holdback" && AILevel = 0
+value = 50
+ctrl = 1
+
+[Statedef 140]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 120
+[State 140, VelSet 52]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 140, ChangeState 53]
+type = ChangeState
+trigger1 = Time >= 1
+value = 0
+ctrl = 1
+
+[Statedef 150]
+type = S
+movetype = H
+physics = S
+ctrl = 0
+anim = 120
+[State 150, ChangeState 55]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 151
+ctrl = 0
+
+[Statedef 151]
+type = S
+movetype = H
+physics = S
+ctrl = 0
+anim = 120
+[State 151, VelSet 57]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 151, ChangeState 58]
+type = ChangeState
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+[Statedef 152]
+type = C
+movetype = H
+physics = C
+ctrl = 0
+anim = 130
+[State 152, ChangeState 60]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 153
+ctrl = 0
+
+[Statedef 153]
+type = C
+movetype = H
+physics = C
+ctrl = 0
+anim = 130
+[State 153, VelSet 62]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 153, ChangeState 63]
+type = ChangeState
+trigger1 = HitOver
+value = 11
+ctrl = 1
+
+[Statedef 154]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 140
+[State 154, ChangeState 65]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 155
+ctrl = 0
+
+[Statedef 155]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 140
+[State 155, VelSet 67]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 155, VelAdd 68]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 155, ChangeState 69]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 155, ChangeState 70]
+type = ChangeState
+trigger1 = HitOver
+value = 50
+ctrl = 1
+
+[Statedef 190]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 190
+velset = 0,0
+[State 190, AssertSpecial 72]
+type = AssertSpecial
+trigger1 = AnimTime != 0
+flag = Intro
+[State 190, ChangeState 73]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 180]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 180
+velset = 0,0
+
+
+; Explicit no-op: retain original state behaviour; MUGEN requires a controller.
+[State 180, Idle controller]
+type = Null
+trigger1 = 0
+
+[Statedef 170]
+type = L
+movetype = I
+physics = N
+ctrl = 0
+anim = 5110
+velset = 0,0
+
+
+; Explicit no-op: retain original state behaviour; MUGEN requires a controller.
+[State 170, Idle controller]
+type = Null
+trigger1 = 0
+
+[Statedef 175]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 0
+velset = 0,0
+
+
+; Explicit no-op: retain original state behaviour; MUGEN requires a controller.
+[State 175, Idle controller]
+type = Null
+trigger1 = 0
+
+[Statedef 5000]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+anim = 5000
+velset = 0,0
+[State 5000, Select visible hit reaction]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(GetHitVar(type) = 2,5005,5000) + ifelse(GetHitVar(animtype) > 1,2,GetHitVar(animtype))
+[State 5000, ChangeState 78]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 5001
+ctrl = 0
+
+[Statedef 5010]
+type = C
+movetype = H
+physics = N
+ctrl = 0
+anim = 5010
+velset = 0,0
+[State 5010, Select visible hit reaction]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5010 + ifelse(GetHitVar(animtype) > 1,2,GetHitVar(animtype))
+[State 5010, ChangeState 80]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 5011
+ctrl = 0
+
+[Statedef 5020]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5020
+velset = 0,0
+[State 5020, ChangeState 82]
+type = ChangeState
+trigger1 = HitShakeOver
+value = 5030
+ctrl = 0
+
+[Statedef 5001]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+[State 5001, VelSet 84]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5001, ChangeState 85]
+type = ChangeState
+trigger1 = !Alive || GetHitVar(fall) || Vel Y < 0
+value = 5030
+ctrl = 0
+[State 5001, VelMul 86]
+type = VelMul
+trigger1 = 1
+x = .85
+[State 5001, ChangeState 87]
+type = ChangeState
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+[Statedef 5011]
+type = C
+movetype = H
+physics = N
+ctrl = 0
+[State 5011, VelSet 89]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5011, ChangeState 90]
+type = ChangeState
+trigger1 = !Alive || GetHitVar(fall) || Vel Y < 0
+value = 5030
+ctrl = 0
+[State 5011, VelMul 91]
+type = VelMul
+trigger1 = 1
+x = .85
+[State 5011, ChangeState 92]
+type = ChangeState
+trigger1 = HitOver
+value = 11
+ctrl = 1
+
+[Statedef 5030]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+[State 5030, VelSet 94]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5030, VelAdd 95]
+type = VelAdd
+trigger1 = 1
+y = GetHitVar(yaccel)
+[State 5030, ChangeState 96]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+value = 5100
+ctrl = 0
+[State 5030, ChangeState 97]
+type = ChangeState
+trigger1 = HitOver && GetHitVar(fall)
+value = 5050
+ctrl = 0
+[State 5030, ChangeState 98]
+type = ChangeState
+trigger1 = HitOver && !GetHitVar(fall)
+value = 50
+ctrl = 1
+
+[Statedef 5040]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+[State 5040, ChangeState 100]
+type = ChangeState
+trigger1 = Time = 0
+value = 5050
+ctrl = 0
+
+[Statedef 5050]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5050
+
+[State 5050, Optional legal recovery edge]
+type = ChangeState
+triggerall = Alive && CanRecover
+triggerall = GetHitVar(fall.recover)
+triggerall = Pos Y < -12
+trigger1 = command = "recovery"
+value = 5200
+ctrl = 0
+[State 5050, VelAdd 102]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5050, ChangeState 103]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+value = 5100
+ctrl = 0
+
+[Statedef 5070]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+[State 5070, VelAdd 105]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5070, ChangeState 106]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+value = 5100
+ctrl = 0
+
+[Statedef 5080]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+[State 5080, VelAdd 108]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5080, ChangeState 109]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+value = 5100
+ctrl = 0
+
+[Statedef 5100]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5100
+velset = 0,0
+[State 5100, PosSet 111]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5100, HitFallDamage 112]
+type = HitFallDamage
+trigger1 = Time = 0
+[State 5100, ChangeState 113]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 5110
+ctrl = 0
+
+[Statedef 5110]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+velset = 0,0
+[State 5110, Clamp every floor entry]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5110, ChangeState 115]
+type = ChangeState
+trigger1 = !Alive
+value = 5150
+ctrl = 0
+[State 5110, ChangeState 116]
+type = ChangeState
+trigger1 = Alive && Time >= const(data.liedown.time)
+value = 5120
+ctrl = 0
+
+[Statedef 5120]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 5120
+velset = 0,0
+[State 5120, NotHitBy 118]
+type = NotHitBy
+trigger1 = Time < 8
+value = SCA
+time = 1
+[State 5120, ChangeState 119]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 5150]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+velset = 0,0
+
+
+; Explicit no-op: retain original state behaviour; MUGEN requires a controller.
+[State 5150, Idle controller]
+type = Null
+trigger1 = 0
+
+[Statedef 5200]
+type = A
+movetype = I
+physics = N
+ctrl = 0
+anim = 42
+
+[State 5200, Finite recovery impulse]
+type = VelSet
+trigger1 = Time = 0
+y = -4
+
+[State 5200, Recovery uses actual tuck artwork]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 5200
+[State 5200, VelAdd 122]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5200, ChangeState 123]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5200, ChangeState 124]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+[Statedef 5210]
+type = A
+movetype = I
+physics = N
+ctrl = 0
+anim = 42
+[State 5210, VelAdd 126]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5210, ChangeState 127]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5210, ChangeState 128]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+; Engine round initialization entry. No invisible fallback animation.
+[Statedef 5900]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 0
+velset = 0,0
+
+[State 5900, Fresh round root ledger]
+type = VarRangeSet
+trigger1 = Time = 0
+first = 0
+last = 59
+value = 0
+
+[State 5900, Begin intro]
+type = ChangeState
+trigger1 = Time >= 0
+value = 190
+ctrl = 0
+
+; Additional standard common entry states, all visible.
+[Statedef 106]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 47
+[State 106, Finite exit]
+type = ChangeState
+trigger1 = Time >= 4
+value = 0
+
+[Statedef 191]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 0
+[State 191, Finite exit]
+type = ChangeState
+trigger1 = Time >= 1
+value = 0
+
+[Statedef 5500]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 0
+[State 5500, Finite exit]
+type = ChangeState
+trigger1 = Time >= 1
+value = 5900
+
+[Statedef 5071]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+[State 5071, Floor]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5071, Slide friction]
+type = VelMul
+trigger1 = 1
+x = .85
+[State 5071, Lie down]
+type = ChangeState
+trigger1 = Time >= 10
+value = 5110
+
+[Statedef 5081]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+[State 5081, Floor]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5081, Slide friction]
+type = VelMul
+trigger1 = 1
+x = .85
+[State 5081, Lie down]
+type = ChangeState
+trigger1 = Time >= 10
+value = 5110
+
+[Statedef 5035]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+
+[State 5035, Gravity]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5035, Ground exit]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5100
+
+[Statedef 5101]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5100
+
+[State 5101, Actual rebound]
+type = VelSet
+trigger1 = Time = 0
+y = -2.2
+
+[State 5101, Gravity]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5101, Ground exit]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5110
+
+[Statedef 5201]
+type = A
+movetype = I
+physics = N
+ctrl = 0
+anim = 42
+
+[State 5201, Gravity]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+[State 5201, Ground exit]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+
+[State 5201, Air recovery]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1

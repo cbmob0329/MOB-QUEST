@@ -1,0 +1,16 @@
+[Info]
+name="Kanan JUS"
+displayname="Kanan"
+versiondate=10,26,2026
+mugenversion=1.1
+author="User project / Codex"
+localcoord=320,240
+pal.defaults=1
+[Files]
+cmd=kanan_jus.cmd
+cns=kanan_jus.cns
+st=kanan_jus.cns
+stcommon=common1.cns
+sprite=kanan_jus.sff
+anim=kanan_jus.air
+sound=kanan_jus.snd

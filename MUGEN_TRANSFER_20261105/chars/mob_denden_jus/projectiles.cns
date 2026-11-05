@@ -1,0 +1,2447 @@
+; LEASE_V2: finite 1v1 helpers. No damaging HitDef without single-use root lease.
+
+[Statedef 20000]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20000
+ctrl = 0
+sprpriority = 3
+
+[State 20000, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20300
+[State 20000, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20000, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Parent,var(30)
+
+[State 20000, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20000, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20000, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20000, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20000, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20000, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20000, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse(IsHelper(21000),1,2)
+
+[State 20000, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 8
+y = 0
+
+[State 20000, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20000, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20000, slot1 hit reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 1
+triggerall = Parent,var(50) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 37
+value = 240
+
+[State 20000, slot1 guard reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 1
+triggerall = Parent,var(50) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveGuarded
+trigger1 = var(1) = 0
+v = 37
+value = 40
+
+[State 20000, slot1 reward paid latch]
+type = ParentVarSet
+triggerall = var(5) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+trigger1 = var(1) = 0
+v = 50
+value = 1
+
+[State 20000, slot2 hit reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 2
+triggerall = Parent,var(51) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 37
+value = 240
+
+[State 20000, slot2 guard reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 2
+triggerall = Parent,var(51) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveGuarded
+trigger1 = var(1) = 0
+v = 37
+value = 40
+
+[State 20000, slot2 reward paid latch]
+type = ParentVarSet
+triggerall = var(5) = 2
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+trigger1 = var(1) = 0
+v = 51
+value = 1
+
+[State 20000, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20000, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20000, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 36 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20000, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20000, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20000, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20000, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20000, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 36
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20000, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20000, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 0 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20000, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20000, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20000, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20000, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, SP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20000
+
+[State 20000, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, SP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20000
+
+[State 20000, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+
+[Statedef 20002]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20002
+ctrl = 0
+sprpriority = 3
+
+[State 20002, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20300
+[State 20002, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20002, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Parent,var(30)
+
+[State 20002, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20002, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20002, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20002, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20002, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20002, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20002, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse(IsHelper(21000),1,2)
+
+[State 20002, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 7
+y = 3
+
+[State 20002, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20002, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20002, slot1 hit reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 1
+triggerall = Parent,var(50) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 37
+value = 240
+
+[State 20002, slot1 guard reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 1
+triggerall = Parent,var(50) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveGuarded
+trigger1 = var(1) = 0
+v = 37
+value = 40
+
+[State 20002, slot1 reward paid latch]
+type = ParentVarSet
+triggerall = var(5) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+trigger1 = var(1) = 0
+v = 50
+value = 1
+
+[State 20002, slot2 hit reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 2
+triggerall = Parent,var(51) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 37
+value = 240
+
+[State 20002, slot2 guard reward queue]
+type = ParentVarAdd
+triggerall = Root,Alive
+triggerall = RoundState = 2
+triggerall = var(5) = 2
+triggerall = Parent,var(51) = 0
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveGuarded
+trigger1 = var(1) = 0
+v = 37
+value = 40
+
+[State 20002, slot2 reward paid latch]
+type = ParentVarSet
+triggerall = var(5) = 2
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+trigger1 = var(1) = 0
+v = 51
+value = 1
+
+[State 20002, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20002, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20002, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 30 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20002, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20002, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20002, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20002, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20002, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 30
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20002, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20002, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 0 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20002, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20002, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20002, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20002, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, SP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20002
+
+[State 20002, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, SP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20002
+
+[State 20002, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+
+[Statedef 20100]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20100
+ctrl = 0
+sprpriority = 3
+
+[State 20100, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20310
+[State 20100, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20100, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Parent,var(30)
+
+[State 20100, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20100, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20100, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20100, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20100, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20100, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20100, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse((Parent,StateNo) = 1000 || (Parent,StateNo) = 1100,1,2)
+
+[State 20100, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 3.5
+y = 0
+
+[State 20100, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20100, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20100, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20100, AUDIO soap actual hit or block pop]
+type = PlaySnd
+triggerall = Root,var(59) = 1
+triggerall = var(1) = 0
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+value = 0,6
+channel = 2
+volumescale = 45
+loop = 0
+ignorehitpause = 0
+
+[State 20100, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20100, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 70 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20100, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20100, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20100, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20100, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20100, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 70
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20100, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20100, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 8 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20100, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20100, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20100, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20100, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20100
+
+[State 20100, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20100
+
+[State 20100, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+[State 20100, soap growth before flight]
+type = VelSet
+trigger1 = Time < 8
+x = 0
+
+[State 20100, soap flight]
+type = VelSet
+trigger1 = Time = 8
+x = 3.5
+
+
+[Statedef 20101]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20101
+ctrl = 0
+sprpriority = 3
+
+[State 20101, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20311
+[State 20101, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20101, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Parent,var(30)
+
+[State 20101, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20101, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20101, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20101, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20101, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20101, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20101, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse((Parent,StateNo) = 1000 || (Parent,StateNo) = 1100,1,2)
+
+[State 20101, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 3.5
+y = 0
+
+[State 20101, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20101, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20101, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20101, AUDIO soap actual hit or block pop]
+type = PlaySnd
+triggerall = Root,var(59) = 1
+triggerall = var(1) = 0
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+value = 0,6
+channel = 2
+volumescale = 45
+loop = 0
+ignorehitpause = 0
+
+[State 20101, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20101, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 70 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20101, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20101, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20101, unreleased standing SOAP abort]
+type = DestroySelf
+triggerall = Time < 8
+trigger1 = Root,StateNo != 3000
+trigger2 = Root,StateType != S
+trigger3 = Root,Anim != 3000
+
+[State 20101, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20101, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20101, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 70
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20101, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20101, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 8 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20101, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20101, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20101, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20101, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20101
+
+[State 20101, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20101
+
+[State 20101, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+[State 20101, soap growth before flight]
+type = VelSet
+trigger1 = Time < 8
+x = 0
+
+[State 20101, soap flight]
+type = VelSet
+trigger1 = Time = 8
+x = 3.5
+
+
+; Standing-only nondamaging charge: AIR contains five genuine scaled cels of one FX drawing.
+[Statedef 20110]
+type = A
+movetype = I
+physics = N
+anim = 20110
+ctrl = 0
+sprpriority = 3
+velset = 0,0
+
+[State 20110, birth deadline]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20110, harmless charge]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20110, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20110, close on release interruption or invalid root]
+type = DestroySelf
+trigger1 = Root,StateNo != 3000
+trigger2 = Root,StateType != S
+trigger3 = Root,Anim != 3000
+trigger4 = Root,Time >= 68
+trigger5 = Root,Time < 42
+trigger6 = Root,Alive = 0
+trigger7 = RoundState != 2
+trigger8 = Root,var(59) != 1
+trigger9 = NumEnemy != 1
+trigger10 = Root,var(3) = 1
+trigger11 = Time >= 26
+trigger12 = GameTime - var(9) >= 26
+
+[State 20110, bind puff mouth]
+type = BindToRoot
+trigger1 = Root,Time < 54
+time = 1
+facing = 1
+pos = Floor(11.15203426124197*(Root,Const(size.xscale))+.5), -Floor(61.396145610278374*(Root,Const(size.yscale))+.5)
+
+[State 20110, bind full cheeks mouth]
+type = BindToRoot
+trigger1 = Root,Time >= 54
+time = 1
+facing = 1
+pos = Floor(16.78800856531049*(Root,Const(size.xscale))+.5), -Floor(58.8779443254818*(Root,Const(size.yscale))+.5)
+
+[Statedef 20200]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20200
+ctrl = 0
+sprpriority = 3
+
+[State 20200, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20320
+[State 20200, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20200, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Parent,var(30)
+
+[State 20200, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20200, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20200, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20200, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20200, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20200, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20200, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse((Parent,StateNo) = 1000 || (Parent,StateNo) = 1100,1,2)
+
+[State 20200, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 20200, ground lightning anchor]
+type = PosSet
+trigger1 = Time = 0
+; Remove integer spawn-offset error before this helper can attack/render.
+x = (Root,fvar(20)) - CameraPos X
+y = 0
+
+[State 20200, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20200, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20200, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20200, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20200, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 2 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20200, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20200, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20200, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20200, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20200, finite travel ends]
+type = ChangeState
+trigger1 = Time >= 2
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+value = 20201
+
+[State 20200, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20200, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 0 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20200, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20200, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20200, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20200, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20200
+
+[State 20200, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20200
+
+[State 20200, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+[Statedef 20201]
+type = A
+movetype = I
+physics = N
+anim = 20201
+ctrl = 0
+sprpriority = 2
+
+[State 20201, afterglow expiry]
+type = DestroySelf
+trigger1 = Time >= 12
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+[Statedef 20300]
+type = A
+movetype = I
+physics = N
+anim = 20300
+ctrl = 0
+sprpriority = 3
+
+[State 20300, own effect impact not generic orb]
+type = ChangeAnim
+trigger1 = Time = 0
+value = var(10) ; 20300 bullet / 20310 giant SOAP pop / 20320 ground thunder impact
+[State 20300, impact stop]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 20300, final soap hard deadline]
+type = DestroySelf
+trigger1 = var(10) = 20310 || var(10) = 20311
+trigger1 = GameTime - var(9) >= 70
+[State 20300, impact expiry]
+type = DestroySelf
+trigger1 = Time >= IfElse(var(10) = 20310 || var(10) = 20311,18,8)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+; Nondamaging cinematic phase; required AIR has NO Clsn1/Clsn2.
+[Statedef 20210]
+type = A
+movetype = I
+physics = N
+anim = 20210
+ctrl = 0
+sprpriority = 3
+[State 20210, ground-origin thunder even from air cast]
+type = PosSet
+trigger1 = Time = 0
+; Remove integer spawn-offset error before this helper can attack/render.
+x = (Root,fvar(20)) - CameraPos X
+y = 0
+
+[State 20210, phase finite expiry]
+type = DestroySelf
+trigger1 = Time >= 22
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+; Nondamaging cinematic phase; required AIR has NO Clsn1/Clsn2.
+[Statedef 20220]
+type = A
+movetype = I
+physics = N
+anim = 20220
+ctrl = 0
+sprpriority = 3
+[State 20220, ground-origin thunder even from air cast]
+type = PosSet
+trigger1 = Time = 0
+; Remove integer spawn-offset error before this helper can attack/render.
+x = (Root,fvar(20)) - CameraPos X
+y = 0
+
+[State 20220, phase finite expiry]
+type = DestroySelf
+trigger1 = Time >= 36
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+; Nondamaging cinematic phase; required AIR has NO Clsn1/Clsn2.
+[Statedef 20230]
+type = A
+movetype = I
+physics = N
+anim = 20230
+ctrl = 0
+sprpriority = 3
+[State 20230, ground-origin thunder even from air cast]
+type = PosSet
+trigger1 = Time = 0
+; Remove integer spawn-offset error before this helper can attack/render.
+x = (Root,fvar(20)) - CameraPos X
+y = 0
+
+[State 20230, phase finite expiry]
+type = DestroySelf
+trigger1 = Time >= 42
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+; Nondamaging cinematic phase; required AIR has NO Clsn1/Clsn2.
+[Statedef 20240]
+type = A
+movetype = I
+physics = N
+anim = 20240
+ctrl = 0
+sprpriority = 3
+[State 20240, ground-origin thunder even from air cast]
+type = PosSet
+trigger1 = Time = 0
+; Remove integer spawn-offset error before this helper can attack/render.
+x = (Root,fvar(20)) - CameraPos X
+y = 0
+
+[State 20240, phase finite expiry]
+type = DestroySelf
+trigger1 = Time >= 38
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+
+; ELECTRIC_VISUAL_ONLY: existing thunder contact drawing reused at a fist.
+; This is an activation discharge (also on whiff), not a hit receipt.
+[Statedef 20400]
+type = A
+movetype = I
+physics = N
+anim = 20400
+ctrl = 0
+sprpriority = 3
+
+[State 20400, birth clock]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = GameTime
+
+[State 20400, stationary accent]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 20400, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20400, not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20400, finite discharge and real interruption cleanup]
+type = DestroySelf
+trigger1 = Time >= 4
+trigger2 = GameTime - var(0) >= 4
+trigger3 = (Root,Alive) = 0
+trigger4 = RoundState != 2
+trigger5 = Root,var(59) != 1
+trigger6 = NumEnemy != 1
+trigger7 = Root,MoveType = H
+trigger8 = (Root,StateNo) < 1400 || (Root,StateNo) > 1402
+trigger9 = Root,var(3) = 1
+ignorehitpause = 1
+
+; Required AIR20400 has zero Clsn1 and zero Clsn2. No HitDef, lease,
+; damage, meter, sounds, binding or opponent access occurs in this helper.
+
+; GRAND_STANDING_SOAP isolated from original shared and one-bar helpers.
+[Statedef 20102]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20101
+ctrl = 0
+sprpriority = 3
+
+[State 20102, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20311
+[State 20102, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20102, reject unknown grand producer]
+type = DestroySelf
+trigger1 = !IsHelper(21102) && !IsHelper(21103) && !IsHelper(21104)
+
+[State 20102, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = IfElse(IsHelper(21102),60,IfElse(IsHelper(21103),75,120))
+
+[State 20102, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20102, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20102, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20102, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20102, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20102, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20102, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse((Parent,StateNo) = 1000 || (Parent,StateNo) = 1100,1,2)
+
+[State 20102, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 3.5
+y = 0
+
+[State 20102, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20102, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20102, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20102, AUDIO soap actual hit or block pop]
+type = PlaySnd
+triggerall = Root,var(59) = 1
+triggerall = var(1) = 0
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+value = 0,6
+channel = 2
+volumescale = 45
+loop = 0
+ignorehitpause = 0
+
+[State 20102, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20102, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 70 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20102, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20102, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20102, unreleased standing SOAP abort]
+type = DestroySelf
+triggerall = Time < 8
+trigger1 = Root,StateNo != 3300
+trigger2 = Root,StateType != S
+trigger3 = Root,Anim != 3300
+
+[State 20102, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20102, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20300
+
+[State 20102, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 70
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20102, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20102, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 8 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20102, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20102, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20102, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20102, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20102
+
+[State 20102, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20102
+
+[State 20102, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+[State 20102, soap growth before flight]
+type = VelSet
+trigger1 = Time < 8
+x = 0
+
+[State 20102, soap flight]
+type = VelSet
+trigger1 = Time = 8
+x = 3.5
+
+
+
+[Statedef 20111]
+type = A
+movetype = I
+physics = N
+anim = 20111
+ctrl = 0
+sprpriority = 3
+velset = 0,0
+
+[State 20111, reject unknown charge producer]
+type = DestroySelf
+trigger1 = !IsHelper(21110) && !IsHelper(21111) && !IsHelper(21112)
+
+[State 20111, immutable phase start]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = IfElse(IsHelper(21110),42,IfElse(IsHelper(21111),92,120))
+
+[State 20111, immutable phase release]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = IfElse(IsHelper(21110),84,IfElse(IsHelper(21111),112,140))
+
+[State 20111, immutable mouth switch]
+type = VarSet
+trigger1 = Time = 0
+v = 2
+value = IfElse(IsHelper(21110),62,IfElse(IsHelper(21111),100,128))
+
+[State 20111, short recharge animation]
+type = ChangeAnim
+trigger1 = Time = 0
+trigger1 = !IsHelper(21110)
+value = 20112
+
+[State 20111, birth deadline]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20111, harmless charge]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20111, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20111, close before release or invalid binding]
+type = DestroySelf
+trigger1 = Root,StateNo != 3300
+trigger2 = Root,StateType != S
+trigger3 = Root,Anim != 3300
+trigger4 = (Root,Time) >= var(1)
+trigger5 = (Root,Time) < var(0)
+trigger6 = Root,Alive = 0
+trigger7 = RoundState != 2
+trigger8 = Root,var(59) != 1
+trigger9 = NumEnemy != 1
+trigger10 = Root,var(3) = 1
+trigger11 = Time >= var(1)-var(0)
+trigger12 = GameTime - var(9) >= var(1)-var(0)
+
+[State 20111, bind puff mouth]
+type = BindToRoot
+trigger1 = (Root,Time) < var(2)
+time = 1
+facing = 1
+pos = Floor(11.15203426124197*(Root,Const(size.xscale))+.5), -Floor(61.396145610278374*(Root,Const(size.yscale))+.5)
+
+[State 20111, bind full cheeks mouth]
+type = BindToRoot
+trigger1 = (Root,Time) >= var(2)
+time = 1
+facing = 1
+pos = Floor(16.78800856531049*(Root,Const(size.xscale))+.5), -Floor(58.8779443254818*(Root,Const(size.yscale))+.5)
+
+; POSTURE_SOAP isolated family; original helper prefix preserved byte-for-byte.
+[Statedef 20120]
+type = A
+movetype = A
+juggle = 1
+physics = N
+anim = 20120
+ctrl = 0
+sprpriority = -1
+
+[State 20120, POSTURE_SOAP reject unknown producer]
+type = DestroySelf
+trigger1 = !IsHelper(21120) && !IsHelper(21121) && !IsHelper(21122) && !IsHelper(21123)
+
+[State 20120, POSTURE_SOAP cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = Root,var(22)
+
+[State 20120, POSTURE_SOAP expected cast state]
+type = VarSet
+trigger1 = Time = 0
+v = 12
+value = IfElse(IsHelper(21120),3000,3300)
+
+[State 20120, POSTURE_SOAP immutable release clock]
+type = VarSet
+trigger1 = Time = 0
+v = 13
+value = IfElse(IsHelper(21120),68,IfElse(IsHelper(21121),84,IfElse(IsHelper(21122),112,140)))
+
+[State 20120, POSTURE_SOAP no automatic projectile turn]
+type = AssertSpecial
+trigger1 = 1
+flag = noautoturn
+ignorehitpause = 1
+
+[State 20120, POSTURE_SOAP cosmetic separation layer]
+type = SprPriority
+trigger1 = 1
+value = IfElse(Time >= 20 && (Pos X - (Root,Pos X))*Facing >= 85,3,-1)
+ignorehitpause = 1
+
+[State 20120, impact identity]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 20312
+[State 20120, hard visual birth tick]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20120, init damage]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = IfElse(IsHelper(21120),190,IfElse(IsHelper(21121),60,IfElse(IsHelper(21122),75,120)))
+
+[State 20120, init receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 20120, init lease]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 20120, init birth epoch]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(21)
+
+[State 20120, init armed]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 20120, init admit]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 20120, init terminal]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 20120, init skill slot]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = IfElse((Parent,StateNo) = 1000 || (Parent,StateNo) = 1100,1,2)
+
+[State 20120, initial motion]
+type = VelSet
+trigger1 = Time = 0
+x = 3.5
+y = 0
+
+[State 20120, no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20120, FX helper not a hurt actor]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20120, commit one air followup]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = MoveHit
+trigger1 = var(1) = 0
+v = 20
+value = 1
+
+[State 20120, AUDIO soap actual hit or block pop]
+type = PlaySnd
+triggerall = Root,var(59) = 1
+triggerall = var(1) = 0
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = MoveContact
+value = 0,6
+channel = 2
+volumescale = 45
+loop = 0
+ignorehitpause = 0
+
+[State 20120, contact receipt once]
+type = VarSet
+trigger1 = MoveContact
+v = 1
+value = 1
+
+[State 20120, terminal predicate]
+type = VarSet
+trigger1 = 1
+v = 8
+value = (MoveContact || Time >= 70 || FrontEdgeDist < -60 || BackEdgeDist < -60 || (Root,Alive) = 0 || RoundState != 2 || var(4) != Root,var(21) || NumEnemy != 1 || (Root,var(59)) != 1 || (Root,var(3)) = 1)
+
+[State 20120, release terminal pending lease]
+type = ParentVarAdd
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+trigger1 = var(8) = 1
+v = 38
+value = -1
+
+[State 20120, clear terminal lease ownership]
+type = VarSet
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State 20120, POSTURE_SOAP detached preflight abort]
+type = DestroySelf
+triggerall = Time < 8
+trigger1 = (Root,StateNo) != var(12)
+trigger2 = (Root,var(22)) != var(11)
+trigger3 = Root,MoveType = H
+trigger4 = (Root,fvar(29)) != 1 && (Root,fvar(29)) != 2
+trigger5 = !(((Root,StateType = S) && (Root,Anim) = var(12)) || ((Root,StateType = A) && (Root,Anim) = var(12)+10) || ((Root,StateType = C) && (Root,Anim) = var(12)+20))
+trigger6 = (Root,Time) < var(13) || (Root,Time) >= var(13)+8
+
+[State 20120, closed generation dies without new-pool decrement]
+type = DestroySelf
+trigger1 = var(4) != Root,var(21)
+trigger2 = (Root,Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = Root,var(59) != 1
+trigger6 = Root,var(3) = 1
+
+
+[State 20120, accepted contact clears active hitdef]
+type = ChangeState
+trigger1 = MoveContact
+value = 20312
+
+[State 20120, finite travel ends]
+type = DestroySelf
+trigger1 = Time >= 70
+trigger2 = FrontEdgeDist < -60
+trigger3 = BackEdgeDist < -60
+
+
+[State 20120, clear admission scratch every tick]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 20120, admission scratch]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = 1
+v = 7
+value = (Time >= 8 && var(6) = 0 && Root,var(59) = 1 && (Root,var(3)) = 0 && (Root,var(20)) + (Root,var(38)) + (Root,var(6)) < 4)
+
+[State 20120, reserve root pending slot]
+type = ParentVarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 20120, lock target collision kind]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 2
+value = (EnemyNear,StateType = A)
+
+[State 20120, own pending lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 3
+value = 1
+
+[State 20120, leased M contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 0
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = M
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20120
+
+[State 20120, leased AF contact]
+type = HitDef
+triggerall = Root,var(59) = 1
+triggerall = var(3) = 1
+triggerall = var(4) = Root,var(21)
+triggerall = var(2) = 1
+trigger1 = var(7) = 1
+attr = A, HP
+damage = var(0),0
+animtype = Medium
+hitflag = AF
+guardflag = MA
+priority = 3,Hit
+hitonce = 1
+pausetime = 0,5
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 15
+ground.velocity = -2,0
+air.velocity = -1.5,-3.2
+air.hittime = 15
+air.fall = 1
+fall.recover = 0
+getpower = 0,0
+givepower = 10,0
+ID = 20120
+
+[State 20120, mark one hitdef armed]
+type = VarSet
+trigger1 = var(7) = 1
+v = 6
+value = 1
+
+[State 20120, soap growth before flight]
+type = VelSet
+trigger1 = Time < 8
+x = 0
+
+[State 20120, soap flight]
+type = VelSet
+trigger1 = Time = 8
+x = 3.5
+
+[Statedef 20121]
+type = A
+movetype = I
+physics = N
+anim = 20121
+ctrl = 0
+sprpriority = -1
+velset = 0,0
+
+[State 20121, POSTURE_SOAP reject unknown producer]
+type = DestroySelf
+trigger1 = !IsHelper(21130) && !IsHelper(21131) && !IsHelper(21132) && !IsHelper(21133)
+
+[State 20121, POSTURE_SOAP immutable parameter 0]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = IfElse(IsHelper(21130) || IsHelper(21131),42,IfElse(IsHelper(21132),92,120))
+
+[State 20121, POSTURE_SOAP immutable parameter 1]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = IfElse(IsHelper(21130),68,IfElse(IsHelper(21131),84,IfElse(IsHelper(21132),112,140)))
+
+[State 20121, POSTURE_SOAP immutable parameter 2]
+type = VarSet
+trigger1 = Time = 0
+v = 2
+value = IfElse(IsHelper(21130),54,IfElse(IsHelper(21131),62,IfElse(IsHelper(21132),100,128)))
+
+[State 20121, POSTURE_SOAP immutable parameter 3]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = IfElse(IsHelper(21130),3000,3300)
+
+[State 20121, POSTURE_SOAP immutable parameter 4]
+type = VarSet
+trigger1 = Time = 0
+v = 4
+value = Root,var(22)
+
+[State 20121, POSTURE_SOAP immutable parameter 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = GameTime
+
+[State 20121, POSTURE_SOAP phase animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = IfElse(IsHelper(21130),20121,IfElse(IsHelper(21131),20122,20123))
+
+[State 20121, POSTURE_SOAP harmless charge]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 20121, POSTURE_SOAP no pushing]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20121, POSTURE_SOAP close before binding]
+type = DestroySelf
+trigger1 = (Root,StateNo) != var(3)
+trigger2 = (Root,var(22)) != var(4)
+trigger3 = (Root,Time) < var(0) || (Root,Time) >= var(1)
+trigger4 = (Root,Alive) = 0
+trigger5 = RoundState != 2
+trigger6 = Root,var(59) != 1
+trigger7 = NumEnemy != 1
+trigger8 = Root,var(3) = 1
+trigger9 = Root,MoveType = H
+trigger10 = (Root,fvar(29)) != 1 && (Root,fvar(29)) != 2
+trigger11 = !(((Root,StateType = S) && (Root,Anim) = var(3)) || ((Root,StateType = A) && (Root,Anim) = var(3)+10) || ((Root,StateType = C) && (Root,Anim) = var(3)+20))
+trigger12 = Time >= var(1)-var(0)
+trigger13 = GameTime - var(9) >= var(1)-var(0)
+
+[State 20121, POSTURE_SOAP actual current mouth phase 1]
+type = BindToRoot
+trigger1 = (Root,Time) < var(2)
+time = 1
+facing = 1
+pos = Floor((IfElse((Root,StateType = A),10.792291220556745,IfElse((Root,StateType = C),26.980728051391864,11.15203426124197))*(Root,Const(size.xscale)))+.5), -Floor((IfElse((Root,StateType = A),61.99571734475375,IfElse((Root,StateType = C),44.36830835117773,61.396145610278374))*(Root,Const(size.yscale)))+.5)
+
+[State 20121, POSTURE_SOAP actual current mouth phase 2]
+type = BindToRoot
+trigger1 = (Root,Time) >= var(2)
+time = 1
+facing = 1
+pos = Floor((IfElse((Root,StateType = A),15.588865096359743,IfElse((Root,StateType = C),27.700214132762312,16.78800856531049))*(Root,Const(size.xscale)))+.5), -Floor((IfElse((Root,StateType = A),62.11563169164882,IfElse((Root,StateType = C),44.36830835117773,58.8779443254818))*(Root,Const(size.yscale)))+.5)
+
+[Statedef 20312]
+type = A
+movetype = I
+physics = N
+anim = 20312
+ctrl = 0
+sprpriority = 3
+velset = 0,0
+
+[State 20312, POSTURE_SOAP finite isolated pop]
+type = DestroySelf
+trigger1 = Time >= 18
+trigger2 = GameTime - var(9) >= 70
+trigger3 = (Root,Alive) = 0
+trigger4 = RoundState != 2
+trigger5 = NumEnemy != 1
+trigger6 = Root,var(59) != 1
+trigger7 = Root,var(3) = 1
+

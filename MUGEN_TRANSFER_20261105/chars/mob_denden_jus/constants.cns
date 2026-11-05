@@ -1,0 +1,74 @@
+; Original proposed Denden tuning. Not engine-tested.
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 45
+airjuggle = 4
+sparkno = -1
+guard.sparkno = -1
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+; Internal proposal: 112 native visible px at .5 => 56 world px; not user numeric approval.
+[Size]
+xscale = .5
+yscale = .5
+ground.back = 13
+ground.front = 14
+air.back = 12
+air.front = 12
+height = 48
+attack.dist = 60
+proj.attack.dist = 110
+head.pos = 4,-38
+mid.pos = 0,-22
+shadowoffset = 0
+draw.offset = 0,0
+[Velocity]
+walk.fwd = 2.0
+walk.back = -1.5
+run.fwd = 4.8,0
+run.back = -3.2,0
+jump.neu = 0,-8.8
+jump.fwd = 2.6
+jump.back = -2.2
+airjump.neu = 0,-7.8
+airjump.fwd = 2.6
+airjump.back = -2.2
+runjump.fwd = 3.8,-8.8
+runjump.back = -2.5,-8.8
+; Explicit recovery in 320-wide coordinates; provisional, native untested.
+air.gethit.groundrecover = -.15,-3.2
+air.gethit.airrecover.mul = .5,.2
+air.gethit.airrecover.add = 0,-4
+air.gethit.airrecover.back = -1
+air.gethit.airrecover.fwd = 1
+air.gethit.airrecover.up = -2
+air.gethit.airrecover.down = 1
+[Movement]
+airjump.num = 1
+airjump.height = 0
+yaccel = .45
+stand.friction = .85
+crouch.friction = .82
+stand.friction.threshold = .05
+crouch.friction.threshold = .05
+air.gethit.groundlevel = 0
+air.gethit.airrecover.threshold = -20
+air.gethit.airrecover.yaccel = .35
+; Unused legacy Movement key; not a substitute for Velocity recovery fields.
+; air.gethit.airrecover.level = -20
+; Unused legacy Movement key; not a substitute for Velocity recovery fields.
+; air.gethit.airrecover.yvel = -4
+; Explicit common fall/recovery geometry; zero floor does not fix sprite-axis clipping.
+air.gethit.groundrecover.ground.threshold = -16
+air.gethit.groundrecover.groundlevel = 0
+air.gethit.trip.groundlevel = 0
+down.bounce.offset = 0,0
+down.bounce.yaccel = .4
+down.bounce.groundlevel = 0
+down.friction.threshold = .05

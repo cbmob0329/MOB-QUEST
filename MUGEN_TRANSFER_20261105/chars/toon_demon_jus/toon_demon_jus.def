@@ -1,0 +1,16 @@
+[Info]
+name="Toon Demon JUS"
+displayname="Toon Demon"
+versiondate=10,26,2026
+mugenversion=1.1
+author="User project / Codex"
+localcoord=320,240
+pal.defaults=1
+[Files]
+cmd=toon_demon_jus.cmd
+cns=toon_demon_jus.cns
+st=toon_demon_jus.cns
+stcommon=common1.cns
+sprite=toon_demon_jus.sff
+anim=toon_demon_jus.air
+sound=toon_demon_jus.snd

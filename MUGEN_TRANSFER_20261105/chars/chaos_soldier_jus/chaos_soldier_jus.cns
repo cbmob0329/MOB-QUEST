@@ -1,0 +1,2560 @@
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 30
+airjuggle = 12
+sparkno = 2
+guard.sparkno = 40
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+[Size]
+xscale = .6
+yscale = .6
+ground.back = 19
+ground.front = 22
+air.back = 26
+air.front = 26
+height = 70
+attack.dist = 65
+proj.attack.dist = 100
+proj.doscale = 1
+head.pos = 14,-48
+mid.pos = 0,-36
+shadowoffset = 0
+draw.offset = 0,0
+[Velocity]
+walk.fwd = 2.35
+walk.back = -1.8
+run.fwd = 4.5,0
+run.back = -3.8,-3.5
+jump.neu = 0,-7.8
+jump.back = -2.4
+jump.fwd = 2.6
+runjump.back = -2.6,-7.8
+runjump.fwd = 3.8,-7.8
+airjump.neu = 0,-6.8
+airjump.back = -2.2
+airjump.fwd = 2.4
+air.gethit.groundrecover = -.15,-3.2
+air.gethit.airrecover.mul = .5,.2
+air.gethit.airrecover.add = 0,-4
+air.gethit.airrecover.back = -1
+air.gethit.airrecover.fwd = 0
+air.gethit.airrecover.up = -2
+air.gethit.airrecover.down = 1.5
+[Movement]
+airjump.num = 1
+airjump.height = 12
+yaccel = .34
+stand.friction = .83
+crouch.friction = .82
+stand.friction.threshold = .05
+crouch.friction.threshold = .05
+air.gethit.groundlevel = 0
+air.gethit.groundrecover.ground.threshold = -16
+air.gethit.groundrecover.groundlevel = 0
+air.gethit.airrecover.threshold = -1
+air.gethit.airrecover.yaccel = .35
+air.gethit.trip.groundlevel = 0
+down.bounce.offset = 0,0
+down.bounce.yaccel = .4
+down.bounce.groundlevel = 0
+down.friction.threshold = .05
+
+[Statedef -2]
+type=S
+movetype=I
+physics=S
+
+
+
+
+[State -2, AI observed attack time]
+type=VarAdd
+triggerall=!IsHelper && AILevel>0 && NumEnemy>0
+trigger1=P2MoveType=A && var(53)<30
+v=53
+value=1
+
+[State -2, AI reset observation]
+type=VarSet
+triggerall=!IsHelper
+trigger1=RoundState!=2 || AILevel=0
+trigger2=NumEnemy>0 && P2MoveType!=A
+v=53
+value=0
+
+[State -2, AI cooldown]
+type=VarAdd
+trigger1=!IsHelper && var(50)>0
+v=50
+value=-1
+ignorehitpause=1
+
+[State -2, AI remember special]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=var(52)
+trigger1=StateNo=1000 || StateNo=1100 || StateNo=1200 || StateNo=1300 || StateNo=3000 || StateNo=3100 || StateNo=3200
+v=51
+value=StateNo
+ignorehitpause=1
+
+[State -2, AI space specials]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=var(52)
+trigger1=StateNo=1000 || StateNo=1100 || StateNo=1200 || StateNo=1300 || StateNo=3000 || StateNo=3100 || StateNo=3200
+v=50
+value=ifelse(StateNo>=3000,180,100)
+ignorehitpause=1
+
+[State -2, AI previous state]
+type=VarSet
+trigger1=!IsHelper
+v=52
+value=StateNo
+ignorehitpause=1
+[State -2, one real contact per body action]
+type=PowerAdd
+trigger1=!IsHelper && (StateNo=200 || StateNo=210 || StateNo=220 || StateNo=400 || StateNo=410 || StateNo=600 || StateNo=610 || StateNo=1000 || StateNo=1100 || StateNo=1200 || StateNo=1300) && MoveType=A && MoveContact && !var(35)
+value=ifelse(MoveHit,120,40)
+ignorehitpause=1
+
+[State -2, latch paid body action]
+type=VarSet
+trigger1=!IsHelper && (StateNo=200 || StateNo=210 || StateNo=220 || StateNo=400 || StateNo=410 || StateNo=600 || StateNo=610 || StateNo=1000 || StateNo=1100 || StateNo=1200 || StateNo=1300) && MoveType=A && MoveContact && !var(35)
+v=35
+value=1
+ignorehitpause=1
+
+[State -2, special meter]
+type=PowerAdd
+trigger1=!IsHelper && var(37)>0
+value=var(37)
+ignorehitpause=1
+
+[State -2, clear meter]
+type=VarSet
+trigger1=!IsHelper
+v=37
+value=0
+ignorehitpause=1
+
+[State -2, save armored move]
+type=VarSet
+trigger1=!IsHelper && MoveType=A && StateNo != 799 && StateNo < 4000 && Alive && RoundState=2
+v=20
+value=StateNo
+ignorehitpause=1
+
+[State -2, save animation phase]
+type=VarSet
+trigger1=!IsHelper && MoveType=A && StateNo != 799 && StateNo < 4000 && Alive && RoundState=2
+v=21
+value=AnimElemNo(0)
+ignorehitpause=1
+
+[State -2, save horizontal momentum]
+type=VarSet
+trigger1=!IsHelper && MoveType=A && StateNo != 799 && StateNo < 4000 && Alive && RoundState=2
+fv=0
+value=Vel X
+ignorehitpause=1
+
+[State -2, save vertical momentum]
+type=VarSet
+trigger1=!IsHelper && MoveType=A && StateNo != 799 && StateNo < 4000 && Alive && RoundState=2
+fv=1
+value=Vel Y
+ignorehitpause=1
+
+[State -2, attack armor excluding throws]
+type=HitOverride
+trigger1=!IsHelper && MoveType=A && StateNo != 799 && StateNo < 4000 && Alive && RoundState=2
+attr=SCA, NA, SA, HA, NP, SP, HP
+slot=0
+stateno=799
+time=1
+forceair=0
+ignorehitpause=1
+
+[State -2, guard sound]
+type=PlaySnd
+trigger1=!IsHelper && (StateNo=[150,155]) && Time=0
+value=0,4
+channel=2
+
+[State -2, effect]
+type=Explod
+trigger1=!IsHelper && MoveType=H && Time=0 && StateNo!=799
+anim=8210
+pos=0,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.5,.5
+
+[Statedef 799]
+type=U
+movetype=H
+physics=N
+ctrl=0
+
+[State 799, armor impact]
+type=PlaySnd
+trigger1=Time=0
+value=0,4
+channel=2
+
+[State 799, effect]
+type=Explod
+trigger1=Time=0
+anim=8210
+pos=0,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.5,.5
+
+[State 799, resume flag]
+type=VarSet
+trigger1=Time>=1 && Alive
+v=24
+value=1
+
+[State 799, resume attack]
+type=ChangeState
+trigger1=Time>=1 && Alive
+value=var(20)
+ctrl=0
+
+[State 799, armor cannot prevent KO]
+type=ChangeState
+trigger1=!Alive
+value=5050
+
+[Statedef 100]
+type=S
+movetype=I
+physics=S
+anim=100
+ctrl=0
+
+[State 100, run]
+type=VelSet
+trigger1=1
+x=4.5
+y=0
+
+[State 100, end]
+type=ChangeState
+trigger1=Time>=18 || (AILevel=0 && command!="holdfwd") || (AILevel>0 && P2BodyDist X<48)
+value=0
+ctrl=1
+
+[Statedef 105]
+type=A
+movetype=I
+physics=A
+anim=105
+ctrl=0
+
+[State 105, hop]
+type=VelSet
+trigger1=Time=0
+x=-3.8
+y=-3.5
+
+[State 105, land]
+type=ChangeState
+trigger1=Pos Y>=0 && Vel Y>0
+value=52
+ctrl=1
+
+[Statedef 170]
+type=S
+movetype=I
+physics=S
+anim=170
+ctrl=0
+velset=0,0
+
+[State 170, hold pose]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[Statedef 180]
+type=S
+movetype=I
+physics=S
+anim=180
+ctrl=0
+velset=0,0
+
+[State 180, hold pose]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[Statedef 181]
+type=S
+movetype=I
+physics=S
+anim=181
+ctrl=0
+velset=0,0
+
+[State 181, hold pose]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[Statedef 190]
+type=S
+movetype=I
+physics=S
+anim=190
+ctrl=0
+velset=0,0
+
+[State 190, hold pose]
+type=VelSet
+trigger1=1
+x=0
+y=0
+
+[State 190, intro]
+type=AssertSpecial
+trigger1=Time<37
+flag=intro
+
+[State 190, ready]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 200]
+type=S
+movetype=A
+physics=S
+anim=200
+ctrl=0
+juggle=2
+
+[State 200, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=200
+elem=var(21)
+
+[State 200, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 200, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 200, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 200, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 200, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 200, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 200, sword hit]
+type=HitDef
+trigger1=var(10)=8
+attr=S, NA
+hitflag=MAF
+guardflag=MA
+damage=45,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2.5
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 200, effect]
+type=Explod
+trigger1=var(10)=8
+anim=8300
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 200, sword sound]
+type=PlaySnd
+trigger1=var(10)=8
+value=0,0
+channel=1
+
+[State 200, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 200, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 210]
+type=S
+movetype=A
+physics=S
+anim=210
+ctrl=0
+juggle=2
+
+[State 210, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=210
+elem=var(21)
+
+[State 210, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 210, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 210, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 210, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 210, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 210, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 210, sword hit]
+type=HitDef
+trigger1=var(10)=10
+attr=S, NA
+hitflag=MAF
+guardflag=MA
+damage=75,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 210, effect]
+type=Explod
+trigger1=var(10)=10
+anim=8301
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 210, sword sound]
+type=PlaySnd
+trigger1=var(10)=10
+value=0,0
+channel=1
+
+[State 210, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 210, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 220]
+type=S
+movetype=A
+physics=S
+anim=220
+ctrl=0
+juggle=2
+
+[State 220, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=220
+elem=var(21)
+
+[State 220, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 220, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 220, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 220, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 220, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 220, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 220, sword hit]
+type=HitDef
+trigger1=var(10)=5
+attr=S, NA
+hitflag=MAF
+guardflag=MA
+damage=65,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2.5
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 220, effect]
+type=Explod
+trigger1=var(10)=5
+anim=8302
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 220, sword sound]
+type=PlaySnd
+trigger1=var(10)=5
+value=0,0
+channel=1
+
+[State 220, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 220, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 400]
+type=C
+movetype=A
+physics=S
+anim=400
+ctrl=0
+juggle=2
+
+[State 400, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=400
+elem=var(21)
+
+[State 400, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 400, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 400, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 400, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 400, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 400, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 400, sword hit]
+type=HitDef
+trigger1=var(10)=5
+attr=C, NA
+hitflag=MAF
+guardflag=LA
+damage=40,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2.5
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 400, effect]
+type=Explod
+trigger1=var(10)=5
+anim=8300
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 400, sword sound]
+type=PlaySnd
+trigger1=var(10)=5
+value=0,0
+channel=1
+
+[State 400, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 400, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 410]
+type=C
+movetype=A
+physics=S
+anim=410
+ctrl=0
+juggle=2
+
+[State 410, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=410
+elem=var(21)
+
+[State 410, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 410, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 410, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 410, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 410, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 410, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 410, sword hit]
+type=HitDef
+trigger1=var(10)=6
+attr=C, NA
+hitflag=MAF
+guardflag=MA
+damage=65,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 410, effect]
+type=Explod
+trigger1=var(10)=6
+anim=8301
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 410, sword sound]
+type=PlaySnd
+trigger1=var(10)=6
+value=0,0
+channel=1
+
+[State 410, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 410, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 600]
+type=A
+movetype=A
+physics=A
+anim=600
+ctrl=0
+juggle=2
+
+[State 600, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=600
+elem=var(21)
+
+[State 600, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 600, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 600, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 600, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 600, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 600, sword hit]
+type=HitDef
+trigger1=var(10)=5
+attr=A, NA
+hitflag=MAF
+guardflag=MA
+damage=50,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2.5
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 600, effect]
+type=Explod
+trigger1=var(10)=5
+anim=8300
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 600, sword sound]
+type=PlaySnd
+trigger1=var(10)=5
+value=0,0
+channel=1
+
+[State 600, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 600, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=50
+ctrl=1
+
+[State 600, land]
+type=ChangeState
+trigger1=var(10)>6 && Pos Y>=0 && Vel Y>0
+value=52
+ctrl=1
+
+[Statedef 610]
+type=A
+movetype=A
+physics=A
+anim=610
+ctrl=0
+juggle=2
+
+[State 610, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=610
+elem=var(21)
+
+[State 610, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 610, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 610, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 610, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 610, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 610, sword hit]
+type=HitDef
+trigger1=var(10)=6
+attr=A, NA
+hitflag=MAF
+guardflag=MA
+damage=65,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 610, effect]
+type=Explod
+trigger1=var(10)=6
+anim=8302
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 610, sword sound]
+type=PlaySnd
+trigger1=var(10)=6
+value=0,0
+channel=1
+
+[State 610, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 610, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=50
+ctrl=1
+
+[State 610, land]
+type=ChangeState
+trigger1=var(10)>6 && Pos Y>=0 && Vel Y>0
+value=52
+ctrl=1
+
+[Statedef 1000]
+type=S
+movetype=A
+physics=S
+anim=1000
+ctrl=0
+juggle=2
+
+[State 1000, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=1000
+elem=var(21)
+
+[State 1000, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 1000, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 1000, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 1000, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 1000, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 1000, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 1000, energy blade]
+type=Helper
+trigger1=var(10)=12
+name="Chaos energy"
+ID=8000
+stateno=8000
+pos=30,-38
+postype=p1
+keyctrl=0
+ownpal=1
+size.xscale=.5
+size.yscale=.5
+
+[State 1000, blade sound]
+type=PlaySnd
+trigger1=var(10)=12
+value=0,2
+channel=1
+
+[State 1000, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 1000, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 1100]
+type=S
+movetype=A
+physics=S
+anim=1100
+ctrl=0
+juggle=2
+
+[State 1100, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=1100
+elem=var(21)
+
+[State 1100, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 1100, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 1100, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 1100, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 1100, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 1100, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 1100, advance]
+type=VelSet
+trigger1=var(10)>=6 && var(10)<24
+x=ifelse(P2BodyDist X>18,4.6,0)
+
+[State 1100, sword hit]
+type=HitDef
+trigger1=var(10)=6
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=100,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1100, effect]
+type=Explod
+trigger1=var(10)=6
+anim=8301
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1100, sword sound]
+type=PlaySnd
+trigger1=var(10)=6
+value=0,0
+channel=1
+
+[State 1100, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 1100, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 1200]
+type=S
+movetype=A
+physics=S
+anim=1200
+ctrl=0
+juggle=2
+
+[State 1200, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=1200
+elem=var(21)
+
+[State 1200, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 1200, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 1200, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 1200, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 1200, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 1200, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 1200, rise]
+type=VelSet
+trigger1=var(10)=5
+x=2
+y=-5.5
+
+[State 1200, air physics]
+type=StateTypeSet
+trigger1=var(10)>=5
+statetype=A
+physics=A
+
+[State 1200, sword hit]
+type=HitDef
+trigger1=var(10)=5
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=55,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1200, effect]
+type=Explod
+trigger1=var(10)=5
+anim=8302
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1200, sword sound]
+type=PlaySnd
+trigger1=var(10)=5
+value=0,0
+channel=1
+
+[State 1200, sword hit]
+type=HitDef
+trigger1=var(10)=13
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=55,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-2,-5
+air.hittime=23
+air.velocity=-.8,-3
+fall=1
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1200, effect]
+type=Explod
+trigger1=var(10)=13
+anim=8302
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1200, sword sound]
+type=PlaySnd
+trigger1=var(10)=13
+value=0,0
+channel=1
+
+[State 1200, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 1200, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=50
+ctrl=1
+
+[State 1200, land]
+type=ChangeState
+trigger1=var(10)>6 && Pos Y>=0 && Vel Y>0
+value=52
+ctrl=1
+
+[Statedef 1300]
+type=S
+movetype=A
+physics=S
+anim=1300
+ctrl=0
+juggle=2
+
+[State 1300, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=1300
+elem=var(21)
+
+[State 1300, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+
+[State 1300, fresh action receipt]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=35
+value=0
+ignorehitpause=1
+
+[State 1300, discard inherited contact on genuine entry]
+type=MoveHitReset
+trigger1=Time=0 && !var(24)
+
+ignorehitpause=1
+
+[State 1300, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 1300, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 1300, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 1300, advance]
+type=VelSet
+trigger1=var(10)>=6 && var(10)<24
+x=ifelse(P2BodyDist X>18,3.6,0)
+
+[State 1300, sword hit]
+type=HitDef
+trigger1=var(10)=6
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=35,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1300, effect]
+type=Explod
+trigger1=var(10)=6
+anim=8303
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1300, sword sound]
+type=PlaySnd
+trigger1=var(10)=6
+value=0,0
+channel=1
+
+[State 1300, sword hit]
+type=HitDef
+trigger1=var(10)=15
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=35,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1300, effect]
+type=Explod
+trigger1=var(10)=15
+anim=8303
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1300, sword sound]
+type=PlaySnd
+trigger1=var(10)=15
+value=0,0
+channel=1
+
+[State 1300, sword hit]
+type=HitDef
+trigger1=var(10)=20
+attr=S, SA
+hitflag=MAF
+guardflag=MA
+damage=35,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 1300, effect]
+type=Explod
+trigger1=var(10)=20
+anim=8303
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.45,.45
+
+[State 1300, sword sound]
+type=PlaySnd
+trigger1=var(10)=20
+value=0,0
+channel=1
+
+[State 1300, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 1300, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 3000]
+type=S
+movetype=A
+physics=S
+anim=3000
+ctrl=0
+juggle=2
+
+[State 3000, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=3000
+elem=var(21)
+
+[State 3000, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+[State 3000, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 3000, super cost]
+type=PowerAdd
+trigger1=Time=0 && !var(24)
+value=-1000
+
+[State 3000, super freeze]
+type=SuperPause
+trigger1=Time=0 && !var(24)
+time=54
+movetime=0
+anim=-1
+darken=1
+p2defmul=1
+
+[State 3000, dedicated cinematic portrait]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=9100
+ID=9100
+postype=left
+pos=0,54
+facing=1
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=10
+ontop=1
+scale=.416667,.416667
+
+[State 3000, cutin energy surround]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=8310
+postype=left
+pos=160,110
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=11
+ontop=1
+scale=1.8,.75
+trans=addalpha
+alpha=64,256
+
+[State 3000, super sound]
+type=PlaySnd
+trigger1=Time=0 && !var(24)
+value=0,3
+channel=1
+
+[State 3000, effect]
+type=Explod
+trigger1=var(10)=8
+anim=8310
+pos=0,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3000, finishing impact shake]
+type=EnvShake
+trigger1=var(10)=71
+time=16
+ampl=-5
+freq=75
+
+[State 3000, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 3000, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 3000, effect]
+type=Explod
+trigger1=var(10)=71
+anim=8310
+pos=15,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3000, energy blade]
+type=Helper
+trigger1=var(10)=71
+name="Chaos energy"
+ID=8001
+stateno=8001
+pos=30,-38
+postype=p1
+keyctrl=0
+ownpal=1
+size.xscale=.5
+size.yscale=.5
+
+[State 3000, blade sound]
+type=PlaySnd
+trigger1=var(10)=71
+value=0,2
+channel=1
+
+[State 3000, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 3000, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 3100]
+type=S
+movetype=A
+physics=S
+anim=3100
+ctrl=0
+juggle=2
+
+[State 3100, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=3100
+elem=var(21)
+
+[State 3100, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+[State 3100, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 3100, super cost]
+type=PowerAdd
+trigger1=Time=0 && !var(24)
+value=-1000
+
+[State 3100, super freeze]
+type=SuperPause
+trigger1=Time=0 && !var(24)
+time=54
+movetime=0
+anim=-1
+darken=1
+p2defmul=1
+
+[State 3100, dedicated cinematic portrait]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=9101
+ID=9100
+postype=left
+pos=0,54
+facing=1
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=10
+ontop=1
+scale=.416667,.416667
+
+[State 3100, cutin energy surround]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=8311
+postype=left
+pos=160,110
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=11
+ontop=1
+scale=1.8,.75
+trans=addalpha
+alpha=64,256
+
+[State 3100, super sound]
+type=PlaySnd
+trigger1=Time=0 && !var(24)
+value=0,3
+channel=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=8
+anim=8311
+pos=0,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, finishing impact shake]
+type=EnvShake
+trigger1=var(10)=79
+time=16
+ampl=-5
+freq=75
+
+[State 3100, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 3100, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 3100, advance]
+type=VelSet
+trigger1=var(10)>=6 && var(10)<74
+x=ifelse(P2BodyDist X>18,2.2,0)
+
+[State 3100, sword hit]
+type=HitDef
+trigger1=var(10)=19
+attr=S, HA
+hitflag=MAF
+guardflag=MA
+damage=48,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=19
+anim=8311
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, sword sound]
+type=PlaySnd
+trigger1=var(10)=19
+value=0,0
+channel=1
+
+[State 3100, sword hit]
+type=HitDef
+trigger1=var(10)=31
+attr=S, HA
+hitflag=MAF
+guardflag=MA
+damage=48,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=31
+anim=8311
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, sword sound]
+type=PlaySnd
+trigger1=var(10)=31
+value=0,0
+channel=1
+
+[State 3100, sword hit]
+type=HitDef
+trigger1=var(10)=45
+attr=S, HA
+hitflag=MAF
+guardflag=MA
+damage=48,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=45
+anim=8311
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, sword sound]
+type=PlaySnd
+trigger1=var(10)=45
+value=0,0
+channel=1
+
+[State 3100, sword hit]
+type=HitDef
+trigger1=var(10)=61
+attr=S, HA
+hitflag=MAF
+guardflag=MA
+damage=48,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=61
+anim=8311
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, sword sound]
+type=PlaySnd
+trigger1=var(10)=61
+value=0,0
+channel=1
+
+[State 3100, sword hit]
+type=HitDef
+trigger1=var(10)=79
+attr=S, HA
+hitflag=MAF
+guardflag=MA
+damage=48,5
+pausetime=6,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=23
+ground.slidetime=12
+ground.velocity=-.7
+air.hittime=23
+air.velocity=-.8,-3
+fall=0
+air.fall=1
+fall.recover=1
+getpower=0,0
+givepower=15,10
+hitonce=1
+
+[State 3100, effect]
+type=Explod
+trigger1=var(10)=79
+anim=8311
+pos=20,-30
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3100, sword sound]
+type=PlaySnd
+trigger1=var(10)=79
+value=0,0
+channel=1
+
+[State 3100, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 3100, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 3200]
+type=S
+movetype=A
+physics=S
+anim=3200
+ctrl=0
+juggle=2
+
+[State 3200, restore animation after armored contact]
+type=ChangeAnim
+trigger1=Time=0 && var(24)
+value=3200
+elem=var(21)
+
+[State 3200, restore momentum]
+type=VelSet
+trigger1=Time=0 && var(24)
+x=fvar(0)
+y=fvar(1)
+
+[State 3200, new move clock]
+type=VarSet
+trigger1=Time=0 && !var(24)
+v=10
+value=0
+
+[State 3200, super cost]
+type=PowerAdd
+trigger1=Time=0 && !var(24)
+value=-2000
+
+[State 3200, super freeze]
+type=SuperPause
+trigger1=Time=0 && !var(24)
+time=54
+movetime=0
+anim=-1
+darken=1
+p2defmul=1
+
+[State 3200, dedicated cinematic portrait]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=9102
+ID=9100
+postype=left
+pos=0,54
+facing=1
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=10
+ontop=1
+scale=.416667,.416667
+
+[State 3200, cutin energy surround]
+type=Explod
+trigger1=Time=0 && !var(24)
+anim=8312
+postype=left
+pos=160,110
+bindtime=-1
+removetime=54
+supermovetime=54
+pausemovetime=54
+ownpal=1
+sprpriority=11
+ontop=1
+scale=1.8,.75
+trans=addalpha
+alpha=64,256
+
+[State 3200, super sound]
+type=PlaySnd
+trigger1=Time=0 && !var(24)
+value=0,3
+channel=1
+
+[State 3200, effect]
+type=Explod
+trigger1=var(10)=8
+anim=8312
+pos=0,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3200, finishing impact shake]
+type=EnvShake
+trigger1=var(10)=98
+time=16
+ampl=-5
+freq=75
+
+[State 3200, clear resume]
+type=VarSet
+trigger1=Time=0
+v=24
+value=0
+
+[State 3200, stop]
+type=VelSet
+trigger1=var(10)=0
+x=0
+y=0
+
+[State 3200, effect]
+type=Explod
+trigger1=var(10)=82
+anim=8312
+pos=15,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3200, energy blade]
+type=Helper
+trigger1=var(10)=82
+name="Chaos energy"
+ID=8002
+stateno=8002
+pos=35,0
+postype=p1
+keyctrl=0
+ownpal=1
+size.xscale=.5
+size.yscale=.5
+
+[State 3200, blade sound]
+type=PlaySnd
+trigger1=var(10)=82
+value=0,2
+channel=1
+
+[State 3200, effect]
+type=Explod
+trigger1=var(10)=90
+anim=8312
+pos=15,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3200, energy blade]
+type=Helper
+trigger1=var(10)=90
+name="Chaos energy"
+ID=8002
+stateno=8002
+pos=90,0
+postype=p1
+keyctrl=0
+ownpal=1
+size.xscale=.5
+size.yscale=.5
+
+[State 3200, blade sound]
+type=PlaySnd
+trigger1=var(10)=90
+value=0,2
+channel=1
+
+[State 3200, effect]
+type=Explod
+trigger1=var(10)=98
+anim=8312
+pos=15,-35
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=1,1
+
+[State 3200, energy blade]
+type=Helper
+trigger1=var(10)=98
+name="Chaos energy"
+ID=8002
+stateno=8002
+pos=145,0
+postype=p1
+keyctrl=0
+ownpal=1
+size.xscale=.5
+size.yscale=.5
+
+[State 3200, blade sound]
+type=PlaySnd
+trigger1=var(10)=98
+value=0,2
+channel=1
+
+[State 3200, clock]
+type=VarAdd
+trigger1=1
+v=10
+value=1
+
+[State 3200, recover]
+type=ChangeState
+trigger1=AnimTime=0
+value=0
+ctrl=1
+
+[Statedef 8000]
+type=S
+movetype=A
+physics=N
+anim=8000
+ctrl=0
+velset=6,0
+
+[State 8000, remember special meter eligibility]
+type=VarSet
+trigger1=Time=0
+v=0
+value=(Parent,StateNo)<3000
+
+[State 8000, no push]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State 8000, energy contact]
+type=HitDef
+trigger1=Time=0
+attr=S, SP
+hitflag=MAF
+guardflag=MA
+damage=90,10
+pausetime=0,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=24
+ground.slidetime=12
+ground.velocity=-1
+air.hittime=24
+air.velocity=-1,-3
+fall=0
+air.fall=1
+hitonce=1
+getpower=0,0
+givepower=20,10
+
+[State 8000, special meter]
+type=ParentVarAdd
+trigger1=MoveContact && var(0)
+v=37
+value=ifelse(MoveHit,120,40)
+persistent=0
+ignorehitpause=1
+
+[State 8000, effect]
+type=Explod
+trigger1=MoveContact
+anim=8210
+pos=0,0
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.5,.5
+
+[State 8000, cleanup]
+type=DestroySelf
+trigger1=RoundState!=2 || MoveContact || Time>65 || FrontEdgeBodyDist<-90
+
+[Statedef 8001]
+type=S
+movetype=A
+physics=N
+anim=8001
+ctrl=0
+velset=8,0
+
+[State 8001, remember special meter eligibility]
+type=VarSet
+trigger1=Time=0
+v=0
+value=(Parent,StateNo)<3000
+
+[State 8001, large blade visual]
+type=AngleDraw
+trigger1=1
+scale=2.4,2.4
+
+[State 8001, no push]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State 8001, energy contact]
+type=HitDef
+trigger1=Time=0
+attr=S, HP
+hitflag=MAF
+guardflag=MA
+damage=280,10
+pausetime=0,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=24
+ground.slidetime=12
+ground.velocity=-3,-4
+air.hittime=24
+air.velocity=-1,-3
+fall=1
+air.fall=1
+hitonce=1
+getpower=0,0
+givepower=20,10
+
+[State 8001, effect]
+type=Explod
+trigger1=MoveContact
+anim=8210
+pos=0,0
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.5,.5
+
+[State 8001, cleanup]
+type=DestroySelf
+trigger1=RoundState!=2 || MoveContact || Time>65 || FrontEdgeBodyDist<-90
+
+[Statedef 8002]
+type=S
+movetype=A
+physics=N
+anim=8002
+ctrl=0
+velset=0,0
+
+[State 8002, remember special meter eligibility]
+type=VarSet
+trigger1=Time=0
+v=0
+value=(Parent,StateNo)<3000
+
+[State 8002, no push]
+type=PlayerPush
+trigger1=1
+value=0
+
+[State 8002, energy contact]
+type=HitDef
+trigger1=Time=0
+attr=S, HP
+hitflag=MAF
+guardflag=MA
+damage=100,10
+pausetime=0,9
+sparkno=-1
+guard.sparkno=40
+hitsound=S0,1
+guardsound=S0,4
+ground.type=High
+ground.hittime=24
+ground.slidetime=12
+ground.velocity=-1
+air.hittime=24
+air.velocity=-1,-3
+fall=0
+air.fall=1
+hitonce=1
+getpower=0,0
+givepower=20,10
+
+[State 8002, effect]
+type=Explod
+trigger1=MoveContact
+anim=8210
+pos=0,0
+postype=p1
+bindtime=1
+removetime=-2
+ownpal=1
+sprpriority=3
+scale=.5,.5
+
+[State 8002, cleanup]
+type=DestroySelf
+trigger1=RoundState!=2 || AnimTime=0

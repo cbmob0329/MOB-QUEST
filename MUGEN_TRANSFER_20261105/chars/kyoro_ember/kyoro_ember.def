@@ -1,0 +1,19 @@
+[Info]
+name = "KYORO EMBER"
+displayname = "キョロゾー"
+versiondate = 10,22,2026
+mugenversion = 1.0
+author = "Original KYORO project"
+localcoord = 320,240
+pal.defaults = 1,2,3,4,5,6
+[Files]
+cmd = ember.cmd
+cns = ember.cns
+st = ember.cns
+stcommon = common1.cns
+sprite = ember.sff
+anim = ember.air
+sound = ember.snd
+[Arcade]
+intro.storyboard =
+ending.storyboard =

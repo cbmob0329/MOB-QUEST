@@ -1,0 +1,25 @@
+[Info]
+name = "MOB Patty Red"
+displayname = "MOB Patty Red"
+versiondate = 10,22,2026
+mugenversion = 1.0
+author = "Original MOB project"
+localcoord = 320,240
+pal.defaults = 1,2,3,4,5,6
+[Files]
+cmd = patty_red.cmd
+cns = patty_red.cns
+st = patty_red.cns
+stcommon = common1.cns
+sprite = patty_red.sff
+anim = patty_red.air
+sound = patty_red.snd
+pal1 = patty_red.act
+pal2 = patty_red.act
+pal3 = patty_red.act
+pal4 = patty_red.act
+pal5 = patty_red.act
+pal6 = patty_red.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

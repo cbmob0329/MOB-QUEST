@@ -1,0 +1,52 @@
+; Internal proposed engine constants. No DEF/installable character yet.
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 0
+liedown.time = 30
+airjuggle = 4
+sparkno = 2
+guard.sparkno = 40
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+
+[Size]
+xscale = .5
+yscale = .5
+ground.back = 30
+ground.front = 35
+air.back = 28
+air.front = 32
+height = 78
+attack.dist = 85
+proj.attack.dist = 90
+proj.doscale = 0
+head.pos = 0,-76
+mid.pos = 0,-42
+shadowoffset = 0
+draw.offset = 0,0
+
+[Velocity]
+walk.fwd = 2.185
+walk.back = -1.61
+run.fwd = 3.565,0
+run.back = -3.22,-4
+jump.neu = 0,-7.84
+jump.back = -2.76
+jump.fwd = 2.76
+runjump.back = -2.76,-7.84
+runjump.fwd = 3.565,-7.84
+airjump.neu = 0,-6.72
+airjump.back = -2.76
+airjump.fwd = 2.76
+
+[Movement]
+airjump.num = 1
+airjump.height = 12
+yaccel = .42
+stand.friction = .85
+crouch.friction = .82

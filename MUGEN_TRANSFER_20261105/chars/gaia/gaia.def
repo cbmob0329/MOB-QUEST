@@ -1,0 +1,20 @@
+[Info]
+name = "Gaia Mounted"
+displayname = "Gaia Mounted approved168 candidate"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = gaia.cmd
+cns = gaia.cns
+st = gaia.cns
+stcommon = common1.cns
+sprite = gaia.sff
+anim = gaia.air
+sound = gaia.snd
+pal1 = gaia.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

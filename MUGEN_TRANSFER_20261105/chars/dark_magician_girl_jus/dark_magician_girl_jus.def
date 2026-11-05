@@ -1,0 +1,17 @@
+; Full eight-move source build; no engine playtest.
+[Info]
+name = "Dark Magician Girl"
+displayname = "Dark Magician Girl JUS"
+versiondate = 10,23,2026
+mugenversion = 1.0
+author = "JUS character project"
+localcoord = 320,240
+[Files]
+cmd = dark_magician_girl_jus.cmd
+cns = dark_magician_girl_jus.cns
+st = dark_magician_girl_jus.cns
+stcommon = dark_magician_girl_jus_common.cns
+sprite = dark_magician_girl_jus.sff
+anim = dark_magician_girl_jus.air
+pal1 = dark_magician_girl_jus.act
+sound = dark_magician_girl_jus.snd

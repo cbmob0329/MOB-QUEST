@@ -1,0 +1,2860 @@
+; DENDEN PARTIAL CORE STAGING - NOT PLAYABLE - DO NOT BIND DEF
+; Candidate durations authored here, not recovered/authoritative original AIR.
+; Native112 detail @ CNS .5. Axes96,136. All AIR offsets0,0.
+; Every cel explicitly clears Clsn1 unless its real contact flag is set.
+; Missing STOW travel remains a quality blocker; no fabricated frames.
+; Root approved B00 compression/takeoff, B06/B07 landing reuse; no new drawing count.
+; Root approved finite5/6 held-pose reuse, compatibility11/12; no new turn/standup art.
+;142 uses ONE neutral air cel so common State51 can retain it without guard-neutral repeat jitter.
+
+[Begin Action 0]
+LoopStart
+; idle; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 20
+; I01_inhale; start tick 20; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,1, 0,0, 20
+; I02_peak; start tick 40; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,2, 0,0, 20
+; I03_exhale; start tick 60; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,3, 0,0, 20
+
+[Begin Action 5]
+; idle; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 3
+
+[Begin Action 6]
+; B00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, 3
+
+[Begin Action 10]
+; B00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, -1
+
+[Begin Action 11]
+; B00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, -1
+
+[Begin Action 12]
+; B00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, 2
+; idle; start tick 2; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 2
+
+[Begin Action 20]
+LoopStart
+; W00_contact; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,0, 0,0, 2
+; W01_compress; start tick 2; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,1, 0,0, 2
+; W02_passing; start tick 4; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,2, 0,0, 2
+; W03_opposite_contact_v2; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,3, 0,0, 2
+; W04_opposite_compress; start tick 8; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,4, 0,0, 2
+; W05_passing_return; start tick 10; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,5, 0,0, 2
+
+[Begin Action 21]
+LoopStart
+; W00_contact; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,0, 0,0, 3
+; W05_passing_return; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,5, 0,0, 3
+; W04_opposite_compress; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,4, 0,0, 3
+; W03_opposite_contact_v2; start tick 9; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,3, 0,0, 3
+; W02_passing; start tick 12; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,2, 0,0, 3
+; W01_compress; start tick 15; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,1, 0,0, 3
+
+[Begin Action 40]
+; B00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, 2
+
+[Begin Action 45]
+; J03_double_restart_v2; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -29,-108,41,-52
+  Clsn2[1] = -22,-55,30,-23
+  Clsn2[2] = -25,-28,20,-7
+50,3, 0,0, 2
+
+[Begin Action 50]
+; J00_rise; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -30,-106,42,-54
+  Clsn2[1] = -25,-56,28,-25
+  Clsn2[2] = -25,-30,19,-7
+50,0, 0,0, -1
+
+[Begin Action 51]
+; J02_descend; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-109,39,-52
+  Clsn2[1] = -26,-54,26,-23
+  Clsn2[2] = -26,-26,26,0
+50,2, 0,0, -1
+
+[Begin Action 52]
+; B06; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -22,-84,52,-30
+  Clsn2[1] = -32,-39,41,-10
+  Clsn2[2] = -33,-14,34,0
+52,0, 0,0, 3
+; B07; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -39,-105,38,-49
+  Clsn2[1] = -28,-52,29,-15
+  Clsn2[2] = -29,-18,31,0
+52,1, 0,0, 2
+
+[Begin Action 53]
+; J01_apex; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-49
+  Clsn2[1] = -27,-52,28,-22
+  Clsn2[2] = -22,-27,23,-5
+50,1, 0,0, -1
+
+[Begin Action 120]
+; G00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-49
+  Clsn2[1] = -26,-51,26,-17
+  Clsn2[2] = -29,-20,29,0
+120,0, 0,0, 3
+
+[Begin Action 122]
+; G02; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -43,-108,31,-53
+  Clsn2[1] = -25,-58,41,-20
+  Clsn2[2] = -13,-40,36,-9
+120,2, 0,0, 3
+
+[Begin Action 130]
+; G00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-49
+  Clsn2[1] = -26,-51,26,-17
+  Clsn2[2] = -29,-20,29,0
+120,0, 0,0, -1
+
+[Begin Action 131]
+; G01; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,52,-31
+  Clsn2[1] = -34,-38,41,-10
+  Clsn2[2] = -32,-12,32,0
+120,1, 0,0, -1
+
+[Begin Action 132]
+; G02; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -43,-108,31,-53
+  Clsn2[1] = -25,-58,41,-20
+  Clsn2[2] = -13,-40,36,-9
+120,2, 0,0, -1
+
+[Begin Action 140]
+; G00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-49
+  Clsn2[1] = -26,-51,26,-17
+  Clsn2[2] = -29,-20,29,0
+120,0, 0,0, 1
+; idle; start tick 1; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 2
+
+[Begin Action 141]
+; G01; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,52,-31
+  Clsn2[1] = -34,-38,41,-10
+  Clsn2[2] = -32,-12,32,0
+120,1, 0,0, 1
+; B00; start tick 1; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, 2
+
+[Begin Action 142]
+; J02_descend; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-109,39,-52
+  Clsn2[1] = -26,-54,26,-23
+  Clsn2[2] = -26,-26,26,0
+50,2, 0,0, 3
+
+[Begin Action 200]
+; N1_windup; start tick 0; no attack
+Clsn2: 4
+  Clsn2[0] = -39,-101,35,-50
+  Clsn2[1] = -28,-53,21,-14
+  Clsn2[2] = -29,-18,29,0
+  Clsn2[3] = 13,-57,40,-40
+200,0, 0,0, 5
+; N1_contact; start tick 5; contact
+Clsn1: 1
+  Clsn1[0] = 37,-69,53,-56
+Clsn2: 4
+  Clsn2[0] = -41,-100,31,-50
+  Clsn2[1] = -28,-51,19,-15
+  Clsn2[2] = -34,-18,33,0
+  Clsn2[3] = 10,-56,40,-41
+200,1, 0,0, 3
+; N1_recoil; start tick 8; no attack
+Clsn2: 3
+  Clsn2[0] = -44,-101,30,-47
+  Clsn2[1] = -32,-50,17,-14
+  Clsn2[2] = -30,-16,29,0
+200,2, 0,0, 10
+
+[Begin Action 210]
+; N2_load; start tick 0; no attack
+Clsn2: 4
+  Clsn2[0] = -29,-100,44,-48
+  Clsn2[1] = -23,-50,30,-14
+  Clsn2[2] = -33,-17,35,0
+  Clsn2[3] = 28,-51,44,-36
+200,3, 0,0, 4
+; N2_travel; start tick 4; harmless actual travel key
+Clsn2: 7
+  Clsn2[0] = -29,-100,44,-48
+  Clsn2[1] = -23,-50,30,-14
+  Clsn2[2] = -33,-17,35,-1
+  Clsn2[3] = -27,-50,-3,-31
+  Clsn2[4] = -31,-40,-13,-19
+  Clsn2[5] = 25,-51,47,-38
+  Clsn2[6] = 41,-55,60,-37
+210,10, 0,0, 3
+; N2_contact_v2; start tick 7; contact
+Clsn1: 1
+  Clsn1[0] = 54,-55,69,-43
+Clsn2: 4
+  Clsn2[0] = -25,-99,46,-47
+  Clsn2[1] = -20,-49,31,-13
+  Clsn2[2] = -32,-17,35,0
+  Clsn2[3] = 29,-55,70,-42
+200,4, 0,0, 3
+; N2_recoil_N3_load; start tick 10; no attack
+Clsn2: 4
+  Clsn2[0] = -38,-102,37,-48
+  Clsn2[1] = -28,-51,24,-15
+  Clsn2[2] = -33,-17,32,0
+  Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 4
+; N3_recovery; start tick 14; no attack
+Clsn2: 3
+  Clsn2[0] = -42,-101,32,-46
+  Clsn2[1] = -31,-49,22,-14
+  Clsn2[2] = -29,-17,28,0
+200,7, 0,0, 3
+; draw_clear; start tick 17; no attack
+Clsn2: 4
+  Clsn2[0] = -42,-105,33,-49
+  Clsn2[1] = -28,-52,25,-15
+  Clsn2[2] = -29,-18,29,0
+  Clsn2[3] = 17,-55,47,-38
+220,0, 0,0, 3
+; idle; start tick 20; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 1
+
+[Begin Action 220]
+; N2_recoil_N3_load; start tick 0; no attack
+Clsn2: 4
+  Clsn2[0] = -38,-102,37,-48
+  Clsn2[1] = -28,-51,24,-15
+  Clsn2[2] = -33,-17,32,0
+  Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 6
+; N3_travel; start tick 6; harmless actual travel key
+Clsn2: 7
+  Clsn2[0] = -38,-102,37,-48
+  Clsn2[1] = -28,-51,24,-15
+  Clsn2[2] = -33,-17,32,-1
+  Clsn2[3] = -27,-49,-6,-31
+  Clsn2[4] = -34,-41,-20,-21
+  Clsn2[5] = 20,-55,43,-38
+  Clsn2[6] = 38,-69,58,-49
+220,10, 0,0, 3
+; N3_contact; start tick 9; contact
+Clsn1: 1
+  Clsn1[0] = 31,-87,47,-70
+Clsn2: 4
+  Clsn2[0] = -43,-102,29,-47
+  Clsn2[1] = -30,-50,22,-15
+  Clsn2[2] = -32,-18,32,0
+  Clsn2[3] = 16,-76,47,-49
+200,6, 0,0, 3
+; N3_recovery; start tick 12; no attack
+Clsn2: 3
+  Clsn2[0] = -42,-101,32,-46
+  Clsn2[1] = -31,-49,22,-14
+  Clsn2[2] = -29,-17,28,0
+200,7, 0,0, 8
+; draw_clear; start tick 20; no attack
+Clsn2: 4
+  Clsn2[0] = -42,-105,33,-49
+  Clsn2[1] = -28,-52,25,-15
+  Clsn2[2] = -29,-18,29,0
+  Clsn2[3] = 17,-55,47,-38
+220,0, 0,0, 5
+; idle; start tick 25; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 3
+
+[Begin Action 400]
+; A400_chamber; start tick 0; no attack
+Clsn2: 4
+  Clsn2[0] = -34,-88,40,-32
+  Clsn2[1] = -25,-42,29,-10
+  Clsn2[2] = -26,-13,28,0
+  Clsn2[3] = -46,-41,-20,-25
+400,0, 0,0, 5
+; A400_low_contact; start tick 5; contact
+Clsn1: 1
+  Clsn1[0] = 35,-59,50,-44
+Clsn2: 4
+  Clsn2[0] = -38,-99,36,-45
+  Clsn2[1] = -25,-49,28,-15
+  Clsn2[2] = -22,-17,27,0
+  Clsn2[3] = 13,-59,46,-39
+400,3, 0,0, 3
+; A400_rise; start tick 8; no attack
+Clsn2: 4
+  Clsn2[0] = -44,-106,28,-50
+  Clsn2[1] = -23,-57,30,-24
+  Clsn2[2] = -8,-39,25,-5
+  Clsn2[3] = 20,-93,41,-57
+400,1, 0,0, 8
+; A400_descent; start tick 16; no attack
+Clsn2: 4
+  Clsn2[0] = -34,-101,35,-50
+  Clsn2[1] = -25,-53,31,-22
+  Clsn2[2] = -18,-27,23,0
+  Clsn2[3] = 26,-58,40,-39
+400,2, 0,0, 15
+
+[Begin Action 5000]
+; S5000_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -45,-99,27,-44
+  Clsn2[1] = -27,-48,24,-18
+  Clsn2[2] = -29,-20,29,0
+5000,0, 0,0, 12
+
+[Begin Action 5001]
+; S5000_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -57,-102,19,-44
+  Clsn2[1] = -33,-51,28,-17
+  Clsn2[2] = -29,-19,29,0
+5000,10, 0,0, 12
+
+[Begin Action 5002]
+; S5000_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -52,-100,17,-42
+  Clsn2[1] = -29,-50,29,-16
+  Clsn2[2] = -32,-18,30,0
+5000,20, 0,0, 12
+
+[Begin Action 5005]
+; S5000_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -45,-99,27,-44
+  Clsn2[1] = -27,-48,24,-18
+  Clsn2[2] = -29,-20,29,0
+5000,0, 0,0, 3
+; idle; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5006]
+; S5000_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -57,-102,19,-44
+  Clsn2[1] = -33,-51,28,-17
+  Clsn2[2] = -29,-19,29,0
+5000,10, 0,0, 3
+; S5000_00; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -45,-99,27,-44
+  Clsn2[1] = -27,-48,24,-18
+  Clsn2[2] = -29,-20,29,0
+5000,0, 0,0, 3
+; idle; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5007]
+; S5000_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -52,-100,17,-42
+  Clsn2[1] = -29,-50,29,-16
+  Clsn2[2] = -32,-18,30,0
+5000,20, 0,0, 3
+; S5000_10; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -57,-102,19,-44
+  Clsn2[1] = -33,-51,28,-17
+  Clsn2[2] = -29,-19,29,0
+5000,10, 0,0, 3
+; S5000_00; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -45,-99,27,-44
+  Clsn2[1] = -27,-48,24,-18
+  Clsn2[2] = -29,-20,29,0
+5000,0, 0,0, 3
+; idle; start tick 9; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5010]
+; S5010_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -32,-97,43,-39
+  Clsn2[1] = -29,-46,32,-16
+  Clsn2[2] = -28,-18,28,0
+5010,0, 0,0, 12
+
+[Begin Action 5011]
+; S5010_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -16,-88,61,-30
+  Clsn2[1] = -27,-42,37,-15
+  Clsn2[2] = -26,-17,27,0
+5010,10, 0,0, 12
+
+[Begin Action 5012]
+; S5010_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = 4,-75,71,-18
+  Clsn2[1] = -27,-51,37,-16
+  Clsn2[2] = -26,-17,27,0
+5010,20, 0,0, 12
+
+[Begin Action 5015]
+; S5010_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -32,-97,43,-39
+  Clsn2[1] = -29,-46,32,-16
+  Clsn2[2] = -28,-18,28,0
+5010,0, 0,0, 3
+; idle; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5016]
+; S5010_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -16,-88,61,-30
+  Clsn2[1] = -27,-42,37,-15
+  Clsn2[2] = -26,-17,27,0
+5010,10, 0,0, 3
+; S5010_00; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -32,-97,43,-39
+  Clsn2[1] = -29,-46,32,-16
+  Clsn2[2] = -28,-18,28,0
+5010,0, 0,0, 3
+; idle; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5017]
+; S5010_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = 4,-75,71,-18
+  Clsn2[1] = -27,-51,37,-16
+  Clsn2[2] = -26,-17,27,0
+5010,20, 0,0, 3
+; S5010_10; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -16,-88,61,-30
+  Clsn2[1] = -27,-42,37,-15
+  Clsn2[2] = -26,-17,27,0
+5010,10, 0,0, 3
+; S5010_00; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -32,-97,43,-39
+  Clsn2[1] = -29,-46,32,-16
+  Clsn2[2] = -28,-18,28,0
+5010,0, 0,0, 3
+; idle; start tick 9; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, -1
+
+[Begin Action 5020]
+; S5020_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -46,-95,23,-43
+  Clsn2[1] = -30,-44,26,-13
+  Clsn2[2] = -30,-14,33,0
+5020,0, 0,0, 12
+
+[Begin Action 5021]
+; S5020_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -60,-95,12,-42
+  Clsn2[1] = -36,-44,21,-12
+  Clsn2[2] = -29,-13,30,0
+5020,10, 0,0, 12
+
+[Begin Action 5022]
+; S5020_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -67,-92,3,-37
+  Clsn2[1] = -37,-39,21,-11
+  Clsn2[2] = -27,-12,27,0
+5020,20, 0,0, 12
+
+[Begin Action 5025]
+; S5020_00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -46,-95,23,-43
+  Clsn2[1] = -30,-44,26,-13
+  Clsn2[2] = -30,-14,33,0
+5020,0, 0,0, 3
+; B00; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, -1
+
+[Begin Action 5026]
+; S5020_10; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -60,-95,12,-42
+  Clsn2[1] = -36,-44,21,-12
+  Clsn2[2] = -29,-13,30,0
+5020,10, 0,0, 3
+; S5020_00; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -46,-95,23,-43
+  Clsn2[1] = -30,-44,26,-13
+  Clsn2[2] = -30,-14,33,0
+5020,0, 0,0, 3
+; B00; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, -1
+
+[Begin Action 5027]
+; S5020_20; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -67,-92,3,-37
+  Clsn2[1] = -37,-39,21,-11
+  Clsn2[2] = -27,-12,27,0
+5020,20, 0,0, 3
+; S5020_10; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -60,-95,12,-42
+  Clsn2[1] = -36,-44,21,-12
+  Clsn2[2] = -29,-13,30,0
+5020,10, 0,0, 3
+; S5020_00; start tick 6; no attack
+Clsn2: 3
+  Clsn2[0] = -46,-95,23,-43
+  Clsn2[1] = -30,-44,26,-13
+  Clsn2[2] = -30,-14,33,0
+5020,0, 0,0, 3
+; B00; start tick 9; no attack
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, -1
+
+[Begin Action 5110]
+; K00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -59,-51,-1,-3
+  Clsn2[1] = -5,-32,30,0
+  Clsn2[2] = 24,-22,47,-2
+5110,0, 0,0, -1
+
+[Begin Action 5120]
+; K00; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -59,-51,-1,-3
+  Clsn2[1] = -5,-32,30,0
+  Clsn2[2] = 24,-22,47,-2
+5110,0, 0,0, 4
+; D01; start tick 4; no attack
+Clsn2: 3
+  Clsn2[0] = -60,-73,11,-12
+  Clsn2[1] = -28,-35,30,0
+  Clsn2[2] = 4,-18,58,-3
+5120,0, 0,0, 4
+; U00; start tick 8; no attack
+Clsn2: 3
+  Clsn2[0] = -25,-88,52,-28
+  Clsn2[1] = -33,-44,40,-11
+  Clsn2[2] = -41,-17,24,0
+5120,1, 0,0, 6
+; U01; start tick 14; no attack
+Clsn2: 3
+  Clsn2[0] = -35,-102,42,-47
+  Clsn2[1] = -26,-50,26,-15
+  Clsn2[2] = -29,-18,27,0
+5120,2, 0,0, 6
+; idle; start tick 20; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-48
+  Clsn2[1] = -25,-51,23,-16
+  Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 4
+
+
+[Begin Action 150]
+; G00; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-49
+  Clsn2[1] = -26,-51,26,-17
+  Clsn2[2] = -29,-20,29,0
+120,0, 0,0, -1
+
+[Begin Action 151]
+; G01; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -31,-90,52,-31
+  Clsn2[1] = -34,-38,41,-10
+  Clsn2[2] = -32,-12,32,0
+120,1, 0,0, -1
+
+[Begin Action 152]
+; G02; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -43,-108,31,-53
+  Clsn2[1] = -25,-58,41,-20
+  Clsn2[2] = -13,-40,36,-9
+120,2, 0,0, -1
+
+[Begin Action 5080]
+; ground_jolt; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -48,-64,11,-5
+  Clsn2[1] = -18,-26,32,-1
+  Clsn2[2] = 18,-26,47,-1
+5040,20, 0,0, -1
+
+[Begin Action 5100]
+; D00_impact; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -49,-65,8,-10
+  Clsn2[1] = -24,-27,24,-1
+  Clsn2[2] = 10,-28,53,-2
+5040,0, 0,0, 5
+
+[Begin Action 5170]
+; D00_impact; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -49,-65,8,-10
+  Clsn2[1] = -24,-27,24,-1
+  Clsn2[2] = 10,-28,53,-2
+5040,0, 0,0, 3
+; K00; explicit reused pose; no attack box.
+Clsn2: 3
+  Clsn2[0] = -59,-51,-1,-3
+  Clsn2[1] = -5,-32,30,0
+  Clsn2[2] = 24,-22,47,-2
+5110,0, 0,0, 3
+
+
+[Begin Action 5030]
+; FC00_backreel; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -68,-109,-2,-47
+  Clsn2[1] = -41,-58,17,-27
+  Clsn2[2] = -29,-30,28,0
+550,0, 0,0, 12
+
+[Begin Action 5040]
+; FC01_forwardtuck; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -26,-105,49,-46
+  Clsn2[1] = -34,-57,29,-23
+  Clsn2[2] = -21,-28,19,0
+550,1, 0,0, 4
+; J01_apex; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-49
+  Clsn2[1] = -27,-52,28,-22
+  Clsn2[2] = -22,-27,23,-5
+50,1, 0,0, -1
+
+[Begin Action 5050]
+; FC00_backreel; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -68,-109,-2,-47
+  Clsn2[1] = -41,-58,17,-27
+  Clsn2[2] = -29,-30,28,0
+550,0, 0,0, -1
+
+[Begin Action 5070]
+; FC01_forwardtuck; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -26,-105,49,-46
+  Clsn2[1] = -34,-57,29,-23
+  Clsn2[2] = -21,-28,19,0
+550,1, 0,0, -1
+
+[Begin Action 5160]
+; FC00_backreel; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -68,-109,-2,-47
+  Clsn2[1] = -41,-58,17,-27
+  Clsn2[2] = -29,-30,28,0
+550,0, 0,0, -1
+
+[Begin Action 5200]
+; FC01_forwardtuck; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -26,-105,49,-46
+  Clsn2[1] = -34,-57,29,-23
+  Clsn2[2] = -21,-28,19,0
+550,1, 0,0, 3
+; J01_apex; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-49
+  Clsn2[1] = -27,-52,28,-22
+  Clsn2[2] = -22,-27,23,-5
+50,1, 0,0, -1
+
+[Begin Action 5210]
+; FC01_forwardtuck; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -26,-105,49,-46
+  Clsn2[1] = -34,-57,29,-23
+  Clsn2[2] = -21,-28,19,0
+550,1, 0,0, 4
+; J01_apex; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -36,-103,38,-49
+  Clsn2[1] = -27,-52,28,-22
+  Clsn2[2] = -22,-27,23,-5
+50,1, 0,0, -1
+
+
+[Begin Action 100]
+; D00_accel; start tick 0; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -3,-87,61,-34
+  Clsn2[1] = -12,-35,28,-13
+  Clsn2[2] = -36,-13,36,0
+100,0, 0,0, 4
+; D01_drive; start tick 4; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = 2,-86,68,-32
+  Clsn2[1] = -8,-33,36,-12
+  Clsn2[2] = -29,-13,28,0
+100,1, 0,0, 10
+; D02_brake; start tick 14; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -23,-96,46,-41
+  Clsn2[1] = -25,-42,19,-15
+  Clsn2[2] = -27,-15,28,0
+100,2, 0,0, 4
+
+[Begin Action 105]
+; W00_contact; start tick 0; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,0, 0,0, 2
+; W05_passing_return; start tick 2; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,5, 0,0, 2
+; W04_opposite_compress; start tick 4; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,4, 0,0, 3
+; W03_opposite_contact_v2; start tick 7; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-15
+  Clsn2[2] = -29,-18,26,0
+20,3, 0,0, 2
+; W02_passing; start tick 9; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-102,38,-48
+  Clsn2[1] = -26,-51,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,2, 0,0, 2
+; W01_compress; start tick 11; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -35,-101,38,-47
+  Clsn2[1] = -26,-50,25,-16
+  Clsn2[2] = -29,-19,26,0
+20,1, 0,0, 3
+
+[Begin Action 1000]
+; P00_prepare; start tick 0; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -33,-103,35,-48
+  Clsn2[1] = -30,-48,22,-16
+  Clsn2[2] = -26,-16,25,0
+1000,0, 0,0, 8
+; P01_fire; start tick 8; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -34,-99,31,-47
+  Clsn2[1] = -28,-46,21,-14
+  Clsn2[2] = -27,-14,25,0
+1000,1, 0,0, 2
+; P02_recoil; start tick 10; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -41,-98,22,-43
+  Clsn2[1] = -27,-43,22,-16
+  Clsn2[2] = -28,-16,25,0
+1000,2, 0,0, 2
+; P01_fire; start tick 12; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -34,-99,31,-47
+  Clsn2[1] = -28,-46,21,-14
+  Clsn2[2] = -27,-14,25,0
+1000,1, 0,0, 2
+; P02_recoil; start tick 14; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -41,-98,22,-43
+  Clsn2[1] = -27,-43,22,-16
+  Clsn2[2] = -28,-16,25,0
+1000,2, 0,0, 2
+; P01_fire; start tick 16; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -34,-99,31,-47
+  Clsn2[1] = -28,-46,21,-14
+  Clsn2[2] = -27,-14,25,0
+1000,1, 0,0, 2
+; P02_recoil; start tick 18; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -41,-98,22,-43
+  Clsn2[1] = -27,-43,22,-16
+  Clsn2[2] = -28,-16,25,0
+1000,2, 0,0, 2
+; P01_fire; start tick 20; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -34,-99,31,-47
+  Clsn2[1] = -28,-46,21,-14
+  Clsn2[2] = -27,-14,25,0
+1000,1, 0,0, 2
+; P02_recoil; start tick 22; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -41,-98,22,-43
+  Clsn2[1] = -27,-43,22,-16
+  Clsn2[2] = -28,-16,25,0
+1000,2, 0,0, 6
+; P00_prepare; start tick 28; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -33,-103,35,-48
+  Clsn2[1] = -30,-48,22,-16
+  Clsn2[2] = -26,-16,25,0
+1000,0, 0,0, 8
+
+
+[Begin Action 1100]
+; B00; start tick 0; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -31,-90,43,-35
+  Clsn2[1] = -28,-40,28,-11
+  Clsn2[2] = -29,-14,29,0
+40,0, 0,0, 5
+; B01_lift; start tick 5; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -34,-93,20,-44
+  Clsn2[1] = -16,-49,20,-19
+  Clsn2[2] = -28,-25,8,9
+1100,1, 0,0, 2
+; B02_air_tuck; start tick 7; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -55,-70,-7,-20
+  Clsn2[1] = -13,-52,23,-10
+  Clsn2[2] = -7,-88,29,-52
+1100,2, 0,0, 4
+; B03_inverted_v2; start tick 11; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -37,-22,25,23
+  Clsn2[1] = -25,-58,29,-20
+  Clsn2[2] = -25,-80,23,-50
+1100,3, 0,0, 4
+; B04_uncoil_v3; start tick 15; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -11,-37,46,10
+  Clsn2[1] = -20,-51,19,-19
+  Clsn2[2] = -47,-73,-5,-34
+1100,4, 0,0, 4
+; B05_descend; start tick 19; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -14,-97,50,-46
+  Clsn2[1] = -22,-50,28,-21
+  Clsn2[2] = -32,-26,10,13
+1100,5, 0,0, -1
+
+[Begin Action 1101]
+; B06; start tick 0; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -22,-84,52,-30
+  Clsn2[1] = -32,-39,41,-10
+  Clsn2[2] = -33,-14,34,0
+52,0, 0,0, 4
+; B07; start tick 4; body-only, no attack.
+Clsn2: 3
+  Clsn2[0] = -39,-105,38,-49
+  Clsn2[1] = -28,-52,29,-15
+  Clsn2[2] = -29,-18,31,0
+52,1, 0,0, 8
+
+[Begin Action 1200]
+; Provisional 50-tick body sequence; source exit prevents default AIR repeat.
+; H00_crouch_v1; ticks 0-3; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -23,-77,30,-29
+ Clsn2[1] = -24,-32,19,-12
+ Clsn2[2] = -25,-14,23,-1
+1200,0, 0,0, 4
+; H01_plant_v2; ticks 4-7; no attack boxes
+Clsn2: 4
+ Clsn2[0] = -46,-66,5,-18
+ Clsn2[1] = -70,-44,-37,-15
+ Clsn2[2] = -75,-18,-27,-2
+ Clsn2[3] = -21,-17,1,0
+1200,1, 0,0, 4
+; H02_rise_v2; ticks 8-11; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -23,-44,23,-2
+ Clsn2[1] = -18,-72,17,-40
+ Clsn2[2] = -25,-88,25,-70
+1200,2, 0,0, 4
+; H03_balance_v4; ticks 12-14; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -25,-48,23,-2
+ Clsn2[1] = -17,-74,18,-41
+ Clsn2[2] = -35,-96,35,-71
+1200,3, 0,0, 3
+; H04_side_v1; ticks 15-17; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -30,-46,12,-2
+ Clsn2[1] = -28,-73,12,-39
+ Clsn2[2] = -37,-93,31,-69
+1200,4, 0,0, 3
+; H05_back_v1; ticks 18-20; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -26,-47,23,-2
+ Clsn2[1] = -17,-73,19,-40
+ Clsn2[2] = -34,-95,34,-71
+1200,5, 0,0, 3
+; H04_side_v1; ticks 21-23; same drawing H flip
+Clsn2: 3
+ Clsn2[0] = -30,-46,12,-2
+ Clsn2[1] = -28,-73,12,-39
+ Clsn2[2] = -37,-93,31,-69
+1200,4, 0,0, 3, H
+; H03_balance_v4; ticks 24-27; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -25,-48,23,-2
+ Clsn2[1] = -17,-74,18,-41
+ Clsn2[2] = -35,-96,35,-71
+1200,3, 0,0, 4
+; H04_side_v1; ticks 28-29; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -30,-46,12,-2
+ Clsn2[1] = -28,-73,12,-39
+ Clsn2[2] = -37,-93,31,-69
+1200,4, 0,0, 2
+; H05_back_v1; ticks 30-31; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -26,-47,23,-2
+ Clsn2[1] = -17,-73,19,-40
+ Clsn2[2] = -34,-95,34,-71
+1200,5, 0,0, 2
+; H04_side_v1; ticks 32-33; same drawing H flip
+Clsn2: 3
+ Clsn2[0] = -30,-46,12,-2
+ Clsn2[1] = -28,-73,12,-39
+ Clsn2[2] = -37,-93,31,-69
+1200,4, 0,0, 2, H
+; H03_balance_v4; ticks 34-35; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -25,-48,23,-2
+ Clsn2[1] = -17,-74,18,-41
+ Clsn2[2] = -35,-96,35,-71
+1200,3, 0,0, 2
+; H02_rise_v2; ticks 36-37; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -23,-44,23,-2
+ Clsn2[1] = -18,-72,17,-40
+ Clsn2[2] = -25,-88,25,-70
+1200,2, 0,0, 2
+; H01_plant_v2; ticks 38-39; no attack boxes
+Clsn2: 4
+ Clsn2[0] = -46,-66,5,-18
+ Clsn2[1] = -70,-44,-37,-15
+ Clsn2[2] = -75,-18,-27,-2
+ Clsn2[3] = -21,-17,1,0
+1200,1, 0,0, 2
+; H08_footplant_v2; ticks 40-43; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -2,-69,47,-22
+ Clsn2[1] = -22,-36,14,-10
+ Clsn2[2] = -24,-16,20,-1
+1200,7, 0,0, 4
+; H09_recover_v1; ticks 44-49; no attack boxes
+Clsn2: 3
+ Clsn2[0] = -28,-83,24,-35
+ Clsn2[1] = -24,-37,16,-12
+ Clsn2[2] = -28,-16,24,-1
+1200,8, 0,0, 6
+
+[Begin Action 1300]
+; Provisional counter body schedule. Source exits govern default AIR repeat.
+; C00_readiness_v1; ticks 0-1
+Clsn2: 3
+ Clsn2[0] = -26,-94,42,-46
+ Clsn2[1] = -24,-49,28,-19
+ Clsn2[2] = -35,-21,36,-1
+1300,0, 0,0, 2
+; C01_lift_v1; ticks 2-7
+Clsn1: 1
+ Clsn1[0] = 35,-78,64,-30
+Clsn2: 4
+ Clsn2[0] = -26,-94,43,-44
+ Clsn2[1] = -23,-48,29,-18
+ Clsn2[2] = -32,-21,37,-1
+ Clsn2[3] = 31,-54,59,-30
+1300,1, 0,0, 6
+
+[Begin Action 1301]
+; Provisional counter body schedule. Source exits govern default AIR repeat.
+; C01_lift_v1; ticks 0-5
+Clsn2: 4
+ Clsn2[0] = -26,-94,43,-44
+ Clsn2[1] = -23,-48,29,-18
+ Clsn2[2] = -32,-21,37,-1
+ Clsn2[3] = 31,-54,59,-30
+1300,1, 0,0, 6
+; C00_readiness_v1; ticks 6-17
+Clsn2: 3
+ Clsn2[0] = -26,-94,42,-46
+ Clsn2[1] = -24,-49,28,-19
+ Clsn2[2] = -35,-21,36,-1
+1300,0, 0,0, 12
+
+[Begin Action 1310]
+; Provisional counter body schedule. Source exits govern default AIR repeat.
+; C02_slip_v1; ticks 0-2
+Clsn2: 3
+ Clsn2[0] = -10,-88,53,-35
+ Clsn2[1] = -20,-44,36,-15
+ Clsn2[2] = -38,-16,47,-1
+1300,2, 0,0, 3
+; C03_chamber_v2; ticks 3-4
+Clsn2: 4
+ Clsn2[0] = -29,-93,43,-43
+ Clsn2[1] = -23,-45,31,-17
+ Clsn2[2] = -37,-18,41,-1
+ Clsn2[3] = 31,-49,49,-32
+1300,3, 0,0, 2
+; C04_contact_v1; ticks 5-7
+Clsn1: 1
+ Clsn1[0] = 55,-54,72,-40
+Clsn2: 4
+ Clsn2[0] = -16,-88,47,-44
+ Clsn2[1] = -19,-45,32,-16
+ Clsn2[2] = -36,-16,40,-1
+ Clsn2[3] = 31,-53,71,-40
+1300,4, 0,0, 3
+; C05_overshoot_v1; ticks 8-10
+Clsn2: 4
+ Clsn2[0] = -17,-89,47,-42
+ Clsn2[1] = -19,-45,34,-17
+ Clsn2[2] = -34,-18,42,-1
+ Clsn2[3] = 34,-42,71,-29
+1300,5, 0,0, 3
+; C06_recover_v1; ticks 11-13
+Clsn2: 3
+ Clsn2[0] = -28,-102,43,-49
+ Clsn2[1] = -23,-50,32,-18
+ Clsn2[2] = -31,-19,36,-1
+1300,6, 0,0, 3
+; N3_recovery; ticks 14-16
+Clsn2: 3
+ Clsn2[0] = -42,-101,32,-46
+ Clsn2[1] = -31,-49,22,-14
+ Clsn2[2] = -29,-17,28,0
+200,7, 0,0, 3
+; draw_clear; ticks 17-21
+Clsn2: 4
+ Clsn2[0] = -42,-105,33,-49
+ Clsn2[1] = -28,-52,25,-15
+ Clsn2[2] = -29,-18,29,0
+ Clsn2[3] = 17,-55,47,-38
+220,0, 0,0, 5
+
+[Begin Action 3000]
+; T00_brace_v1; starts tick 0; standing body only
+Clsn2: 3
+ Clsn2[0] = -29,-92,38,-43
+ Clsn2[1] = -24,-46,25,-15
+ Clsn2[2] = -26,-16,25,-1
+3000,0, 0,0, 42
+; T01_puffing_v1; starts tick 42; standing body only
+Clsn2: 3
+ Clsn2[0] = -29,-93,40,-41
+ Clsn2[1] = -24,-45,26,-15
+ Clsn2[2] = -26,-16,26,-1
+3000,1, 0,0, 12
+; T02_maxpuff_v1; starts tick 54; standing body only
+Clsn2: 3
+ Clsn2[0] = -30,-90,41,-40
+ Clsn2[1] = -24,-43,29,-16
+ Clsn2[2] = -29,-17,31,-1
+3000,2, 0,0, 14
+; T03_exhale_v1; starts tick 68; standing body only
+Clsn2: 3
+ Clsn2[0] = -22,-88,46,-37
+ Clsn2[1] = -23,-42,31,-13
+ Clsn2[2] = -29,-15,29,-1
+3000,3, 0,0, 28
+; T00_brace_v1; starts tick 96; standing body only
+Clsn2: 3
+ Clsn2[0] = -29,-92,38,-43
+ Clsn2[1] = -24,-46,25,-15
+ Clsn2[2] = -26,-16,25,-1
+3000,0, 0,0, 32
+
+[Begin Action 20110]
+; charge_small; starts tick 0; same-drawing FX resize
+30100,0, 0,0, 5
+; charge_half; starts tick 5; same-drawing FX resize
+30100,1, 0,0, 5
+; charge_mid; starts tick 10; same-drawing FX resize
+30100,2, 0,0, 5
+; charge_large; starts tick 15; same-drawing FX resize
+30100,3, 0,0, 5
+; charge_max; starts tick 20; same-drawing FX resize
+30100,4, 0,0, 6
+
+[Begin Action 20101]
+; sphere; starts tick 0; same-drawing FX resize
+30101,0, 0,0, 8
+; sphere; starts tick 8; same-drawing FX resize
+Clsn1: 16
+ Clsn1[0] = 160,-103,178,-73
+ Clsn1[1] = 148,-64,175,-33
+ Clsn1[2] = 123,-33,155,-1
+ Clsn1[3] = 91,-6,123,18
+ Clsn1[4] = 53,2,83,22
+ Clsn1[5] = 13,-10,44,19
+ Clsn1[6] = -19,-33,13,-1
+ Clsn1[7] = -38,-63,-10,-33
+ Clsn1[8] = -41,-103,-22,-73
+ Clsn1[9] = -37,-142,-11,-112
+ Clsn1[10] = -17,-172,13,-147
+ Clsn1[11] = 14,-191,45,-166
+ Clsn1[12] = 54,-196,82,-178
+ Clsn1[13] = 92,-191,122,-171
+ Clsn1[14] = 123,-172,153,-143
+ Clsn1[15] = 146,-142,173,-111
+30101,0, 0,0, -1
+
+[Begin Action 20311]
+; deform; starts tick 0; same-drawing FX resize
+30102,0, 0,0, 4
+; foam; starts tick 4; same-drawing FX resize
+30103,0, 0,0, 14
+
+[Begin Action 3200]
+; BOLT00_gather_v1; starts tick 0; finite source exit required
+Clsn2: 3
+ Clsn2[0] = -25,-89,44,-38
+ Clsn2[1] = -22,-42,29,-14
+ Clsn2[2] = -31,-16,32,-1
+3200,0, 0,0, 42
+; BOLT01_charge_v2; starts tick 42; finite source exit required
+Clsn2: 5
+ Clsn2[0] = -29,-87,37,-40
+ Clsn2[1] = -25,-43,28,-14
+ Clsn2[2] = -26,-15,28,-1
+ Clsn2[3] = -43,-90,-18,-46
+ Clsn2[4] = 31,-58,53,-34
+3200,1, 0,0, 42
+; BOLT02_release_v1; starts tick 84; finite source exit required
+Clsn2: 5
+ Clsn2[0] = -15,-82,51,-35
+ Clsn2[1] = -21,-40,29,-13
+ Clsn2[2] = -31,-14,32,-1
+ Clsn2[3] = -41,-52,-10,-36
+ Clsn2[4] = 27,-31,44,-13
+3200,2, 0,0, 16
+; BOLT03_recover_v1; starts tick 100; finite source exit required
+Clsn2: 3
+ Clsn2[0] = -28,-92,41,-41
+ Clsn2[1] = -24,-45,26,-15
+ Clsn2[2] = -26,-16,28,-1
+3200,3, 0,0, 42
+; BOLT00_gather_v1; starts tick 142; finite source exit required
+Clsn2: 3
+ Clsn2[0] = -25,-89,44,-38
+ Clsn2[1] = -22,-42,29,-14
+ Clsn2[2] = -31,-16,32,-1
+3200,0, 0,0, 38
+
+[Begin Action 20200]
+; TH20200; starts tick 0; finite source exit required
+Clsn1: 8
+ Clsn1[0] = -16,-308,19,-268
+ Clsn1[1] = 1,-268,37,-230
+ Clsn1[2] = -25,-230,16,-191
+ Clsn1[3] = -1,-191,41,-150
+ Clsn1[4] = 9,-150,40,-114
+ Clsn1[5] = -16,-114,19,-74
+ Clsn1[6] = -15,-74,19,-35
+ Clsn1[7] = -11,-35,11,-1
+20200,0, 0,0, 2
+
+[Begin Action 20201]
+; TH20201; starts tick 0; finite source exit required
+20201,0, 0,0, 12
+
+[Begin Action 20320]
+; TH20320; starts tick 0; finite source exit required
+20320,0, 0,0, 8
+
+[Begin Action 20000]
+; horizontal actual flight head; starts tick 0; source finite lifetime required
+Clsn1: 1
+ Clsn1[0] = -9,-3,6,3
+20000,0, 0,0, 36
+
+[Begin Action 20002]
+; 23.1986degree clockwise same-drawing derivative; starts tick 0; source finite lifetime required
+Clsn1: 1
+ Clsn1[0] = -8,-5,6,3
+20002,0, 0,0, 30
+
+[Begin Action 20300]
+; actual contact burst; starts tick 0; source finite lifetime required
+20300,0, 0,0, 3
+; actual sparse aftermath; starts tick 3; source finite lifetime required
+20300,1, 0,0, 5
+
+[Begin Action 1400]
+; Existing drawing reuse; source exit controls default AIR repeat.
+; Local ticks 0-9; no attack
+Clsn2: 4
+ Clsn2[0] = -29,-100,44,-48
+ Clsn2[1] = -23,-50,30,-14
+ Clsn2[2] = -33,-17,35,0
+ Clsn2[3] = 28,-51,44,-36
+200,3, 0,0, 10
+; Local ticks 10-10; visible fist only
+Clsn1: 1
+ Clsn1[0] = 54,-55,69,-43
+Clsn2: 4
+ Clsn2[0] = -25,-99,46,-47
+ Clsn2[1] = -20,-49,31,-13
+ Clsn2[2] = -32,-17,35,0
+ Clsn2[3] = 29,-55,70,-42
+200,4, 0,0, 1
+
+[Begin Action 1401]
+; Existing drawing reuse; source exit controls default AIR repeat.
+; Local ticks 0-3; no attack
+Clsn2: 4
+ Clsn2[0] = -38,-102,37,-48
+ Clsn2[1] = -28,-51,24,-15
+ Clsn2[2] = -33,-17,32,0
+ Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 4
+; Local ticks 4-7; no attack
+Clsn2: 4
+ Clsn2[0] = -29,-93,43,-43
+ Clsn2[1] = -23,-45,31,-17
+ Clsn2[2] = -37,-18,41,-1
+ Clsn2[3] = 31,-49,49,-32
+1300,3, 0,0, 4
+; Local ticks 8-8; visible fist only
+Clsn1: 1
+ Clsn1[0] = 55,-54,72,-40
+Clsn2: 4
+ Clsn2[0] = -16,-88,47,-44
+ Clsn2[1] = -19,-45,32,-16
+ Clsn2[2] = -36,-16,40,-1
+ Clsn2[3] = 31,-53,71,-40
+1300,4, 0,0, 1
+
+[Begin Action 1402]
+; Existing drawing reuse; source exit controls default AIR repeat.
+; Local ticks 0-2; no attack
+Clsn2: 4
+ Clsn2[0] = -17,-89,47,-42
+ Clsn2[1] = -19,-45,34,-17
+ Clsn2[2] = -34,-18,42,-1
+ Clsn2[3] = 34,-42,71,-29
+1300,5, 0,0, 3
+; Local ticks 3-5; no attack
+Clsn2: 3
+ Clsn2[0] = -28,-102,43,-49
+ Clsn2[1] = -23,-50,32,-18
+ Clsn2[2] = -31,-19,36,-1
+1300,6, 0,0, 3
+; Local ticks 6-9; no attack
+Clsn2: 4
+ Clsn2[0] = -38,-102,37,-48
+ Clsn2[1] = -28,-51,24,-15
+ Clsn2[2] = -33,-17,32,0
+ Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 4
+; Local ticks 10-12; visible fist only
+Clsn1: 1
+ Clsn1[0] = 31,-87,47,-70
+Clsn2: 4
+ Clsn2[0] = -43,-102,29,-47
+ Clsn2[1] = -30,-50,22,-15
+ Clsn2[2] = -32,-18,32,0
+ Clsn2[3] = 16,-76,47,-49
+200,6, 0,0, 3
+; Local ticks 13-20; no attack
+Clsn2: 3
+ Clsn2[0] = -42,-101,32,-46
+ Clsn2[1] = -31,-49,22,-14
+ Clsn2[2] = -29,-17,28,0
+200,7, 0,0, 8
+; Local ticks 21-25; no attack
+Clsn2: 4
+ Clsn2[0] = -42,-105,33,-49
+ Clsn2[1] = -28,-52,25,-15
+ Clsn2[2] = -29,-18,29,0
+ Clsn2[3] = 17,-55,47,-38
+220,0, 0,0, 5
+
+[Begin Action 20400]
+; Existing drawing reuse; source exit controls default AIR repeat.
+; Local ticks 0-3; no attack
+20320,0, 0,0, 4
+
+[Begin Action 20210]
+; Four actual source drawings across phases; explicit same-key size/fade reuse.
+; Local ticks 0-5; no attack or hurt collision
+20210,0, 0,0, 6
+; Local ticks 6-13; no attack or hurt collision
+20210,1, 0,0, 8
+; Local ticks 14-21; no attack or hurt collision
+20210,2, 0,0, 8
+
+[Begin Action 20220]
+; Four actual source drawings across phases; explicit same-key size/fade reuse.
+; Local ticks 0-8; no attack or hurt collision
+20220,0, 0,0, 9
+; Local ticks 9-17; no attack or hurt collision
+20220,0, 0,0, 9, , AS192D64
+; Local ticks 18-26; no attack or hurt collision
+20220,0, 0,0, 9, , AS128D128
+; Local ticks 27-35; no attack or hurt collision
+20220,0, 0,0, 9, , AS64D192
+
+[Begin Action 20230]
+; Four actual source drawings across phases; explicit same-key size/fade reuse.
+; Local ticks 0-13; no attack or hurt collision
+20230,0, 0,0, 14
+; Local ticks 14-27; no attack or hurt collision
+20230,1, 0,0, 14, , AS192D64
+; Local ticks 28-41; no attack or hurt collision
+20230,2, 0,0, 14, , AS128D128
+
+[Begin Action 20240]
+; Four actual source drawings across phases; explicit same-key size/fade reuse.
+; Local ticks 0-9; no attack or hurt collision
+20240,0, 0,0, 10, , AS192D64
+; Local ticks 10-19; no attack or hurt collision
+20240,0, 0,0, 10, , AS128D128
+; Local ticks 20-29; no attack or hurt collision
+20240,0, 0,0, 10, , AS64D192
+; Local ticks 30-37; no attack or hurt collision
+20240,0, 0,0, 8, , AS32D224
+
+[Begin Action 3300]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-41; no attack
+Clsn2: 3
+ Clsn2[0] = -29,-92,38,-43
+ Clsn2[1] = -24,-46,25,-15
+ Clsn2[2] = -26,-16,25,-1
+3000,0, 0,0, 42
+; Local ticks 42-61; no attack
+Clsn2: 3
+ Clsn2[0] = -29,-93,40,-41
+ Clsn2[1] = -24,-45,26,-15
+ Clsn2[2] = -26,-16,26,-1
+3000,1, 0,0, 20
+; Local ticks 62-83; no attack
+Clsn2: 3
+ Clsn2[0] = -30,-90,41,-40
+ Clsn2[1] = -24,-43,29,-16
+ Clsn2[2] = -29,-17,31,-1
+3000,2, 0,0, 22
+; Local ticks 84-91; no attack
+Clsn2: 3
+ Clsn2[0] = -22,-88,46,-37
+ Clsn2[1] = -23,-42,31,-13
+ Clsn2[2] = -29,-15,29,-1
+3000,3, 0,0, 8
+; Local ticks 92-99; no attack
+Clsn2: 3
+ Clsn2[0] = -29,-93,40,-41
+ Clsn2[1] = -24,-45,26,-15
+ Clsn2[2] = -26,-16,26,-1
+3000,1, 0,0, 8
+; Local ticks 100-111; no attack
+Clsn2: 3
+ Clsn2[0] = -30,-90,41,-40
+ Clsn2[1] = -24,-43,29,-16
+ Clsn2[2] = -29,-17,31,-1
+3000,2, 0,0, 12
+; Local ticks 112-119; no attack
+Clsn2: 3
+ Clsn2[0] = -22,-88,46,-37
+ Clsn2[1] = -23,-42,31,-13
+ Clsn2[2] = -29,-15,29,-1
+3000,3, 0,0, 8
+; Local ticks 120-127; no attack
+Clsn2: 3
+ Clsn2[0] = -29,-93,40,-41
+ Clsn2[1] = -24,-45,26,-15
+ Clsn2[2] = -26,-16,26,-1
+3000,1, 0,0, 8
+; Local ticks 128-139; no attack
+Clsn2: 3
+ Clsn2[0] = -30,-90,41,-40
+ Clsn2[1] = -24,-43,29,-16
+ Clsn2[2] = -29,-17,31,-1
+3000,2, 0,0, 12
+; Local ticks 140-167; no attack
+Clsn2: 3
+ Clsn2[0] = -22,-88,46,-37
+ Clsn2[1] = -23,-42,31,-13
+ Clsn2[2] = -29,-15,29,-1
+3000,3, 0,0, 28
+; Local ticks 168-189; no attack
+Clsn2: 3
+ Clsn2[0] = -29,-92,38,-43
+ Clsn2[1] = -24,-46,25,-15
+ Clsn2[2] = -26,-16,25,-1
+3000,0, 0,0, 22
+
+[Begin Action 20111]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-7; no attack
+30100,0, 0,0, 8
+; Local ticks 8-15; no attack
+30100,1, 0,0, 8
+; Local ticks 16-23; no attack
+30100,2, 0,0, 8
+; Local ticks 24-31; no attack
+30100,3, 0,0, 8
+; Local ticks 32-41; no attack
+30100,4, 0,0, 10
+
+[Begin Action 20112]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-3; no attack
+30100,0, 0,0, 4
+; Local ticks 4-7; no attack
+30100,1, 0,0, 4
+; Local ticks 8-11; no attack
+30100,2, 0,0, 4
+; Local ticks 12-15; no attack
+30100,3, 0,0, 4
+; Local ticks 16-19; no attack
+30100,4, 0,0, 4
+
+[Begin Action 3100]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-41; actual existing contact only
+Clsn2: 3
+ Clsn2[0] = -36,-103,38,-48
+ Clsn2[1] = -25,-51,23,-16
+ Clsn2[2] = -27,-18,26,0
+0,0, 0,0, 42
+; Local ticks 42-53; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -29,-100,44,-48
+ Clsn2[1] = -23,-50,30,-14
+ Clsn2[2] = -33,-17,35,0
+ Clsn2[3] = 28,-51,44,-36
+200,3, 0,0, 12
+; Local ticks 54-54; actual existing contact only
+Clsn1: 1
+ Clsn1[0] = 54,-55,69,-43
+Clsn2: 4
+ Clsn2[0] = -25,-99,46,-47
+ Clsn2[1] = -20,-49,31,-13
+ Clsn2[2] = -32,-17,35,0
+ Clsn2[3] = 29,-55,70,-42
+200,4, 0,0, 1
+
+[Begin Action 3101]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-4; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -38,-102,37,-48
+ Clsn2[1] = -28,-51,24,-15
+ Clsn2[2] = -33,-17,32,0
+ Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 5
+; Local ticks 5-10; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -29,-93,43,-43
+ Clsn2[1] = -23,-45,31,-17
+ Clsn2[2] = -37,-18,41,-1
+ Clsn2[3] = 31,-49,49,-32
+1300,3, 0,0, 6
+; Local ticks 11-11; actual existing contact only
+Clsn1: 1
+ Clsn1[0] = 55,-54,72,-40
+Clsn2: 4
+ Clsn2[0] = -16,-88,47,-44
+ Clsn2[1] = -19,-45,32,-16
+ Clsn2[2] = -36,-16,40,-1
+ Clsn2[3] = 31,-53,71,-40
+1300,4, 0,0, 1
+
+[Begin Action 3102]
+; Explicit existing drawing reuse; positive-duration AIR requires source exit.
+; Local ticks 0-3; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -17,-89,47,-42
+ Clsn2[1] = -19,-45,34,-17
+ Clsn2[2] = -34,-18,42,-1
+ Clsn2[3] = 34,-42,71,-29
+1300,5, 0,0, 4
+; Local ticks 4-7; actual existing contact only
+Clsn2: 3
+ Clsn2[0] = -28,-102,43,-49
+ Clsn2[1] = -23,-50,32,-18
+ Clsn2[2] = -31,-19,36,-1
+1300,6, 0,0, 4
+; Local ticks 8-12; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -38,-102,37,-48
+ Clsn2[1] = -28,-51,24,-15
+ Clsn2[2] = -33,-17,32,0
+ Clsn2[3] = 23,-41,40,-24
+200,5, 0,0, 5
+; Local ticks 13-15; actual existing contact only
+Clsn1: 1
+ Clsn1[0] = 31,-87,47,-70
+Clsn2: 4
+ Clsn2[0] = -43,-102,29,-47
+ Clsn2[1] = -30,-50,22,-15
+ Clsn2[2] = -32,-18,32,0
+ Clsn2[3] = 16,-76,47,-49
+200,6, 0,0, 3
+; Local ticks 16-23; actual existing contact only
+Clsn2: 3
+ Clsn2[0] = -42,-101,32,-46
+ Clsn2[1] = -31,-49,22,-14
+ Clsn2[2] = -29,-17,28,0
+200,7, 0,0, 8
+; Local ticks 24-28; actual existing contact only
+Clsn2: 4
+ Clsn2[0] = -42,-105,33,-49
+ Clsn2[1] = -28,-52,25,-15
+ Clsn2[2] = -29,-18,29,0
+ Clsn2[3] = 17,-55,47,-38
+220,0, 0,0, 5
+
+[Begin Action 20900]
+; Runtime opaque panel. Six background-only variants; original portrait indices exact.
+20900,10, 0,0, 7
+20900,11, 0,0, 7
+20900,12, 0,0, 7
+20900,13, 0,0, 7
+20900,14, 0,0, 7
+20900,15, 0,0, 7
+
+[Begin Action 20901]
+; Runtime opaque panel. Six background-only variants; original portrait indices exact.
+20901,10, 0,0, 7
+20901,11, 0,0, 7
+20901,12, 0,0, 7
+20901,13, 0,0, 7
+20901,14, 0,0, 7
+20901,15, 0,0, 7
+
+; Two accepted airborne drawings. Recovery reused as preparation, not rejected windup.
+[Begin Action 600]
+Clsn2: 3
+Clsn2[0] = -37, -93, 25, -56
+Clsn2[1] = -27, -57, 25, -24
+Clsn2[2] = -16, -26, 14, -1
+600, 2, 0, 0, 2
+; A600_travel_v2; harmless actual partial extension ticks2-4
+Clsn2: 7
+  Clsn2[0] = -37,-92,27,-48
+  Clsn2[1] = -27,-49,19,-26
+  Clsn2[2] = -21,-29,13,-1
+  Clsn2[3] = -38,-49,-21,-35
+  Clsn2[4] = -31,-45,-14,-28
+  Clsn2[5] = 1,-49,32,-36
+  Clsn2[6] = 27,-57,45,-41
+600,10, 0,0, 3
+Clsn1: 1
+Clsn1[0] = 42, -55, 53, -43
+Clsn2: 4
+Clsn2[0] = -37, -91, 25, -55
+Clsn2[1] = -27, -56, 17, -24
+Clsn2[2] = -17, -25, 12, -1
+Clsn2[3] = 18, -55, 42, -44
+600, 1, 0, 0, 3
+Clsn2: 3
+Clsn2[0] = -37, -93, 25, -56
+Clsn2[1] = -27, -57, 25, -24
+Clsn2[2] = -16, -26, 14, -1
+600, 2, 0, 0, 14
+
+; Provisional lifecycle pose reuse, not newly drawn transitions.
+[Begin Action 170]
+; D01 reclined defeat reuse; common170 host-held, no AnimTime exit
+Clsn2: 3
+Clsn2[0] = -60,-73,11,-12
+Clsn2[1] = -28,-35,30,0
+Clsn2[2] = 4,-18,58,-3
+5120,0,0,0,-1
+
+[Begin Action 180]
+; Standing Hou only; own180 host-held, airborne-entry positioning unresolved
+Clsn2: 3
+Clsn2[0] = -37,-91,28,-49
+Clsn2[1] = -28,-48,25,-20
+Clsn2[2] = -25,-20,23,-1
+180,0,0,0,-1
+
+[Begin Action 5300]
+; K00 reuse for supplied common Continue5500 default only, not a new dizzy bank
+Clsn2: 3
+Clsn2[0] = -59,-51,-1,-3
+Clsn2[1] = -5,-32,30,0
+Clsn2[2] = 24,-22,47,-2
+5110,0,0,0,-1
+
+
+; Electric projection grip: eight real keys, explicit preparation/recovery reuse.
+[Begin Action 800]
+; EG01; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,4
+; EG00; local ticks 4-5; palm capture only, not damage/release effect
+Clsn1: 1
+Clsn1[0] = 53,-51,68,-42
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 32,-52,69,-40
+800,0,0,0,2
+; EG01; local ticks 6-15; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,10
+
+[Begin Action 805]
+; EG01; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,4
+; EG00; local ticks 4-5; palm capture only, not damage/release effect
+Clsn1: 1
+Clsn1[0] = 53,-51,68,-42
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 32,-52,69,-40
+800,0,0,0,2
+; EG01; local ticks 6-15; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,10
+
+[Begin Action 810]
+; EA01; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,4
+; EA00; local ticks 4-5; palm capture only, not damage/release effect
+Clsn1: 1
+Clsn1[0] = 43,-52,59,-43
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 22,-55,60,-42
+810,0,0,0,2
+; EA01; local ticks 6-15; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,10
+
+[Begin Action 815]
+; EA01; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,4
+; EA00; local ticks 4-5; palm capture only, not damage/release effect
+Clsn1: 1
+Clsn1[0] = 43,-52,59,-43
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 22,-55,60,-42
+810,0,0,0,2
+; EA01; local ticks 6-15; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,10
+
+[Begin Action 801]
+; EG01; local ticks 0-7; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,8
+
+[Begin Action 806]
+; EG01; local ticks 0-7; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,8
+
+[Begin Action 811]
+; EA01; local ticks 0-7; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,8
+
+[Begin Action 816]
+; EA01; local ticks 0-7; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,8
+
+[Begin Action 802]
+; EG02; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,44,-49
+Clsn2[1] = -28,-50,35,-20
+Clsn2[2] = -38,-20,42,-1
+Clsn2[3] = 33,-54,72,-40
+800,2,0,0,4
+; EG01; local ticks 4-17; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,14
+
+[Begin Action 807]
+; EG03; local ticks 0-3; no capture/attack box
+Clsn2: 5
+Clsn2[0] = -24,-91,45,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = -47,-98,-28,-72
+Clsn2[4] = -32,-78,-10,-45
+800,3,0,0,4
+; EG01; local ticks 4-17; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -26,-91,42,-50
+Clsn2[1] = -25,-50,34,-20
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = 34,-53,60,-38
+800,1,0,0,14
+
+[Begin Action 812]
+; EA02; local ticks 0-3; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-3
+Clsn2[3] = 22,-56,62,-42
+810,2,0,0,4
+; EA01; local ticks 4-17; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,14
+
+[Begin Action 817]
+; EA03; local ticks 0-3; no capture/attack box
+Clsn2: 5
+Clsn2[0] = -22,-96,47,-48
+Clsn2[1] = -26,-50,32,-24
+Clsn2[2] = -13,-28,14,-4
+Clsn2[3] = -58,-107,-29,-81
+Clsn2[4] = -36,-87,-8,-46
+810,3,0,0,4
+; EA01; local ticks 4-17; no capture/attack box
+Clsn2: 4
+Clsn2[0] = -35,-94,34,-51
+Clsn2[1] = -33,-51,25,-25
+Clsn2[2] = -17,-28,10,-1
+Clsn2[3] = 24,-55,48,-39
+810,1,0,0,14
+
+
+; Isolated posture SOAP body/axis variants; unchanged standing bank.
+
+[Begin Action 3020]
+; CS00_brace_v2; local start 0; duration 42
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,42
+; CS01_inflate_v3; local start 42; duration 12
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,1,0,0,12
+; CS02_fullpuff_v1; local start 54; duration 14
+Clsn2: 5
+Clsn2[0] = -20,-77,52,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,2,0,0,14
+; CS03_exhale_v1; local start 68; duration 28
+Clsn2: 5
+Clsn2[0] = -20,-79,50,-34
+Clsn2[1] = -25,-34,28,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,3,0,0,28
+; CS00_brace_v2; local start 96; duration 32
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,32
+
+[Begin Action 3010]
+; AS00_brace_v2; local start 0; duration 42
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,42
+; AS01_inflate_v1; local start 42; duration 12
+Clsn2: 5
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,1,0,0,12
+; AS02_fullpuff_v1; local start 54; duration 14
+Clsn2: 5
+Clsn2[0] = -37,-94,36,-46
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,2,0,0,14
+; AS03_exhale_v2; local start 68; duration 28
+Clsn2: 5
+Clsn2[0] = -27,-91,40,-44
+Clsn2[1] = -29,-44,25,-20
+Clsn2[2] = -25,-23,13,-3
+Clsn2[3] = 18,-37,33,-24
+Clsn2[4] = 26,-32,38,-16
+3010,3,0,0,28
+; AS00_brace_v2; local start 96; duration 32
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,32
+
+[Begin Action 3320]
+; CS00_brace_v2; local start 0; duration 42
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,42
+; CS01_inflate_v3; local start 42; duration 20
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,1,0,0,20
+; CS02_fullpuff_v1; local start 62; duration 22
+Clsn2: 5
+Clsn2[0] = -20,-77,52,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,2,0,0,22
+; CS03_exhale_v1; local start 84; duration 8
+Clsn2: 5
+Clsn2[0] = -20,-79,50,-34
+Clsn2[1] = -25,-34,28,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,3,0,0,8
+; CS01_inflate_v3; local start 92; duration 8
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,1,0,0,8
+; CS02_fullpuff_v1; local start 100; duration 12
+Clsn2: 5
+Clsn2[0] = -20,-77,52,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,2,0,0,12
+; CS03_exhale_v1; local start 112; duration 8
+Clsn2: 5
+Clsn2[0] = -20,-79,50,-34
+Clsn2[1] = -25,-34,28,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,3,0,0,8
+; CS01_inflate_v3; local start 120; duration 8
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,1,0,0,8
+; CS02_fullpuff_v1; local start 128; duration 12
+Clsn2: 5
+Clsn2[0] = -20,-77,52,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,2,0,0,12
+; CS03_exhale_v1; local start 140; duration 28
+Clsn2: 5
+Clsn2[0] = -20,-79,50,-34
+Clsn2[1] = -25,-34,28,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,3,0,0,28
+; CS00_brace_v2; local start 168; duration 22
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,22
+
+[Begin Action 3310]
+; AS00_brace_v2; local start 0; duration 42
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,42
+; AS01_inflate_v1; local start 42; duration 20
+Clsn2: 5
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,1,0,0,20
+; AS02_fullpuff_v1; local start 62; duration 22
+Clsn2: 5
+Clsn2[0] = -37,-94,36,-46
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,2,0,0,22
+; AS03_exhale_v2; local start 84; duration 8
+Clsn2: 5
+Clsn2[0] = -27,-91,40,-44
+Clsn2[1] = -29,-44,25,-20
+Clsn2[2] = -25,-23,13,-3
+Clsn2[3] = 18,-37,33,-24
+Clsn2[4] = 26,-32,38,-16
+3010,3,0,0,8
+; AS01_inflate_v1; local start 92; duration 8
+Clsn2: 5
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,1,0,0,8
+; AS02_fullpuff_v1; local start 100; duration 12
+Clsn2: 5
+Clsn2[0] = -37,-94,36,-46
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,2,0,0,12
+; AS03_exhale_v2; local start 112; duration 8
+Clsn2: 5
+Clsn2[0] = -27,-91,40,-44
+Clsn2[1] = -29,-44,25,-20
+Clsn2[2] = -25,-23,13,-3
+Clsn2[3] = 18,-37,33,-24
+Clsn2[4] = 26,-32,38,-16
+3010,3,0,0,8
+; AS01_inflate_v1; local start 120; duration 8
+Clsn2: 5
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,1,0,0,8
+; AS02_fullpuff_v1; local start 128; duration 12
+Clsn2: 5
+Clsn2[0] = -37,-94,36,-46
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,2,0,0,12
+; AS03_exhale_v2; local start 140; duration 28
+Clsn2: 5
+Clsn2[0] = -27,-91,40,-44
+Clsn2[1] = -29,-44,25,-20
+Clsn2[2] = -25,-23,13,-3
+Clsn2[3] = 18,-37,33,-24
+Clsn2[4] = 26,-32,38,-16
+3010,3,0,0,28
+; AS00_brace_v2; local start 168; duration 22
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,22
+
+[Begin Action 20120]
+; stationary preflight, zero attack; local start 0; duration 8
+30111,0,0,0,8
+; same sphere; translated existing16rim segments; source lease/exit controls; local start 8; held tail; source owns exit
+Clsn1: 16
+Clsn1[0] = 146,-111,164,-81
+Clsn1[1] = 134,-72,161,-41
+Clsn1[2] = 109,-41,141,-9
+Clsn1[3] = 77,-14,109,10
+Clsn1[4] = 39,-6,69,14
+Clsn1[5] = -1,-18,30,11
+Clsn1[6] = -33,-41,-1,-9
+Clsn1[7] = -52,-71,-24,-41
+Clsn1[8] = -55,-111,-36,-81
+Clsn1[9] = -51,-150,-25,-120
+Clsn1[10] = -31,-180,-1,-155
+Clsn1[11] = 0,-199,31,-174
+Clsn1[12] = 40,-204,68,-186
+Clsn1[13] = 78,-199,108,-179
+Clsn1[14] = 109,-180,139,-151
+Clsn1[15] = 132,-150,159,-119
+30111,0,0,0,-1
+
+[Begin Action 20121]
+; existing charge pixel cel with new opaque-rim axis; local start 0; duration 5
+30110,0,0,0,5
+; existing charge pixel cel with new opaque-rim axis; local start 5; duration 5
+30110,1,0,0,5
+; existing charge pixel cel with new opaque-rim axis; local start 10; duration 5
+30110,2,0,0,5
+; existing charge pixel cel with new opaque-rim axis; local start 15; duration 5
+30110,3,0,0,5
+; existing charge pixel cel with new opaque-rim axis; local start 20; duration 6
+30110,4,0,0,6
+
+[Begin Action 20122]
+; existing charge pixel cel with new opaque-rim axis; local start 0; duration 8
+30110,0,0,0,8
+; existing charge pixel cel with new opaque-rim axis; local start 8; duration 8
+30110,1,0,0,8
+; existing charge pixel cel with new opaque-rim axis; local start 16; duration 8
+30110,2,0,0,8
+; existing charge pixel cel with new opaque-rim axis; local start 24; duration 8
+30110,3,0,0,8
+; existing charge pixel cel with new opaque-rim axis; local start 32; duration 10
+30110,4,0,0,10
+
+[Begin Action 20123]
+; existing charge pixel cel with new opaque-rim axis; local start 0; duration 4
+30110,0,0,0,4
+; existing charge pixel cel with new opaque-rim axis; local start 4; duration 4
+30110,1,0,0,4
+; existing charge pixel cel with new opaque-rim axis; local start 8; duration 4
+30110,2,0,0,4
+; existing charge pixel cel with new opaque-rim axis; local start 12; duration 4
+30110,3,0,0,4
+; existing charge pixel cel with new opaque-rim axis; local start 16; duration 4
+30110,4,0,0,4
+
+[Begin Action 20312]
+; existing deformed bubble; local start 0; duration 4
+30112,0,0,0,4
+; existing distinct broken foam; local start 4; duration 14
+30113,0,0,0,14
+
+; V28 genuine Thunder posture append; neutral preparation/recovery are explicit SOAP-neutral reuse.
+
+[Begin Action 3220]
+; existing neutral prep; source phase start 0, duration 42
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,42
+; CT01; source phase start 42, duration 21
+Clsn2: 7
+Clsn2[0] = -22,-77,52,-31
+Clsn2[1] = -24,-35,34,-12
+Clsn2[2] = -31,-17,32,-1
+Clsn2[3] = -24,-41,0,-20
+Clsn2[4] = 29,-33,57,-15
+Clsn2[5] = -35,-50,-15,-26
+Clsn2[6] = 51,-44,71,-23
+3220,1,0,0,21
+; CT02; source phase start 63, duration 21
+Clsn2: 8
+Clsn2[0] = -24,-80,52,-34
+Clsn2[1] = -28,-40,30,-14
+Clsn2[2] = -32,-19,32,-1
+Clsn2[3] = -42,-83,-24,-57
+Clsn2[4] = -32,-63,-10,-36
+Clsn2[5] = 27,-42,55,-24
+Clsn2[6] = -47,-97,-29,-79
+Clsn2[7] = 51,-54,69,-35
+3220,2,0,0,21
+; CT03; source phase start 84, duration 16
+Clsn2: 7
+Clsn2[0] = -22,-77,52,-31
+Clsn2[1] = -24,-35,34,-12
+Clsn2[2] = -31,-17,32,-1
+Clsn2[3] = -33,-48,1,-34
+Clsn2[4] = 28,-37,53,-23
+Clsn2[5] = -42,-45,-31,-27
+Clsn2[6] = 47,-30,60,-14
+3220,3,0,0,16
+; CT04; source phase start 100, duration 42
+Clsn2: 7
+Clsn2[0] = -22,-77,52,-31
+Clsn2[1] = -24,-35,34,-12
+Clsn2[2] = -31,-17,32,-1
+Clsn2[3] = -20,-38,2,-19
+Clsn2[4] = 28,-34,47,-16
+Clsn2[5] = -16,-31,-3,-16
+Clsn2[6] = 40,-26,54,-11
+3220,4,0,0,42
+; existing neutral recovery; source phase start 142, duration 38
+Clsn2: 5
+Clsn2[0] = -18,-77,49,-32
+Clsn2[1] = -25,-34,29,-12
+Clsn2[2] = -28,-16,27,-1
+Clsn2[3] = 28,-30,43,-14
+Clsn2[4] = 37,-22,51,-6
+3020,0,0,0,38
+
+[Begin Action 3210]
+; existing neutral prep; source phase start 0, duration 42
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,42
+; AT01; source phase start 42, duration 21
+Clsn2: 7
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = -45,-55,-12,-31
+Clsn2[4] = 18,-44,44,-26
+Clsn2[5] = -56,-68,-38,-47
+Clsn2[6] = 41,-62,60,-41
+3210,1,0,0,21
+; AT02; source phase start 63, duration 21
+Clsn2: 8
+Clsn2[0] = -31,-84,29,-39
+Clsn2[1] = -28,-43,18,-16
+Clsn2[2] = -20,-22,16,-1
+Clsn2[3] = -49,-77,-32,-55
+Clsn2[4] = -39,-57,-15,-32
+Clsn2[5] = 20,-41,45,-24
+Clsn2[6] = -53,-94,-35,-76
+Clsn2[7] = 41,-55,59,-36
+3210,2,0,0,21
+; AT03; source phase start 84, duration 16
+Clsn2: 7
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = -44,-49,-12,-34
+Clsn2[4] = 18,-36,43,-21
+Clsn2[5] = -59,-55,-41,-38
+Clsn2[6] = 36,-39,52,-22
+3210,3,0,0,16
+; AT04; source phase start 100, duration 42
+Clsn2: 7
+Clsn2[0] = -36,-94,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = -38,-43,-13,-25
+Clsn2[4] = 17,-34,34,-18
+Clsn2[5] = -42,-43,-27,-28
+Clsn2[6] = 31,-35,46,-21
+3210,4,0,0,42
+; existing neutral recovery; source phase start 142, duration 38
+Clsn2: 5
+Clsn2[0] = -36,-93,33,-47
+Clsn2[1] = -28,-49,20,-20
+Clsn2[2] = -24,-23,14,-1
+Clsn2[3] = 17,-43,30,-29
+Clsn2[4] = 23,-37,38,-20
+3010,0,0,0,38
+
+; V29 genuine crouch/air punch-super variants. Six new drawings, two exact A600 reused originals.
+
+[Begin Action 3120]
+; CP00: actual chamber reused for cutin preparation; localstart0,duration42
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,42
+; CP00: chamber/load hold; no invented inbetween; localstart42,duration12
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,12
+; CP01: startercontact54 only; localstart54,duration1
+Clsn1: 1
+Clsn1[0] = 58,-47,73,-34
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-38,-18,-19
+Clsn2[5] = 22,-47,57,-33
+Clsn2[6] = 56,-50,74,-33
+3120,1,0,0,1
+
+[Begin Action 3121]
+; CP01: prior straight pose reused as clear overshoot/recoil; localstart0,duration5
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-38,-18,-19
+Clsn2[5] = 22,-47,57,-33
+Clsn2[6] = 56,-50,74,-33
+3120,1,0,0,5
+; CP00: chamber; localstart5,duration6
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,6
+; CP02: actual short hookcontact11 only; localstart11,duration1
+Clsn1: 1
+Clsn1[0] = 53,-44,66,-33
+Clsn2: 8
+Clsn2[0] = -22,-84,58,-43
+Clsn2[1] = -25,-43,36,-14
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = -17,-49,14,-31
+Clsn2[4] = 28,-44,50,-26
+Clsn2[5] = 43,-43,59,-28
+Clsn2[6] = -38,-50,-21,-31
+Clsn2[7] = 50,-47,71,-31
+3120,2,0,0,1
+
+[Begin Action 3122]
+; CP02: clear hookovershoot; localstart0,duration4
+Clsn2: 8
+Clsn2[0] = -22,-84,58,-43
+Clsn2[1] = -25,-43,36,-14
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = -17,-49,14,-31
+Clsn2[4] = 28,-44,50,-26
+Clsn2[5] = 43,-43,59,-28
+Clsn2[6] = -38,-50,-21,-31
+Clsn2[7] = 50,-47,71,-31
+3120,2,0,0,4
+; CP00: recovery; localstart4,duration4
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,4
+; CP00: chamber; localstart8,duration5
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,5
+; CP03: rising contact13–15; localstart13,duration3
+Clsn1: 1
+Clsn1[0] = 53,-78,66,-64
+Clsn2: 8
+Clsn2[0] = -22,-84,58,-43
+Clsn2[1] = -25,-43,36,-14
+Clsn2[2] = -35,-20,39,-1
+Clsn2[3] = -18,-48,4,-30
+Clsn2[4] = 26,-60,47,-40
+Clsn2[5] = 41,-71,60,-51
+Clsn2[6] = -33,-45,-16,-26
+Clsn2[7] = 49,-83,71,-60
+3120,3,0,0,3
+; CP00: safe recoveryelement5; failed3190 uses this; localstart16,duration8
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,8
+; CP00: safe readyelement6; failed3190 exits12 beforeloop; localstart24,duration5
+Clsn2: 7
+Clsn2[0] = -19,-80,52,-37
+Clsn2[1] = -25,-39,32,-13
+Clsn2[2] = -32,-18,37,-1
+Clsn2[3] = -29,-48,-5,-26
+Clsn2[4] = -32,-42,-18,-26
+Clsn2[5] = 28,-43,45,-26
+Clsn2[6] = 22,-42,38,-25
+3120,0,0,0,5
+
+[Begin Action 3110]
+; A600_recovery: actual chamber reused for cutin preparation; localstart0,duration42
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,42
+; A600_recovery: chamber/load hold; no invented inbetween; localstart42,duration12
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,12
+; A600_contact: startercontact54 only; localstart54,duration1
+Clsn1: 1
+Clsn1[0] = 42,-55,53,-43
+Clsn2: 6
+Clsn2[0] = -37,-91,25,-55
+Clsn2[1] = -27,-56,17,-24
+Clsn2[2] = -17,-25,12,-1
+Clsn2[3] = 18,-55,42,-44
+Clsn2[4] = -31,-44,-13,-27
+Clsn2[5] = 42,-55,54,-43
+600,1,0,0,1
+
+[Begin Action 3111]
+; A600_contact: prior straight pose reused as clear overshoot/recoil; localstart0,duration5
+Clsn2: 6
+Clsn2[0] = -37,-91,25,-55
+Clsn2[1] = -27,-56,17,-24
+Clsn2[2] = -17,-25,12,-1
+Clsn2[3] = 18,-55,42,-44
+Clsn2[4] = -31,-44,-13,-27
+Clsn2[5] = 42,-55,54,-43
+600,1,0,0,5
+; A600_recovery: chamber; localstart5,duration6
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,6
+; AP02: actual short hookcontact11 only; localstart11,duration1
+Clsn1: 1
+Clsn1[0] = 20,-41,34,-31
+Clsn2: 7
+Clsn2[0] = -38,-94,30,-50
+Clsn2[1] = -31,-52,20,-23
+Clsn2[2] = -22,-26,14,-1
+Clsn2[3] = -42,-62,-17,-42
+Clsn2[4] = 11,-57,41,-37
+Clsn2[5] = -40,-59,-20,-40
+Clsn2[6] = 16,-44,38,-24
+3110,2,0,0,1
+
+[Begin Action 3112]
+; AP02: clear hookovershoot; localstart0,duration4
+Clsn2: 7
+Clsn2[0] = -38,-94,30,-50
+Clsn2[1] = -31,-52,20,-23
+Clsn2[2] = -22,-26,14,-1
+Clsn2[3] = -42,-62,-17,-42
+Clsn2[4] = 11,-57,41,-37
+Clsn2[5] = -40,-59,-20,-40
+Clsn2[6] = 16,-44,38,-24
+3110,2,0,0,4
+; A600_recovery: recovery; localstart4,duration4
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,4
+; A600_recovery: chamber; localstart8,duration5
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,5
+; AP03: rising contact13–15; localstart13,duration3
+Clsn1: 1
+Clsn1[0] = 42,-84,53,-69
+Clsn2: 8
+Clsn2[0] = -38,-94,30,-50
+Clsn2[1] = -31,-52,20,-23
+Clsn2[2] = -22,-26,14,-1
+Clsn2[3] = -39,-59,-14,-40
+Clsn2[4] = 11,-62,35,-41
+Clsn2[5] = 31,-76,48,-54
+Clsn2[6] = -32,-55,-14,-37
+Clsn2[7] = 38,-91,63,-67
+3110,3,0,0,3
+; A600_recovery: safe recoveryelement5; failed3190 uses this; localstart16,duration8
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,8
+; A600_recovery: safe readyelement6; failed3190 exits12 beforeloop; localstart24,duration5
+Clsn2: 4
+Clsn2[0] = -37,-93,25,-56
+Clsn2[1] = -27,-57,25,-24
+Clsn2[2] = -16,-26,14,-1
+Clsn2[3] = -31,-46,-12,-28
+600,2,0,0,5
+
+; LOWKICK430: genuine five-pose terminal branch; no zero collision declarations/defaults.
+[Begin Action 430]
+Clsn2: 6
+Clsn2[0] = -36, -104, 33, -51
+Clsn2[1] = -30, -52, 24, -19
+Clsn2[2] = -42, -49, -25, -29
+Clsn2[3] = 14, -53, 35, -33
+Clsn2[4] = -39, -24, -10, 0
+Clsn2[5] = -1, -23, 24, 0
+430,0,0,0,3
+Clsn2: 7
+Clsn2[0] = -36, -103, 33, -51
+Clsn2[1] = -30, -51, 24, -21
+Clsn2[2] = -42, -49, -25, -28
+Clsn2[3] = 14, -53, 35, -33
+Clsn2[4] = -35, -25, -4, 0
+Clsn2[5] = 8, -36, 42, -14
+Clsn2[6] = 36, -30, 56, -14
+430,1,0,0,4
+Clsn1: 1
+Clsn1[0] = 48, -24, 62, -10
+Clsn2: 7
+Clsn2[0] = -32, -103, 36, -49
+Clsn2[1] = -26, -50, 26, -18
+Clsn2[2] = -41, -47, -23, -28
+Clsn2[3] = 16, -52, 37, -31
+Clsn2[4] = -30, -25, -4, 0
+Clsn2[5] = -8, -28, 46, -11
+Clsn2[6] = 46, -26, 64, -9
+430,2,0,0,3
+Clsn2: 7
+Clsn2[0] = -32, -103, 36, -49
+Clsn2[1] = -26, -51, 26, -18
+Clsn2[2] = -41, -48, -23, -28
+Clsn2[3] = 16, -52, 37, -31
+Clsn2[4] = -30, -25, -4, 0
+Clsn2[5] = 4, -31, 27, -15
+Clsn2[6] = 2, -18, 18, -7
+430,3,0,0,4
+Clsn2: 6
+Clsn2[0] = -36, -104, 33, -51
+Clsn2[1] = -29, -52, 24, -19
+Clsn2[2] = -42, -49, -25, -29
+Clsn2[3] = 14, -54, 35, -33
+Clsn2[4] = -37, -24, -6, 0
+Clsn2[5] = 0, -23, 24, 0
+430,4,0,0,6
+
+; DROPKICK640 genuine five-key body, two paw boxes share one hitonce HitDef.
+[Begin Action 640]
+Clsn2: 6
+Clsn2[0] = -38, -92, 28, -41
+Clsn2[1] = -35, -44, 23, -18
+Clsn2[2] = -52, -46, -34, -29
+Clsn2[3] = 8, -48, 29, -31
+Clsn2[4] = -19, -32, 7, -7
+Clsn2[5] = 5, -27, 20, 2
+640,0,0,0,3
+Clsn2: 7
+Clsn2[0] = -29, -100, 34, -50
+Clsn2[1] = -24, -52, 33, -22
+Clsn2[2] = -38, -53, -20, -36
+Clsn2[3] = 16, -55, 37, -40
+Clsn2[4] = 5, -41, 39, -22
+Clsn2[5] = 35, -46, 60, -25
+Clsn2[6] = 19, -25, 49, -5
+640,1,0,0,2
+Clsn1: 2
+Clsn1[0] = 52, -53, 65, -34
+Clsn1[1] = 42, -25, 55, -10
+Clsn2: 8
+Clsn2[0] = -30, -101, 34, -50
+Clsn2[1] = -26, -53, 32, -21
+Clsn2[2] = -40, -55, -20, -38
+Clsn2[3] = 16, -56, 35, -41
+Clsn2[4] = 4, -43, 50, -25
+Clsn2[5] = 49, -55, 67, -32
+Clsn2[6] = 5, -31, 44, -16
+Clsn2[7] = 38, -28, 56, -9
+640,2,0,0,3
+Clsn2: 7
+Clsn2[0] = -28, -100, 35, -50
+Clsn2[1] = -25, -52, 32, -24
+Clsn2[2] = -40, -53, -22, -37
+Clsn2[3] = 18, -56, 38, -41
+Clsn2[4] = 0, -40, 29, -18
+Clsn2[5] = 29, -43, 50, -21
+Clsn2[6] = 21, -27, 37, -8
+640,3,0,0,5
+Clsn2: 6
+Clsn2[0] = -28, -100, 37, -49
+Clsn2[1] = -24, -51, 31, -27
+Clsn2[2] = -40, -53, -22, -36
+Clsn2[3] = 19, -56, 39, -39
+Clsn2[4] = -18, -35, 10, -3
+Clsn2[5] = 7, -27, 25, 6
+640,4,0,0,9
+
+[Begin Action 41]
+; Required engine alias: existing phase 50; reused authored pose, not new motion.
+
+; J00_rise; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -30,-106,42,-54
+  Clsn2[1] = -25,-56,28,-25
+  Clsn2[2] = -25,-30,19,-7
+50,0, 0,0, -1
+
+
+[Begin Action 42]
+; Required engine alias: existing phase 50; reused authored pose, not new motion.
+
+; J00_rise; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -30,-106,42,-54
+  Clsn2[1] = -25,-56,28,-25
+  Clsn2[2] = -25,-30,19,-7
+50,0, 0,0, -1
+
+
+[Begin Action 43]
+; Required engine alias: existing phase 50; reused authored pose, not new motion.
+
+; J00_rise; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -30,-106,42,-54
+  Clsn2[1] = -25,-56,28,-25
+  Clsn2[2] = -25,-30,19,-7
+50,0, 0,0, -1
+
+
+[Begin Action 44]
+; Required engine alias: existing phase 51; reused authored pose, not new motion.
+
+; J02_descend; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-109,39,-52
+  Clsn2[1] = -26,-54,26,-23
+  Clsn2[2] = -26,-26,26,0
+50,2, 0,0, -1
+
+
+[Begin Action 46]
+; Required engine alias: existing phase 51; reused authored pose, not new motion.
+
+; J02_descend; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -36,-109,39,-52
+  Clsn2[1] = -26,-54,26,-23
+  Clsn2[2] = -26,-26,26,0
+50,2, 0,0, -1
+
+
+[Begin Action 47]
+; Required engine alias: existing phase 52; reused authored pose, not new motion.
+
+; B06; start tick 0; no attack
+Clsn2: 3
+  Clsn2[0] = -22,-84,52,-30
+  Clsn2[1] = -32,-39,41,-10
+  Clsn2[2] = -33,-14,34,0
+52,0, 0,0, 3
+; B07; start tick 3; no attack
+Clsn2: 3
+  Clsn2[0] = -39,-105,38,-49
+  Clsn2[1] = -28,-52,29,-15
+  Clsn2[2] = -29,-18,31,0
+52,1, 0,0, 2
+
+
+[Begin Action 5090]
+; Required engine alias: existing phase 5050; reused authored pose, not new motion.
+
+; FC00_backreel; explicit actual/reused pose; no attack.
+Clsn2: 3
+  Clsn2[0] = -68,-109,-2,-47
+  Clsn2[1] = -41,-58,17,-27
+  Clsn2[2] = -29,-30,28,0
+550,0, 0,0, -1
+

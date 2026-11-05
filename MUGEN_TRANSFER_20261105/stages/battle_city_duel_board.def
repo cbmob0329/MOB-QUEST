@@ -1,0 +1,60 @@
+[Info]
+name = "Battle City Duel Board"
+displayname = "Battle City Duel Board"
+versiondate = 11,05,2026
+mugenversion = 1.0
+author = "YuGiOh fan stage project"
+[Camera]
+startx = 0
+starty = 0
+boundleft = 0
+boundright = 0
+boundhigh = 0
+boundlow = 0
+verticalfollow = 0
+floortension = 100
+tension = 120
+[PlayerInfo]
+p1startx = -290
+p1starty = 0
+p1facing = 1
+p2startx = 290
+p2starty = 0
+p2facing = -1
+leftbound = -720
+rightbound = 720
+[Bound]
+screenleft = 180
+screenright = 180
+[StageInfo]
+zoffset = 710
+autoturn = 1
+resetBG = 1
+localcoord = 1536,864
+xscale = 1
+yscale = 1
+[Shadow]
+intensity = 95
+color = 0,0,0
+yscale = .18
+fade.range = -180,-90
+[Reflection]
+intensity = 0
+[Music]
+bgmusic =
+bgmvolume = 100
+[BGdef]
+spr = battle_city_duel_board.sff
+debugbg = 0
+[BG board0]
+type = normal
+spriteno = 0,0
+start = -768,-160
+delta = 1,1
+mask = 0
+[BG board1]
+type = normal
+spriteno = 0,1
+start = 0,-160
+delta = 1,1
+mask = 0

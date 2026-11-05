@@ -1,0 +1,271 @@
+{
+  "status": "PASS_STATIC_ONLY_NOT_NATIVE",
+  "candidate": "candidates/harpy_normal_production_v1/harpy_normal_jus",
+  "issues": [],
+  "engine_run": false,
+  "sprite_count": 312,
+  "palette_count": 306,
+  "action_count": 214,
+  "AIR_elements": 474,
+  "zero_declarations": 0,
+  "defaults": 0,
+  "maximum_c2_per_element": 128,
+  "u1_maximum_c2": 108,
+  "state_count": 99,
+  "controller_count": 1152,
+  "root_HitDef_helper_states": [
+    7400,
+    7450,
+    7451,
+    7500,
+    7501,
+    7502,
+    7503,
+    7504,
+    7505,
+    7600,
+    7601,
+    7602,
+    7603,
+    7604,
+    7605,
+    7606,
+    7607
+  ],
+  "helper_spawn_proof": [
+    {
+      "source": 4000,
+      "target": 7400
+    },
+    {
+      "source": 4200,
+      "target": 7450
+    },
+    {
+      "source": 6000,
+      "target": 7500
+    },
+    {
+      "source": 6000,
+      "target": 7501
+    },
+    {
+      "source": 6000,
+      "target": 7502
+    },
+    {
+      "source": 6000,
+      "target": 7503
+    },
+    {
+      "source": 6000,
+      "target": 7504
+    },
+    {
+      "source": 6000,
+      "target": 7505
+    },
+    {
+      "source": 6200,
+      "target": 7600
+    }
+  ],
+  "gethitvar_parameters": [
+    "fall",
+    "isbound",
+    "yaccel"
+  ],
+  "6301_longline_waiver": "2 lines exact to original22 intake; historical startup evidence only, not new runtime pass",
+  "6301_longline_lengths": [
+    363,
+    357
+  ],
+  "dependencies": [
+    {
+      "key": "cmd",
+      "name": "harpy_normal.cmd",
+      "sha256": "5e1c311425b9f57e84252fd79b9a0d491b30e0f12bc6cf7b4ceff261477a6a7e"
+    },
+    {
+      "key": "cns",
+      "name": "harpy_normal.cns",
+      "sha256": "06e662247043676d87f4dd12074d37fb0da98d7a5411fef4502c4deafb9427d8"
+    },
+    {
+      "key": "st",
+      "name": "harpy_normal.cns",
+      "sha256": "06e662247043676d87f4dd12074d37fb0da98d7a5411fef4502c4deafb9427d8"
+    },
+    {
+      "key": "stcommon",
+      "name": "harpy_normal_common.cns",
+      "sha256": "ad1dc249557a2fe7af814b7426c59495c0f565e829570b7cfbd258e12cc1d5e7"
+    },
+    {
+      "key": "sprite",
+      "name": "harpy_normal.sff",
+      "sha256": "dd31c06f0aea70820f55c172ff7a3dfe9ad53475882998eee770f80b5133773a"
+    },
+    {
+      "key": "anim",
+      "name": "harpy_normal.air",
+      "sha256": "ef96daf61dd2080a79a13bd4922ba0124926dc0f9b54afaab933e1e703d21c48"
+    },
+    {
+      "key": "sound",
+      "name": "harpy_normal.snd",
+      "sha256": "57c3dd631f278fac52520688e2c9864e90b1d3135ca43c320563ecb524adba4e"
+    },
+    {
+      "key": "pal1",
+      "name": "harpy_normal.act",
+      "sha256": "bb2dcf7e2927693513c43bfbea6647ff261aaac84e0f57d2341c516b49a71901"
+    }
+  ],
+  "sounds": 13,
+  "local_sound_references": [
+    [
+      9000,
+      0
+    ],
+    [
+      9000,
+      1
+    ],
+    [
+      9000,
+      2
+    ],
+    [
+      9000,
+      3
+    ],
+    [
+      9000,
+      4
+    ],
+    [
+      9000,
+      5
+    ]
+  ],
+  "move_coverage": [
+    {
+      "code": "S1",
+      "input": "F+x (ground)",
+      "cost": 0,
+      "state_action": 4000,
+      "body_air_frames": 6,
+      "direct_helpers": [
+        7400
+      ],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "S2",
+      "input": "D+y (air)",
+      "cost": 0,
+      "state_action": 4100,
+      "body_air_frames": 5,
+      "direct_helpers": [],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "S3",
+      "input": "D+c (ground)",
+      "cost": 0,
+      "state_action": 4200,
+      "body_air_frames": 6,
+      "direct_helpers": [
+        7450
+      ],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "S4",
+      "input": "B+y (ground)",
+      "cost": 0,
+      "state_action": 4300,
+      "body_air_frames": 6,
+      "direct_helpers": [],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "U1",
+      "input": "a (ground)",
+      "cost": 1000,
+      "state_action": 6000,
+      "body_air_frames": 31,
+      "direct_helpers": [
+        7500,
+        7501,
+        7502,
+        7503,
+        7504,
+        7505
+      ],
+      "source_preserved_except_U1_material": false
+    },
+    {
+      "code": "U2",
+      "input": "b (ground)",
+      "cost": 1000,
+      "state_action": 6100,
+      "body_air_frames": 4,
+      "direct_helpers": [],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "U3",
+      "input": "D+a (ground)",
+      "cost": 2000,
+      "state_action": 6200,
+      "body_air_frames": 22,
+      "direct_helpers": [
+        7600
+      ],
+      "source_preserved_except_U1_material": true
+    },
+    {
+      "code": "U4",
+      "input": "D+b (ground)",
+      "cost": 2000,
+      "state_action": 6300,
+      "body_air_frames": 3,
+      "direct_helpers": [],
+      "source_preserved_except_U1_material": true
+    }
+  ],
+  "U1": {
+    "body_frames": 31,
+    "ticks": 142,
+    "helper_births": [
+      62,
+      62,
+      77,
+      77,
+      92,
+      104
+    ],
+    "packet_damage": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      80
+    ],
+    "nominal_total": 205,
+    "cost": 1000
+  },
+  "runtime_file_hashes": {
+    "harpy_normal.cns": "06e662247043676d87f4dd12074d37fb0da98d7a5411fef4502c4deafb9427d8",
+    "harpy_normal.air": "ef96daf61dd2080a79a13bd4922ba0124926dc0f9b54afaab933e1e703d21c48",
+    "harpy_normal.snd": "57c3dd631f278fac52520688e2c9864e90b1d3135ca43c320563ecb524adba4e",
+    "harpy_normal.act": "bb2dcf7e2927693513c43bfbea6647ff261aaac84e0f57d2341c516b49a71901",
+    "harpy_normal.cmd": "5e1c311425b9f57e84252fd79b9a0d491b30e0f12bc6cf7b4ceff261477a6a7e",
+    "harpy_normal_common.cns": "ad1dc249557a2fe7af814b7426c59495c0f565e829570b7cfbd258e12cc1d5e7",
+    "harpy_normal.sff": "dd31c06f0aea70820f55c172ff7a3dfe9ad53475882998eee770f80b5133773a",
+    "harpy_normal_jus.def": "256fe99c9d7dd16f378e98975fb7ace088a3f19d46eeee9341376f9d38106200"
+  }
+}

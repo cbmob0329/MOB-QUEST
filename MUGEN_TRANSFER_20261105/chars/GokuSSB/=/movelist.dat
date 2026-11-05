@@ -1,0 +1,76 @@
+<#a800f0>:Stardust Classes:</>
+Character's must awaken to gain class buffs:
+
+<#28f000>:Caster Class:</>
+_!Increased meter regen
+
+<#00f0b8>:Fighter Class:</>
+_!Gain a 20% attack boost, increased move hitstun
+
+<#f00000>:Hunter Class:</>
+_!Causes small bleed damage after hits
+
+<#f06800>:Tanker Class:</>
+_!Gain armor against normal attacks
+
+<#f0f000>:Ranger Class:</>
+_!Causes slight meter drain after hits
+
+<#00ccf0>:Warrior Class:</>
+_!Gains a slight dodge chance on getting hit
+
+<#f0f000>:Normal Attacks / Projectiles:</>
+A 									        ^A
+B 								                ^B
+C 							                        ^C
+
+<#f0f000>:Crouch Attacks / Projectiles:</>
+_!Down A 					                            _D_+^A
+_!Down B 					                            _D_+^B
+_!Down C 					                            _D_+^C
+
+<#f0f000>:Air Attacks / Projectiles:</>
+Air A 							                _AIR^A
+_!Air Down A 								_AIR_D_+^A
+Air B 							                _AIR^B
+_!Air Down B 								_AIR_D_+^B
+Air C 							                _AIR^C
+_!Air Down C								_AIR_D_+^C
+
+
+<#f06800>:General Mechanics:</>
+Power Charge (Fills Tactical Gauge)					      ^S_.
+Grab (-1000)									^Y
+Dodge							              [_B/_F]_+^Z
+Super Dash (-500)						        [_B/_F]_+^S
+Taunt									    _D_+^S
+
+<#28f000>:Awakenings / Transformations:</>
+Awakening (Low HP)							      ^X_.
+_!Instant Awakening (-2000) 							^S
+Transform (varies by character, Full Tactical Gauge)			    _D_+^X
+
+<#00ccf0>:Defensive Mechanics:</>
+Combo Breaker (Full Tactical Gauge, hurt)				        ^S
+Guard Pushback (While Blocking) (-300)							     ^A+^B
+Parry									    _D_+^Z
+_!Parry Dash (After Successful Parry) (-500)				_D_+^A
+_!Parry Push (After Successful Parry) (-500)				_D_+^B
+
+<#f00000>:Special Moves (Can be done in the air based on the character):</>
+Special 1 (-1000)							  _QCF_+^A
+Special 2 (-1000)							  _QCB_+^A
+Special 3 (-1000)							  _QCF_+^B
+Special 4 (-1000)							  _QCB_+^B
+
+<#f00000>:Super Moves (Can be done in the air based on the character):</>
+Super 1 (-2000)								  _QCF_+^C
+Super 2 (-2000)								  _QCB_+^C
+
+<#f00000>:Ultimates:</>
+Ultimate (Full Tactical Gauge)					                ^A_+^B_+^C
+                                                                                                                                                                                             OR  _QCF_+^A^B  
+<#a800f0>:Tag Mechanics:</>
+Partner Switch (Tag Mode only)					           [^D/^W]
+Special Assist (Tag Mode only) (400)						   _F_+[^D/^W]
+Super Assist (Tag Mode only) (-2000)						   _B_+[^D/^W]

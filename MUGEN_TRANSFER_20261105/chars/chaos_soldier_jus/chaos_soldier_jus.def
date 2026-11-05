@@ -1,0 +1,16 @@
+[Info]
+name="Chaos Soldier JUS"
+displayname="Chaos Soldier"
+versiondate=10,26,2026
+mugenversion=1.1
+author="User project / Codex"
+localcoord=320,240
+pal.defaults=1
+[Files]
+cmd=chaos_soldier_jus.cmd
+cns=chaos_soldier_jus.cns
+st=chaos_soldier_jus.cns
+stcommon=common1.cns
+sprite=chaos_soldier_jus.sff
+anim=chaos_soldier_jus.air
+sound=chaos_soldier_jus.snd

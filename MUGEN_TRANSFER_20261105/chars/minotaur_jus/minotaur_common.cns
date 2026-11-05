@@ -1,0 +1,1271 @@
+; Own common mechanics adapted from audited original project source. No borrowed character art.
+[Statedef 150]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+anim = 130
+poweradd = 0
+
+[State 150, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 150, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 150, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 151
+ctrl = 0
+
+
+
+
+
+
+[State 150, live crouch guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command = "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType = C
+statetype = C
+ignorehitpause = 1
+
+[State 150, live high guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command != "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType != C
+statetype = S
+ignorehitpause = 1
+
+[State 150, corresponding actual guard silhouette]
+type = ChangeAnim
+trigger1 = Anim != ifelse(StateType=C,131,130)
+value = ifelse(StateType=C,131,130)
+ignorehitpause = 1
+
+[Statedef 151]
+type = S
+movetype = H
+physics = S
+ctrl = 0
+anim = 130
+poweradd = 0
+
+[State 151, ground KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 151, ground hitover only]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+value = ifelse(StateType=C,131,130)
+ctrl = 0
+
+
+
+
+
+
+[State 151, live crouch guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command = "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType = C
+statetype = C
+ignorehitpause = 1
+
+[State 151, live high guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command != "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType != C
+statetype = S
+ignorehitpause = 1
+
+[State 151, corresponding actual guard silhouette]
+type = ChangeAnim
+trigger1 = Anim != ifelse(StateType=C,131,130)
+value = ifelse(StateType=C,131,130)
+ignorehitpause = 1
+
+[Statedef 152]
+type = C
+movetype = H
+physics = N
+ctrl = 0
+anim = 131
+poweradd = 0
+
+[State 152, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 152, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 152, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 153
+ctrl = 0
+
+
+
+
+
+
+[State 152, live crouch guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command = "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType = C
+statetype = C
+ignorehitpause = 1
+
+[State 152, live high guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command != "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType != C
+statetype = S
+ignorehitpause = 1
+
+[State 152, corresponding actual guard silhouette]
+type = ChangeAnim
+trigger1 = Anim != ifelse(StateType=C,131,130)
+value = ifelse(StateType=C,131,130)
+ignorehitpause = 1
+
+[Statedef 153]
+type = C
+movetype = H
+physics = C
+ctrl = 0
+anim = 131
+poweradd = 0
+
+[State 153, ground KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 153, ground hitover only]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+value = ifelse(StateType=C,131,130)
+ctrl = 0
+
+
+
+
+
+
+[State 153, live crouch guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command = "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType = C
+statetype = C
+ignorehitpause = 1
+
+[State 153, live high guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command != "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType != C
+statetype = S
+ignorehitpause = 1
+
+[State 153, corresponding actual guard silhouette]
+type = ChangeAnim
+trigger1 = Anim != ifelse(StateType=C,131,130)
+value = ifelse(StateType=C,131,130)
+ignorehitpause = 1
+
+[Statedef 154]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 132
+poweradd = 0
+
+[State 154, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 154, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 154, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 155
+ctrl = 0
+
+
+
+
+
+
+[Statedef 155]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 132
+poweradd = 0
+
+[State 155, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 155, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(!Alive,5100,156)
+ctrl = 0
+
+[State 155, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 156]
+type = S
+movetype = H
+physics = S
+anim = ifelse(command="holddown",131,130)
+ctrl = 0
+poweradd = 0
+
+[State 156, actual nonfall floor clamp]
+type = PosSet
+trigger1 = 1
+y = 0
+
+[State 156, remove vertical drift only]
+type = VelSet
+trigger1 = 1
+y = 0
+
+[State 156, ground KO before recovery]
+type = ChangeState
+trigger1 = !Alive
+value = 5150
+ctrl = 0
+
+[State 156, nonfall exits after real hitstun not knockdown]
+type = ChangeState
+trigger1 = Alive && HitOver
+value = ifelse(command="holddown",131,130)
+ctrl = 0
+
+
+
+[State 156, live crouch guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command = "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType = C
+statetype = C
+ignorehitpause = 1
+
+[State 156, live high guard without restarting stun]
+type = StateTypeSet
+trigger1 = AILevel = 0 && command != "holddown"
+trigger2 = AILevel > 0 && NumEnemy > 0 && P2StateType != C
+statetype = S
+ignorehitpause = 1
+
+[State 156, corresponding actual guard silhouette]
+type = ChangeAnim
+trigger1 = Anim != ifelse(StateType=C,131,130)
+value = ifelse(StateType=C,131,130)
+ignorehitpause = 1
+
+[Statedef 170]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 5110
+poweradd = 0
+
+[State 170, round pose stationary]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+
+
+
+
+
+[Statedef 175]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 0
+poweradd = 0
+
+[State 175, round pose stationary]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+
+
+
+
+
+[Statedef 5000]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5000, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 5000, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 5000, launched ground hit]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+trigger1 = Vel Y < 0
+value = 5030
+ctrl = 0
+
+[State 5000, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 5001
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5001]
+type = S
+movetype = H
+physics = S
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5001, ground KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5001, ground hitover only]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5010]
+type = C
+movetype = H
+physics = N
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5010, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 5010, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 5010, launched ground hit]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+trigger1 = Vel Y < 0
+value = 5030
+ctrl = 0
+
+[State 5010, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 5011
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5011]
+type = C
+movetype = H
+physics = C
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5011, ground KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5011, ground hitover only]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5020]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5020, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 5020, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 5020, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 5030
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5030]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5030, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 5030, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,5090)
+ctrl = 0
+
+[State 5030, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5035]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5035, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 5035, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,5090)
+ctrl = 0
+
+[State 5035, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5040]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5040, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 5040, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,5090)
+ctrl = 0
+
+[State 5040, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5050]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5050, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 5050, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,5090)
+ctrl = 0
+
+[State 5050, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5070]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5070, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 5070, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 5070, launched ground hit]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+trigger1 = Vel Y < 0
+value = 5030
+ctrl = 0
+
+[State 5070, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 5030
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5071]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5071, hit gravity]
+type = VelAdd
+ignorehitpause = 1
+trigger1 = HitPauseTime = 0
+y = GetHitVar(yaccel)
+
+[State 5071, ground contact from damage]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,5090)
+ctrl = 0
+
+[State 5071, nonfall recovery only alive]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+trigger1 = GetHitVar(fall) = 0
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5080]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5080, hit velocity once after shake]
+type = HitVelSet
+ignorehitpause = 1
+trigger1 = HitShakeOver
+x = 1
+y = 1
+
+[State 5080, KO stays in damage flow]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+trigger1 = HitShakeOver
+value = ifElse(StateType = A || Vel Y < 0, 5050, 5150)
+ctrl = 0
+
+[State 5080, launched ground hit]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+trigger1 = Vel Y < 0
+value = 5030
+ctrl = 0
+
+[State 5080, shake complete]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitShakeOver
+value = 5081
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5081]
+type = L
+movetype = H
+physics = C
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5081, ground KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5081, ground hitover only]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5090]
+type = S
+movetype = H
+physics = S
+anim = 5000
+ctrl = 0
+poweradd = 0
+
+[State 5090, actual nonfall floor clamp]
+type = PosSet
+trigger1 = 1
+y = 0
+
+[State 5090, remove vertical drift only]
+type = VelSet
+trigger1 = 1
+y = 0
+
+[State 5090, ground KO before recovery]
+type = ChangeState
+trigger1 = !Alive
+value = 5150
+ctrl = 0
+
+[State 5090, nonfall exits after real hitstun not knockdown]
+type = ChangeState
+trigger1 = Alive && HitOver
+value = 0
+ctrl = 1
+
+
+
+[Statedef 5100]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+poweradd = 0
+
+[State 5100, down ground root]
+type = PosSet
+ignorehitpause = 1
+trigger1 = 1
+y = 0
+
+[State 5100, down velocity stop]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+[State 5100, apply engine fall damage once]
+type = HitFallDamage
+ignorehitpause = 1
+trigger1 = Time = 0
+persistent = 0
+
+[State 5100, down KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5100, finite normal getup]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 6
+value = 5110
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5101]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+poweradd = 0
+
+[State 5101, down ground root]
+type = PosSet
+ignorehitpause = 1
+trigger1 = 1
+y = 0
+
+[State 5101, down velocity stop]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+[State 5101, down KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5101, finite normal getup]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 6
+value = 5110
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5110]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5110
+poweradd = 0
+
+[State 5110, down ground root]
+type = PosSet
+ignorehitpause = 1
+trigger1 = 1
+y = 0
+
+[State 5110, down velocity stop]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+[State 5110, down KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5110, finite normal getup]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 30
+value = 5120
+ctrl = 0
+
+
+
+
+
+
+[Statedef 5120]
+type = S
+movetype = H
+physics = N
+ctrl = 0
+anim = 5120
+poweradd = 0
+
+[State 5120, down ground root]
+type = PosSet
+ignorehitpause = 1
+trigger1 = 1
+y = 0
+
+[State 5120, down velocity stop]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+[State 5120, down KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5150
+ctrl = 0
+
+[State 5120, finite normal getup]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+
+
+
+
+
+[Statedef 5150]
+type = L
+movetype = H
+physics = N
+ctrl = 0
+anim = 5150
+poweradd = 0
+
+[State 5150, KO remains down]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+[State 5150, KO ground root]
+type = PosSet
+ignorehitpause = 1
+trigger1 = 1
+y = 0
+
+
+
+
+
+
+[Statedef 5200]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5200, recovery KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5050
+ctrl = 0
+
+[State 5200, recovery grounded]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = 52
+ctrl = 0
+
+[State 5200, recovery air no jump budget refill]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[State 5200, recovery actual gravity no floating frozen body]
+type = VelAdd
+trigger1 = HitPauseTime = 0
+y = .43
+
+[Statedef 5201]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5000
+poweradd = 0
+
+[State 5201, recovery KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5050
+ctrl = 0
+
+[State 5201, recovery grounded]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = 52
+ctrl = 0
+
+[State 5201, recovery air no jump budget refill]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[State 5201, recovery actual gravity no floating frozen body]
+type = VelAdd
+trigger1 = HitPauseTime = 0
+y = .43
+
+[Statedef 5210]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+poweradd = 0
+
+[State 5210, recovery KO priority]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Life <= 0
+value = 5050
+ctrl = 0
+
+[State 5210, recovery grounded]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y >= 0
+value = 52
+ctrl = 0
+
+[State 5210, recovery air no jump budget refill]
+type = ChangeState
+ignorehitpause = 1
+trigger1 = Alive = 1
+trigger1 = Life > 0
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+
+
+
+
+
+[State 5210, recovery actual gravity no floating frozen body]
+type = VelAdd
+trigger1 = HitPauseTime = 0
+y = .43
+
+[Statedef 5500]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 0
+poweradd = 0
+
+[State 5500, round pose stationary]
+type = VelSet
+ignorehitpause = 1
+trigger1 = 1
+x = 0
+y = 0
+
+
+
+
+
+[Statedef 5900]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+poweradd = 0
+
+[State 5900, round entry]
+type = ChangeState
+trigger1 = 1
+value = 190
+ctrl = 0

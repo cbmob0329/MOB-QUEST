@@ -1,0 +1,19 @@
+[Info]
+name = "Saggi"
+displayname = "Saggi approved168 static candidate"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1,2,3,4,5,6
+[Files]
+cmd = saggi_jus.cmd
+cns = saggi_jus.cns
+st = saggi_jus.cns
+stcommon = common1.cns
+sprite = saggi_jus.sff
+anim = saggi_jus.air
+sound = saggi_jus.snd
+[Arcade]
+intro.storyboard =
+ending.storyboard =

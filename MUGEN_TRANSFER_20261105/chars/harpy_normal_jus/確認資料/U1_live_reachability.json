@@ -1,0 +1,25 @@
+{
+  "status": "PASS_STATIC_CONNECTED_LIVE_INPUT_AND_AI_SOURCE_NOT_RUNTIME",
+  "cns_sha256": "06e662247043676d87f4dd12074d37fb0da98d7a5411fef4502c4deafb9427d8",
+  "cmd_sha256": "5e1c311425b9f57e84252fd79b9a0d491b30e0f12bc6cf7b4ceff261477a6a7e",
+  "route": [
+    "human neutral a packet var36=8,var37=0,var38=2,var39=0 OR AI var26=6000 builds same packet",
+    "CNS State-2 dispatcher var40=6000",
+    "CMD State-1 validates Ctrl/confirmed normal chain, ground, power1000 and target limits",
+    "ChangeState6000",
+    "Statedef6000 anim6000",
+    "AIR6000 actual31 elements/142ticks, 17 new body keys + approved idle",
+    "Helper7500..7505 use action7500/7505 and fade7506/7507; gather Explod26000"
+  ],
+  "AI_scope": "One-bar candidate with P2BodyDist X32..150, subject to prior decisions/cooldown/admission; not guaranteed frequency",
+  "source_excerpts": [
+    "[State -2, AI one bar appropriate range]\ntype = VarSet\ntriggerall = !IsHelper\ntriggerall=AILevel>0 && Alive && RoundState=2 && MoveType!=H && HitPauseTime=0\ntriggerall=var(25)=0 && NumEnemy>0 && (EnemyNear,Alive)\ntriggerall=var(26)=0\ntrigger1=(Ctrl || ((StateNo=1000 || StateNo=1100 || StateNo=1200) && var(12)=2 && MoveHit>0 && Time=[9,23])) && StateType!=A && Pos Y=0 && Power>=1000 && (P2BodyDist X=[0,150]) && Random<300\nv=26\nvalue=ifelse(P2BodyDist X<32,6100,6000)\n\n",
+    "[State -2, AI settled special packet same human gates]\ntype = VarSet\ntriggerall = !IsHelper\ntrigger1=AILevel>0 && var(26)=6000\nv=36\nvalue=8\n\n",
+    "[State -2, AI settled special packet same human gates]\ntype = VarSet\ntriggerall = !IsHelper\ntrigger1=AILevel>0 && var(26)=6000\nv=37\nvalue=0\n\n",
+    "[State -2, AI settled special packet same human gates]\ntype = VarSet\ntriggerall = !IsHelper\ntrigger1=AILevel>0 && var(26)=6000\nv=38\nvalue=2\n\n",
+    "[State -2, AI settled special packet same human gates]\ntype = VarSet\ntriggerall = !IsHelper\ntrigger1=AILevel>0 && var(26)=6000\nv=39\nvalue=0\n\n",
+    "[State -2, normal U1 neutral a packet]\ntype = VarSet\ntriggerall = !IsHelper\ntrigger1=var(38)=2 && var(39)=0 && var(36)=8 && var(37)=0 && StateType!=A\nv=40\nvalue=6000\n\n\n",
+    "[State -1, normal U1 one bar feather storm]\ntype = ChangeState\ntriggerall=!IsHelper && Alive && RoundState=2 && MoveType!=H && HitPauseTime=0\ntriggerall=(Ctrl || ((StateNo=1000 || StateNo=1100 || StateNo=1200) && var(12)=2 && MoveHit>0 && Time=[9,23])) && StateType!=A && Pos Y=0 && Power>=1000\ntriggerall=NumEnemy>0 && (EnemyNear,ID)!=var(18) && (var(20)=0 || (var(21)<4 && (EnemyNear,ID)=var(22)))\ntrigger1=var(40)=6000\nvalue=6000\nctrl=0\n\n\n",
+    "[Statedef 6000]\ntype=S\nmovetype=A\nphysics=N\nanim=6000\nctrl=0\npoweradd=0\njuggle=0\nvelset=0,0\n\n"
+  ]
+}

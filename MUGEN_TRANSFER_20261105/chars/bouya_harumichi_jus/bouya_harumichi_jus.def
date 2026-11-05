@@ -1,0 +1,20 @@
+[Info]
+name = "Bouya Harumichi JUS"
+displayname = "Bouya Harumichi JUS Eight Moves"
+versiondate = 10,23,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = bouya_harumichi_jus.cmd
+cns = bouya_harumichi_jus.cns
+st = bouya_harumichi_jus.cns
+stcommon = common1.cns
+sprite = bouya_harumichi_jus.sff
+anim = bouya_harumichi_jus.air
+pal1 = bouya_harumichi_jus.act
+sound = bouya_harumichi_jus.snd
+[Arcade]
+intro.storyboard =
+ending.storyboard =

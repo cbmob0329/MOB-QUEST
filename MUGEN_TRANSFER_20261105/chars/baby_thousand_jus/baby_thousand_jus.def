@@ -1,0 +1,20 @@
+[Info]
+name = "Baby Dragon JUS"
+displayname = "Baby Dragon JUS"
+versiondate = 10,23,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = baby_thousand.cmd
+cns = baby_thousand.cns
+st = baby_thousand.cns
+stcommon = common1.cns
+sprite = baby_thousand.sff
+anim = baby_thousand.air
+sound = baby_thousand.snd
+; SFF2 indexed per-sprite palettes. No external ACT override.
+[Arcade]
+intro.storyboard =
+ending.storyboard =

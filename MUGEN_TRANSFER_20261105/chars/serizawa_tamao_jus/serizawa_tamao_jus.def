@@ -1,0 +1,20 @@
+[Info]
+name = "Serizawa Tamao JUS"
+displayname = "Serizawa Tamao"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = serizawa_tamao_jus.cmd
+cns = serizawa_tamao_jus.cns
+st = serizawa_tamao_jus.cns
+stcommon = serizawa_tamao_jus_common.cns
+sprite = serizawa_tamao_jus.sff
+anim = serizawa_tamao_jus.air
+sound = serizawa_tamao_jus.snd
+pal1 = serizawa_tamao_jus.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

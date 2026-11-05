@@ -1,0 +1,6876 @@
+; Original dynamic street-brawler implementation. NOT ENGINE TESTED.
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 0
+liedown.time = 35
+airjuggle = 16
+sparkno = 2
+guard.sparkno = 40
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+[Size]
+xscale = .5
+yscale = .5
+ground.back = 12
+ground.front = 13
+air.back = 11
+air.front = 11
+height = 66
+attack.dist = 64
+proj.attack.dist = 64
+proj.doscale = 0
+head.pos = 0,-58
+mid.pos = 0,-33
+shadowoffset = 0
+draw.offset = 0,0
+[Velocity]
+walk.fwd = 2.6
+walk.back = -2.15
+run.fwd = 7.2,0
+run.back = -4.1,-3.8
+jump.neu = 0,-8.0
+jump.back = -3.0
+jump.fwd = 3.5
+runjump.back = -3.0,-8.0
+runjump.fwd = 4.8,-8.0
+airjump.neu = 0,-7.4
+airjump.back = -3.0
+airjump.fwd = 3.5
+air.gethit.groundrecover = -.15,-3.2
+air.gethit.airrecover.mul = .5,.2
+air.gethit.airrecover.add = 0,-4.0
+air.gethit.airrecover.back = -1
+air.gethit.airrecover.fwd = 0
+air.gethit.airrecover.up = -2
+air.gethit.airrecover.down = 1.5
+[Movement]
+airjump.num = 1
+airjump.height = 16
+yaccel = .44
+stand.friction = .82
+crouch.friction = .82
+stand.friction.threshold = .05
+crouch.friction.threshold = .05
+air.gethit.groundlevel = 0
+air.gethit.groundrecover.ground.threshold = -16
+air.gethit.groundrecover.groundlevel = 0
+air.gethit.airrecover.threshold = -1
+air.gethit.airrecover.yaccel = .35
+air.gethit.trip.groundlevel = 0
+down.bounce.offset = 0,0
+down.bounce.yaccel = .4
+down.bounce.groundlevel = 0
+down.friction.threshold = .05
+
+[Statedef -3]
+
+[State -3, Paid move state gate]
+type = VarSet
+trigger1 = 1
+v = 12
+value = (StateNo = [3000,3499]) || (StateNo = 7900 && var(7) = 3200)
+
+[Statedef -2]
+
+[State -2, Revision clear armor outside attack]
+type = HitOverride
+trigger1 = StateNo != 1000 && StateNo != 3200 && StateNo != 7900
+trigger2 = !Alive || RoundState != 2
+attr = SCA, NA, SA
+slot = 0
+stateno = -1
+time = 0
+ignorehitpause = 1
+
+
+[State -2, One-time low-life awakening]
+type = VarSet
+triggerall = Alive && RoundState = 2
+triggerall = var(0) = 0
+trigger1 = Life <= LifeMax * .4
+v = 0
+value = 1
+
+[State -2, Aura damage reduction standard controller]
+type = DefenceMulSet
+trigger1 = 1
+value = ifelse(var(0),.9,1)
+ignorehitpause = 1
+
+[State -2, Visible broad beast pressure behind the body]
+type = Explod
+triggerall = Alive && RoundState = 2
+triggerall = var(0) = 1
+trigger1 = NumExplod(19100) = 0
+anim = 9100
+ID = 19100
+pos = 0,-1
+postype = p1
+bindtime = -1
+removetime = 36
+sprpriority = -2
+scale = .5,.5
+ownpal = 1
+removeongethit = 0
+
+[State -2, Aura end outside living round]
+type = RemoveExplod
+trigger1 = !Alive
+trigger2 = RoundState != 2
+ID = 19100
+ignorehitpause = 1
+
+[State -2, Cutin never survives move interruption]
+type = RemoveExplod
+trigger1 = StateNo != 3000 && StateNo != 3100 && StateNo != 3200 && StateNo != 3300
+trigger1 = StateNo != 7900
+trigger2 = !Alive
+trigger3 = RoundState != 2
+ID = 19001
+ignorehitpause = 1
+
+[State -2, Only own cue channels stop on interruption]
+type = StopSnd
+trigger1 = MoveType = H && StateNo != 7900
+trigger2 = !Alive
+trigger3 = RoundState != 2
+channel = 1
+ignorehitpause = 1
+
+[State -2, Release up rearms jump edge]
+type = VarSet
+trigger1 = command != "holdup"
+v = 11
+value = 0
+
+[State -2, Consume every jump upward edge]
+type = VarSet
+trigger1 = StateNo = 40 || StateNo = 45 || StateNo = 51
+v = 11
+value = 1
+
+[State -2, Only actual caster landing refunds extra jump]
+type = VarSet
+triggerall = Pos Y >= 0
+triggerall = StateType != A
+trigger1 = StateNo = 0 || StateNo = 11 || StateNo = 52
+v = 10
+value = 0
+
+[State -2, More than two enemies locks conservative mode until round reset]
+type = VarSet
+triggerall = RoundState = 2
+trigger1 = NumEnemy > 2
+v = 43
+value = 1
+
+[State -2, All 1 enemies recovered closes shared aerial episode]
+type = VarSet
+triggerall = var(42) = 1 && var(43) = 0
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear(0), Pos Y) >= 0
+triggerall = (EnemyNear(0), StateType != A)
+triggerall = (EnemyNear(0), MoveType != H)
+trigger1 = 1
+v = 42
+value = 0
+
+[State -2, All 2 enemies recovered closes shared aerial episode]
+type = VarSet
+triggerall = var(42) = 1 && var(43) = 0
+triggerall = NumEnemy = 2
+triggerall = (EnemyNear(0), Pos Y) >= 0
+triggerall = (EnemyNear(0), StateType != A)
+triggerall = (EnemyNear(0), MoveType != H)
+triggerall = (EnemyNear(1), Pos Y) >= 0
+triggerall = (EnemyNear(1), StateType != A)
+triggerall = (EnemyNear(1), MoveType != H)
+trigger1 = 1
+v = 42
+value = 0
+
+[State -2, Closed episode clears count]
+type = VarSet
+trigger1 = var(42) = 0
+v = 41
+value = 0
+
+[State -2, Closed episode clears identity]
+type = VarSet
+trigger1 = var(42) = 0
+v = 40
+value = 0
+
+[State -2, AI observation beat]
+type = VarSet
+trigger1 = 1
+v = 20
+value = AILevel > 0 && GameTime % 12 = 0
+
+[State -2, AI delayed guard decision]
+type = VarSet
+triggerall = AILevel > 0 && NumEnemy > 0
+trigger1 = var(20)
+v = 21
+value = P2MoveType = A && Abs(P2BodyDist X) < 94
+
+[State -2, AI delayed approach decision]
+type = VarSet
+triggerall = AILevel > 0 && NumEnemy > 0
+trigger1 = var(20)
+v = 22
+value = Abs(P2BodyDist X) > 80 && P2MoveType != A
+
+[State -2, AI deliberate aerial pursuit]
+type = VarSet
+triggerall = AILevel > 0 && NumEnemy > 0
+trigger1 = var(20)
+v = 23
+value = P2StateType = A && P2Dist Y < -28 && Abs(P2BodyDist X) < 95
+
+[State -2, AI bounded move choice]
+type = VarSet
+triggerall = AILevel > 0
+trigger1 = var(20)
+v = 24
+value = Random % 4
+
+[State -2, AI sampled guard height]
+type = VarSet
+triggerall = AILevel > 0 && NumEnemy > 0
+trigger1 = var(20)
+v = 25
+value = P2StateType = C
+
+[State -2, Precontact conservative roster default refreshed until contact]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+trigger1 = MoveContact = 0
+v = 45
+value = var(43) = 1 || NumEnemy > 2
+ignorehitpause = 1
+[State -2, Precontact any actual air among 1 enemies]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+trigger1 = MoveContact = 0
+triggerall = NumEnemy = 1
+triggerall = var(43) = 0
+v = 45
+value = (EnemyNear(0), StateType = A) || (EnemyNear(0), Pos Y) < 0
+ignorehitpause = 1
+[State -2, Precontact any actual air among 2 enemies]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+trigger1 = MoveContact = 0
+triggerall = NumEnemy = 2
+triggerall = var(43) = 0
+v = 45
+value = (EnemyNear(0), StateType = A) || (EnemyNear(0), Pos Y) < 0 || (EnemyNear(1), StateType = A) || (EnemyNear(1), Pos Y) < 0
+ignorehitpause = 1
+[State -2, Precontact episode snapshot without identity refund]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+trigger1 = MoveContact = 0
+v = 46
+value = var(42)
+ignorehitpause = 1
+[State -2, Before-cancel free meter receipt]
+type = PowerAdd
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo < 3000
+triggerall = var(44) < 360
+value = ifelse(var(44) <= 240,120,360-var(44))
+ignorehitpause = 1
+
+[State -2, Commit shared free cast cap]
+type = VarAdd
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo < 3000
+triggerall = var(44) < 360
+v = 44
+value = ifelse(var(44) <= 240,120,360-var(44))
+ignorehitpause = 1
+
+[State -2, Before-cancel free meter receipt]
+type = PowerAdd
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = StateNo < 3000
+triggerall = var(44) < 360
+triggerall = MoveHit != 1
+trigger1 = MoveGuarded = 1
+value = ifelse(var(44) <= 320,40,360-var(44))
+ignorehitpause = 1
+
+[State -2, Commit shared free cast cap]
+type = VarAdd
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = StateNo < 3000
+triggerall = var(44) < 360
+triggerall = MoveHit != 1
+trigger1 = MoveGuarded = 1
+v = 44
+value = ifelse(var(44) <= 320,40,360-var(44))
+ignorehitpause = 1
+
+[State -2, One slot for real air followup before cancel]
+type = VarAdd
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo < 3000
+triggerall = var(45) = 1 || var(46) = 1
+v = 41
+value = ifelse(var(41) < 4,1,0)
+ignorehitpause = 1
+
+[State -2, First ground launch opens four-slot episode]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = (Target, StateType = A) || var(45) = 1
+v = 42
+value = 1
+ignorehitpause = 1
+[State -2, Original actual episode identity retained across other enemies]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = var(42) = 1
+triggerall = var(40) = 0
+v = 40
+value = Target, ID
+ignorehitpause = 1
+[State -2, Confirmed cinematic reserves all remaining slots]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo = [3000,3399]
+v = 41
+value = 4
+ignorehitpause = 1
+[State -2, Cinematic terminal opens exhausted episode]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo = [3000,3399]
+v = 42
+value = 1
+ignorehitpause = 1
+[State -2, Cinematic fixed actual episode identity]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+triggerall = StateNo = [3000,3399]
+triggerall = var(40) = 0
+v = 40
+value = Target, ID
+ignorehitpause = 1
+[State -2, Latch contact so frozen hitpause cannot repeat receipts]
+type = VarSet
+triggerall = MoveType = A
+triggerall = StateNo = [200,3399]
+triggerall = var(9) = 0
+trigger1 = MoveHit = 1
+trigger2 = MoveGuarded = 1
+v = 9
+value = 1
+ignorehitpause = 1
+
+[State -2, Clear same-tick paid intent gate]
+type = VarSet
+trigger1 = 1
+v = 16
+value = 0
+
+[State -2, Reserve paid entry before CMD regeneration 3000]
+type = VarSet
+triggerall = Alive && RoundState = 2
+triggerall = StateType != A && MoveType != H
+triggerall = StateNo != [120,155]
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = Ctrl || (MoveHit && ((StateNo = [200,222]) || (StateNo = [400,422]) || StateNo = [600,622]) && Time >= 7) || (MoveHit && ((StateNo = 1000 && var(5) >= 14) || (StateNo = 1200 && Time >= 17)))
+triggerall = Power >= 1000
+trigger1 = AILevel = 0 && command = "b" && command = "holdfwd" && command != "throw"
+trigger1 = command != "holdback"
+trigger2 = AILevel > 0 && NumEnemy > 0 && var(20)
+trigger2 = (P2Dist X = [0,46]) && (P2MoveType = H || MoveHit)
+v = 16
+value = 1
+
+[State -2, Reserve paid entry before CMD regeneration 3100]
+type = VarSet
+triggerall = Alive && RoundState = 2
+triggerall = StateType != A && MoveType != H
+triggerall = StateNo != [120,155]
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = Ctrl || (MoveHit && ((StateNo = [200,222]) || (StateNo = [400,422]) || StateNo = [600,622]) && Time >= 7) || (MoveHit && ((StateNo = 1000 && var(5) >= 14) || (StateNo = 1200 && Time >= 17)))
+triggerall = Power >= 1000
+trigger1 = AILevel = 0 && command = "b" && command = "holdback" && command != "throw"
+trigger2 = AILevel > 0 && NumEnemy > 0 && var(20)
+trigger2 = P2StateType = A && Abs(P2Dist Y) < 55 && P2Dist X = [0,42]
+v = 16
+value = 1
+
+[State -2, Reserve paid entry before CMD regeneration 3200]
+type = VarSet
+triggerall = Alive && RoundState = 2
+triggerall = StateType != A && MoveType != H
+triggerall = StateNo != [120,155]
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = Ctrl || (MoveHit && ((StateNo = [200,222]) || (StateNo = [400,422]) || StateNo = [600,622]) && Time >= 7) || (MoveHit && ((StateNo = 1000 && var(5) >= 14) || (StateNo = 1200 && Time >= 17)))
+triggerall = Power >= 2000
+trigger1 = AILevel = 0 && command = "c" && command = "holdfwd" && command != "throw"
+trigger1 = command != "holdback"
+trigger2 = AILevel > 0 && NumEnemy > 0 && var(20)
+trigger2 = (Abs(P2BodyDist X) = [60,140]) && P2MoveType != A
+v = 16
+value = 1
+
+[State -2, Reserve paid entry before CMD regeneration 3300]
+type = VarSet
+triggerall = Alive && RoundState = 2
+triggerall = StateType != A && MoveType != H
+triggerall = StateNo != [120,155]
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = Ctrl || (MoveHit && ((StateNo = [200,222]) || (StateNo = [400,422]) || StateNo = [600,622]) && Time >= 7) || (MoveHit && ((StateNo = 1000 && var(5) >= 14) || (StateNo = 1200 && Time >= 17)))
+triggerall = Power >= 2000
+trigger1 = AILevel = 0 && command = "c" && command = "holdback" && command != "throw"
+trigger2 = AILevel > 0 && NumEnemy > 0 && var(20)
+trigger2 = (P2Dist X = [0,28]) && Abs(P2Dist Y) < 12
+v = 16
+value = 1
+
+[State -2, Aura passive regen except actual or pending paid move]
+type = PowerAdd
+triggerall = Alive && RoundState = 2
+triggerall = var(0) = 1 && var(12) = 0 && var(16) = 0
+trigger1 = Power < 3000
+value = 2
+
+[State -2, Owned physical FX end with round 19200]
+type = RemoveExplod
+trigger1 = !Alive
+trigger2 = RoundState != 2
+ID = 19200
+ignorehitpause = 1
+
+[State -2, Owned physical FX end with round 19201]
+type = RemoveExplod
+trigger1 = !Alive
+trigger2 = RoundState != 2
+ID = 19201
+ignorehitpause = 1
+
+[State -2, Owned physical FX end with round 19202]
+type = RemoveExplod
+trigger1 = !Alive
+trigger2 = RoundState != 2
+ID = 19202
+ignorehitpause = 1
+
+[State -2, Owned physical FX end with round 19300]
+type = RemoveExplod
+trigger1 = !Alive
+trigger2 = RoundState != 2
+ID = 19300
+ignorehitpause = 1
+
+; 27 real normal stages. Unique real-contact meter receipt: 120; per-action cap 360. Guard receipt 40.
+
+[Statedef 200]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 200
+
+[State 200, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 200, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 200, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 200, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 200, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 200, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 200, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 200, bounded normal step stop first]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 200, supported precontact normal approach]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = NumEnemy > 0
+triggerall = StateType = S && Pos Y = 0
+triggerall = Time < 5
+triggerall = MoveContact = 0
+triggerall = P2Dist X > 0 && P2BodyDist X > 6
+trigger1 = Abs(P2Dist Y) < 48
+x = IfElse(P2BodyDist X > 8.5,2.5,P2BodyDist X-6)
+
+[State 200, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 200, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 200
+hitonce = 1
+persistent = 0
+
+[State 200, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 35,-50
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 200, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 201]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 201
+
+[State 201, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 201, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 201, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 201, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 201, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 201, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 201, bounded normal step stop first]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 201, supported precontact normal approach]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = NumEnemy > 0
+triggerall = StateType = S && Pos Y = 0
+triggerall = Time < 6
+triggerall = MoveContact = 0
+triggerall = P2Dist X > 0 && P2BodyDist X > 6
+trigger1 = Abs(P2Dist Y) < 48
+x = IfElse(P2BodyDist X > 8.5,2.5,P2BodyDist X-6)
+
+[State 201, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 201, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 201
+hitonce = 1
+persistent = 0
+
+[State 201, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 28,-47
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 201, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 0
+ctrl = 1
+
+[Statedef 202]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 202
+
+[State 202, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 202, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 202, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 202, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 202, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 202, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 202, bounded normal step stop first]
+type = VelSet
+trigger1 = 1
+x = 0
+
+[State 202, supported precontact normal approach]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = NumEnemy > 0
+triggerall = StateType = S && Pos Y = 0
+triggerall = Time < 7
+triggerall = MoveContact = 0
+triggerall = P2Dist X > 0 && P2BodyDist X > 6
+trigger1 = Abs(P2Dist Y) < 48
+x = IfElse(P2BodyDist X > 8.5,2.5,P2BodyDist X-6)
+
+[State 202, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 202, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 202
+hitonce = 1
+persistent = 0
+
+[State 202, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 40,-40
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 202, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 0
+ctrl = 1
+
+[Statedef 210]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 210
+
+[State 210, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 210, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 210, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 210, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 210, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 210, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 210, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 210, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 210, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 210
+hitonce = 1
+persistent = 0
+
+[State 210, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 210, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 211]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 211
+
+[State 211, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 211, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 211, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 211, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 211, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 211, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 211, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 211, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 211
+hitonce = 1
+persistent = 0
+
+[State 211, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 211, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 0
+ctrl = 1
+
+[Statedef 212]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 212
+
+[State 212, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 212, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 212, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 212, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 212, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 212, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 212, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 212, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 212
+hitonce = 1
+persistent = 0
+
+[State 212, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 212, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 0
+ctrl = 1
+
+[Statedef 220]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 220
+
+[State 220, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 220, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 220, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 220, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 220, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 220, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 220, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 220, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 220, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 220
+hitonce = 1
+persistent = 0
+
+[State 220, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 220, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 221]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 221
+
+[State 221, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 221, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 221, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 221, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 221, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 221, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 221, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 221, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 221
+hitonce = 1
+persistent = 0
+
+[State 221, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 221, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 0
+ctrl = 1
+
+[Statedef 222]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 222
+
+[State 222, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 222, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 222, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 222, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 222, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 222, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 222, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 222, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = S, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 222
+hitonce = 1
+persistent = 0
+
+[State 222, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 222, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 0
+ctrl = 1
+
+[Statedef 400]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 400
+
+[State 400, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 400, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 400, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 400, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 400, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 400, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 400, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 400, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 400, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 400
+hitonce = 1
+persistent = 0
+
+[State 400, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 400, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 401]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 401
+
+[State 401, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 401, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 401, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 401, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 401, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 401, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 401, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 401, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 401
+hitonce = 1
+persistent = 0
+
+[State 401, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 401, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 11
+ctrl = 1
+
+[Statedef 402]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 402
+
+[State 402, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 402, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 402, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 402, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 402, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 402, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 402, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 402, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Up
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 24
+ground.velocity = -2,-7.4
+air.velocity = -1.5,-7.4
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 402
+hitonce = 1
+persistent = 0
+
+[State 402, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 402, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 11
+ctrl = 1
+
+[Statedef 410]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 410
+
+[State 410, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 410, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 410, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 410, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 410, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 410, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 410, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 410, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 410, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 410
+hitonce = 1
+persistent = 0
+
+[State 410, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 410, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 411]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 411
+
+[State 411, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 411, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 411, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 411, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 411, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 411, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 411, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 411, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 411
+hitonce = 1
+persistent = 0
+
+[State 411, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 411, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 11
+ctrl = 1
+
+[Statedef 412]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 412
+
+[State 412, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 412, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 412, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 412, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 412, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 412, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 412, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 412, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Up
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 24
+ground.velocity = -2,-7.4
+air.velocity = -1.5,-7.4
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 412
+hitonce = 1
+persistent = 0
+
+[State 412, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 412, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 11
+ctrl = 1
+
+[Statedef 420]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 420
+
+[State 420, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 420, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 420, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 420, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 420, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 420, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 420, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 420, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 420, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 420
+hitonce = 1
+persistent = 0
+
+[State 420, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 420, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 421]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 421
+
+[State 421, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 421, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 421, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 421, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 421, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 421, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 421, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 421, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 421
+hitonce = 1
+persistent = 0
+
+[State 421, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 421, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 11
+ctrl = 1
+
+[Statedef 422]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 422
+
+[State 422, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 422, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 422, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 422, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 422, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 422, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 422, Planted normal balance]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 422, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = C, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Up
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 24
+ground.velocity = -2,-7.4
+air.velocity = -1.5,-7.4
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 422
+hitonce = 1
+persistent = 0
+
+[State 422, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 422, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 11
+ctrl = 1
+
+[Statedef 600]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 600
+
+[State 600, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 600, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 600, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 600, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 600, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 600, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 600, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 600, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 600, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 600, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 600
+hitonce = 1
+persistent = 0
+
+[State 600, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 600, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 601]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 601
+
+[State 601, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 601, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 601, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 601, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 601, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 601, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 601, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 601, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 601, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 601
+hitonce = 1
+persistent = 0
+
+[State 601, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 601, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 50
+ctrl = 1
+
+[Statedef 602]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 602
+
+[State 602, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 602, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 602, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 602, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 602, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 602, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 602, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 602, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 602, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 602
+hitonce = 1
+persistent = 0
+
+[State 602, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 602, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 50
+ctrl = 1
+
+[Statedef 610]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 610
+
+[State 610, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 610, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 610, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 610, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 610, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 610, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 610, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 610, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 610, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 610, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 610
+hitonce = 1
+persistent = 0
+
+[State 610, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 610, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 611]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 611
+
+[State 611, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 611, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 611, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 611, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 611, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 611, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 611, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 611, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 611, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 611
+hitonce = 1
+persistent = 0
+
+[State 611, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 611, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 50
+ctrl = 1
+
+[Statedef 612]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 612
+
+[State 612, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 612, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 612, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 612, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 612, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 612, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 612, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 612, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 612, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 612
+hitonce = 1
+persistent = 0
+
+[State 612, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 612, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 50
+ctrl = 1
+
+[Statedef 620]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 620
+
+[State 620, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 620, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 620, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 620, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 620, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 620, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 620, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 620, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 620, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 620, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 5
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 30 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 620
+hitonce = 1
+persistent = 0
+
+[State 620, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 620, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 621]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 621
+
+[State 621, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 621, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 621, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 621, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 621, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 621, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 621, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 621, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 621, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 38 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 621
+hitonce = 1
+persistent = 0
+
+[State 621, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 621, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 21
+value = 50
+ctrl = 1
+
+[Statedef 622]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 622
+
+[State 622, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 622, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 622, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 622, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 622, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 622, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 622, Air normal keeps its existing ballistic arc]
+type = VelAdd
+trigger1 = 1
+y = const(movement.yaccel)
+
+[State 622, Actual floor aborts airborne attack safely]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 622, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 7
+attr = A, NA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 52 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 4,4
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 622
+hitonce = 1
+persistent = 0
+
+[State 622, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 622, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 50
+ctrl = 1
+
+[Statedef 1000]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+movehitpersist = 1
+hitcountpersist = 1
+
+[State 1000, Contact ledger 9]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1000, Contact ledger 45]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 1000, Contact ledger 46]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 1000, Contact ledger 56]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 1000, Contact ledger 44]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1000, No inherited contact receipt]
+type = MoveHitReset
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+
+
+[State 1000, Drop stale targets only at true entry]
+type = TargetDrop
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+keepone = 0
+
+[State 1000, Fresh armor clock]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 5
+value = 0
+
+[State 1000, Fresh armor clock]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 1000, Fresh armor animation]
+type = ChangeAnim
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+value = 1000
+
+[State 1000, Ground cast keeps feet planted]
+type = VelSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1000, Finite real approach]
+type = VelSet
+trigger1 = var(5) = [6,9]
+x = 2.6 * ifelse(var(0),1.2,1)
+
+[State 1000, Stop approach at strike]
+type = VelSet
+trigger1 = var(5) = 10
+x = 0
+
+[State 1000, Armor return state]
+type = VarSet
+trigger1 = var(5) = [6,12]
+v = 7
+value = 1000
+
+[State 1000, Armor return animation]
+type = VarSet
+trigger1 = var(5) = [6,12]
+v = 8
+value = Anim
+
+[State 1000, One-hit only ordinary-melee armor]
+type = HitOverride
+triggerall = Alive && RoundState = 2
+triggerall = var(6) = 0
+trigger1 = var(5) = [6,12]
+attr = SCA, NA, SA
+slot = 0
+stateno = 7900
+time = 1
+forceair = 0
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [0,5]
+trigger1 = Anim != 10001
+value = 10001
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [6,9]
+trigger1 = Anim != 10002
+value = 10002
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [10,13]
+trigger1 = Anim != 10003
+value = 10003
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [14,21]
+trigger1 = Anim != 10004
+value = 10004
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [22,27]
+trigger1 = Anim != 10005
+value = 10005
+
+[State 1000, Preserved logical body key]
+type = ChangeAnim
+triggerall = var(5) = [28,33]
+trigger1 = Anim != 10006
+value = 10006
+
+[State 1000, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = var(5) = 10
+attr = S, SA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 78 * ifelse(var(0),1.2,1),0
+animtype = Medium
+air.animtype = Medium
+pausetime = 6,6
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -2.0,0
+air.velocity = -1.5,-3.6
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 1000
+hitonce = 1
+persistent = 0
+
+[State 1000, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1000, Whiff and guard never erase recovery]
+type = ChangeState
+trigger1 = var(5) >= 34
+value = 0
+ctrl = 1
+
+[State 1000, One live logical tick]
+type = VarAdd
+trigger1 = 1
+v = 5
+value = 1
+
+[Statedef 1100]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 1100
+
+[State 1100, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1100, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 1100, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 1100, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 1100, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1100, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 1100, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 1100, Ground cast keeps feet planted]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1100, Finite real approach]
+type = VelSet
+trigger1 = Time = [7,10]
+x = 2.6 * ifelse(var(0),1.2,1)
+
+[State 1100, Stop approach at strike]
+type = VelSet
+trigger1 = Time = 11
+x = 0
+
+[State 1100, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 11
+attr = S, SA
+priority = 4,Hit
+hitflag = MAF
+guardflag = MA
+damage = 70 * ifelse(var(0),1.2,1),0
+animtype = Up
+air.animtype = Medium
+pausetime = 6,6
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 24
+ground.velocity = -2,-7.4
+air.velocity = -1.5,-7.4
+yaccel = .28
+air.hittime = 24
+air.fall = 0
+fall = 0
+fall.recover = 1
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 1100
+hitonce = 1
+persistent = 0
+
+[State 1100, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1100, Whiff and guard never erase recovery]
+type = ChangeState
+trigger1 = Time >= 39
+value = 0
+ctrl = 1
+
+[Statedef 1200]
+type = C
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 1200
+
+[State 1200, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1200, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 1200, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 1200, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 1200, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1200, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 1200, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 1200, Ground cast keeps feet planted]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1200, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 12
+attr = C, SA
+priority = 4,Hit
+hitflag = MAF
+guardflag = LA
+damage = 66 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 6,6
+guard.pausetime = 4,4
+ground.type = Low
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 1200
+hitonce = 1
+persistent = 0
+
+[State 1200, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1200, Whiff and guard never erase recovery]
+type = ChangeState
+trigger1 = Time >= 40
+value = 0
+ctrl = 1
+
+[Statedef 1300]
+type = A
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+anim = 1300
+
+[State 1300, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1300, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 1300, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 1300, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 1300, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1300, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 1300, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 1300, Directional air elbow committed once]
+type = VelSet
+trigger1 = Time = 0
+x = ifelse(command = "holdback",-.8,ifelse(command = "holdfwd",2.8,1.6)) * ifelse(var(0),1.2,1)
+
+[State 1300, Actual elbow descent without teleport]
+type = VelAdd
+trigger1 = 1
+y = .44
+
+[State 1300, Actual-floor elbow landing recovery]
+type = ChangeState
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 1301
+ctrl = 0
+
+[State 1300, Single visible body contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 11
+attr = A, SA
+priority = 4,Hit
+hitflag = MAF
+guardflag = HA
+damage = 72 * ifelse(var(0),1.2,1),0
+animtype = Back
+air.animtype = Back
+pausetime = 6,6
+guard.pausetime = 4,4
+ground.type = High
+ground.slidetime = 12
+ground.hittime = 17
+ground.velocity = -5.4,-4.4
+air.velocity = -4.8,-4.4
+yaccel = .28
+air.hittime = 24
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.recovertime = 18
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 1300
+hitonce = 1
+persistent = 0
+
+[State 1300, Real-contact physical impact]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9200
+ID = 19200
+pos = 22,-34
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.3,0.3
+sprpriority = 3
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 1300, Whiff and guard never erase recovery]
+type = ChangeState
+trigger1 = Time >= 40
+value = 50
+ctrl = 1
+
+[Statedef 1301]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 1301
+velset = 0,0
+
+[State 1301, Floor only after real crossing]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1301, Physical elbow landing dust]
+type = Explod
+trigger1 = Time = 0
+anim = 9202
+ID = 19202
+pos = 0,0
+postype = p1
+bindtime = 0
+removetime = 16
+scale = .45,.45
+sprpriority = -1
+ownpal = 1
+
+[State 1301, Sixteen grounded ticks of elbow exposure]
+type = ChangeState
+trigger1 = Time >= 16
+value = 0
+ctrl = 1
+
+; Authored Serizawa capture states: no own-variable writes in victim states.
+
+[Statedef 3000]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3000
+velset = 0,0
+juggle = 1
+poweradd = 0
+
+
+[State 3000, Original short super cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 1,4
+channel = 1
+volume = 0
+loop = 0
+persistent = 0
+[State 3000, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3000, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 3000, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 3000, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3000, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3000, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 3000, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 48
+value = 3000
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 51
+value = 0
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 52
+value = 0
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3000, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3000, Freeze input throw/release direction]
+type = VarSet
+trigger1 = Time = 0
+v = 54
+value = 1
+
+[State 3000, Exactly one paid cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+persistent = 0
+
+[State 3000, Once-only cost receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 1
+
+[State 3000, Actual approved horizontal portrait lifetime]
+type = Explod
+trigger1 = Time = 0
+anim = 9001
+ID = 19001
+pos = 0,28
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 54
+pausemovetime = 54
+ignorehitpause = 1
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = 1,1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Distinct short global pause, no invulnerability]
+type = SuperPause
+trigger1 = Time = 0
+time = 10
+movetime = 10
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3000, Portrait completely exits before attack]
+type = RemoveExplod
+trigger1 = Time >= 54
+ID = 19001
+
+[State 3000, Finite human entry step]
+type = VelSet
+triggerall = NumExplod(19001) = 0
+trigger1 = Time = [54,59]
+x = 2.2 * ifelse(var(0),1.2,1)
+
+[State 3000, End grounded entry]
+type = VelSet
+trigger1 = Time = 60
+x = 0
+
+[State 3000, Reserve strike damage tier at initial collision]
+type = VarSet
+trigger1 = Time = 60
+v = 1
+value = var(0)
+
+[State 3000, Only actual body contact admits a captured victim]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = NumExplod(19001) = 0
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 60
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+priority = 5,Hit
+damage = 55 * ifelse(var(1),1.2,1),20
+animtype = Hard
+pausetime = 5,5
+guard.pausetime = 6,6
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+yaccel = .4
+fall = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 3000
+hitonce = 1
+p2stateno = 3500
+p2getp1state = 1
+persistent = 0
+
+[State 3000, Keep exactly one actually hit target before fixing its player ID]
+type = TargetDrop
+triggerall = var(47) = 0
+triggerall = NumTarget(3000) > 0
+trigger1 = MoveHit
+excludeid = 3000
+keepone = 1
+
+ignorehitpause = 1
+
+[State 3000, Fixed actual hit victim identity]
+type = VarSet
+triggerall = var(47) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = MoveHit
+v = 47
+value = Target(3000), ID
+
+
+ignorehitpause = 1
+
+[State 3000, Renew fixed-ID capture lease two-tick frame-order-safe lease]
+type = TargetBind
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = (Target(3000), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 88
+ID = 3000
+time = 2
+pos = 24,-3
+ignorehitpause = 1
+
+[State 3000, Victim faces the actual caster]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = (Target(3000), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 88
+ID = 3000
+value = -1
+
+[State 3000, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = (Target(3000), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 72
+ID = 3000
+value = -(60 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3000, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 72
+time = 5
+movetime = 0
+persistent = 0
+
+[State 3000, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 72
+anim = 9200
+ID = 19200
+pos = 24,-30
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.4,0.4
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3000, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = (Target(3000), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+ID = 3000
+value = -(90 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3000, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+time = 10
+movetime = 0
+persistent = 0
+
+[State 3000, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+anim = 9203
+ID = 19200
+pos = 24,-42
+postype = p1
+bindtime = 0
+removetime = 18
+scale = 0.55,0.55
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3000, One final bounded shake]
+type = EnvShake
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+time = 8
+ampl = 4
+freq = 60
+persistent = 0
+
+[State 3000, One final nonstrobe underflash]
+type = EnvColor
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+value = 235,224,192
+time = 2
+under = 1
+persistent = 0
+
+[State 3000, Fix victim facing immediately before finite release]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+ID = 3000
+value = -1
+
+[State 3000, Finite release only AFTER final damage]
+type = TargetState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 88
+ID = 3000
+value = 3560
+persistent = 0
+
+[State 3000, Release committed once]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = Time = 88
+v = 52
+value = 1
+
+[State 3000, Whiff/guard never plays airborne/captured continuation]
+type = ChangeAnim
+triggerall = var(47) = 0
+trigger1 = Time = 64
+value = 3001
+
+[State 3000, Lost fixed victim enters honest paid recovery]
+type = ChangeState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = Time > 64
+trigger1 = NumTarget(3000) = 0
+trigger2 = NumTarget(3000) > 0
+trigger2 = (Target(3000), ID) != var(47) || (Target(3000), StateNo) != 3500 || !(Target(3000), Alive)
+value = 3400
+ctrl = 0
+
+[State 3000, Guard and whiff remain grounded for full exposure]
+type = ChangeState
+triggerall = var(47) = 0
+trigger1 = Time >= 88
+value = 0
+ctrl = 1
+
+[State 3000, Finite full cinematic recovery]
+type = ChangeState
+trigger1 = Time >= 126
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[Statedef 3500]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+
+[State 3500, Victim keeps own available gethit artwork]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5002),5002,ifelse(SelfAnimExist(5000),5000,0))
+
+[State 3500, No inherited fall damage during bounded capture]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3500, Binding must be renewed, no EnemyNear owner guess]
+type = SelfState
+trigger1 = Time > 2 && !GetHitVar(isbound)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time >= 134
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3100]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3100
+velset = 0,0
+juggle = 1
+poweradd = 0
+
+
+[State 3100, Original short super cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 1,4
+channel = 1
+volume = 0
+loop = 0
+persistent = 0
+[State 3100, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3100, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 3100, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 3100, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3100, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3100, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 3100, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 48
+value = 3100
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 51
+value = 0
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 52
+value = 0
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3100, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3100, Freeze input throw/release direction]
+type = VarSet
+trigger1 = Time = 0
+v = 54
+value = 1
+
+[State 3100, Exactly one paid cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+persistent = 0
+
+[State 3100, Once-only cost receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 1
+
+[State 3100, Actual approved horizontal portrait lifetime]
+type = Explod
+trigger1 = Time = 0
+anim = 9001
+ID = 19001
+pos = 0,28
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 54
+pausemovetime = 54
+ignorehitpause = 1
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = 1,1
+removeongethit = 1
+persistent = 0
+
+[State 3100, Distinct short global pause, no invulnerability]
+type = SuperPause
+trigger1 = Time = 0
+time = 10
+movetime = 10
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3100, Portrait completely exits before attack]
+type = RemoveExplod
+trigger1 = Time >= 54
+ID = 19001
+
+[State 3100, Finite human entry step]
+type = VelSet
+triggerall = NumExplod(19001) = 0
+trigger1 = Time = [54,59]
+x = 2.2 * ifelse(var(0),1.2,1)
+
+[State 3100, End grounded entry]
+type = VelSet
+trigger1 = Time = 60
+x = 0
+
+[State 3100, Reserve strike damage tier at initial collision]
+type = VarSet
+trigger1 = Time = 60
+v = 1
+value = var(0)
+
+[State 3100, Only actual body contact admits a captured victim]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = NumExplod(19001) = 0
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = 60
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+priority = 5,Hit
+damage = 55 * ifelse(var(1),1.2,1),20
+animtype = Hard
+pausetime = 5,5
+guard.pausetime = 6,6
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+yaccel = .4
+fall = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 3100
+hitonce = 1
+p2stateno = 3510
+p2getp1state = 1
+persistent = 0
+
+[State 3100, Keep exactly one actually hit target before fixing its player ID]
+type = TargetDrop
+triggerall = var(47) = 0
+triggerall = NumTarget(3100) > 0
+trigger1 = MoveHit
+excludeid = 3100
+keepone = 1
+
+ignorehitpause = 1
+
+[State 3100, Fixed actual hit victim identity]
+type = VarSet
+triggerall = var(47) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), StateNo) = 3510
+trigger1 = MoveHit
+v = 47
+value = Target(3100), ID
+
+
+ignorehitpause = 1
+
+[State 3100, Renew fixed-ID capture lease two-tick frame-order-safe lease]
+type = TargetBind
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 84
+ID = 3100
+time = 2
+pos = 24,-12
+ignorehitpause = 1
+
+[State 3100, Victim faces the actual caster]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 84
+ID = 3100
+value = -1
+
+[State 3100, Hit-confirmed short jump only]
+type = StateTypeSet
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 64
+statetype = A
+physics = N
+
+[State 3100, One true upward launch, whiff never jumps]
+type = VelSet
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 64
+x = 1.5 * ifelse(var(0),1.2,1)
+y = -5.2 * ifelse(var(0),1.095445115,1)
+
+[State 3100, Finite jump gravity]
+type = VelAdd
+triggerall = StateType = A
+trigger1 = Time > 64
+y = .38
+
+[State 3100, Landing starts only at crossed floor]
+type = ChangeAnim
+triggerall = StateType = A
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 3101
+
+[State 3100, Physical landing receipt]
+type = VarSet
+triggerall = StateType = A
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+v = 56
+value = 1
+
+[State 3100, Actual-floor dust]
+type = Explod
+triggerall = StateType = A
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+anim = 9202
+ID = 19202
+pos = 0,0
+postype = p1
+bindtime = 0
+removetime = 24
+scale = .7,.7
+sprpriority = -1
+ownpal = 1
+persistent = 0
+
+[State 3100, Actual floor clamp]
+type = PosSet
+triggerall = StateType = A
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+y = 0
+
+[State 3100, Stop only after floor contact]
+type = VelSet
+triggerall = StateType = A
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+x = 0
+y = 0
+
+[State 3100, Ground only after landing]
+type = StateTypeSet
+triggerall = var(56) = 1
+trigger1 = StateType = A
+statetype = S
+physics = N
+
+[State 3100, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 70
+ID = 3100
+value = -(65 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3100, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 70
+time = 5
+movetime = 0
+persistent = 0
+
+[State 3100, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 70
+anim = 9200
+ID = 19200
+pos = 24,-30
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.4,0.4
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3100, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = (Target(3100), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+ID = 3100
+value = -(95 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3100, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+time = 10
+movetime = 0
+persistent = 0
+
+[State 3100, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+anim = 9203
+ID = 19200
+pos = 24,-42
+postype = p1
+bindtime = 0
+removetime = 18
+scale = 0.55,0.55
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3100, One final bounded shake]
+type = EnvShake
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+time = 8
+ampl = 4
+freq = 60
+persistent = 0
+
+[State 3100, One final nonstrobe underflash]
+type = EnvColor
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+value = 235,224,192
+time = 2
+under = 1
+persistent = 0
+
+[State 3100, Fix victim facing immediately before finite release]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+ID = 3100
+value = -1
+
+[State 3100, Finite release only AFTER final damage]
+type = TargetState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3100) > 0
+triggerall = (Target(3100), ID) = var(47)
+triggerall = (Target(3100), StateNo) = 3510
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 84
+ID = 3100
+value = 3560
+persistent = 0
+
+[State 3100, Release committed once]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = Time = 84
+v = 52
+value = 1
+
+[State 3100, Whiff/guard never plays airborne/captured continuation]
+type = ChangeAnim
+triggerall = var(47) = 0
+trigger1 = Time = 64
+value = 3102
+
+[State 3100, Lost fixed victim enters honest paid recovery]
+type = ChangeState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = Time > 64
+trigger1 = NumTarget(3100) = 0
+trigger2 = NumTarget(3100) > 0
+trigger2 = (Target(3100), ID) != var(47) || (Target(3100), StateNo) != 3510 || !(Target(3100), Alive)
+value = 3400
+ctrl = 0
+
+[State 3100, Guard and whiff remain grounded for full exposure]
+type = ChangeState
+triggerall = var(47) = 0
+trigger1 = Time >= 88
+value = 0
+ctrl = 1
+
+[State 3100, Finite full cinematic recovery]
+type = ChangeState
+trigger1 = Time >= 131
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[Statedef 3510]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+
+[State 3510, Victim keeps own available gethit artwork]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5002),5002,ifelse(SelfAnimExist(5000),5000,0))
+
+[State 3510, No inherited fall damage during bounded capture]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3510, Binding must be renewed, no EnemyNear owner guess]
+type = SelfState
+trigger1 = Time > 2 && !GetHitVar(isbound)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time >= 139
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3300]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3300
+velset = 0,0
+juggle = 1
+poweradd = 0
+
+
+[State 3300, Original short super cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 1,4
+channel = 1
+volume = 0
+loop = 0
+persistent = 0
+[State 3300, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3300, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 3300, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 3300, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3300, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3300, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 3300, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 48
+value = 3300
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 51
+value = 0
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 52
+value = 0
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3300, New finite capture ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3300, Freeze input throw/release direction]
+type = VarSet
+trigger1 = Time = 0
+v = 54
+value = ifelse(command = "holdback",-1,1)
+
+[State 3300, Exactly one paid cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -2000
+persistent = 0
+
+[State 3300, Once-only cost receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 1
+
+[State 3300, Actual approved horizontal portrait lifetime]
+type = Explod
+trigger1 = Time = 0
+anim = 9003
+ID = 19001
+pos = 0,28
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+ignorehitpause = 1
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = 1,1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Distinct short global pause, no invulnerability]
+type = SuperPause
+trigger1 = Time = 0
+time = 16
+movetime = 16
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3300, Portrait completely exits before attack]
+type = RemoveExplod
+trigger1 = Time >= 72
+ID = 19001
+
+[State 3300, Finite human entry step]
+type = VelSet
+triggerall = NumExplod(19001) = 0
+trigger1 = Time = [72,81]
+x = ifelse(P2BodyDist X > 8, ifelse(P2BodyDist X > 11.6,3.6,P2BodyDist X-8),0)
+
+[State 3300, End grounded entry]
+type = VelSet
+trigger1 = Time = 82
+x = 0
+
+[State 3300, Reserve strike damage tier at initial collision]
+type = VarSet
+trigger1 = Time = 82
+v = 1
+value = var(0)
+
+[State 3300, Only actual body contact admits a captured victim]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = NumExplod(19001) = 0
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = Time = [82,90]
+triggerall = NumEnemy > 0
+triggerall = P2Dist X = [0,55]
+triggerall = Abs(P2Dist Y) <= 20
+triggerall = P2StateType != A
+triggerall = P2MoveType != H
+attr = S, HT
+hitflag = M-
+; Unguardable ordinary throw attribute; throw immunity still applies.
+priority = 1,Miss
+damage = 0,0
+animtype = Hard
+pausetime = 0,0
+guard.pausetime = 6,6
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+yaccel = .4
+fall = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 3300
+hitonce = 1
+p2stateno = 3530
+p2getp1state = 1
+persistent = 0
+
+[State 3300, Keep exactly one actually hit target before fixing its player ID]
+type = TargetDrop
+triggerall = var(47) = 0
+triggerall = NumTarget(3300) > 0
+trigger1 = MoveHit
+excludeid = 3300
+keepone = 1
+
+[State 3300, Fixed actual hit victim identity]
+type = VarSet
+triggerall = var(47) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), StateNo) = 3530
+trigger1 = MoveHit
+v = 47
+value = Target(3300), ID
+
+[State 3300, Damage multiplier frozen on actual capture]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 1
+value = var(0)
+
+[State 3300, Commit release side on actual grab after portrait]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 54
+value = ifelse(command = "holdback",-1,1)
+
+[State 3300, Renew fixed-ID capture lease two-tick frame-order-safe lease]
+type = TargetBind
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = (Target(3300), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 136
+ID = 3300
+time = 2
+pos = 25 * ifelse(Time < 106,1,ifelse(Time < 130,1+(var(54)-1)*(Time-106)/24.0,var(54))),ifelse(Time < 106,-4,ifelse(Time < 130,-8,0))
+ignorehitpause = 1
+
+[State 3300, Victim faces the actual caster]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = (Target(3300), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 136
+ID = 3300
+value = -1
+
+[State 3300, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = (Target(3300), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 96
+ID = 3300
+value = -(80 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3300, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 96
+time = 5
+movetime = 0
+persistent = 0
+
+[State 3300, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 96
+anim = 9200
+ID = 19200
+pos = 24,-30
+postype = p1
+bindtime = 0
+removetime = 10
+scale = 0.4,0.4
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3300, Actual reserved damage BEFORE any release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = (Target(3300), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+ID = 3300
+value = -(270 * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3300, Physical contact stop separate from cutin pause]
+type = Pause
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+time = 10
+movetime = 0
+persistent = 0
+
+[State 3300, Body-point impact not projectile]
+type = Explod
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+anim = 9203
+ID = 19200
+pos = 24,-8
+postype = p1
+bindtime = 0
+removetime = 18
+scale = 0.55,0.55
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+ignorehitpause = 1
+
+[State 3300, One final bounded shake]
+type = EnvShake
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+time = 8
+ampl = 4
+freq = 60
+persistent = 0
+
+[State 3300, One final nonstrobe underflash]
+type = EnvColor
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+value = 235,224,192
+time = 2
+under = 1
+persistent = 0
+
+[State 3300, Fix victim facing immediately before finite release]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+ID = 3300
+value = -1
+
+[State 3300, Finite release only AFTER final damage]
+type = TargetState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3530
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 136
+ID = 3300
+value = ifelse(var(54) > 0,3564,3565)
+persistent = 0
+
+[State 3300, Release committed once]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = Time = 136
+v = 52
+value = 1
+
+[State 3300, Whiff/guard never plays airborne/captured continuation]
+type = ChangeAnim
+triggerall = var(47) = 0
+trigger1 = Time = 86
+value = 3301
+
+[State 3300, Lost fixed victim enters honest paid recovery]
+type = ChangeState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = Time > 86
+trigger1 = NumTarget(3300) = 0
+trigger2 = NumTarget(3300) > 0
+trigger2 = (Target(3300), ID) != var(47) || (Target(3300), StateNo) != 3530 || !(Target(3300), Alive)
+value = 3400
+ctrl = 0
+
+[State 3300, Guard and whiff remain grounded for full exposure]
+type = ChangeState
+triggerall = var(47) = 0
+trigger1 = Time >= 114
+value = 0
+ctrl = 1
+
+[State 3300, Finite full cinematic recovery]
+type = ChangeState
+trigger1 = Time >= 185
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[Statedef 3530]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+
+[State 3530, Victim keeps own available gethit artwork]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5002),5002,ifelse(SelfAnimExist(5000),5000,0))
+
+[State 3530, No inherited fall damage during bounded capture]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3530, Binding must be renewed, no EnemyNear owner guess]
+type = SelfState
+trigger1 = Time > 2 && !GetHitVar(isbound)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time >= 193
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3400]
+type = U
+movetype = I
+physics = N
+ctrl = 0
+
+[State 3400, Recovery family follows actual air status]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(StateType = A,3402,3401)
+
+[State 3400, Recovery gravity only while truly airborne]
+type = VelAdd
+trigger1 = StateType = A
+y = .4
+
+[State 3400, Physical recovery floor clamp]
+type = PosSet
+triggerall = StateType = A && Vel Y >= 0
+trigger1 = Pos Y >= 0
+y = 0
+
+[State 3400, Physical recovery stops on floor]
+type = VelSet
+triggerall = StateType = A && Vel Y >= 0
+trigger1 = Pos Y >= 0
+x = 0
+y = 0
+
+[State 3400, Ground after recovery floor contact]
+type = StateTypeSet
+triggerall = StateType = A && Vel Y >= 0
+trigger1 = Pos Y >= 0
+statetype = S
+physics = N
+
+[State 3400, Finite paid exposure]
+type = ChangeState
+trigger1 = Time >= ifelse(var(48) = 3300,28,24)
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[Statedef 800]
+type = U
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+
+[State 800, Contact ledger 9]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 800, Contact ledger 45]
+type = VarSet
+trigger1 = Time = 0
+v = 45
+value = 0
+
+[State 800, Contact ledger 46]
+type = VarSet
+trigger1 = Time = 0
+v = 46
+value = 0
+
+[State 800, Contact ledger 56]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 800, Contact ledger 44]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 800, No inherited contact receipt]
+type = MoveHitReset
+trigger1 = Time = 0
+
+
+[State 800, Drop stale targets only at true entry]
+type = TargetDrop
+trigger1 = Time = 0
+keepone = 0
+
+[State 800, Throw ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 800, Throw ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 52
+value = 0
+
+[State 800, Throw ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 51
+value = 0
+
+[State 800, Throw ledger]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 800, Freeze throw side input]
+type = VarSet
+trigger1 = Time = 0
+v = 54
+value = ifelse(command = "holdback",-1,1)
+
+[State 800, Choose ground slam from down plus throw]
+type = VarSet
+trigger1 = Time = 0
+v = 57
+value = StateType != A && command = "holddown"
+
+[State 800, Ground or airborne authored body family]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(StateType = A,801,ifelse(var(57),802,800))
+
+[State 800, Ground throw is planted]
+type = VelSet
+triggerall = StateType != A
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 800, Air throw retains gravity]
+type = VelAdd
+trigger1 = StateType = A
+y = .36
+
+[State 800, Actual throw collision only inside reach and height]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = NumEnemy > 0
+triggerall = P2Dist X = [0,33]
+triggerall = Abs(P2Dist Y) <= 23.1
+triggerall = StateType != A && P2StateType != A
+triggerall = P2MoveType != H
+trigger1 = Time = 3
+attr = S, NT
+hitflag = M-
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+sparkno = -1
+hitsound = -1,0
+getpower = 0,0
+givepower = 0,0
+id = 800
+hitonce = 1
+p2stateno = 3540
+p2getp1state = 1
+persistent = 0
+
+[State 800, Actual throw collision only inside reach and height]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = NumEnemy > 0
+triggerall = P2Dist X = [0,33]
+triggerall = Abs(P2Dist Y) <= 23.1
+triggerall = StateType != A && P2StateType = A
+trigger1 = Time = 3
+attr = S, NT
+hitflag = AF
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+sparkno = -1
+hitsound = -1,0
+getpower = 0,0
+givepower = 0,0
+id = 800
+hitonce = 1
+p2stateno = 3540
+p2getp1state = 1
+persistent = 0
+
+[State 800, Actual throw collision only inside reach and height]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(42) = 0 || var(41) < 4
+triggerall = NumEnemy > 0
+triggerall = P2Dist X = [0,33]
+triggerall = Abs(P2Dist Y) <= 23.1
+triggerall = StateType = A && P2StateType = A
+trigger1 = Time = 3
+attr = A, NT
+hitflag = AF
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+sparkno = -1
+hitsound = -1,0
+getpower = 0,0
+givepower = 0,0
+id = 800
+hitonce = 1
+p2stateno = 3540
+p2getp1state = 1
+persistent = 0
+
+[State 800, Keep exactly one actually hit target before fixing its player ID]
+type = TargetDrop
+triggerall = var(47) = 0
+triggerall = NumTarget(800) > 0
+trigger1 = MoveHit
+excludeid = 800
+keepone = 1
+
+[State 800, Fixed actual hit victim identity]
+type = VarSet
+triggerall = var(47) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), StateNo) = 3540
+trigger1 = MoveHit
+v = 47
+value = Target(800), ID
+
+[State 800, Damage multiplier frozen on actual capture]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 1
+value = var(0)
+
+
+[State 800, Lost ordinary capture permanently cancels pending damage]
+type = VarSet
+triggerall = var(47) > 0 && var(52) = 0
+trigger1 = NumTarget(800) = 0
+trigger2 = NumTarget(800) > 0
+trigger2 = (Target(800), ID) != var(47) || (Target(800), StateNo) != 3540 || !(Target(800), Alive)
+trigger3 = !Alive || RoundState != 2
+v = 52
+value = 1
+
+[State 800, Only confirmed living air capture suspends owner descent]
+type = VelSet
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = (Target(800), Alive)
+triggerall = Alive && RoundState = 2
+triggerall = StateType = A
+trigger1 = Time < 18
+y = 0
+
+[State 800, Confirmed air capture never remains below actual floor]
+type = PosSet
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = (Target(800), Alive)
+triggerall = Alive && RoundState = 2
+triggerall = StateType = A
+triggerall = Pos Y > 0
+trigger1 = Time < 18
+y = 0
+[State 800, Face the actual ordinary captor]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = (Target(800), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 18
+ID = 800
+value = -1
+
+[State 800, Two-tick ordinary throw lease]
+type = TargetBind
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = (Target(800), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time < 18
+ID = 800
+time = 2
+pos = ifelse(var(57),20,23 * ifelse(Time < 11,1,1+(var(54)-1)*(Time-11)/7.0)),ifelse(var(57),ifelse(Time<6,-5,ifelse(Time<11,-5-6*(Time-6),-35+4*(Time-11))),-5)
+ignorehitpause = 1
+
+[State 800, Ordinary throw actual damage before release]
+type = TargetLifeAdd
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = (Target(800), Alive)
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 18
+ID = 800
+value = -(ifelse(var(57),105,95) * ifelse(var(1),1.2,1))
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 800, Facing determines release without foreign variables]
+type = TargetFacing
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 18
+ID = 800
+value = -1
+
+[State 800, Release only after damage into bounded flight]
+type = TargetState
+triggerall = var(47) > 0 && var(52) = 0
+triggerall = NumTarget(800) > 0
+triggerall = (Target(800), ID) = var(47)
+triggerall = (Target(800), StateNo) = 3540
+triggerall = Alive && RoundState = 2
+trigger1 = Time = 18
+ID = 800
+value = ifelse(var(57),3571,ifelse(StateType = A,ifelse(var(54) > 0,3562,3563),ifelse(var(54) > 0,3560,3561)))
+persistent = 0
+
+[State 800, Ordinary release receipt]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = Time = 18
+v = 52
+value = 1
+
+[State 800, Actual floor ends any airborne ordinary throw]
+type = ChangeState
+triggerall = StateType = A && Vel Y >= 0
+triggerall = var(47) = 0 || var(52) = 1
+trigger1 = Pos Y >= 0
+value = 52
+ctrl = 0
+
+[State 800, Finite ordinary throw exposure]
+type = ChangeState
+trigger1 = Time >= 34
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[Statedef 3540]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+
+[State 3540, Victim keeps own available gethit artwork]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5002),5002,ifelse(SelfAnimExist(5000),5000,0))
+
+[State 3540, No inherited fall damage during bounded capture]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3540, Binding must be renewed, no EnemyNear owner guess]
+type = SelfState
+trigger1 = Time > 2 && !GetHitVar(isbound)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time >= 44
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3560]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3560, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3560, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = -5.2
+y = -4.0
+
+[State 3560, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3560, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3560, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3561]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3561, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3561, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = 5.2
+y = -4.0
+
+[State 3561, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3561, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3561, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3562]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3562, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3562, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = -4.8
+y = 3.6
+
+[State 3562, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3562, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3562, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3563]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3563, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3563, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = 4.8
+y = 3.6
+
+[State 3563, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3563, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3563, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3564]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3564, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3564, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = -3.5
+y = -2.6
+
+[State 3564, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3564, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3564, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3565]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3565, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3565, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = 3.5
+y = -2.6
+
+[State 3565, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3565, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3565, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+
+[Statedef 3200]
+type = U
+movetype = A
+physics = N
+ctrl = 0
+juggle = 1
+poweradd = 0
+movehitpersist = 1
+hitcountpersist = 1
+hitdefpersist = 0
+
+
+[State 3200, Original short super cue]
+type = PlaySnd
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+value = 1,4
+channel = 1
+volume = 0
+loop = 0
+persistent = 0
+[State 3200, New cast only ledger 5]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 5
+value = 0
+
+[State 3200, New cast only ledger 6]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 3200, New cast only ledger 9]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3200, New cast only ledger 44]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3200, New cast only ledger 47]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3200, New cast only ledger 51]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 51
+value = 0
+
+[State 3200, New cast only ledger 52]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 52
+value = 0
+
+[State 3200, New cast only ledger 55]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3200, New cast only ledger 56]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 56
+value = 0
+
+[State 3200, Clear prior normal contact on a genuine new cast]
+type = MoveHitReset
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+
+
+[State 3200, Drop old non-cinematic hit targets on new cast]
+type = TargetDrop
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+keepone = 0
+
+[State 3200, Snapshot aura damage for this cast]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 1
+value = var(0)
+
+[State 3200, Begin planted human charge]
+type = StateTypeSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+statetype = S
+physics = N
+
+[State 3200, Start from real floor]
+type = VelSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 3200, Exactly one two-bar cost]
+type = PowerAdd
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+value = -2000
+persistent = 0
+
+[State 3200, Cost receipt]
+type = VarSet
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+v = 55
+value = 1
+
+[State 3200, Actual readable horizontal manga portrait]
+type = Explod
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+anim = 9003
+ID = 19001
+pos = 0,28
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+ignorehitpause = 1
+sprpriority = 10
+ontop = 1
+ownpal = 1
+scale = 1,1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Short global pause distinct from portrait lifetime]
+type = SuperPause
+triggerall = PrevStateNo != 7900
+trigger1 = Time = 0
+time = 16
+movetime = 16
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3200, Pose phase U3_01]
+type = ChangeAnim
+triggerall = var(5) = [0,35]
+triggerall = Anim != 32001
+trigger1 = 1
+value = 32001
+
+[State 3200, Pose phase U3_02]
+type = ChangeAnim
+triggerall = var(5) = [36,71]
+triggerall = Anim != 32002
+trigger1 = 1
+value = 32002
+
+[State 3200, Full run cycle during the longer approach]
+type = ChangeAnim
+triggerall = var(5) = [72,105]
+trigger1 = Anim != 100
+value = 100
+
+[State 3200, Invulnerable only during finite running phase]
+type = NotHitBy
+triggerall = Alive && RoundState = 2
+trigger1 = var(5) = [72,105]
+value = SCA
+time = 1
+ignorehitpause = 1
+
+[State 3200, Pose phase U3_05]
+type = ChangeAnim
+triggerall = var(5) = [106,108]
+triggerall = Anim != 32005
+trigger1 = 1
+value = 32005
+
+[State 3200, Pose phase U3_06]
+type = ChangeAnim
+triggerall = var(5) = [109,110]
+triggerall = Anim != 32006
+trigger1 = 1
+value = 32006
+
+[State 3200, Pose phase U3_07]
+type = ChangeAnim
+triggerall = var(5) = [111,112]
+triggerall = Anim != 32007
+trigger1 = 1
+value = 32007
+
+[State 3200, Pose phase U3_08]
+type = ChangeAnim
+triggerall = var(5) = [113,118]
+triggerall = Anim != 32008
+trigger1 = 1
+value = 32008
+
+[State 3200, Pose phase U3_09]
+type = ChangeAnim
+triggerall = var(5) = [119,124]
+triggerall = Anim != 32009
+trigger1 = 1
+value = 32009
+
+[State 3200, Pose phase U3_10]
+type = ChangeAnim
+triggerall = var(5) = [125,140]
+triggerall = Anim != 32010
+triggerall = StateType = A
+trigger1 = 1
+value = 32010
+
+[State 3200, Pose phase U3_12]
+type = ChangeAnim
+triggerall = var(5) = [141,159]
+triggerall = Anim != 32012
+triggerall = StateType != A
+trigger1 = 1
+value = 32012
+
+[State 3200, Pose phase idle_01]
+type = ChangeAnim
+triggerall = var(5) = [160,181]
+triggerall = Anim != 0
+triggerall = StateType != A
+trigger1 = 1
+value = 0
+
+[State 3200, No portrait over the attack]
+type = RemoveExplod
+trigger1 = var(5) >= 72
+ID = 19001
+
+[State 3200, Finite directional physical motion background]
+type = Explod
+trigger1 = var(5) = 106
+anim = 9300
+trans = addalpha
+alpha = 80,256
+ID = 19300
+pos = 0,62
+postype = left
+facing = 1
+bindtime = -1
+removetime = 34
+sprpriority = -3
+ignorehitpause = 1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Stop speed plane with active flight]
+type = RemoveExplod
+trigger1 = var(5) > 124
+ID = 19300
+
+[State 3200, Actual two-step approach]
+type = VelSet
+triggerall = NumExplod(19001) = 0
+trigger1 = var(5) = [72,105]
+x = ifelse(P2BodyDist X > 32, ifelse(P2BodyDist X > 38.2,6.2,P2BodyDist X-32),0)
+y = 0
+
+[State 3200, Actual takeoff into aerial type]
+type = StateTypeSet
+triggerall = NumExplod(19001) = 0
+trigger1 = var(5) = 106
+statetype = A
+physics = N
+
+[State 3200, Ballistic launch from feet]
+type = VelSet
+triggerall = NumExplod(19001) = 0
+trigger1 = var(5) = 106
+x = 4.4 * ifelse(var(0),1.2,1)
+y = -3.6 * ifelse(var(0),1.095445115,1)
+
+[State 3200, Real finite descending gravity]
+type = VelAdd
+triggerall = StateType = A
+trigger1 = var(5) > 106
+y = .28
+
+[State 3200, Armor return state]
+type = VarSet
+trigger1 = var(5) = [106,112]
+v = 7
+value = 3200
+
+[State 3200, Armor return animation]
+type = VarSet
+trigger1 = var(5) = [106,112]
+v = 8
+value = Anim
+
+[State 3200, Bounded one-hit ordinary-melee armor]
+type = HitOverride
+triggerall = Alive && RoundState = 2
+triggerall = var(6) = 0
+trigger1 = var(5) = [106,112]
+attr = SCA, NA, SA
+slot = 0
+stateno = 7900
+time = 1
+forceair = 0
+
+[State 3200, Visible both-heel single heavy collision]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = NumExplod(19001) = 0
+triggerall = var(42) = 0 || var(41) < 4
+trigger1 = var(5) = 113
+attr = A, HA
+hitflag = MAF
+guardflag = MA
+priority = 5,Hit
+damage = ifelse(var(0),432,360),ifelse(var(0),43,36)
+animtype = Back
+pausetime = 12,12
+guard.pausetime = 8,8
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 26
+ground.velocity = -7.0,-4.8
+guard.velocity = -6.0
+airguard.velocity = -5.8,-3.6
+air.velocity = -6.5,-3.5
+yaccel = .4
+air.hittime = 26
+air.fall = 1
+fall = 1
+fall.recover = 0
+fall.damage = 0
+sparkno = -1
+guard.sparkno = 40
+hitsound = S1,0
+guardsound = 6,0
+getpower = 0,0
+givepower = 0,0
+id = 3200
+hitonce = 1
+persistent = 0
+
+[State 3200, Guarded victim faces the actual kicker]
+type = TargetFacing
+triggerall = NumTarget(3200) > 0
+trigger1 = MoveGuarded = 1
+ID = 3200
+value = -1
+ignorehitpause = 1
+persistent = 0
+
+[State 3200, Guard still launches once with engine chip damage only]
+type = TargetState
+triggerall = NumTarget(3200) > 0
+trigger1 = MoveGuarded = 1
+ID = 3200
+value = 3570
+ignorehitpause = 1
+persistent = 0
+
+[State 3200, Actual shoes emit broad collision art]
+type = Explod
+trigger1 = MoveHit = 1
+anim = 9203
+ID = 19200
+pos = 38,-30
+postype = p1
+bindtime = 0
+removetime = 18
+ignorehitpause = 1
+scale = .55,.55
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Single decisive short shake]
+type = EnvShake
+trigger1 = MoveHit = 1
+time = 8
+freq = 60
+ampl = 4
+persistent = 0
+
+[State 3200, Single nonstrobing impact flash]
+type = EnvColor
+trigger1 = MoveHit = 1
+value = 230,220,190
+time = 2
+under = 1
+persistent = 0
+
+[State 3200, Shoe takeoff dust]
+type = Explod
+trigger1 = var(5) = 106
+anim = 9201
+ID = 19201
+pos = -4,0
+postype = p1
+bindtime = 0
+removetime = 16
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Real floor landing dust before clamp]
+type = Explod
+triggerall = StateType = A
+triggerall = var(5) > 106
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+anim = 9202
+ID = 19202
+pos = 0,0
+postype = p1
+bindtime = 0
+removetime = 24
+scale = .8,.8
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Floor crossing chooses actual hip landing]
+type = ChangeAnim
+triggerall = StateType = A
+triggerall = var(5) > 106
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+value = 32011
+
+[State 3200, Actual landing receipt]
+type = VarSet
+triggerall = StateType = A
+triggerall = var(5) > 106
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+v = 56
+value = 1
+
+[State 3200, Clamp only crossed actual floor]
+type = PosSet
+triggerall = StateType = A
+triggerall = var(5) > 106
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+y = 0
+
+[State 3200, Stop only at actual floor]
+type = VelSet
+triggerall = StateType = A
+triggerall = var(5) > 106
+triggerall = Vel Y >= 0
+trigger1 = Pos Y >= 0
+x = 0
+y = 0
+
+[State 3200, Ground only after actual landing]
+type = StateTypeSet
+triggerall = var(56) = 1
+trigger1 = StateType = A
+statetype = S
+physics = N
+
+[State 3200, Keep hip contact until getup]
+type = ChangeAnim
+triggerall = var(56) = 1
+triggerall = var(5) < 141
+trigger1 = Anim != 32011
+value = 32011
+
+[State 3200, Finite full recovery without extra jumps]
+type = ChangeState
+trigger1 = var(5) >= 182
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[State 3200, One logical attack tick per live update]
+type = VarAdd
+trigger1 = 1
+v = 5
+value = 1
+
+[Statedef 7900]
+type = U
+movetype = H
+physics = N
+ctrl = 0
+
+
+[State 7900, Brief ordinary-strike receipt protection]
+type = NotHitBy
+triggerall = var(7) = 1000
+trigger1 = Time = 0
+value = SCA, NA, SA
+time = 4
+ignorehitpause = 1
+persistent = 0
+
+[State 7900, Consume one armor receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 1
+
+[State 7900, Preserve authored attack pose during receipt]
+type = ChangeAnim
+trigger1 = Time = 0
+value = var(8)
+
+[State 7900, Never armor through lethal damage]
+type = ChangeState
+trigger1 = !Alive
+value = ifelse(StateType = A,5030,5001)
+ctrl = 0
+
+[State 7900, Resume only after actual hit shake receipt]
+type = ChangeState
+triggerall = Alive && RoundState = 2
+triggerall = var(7) = 1000 || var(7) = 3200
+trigger1 = var(7) = 1000 && Time >= 1
+trigger2 = var(7) = 3200 && HitShakeOver && Time >= 1
+value = var(7)
+ctrl = 0
+
+[State 7900, Hard receive-state recovery bound]
+type = ChangeState
+trigger1 = Time >= 30
+trigger2 = RoundState != 2
+value = ifelse(StateType = A,5030,5001)
+ctrl = 0
+
+[Statedef 3570]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+[State 3570, Guard pose stays readable at impact]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(150),150,ifelse(SelfAnimExist(5000),5000,0))
+[State 3570, Bounded guard launch]
+type = VelSet
+trigger1 = Time = 0
+x = -6.0
+y = -4.0
+[State 3570, No secondary fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+[State 3570, Fall pose after guarded impact]
+type = ChangeAnim
+trigger1 = Time = 8
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+[State 3570, Gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+[State 3570, Return ownership at floor or finite timeout]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+
+[Statedef 3571]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+
+[State 3571, Use victims own finite falling animation]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(SelfAnimExist(5050),5050,ifelse(SelfAnimExist(5030),5030,ifelse(SelfAnimExist(5000),5000,0)))
+
+[State 3571, Unambiguous victim-local launch, no own vars]
+type = VelSet
+trigger1 = Time = 0
+x = -1.2
+y = 3.2
+
+[State 3571, Release clears inherited fall damage]
+type = HitFallSet
+trigger1 = Time = 0
+value = 0
+
+[State 3571, Real release gravity]
+type = VelAdd
+trigger1 = 1
+y = .4
+
+[State 3571, Hand back at actual floor, no custom-state lock]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y >= 0
+trigger2 = RoundState != 2
+trigger3 = Time >= 90
+value = ifelse(Pos Y < 0,5050,5100)
+ctrl = 0
+

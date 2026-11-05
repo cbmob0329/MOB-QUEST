@@ -1,0 +1,1122 @@
+; ORIGINAL THROW REVISION. No runtime or victim-compatibility claim.
+; Exact1v1 ownership: HitDefID=100000+ownerPlayerID, actual captured targetPlayerID var55.
+; Root vars55targetID/56direction/57facing/58released. Fvars2/3 capture world offset/Y.
+; Victim820 contains NO VarSet/VarAdd/ChangeAnim2/TargetLifeAdd and no opponent variable writes.
+; All own throw AIR actions800/805/810/815,801/806/811/816,802/807/812/817 MISSING.
+[Statedef 800]
+type = U
+movetype = A
+physics = N
+ctrl = 0
+anim = 800
+sprpriority = 1
+
+; THROW_POSE_ROUTING: ground crouch entry rises without moving either actor.
+[State 800, THROW_POSE_ROUTING stand crouching entry]
+type = StateTypeSet
+trigger1 = Time = 0
+trigger1 = StateType = C
+statetype = S
+physics = N
+
+[State 800, latch forward direction]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = 1
+
+[State 800, latch backward direction]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = command = "holdback"
+v = 56
+value = -1
+
+[State 800, AI chooses occasional back release]
+type = VarSet
+triggerall = AILevel > 0
+trigger1 = Time = 0
+trigger1 = (GameTime+ID)%4 = 0
+v = 56
+value = -1
+
+[State 800, initialize facing]
+type = VarSet
+trigger1 = Time = 0
+v = 57
+value = Facing
+
+[State 800, initialize owned target]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = -1
+
+[State 800, initialize release receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 58
+value = 0
+
+[State 800, initialize hit receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 23
+value = 0
+
+[State 800, bounded throw hold not floor snap]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 800, dedicated throw stance art]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 800 + 5*(var(56) = -1) + 10*(StateType = A)
+
+[State 800, clear admission scratch]
+type = VarSet
+trigger1 = 1
+v = 7
+value = 0
+
+[State 800, reserve only eligible capture]
+type = VarSet
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+trigger1 = Time = 4
+v = 7
+value = (var(29) = 0 && var(38) = 0 && var(20)+var(38)+var(6) < 4)
+
+[State 800, reserve grab lease]
+type = VarAdd
+trigger1 = var(7) = 1
+v = 38
+value = 1
+
+[State 800, stamp grab epoch]
+type = VarSet
+trigger1 = var(7) = 1
+v = 9
+value = var(21)
+
+[State 800, stamp grab state]
+type = VarSet
+trigger1 = var(7) = 1
+v = 36
+value = StateNo
+
+[State 800, own grab lease]
+type = VarSet
+trigger1 = var(7) = 1
+v = 29
+value = 1
+
+[State 800, fixed target kind for grab receipt]
+type = VarSet
+triggerall = NumEnemy = 1
+trigger1 = var(7) = 1
+v = 4
+value = (EnemyNear,StateType = A)
+
+[State 800, S real grab M-]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = S
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 0
+trigger1 = var(7) = 1
+attr = S, NT
+hitflag = M-
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, S real grab AF]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = S
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = var(7) = 1
+attr = S, NT
+hitflag = AF
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, C real grab M-]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = C
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 0
+trigger1 = var(7) = 1
+attr = C, NT
+hitflag = M-
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, C real grab AF]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = C
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = var(7) = 1
+attr = C, NT
+hitflag = AF
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, A real grab M-]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = A
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 0
+trigger1 = var(7) = 1
+attr = A, NT
+hitflag = M-
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, A real grab AF]
+type = HitDef
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = NumEnemy = 1
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = EnemyNear,Alive
+triggerall = (EnemyNear,SelfAnimExist(5000))
+triggerall = (EnemyNear,SelfAnimExist(5030))
+triggerall = (EnemyNear,SelfAnimExist(5050))
+triggerall = P2Dist X = [0,30]
+triggerall = Abs(P2Dist Y) <= 28
+triggerall = Pos Y = [-72,0]
+triggerall = EnemyNear,Pos Y = [-72,0]
+triggerall = StateType = A
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = var(7) = 1
+attr = A, NT
+hitflag = AF
+guardflag =
+priority = 5,Miss
+hitonce = 1
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+animtype = Hard
+air.animtype = Back
+ground.type = High
+ground.hittime = 18
+air.hittime = 18
+ground.velocity = 0,0
+air.velocity = 0,0
+fall = 1
+air.fall = 1
+fall.recover = 0
+yaccel = .45
+getpower = 0,0
+givepower = 0,0
+p1stateno = 801
+; No automatic custom target state: owner801 validates actual player first.
+ID = 100000+ID
+
+[State 800, ELECTRIC_GRIP attempt palm]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21410) = 0
+trigger1 = Time = 4
+anim = 20400
+ID = 21410
+postype = p1
+pos = IfElse((IfElse(StateType = A,51.563169164882225,61.15631691648822)*Const(size.xscale)) < 0,-Floor(-(IfElse(StateType = A,51.563169164882225,61.15631691648822)*Const(size.xscale))+.5),Floor((IfElse(StateType = A,51.563169164882225,61.15631691648822)*Const(size.xscale))+.5)),IfElse((-IfElse(StateType = A,47.3661670235546,46.406852248394)*Const(size.yscale)) < 0,-Floor(-(-IfElse(StateType = A,47.3661670235546,46.406852248394)*Const(size.yscale))+.5),Floor((-IfElse(StateType = A,47.3661670235546,46.406852248394)*Const(size.yscale))+.5))
+facing = 1
+bindtime = 1
+removetime = 4
+scale = .07,.07
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 800, finite grab whiff]
+type = ChangeState
+trigger1 = Time >= 16
+value = IfElse(StateType = A,50,0)
+ctrl = 1
+
+
+[Statedef 801]
+type = U
+movetype = A
+physics = N
+ctrl = 0
+anim = 801
+movehitpersist = 1
+hitdefpersist = 0
+sprpriority = 2
+
+[State 801, capture actual target identity]
+type = VarSet
+triggerall = NumTarget(100000+ID) = 1
+trigger1 = Time = 0
+v = 55
+value = Target(100000+ID),ID
+
+[State 801, capture real world horizontal offset]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+fv = 2
+value = (Target(100000+ID),Pos X) - Pos X
+
+[State 801, capture real world height]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+fv = 3
+value = Target(100000+ID),Pos Y
+
+[State 801, reset release eligibility]
+type = VarSet
+trigger1 = Time = 0
+v = 53
+value = 0
+[State 801, start explicit terminal ownership episode]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+v = 8
+value = 1
+
+[State 801, restart victim free settle only on actual capture]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+v = 26
+value = 0
+
+[State 801, terminal throw episode no followup loop]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+v = 3
+value = 1
+
+[State 801, grip art]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 801 + 5*(var(56) = -1) + 10*(StateType = A)
+
+[State 801, brief fixed owner hold]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 801, claim validated main player custom state]
+type = TargetState
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),Alive)
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+trigger1 = Time = 0
+ID = 100000+ID
+value = 820
+ctrl = 0
+
+[State 801, one tick exact target bind preserves capture location]
+type = TargetBind
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+trigger1 = Time < 8
+ID = 100000+ID
+time = 1
+pos = fvar(2)*Facing,fvar(3)-Pos Y
+
+[State 801, ELECTRIC_GRIP refresh owned fragment 0]
+type = RemoveExplod
+trigger1 = 1
+ID = 21411
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP owned bridge fragment 0]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21411) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = (Target(100000+ID),Alive)
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = var(58) = 0
+trigger1 = Time < 8
+anim = 20400
+ID = 21411
+postype = p1
+pos = IfElse(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0)+(fvar(2)*Facing)*0) < 0,-Floor(-((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0)+(fvar(2)*Facing)*0)+.5),Floor(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0)+(fvar(2)*Facing)*0)+.5)),IfElse(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0)+(fvar(3)-Pos Y-20)*0) < 0,-Floor(-((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0)+(fvar(3)-Pos Y-20)*0)+.5),Floor(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0)+(fvar(3)-Pos Y-20)*0)+.5))
+facing = 1
+bindtime = 1
+removetime = 1
+scale = .07,.07
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP refresh owned fragment 1]
+type = RemoveExplod
+trigger1 = 1
+ID = 21412
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP owned bridge fragment 1]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21412) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = (Target(100000+ID),Alive)
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = var(58) = 0
+trigger1 = Time < 8
+anim = 20400
+ID = 21412
+postype = p1
+pos = IfElse(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.5)+(fvar(2)*Facing)*0.5) < 0,-Floor(-((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.5)+(fvar(2)*Facing)*0.5)+.5),Floor(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.5)+(fvar(2)*Facing)*0.5)+.5)),IfElse(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.5)+(fvar(3)-Pos Y-20)*0.5) < 0,-Floor(-((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.5)+(fvar(3)-Pos Y-20)*0.5)+.5),Floor(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.5)+(fvar(3)-Pos Y-20)*0.5)+.5))
+facing = 1
+bindtime = 1
+removetime = 1
+scale = .07,.07
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP refresh owned fragment 2]
+type = RemoveExplod
+trigger1 = 1
+ID = 21413
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP owned bridge fragment 2]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21413) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = (Target(100000+ID),Alive)
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = var(58) = 0
+trigger1 = Time < 8
+anim = 20400
+ID = 21413
+postype = p1
+pos = IfElse(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-1)+(fvar(2)*Facing)*1) < 0,-Floor(-((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-1)+(fvar(2)*Facing)*1)+.5),Floor(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-1)+(fvar(2)*Facing)*1)+.5)),IfElse(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-1)+(fvar(3)-Pos Y-20)*1) < 0,-Floor(-((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-1)+(fvar(3)-Pos Y-20)*1)+.5),Floor(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-1)+(fvar(3)-Pos Y-20)*1)+.5))
+facing = 1
+bindtime = 1
+removetime = 1
+scale = .07,.07
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 801, ELECTRIC_GRIP refresh owned fragment 3]
+type = RemoveExplod
+trigger1 = 1
+ID = 21415
+ignorehitpause = 1
+
+
+[State 801, ELECTRIC_GRIP owned bridge fragment 3]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21415) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = (Target(100000+ID),Alive)
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = var(58) = 0
+trigger1 = Time < 8
+anim = 20400
+ID = 21415
+postype = p1
+pos = IfElse(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.25)+(fvar(2)*Facing)*0.25) < 0,-Floor(-((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.25)+(fvar(2)*Facing)*0.25)+.5),Floor(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.25)+(fvar(2)*Facing)*0.25)+.5)),IfElse(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.25)+(fvar(3)-Pos Y-20)*0.25) < 0,-Floor(-((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.25)+(fvar(3)-Pos Y-20)*0.25)+.5),Floor(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.25)+(fvar(3)-Pos Y-20)*0.25)+.5))
+facing = 1
+bindtime = 1
+removetime = 1
+scale = .07,.07
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+
+[State 801, ELECTRIC_GRIP refresh owned fragment 4]
+type = RemoveExplod
+trigger1 = 1
+ID = 21416
+ignorehitpause = 1
+
+
+[State 801, ELECTRIC_GRIP owned bridge fragment 4]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21416) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = (Target(100000+ID),Alive)
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = var(58) = 0
+trigger1 = Time < 8
+anim = 20400
+ID = 21416
+postype = p1
+pos = IfElse(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.75)+(fvar(2)*Facing)*0.75) < 0,-Floor(-((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.75)+(fvar(2)*Facing)*0.75)+.5),Floor(((IfElse(StateType = A,39.57173447537473,55.76017130620985)*Const(size.xscale))*(1-0.75)+(fvar(2)*Facing)*0.75)+.5)),IfElse(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.75)+(fvar(3)-Pos Y-20)*0.75) < 0,-Floor(-((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.75)+(fvar(3)-Pos Y-20)*0.75)+.5),Floor(((-IfElse(StateType = A,46.16702355460386,49.04496788008566)*Const(size.yscale))*(1-0.75)+(fvar(3)-Pos Y-20)*0.75)+.5))
+facing = 1
+bindtime = 1
+removetime = 1
+scale = .07,.07
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+
+[State 801, latch valid release before possible KO]
+type = VarSet
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = NumEnemy = 1
+triggerall = var(59) = 1
+triggerall = Target(100000+ID),Alive
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = var(58) = 0
+trigger1 = Time = 8
+v = 53
+value = 1
+
+[State 801, one release damage only]
+type = TargetLifeAdd
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = NumEnemy = 1
+triggerall = var(59) = 1
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = var(58) = 0
+trigger1 = Time = 8
+trigger1 = var(53) = 1
+ID = 100000+ID
+value = -80
+kill = 1
+absolute = 0
+
+[State 801, one release meter]
+type = PowerAdd
+trigger1 = Time = 8
+trigger1 = var(53) = 1
+trigger1 = var(58) = 0
+value = 90
+
+[State 801, release receipt]
+type = VarSet
+trigger1 = Time = 8
+trigger1 = var(53) = 1
+trigger1 = var(58) = 0
+v = 58
+value = 1
+
+[State 801, ELECTRIC_GRIP successful release flash]
+type = Explod
+triggerall = !IsHelper
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = NumExplod(21414) = 0
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = var(55)
+triggerall = (Target(100000+ID),StateNo) = 820
+triggerall = (Target(100000+ID),GetHitVar(chainid)) = 100000+ID
+triggerall = var(9) = var(21)
+triggerall = var(53) = 1
+triggerall = var(58) = 1
+trigger1 = Time = 8
+anim = 20400
+ID = 21414
+postype = p1
+pos = IfElse((fvar(2)*Facing) < 0,-Floor(-(fvar(2)*Facing)+.5),Floor((fvar(2)*Facing)+.5)),IfElse((fvar(3)-Pos Y-20) < 0,-Floor(-(fvar(3)-Pos Y-20)+.5),Floor((fvar(3)-Pos Y-20)+.5))
+facing = 1
+bindtime = 1
+removetime = 4
+scale = .10,.10
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 801, normal release recover]
+type = ChangeState
+trigger1 = var(58) = 1
+value = 802
+
+[State 801, abort no exact target]
+type = ChangeState
+trigger1 = NumTarget(100000+ID) != 1
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = var(59) != 1
+trigger6 = Time >= 10
+value = 802
+
+[State 801, reject actual helper or mismatched player without custom capture]
+type = ChangeState
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+trigger1 = (Target(100000+ID),IsHelper)
+trigger2 = (Target(100000+ID),ID) != (EnemyNear,ID)
+trigger3 = !(Target(100000+ID),SelfAnimExist(5000))
+trigger4 = !(Target(100000+ID),SelfAnimExist(5030))
+trigger5 = !(Target(100000+ID),SelfAnimExist(5050))
+value = 802
+
+[State 801, abort crossed ownership]
+type = ChangeState
+triggerall = NumTarget(100000+ID) = 1
+trigger1 = (Target(100000+ID),ID) != var(55)
+trigger2 = (Target(100000+ID),StateNo) != 820
+trigger3 = (Target(100000+ID),GetHitVar(chainid)) != 100000+ID
+trigger4 = !(Target(100000+ID),Alive)
+value = 802
+
+
+[Statedef 802]
+type = U
+movetype = I
+physics = N
+ctrl = 0
+anim = 802
+sprpriority = 1
+
+[State 802, release art]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 802 + 5*(var(56) = -1) + 10*(StateType = A)
+
+[State 802, stop binding by omission and recover]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+
+[State 802, air recovery gravity]
+type = VelAdd
+trigger1 = StateType = A
+y = .45
+
+[State 802, own real landing floor]
+type = PosSet
+trigger1 = StateType = A
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+y = 0
+
+[State 802, own landing stop]
+type = VelSet
+trigger1 = StateType = A
+trigger1 = Pos Y >= 0
+trigger1 = Vel Y > 0
+y = 0
+
+[State 802, own landed type]
+type = StateTypeSet
+trigger1 = StateType = A
+trigger1 = Pos Y >= 0
+statetype = S
+physics = S
+
+; THROW_POSE_ROUTING: ground AIR element2 is recovery, not release replay.
+[State 802, THROW_POSE_ROUTING grounded recovery after air landing]
+type = ChangeAnim
+triggerall = StateType = S
+triggerall = Pos Y >= 0
+trigger1 = Anim = 812 || Anim = 817
+value = 802 + 5*(var(56) = -1)
+elem = 2
+
+[State 802, drop only after victim leaves our hold]
+type = TargetDrop
+triggerall = NumTarget(100000+ID) = 1
+trigger1 = (Target(100000+ID),StateNo) != 820
+trigger2 = Time >= 14
+excludeID = -1
+keepone = 0
+
+[State 802, finite throw recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = IfElse(StateType = A,50,0)
+ctrl = 1
+
+
+; VICTIM CUSTOM STATE. Uses only own standard hurt/fall animations; no victim variable writes.
+[Statedef 820]
+type = U
+movetype = H
+physics = N
+ctrl = 0
+sprpriority = 1
+
+[State 820, unsupported own fall data abort to own free air state]
+type = SelfState
+triggerall = !SelfAnimExist(5050)
+trigger1 = Pos Y < 0
+trigger1 = SelfAnimExist(50)
+value = 50
+ctrl = 1
+
+[State 820, unsupported own fall data abort grounded]
+type = SelfState
+triggerall = !SelfAnimExist(5050)
+trigger1 = Pos Y >= 0
+trigger1 = SelfAnimExist(0)
+value = 0
+ctrl = 1
+
+[State 820, own standing grip reaction]
+type = ChangeAnim
+triggerall = SelfAnimExist(5000)
+trigger1 = Time = 0
+trigger1 = StateType != A
+value = 5000
+
+[State 820, own airborne grip reaction]
+type = ChangeAnim
+triggerall = SelfAnimExist(5030)
+trigger1 = Time = 0
+trigger1 = StateType = A
+value = 5030
+
+[State 820, freeze only short grip at current height]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 820, latched throw flight not teleport]
+type = VelSet
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear,ID) = GetHitVar(chainid)-100000
+triggerall = (EnemyNear,var(55)) = ID
+triggerall = (EnemyNear,NumTarget(100000+ID)) = 1
+triggerall = (EnemyNear,Alive)
+triggerall = SelfAnimExist(5050)
+trigger1 = (EnemyNear,StateNo) = 802
+trigger1 = (EnemyNear,var(58)) = 1
+x = (EnemyNear,var(56))*(EnemyNear,var(57))*Facing*4.5
+y = -3.0
+
+[State 820, release to victim own fall state]
+type = SelfState
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear,ID) = GetHitVar(chainid)-100000
+triggerall = (EnemyNear,var(55)) = ID
+triggerall = (EnemyNear,NumTarget(100000+ID)) = 1
+triggerall = (EnemyNear,Alive)
+triggerall = SelfAnimExist(5050)
+trigger1 = (EnemyNear,StateNo) = 802
+trigger1 = (EnemyNear,var(58)) = 1
+value = 5050
+ctrl = 0
+
+[State 820, unconditional hard custom-state deadline]
+type = SelfState
+trigger1 = Time >= 16
+value = 5050
+ctrl = 0
+
+[State 820, round KO or time watchdog returns own fall]
+type = SelfState
+triggerall = SelfAnimExist(5050)
+trigger1 = NumEnemy != 1
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time >= 16
+value = 5050
+ctrl = 0
+
+[State 820, owner mismatch watchdog]
+type = SelfState
+triggerall = NumEnemy = 1
+triggerall = SelfAnimExist(5050)
+trigger1 = (EnemyNear,ID) != GetHitVar(chainid)-100000
+trigger2 = !(EnemyNear,Alive)
+trigger3 = (EnemyNear,StateNo) != 801 && (EnemyNear,StateNo) != 802
+trigger4 = Time > 1
+trigger4 = (EnemyNear,var(55)) != ID
+trigger5 = Time > 1
+trigger5 = (EnemyNear,NumTarget(100000+ID)) != 1
+trigger6 = (EnemyNear,StateNo) = 802
+trigger6 = (EnemyNear,var(58)) = 0
+value = 5050
+ctrl = 0
+

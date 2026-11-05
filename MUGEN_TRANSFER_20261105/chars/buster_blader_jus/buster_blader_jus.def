@@ -1,0 +1,20 @@
+[Info]
+name = "Buster Blader JUS"
+displayname = "Buster Blader JUS"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = buster_blader.cmd
+cns = buster_blader.cns
+st = buster_blader.cns
+stcommon = common1.cns
+sprite = buster_blader.sff
+anim = buster_blader.air
+sound = buster_blader.snd
+pal1 = buster_blader.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

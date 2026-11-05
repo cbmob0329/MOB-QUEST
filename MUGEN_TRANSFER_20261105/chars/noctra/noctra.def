@@ -1,0 +1,19 @@
+[Info]
+name = "KYORO NOCTRA"
+displayname = "ノクトラ"
+versiondate = 10,22,2026
+mugenversion = 1.0
+author = "Original KYORO project"
+localcoord = 320,240
+pal.defaults = 1,2,3,4,5,6
+[Files]
+cmd = noctra.cmd
+cns = noctra.cns
+st = noctra.cns
+stcommon = common1.cns
+sprite = noctra.sff
+anim = noctra.air
+sound = noctra.snd
+[Arcade]
+intro.storyboard =
+ending.storyboard =

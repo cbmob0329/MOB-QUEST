@@ -1,0 +1,1327 @@
+; MOB DENDEN JUS - original bounded, delayed-observation AI WIP.
+; Static source only. No match or strength assertion. Standard 1v1 only.
+; AI reads public enemy MoveType/StateType/projectile count and distance;
+; never enemy Command, future state, input buffer or hidden hit resolution.
+; vars40..49 are exclusive AI snapshot fields, listed in AI_INPUT_CONTRACT.md.
+; Delayed observation cycle: promote PREVIOUS snapshot, then capture next.
+; Dispatch cadence every6 GameTime ticks; counter maximum policy weight65%.
+; Deterministic GameTime/ID modular tie-break is reproducible, not random seed.
+; All body action admissions art-gated by var59; no placeholder animation use.
+[Statedef -3]
+
+[State -3, PUNCH_Y retire unused stage authorization]
+type = VarSet
+triggerall = !IsHelper
+triggerall = var(18) != 0
+trigger1 = StateNo != 3100 && StateNo != 3101 && StateNo != 3102
+trigger2 = MoveType = H
+trigger3 = !Alive
+trigger4 = RoundState != 2
+trigger5 = var(59) != 1
+trigger6 = NumEnemy != 1
+trigger7 = var(14) = 0
+trigger8 = var(16) != var(21)
+trigger9 = var(3) != 0
+v = 18
+value = 0
+ignorehitpause = 1
+
+[State -3, PUNCH_CONFIRM retire invalid authorization]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = StateNo != 3100 && StateNo != 3101 && StateNo != 3102
+trigger2 = MoveType = H
+trigger3 = !Alive
+trigger4 = RoundState != 2
+trigger5 = var(59) != 1
+trigger6 = NumEnemy != 1
+trigger7 = var(14) != 0 && var(16) != var(21)
+v = 14
+value = 0
+ignorehitpause = 1
+
+
+; LEASE_V2_PREFIX: runs before ANY AI dispatch, all roots only.
+[State -3, AIR_CHASE restore owned neutral exit before global routing]
+type = VelSet
+triggerall = !IsHelper
+triggerall = var(27) = 1
+triggerall = StateNo = 610 || StateNo = 620 || StateNo = 630
+triggerall = Alive
+triggerall = MoveType != H
+trigger1 = var(59) != 1
+trigger2 = RoundState != 2
+trigger3 = NumEnemy != 1
+trigger4 = var(3) != 0
+x = fvar(27)
+ignorehitpause = 1
+
+[State -3, AIR_CHASE retire invalid owned context]
+type = VarSet
+triggerall = !IsHelper
+triggerall = var(27) = 1
+trigger1 = StateNo != 610 && StateNo != 620 && StateNo != 630
+trigger2 = var(59) != 1
+trigger3 = RoundState != 2
+trigger4 = NumEnemy != 1
+trigger5 = var(3) != 0
+trigger6 = MoveType = H
+trigger7 = !Alive
+v = 27
+value = 0
+ignorehitpause = 1
+
+[State -3, victim recovery settle tick]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = var(8) = 1
+trigger1 = EnemyNear,MoveType != H
+trigger1 = EnemyNear,Ctrl
+v = 26
+value = 1
+
+[State -3, victim still combo reset settle]
+type = VarSet
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+trigger1 = EnemyNear,MoveType = H
+trigger2 = EnemyNear,Ctrl = 0
+v = 26
+value = 0
+
+[State -3, observe active damage episode]
+type = VarSet
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+trigger1 = EnemyNear,MoveType = H
+v = 8
+value = 1
+
+[State -3, advance recovered combo epoch]
+type = VarAdd
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+trigger1 = var(8) = 1
+v = 21
+value = 1
+
+[State -3, clear recovered confirmed budget]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+trigger1 = var(8) = 1
+v = 20
+value = 0
+
+[State -3, clear recovered pending budget]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+trigger1 = var(8) = 1
+v = 38
+value = 0
+
+[State -3, clear recovered uncertain budget]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+trigger1 = var(8) = 1
+v = 6
+value = 0
+
+[State -3, clear terminal throw on victim recovery only]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+trigger1 = var(8) = 1
+v = 3
+value = 0
+
+[State -3, end recovered combo episode]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = var(26) >= 6
+v = 8
+value = 0
+
+[State -3, AIR_CHASE capture owned victim identity]
+type = VarSet
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = (Target(StateNo),StateType = A)
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = MoveHit
+v = 1
+value = (Target(StateNo),ID)
+
+[State -3, AIR_CHASE capture owned combo epoch]
+type = VarSet
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = (Target(StateNo),StateType = A)
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = MoveHit
+v = 2
+value = var(21)
+
+[State -3, AIR_CHASE capture owned source stage]
+type = VarSet
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = (Target(StateNo),StateType = A)
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+trigger1 = MoveHit
+v = 5
+value = StateNo
+
+[State -3, PUNCH_CONFIRM capture exact victim]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = 3100
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumEnemy = 1
+triggerall = var(14) = 0
+triggerall = var(17) = var(22)
+triggerall = var(29) = 1
+triggerall = var(36) = 3100
+triggerall = var(9) = var(21)
+triggerall = NumTarget(3100) = 1
+triggerall = (Target(3100),IsHelper) = 0
+triggerall = (Target(3100),ID) = (EnemyNear,ID)
+triggerall = (Target(3100),Alive)
+triggerall = (Target(3100),MoveType = H)
+trigger1 = MoveHit
+v = 15
+value = (Target(3100),ID)
+ignorehitpause = 0
+
+[State -3, PUNCH_CONFIRM capture shared epoch]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = 3100
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumEnemy = 1
+triggerall = var(14) = 0
+triggerall = var(17) = var(22)
+triggerall = var(29) = 1
+triggerall = var(36) = 3100
+triggerall = var(9) = var(21)
+triggerall = NumTarget(3100) = 1
+triggerall = (Target(3100),IsHelper) = 0
+triggerall = (Target(3100),ID) = (EnemyNear,ID)
+triggerall = (Target(3100),Alive)
+triggerall = (Target(3100),MoveType = H)
+trigger1 = MoveHit
+v = 16
+value = var(21)
+ignorehitpause = 0
+
+[State -3, PUNCH_CONFIRM latch fresh hit last]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = 3100
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumEnemy = 1
+triggerall = var(14) = 0
+triggerall = var(17) = var(22)
+triggerall = var(29) = 1
+triggerall = var(36) = 3100
+triggerall = var(9) = var(21)
+triggerall = NumTarget(3100) = 1
+triggerall = (Target(3100),IsHelper) = 0
+triggerall = (Target(3100),ID) = (EnemyNear,ID)
+triggerall = (Target(3100),Alive)
+triggerall = (Target(3100),MoveType = H)
+trigger1 = MoveHit
+v = 14
+value = 1
+ignorehitpause = 0
+
+[State -3, PUNCH_Y capture fresh owned air hit before lease settlement]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = 3100 || StateNo = 3101
+triggerall = StateType = A
+triggerall = MoveType != H
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumEnemy = 1
+triggerall = var(14) = IfElse(StateNo = 3100,1,2)
+triggerall = var(16) = var(21)
+triggerall = var(29) = 1
+triggerall = var(36) = StateNo
+triggerall = var(9) = var(21)
+triggerall = var(4) = 1
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = var(15)
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = (Target(StateNo),Alive)
+triggerall = (Target(StateNo),MoveType = H)
+triggerall = (Target(StateNo),StateType = A)
+trigger1 = MoveHit
+v = 18
+value = StateNo
+ignorehitpause = 0
+
+[State -3, NORMAL_HIT_FX replace previous cosmetic tail on fresh receipt]
+type = RemoveExplod
+triggerall = !IsHelper
+triggerall = StateNo = 640 || StateNo = 430 || StateNo = 200 || StateNo = 210 || StateNo = 220 || StateNo = 400 || StateNo = 600 || StateNo = 610 || StateNo = 620 || StateNo = 630
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = SelfAnimExist(20300)
+triggerall = NumEnemy = 1
+triggerall = var(29) = 1
+triggerall = var(36) = StateNo
+triggerall = var(9) = var(21)
+triggerall = var(23) = 0
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = HitPauseTime = 0
+trigger1 = MoveHit
+ID = 21500
+ignorehitpause = 1
+
+[State -3, NORMAL_HIT_FX owned confirmed normal burst]
+type = Explod
+triggerall = !IsHelper
+triggerall = StateNo = 200 || StateNo = 210 || StateNo = 220 || StateNo = 400 || StateNo = 600 || StateNo = 610 || StateNo = 620 || StateNo = 630
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = SelfAnimExist(20300)
+triggerall = NumEnemy = 1
+triggerall = var(29) = 1
+triggerall = var(36) = StateNo
+triggerall = var(9) = var(21)
+triggerall = var(23) = 0
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = HitPauseTime = 0
+trigger1 = MoveHit
+anim = 20300
+ID = 21500
+postype = p1
+pos = Floor(IfElse(StateNo = 200,45,IfElse(StateNo = 210,61.5,IfElse(StateNo = 220,39,IfElse(StateNo = 400,42.5,47.5))))*Const(size.xscale)+.5),-Floor(IfElse(StateNo = 200,62.5,IfElse(StateNo = 210,49,IfElse(StateNo = 220,78.5,IfElse(StateNo = 400,51.5,49))))*Const(size.yscale)+.5)
+facing = 1
+vfacing = 1
+bindtime = 0
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime = 8
+scale = .5,.5
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+pausemovetime = 8
+supermovetime = 8
+ignorehitpause = 1
+
+[State -3, LOWKICK430 fresh owned paw impact]
+type = Explod
+triggerall = !IsHelper
+triggerall = StateNo = 430
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = SelfAnimExist(20300)
+triggerall = NumEnemy = 1
+triggerall = var(29) = 1
+triggerall = var(36) = StateNo
+triggerall = var(9) = var(21)
+triggerall = var(23) = 0
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = HitPauseTime = 0
+trigger1 = MoveHit
+anim = 20300
+ID = 21500
+postype = p1
+pos = Floor(55*Const(size.xscale)+.5),-Floor(17*Const(size.yscale)+.5)
+facing = 1
+vfacing = 1
+bindtime = 0
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime = 8
+scale = .5,.5
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+pausemovetime = 8
+supermovetime = 8
+ignorehitpause = 1
+
+[State -3, DROPKICK640 fresh owned paw impact]
+type = Explod
+triggerall = !IsHelper
+triggerall = StateNo = 640
+triggerall = Alive
+triggerall = MoveType != H
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = SelfAnimExist(20300)
+triggerall = NumEnemy = 1
+triggerall = var(29) = 1
+triggerall = var(36) = StateNo
+triggerall = var(9) = var(21)
+triggerall = var(23) = 0
+triggerall = NumTarget(StateNo) = 1
+triggerall = (Target(StateNo),IsHelper) = 0
+triggerall = (Target(StateNo),ID) = (EnemyNear,ID)
+triggerall = HitPauseTime = 0
+trigger1 = MoveHit
+anim = 20300
+ID = 21500
+postype = p1
+pos = Floor(58.5*Const(size.xscale)+.5),-Floor(43.5*Const(size.yscale)+.5)
+facing = 1
+vfacing = 1
+bindtime = 0
+vel = 0,0
+accel = 0,0
+random = 0,0
+removetime = 8
+scale = .5,.5
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+pausemovetime = 8
+supermovetime = 8
+ignorehitpause = 1
+
+[State -3, body lease hit commit]
+type = VarAdd
+triggerall = StateNo != 801
+triggerall = !IsHelper
+triggerall = NumTarget > 0
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+trigger1 = MoveHit
+trigger1 = var(4) = 1
+v = 20
+value = 1
+
+[State -3, validated air grab lease commit before AI]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = NumTarget(100000+ID) = 1
+triggerall = (Target(100000+ID),IsHelper) = 0
+triggerall = (Target(100000+ID),ID) = (EnemyNear,ID)
+triggerall = (Target(100000+ID),SelfAnimExist(5000))
+triggerall = (Target(100000+ID),SelfAnimExist(5030))
+triggerall = (Target(100000+ID),SelfAnimExist(5050))
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = StateNo = 801
+trigger1 = MoveHit
+trigger1 = var(4) = 1
+v = 20
+value = 1
+
+[State -3, body contact returns pending lease]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+trigger1 = MoveContact
+v = 38
+value = -1
+
+[State -3, body free punch meter hit once]
+type = PowerAdd
+triggerall = !IsHelper
+triggerall = StateNo = [1400,1402]
+triggerall = var(54) = 0
+trigger1 = MoveHit
+value = 240
+
+[State -3, body free punch meter guard once]
+type = PowerAdd
+triggerall = !IsHelper
+triggerall = StateNo = [1400,1402]
+triggerall = var(54) = 0
+trigger1 = MoveGuarded
+value = 40
+
+[State -3, body free punch paid]
+type = VarSet
+triggerall = !IsHelper
+triggerall = StateNo = [1400,1402]
+trigger1 = MoveContact
+v = 54
+value = 1
+
+[State -3, AUDIO fresh body hit receipt before cancel]
+type = PlaySnd
+triggerall = var(59) = 1
+triggerall = !IsHelper
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = var(23) = 0
+triggerall = StateNo != 800 && StateNo != 801
+trigger1 = MoveHit
+value = 0,IfElse(StateNo = 200,1,2)
+channel = 2
+volumescale = 55
+loop = 0
+ignorehitpause = 0
+
+[State -3, body receipt before AI cancel]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = MoveContact
+v = 23
+value = 1
+
+[State -3, body consumed lease latch]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = MoveContact
+v = 29
+value = 0
+
+[State -3, uncertain trade reserves safety budget]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+triggerall = StateNo != var(36)
+triggerall = MoveType = H
+trigger1 = EnemyNear,StateType = A
+v = 6
+value = 1
+
+[State -3, return lease after body HitDef state cleared]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = var(29) = 1
+triggerall = var(9) = var(21)
+trigger1 = StateNo != var(36)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = var(59) != 1
+trigger5 = NumEnemy != 1
+v = 38
+value = -1
+
+[State -3, detect stale body lease]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = 1
+v = 7
+value = (var(29) = 1 && var(9) != var(21))
+
+[State -3, clear inactive body lease flag]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = StateNo != var(36)
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = var(7) = 1
+trigger5 = var(59) != 1
+trigger6 = NumEnemy != 1
+v = 29
+value = 0
+
+[State -3, gate closure clears current body hitdef]
+type = ChangeState
+triggerall = !IsHelper
+triggerall = MoveType = A
+trigger1 = var(59) != 1
+trigger2 = NumEnemy != 1
+value = IfElse(StateType = A,50,0)
+ctrl = 1
+
+[State -3, stale generation clears body hitdef]
+type = ChangeState
+triggerall = !IsHelper
+triggerall = MoveType != H
+trigger1 = var(7) = 1
+value = IfElse(StateType = A,50,0)
+ctrl = 1
+
+
+ ; AIR_CHAIN single-token edge buffer; previous-held persists across stage entry.
+[State -3, AIR_CHAIN clear token outside eligible context]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = AILevel > 0
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = var(59) != 1
+trigger5 = StateNo != 600 && StateNo != 610 && StateNo != 620
+trigger6 = StateType != A
+trigger7 = Time > 12
+trigger8 = NumEnemy != 1
+trigger9 = var(3) != 0
+fv = 25
+value = 0
+ignorehitpause = 1
+
+[State -3, AIR_CHAIN age token only on unpaused eligible ticks]
+type = VarAdd
+triggerall = !IsHelper
+triggerall = AILevel = 0
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = StateType = A
+triggerall = var(3) = 0
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = Time <= 12
+trigger1 = fvar(25) > 0
+fv = 25
+value = -1
+ignorehitpause = 0
+
+[State -3, AIR_CHAIN capture one rising held-button edge]
+type = VarSet
+triggerall = !IsHelper
+triggerall = AILevel = 0
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(59) = 1
+triggerall = NumEnemy = 1
+triggerall = StateType = A
+triggerall = var(3) = 0
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = Time <= 12
+triggerall = fvar(24) = 0
+trigger1 = command = "holda"
+fv = 25
+value = 8
+ignorehitpause = 1
+
+[State -3, AIR_CHAIN update previous held state after capture]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = 1
+fv = 24
+value = IfElse(command = "holda",1,0)
+ignorehitpause = 1
+
+[State -3, Clear AI observation outside a live single opponent round]
+type = VarRangeSet
+trigger1 = RoundState != 2
+trigger2 = AILevel = 0
+trigger3 = !Alive
+trigger4 = NumEnemy = 0
+first = 40
+last = 49
+value = 0
+ignorehitpause = 1
+
+[State -3, Low level perception delay]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = AILevel <= 3
+trigger1 = 1
+v = 49
+value = 12
+ignorehitpause = 0
+
+[State -3, Medium level perception delay]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = AILevel = [4,6]
+trigger1 = 1
+v = 49
+value = 9
+ignorehitpause = 0
+
+[State -3, High level perception delay hard floor six ticks]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = AILevel >= 7
+trigger1 = 1
+v = 49
+value = 6
+ignorehitpause = 0
+
+[State -3, Promote delayed threat]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(47) = 1
+triggerall = GameTime - var(40) >= var(49)
+trigger1 = 1
+v = 44
+value = var(41)
+ignorehitpause = 0
+
+[State -3, Promote delayed horizontal distance]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(47) = 1
+triggerall = GameTime - var(40) >= var(49)
+trigger1 = 1
+v = 45
+value = var(42)
+ignorehitpause = 0
+
+[State -3, Promote delayed opponent air flag]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(47) = 1
+triggerall = GameTime - var(40) >= var(49)
+trigger1 = 1
+v = 46
+value = var(43)
+ignorehitpause = 0
+
+[State -3, Mark delayed observation valid]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(47) = 1
+triggerall = GameTime - var(40) >= var(49)
+trigger1 = 1
+v = 48
+value = 1
+ignorehitpause = 0
+
+[State -3, Latch capture eligibility before any snapshot writes]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+trigger1 = 1
+fv = 10
+value = (var(47) = 0 || GameTime - var(40) >= var(49))
+ignorehitpause = 0
+
+[State -3, Capture no visible threat default]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+trigger1 = 1
+v = 41
+value = 0
+ignorehitpause = 0
+
+[State -3, Capture visible frontal strike proximity]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+triggerall = P2Dist X = [0,65]
+triggerall = EnemyNear, MoveType = A
+trigger1 = 1
+v = 41
+value = 1
+ignorehitpause = 0
+
+[State -3, Capture visible projectile population hint]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+triggerall = EnemyNear, NumProj > 0
+trigger1 = 1
+v = 41
+value = 2
+ignorehitpause = 0
+
+[State -3, Capture public horizontal distance]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+trigger1 = 1
+v = 42
+value = floor(P2Dist X)
+ignorehitpause = 0
+
+[State -3, Capture public airborne flag]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+trigger1 = 1
+v = 43
+value = (EnemyNear, StateType = A)
+ignorehitpause = 0
+
+[State -3, Commit snapshot timestamp]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+trigger1 = 1
+v = 40
+value = GameTime
+ignorehitpause = 0
+
+[State -3, Set capture pending flag]
+type = VarSet
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = fvar(10) = 1
+trigger1 = 1
+v = 47
+value = 1
+ignorehitpause = 0
+
+[State -3, AI bounded delayed throw chance]
+type = ChangeState
+triggerall = var(38) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = NumHelper(20000) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = var(59) = 1
+triggerall = var(3) = 0
+triggerall = NumEnemy = 1
+triggerall = Ctrl
+triggerall = var(48) = 1
+triggerall = var(45) = [0,24]
+triggerall = var(44) = 0
+triggerall = (GameTime+ID)%24 = 0
+trigger1 = 1
+value = 800
+
+[State -3, AI counter a delayed visible close strike]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(13) <= 0
+triggerall = var(44) = 1
+triggerall = var(45) = [10,42]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 25 + AILevel * 5
+trigger1 = 1
+value = 1300
+ignorehitpause = 0
+
+[State -3, AI ground guard delayed threat]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = StateNo != 120
+triggerall = var(44) > 0
+triggerall = var(45) = [0,100]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 78
+trigger1 = 1
+value = 120
+ignorehitpause = 0
+
+[State -3, AI backstep close unsafe space]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(44) > 0
+triggerall = var(45) = [0,25]
+triggerall = ((GameTime / 6 + ID * 17) % 100) >= 78
+trigger1 = 1
+value = 105
+ignorehitpause = 0
+
+[State -3, AI projectile evasion first jump]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(0) = 0
+triggerall = var(44) = 2
+triggerall = var(45) > 70
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 55
+trigger1 = 1
+value = 40
+ignorehitpause = 0
+
+[State -3, AI projectile evasion second jump]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType = A
+triggerall = var(0) = 1
+triggerall = Vel Y >= 0
+triggerall = var(44) = 2
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 40
+trigger1 = 1
+value = 45
+ignorehitpause = 0
+
+[State -3, AI third normal contact confirm]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = StateNo = 210
+triggerall = MoveContact
+triggerall = Time = [10,17]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 65 + AILevel * 3
+trigger1 = 1
+value = 220
+ignorehitpause = 0
+
+[State -3, AI second normal contact confirm]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = StateNo = 200
+triggerall = MoveContact
+triggerall = Time = [8,15]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 65 + AILevel * 3
+trigger1 = 1
+value = 210
+ignorehitpause = 0
+
+[State -3, AI anti air rising uppercut]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(46) = 1
+triggerall = var(45) = [0,48]
+trigger1 = 1
+value = 400
+ignorehitpause = 0
+
+[State -3, AI AIR_CHAIN settled hit confirm]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = var(3) = 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy = 1
+triggerall = var(59) = 1
+triggerall = StateType = A
+triggerall = Pos Y < 0 || Vel Y < 0
+triggerall = StateNo = 600 || StateNo = 610 || StateNo = 620
+triggerall = Time = [6,12]
+triggerall = MoveHit
+triggerall = var(23) = 1
+triggerall = var(29) = 0
+triggerall = var(9) = var(21)
+triggerall = var(20) + var(38) + var(6) < 4
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 65 + AILevel * 3
+trigger1 = 1
+value = StateNo + 10
+ignorehitpause = 0
+
+[State -3, AI air normal close contact]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType = A
+triggerall = var(45) = [0,48]
+trigger1 = 1
+value = 600
+ignorehitpause = 0
+
+[State -3, AI air crossfire spacing]
+type = ChangeState
+triggerall = 0 ; TEST_PROFILE_DISABLED_AIR_CROSS: corrected AC01 and six sockets unfinished
+triggerall = var(3) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType = A
+triggerall = var(11) <= 0
+triggerall = var(45) = [55,170]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 55
+trigger1 = 1
+value = 1250
+ignorehitpause = 0
+
+[State -3, AI two bar thunderbolt spaced punish]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = Power >= 2000
+triggerall = var(45) = [90,175]
+triggerall = var(44) = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 18
+trigger1 = 1
+value = 3200
+ignorehitpause = 0
+
+[State -3, AI two bar bubble chain opportunity]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = Power >= 2000
+triggerall = var(45) = [60,125]
+triggerall = var(44) = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) = [18,29]
+trigger1 = 1
+value = 3300
+ignorehitpause = 0
+
+[State -3, AI one bar thunder rush approach]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = Power >= 1000
+triggerall = var(45) = [35,80]
+triggerall = var(44) = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 22
+trigger1 = 1
+value = 3100
+ignorehitpause = 0
+
+[State -3, AI one bar huge soap bubble]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = Power >= 1000
+triggerall = var(45) = [90,190]
+triggerall = var(44) = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) = [30,49]
+trigger1 = 1
+value = 3000
+ignorehitpause = 0
+
+[State -3, AI three contact thunder punch]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(12) <= 0
+triggerall = var(45) = [0,42]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 30
+trigger1 = 1
+value = 1400
+ignorehitpause = 0
+
+[State -3, AI headspin spacing burst]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = NumHelper(21001) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(11) <= 0
+triggerall = var(45) = [40,100]
+triggerall = ((GameTime / 6 + ID * 17) % 100) = [30,49]
+trigger1 = 1
+value = 1200
+ignorehitpause = 0
+
+[State -3, AI backflip shooting spacing]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(10) <= 0
+triggerall = var(45) = [20,70]
+triggerall = ((GameTime / 6 + ID * 17) % 100) = [50,69]
+trigger1 = 1
+value = 1100
+ignorehitpause = 0
+
+[State -3, AI four shot ranged pressure]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = NumHelper(21000) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = var(10) <= 0
+triggerall = var(45) = [90,220]
+triggerall = ((GameTime / 6 + ID * 17) % 100) < 70
+trigger1 = 1
+value = 1000
+ignorehitpause = 0
+
+[State -3, AI close normal pressure]
+type = ChangeState
+triggerall = var(3) = 0
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl || StateNo = 100
+triggerall = StateType != A
+triggerall = var(45) = [0,40]
+trigger1 = 1
+value = 200
+ignorehitpause = 0
+
+[State -3, AI dash in rather than stand off]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = StateNo != 100
+triggerall = var(45) > 55
+triggerall = var(44) = 0
+triggerall = ((GameTime / 6 + ID * 17) % 100) >= 30
+trigger1 = 1
+value = 100
+ignorehitpause = 0
+
+
+[State -3, AI delayed walking closes short spacing gap]
+type = ChangeState
+triggerall = AILevel > 0
+triggerall = RoundState = 2
+triggerall = Alive
+triggerall = !IsHelper
+triggerall = NumEnemy > 0
+triggerall = var(59) = 1
+triggerall = var(48) = 1
+triggerall = GameTime % 6 = 0
+triggerall = Ctrl
+triggerall = StateType != A
+triggerall = StateNo != 20
+triggerall = var(45) > 40
+triggerall = var(44) = 0
+trigger1 = 1
+value = 20
+ignorehitpause = 0

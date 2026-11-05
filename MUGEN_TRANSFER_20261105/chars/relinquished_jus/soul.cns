@@ -1,0 +1,312 @@
+; Relinquished common soul mechanic. 300HP, one original source, one retaliation.
+; Capture source PlayerID survives normal target loss; never retarget EnemyNear.
+; Helper vars: 0 current HP, 1 captured, 2 max HP, 3 previous parent life,
+; 4 captured opponent LifeMax, 5 captured opponent PlayerID, 6 spent flag.
+; AIR7000 = light-wave collision, AIR7001 = common soul appearance.
+[Statedef 7000]
+type = S
+movetype = A
+physics = N
+anim = 7000
+velset = 0,0
+ctrl = 0
+
+[State 7000, no helper collision or damage interception]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 7000, follow caster]
+type = BindToParent
+trigger1 = 1
+time = 1
+pos = 0,-32
+ignorehitpause = 1
+
+[State 7000, capture light wave]
+type = HitDef
+trigger1 = !var(1) && Time < 8 && Time % 3 = 0
+attr = S, HP
+hitflag = MAF
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 12
+ground.velocity = 0,0
+air.hittime = 12
+air.velocity = 0,0
+fall = 0
+getpower = 0,0
+givepower = 0,0
+id = 7000
+hitonce = 1
+numhits = 0
+kill = 0
+
+[State 7000, do not absorb a projectile or helper]
+type = TargetDrop
+triggerall = !var(1) && NumTarget(7000) > 0
+trigger1 = Target(7000), IsHelper
+excludeID = -1
+keepone = 0
+
+[State 7000, keep a single actually struck opponent]
+type = TargetDrop
+trigger1 = !var(1) && NumTarget(7000) > 0
+excludeID = 7000
+keepone = 1
+
+[State 7000, remember source ID]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 5
+value = Target(7000), ID
+
+[State 7000, remember source maximum HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 4
+value = Target(7000), LifeMax
+
+[State 7000, start soul travel]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 7
+value = Time
+
+[State 7000, common soul max HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 2
+value = 300
+
+[State 7000, initialize soul HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 0
+value = var(2)
+
+[State 7000, sample starting parent life]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 3
+value = Parent, Life
+
+[State 7000, soul picture after capture]
+type = ChangeAnim
+trigger1 = !var(1) && NumTarget(7000) > 0
+value = 7001
+
+[State 7000, mark successful capture last]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 1
+value = 1
+
+[State 7000, soul in front of abdomen]
+type = SprPriority
+trigger1 = var(1)
+value = 3
+
+[State 7000, draw the absorbed soul from its source into the abdomen]
+type = BindToParent
+triggerall = var(1) && PlayerIDExist(var(5))
+trigger1 = Time-var(7) < 15
+time = 1
+pos = ((PlayerID(var(5)),Pos X)-(Parent,Pos X))*(Parent,Facing)*(1-(Time-var(7))/15.0), -32+((PlayerID(var(5)),Pos Y)-(Parent,Pos Y))*(1-(Time-var(7))/15.0)
+
+[State 7000, HP border]
+type = Explod
+trigger1 = var(1) && Time-var(7) >= 15 && NumExplod(8300) = 0
+anim = 8300
+ID = 8300
+postype = p1
+pos = 0,-45
+bindtime = -1
+removetime = -1
+sprpriority = 5
+ownpal = 1
+
+[State 7000, HP fill]
+type = Explod
+trigger1 = var(1) && Time-var(7) >= 15 && NumExplod(8301) = 0
+anim = 8301
+ID = 8301
+postype = p1
+pos = -15,-44
+bindtime = -1
+removetime = -1
+sprpriority = 6
+ownpal = 1
+
+[State 7000, decrease soul by actual parent life loss]
+type = VarAdd
+triggerall = var(1) && !var(6)
+trigger1 = (Parent, var(36)) > 0
+v = 0
+value = -(Parent, var(36))
+ignorehitpause = 1
+
+[State 7000, clamp soul HP]
+type = VarSet
+trigger1 = var(0) < 0
+v = 0
+value = 0
+ignorehitpause = 1
+
+[State 7000, sample life after accounting]
+type = VarSet
+trigger1 = var(1)
+v = 3
+value = Parent, Life
+ignorehitpause = 1
+
+[State 7000, update visible HP bar]
+type = ModifyExplod
+trigger1 = var(1) && NumExplod(8301) > 0
+ID = 8301
+scale = var(0)/300.0,1
+ignorehitpause = 1
+
+[State 7000, shatter soul]
+type = Explod
+trigger1 = var(1) && var(0) <= 0
+anim = 8211
+scale = .5,.5
+pos = 0,0
+postype = p1
+bindtime = 0
+removetime = -2
+sprpriority = 4
+ownpal = 1
+ignorehitpause = 1
+
+[State 7000, shatter sound]
+type = PlaySnd
+trigger1 = var(1) && var(0) <= 0
+value = 0,6
+ignorehitpause = 1
+
+[State 7000, remove bar on break or cleanup]
+type = RemoveExplod
+trigger1 = var(1) && var(0) <= 0
+trigger2 = RoundState != 2
+trigger3 = !(Parent, Alive)
+ID = 8300
+ignorehitpause = 1
+
+[State 7000, remove fill on break or cleanup]
+type = RemoveExplod
+trigger1 = var(1) && var(0) <= 0
+trigger2 = RoundState != 2
+trigger3 = !(Parent, Alive)
+ID = 8301
+ignorehitpause = 1
+
+[State 7000, seek captured opponent on soul destruction]
+type = ChangeState
+triggerall = var(1) && !var(6) && var(0) <= 0
+trigger1 = RoundState = 2
+value = 7100
+ignorehitpause = 1
+
+[State 7000, release all references on end]
+type = DestroySelf
+trigger1 = !var(1) && Time > 24
+trigger2 = var(6)
+trigger3 = RoundState != 2
+trigger4 = !(Parent, Alive)
+ignorehitpause = 1
+
+; Engine targets disappear when victims recover. Reacquire at the stored source.
+; This contact can be delayed by invulnerability; never hit an arbitrary EnemyNear.
+[Statedef 7100]
+type = S
+movetype = A
+physics = N
+anim = 7100
+velset = 0,0
+ctrl = 0
+
+[State 7100, cancel stale source]
+type = DestroySelf
+trigger1 = !PlayerIDExist(var(5))
+trigger2 = RoundState != 2
+
+[State 7100, cancel defeated source]
+type = DestroySelf
+triggerall = PlayerIDExist(var(5))
+trigger1 = !(PlayerID(var(5)), Alive)
+
+[State 7100, no push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 7100, follow stored source]
+type = PosSet
+trigger1 = PlayerIDExist(var(5))
+x = PlayerID(var(5)), Pos X
+y = PlayerID(var(5)), Pos Y
+
+[State 7100, reacquire source]
+type = HitDef
+trigger1 = Time % 3 = 0
+attr = S, HP
+hitflag = MAFD
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+ground.type = High
+ground.hittime = 1
+ground.slidetime = 0
+ground.velocity = 0,0
+air.hittime = 1
+air.velocity = 0,0
+fall = 0
+getpower = 0,0
+givepower = 0,0
+id = 7100
+hitonce = 1
+numhits = 0
+kill = 0
+
+; Only keep one target. In overlapping team fights never damage a non-source.
+[State 7100, isolate contact]
+type = TargetDrop
+trigger1 = NumTarget(7100) > 0
+excludeID = 7100
+keepone = 1
+
+[State 7100, discard wrong overlapping contact]
+type = TargetDrop
+triggerall = NumTarget(7100) > 0
+trigger1 = (Target(7100), ID) != var(5)
+excludeID = -1
+keepone = 0
+
+[State 7100, exact source damage once]
+type = TargetLifeAdd
+triggerall = !var(6) && NumTarget(7100) > 0
+triggerall = (Target(7100), ID) = var(5)
+trigger1 = RoundState = 2
+ID = 7100
+value = -floor(var(4)*.20)
+absolute = 1
+kill = 1
+
+[State 7100, mark successful retaliation]
+type = VarSet
+triggerall = NumTarget(7100) > 0
+trigger1 = (Target(7100), ID) = var(5)
+v = 6
+value = 1
+
+[State 7100, finish once]
+type = DestroySelf
+trigger1 = var(6)

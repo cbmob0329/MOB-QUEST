@@ -1,0 +1,17 @@
+[Info]
+name = "Relinquished JUS"
+displayname = "Relinquished"
+versiondate = 10,26,2026
+mugenversion = 1.1
+author = "User project / Codex"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = relinquished_jus.cmd
+cns = relinquished_jus.cns
+st = relinquished_jus.cns
+st1 = soul.cns
+stcommon = common1.cns
+sprite = relinquished_jus.sff
+anim = relinquished_jus.air
+sound = relinquished_jus.snd

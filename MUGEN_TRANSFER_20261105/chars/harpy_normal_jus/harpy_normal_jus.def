@@ -1,0 +1,20 @@
+[Info]
+name = "Harpy Lady Normal JUS"
+displayname = "Harpy Lady Normal JUS"
+versiondate = 10,22,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = harpy_normal.cmd
+cns = harpy_normal.cns
+st = harpy_normal.cns
+stcommon = harpy_normal_common.cns
+sprite = harpy_normal.sff
+anim = harpy_normal.air
+sound = harpy_normal.snd
+pal1 = harpy_normal.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =

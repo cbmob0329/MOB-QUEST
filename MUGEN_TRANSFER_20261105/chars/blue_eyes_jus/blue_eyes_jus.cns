@@ -1,0 +1,8231 @@
+; Original dragon internal candidate. Asset-bound; engine deliberately untested.
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 45
+airjuggle = 15
+sparkno = 2
+guard.sparkno = 40
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+[Size]
+xscale = .35
+yscale = .35
+ground.back = 13
+ground.front = 17
+air.back = 13
+air.front = 17
+height = 44
+attack.dist = 70
+proj.attack.dist = 0
+head.pos = 20,-36
+mid.pos = 0,-21
+shadowoffset = 0
+[Velocity]
+walk.fwd = 2.9
+walk.back = -2.4
+run.fwd = 6.8,0
+run.back = -5.5,-3
+jump.neu = 0,-9.2
+jump.back = -3.5
+jump.fwd = 4.2
+runjump.back = -4,-9.2
+runjump.fwd = 6,-9.2
+airjump.neu = 0,-8.4
+airjump.back = -3.5
+airjump.fwd = 4.2
+air.gethit.groundrecover = -.15,-3.5
+air.gethit.airrecover.mul = .5,.2
+air.gethit.airrecover.add = 0,-3
+air.gethit.airrecover.back = -1
+air.gethit.airrecover.fwd = 0
+air.gethit.airrecover.up = -1
+air.gethit.airrecover.down = 1
+[Movement]
+airjump.num = 1
+airjump.height = 16
+yaccel = .42
+stand.friction = .82
+crouch.friction = .82
+stand.friction.threshold = 2
+crouch.friction.threshold = .05
+air.gethit.groundlevel = 0
+air.gethit.groundrecover.ground.threshold = -12
+air.gethit.groundrecover.groundlevel = 0
+air.gethit.airrecover.threshold = -1
+air.gethit.airrecover.yaccel = .35
+air.gethit.trip.groundlevel = 0
+down.bounce.offset = 0,0
+down.bounce.yaccel = .4
+down.bounce.groundlevel = 0
+down.friction.threshold = .05
+
+
+[Statedef 202]
+type = S
+movetype = A
+physics = S
+anim = 202
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 202, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 15,13
+edge = 17,13
+
+[State 202, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 202, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.55 && P2BodyDist X <= 20.85
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.55 < 2.9,P2BodyDist X - 0.55,2.9)
+
+[State 202, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 202, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 202, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 202, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 202, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 202, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 0
+ctrl = 1
+
+[Statedef 201]
+type = S
+movetype = A
+physics = S
+anim = 201
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 201, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 15,13
+edge = 17,13
+
+[State 201, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 201, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.9 && P2BodyDist X <= 18.3
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.9 < 2.9,P2BodyDist X - 0.9,2.9)
+
+[State 201, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 201, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 201, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 201, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 201, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 201, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 0
+ctrl = 1
+
+[Statedef 200]
+type = S
+movetype = A
+physics = S
+anim = 200
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 200, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 200, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 200, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 9.75 && P2BodyDist X <= 24.25
+trigger1 = 1
+x = IfElse(P2BodyDist X - 9.75 < 2.9,P2BodyDist X - 9.75,2.9)
+
+[State 200, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 200, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 200, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 200, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 200, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 200, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 212]
+type = S
+movetype = A
+physics = S
+anim = 212
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 212, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 16,13
+edge = 17,13
+
+[State 212, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 212, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.95 && P2BodyDist X <= 21.25
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.95 < 2.9,P2BodyDist X - 0.95,2.9)
+
+[State 212, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 212, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 212, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 212, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 212, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 212, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 0
+ctrl = 1
+
+[Statedef 211]
+type = S
+movetype = A
+physics = S
+anim = 211
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 211, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 211, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 211, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 4.5 && P2BodyDist X <= 21.9
+trigger1 = 1
+x = IfElse(P2BodyDist X - 4.5 < 2.9,P2BodyDist X - 4.5,2.9)
+
+[State 211, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 211, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 211, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 211, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 211, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 211, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 0
+ctrl = 1
+
+[Statedef 210]
+type = S
+movetype = A
+physics = S
+anim = 210
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 210, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 16,13
+edge = 17,13
+
+[State 210, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 210, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.6 && P2BodyDist X <= 15.1
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.6 < 2.9,P2BodyDist X - 0.6,2.9)
+
+[State 210, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 210, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 210, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 210, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 210, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 210, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 222]
+type = S
+movetype = A
+physics = S
+anim = 222
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 222, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 16,13
+edge = 17,13
+
+[State 222, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 222, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.95 && P2BodyDist X <= 21.25
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.95 < 2.9,P2BodyDist X - 0.95,2.9)
+
+[State 222, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 222, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 222, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 222, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 222, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = S, NA
+damage = 54,0
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 222, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 0
+ctrl = 1
+
+[Statedef 221]
+type = S
+movetype = A
+physics = S
+anim = 221
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 221, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 7,13
+edge = 17,13
+
+[State 221, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 221, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.5 && P2BodyDist X <= 17.9
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.5 < 2.9,P2BodyDist X - 0.5,2.9)
+
+[State 221, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 221, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 221, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 221, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 221, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = S, NA
+damage = 42,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 221, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 0
+ctrl = 1
+
+[Statedef 220]
+type = S
+movetype = A
+physics = S
+anim = 220
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 220, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 220, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 220, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 9.05 && P2BodyDist X <= 23.55
+trigger1 = 1
+x = IfElse(P2BodyDist X - 9.05 < 2.9,P2BodyDist X - 9.05,2.9)
+
+[State 220, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 220, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 220, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 220, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 220, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = S, NA
+damage = 30,0
+animtype = Medium
+guardflag = MA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 220, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 402]
+type = C
+movetype = A
+physics = C
+anim = 402
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 402, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 16,13
+edge = 17,13
+
+[State 402, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 402, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.95 && P2BodyDist X <= 21.25
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.95 < 2.9,P2BodyDist X - 0.95,2.9)
+
+[State 402, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 402, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 402, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 402, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 402, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 402, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 11
+ctrl = 1
+
+[Statedef 401]
+type = C
+movetype = A
+physics = C
+anim = 401
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 401, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 401, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 401, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 1 && P2BodyDist X <= 18.4
+trigger1 = 1
+x = IfElse(P2BodyDist X - 1 < 2.9,P2BodyDist X - 1,2.9)
+
+[State 401, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 401, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 401, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 401, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 401, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 401, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 11
+ctrl = 1
+
+[Statedef 400]
+type = C
+movetype = A
+physics = C
+anim = 400
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 400, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 400, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 400, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 10.45 && P2BodyDist X <= 24.95
+trigger1 = 1
+x = IfElse(P2BodyDist X - 10.45 < 2.9,P2BodyDist X - 10.45,2.9)
+
+[State 400, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 400, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 400, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 400, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 400, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 400, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 412]
+type = C
+movetype = A
+physics = C
+anim = 412
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 412, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 412, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 412, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.3 && P2BodyDist X <= 20.6
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.3 < 2.9,P2BodyDist X - 0.3,2.9)
+
+[State 412, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 412, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 412, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 412, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 412, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 412, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 11
+ctrl = 1
+
+[Statedef 411]
+type = C
+movetype = A
+physics = C
+anim = 411
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 411, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 411, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 411, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 4.5 && P2BodyDist X <= 21.9
+trigger1 = 1
+x = IfElse(P2BodyDist X - 4.5 < 2.9,P2BodyDist X - 4.5,2.9)
+
+[State 411, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 411, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 411, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 411, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 411, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 411, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 11
+ctrl = 1
+
+[Statedef 410]
+type = C
+movetype = A
+physics = C
+anim = 410
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 410, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 410, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 410, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 8 && P2BodyDist X <= 22.5
+trigger1 = 1
+x = IfElse(P2BodyDist X - 8 < 2.9,P2BodyDist X - 8,2.9)
+
+[State 410, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 410, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 410, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 410, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 410, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 410, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 422]
+type = C
+movetype = A
+physics = C
+anim = 422
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 422, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 11,13
+edge = 17,13
+
+[State 422, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 422, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 7 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.7 && P2BodyDist X <= 21
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.7 < 2.9,P2BodyDist X - 0.7,2.9)
+
+[State 422, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 422, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 422, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 422, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 422, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = C, NA
+damage = 54,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 422, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 11
+ctrl = 1
+
+[Statedef 421]
+type = C
+movetype = A
+physics = C
+anim = 421
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 421, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 421, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 421, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 6 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 0.3 && P2BodyDist X <= 17.7
+trigger1 = 1
+x = IfElse(P2BodyDist X - 0.3 < 2.9,P2BodyDist X - 0.3,2.9)
+
+[State 421, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 421, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 421, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 421, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 421, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = C, NA
+damage = 42,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 421, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 11
+ctrl = 1
+
+[Statedef 420]
+type = C
+movetype = A
+physics = C
+anim = 420
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 420, Compact grounded normal physical front]
+type = Width
+trigger1 = Pos Y = 0 && StateType != A
+player = 17,13
+edge = 17,13
+
+[State 420, Compact normal stop inherited and spent approach]
+type = VelSet
+trigger1 = Pos Y = 0 && StateType != A
+x = 0
+
+[State 420, Bounded visible contact approach before contact]
+type = VelSet
+triggerall = !IsHelper && Alive && RoundState = 2 && NumEnemy = 1
+triggerall = Pos Y = 0 && StateType != A && MoveType = A
+triggerall = Time < 5 && MoveContact = 0
+triggerall = P2Dist X > 0
+triggerall = P2BodyDist X > 8 && P2BodyDist X <= 22.5
+trigger1 = 1
+x = IfElse(P2BodyDist X - 8 < 2.9,P2BodyDist X - 8,2.9)
+
+[State 420, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 420, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 420, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 420, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 420, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = C, NA
+damage = 30,0
+animtype = Hard
+guardflag = L
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-7
+air.velocity = -3,-7
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 420, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 602]
+type = A
+movetype = A
+physics = A
+anim = 602
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 602, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 602, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 602, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 602, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 602, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 602, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 602, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 50
+ctrl = 1
+
+[Statedef 601]
+type = A
+movetype = A
+physics = A
+anim = 601
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 601, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 601, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 601, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 601, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 601, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 601, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 601, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 50
+ctrl = 1
+
+[Statedef 600]
+type = A
+movetype = A
+physics = A
+anim = 600
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 600, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 600, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 600, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 600, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 600, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 600, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 600, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 612]
+type = A
+movetype = A
+physics = A
+anim = 612
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 612, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 612, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 612, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 612, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 612, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 612, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 612, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 50
+ctrl = 1
+
+[Statedef 611]
+type = A
+movetype = A
+physics = A
+anim = 611
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 611, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 611, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 611, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 611, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 611, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 611, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 611, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 50
+ctrl = 1
+
+[Statedef 610]
+type = A
+movetype = A
+physics = A
+anim = 610
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 610, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 610, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 610, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 610, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 610, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 610, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 610, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 622]
+type = A
+movetype = A
+physics = A
+anim = 622
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 622, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 622, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 622, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 622, Visible contact]
+type = HitDef
+trigger1 = Time = 7 && (var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 622, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 7 && !(var(41) < 4)
+attr = A, NA
+damage = 54,0
+animtype = Hard
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,-4
+air.velocity = -3,-4
+fall = 1
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 622, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 622, Finite exit]
+type = ChangeState
+trigger1 = Time >= 26
+value = 50
+ctrl = 1
+
+[Statedef 621]
+type = A
+movetype = A
+physics = A
+anim = 621
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 621, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 621, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 621, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 621, Visible contact]
+type = HitDef
+trigger1 = Time = 6 && (var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 621, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 6 && !(var(41) < 4)
+attr = A, NA
+damage = 42,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 621, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 621, Finite exit]
+type = ChangeState
+trigger1 = Time >= 23
+value = 50
+ctrl = 1
+
+[Statedef 620]
+type = A
+movetype = A
+physics = A
+anim = 620
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 620, Original claw cue]
+type = PlaySnd
+trigger1 = Time = 1
+value = 0,0
+channel = 1
+
+[State 620, Per contact latch]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 620, Was target already airborne]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 45
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 620, Visible contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = MAF
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 620, Visible contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = A, NA
+damage = 30,0
+animtype = Medium
+guardflag = HA
+hitflag = M
+priority = 4,Hit
+pausetime = 4,7
+ground.type = High
+ground.slidetime = 15
+ground.hittime = 23
+ground.velocity = -3,0
+air.velocity = -3,-4
+fall = 0
+fall.recover = 1
+fall.recovertime = 32
+getpower = 120,40
+givepower = 0,0
+
+[State 620, Actual airborne attack floor exit]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 620, Finite exit]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 1800]
+type = A
+movetype = I
+physics = N
+anim = 1800
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 1800, Air descent preparation]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 1
+
+[State 1800, Natural downward acceleration]
+type = VelAdd
+trigger1 = 1
+y = 0.42
+
+[State 1800, Ground contact enters charged sequence once]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0 && Power >= 1000
+value = 1400
+
+[State 1800, Interrupted meter reservation cancels naturally]
+type = ChangeState
+trigger1 = Time > 0 && Pos Y >= 0 && Vel Y > 0 && Power < 1000
+value = 52
+ctrl = 1
+
+[State 1800, Finite aerial cancel]
+type = ChangeState
+trigger1 = Time >= 120
+value = 50
+ctrl = 1
+
+[Statedef 45]
+type = A
+movetype = I
+physics = N
+anim = 44
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 45, Spend second jump]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 1
+
+[State 45, Latch press]
+type = VarSet
+trigger1 = Time = 0
+v = 43
+value = 1
+
+[State 45, Actual upward velocity]
+type = VelSet
+trigger1 = Time = 0
+y = -8.4
+
+[State 45, Finite exit]
+type = ChangeState
+trigger1 = Time >= 1
+value = 50
+ctrl = 1
+
+[Statedef 100]
+type = S
+movetype = I
+physics = S
+anim = 100
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 100, Actual dash velocity]
+type = VelSet
+trigger1 = 1
+x = 6.8
+
+[State 100, Dash release]
+type = ChangeState
+trigger1 = Time >= 8 && command != "holdfwd"
+value = 0
+ctrl = 1
+
+[State 100, Dash control]
+type = CtrlSet
+trigger1 = Time >= 8
+value = 1
+
+[State 100, Finite exit]
+type = ChangeState
+trigger1 = Time >= 45
+value = 0
+ctrl = 1
+
+[Statedef 105]
+type = A
+movetype = I
+physics = N
+anim = 105
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 105, Retreat]
+type = VelSet
+trigger1 = Time = 0
+x = -5.5
+y = -3
+
+[State 105, Gravity]
+type = VelAdd
+trigger1 = 1
+y = 0.42
+
+[State 105, Land]
+type = ChangeState
+trigger1 = Time > 2 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 105, Finite exit]
+type = ChangeState
+trigger1 = Time >= 40
+value = 50
+ctrl = 1
+
+[Statedef 1000]
+type = S
+movetype = A
+physics = S
+anim = 1000
+ctrl = 0
+poweradd = 0
+juggle = 0
+; S1 白い短ブレス
+
+[State 1000, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1000, Original release cue]
+type = PlaySnd
+trigger1 = Time = 8
+value = 0,3
+channel = 3
+
+[State 1000, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1000, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1000, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1000, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1000, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1000, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1000, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1000, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9200
+ID = 8800
+postype = p1
+pos = 17,-32
+bindtime = -1
+removetime = 8
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1000, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 20
+anim = 9204
+ID = 8801
+postype = p1
+pos = 17,-32
+bindtime = 0
+removetime = 15
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1000, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 17
+anim = 9203
+ID = 8802
+postype = p1
+pos = 17,-32
+bindtime = 0
+removetime = 3
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1000, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 11
+helpertype = normal
+name = "S1 phase 0"
+ID = 10000
+stateno = 10000
+postype = p1
+pos = 17,-32
+ownpal = 1
+keyctrl = 0
+
+[State 1000, Finite exit]
+type = ChangeState
+trigger1 = Time >= 35
+value = 0
+ctrl = 1
+
+[Statedef 10000]
+type = A
+movetype = A
+physics = N
+anim = 9000
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10000, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10000, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10000, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10000, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10000, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10000, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10000, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 6
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10000, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 64,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10000, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 64,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10000, Calculate award bounded by root registry]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0
+v = 4
+value = ifelse(MoveHit,90 * ifelse(NumTarget > 0,NumTarget,1),20 * ifelse(NumTarget > 0,NumTarget,1))
+
+[State 10000, Clamp shared cast remainder]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0 && ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37))))))))) + var(4) > 240
+v = 4
+value = 240 - ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37)))))))))
+
+[State 10000, Queue exact root credit]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 10
+value = var(4)
+
+[State 10000, Update shared root ledger]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 30 + var(0)
+value = var(4)
+
+[State 10000, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10000, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10000, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1100]
+type = S
+movetype = A
+physics = S
+anim = 1100
+ctrl = 0
+poweradd = 0
+juggle = 0
+; S2 翼の烈風
+
+[State 1100, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1100, Original release cue]
+type = PlaySnd
+trigger1 = Time = 11
+value = 0,3
+channel = 3
+
+[State 1100, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1100, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1100, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1100, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1100, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1100, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1100, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1100, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9210
+ID = 8810
+postype = p1
+pos = 0,-24
+bindtime = -1
+removetime = 11
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1100, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 30
+anim = 9214
+ID = 8811
+postype = p1
+pos = 0,-24
+bindtime = 0
+removetime = 18
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1100, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 26
+anim = 9213
+ID = 8812
+postype = p1
+pos = 0,-24
+bindtime = 0
+removetime = 4
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1100, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 16
+helpertype = normal
+name = "S2 phase 0"
+ID = 10100
+stateno = 10100
+postype = p1
+pos = 13,-13
+ownpal = 1
+keyctrl = 0
+
+[State 1100, Finite exit]
+type = ChangeState
+trigger1 = Time >= 48
+value = 0
+ctrl = 1
+
+[Statedef 10100]
+type = A
+movetype = A
+physics = N
+anim = 9010
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10100, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10100, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10100, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10100, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10100, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10100, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 4
+y = 0
+
+[State 10100, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 10
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10100, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 58,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10100, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 58,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10100, Calculate award bounded by root registry]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0
+v = 4
+value = ifelse(MoveHit,90 * ifelse(NumTarget > 0,NumTarget,1),20 * ifelse(NumTarget > 0,NumTarget,1))
+
+[State 10100, Clamp shared cast remainder]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0 && ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37))))))))) + var(4) > 240
+v = 4
+value = 240 - ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37)))))))))
+
+[State 10100, Queue exact root credit]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 10
+value = var(4)
+
+[State 10100, Update shared root ledger]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 30 + var(0)
+value = var(4)
+
+[State 10100, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10100, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10100, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1200]
+type = S
+movetype = A
+physics = S
+anim = 1200
+ctrl = 0
+poweradd = 0
+juggle = 0
+; S3 上昇の爪
+
+[State 1200, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1200, Original release cue]
+type = PlaySnd
+trigger1 = Time = 9
+value = 0,3
+channel = 3
+
+[State 1200, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1200, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1200, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1200, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1200, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1200, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1200, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1200, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9220
+ID = 8820
+postype = p1
+pos = 14,-21
+bindtime = -1
+removetime = 9
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1200, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 23
+anim = 9224
+ID = 8821
+postype = p1
+pos = 14,-21
+bindtime = 0
+removetime = 19
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1200, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 18
+anim = 9223
+ID = 8822
+postype = p1
+pos = 14,-21
+bindtime = 0
+removetime = 5
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1200, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 14
+helpertype = normal
+name = "S3 phase 0"
+ID = 10200
+stateno = 10200
+postype = p1
+pos = 11,-24
+ownpal = 1
+keyctrl = 0
+
+[State 1200, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 18
+helpertype = normal
+name = "S3 phase 1"
+ID = 10201
+stateno = 10201
+postype = p1
+pos = 14,-38
+ownpal = 1
+keyctrl = 0
+
+[State 1200, Finite exit]
+type = ChangeState
+trigger1 = Time >= 42
+value = 0
+ctrl = 1
+
+[Statedef 10200]
+type = A
+movetype = A
+physics = N
+anim = 9020
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10200, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10200, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10200, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10200, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10200, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10200, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10200, Claw-local emitter follows authored motion]
+type = BindToRoot
+trigger1 = 1
+pos = 11.2,-24.5
+time = 1
+
+[State 10200, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 4
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10200, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 35,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-7
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10200, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 35,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-7
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10200, Calculate award bounded by root registry]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0
+v = 4
+value = ifelse(MoveHit,90 * ifelse(NumTarget > 0,NumTarget,1),20 * ifelse(NumTarget > 0,NumTarget,1))
+
+[State 10200, Clamp shared cast remainder]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0 && ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37))))))))) + var(4) > 240
+v = 4
+value = 240 - ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37)))))))))
+
+[State 10200, Queue exact root credit]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 10
+value = var(4)
+
+[State 10200, Update shared root ledger]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 30 + var(0)
+value = var(4)
+
+[State 10200, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10200, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10200, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10201]
+type = A
+movetype = A
+physics = N
+anim = 9021
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10201, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10201, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10201, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10201, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10201, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10201, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10201, Claw-local emitter follows authored motion]
+type = BindToRoot
+trigger1 = 1
+pos = 14,-38.5
+time = 1
+
+[State 10201, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 5
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10201, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 35,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-7
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10201, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 35,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-7
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10201, Calculate award bounded by root registry]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0
+v = 4
+value = ifelse(MoveHit,90 * ifelse(NumTarget > 0,NumTarget,1),20 * ifelse(NumTarget > 0,NumTarget,1))
+
+[State 10201, Clamp shared cast remainder]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0 && ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37))))))))) + var(4) > 240
+v = 4
+value = 240 - ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37)))))))))
+
+[State 10201, Queue exact root credit]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 10
+value = var(4)
+
+[State 10201, Update shared root ledger]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 30 + var(0)
+value = var(4)
+
+[State 10201, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10201, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10201, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1300]
+type = S
+movetype = A
+physics = S
+anim = 1300
+ctrl = 0
+poweradd = 0
+juggle = 0
+; S4 地走り白光
+
+[State 1300, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1300, Original release cue]
+type = PlaySnd
+trigger1 = Time = 10
+value = 0,3
+channel = 3
+
+[State 1300, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1300, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1300, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1300, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1300, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1300, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1300, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1300, Authored mouth to floor connector]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 10
+helpertype = normal
+name = "White mouth floor connector"
+ID = 19020
+stateno = 19020
+postype = p1
+pos = 13,-11
+ownpal = 1
+keyctrl = 0
+
+[State 1300, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9230
+ID = 8830
+postype = p1
+pos = 13,-11
+bindtime = -1
+removetime = 10
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1300, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 29
+anim = 9234
+ID = 8831
+postype = p1
+pos = 13,-11
+bindtime = 0
+removetime = 16
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1300, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 26
+anim = 9233
+ID = 8832
+postype = p1
+pos = 13,-11
+bindtime = 0
+removetime = 3
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1300, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 14
+helpertype = normal
+name = "S4 phase 0"
+ID = 10300
+stateno = 10300
+postype = p1
+pos = 39,0
+ownpal = 1
+keyctrl = 0
+
+[State 1300, Finite exit]
+type = ChangeState
+trigger1 = Time >= 45
+value = 0
+ctrl = 1
+
+[Statedef 10300]
+type = A
+movetype = A
+physics = N
+anim = 9030
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10300, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10300, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10300, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10300, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10300, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10300, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 5.8
+y = 0
+
+[State 10300, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 12
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10300, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 61,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10300, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, SP
+damage = 61,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10300, Calculate award bounded by root registry]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0
+v = 4
+value = ifelse(MoveHit,90 * ifelse(NumTarget > 0,NumTarget,1),20 * ifelse(NumTarget > 0,NumTarget,1))
+
+[State 10300, Clamp shared cast remainder]
+type = VarSet
+trigger1 = MoveContact && var(3) = 0 && ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37))))))))) + var(4) > 240
+v = 4
+value = 240 - ifelse(var(0) = 0,(Root, var(30)),ifelse(var(0) = 1,(Root, var(31)),ifelse(var(0) = 2,(Root, var(32)),ifelse(var(0) = 3,(Root, var(33)),ifelse(var(0) = 4,(Root, var(34)),ifelse(var(0) = 5,(Root, var(35)),ifelse(var(0) = 6,(Root, var(36)),(Root, var(37)))))))))
+
+[State 10300, Queue exact root credit]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 10
+value = var(4)
+
+[State 10300, Update shared root ledger]
+type = ParentVarAdd
+trigger1 = MoveContact && var(3) = 0
+v = 30 + var(0)
+value = var(4)
+
+[State 10300, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10300, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10300, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1400]
+type = S
+movetype = A
+physics = S
+anim = 1400
+ctrl = 0
+poweradd = -1000
+juggle = 0
+; U1 白光の三連砲
+
+[State 1400, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1400, Original release cue]
+type = PlaySnd
+trigger1 = Time = 54
+value = 0,3
+channel = 3
+
+[State 1400, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1400, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1400, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1400, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1400, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1400, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1400, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1400, Single bounded pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 12
+movetime = 0
+anim = -1
+darken = 1
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+
+[State 1400, Finite long cutin presentation]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 0
+helpertype = normal
+name = "Wide cutin presentation"
+ID = 19000
+stateno = 19000
+postype = left
+pos = -320,28
+ownpal = 1
+keyctrl = 0
+supermovetime = 999
+pausemovetime = 999
+
+[State 1400, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9240
+ID = 8840
+postype = p1
+pos = 17,-32
+bindtime = -1
+removetime = 54
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1400, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 110
+anim = 9244
+ID = 8841
+postype = p1
+pos = 17,-32
+bindtime = 0
+removetime = 24
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1400, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 54
+helpertype = normal
+name = "U1 phase 0"
+ID = 10400
+stateno = 10400
+postype = p1
+pos = 18,-31
+ownpal = 1
+keyctrl = 0
+
+[State 1400, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 68
+helpertype = normal
+name = "U1 phase 1"
+ID = 10401
+stateno = 10401
+postype = p1
+pos = 18,-31
+ownpal = 1
+keyctrl = 0
+
+[State 1400, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 96
+helpertype = normal
+name = "U1 phase 2"
+ID = 10402
+stateno = 10402
+postype = p1
+pos = 18,-31
+ownpal = 1
+keyctrl = 0
+
+[State 1400, Finite exit]
+type = ChangeState
+trigger1 = Time >= 134
+value = 0
+ctrl = 1
+
+[Statedef 10400]
+type = A
+movetype = A
+physics = N
+anim = 9040
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10400, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10400, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10400, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10400, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10400, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10400, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10400, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 14
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10400, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 60,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10400, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 60,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10400, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10400, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10400, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10401]
+type = A
+movetype = A
+physics = N
+anim = 9041
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10401, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10401, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10401, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10401, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10401, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10401, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10401, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 28
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10401, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 60,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10401, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 60,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10401, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10401, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10401, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10402]
+type = A
+movetype = A
+physics = N
+anim = 9042
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10402, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10402, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10402, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10402, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10402, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10402, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10402, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 14
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10402, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 85,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10402, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 85,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10402, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10402, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10402, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1500]
+type = S
+movetype = A
+physics = S
+anim = 1500
+ctrl = 0
+poweradd = -1000
+juggle = 0
+; U2 天空の白雷
+
+[State 1500, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1500, Original release cue]
+type = PlaySnd
+trigger1 = Time = 54
+value = 0,3
+channel = 3
+
+[State 1500, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1500, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1500, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1500, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1500, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1500, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1500, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1500, Single bounded pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 12
+movetime = 0
+anim = -1
+darken = 1
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+
+[State 1500, Finite long cutin presentation]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 0
+helpertype = normal
+name = "Wide cutin presentation"
+ID = 19000
+stateno = 19000
+postype = left
+pos = -320,28
+ownpal = 1
+keyctrl = 0
+supermovetime = 999
+pausemovetime = 999
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9250
+ID = 8850
+postype = p1
+pos = 17,-32
+bindtime = -1
+removetime = 54
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 116
+anim = 9254
+ID = 8851
+postype = p1
+pos = 17,-32
+bindtime = 0
+removetime = 24
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 54
+anim = 9251
+ID = 8852
+postype = p1
+pos = 17,-39
+bindtime = -1
+removetime = 16
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 58
+anim = 9255
+ID = 8853
+postype = p1
+pos = 32,0
+bindtime = 0
+removetime = 12
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 66
+anim = 9255
+ID = 8854
+postype = p1
+pos = 82,0
+bindtime = 0
+removetime = 12
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 74
+anim = 9255
+ID = 8855
+postype = p1
+pos = 132,0
+bindtime = 0
+removetime = 12
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1500, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 70
+helpertype = normal
+name = "U2 phase 0"
+ID = 10500
+stateno = 10500
+postype = p1
+pos = 32,0
+ownpal = 1
+keyctrl = 0
+
+[State 1500, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 78
+helpertype = normal
+name = "U2 phase 1"
+ID = 10501
+stateno = 10501
+postype = p1
+pos = 82,0
+ownpal = 1
+keyctrl = 0
+
+[State 1500, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 86
+helpertype = normal
+name = "U2 phase 2"
+ID = 10502
+stateno = 10502
+postype = p1
+pos = 132,0
+ownpal = 1
+keyctrl = 0
+
+[State 1500, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 100
+helpertype = normal
+name = "U2 phase 3"
+ID = 10503
+stateno = 10503
+postype = p1
+pos = 17,-31
+ownpal = 1
+keyctrl = 0
+
+[State 1500, Finite exit]
+type = ChangeState
+trigger1 = Time >= 140
+value = 0
+ctrl = 1
+
+[Statedef 10500]
+type = A
+movetype = A
+physics = N
+anim = 9050
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10500, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10500, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10500, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10500, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10500, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10500, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10500, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 18
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10500, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10500, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10500, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10500, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10500, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10501]
+type = A
+movetype = A
+physics = N
+anim = 9051
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10501, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10501, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10501, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10501, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10501, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10501, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10501, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 18
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10501, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10501, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10501, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10501, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10501, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10502]
+type = A
+movetype = A
+physics = N
+anim = 9052
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10502, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10502, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10502, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10502, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10502, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10502, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10502, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 18
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10502, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10502, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 40,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10502, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10502, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10502, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10503]
+type = A
+movetype = A
+physics = N
+anim = 9053
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10503, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10503, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10503, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10503, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10503, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10503, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10503, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10503, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 95,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10503, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 95,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10503, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10503, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10503, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1600]
+type = S
+movetype = A
+physics = S
+anim = 1600
+ctrl = 0
+poweradd = -2000
+juggle = 0
+; U3 究極の白光砲
+
+[State 1600, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1600, Original release cue]
+type = PlaySnd
+trigger1 = Time = 72
+value = 0,3
+channel = 3
+
+[State 1600, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1600, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1600, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1600, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1600, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1600, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1600, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1600, Single bounded pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 12
+movetime = 0
+anim = -1
+darken = 1
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+
+[State 1600, Finite long cutin presentation]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 0
+helpertype = normal
+name = "Wide cutin presentation"
+ID = 19000
+stateno = 19000
+postype = left
+pos = -320,28
+ownpal = 1
+keyctrl = 0
+supermovetime = 999
+pausemovetime = 999
+
+[State 1600, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9260
+ID = 8860
+postype = p1
+pos = 18,-27
+bindtime = -1
+removetime = 72
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1600, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 162
+anim = 9264
+ID = 8861
+postype = p1
+pos = 18,-27
+bindtime = 0
+removetime = 34
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 72
+helpertype = normal
+name = "U3 phase 0"
+ID = 10600
+stateno = 10600
+postype = p1
+pos = 20,-28
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 84
+helpertype = normal
+name = "U3 phase 1"
+ID = 10601
+stateno = 10601
+postype = p1
+pos = 20,-28
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 96
+helpertype = normal
+name = "U3 phase 2"
+ID = 10602
+stateno = 10602
+postype = p1
+pos = 27,-25
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 112
+helpertype = normal
+name = "U3 phase 3"
+ID = 10603
+stateno = 10603
+postype = p1
+pos = 27,-25
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 128
+helpertype = normal
+name = "U3 phase 4"
+ID = 10604
+stateno = 10604
+postype = p1
+pos = 19,-27
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 144
+helpertype = normal
+name = "U3 phase 5"
+ID = 10605
+stateno = 10605
+postype = p1
+pos = 29,-34
+ownpal = 1
+keyctrl = 0
+
+[State 1600, Finite exit]
+type = ChangeState
+trigger1 = Time >= 196
+value = 0
+ctrl = 1
+
+[Statedef 10600]
+type = A
+movetype = A
+physics = N
+anim = 9060
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10600, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10600, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10600, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10600, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10600, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10600, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10600, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 12
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10600, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10600, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10600, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10600, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10600, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10601]
+type = A
+movetype = A
+physics = N
+anim = 9061
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10601, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10601, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10601, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10601, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10601, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10601, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10601, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 12
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10601, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10601, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10601, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10601, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10601, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10602]
+type = A
+movetype = A
+physics = N
+anim = 9062
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10602, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10602, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10602, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10602, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10602, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10602, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10602, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10602, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10602, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10602, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10602, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10602, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10603]
+type = A
+movetype = A
+physics = N
+anim = 9063
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10603, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10603, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10603, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10603, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10603, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10603, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10603, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10603, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10603, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10603, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10603, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10603, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10604]
+type = A
+movetype = A
+physics = N
+anim = 9064
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10604, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10604, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10604, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10604, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10604, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10604, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10604, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10604, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10604, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10604, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10604, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10604, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10605]
+type = A
+movetype = A
+physics = N
+anim = 9065
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10605, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10605, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10605, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10605, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10605, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10605, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10605, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 18
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10605, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 80,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10605, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 80,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10605, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10605, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10605, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 1700]
+type = S
+movetype = A
+physics = S
+anim = 1700
+ctrl = 0
+poweradd = -2000
+juggle = 0
+; U4 白雷の領域
+
+[State 1700, Original charge cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,2
+channel = 2
+
+[State 1700, Original release cue]
+type = PlaySnd
+trigger1 = Time = 72
+value = 0,3
+channel = 3
+
+[State 1700, Stop motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1700, Clamp landed feet only after crossing]
+type = PosSet
+trigger1 = Time = 0 && Pos Y > 0
+y = 0
+
+[State 1700, New cast serial]
+type = VarAdd
+trigger1 = Time = 0
+v = 12
+value = 1
+
+[State 1700, Select bounded ledger slot]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = var(12) % 8
+
+[State 1700, Initialize cast gain]
+type = VarSet
+trigger1 = Time = 0
+v = 30 + var(11)
+value = 0
+
+[State 1700, Initialize cast episode flag]
+type = VarSet
+trigger1 = Time = 0
+v = 48 + var(11)
+value = 0
+
+[State 1700, Save cast identity]
+type = VarSet
+trigger1 = Time = 0
+v = 20 + var(11)
+value = var(12)
+
+[State 1700, Single bounded pause]
+type = SuperPause
+trigger1 = Time = 0
+time = 12
+movetime = 0
+anim = -1
+darken = 1
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+
+[State 1700, Finite long cutin presentation]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 0
+helpertype = normal
+name = "Wide cutin presentation"
+ID = 19000
+stateno = 19000
+postype = left
+pos = -320,28
+ownpal = 1
+keyctrl = 0
+supermovetime = 999
+pausemovetime = 999
+
+[State 1700, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 0
+anim = 9270
+ID = 8870
+postype = p1
+pos = 0,-42
+bindtime = -1
+removetime = 72
+scale = .5,.5
+sprpriority = 2
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1700, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 170
+anim = 9274
+ID = 8871
+postype = p1
+pos = 0,-42
+bindtime = 0
+removetime = 34
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1700, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 72
+anim = 9255
+ID = 8872
+postype = p1
+pos = 44,0
+bindtime = 0
+removetime = 26
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1700, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 72
+anim = 9255
+ID = 8873
+postype = p1
+pos = 94,0
+bindtime = 0
+removetime = 26
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1700, Authored noncontact visual phase]
+type = Explod
+trigger1 = Time = 72
+anim = 9255
+ID = 8874
+postype = p1
+pos = 144,0
+bindtime = 0
+removetime = 26
+scale = .5,.5
+sprpriority = -1
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+removeongethit = 1
+
+[State 1700, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 98
+helpertype = normal
+name = "U4 phase 0"
+ID = 10700
+stateno = 10700
+postype = p1
+pos = 44,0
+ownpal = 1
+keyctrl = 0
+
+[State 1700, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 113
+helpertype = normal
+name = "U4 phase 1"
+ID = 10701
+stateno = 10701
+postype = p1
+pos = 94,0
+ownpal = 1
+keyctrl = 0
+
+[State 1700, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 128
+helpertype = normal
+name = "U4 phase 2"
+ID = 10702
+stateno = 10702
+postype = p1
+pos = 144,0
+ownpal = 1
+keyctrl = 0
+
+[State 1700, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 148
+helpertype = normal
+name = "U4 phase 3"
+ID = 10703
+stateno = 10703
+postype = p1
+pos = 94,0
+ownpal = 1
+keyctrl = 0
+
+[State 1700, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 160
+helpertype = normal
+name = "U4 phase 4"
+ID = 10704
+stateno = 10704
+postype = p1
+pos = 94,0
+ownpal = 1
+keyctrl = 0
+
+[State 1700, Finite exit]
+type = ChangeState
+trigger1 = Time >= 204
+value = 0
+ctrl = 1
+
+[Statedef 10700]
+type = A
+movetype = A
+physics = N
+anim = 9070
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10700, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10700, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10700, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10700, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10700, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10700, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10700, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 20
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10700, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10700, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10700, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10700, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10700, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10701]
+type = A
+movetype = A
+physics = N
+anim = 9071
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10701, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10701, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10701, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10701, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10701, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10701, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10701, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 20
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10701, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10701, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10701, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10701, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10701, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10702]
+type = A
+movetype = A
+physics = N
+anim = 9072
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10702, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10702, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10702, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10702, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10702, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10702, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10702, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 20
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10702, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10702, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 55,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10702, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10702, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10702, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10703]
+type = A
+movetype = A
+physics = N
+anim = 9073
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10703, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10703, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10703, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10703, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10703, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10703, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10703, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10703, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 90,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10703, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 90,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10703, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10703, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10703, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 10704]
+type = A
+movetype = A
+physics = N
+anim = 9074
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 10704, Effect has no invisible physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 10704, Snapshot cast slot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = Root, var(11)
+
+[State 10704, Snapshot cast serial]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = Root, var(12)
+
+[State 10704, Snapshot target identity]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (EnemyNear, ID)
+
+[State 10704, Snapshot airborne target]
+type = VarSet
+trigger1 = MoveContact = 0
+v = 2
+value = Cond(NumEnemy > 2,1,Cond(NumEnemy = 2,((EnemyNear(0), StateType = A) || (EnemyNear(1), StateType = A)),Cond(NumEnemy = 1,(EnemyNear(0), StateType = A),0)))
+
+[State 10704, Actual emitter travel]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 10704, Destroy stale owner lifecycle]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (EnemyNear, ID) != var(5)
+trigger5 = Time >= 16
+trigger6 = ifelse(var(0) = 0,(Root, var(20)),ifelse(var(0) = 1,(Root, var(21)),ifelse(var(0) = 2,(Root, var(22)),ifelse(var(0) = 3,(Root, var(23)),ifelse(var(0) = 4,(Root, var(24)),ifelse(var(0) = 5,(Root, var(25)),ifelse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+
+[State 10704, FX contact]
+type = HitDef
+trigger1 = Time = 1 && ((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 90,8
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10704, FX contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 1 && !((Root, var(41)) < 4 || ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) > 0)
+attr = A, HP
+damage = 90,8
+animtype = Hard
+guardflag = MA
+hitflag = M
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+
+[State 10704, Spend one skill episode slot]
+type = ParentVarAdd
+trigger1 = MoveHit && var(3) = 0 && var(2) && ifelse(var(0) = 0,(Root, var(48)),ifelse(var(0) = 1,(Root, var(49)),ifelse(var(0) = 2,(Root, var(50)),ifelse(var(0) = 3,(Root, var(51)),ifelse(var(0) = 4,(Root, var(52)),ifelse(var(0) = 5,(Root, var(53)),ifelse(var(0) = 6,(Root, var(54)),(Root, var(55))))))))) = 0
+v = 41
+value = 1
+
+[State 10704, Mark skill episode spent]
+type = ParentVarSet
+trigger1 = MoveHit && var(3) = 0
+v = 48 + var(0)
+value = 1
+
+[State 10704, Contact latch]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+
+[Statedef 19020]
+type = S
+movetype = I
+physics = N
+anim = 9241
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 19020, Connector anatomical mouth origin]
+type = BindToRoot
+trigger1 = 1
+pos = 13.3,-11.2
+time = 1
+
+[State 19020, Connector runtime affine of authored down-ray]
+type = AngleDraw
+trigger1 = 1
+value = -20
+scale = .11,.11
+
+[State 19020, Connector no push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 19020, Connector finite cleanup]
+type = DestroySelf
+trigger1 = Time >= 4
+trigger2 = (Root, MoveType = H)
+trigger3 = (Root, Alive) = 0
+trigger4 = RoundState != 2
+
+[Statedef 19000]
+type = S
+movetype = I
+physics = N
+anim = 8000
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 19000, Presentation lifetime snapshot]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = ifelse(((Root, StateNo)) >= 1600,72,54)
+
+[State 19000, Cutin screen locking and finite slide]
+type = PosAdd
+trigger1 = 1
+x = ifelse(Time < 8,-320 + Time * 40,ifelse(Time >= var(0)-8,(Time-var(0)+8)*40,0)) - ScreenPos X
+y = 28 - ScreenPos Y
+
+[State 19000, Cutin no physical influence]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 19000, Cutin no shadow]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+
+[State 19000, Cutin screen independent]
+type = ScreenBound
+trigger1 = 1
+value = 0
+movex = 0
+movey = 0
+
+[State 19000, Cutin front layer]
+type = SprPriority
+trigger1 = 1
+value = 10
+
+[State 19000, Cutin exact finite cleanup]
+type = DestroySelf
+trigger1 = Time >= var(0)
+trigger2 = RoundState != 2
+trigger3 = (Root, Alive) = 0
+trigger4 = (Root, MoveType = H)
+
+[Statedef 800]
+type = S
+movetype = A
+physics = S
+anim = 800
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 800, Discard stale throw targets]
+type = TargetDrop
+trigger1 = Time = 0
+persistent = 0
+
+[State 800, Throw direction]
+type = VarSet
+trigger1 = Time = 0
+v = 14
+value = ifelse(command = "holdback",-1,1)
+persistent = 0
+
+[State 800, Capture only on physical contact]
+type = HitDef
+trigger1 = Time = 5 && (var(41) < 4)
+attr = S, NT
+hitflag = MAF
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+p1stateno = 801
+p2stateno = 810
+p2facing = 1
+fall = 1
+getpower = 0,0
+givepower = 0,0
+ID = 800
+hitonce = 1
+
+[State 800, Capture only on physical contact ground-only exhausted budget]
+type = HitDef
+trigger1 = Time = 5 && !(var(41) < 4)
+attr = S, NT
+hitflag = M
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+p1stateno = 801
+p2stateno = 810
+p2facing = 1
+fall = 1
+getpower = 0,0
+givepower = 0,0
+ID = 800
+hitonce = 1
+
+[State 800, Finite exit]
+type = ChangeState
+trigger1 = Time >= 28
+value = 0
+ctrl = 1
+
+[Statedef 801]
+type = S
+movetype = A
+physics = S
+anim = 801
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 801, Directional throw authored release]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(var(14) < 0,802,801)
+
+[State 801, Keep one actual throw victim]
+type = TargetDrop
+trigger1 = Time = 0
+excludeID = 800
+keepone = 1
+persistent = 0
+
+[State 801, Captured victim identity]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = NumTarget(800) > 0
+v = 15
+value = (Target(800), ID)
+persistent = 0
+
+[State 801, Reserve actual airborne throw contact]
+type = VarAdd
+trigger1 = Time = 0
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), StateType = A)
+v = 41
+value = 1
+persistent = 0
+
+[State 801, Throw hold no drift]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 801, Same victim finite capture]
+type = TargetBind
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time < 16
+ID = 800
+pos = 24,-35
+time = 1
+
+[State 801, Successful throw exact hit award]
+type = PowerAdd
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 16
+value = 80
+persistent = 0
+
+[State 801, Once throw damage]
+type = TargetLifeAdd
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 16
+ID = 800
+value = -100
+kill = 1
+persistent = 0
+
+[State 801, Explicit victim facing for release]
+type = TargetFacing
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 16
+ID = 800
+value = 1
+persistent = 0
+
+[State 801, Chosen direction release]
+type = TargetVelSet
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 16
+ID = 800
+x = 5 * var(14)
+y = -6
+persistent = 0
+
+[State 801, Release same victim after damage]
+type = TargetState
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 16
+ID = 800
+value = 811
+persistent = 0
+
+[State 801, Release root target handle]
+type = TargetDrop
+trigger1 = Time = 16
+persistent = 0
+
+[State 801, Lost capture abort before damage]
+type = ChangeState
+trigger1 = Time < 16 && NumTarget(800) = 0
+trigger2 = Time < 16
+trigger2 = NumTarget(800) > 0
+trigger2 = (Target(800), ID) != var(15) || (Target(800), StateNo) != 810 || !(Target(800), Alive)
+trigger3 = !Alive || RoundState != 2
+value = 0
+ctrl = 1
+
+[State 801, Finite exit]
+type = ChangeState
+trigger1 = Time >= 32
+value = 0
+ctrl = 1
+
+[Statedef 820]
+type = A
+movetype = A
+physics = N
+anim = 820
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 820, Discard stale throw targets]
+type = TargetDrop
+trigger1 = Time = 0
+persistent = 0
+
+[State 820, Throw direction]
+type = VarSet
+trigger1 = Time = 0
+v = 14
+value = ifelse(command = "holdback",-1,1)
+persistent = 0
+
+[State 820, Air throw gravity]
+type = VelAdd
+trigger1 = 1
+y = 0.42
+
+[State 820, Capture only on physical contact]
+type = HitDef
+trigger1 = Time = 5 && var(41) < 4
+attr = A, NT
+hitflag = AF
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+p1stateno = 821
+p2stateno = 810
+p2facing = 1
+fall = 1
+getpower = 0,0
+givepower = 0,0
+ID = 800
+hitonce = 1
+
+[State 820, Air throw floor abort]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 820, Finite exit]
+type = ChangeState
+trigger1 = Time >= 24
+value = 50
+ctrl = 1
+
+[Statedef 821]
+type = A
+movetype = A
+physics = N
+anim = 821
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 821, Directional throw authored release]
+type = ChangeAnim
+trigger1 = Time = 0
+value = ifelse(var(14) < 0,822,821)
+
+[State 821, Keep one actual throw victim]
+type = TargetDrop
+trigger1 = Time = 0
+excludeID = 800
+keepone = 1
+persistent = 0
+
+[State 821, Captured victim identity]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = NumTarget(800) > 0
+v = 15
+value = (Target(800), ID)
+persistent = 0
+
+[State 821, Reserve actual airborne throw contact]
+type = VarAdd
+trigger1 = Time = 0
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), StateType = A)
+v = 41
+value = 1
+persistent = 0
+
+[State 821, Throw hold no drift]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 821, Same victim finite capture]
+type = TargetBind
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time < 12
+ID = 800
+pos = 26,-20
+time = 1
+
+[State 821, Original wing throw cue]
+type = PlaySnd
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+value = 0,5
+channel = 1
+
+[State 821, Successful throw exact hit award]
+type = PowerAdd
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+value = 80
+persistent = 0
+
+[State 821, Once throw damage]
+type = TargetLifeAdd
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = (Target(800), Alive)
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+ID = 800
+value = -100
+kill = 1
+persistent = 0
+
+[State 821, Explicit victim facing for release]
+type = TargetFacing
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+ID = 800
+value = 1
+persistent = 0
+
+[State 821, Chosen direction release]
+type = TargetVelSet
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+ID = 800
+x = 5 * var(14)
+y = -4
+persistent = 0
+
+[State 821, Release same victim after damage]
+type = TargetState
+trigger1 = NumTarget(800) > 0
+trigger1 = (Target(800), ID) = var(15)
+trigger1 = (Target(800), StateNo) = 810
+trigger1 = Alive && RoundState = 2
+trigger1 = Time = 12
+ID = 800
+value = 811
+persistent = 0
+
+[State 821, Release root target handle]
+type = TargetDrop
+trigger1 = Time = 12
+persistent = 0
+
+[State 821, Lost capture abort before damage]
+type = ChangeState
+trigger1 = Time < 12 && NumTarget(800) = 0
+trigger2 = Time < 12
+trigger2 = NumTarget(800) > 0
+trigger2 = (Target(800), ID) != var(15) || (Target(800), StateNo) != 810 || !(Target(800), Alive)
+trigger3 = !Alive || RoundState != 2
+value = 50
+ctrl = 1
+
+[State 821, Air throw recovery gravity]
+type = VelAdd
+trigger1 = Time >= 12
+y = 0.42
+
+[State 821, Air throw real floor]
+type = ChangeState
+trigger1 = Time > 12 && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 1
+
+[State 821, Finite exit]
+type = ChangeState
+trigger1 = Time >= 30
+value = 50
+ctrl = 1
+
+[Statedef 810]
+type = U
+movetype = H
+physics = N
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 810, Borrow required pose]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 810
+
+[State 810, Held victim no drift]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 810, Finite binding loss release]
+type = SelfState
+trigger1 = Time >= 24
+trigger2 = !Alive
+trigger3 = RoundState != 2
+trigger4 = Time > 1 && !GetHitVar(isbound)
+value = 5050
+ctrl = 0
+
+[Statedef 811]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 811, Borrow thrown pose]
+type = ChangeAnim2
+trigger1 = Time = 0
+value = 811
+
+[State 811, Victim gravity]
+type = VelAdd
+trigger1 = 1
+y = 0.42
+
+[State 811, Victim round release]
+type = SelfState
+trigger1 = RoundState != 2
+value = 5050
+
+[State 811, Ground release]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5100
+
+[State 811, Finite flight fallback]
+type = SelfState
+trigger1 = Time >= 75
+value = 5050
+
+[Statedef -2]
+
+
+[State -2, AI reaction clock]
+type=VarAdd
+triggerall=!IsHelper && AILevel>0 && NumEnemy>0 && RoundState=2
+trigger1=P2MoveType=A && fvar(36)<30
+fv=36
+value=1
+[State -2, AI reaction reset]
+type=VarSet
+triggerall=!IsHelper
+trigger1=RoundState!=2 || AILevel=0
+trigger2=NumEnemy>0 && P2MoveType!=A
+fv=36
+value=0
+[State -2, AI reuse clock]
+type=VarAdd
+trigger1=!IsHelper && fvar(37)>0
+fv=37
+value=-1
+[State -2, AI track selected technique]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[1000,1700]
+fv=38
+value=StateNo
+[State -2, AI finite technique interval]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[1000,1700]
+fv=37
+value=80
+[State -2, AI previous state]
+type=VarSet
+trigger1=!IsHelper
+fv=39
+value=StateNo
+
+[State -2, Original scale guard cue]
+type = PlaySnd
+trigger1 = !IsHelper && Time = 0 && StateNo >= 150 && StateNo <= 155
+value = 0,1
+channel = 1
+
+[State -2, Apply pending root gains]
+type = PowerAdd
+trigger1 = !IsHelper && var(10) > 0
+value = var(10)
+
+[State -2, Clear pending root gains]
+type = VarSet
+trigger1 = !IsHelper
+v = 10
+value = 0
+
+[State -2, First jump requires release before second]
+type = VarSet
+trigger1 = !IsHelper && StateType != A && command = "holdup"
+v = 43
+value = 1
+
+[State -2, Release jump button latch]
+type = VarSet
+trigger1 = !IsHelper && command != "holdup"
+v = 43
+value = 0
+
+[State -2, Ground jump budget]
+type = VarSet
+trigger1 = !IsHelper && StateType != A
+v = 44
+value = 0
+
+; Insert observer and reset observation immediately before original reset; original stays exact.
+[State -2, Observe positive reset or zero-budget reset edge]
+type = VarAdd
+triggerall = var(41) > 0 || var(58) = 0
+trigger1 = !IsHelper && (RoundState != 2 || !Alive || NumEnemy = 0)
+trigger2 = !IsHelper && NumEnemy = 1
+trigger2 = (EnemyNear(0), StateType != A)
+trigger2 = (EnemyNear(0), MoveType != H)
+trigger2 = (EnemyNear(0), Ctrl)
+trigger3 = !IsHelper && NumEnemy = 2
+trigger3 = (EnemyNear(0), StateType != A)
+trigger3 = (EnemyNear(0), MoveType != H)
+trigger3 = (EnemyNear(0), Ctrl)
+trigger3 = (EnemyNear(1), StateType != A)
+trigger3 = (EnemyNear(1), MoveType != H)
+trigger3 = (EnemyNear(1), Ctrl)
+v = 57
+value = 1
+ignorehitpause = 1
+
+[State -2, Clear current reset observation after epoch comparison]
+type = VarSet
+trigger1 = !IsHelper
+v = 58
+value = 0
+ignorehitpause = 1
+
+[State -2, Record exact current existing reset predicate]
+type = VarSet
+trigger1 = !IsHelper && (RoundState != 2 || !Alive || NumEnemy = 0)
+trigger2 = !IsHelper && NumEnemy = 1
+trigger2 = (EnemyNear(0), StateType != A)
+trigger2 = (EnemyNear(0), MoveType != H)
+trigger2 = (EnemyNear(0), Ctrl)
+trigger3 = !IsHelper && NumEnemy = 2
+trigger3 = (EnemyNear(0), StateType != A)
+trigger3 = (EnemyNear(0), MoveType != H)
+trigger3 = (EnemyNear(0), Ctrl)
+trigger3 = (EnemyNear(1), StateType != A)
+trigger3 = (EnemyNear(1), MoveType != H)
+trigger3 = (EnemyNear(1), Ctrl)
+v = 58
+value = 1
+ignorehitpause = 1
+
+[State -2, Air cast lease actual ground reset]
+type = VarSet
+triggerall = !IsHelper
+trigger1 = RoundState != 2
+trigger2 = StateType != A && Pos Y >= 0
+trigger2 = StateNo = 0 || StateNo = 11 || StateNo = 52 || StateNo = 1851
+v = 46
+value = 0
+ignorehitpause = 1
+
+[State -2, Only real target recovery resets air episode]
+type = VarSet
+trigger1 = !IsHelper && (RoundState != 2 || !Alive || NumEnemy = 0)
+trigger2 = !IsHelper && NumEnemy = 1
+trigger2 = (EnemyNear(0), StateType != A)
+trigger2 = (EnemyNear(0), MoveType != H)
+trigger2 = (EnemyNear(0), Ctrl)
+trigger3 = !IsHelper && NumEnemy = 2
+trigger3 = (EnemyNear(0), StateType != A)
+trigger3 = (EnemyNear(0), MoveType != H)
+trigger3 = (EnemyNear(0), Ctrl)
+trigger3 = (EnemyNear(1), StateType != A)
+trigger3 = (EnemyNear(1), MoveType != H)
+trigger3 = (EnemyNear(1), Ctrl)
+v = 41
+value = 0
+ignorehitpause = 1
+
+[State -2, Normal air contact debit before command cancel]
+type = VarAdd
+trigger1 = !IsHelper && ((StateNo = [200,202]) || (StateNo = [210,212]) || (StateNo = [220,222]) || (StateNo = [400,402]) || (StateNo = [410,412]) || (StateNo = [420,422]) || (StateNo = [600,602]) || (StateNo = [610,612]) || (StateNo = [620,622])) && MoveHit && var(42) = 0 && var(45)
+v = 41
+value = 1
+ignorehitpause = 1
+
+[State -2, Normal contact latch before command cancel]
+type = VarSet
+trigger1 = !IsHelper && ((StateNo = [200,202]) || (StateNo = [210,212]) || (StateNo = [220,222]) || (StateNo = [400,402]) || (StateNo = [410,412]) || (StateNo = [420,422]) || (StateNo = [600,602]) || (StateNo = [610,612]) || (StateNo = [620,622])) && MoveContact
+v = 42
+value = 1
+ignorehitpause = 1
+
+[State -2, Remember target identity]
+type = VarSet
+trigger1 = !IsHelper
+v = 40
+value = (EnemyNear, ID)
+
+[State -2, Remove cutin on interruption]
+type = RemoveExplod
+trigger1 = MoveType = H
+trigger2 = !Alive
+trigger3 = RoundState != 2
+ID = -1
+
+[Statedef 1850]
+type = A
+movetype = A
+physics = N
+anim = 1850
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 1850, Admission snapshot before cost]
+type = VarSet
+trigger1 = Time = 0
+v = 56
+value = !IsHelper && Alive && RoundState = 2 && Pos Y < 0 && Power >= 1000 && NumEnemy = 1 && NumHelper = 0 && var(41) <= 2 && var(41) >= 0 && var(46) = 0
+
+[State 1850, Fail admission without payment]
+type = ChangeState
+trigger1 = Time = 0 && var(56) = 0
+value = 50
+ctrl = 1
+
+[State 1850, One admitted payment]
+type = PowerAdd
+trigger1 = Time = 0 && var(56) = 1
+value = -1000
+
+[State 1850, Consume air lease]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+v = 46
+value = 1
+
+[State 1850, Fixed opponent]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+trigger1 = NumEnemy = 1
+v = 47
+value = (EnemyNear, ID)
+
+[State 1850, Cast serial]
+type = VarAdd
+trigger1 = Time = 0 && var(56) = 1
+v = 12
+value = 1
+
+[State 1850, Cast slot]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+v = 11
+value = var(12) % 8
+
+[State 1850, Clear gain receipt]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+v = 30 + var(11)
+value = 0
+
+[State 1850, Clear old cast air receipt]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+v = 48 + var(11)
+value = 0
+
+[State 1850, Save serial]
+type = VarSet
+trigger1 = Time = 0 && var(56) = 1
+v = 20 + var(11)
+value = var(12)
+
+[State 1850, Stop inherited horizontal motion]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+
+[State 1850, Bounded paid hover only]
+type = VelSet
+trigger1 = Time < 28
+y = 0
+
+[State 1850, Gravity after paid hover]
+type = VelAdd
+trigger1 = Time >= 28
+y = Const(movement.yaccel)
+
+[State 1850, Finite pulse 18500]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+triggerall = Time = 18
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(47)
+trigger1 = var(41) < 4 && Alive && RoundState = 2
+helpertype = normal
+name = "Air breath pulse"
+ID = 18500
+stateno = 18500
+pos = 0,0
+postype = p1
+ownpal = 1
+keyctrl = 0
+
+[State 1850, Finite pulse 18501]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+triggerall = Time = 24
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(47)
+trigger1 = var(41) < 4 && Alive && RoundState = 2
+helpertype = normal
+name = "Air breath pulse"
+ID = 18501
+stateno = 18501
+pos = 0,0
+postype = p1
+ownpal = 1
+keyctrl = 0
+
+[State 1850, Own actual landing]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 1851
+
+[State 1850, Finite cast to fall]
+type = ChangeState
+trigger1 = Time >= 44
+value = 1852
+
+[Statedef 1852]
+type = A
+movetype = I
+physics = N
+anim = 1852
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 1852, Falling gravity]
+type = VelAdd
+trigger1 = 1
+y = Const(movement.yaccel)
+
+[State 1852, Own actual landing]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 1851
+
+[State 1852, Bounded custom recovery]
+type = ChangeState
+trigger1 = Time >= 120
+value = 50
+ctrl = 1
+
+[Statedef 1851]
+type = S
+movetype = I
+physics = N
+anim = 1851
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 1851, Clamp only actual floor arrival]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1851, Stop landing velocity]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 1851, Twelve tick own landing]
+type = ChangeState
+trigger1 = Time >= 12
+value = 0
+ctrl = 1
+
+[Statedef 18500]
+type = A
+movetype = A
+physics = N
+anim = 18500
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 18500, Snapshot lease 0]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = (Root, var(11))
+
+[State 18500, Snapshot lease 1]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = (Root, var(12))
+
+[State 18500, Snapshot lease 5]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (Root, var(47))
+
+[State 18500, Snapshot lease 6]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = (Root, var(57))
+
+[State 18500, Snapshot lease 3]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 18500, Snapshot lease 2]
+type = VarSet
+trigger1 = Time = 0
+v = 2
+value = 0
+
+[State 18500, Actual airborne hit debit BEFORE cleanup]
+type = ParentVarAdd
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+triggerall = var(0) = [0,7]
+triggerall = MoveHit && var(3) = 0 && var(2) = 1
+triggerall = NumTarget(18500) > 0
+triggerall = (Target(18500), ID) = var(5)
+triggerall = (Root, var(47)) = var(5)
+triggerall = (Root, var(57)) = var(6)
+triggerall = (Root, var(58)) = 0
+triggerall = IfElse(var(0) = 0,(Root, var(20)),IfElse(var(0) = 1,(Root, var(21)),IfElse(var(0) = 2,(Root, var(22)),IfElse(var(0) = 3,(Root, var(23)),IfElse(var(0) = 4,(Root, var(24)),IfElse(var(0) = 5,(Root, var(25)),IfElse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) = var(1)
+trigger1 = RoundState = 2 && (Root, var(41)) < 4
+v = 41
+value = 1
+ignorehitpause = 1
+
+[State 18500, Latch any real hit or guard]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+ignorehitpause = 1
+
+[State 18500, Contact leaves offensive state]
+type = ChangeState
+trigger1 = var(3) = 1
+value = 18509
+ignorehitpause = 1
+
+[State 18500, Invalid lifecycle cleanup AFTER receipt]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (Root, StateNo) != 1850
+trigger5 = Time >= 6
+trigger6 = NumEnemy != 1
+trigger7 = IfElse(var(0) = 0,(Root, var(20)),IfElse(var(0) = 1,(Root, var(21)),IfElse(var(0) = 2,(Root, var(22)),IfElse(var(0) = 3,(Root, var(23)),IfElse(var(0) = 4,(Root, var(24)),IfElse(var(0) = 5,(Root, var(25)),IfElse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+trigger8 = (Root, var(57)) != var(6)
+trigger9 = (Root, var(47)) != var(5)
+trigger10 = var(0) < 0 || var(0) > 7
+ignorehitpause = 1
+
+[State 18500, Guarded changed opponent cleanup]
+type = DestroySelf
+triggerall = NumEnemy = 1
+trigger1 = (EnemyNear, ID) != var(5)
+ignorehitpause = 1
+
+[State 18500, Exhausted budget disarms before next collision]
+type = ChangeState
+trigger1 = (Root, var(41)) >= 4
+value = 18509
+ignorehitpause = 1
+
+[State 18500, Sample only precontact actual opponent air]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+trigger1 = MoveContact = 0
+v = 2
+value = (EnemyNear, StateType = A) || (EnemyNear, Pos Y) < 0
+
+[State 18500, Measured common release mouth socket]
+type = BindToRoot
+trigger1 = 1
+time = 1
+facing = 1
+pos = 35,-31.5
+
+[State 18500, No physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 18500, One finite pulse HitDef]
+type = HitDef
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+trigger1 = Time = 1 && (Root, var(41)) < 4
+attr = A, HP
+damage = 60,8
+ID = 18500
+hitonce = 1
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -2,0
+air.velocity = -2,0
+fall = 0
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+persistent = 0
+
+[Statedef 18501]
+type = A
+movetype = A
+physics = N
+anim = 18501
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 18501, Snapshot lease 0]
+type = VarSet
+trigger1 = Time = 0
+v = 0
+value = (Root, var(11))
+
+[State 18501, Snapshot lease 1]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = (Root, var(12))
+
+[State 18501, Snapshot lease 5]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = (Root, var(47))
+
+[State 18501, Snapshot lease 6]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = (Root, var(57))
+
+[State 18501, Snapshot lease 3]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 18501, Snapshot lease 2]
+type = VarSet
+trigger1 = Time = 0
+v = 2
+value = 0
+
+[State 18501, Actual airborne hit debit BEFORE cleanup]
+type = ParentVarAdd
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+triggerall = var(0) = [0,7]
+triggerall = MoveHit && var(3) = 0 && var(2) = 1
+triggerall = NumTarget(18501) > 0
+triggerall = (Target(18501), ID) = var(5)
+triggerall = (Root, var(47)) = var(5)
+triggerall = (Root, var(57)) = var(6)
+triggerall = (Root, var(58)) = 0
+triggerall = IfElse(var(0) = 0,(Root, var(20)),IfElse(var(0) = 1,(Root, var(21)),IfElse(var(0) = 2,(Root, var(22)),IfElse(var(0) = 3,(Root, var(23)),IfElse(var(0) = 4,(Root, var(24)),IfElse(var(0) = 5,(Root, var(25)),IfElse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) = var(1)
+trigger1 = RoundState = 2 && (Root, var(41)) < 4
+v = 41
+value = 1
+ignorehitpause = 1
+
+[State 18501, Latch any real hit or guard]
+type = VarSet
+trigger1 = MoveContact
+v = 3
+value = 1
+ignorehitpause = 1
+
+[State 18501, Contact leaves offensive state]
+type = ChangeState
+trigger1 = var(3) = 1
+value = 18509
+ignorehitpause = 1
+
+[State 18501, Invalid lifecycle cleanup AFTER receipt]
+type = DestroySelf
+trigger1 = RoundState != 2
+trigger2 = (Root, Alive) = 0
+trigger3 = (Root, MoveType = H)
+trigger4 = (Root, StateNo) != 1850
+trigger5 = Time >= 6
+trigger6 = NumEnemy != 1
+trigger7 = IfElse(var(0) = 0,(Root, var(20)),IfElse(var(0) = 1,(Root, var(21)),IfElse(var(0) = 2,(Root, var(22)),IfElse(var(0) = 3,(Root, var(23)),IfElse(var(0) = 4,(Root, var(24)),IfElse(var(0) = 5,(Root, var(25)),IfElse(var(0) = 6,(Root, var(26)),(Root, var(27))))))))) != var(1)
+trigger8 = (Root, var(57)) != var(6)
+trigger9 = (Root, var(47)) != var(5)
+trigger10 = var(0) < 0 || var(0) > 7
+ignorehitpause = 1
+
+[State 18501, Guarded changed opponent cleanup]
+type = DestroySelf
+triggerall = NumEnemy = 1
+trigger1 = (EnemyNear, ID) != var(5)
+ignorehitpause = 1
+
+[State 18501, Exhausted budget disarms before next collision]
+type = ChangeState
+trigger1 = (Root, var(41)) >= 4
+value = 18509
+ignorehitpause = 1
+
+[State 18501, Sample only precontact actual opponent air]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+trigger1 = MoveContact = 0
+v = 2
+value = (EnemyNear, StateType = A) || (EnemyNear, Pos Y) < 0
+
+[State 18501, Measured common release mouth socket]
+type = BindToRoot
+trigger1 = 1
+time = 1
+facing = 1
+pos = 35,-31.5
+
+[State 18501, No physical push]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 18501, One finite pulse HitDef]
+type = HitDef
+triggerall = NumEnemy = 1
+triggerall = (EnemyNear, ID) = var(5)
+trigger1 = Time = 1 && (Root, var(41)) < 4
+attr = A, HP
+damage = 85,8
+ID = 18501
+hitonce = 1
+animtype = Hard
+guardflag = MA
+hitflag = MAF
+priority = 5,Hit
+pausetime = 0,5
+ground.type = High
+ground.slidetime = 18
+ground.hittime = 24
+ground.velocity = -4,-3
+air.velocity = -4,-5
+fall = 1
+fall.recover = 1
+getpower = 0,0
+givepower = 0,0
+persistent = 0
+
+[Statedef 18509]
+type = A
+movetype = I
+physics = N
+anim = 18509
+ctrl = 0
+poweradd = 0
+juggle = 0
+
+[State 18509, Harmless fade never pushes even during hitpause]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 18509, Harmless fragment finite cleanup]
+type = DestroySelf
+trigger1 = Time >= 2
+trigger2 = (Root, StateNo) != 1850
+trigger3 = (Root, MoveType = H)
+trigger4 = !(Root, Alive)
+trigger5 = RoundState != 2
+ignorehitpause = 1
+

@@ -1,0 +1,2 @@
+エルフの剣士 制作版 v1
+既存elf_swordsmanフォルダを別の場所に保管し、このelf_swordsmanフォルダ全体で置き換えてください。DEF名はelf_swordsman.defのままです。必要時のみselect.defにelf_swordsmanを1行登録。global dataは上書きしません。操作と変更点_日本語.txtを参照。実機の起動/対戦確認はAstra側に引き継ぎます。

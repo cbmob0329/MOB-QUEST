@@ -1,0 +1,971 @@
+; Original common-state implementation for CORE candidate. Static-only verification.
+
+[Statedef 0]
+type = S
+movetype = I
+physics = S
+anim = 0
+ctrl = 1
+[State 0, stop]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[Statedef 20]
+type = S
+movetype = I
+physics = S
+anim = 20
+ctrl = 1
+[State 20, walk]
+type = VelSet
+trigger1 = 1
+x = 2.8
+[State 20, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdF"
+trigger2 = AILevel > 0 && P2BodyDist X <= 16
+value = 0
+ctrl = 1
+
+[Statedef 21]
+type = S
+movetype = I
+physics = S
+anim = 21
+ctrl = 1
+[State 21, walk]
+type = VelSet
+trigger1 = 1
+x = -2.4
+[State 21, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdB"
+trigger2 = AILevel > 0 && P2BodyDist X >= 24
+value = 0
+ctrl = 1
+
+[Statedef 100]
+type = S
+movetype = I
+physics = S
+anim = 100
+ctrl = 0
+[State 100, JUS finite dash]
+type = VelSet
+trigger1 = 1
+x = 7.2
+y = 0
+[State 100, transition]
+type = ChangeState
+trigger1 = Time >= 11
+value = 0
+ctrl = 1
+
+[Statedef 105]
+type = S
+movetype = I
+physics = S
+anim = 105
+ctrl = 0
+[State 105, JUS finite dash]
+type = VelSet
+trigger1 = 1
+x = -5.8
+y = 0
+[State 105, transition]
+type = ChangeState
+trigger1 = Time >= 11
+value = 0
+ctrl = 1
+
+[Statedef 10]
+type = C
+movetype = I
+physics = C
+anim = 10
+ctrl = 0
+[State 10, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+[Statedef 11]
+type = C
+movetype = I
+physics = C
+anim = 11
+ctrl = 1
+[State 11, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdD"
+trigger2 = AILevel > 0 && Time > 20
+value = 12
+ctrl = 0
+
+[Statedef 12]
+type = S
+movetype = I
+physics = S
+anim = 12
+ctrl = 0
+[State 12, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 40]
+type = S
+movetype = I
+physics = S
+anim = 40
+ctrl = 0
+[State 40, launch]
+type = VelSet
+trigger1 = Time = 2
+x = ifelse(command = "holdF",3.1,ifelse(command = "holdB",-3.1,0))
+y = -8.8
+[State 40, transition]
+type = ChangeState
+trigger1 = Time >= 2
+value = 50
+ctrl = 1
+
+[Statedef 45]
+type = A
+movetype = I
+physics = N
+anim = 45
+ctrl = 0
+[State 45, consume second jump]
+type = VarSet
+trigger1 = Time = 0
+v = 20
+value = 1
+
+[State 45, consume up release]
+type = VarSet
+trigger1 = Time = 0
+v = 28
+value = 0
+[State 45, launch]
+type = VelSet
+trigger1 = Time = 2
+y = -8
+[State 45, transition]
+type = ChangeState
+trigger1 = Time >= 5
+value = 50
+ctrl = 1
+
+[Statedef 50]
+type = A
+movetype = I
+physics = N
+anim = 41
+ctrl = 1
+[State 50, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 50, fall pose]
+type = ChangeAnim
+trigger1 = Vel Y > 0 && Anim != 42
+value = 42
+[State 50, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+
+[Statedef 52]
+type = S
+movetype = I
+physics = S
+anim = 47
+ctrl = 0
+[State 52, floor]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 52, stop]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+[State 52, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 130]
+type = S
+movetype = I
+physics = S
+anim = 130
+ctrl = 0
+[State 130, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdB"
+trigger2 = !InGuardDist
+value = 0
+ctrl = 1
+[State 130, transition]
+type = ChangeState
+triggerall = AILevel = 0
+trigger1 = command = "holdD"
+value = 131
+ctrl = 0
+
+[Statedef 131]
+type = C
+movetype = I
+physics = C
+anim = 131
+ctrl = 0
+[State 131, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdB"
+trigger2 = !InGuardDist
+value = 11
+ctrl = 1
+[State 131, transition]
+type = ChangeState
+triggerall = AILevel = 0
+trigger1 = command != "holdD"
+value = 130
+ctrl = 0
+
+[Statedef 132]
+type = A
+movetype = I
+physics = N
+anim = 132
+ctrl = 0
+[State 132, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 132, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 132, transition]
+type = ChangeState
+trigger1 = AILevel = 0 && command != "holdB"
+trigger2 = !InGuardDist
+value = 50
+ctrl = 1
+
+[Statedef 150]
+type = S
+movetype = H
+physics = S
+anim = 130
+ctrl = 0
+[State 150, guard velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 150, transition]
+type = ChangeState
+trigger1 = HitOver
+value = ifelse(AILevel = 0,ifelse(command = "holdD",131,130),130)
+ctrl = 0
+
+[Statedef 152]
+type = C
+movetype = H
+physics = C
+anim = 131
+ctrl = 0
+[State 152, guard velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+[State 152, transition]
+type = ChangeState
+trigger1 = HitOver
+value = ifelse(AILevel = 0,ifelse(command = "holdD",131,130),131)
+ctrl = 0
+
+[Statedef 154]
+type = A
+movetype = H
+physics = N
+anim = 132
+ctrl = 0
+[State 154, guard velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 154, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 154, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 154, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 132
+ctrl = 0
+
+[Statedef 5000]
+type = S
+movetype = H
+physics = N
+anim = 5000
+ctrl = 0
+[State 5000, low standing hit direction]
+type = ChangeAnim
+trigger1 = Time = 0 && GetHitVar(type) = 2
+value = 5015
+[State 5000, shake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5000, hit velocity]
+type = HitVelSet
+trigger1 = HitShakeOver
+x = 1
+y = 1
+persistent = 0
+[State 5000, transition]
+type = ChangeState
+trigger1 = HitShakeOver && GetHitVar(fall)
+trigger2 = HitShakeOver && !Alive
+value = 5050
+ctrl = 0
+[State 5000, transition]
+type = ChangeState
+trigger1 = HitShakeOver && (Vel Y != 0 || Pos Y < 0)
+value = 5030
+ctrl = 0
+[State 5000, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+[Statedef 5010]
+type = C
+movetype = H
+physics = N
+anim = 5010
+ctrl = 0
+[State 5010, shake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5010, hit velocity]
+type = HitVelSet
+trigger1 = HitShakeOver
+x = 1
+y = 1
+persistent = 0
+[State 5010, transition]
+type = ChangeState
+trigger1 = HitShakeOver && GetHitVar(fall)
+trigger2 = HitShakeOver && !Alive
+value = 5050
+ctrl = 0
+[State 5010, transition]
+type = ChangeState
+trigger1 = HitShakeOver && (Vel Y != 0 || Pos Y < 0)
+value = 5030
+ctrl = 0
+[State 5010, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 11
+ctrl = 1
+
+[Statedef 5020]
+type = A
+movetype = H
+physics = N
+anim = 5020
+ctrl = 0
+[State 5020, shake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5020, hit velocity]
+type = HitVelSet
+trigger1 = HitShakeOver
+x = 1
+y = 1
+persistent = 0
+[State 5020, gravity]
+type = VelAdd
+trigger1 = HitShakeOver
+y = .44
+[State 5020, transition]
+type = ChangeState
+trigger1 = HitShakeOver && GetHitVar(fall)
+trigger2 = HitShakeOver && !Alive
+value = 5050
+ctrl = 0
+[State 5020, transition]
+type = ChangeState
+trigger1 = HitShakeOver && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5020, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 50
+ctrl = 1
+
+[Statedef 5070]
+type = A
+movetype = H
+physics = N
+anim = 5020
+ctrl = 0
+[State 5070, shake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5070, hit velocity]
+type = HitVelSet
+trigger1 = HitShakeOver
+x = 1
+y = 1
+persistent = 0
+[State 5070, gravity]
+type = VelAdd
+trigger1 = HitShakeOver
+y = .44
+[State 5070, transition]
+type = ChangeState
+trigger1 = HitShakeOver && GetHitVar(fall)
+trigger2 = HitShakeOver && !Alive
+value = 5050
+ctrl = 0
+[State 5070, transition]
+type = ChangeState
+trigger1 = HitShakeOver && Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5070, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 50
+ctrl = 1
+
+[Statedef 5050]
+type = A
+movetype = H
+physics = N
+anim = 5030
+ctrl = 0
+[State 5050, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5050, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5100
+ctrl = 0
+
+[Statedef 5100]
+type = L
+movetype = H
+physics = N
+anim = 5100
+ctrl = 0
+[State 5100, floor]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5100, stop]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+[State 5100, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 5110
+ctrl = 0
+
+[Statedef 5110]
+type = L
+movetype = H
+physics = N
+anim = 5110
+ctrl = 0
+[State 5110, transition]
+type = ChangeState
+trigger1 = !Alive
+value = 5150
+ctrl = 0
+[State 5110, transition]
+type = ChangeState
+trigger1 = Time >= 30
+value = 5120
+ctrl = 0
+
+[Statedef 5120]
+type = S
+movetype = I
+physics = S
+anim = 5120
+ctrl = 0
+[State 5120, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 5150]
+type = L
+movetype = H
+physics = N
+anim = 5150
+ctrl = 0
+[State 5150, floor]
+type = PosSet
+trigger1 = 1
+y = 0
+[State 5150, stop]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[Statedef 180]
+type = S
+movetype = I
+physics = S
+anim = 180
+ctrl = 0
+[State 180, stop]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[Statedef 190]
+type = S
+movetype = I
+physics = S
+anim = 190
+ctrl = 0
+[State 190, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+[Statedef 5900]
+type = S
+movetype = I
+physics = S
+anim = 0
+ctrl = 0
+[State 5900, transition]
+type = ChangeState
+trigger1 = Time = 0
+value = 190
+ctrl = 0
+
+[Statedef 120]
+type = S
+movetype = I
+physics = S
+anim = 130
+ctrl = 0
+[State 120, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 130
+ctrl = 0
+
+[Statedef 121]
+type = C
+movetype = I
+physics = C
+anim = 131
+ctrl = 0
+[State 121, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 131
+ctrl = 0
+
+[Statedef 122]
+type = A
+movetype = I
+physics = N
+anim = 132
+ctrl = 0
+[State 122, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 132
+ctrl = 0
+
+[Statedef 140]
+type = S
+movetype = I
+physics = S
+anim = 0
+ctrl = 0
+[State 140, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 0
+ctrl = 1
+
+[Statedef 141]
+type = C
+movetype = I
+physics = C
+anim = 11
+ctrl = 0
+[State 141, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 11
+ctrl = 1
+
+[Statedef 142]
+type = A
+movetype = I
+physics = N
+anim = 41
+ctrl = 0
+[State 142, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 50
+ctrl = 1
+
+[Statedef 151]
+type = S
+movetype = I
+physics = S
+anim = 130
+ctrl = 0
+[State 151, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 130
+ctrl = 0
+
+[Statedef 153]
+type = C
+movetype = I
+physics = C
+anim = 131
+ctrl = 0
+[State 153, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 131
+ctrl = 0
+
+[Statedef 155]
+type = A
+movetype = I
+physics = N
+anim = 132
+ctrl = 0
+[State 155, transition]
+type = ChangeState
+trigger1 = Time >= 1
+value = 132
+ctrl = 0
+
+[Statedef 5001]
+type = S
+movetype = H
+physics = N
+anim = 5000
+ctrl = 0
+[State 5001, inherited hit velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5001, transition]
+type = ChangeState
+trigger1 = GetHitVar(fall) || !Alive
+value = 5050
+ctrl = 0
+[State 5001, transition]
+type = ChangeState
+trigger1 = Vel Y != 0 || Pos Y < 0
+value = 5030
+ctrl = 0
+[State 5001, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 0
+ctrl = 1
+
+[Statedef 5011]
+type = C
+movetype = H
+physics = N
+anim = 5010
+ctrl = 0
+[State 5011, inherited hit velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5011, transition]
+type = ChangeState
+trigger1 = GetHitVar(fall) || !Alive
+value = 5050
+ctrl = 0
+[State 5011, transition]
+type = ChangeState
+trigger1 = Vel Y != 0 || Pos Y < 0
+value = 5030
+ctrl = 0
+[State 5011, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 11
+ctrl = 1
+
+[Statedef 5030]
+type = A
+movetype = H
+physics = N
+anim = 5020
+ctrl = 0
+[State 5030, inherited hit velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5030, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5030, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,52)
+ctrl = 0
+[State 5030, transition]
+type = ChangeState
+trigger1 = GetHitVar(fall) || !Alive
+value = 5050
+ctrl = 0
+[State 5030, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 50
+ctrl = 1
+
+[Statedef 5071]
+type = A
+movetype = H
+physics = N
+anim = 5030
+ctrl = 0
+[State 5071, inherited hit velocity]
+type = HitVelSet
+trigger1 = Time = 0
+x = 1
+y = 1
+[State 5071, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5071, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = ifelse(GetHitVar(fall) || !Alive,5100,52)
+ctrl = 0
+[State 5071, transition]
+type = ChangeState
+trigger1 = GetHitVar(fall) || !Alive
+value = 5050
+ctrl = 0
+[State 5071, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 5050
+ctrl = 1
+
+[Statedef 5080]
+type = L
+movetype = H
+physics = N
+anim = 5080
+ctrl = 0
+[State 5080, freeze during hitshake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5080, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 5110
+ctrl = 0
+
+[Statedef 5081]
+type = L
+movetype = H
+physics = N
+anim = 5080
+ctrl = 0
+[State 5081, freeze during hitshake]
+type = PosFreeze
+trigger1 = !HitShakeOver
+value = 1
+[State 5081, transition]
+type = ChangeState
+trigger1 = HitOver
+value = 5110
+ctrl = 0
+
+[Statedef 5035]
+type = A
+movetype = I
+physics = N
+anim = 5200
+ctrl = 0
+[State 5035, recovery impulse]
+type = VelSet
+trigger1 = Time = 0
+y = -4
+[State 5035, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5035, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5035, transition]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+[Statedef 5040]
+type = A
+movetype = I
+physics = N
+anim = 5200
+ctrl = 0
+[State 5040, recovery impulse]
+type = VelSet
+trigger1 = Time = 0
+y = -4
+[State 5040, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5040, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5040, transition]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+[Statedef 5060]
+type = A
+movetype = I
+physics = N
+anim = 5200
+ctrl = 0
+[State 5060, recovery impulse]
+type = VelSet
+trigger1 = Time = 0
+y = -4
+[State 5060, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5060, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5060, transition]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+[Statedef 5200]
+type = A
+movetype = I
+physics = N
+anim = 5200
+ctrl = 0
+[State 5200, recovery impulse]
+type = VelSet
+trigger1 = Time = 0
+y = -4
+[State 5200, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5200, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 5200, transition]
+type = ChangeState
+trigger1 = Time >= 8
+value = 50
+ctrl = 1
+
+[Statedef 5101]
+type = A
+movetype = H
+physics = N
+anim = 5030
+ctrl = 0
+[State 5101, finite bounce]
+type = VelSet
+trigger1 = Time = 0
+y = -3
+[State 5101, gravity]
+type = VelAdd
+trigger1 = 1
+y = .44
+[State 5101, transition]
+type = ChangeState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5110
+ctrl = 0
+
+[Statedef 5210]
+type = S
+movetype = I
+physics = S
+anim = 5120
+ctrl = 0
+[State 5210, transition]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

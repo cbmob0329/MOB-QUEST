@@ -1,0 +1,2220 @@
+[Begin Action 0]
+Clsn2: 3
+Clsn2[0] = -25,-145,51,-100
+Clsn2[1] = -27,-100,51,-54
+Clsn2[2] = -34,-54,44,-8
+17000,0,0,0,8
+Clsn2: 3
+Clsn2[0] = -33,-145,51,-100
+Clsn2[1] = -45,-100,46,-54
+Clsn2[2] = -46,-54,42,-8
+17000,1,0,0,8
+
+[Begin Action 5]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -35,-134,14,-89
+Clsn2[1] = -40,-93,44,-48
+Clsn2[2] = -45,-52,31,-6
+17500,1,0,0,2
+
+[Begin Action 6]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -23,-89,30,-56
+Clsn2[1] = -32,-60,51,-27
+Clsn2[2] = -48,-31,45,2
+17500,0,0,0,2
+
+[Begin Action 10]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -23,-89,30,-56
+Clsn2[1] = -32,-60,51,-27
+Clsn2[2] = -48,-31,45,2
+17500,0,0,0,3
+
+[Begin Action 11]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -23,-89,30,-56
+Clsn2[1] = -32,-60,51,-27
+Clsn2[2] = -48,-31,45,2
+17500,0,0,0,-1
+
+[Begin Action 12]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -35,-134,14,-89
+Clsn2[1] = -40,-93,44,-48
+Clsn2[2] = -45,-52,31,-6
+17500,1,0,0,3
+
+[Begin Action 20]
+Clsn2: 3
+Clsn2[0] = -21,-140,37,-101
+Clsn2[1] = -46,-101,51,-61
+Clsn2[2] = -46,-61,14,-21
+17000,2,0,0,6
+Clsn2: 3
+Clsn2[0] = -35,-146,51,-102
+Clsn2[1] = -46,-102,49,-58
+Clsn2[2] = -36,-58,51,-14
+17000,3,0,0,6
+
+[Begin Action 21]
+Clsn2: 3
+Clsn2[0] = -42,-145,31,-105
+Clsn2[1] = -42,-105,51,-64
+Clsn2[2] = -22,-64,51,-23
+17000,4,0,0,6
+Clsn2: 3
+Clsn2[0] = -38,-145,43,-103
+Clsn2[1] = -36,-103,51,-61
+Clsn2[2] = -36,-61,51,-18
+17000,5,0,0,6
+
+[Begin Action 40]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -23,-89,30,-56
+Clsn2[1] = -32,-60,51,-27
+Clsn2[2] = -48,-31,45,2
+17500,0,0,0,4
+Clsn2: 3
+Clsn2[0] = -36,-148,39,-98
+Clsn2[1] = -47,-102,35,-52
+Clsn2[2] = -45,-56,21,-6
+17500,2,0,0,2
+
+[Begin Action 41]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -36,-148,39,-98
+Clsn2[1] = -47,-102,35,-52
+Clsn2[2] = -45,-56,21,-6
+17500,2,0,0,7
+Clsn2: 3
+Clsn2[0] = -45,-135,18,-90
+Clsn2[1] = -64,-94,51,-48
+Clsn2[2] = -51,-52,34,-6
+17500,3,0,0,-1
+
+[Begin Action 42]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -36,-148,39,-98
+Clsn2[1] = -47,-102,35,-52
+Clsn2[2] = -45,-56,21,-6
+17500,2,0,0,7
+Clsn2: 3
+Clsn2[0] = -45,-135,18,-90
+Clsn2[1] = -64,-94,51,-48
+Clsn2[2] = -51,-52,34,-6
+17500,3,0,0,-1
+
+[Begin Action 43]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -36,-148,39,-98
+Clsn2[1] = -47,-102,35,-52
+Clsn2[2] = -45,-56,21,-6
+17500,2,0,0,7
+Clsn2: 3
+Clsn2[0] = -45,-135,18,-90
+Clsn2[1] = -64,-94,51,-48
+Clsn2[2] = -51,-52,34,-6
+17500,3,0,0,-1
+
+[Begin Action 44]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -38,-139,20,-92
+Clsn2[1] = -43,-96,44,-49
+Clsn2[2] = -43,-53,37,-6
+17500,4,0,0,-1
+
+[Begin Action 45]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -38,-139,20,-92
+Clsn2[1] = -43,-96,44,-49
+Clsn2[2] = -43,-53,37,-6
+17500,4,0,0,-1
+
+[Begin Action 46]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -38,-139,20,-92
+Clsn2[1] = -43,-96,44,-49
+Clsn2[2] = -43,-53,37,-6
+17500,4,0,0,-1
+
+[Begin Action 47]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-106,24,-68
+Clsn2[1] = -41,-72,50,-33
+Clsn2[2] = -50,-37,48,2
+17500,5,0,0,6
+
+[Begin Action 100]
+Clsn2: 3
+Clsn2[0] = -21,-140,37,-101
+Clsn2[1] = -46,-101,51,-61
+Clsn2[2] = -46,-61,14,-21
+17000,2,0,0,3
+Clsn2: 3
+Clsn2[0] = -35,-146,51,-102
+Clsn2[1] = -46,-102,49,-58
+Clsn2[2] = -36,-58,51,-14
+17000,3,0,0,3
+
+[Begin Action 105]
+Clsn2: 3
+Clsn2[0] = -42,-145,31,-105
+Clsn2[1] = -42,-105,51,-64
+Clsn2[2] = -22,-64,51,-23
+17000,4,0,0,3
+Clsn2: 3
+Clsn2[0] = -38,-145,43,-103
+Clsn2[1] = -36,-103,51,-61
+Clsn2[2] = -36,-61,51,-18
+17000,5,0,0,3
+
+[Begin Action 120]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -39,-145,53,-94
+Clsn2[1] = -46,-98,39,-46
+Clsn2[2] = -53,-50,47,2
+17500,6,0,0,3
+
+[Begin Action 121]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-119,62,-76
+Clsn2[1] = -47,-80,51,-37
+Clsn2[2] = -60,-41,54,2
+17500,7,0,0,3
+
+[Begin Action 122]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -45,-155,30,-103
+Clsn2[1] = -56,-107,44,-55
+Clsn2[2] = -46,-59,44,-6
+17500,8,0,0,3
+
+[Begin Action 130]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -39,-145,53,-94
+Clsn2[1] = -46,-98,39,-46
+Clsn2[2] = -53,-50,47,2
+17500,6,0,0,-1
+
+[Begin Action 131]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-119,62,-76
+Clsn2[1] = -47,-80,51,-37
+Clsn2[2] = -60,-41,54,2
+17500,7,0,0,-1
+
+[Begin Action 132]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -45,-155,30,-103
+Clsn2[1] = -56,-107,44,-55
+Clsn2[2] = -46,-59,44,-6
+17500,8,0,0,-1
+
+[Begin Action 140]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -39,-145,53,-94
+Clsn2[1] = -46,-98,39,-46
+Clsn2[2] = -53,-50,47,2
+17500,6,0,0,3
+
+[Begin Action 141]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-119,62,-76
+Clsn2[1] = -47,-80,51,-37
+Clsn2[2] = -60,-41,54,2
+17500,7,0,0,3
+
+[Begin Action 142]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -45,-155,30,-103
+Clsn2[1] = -56,-107,44,-55
+Clsn2[2] = -46,-59,44,-6
+17500,8,0,0,3
+
+[Begin Action 150]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -39,-145,53,-94
+Clsn2[1] = -46,-98,39,-46
+Clsn2[2] = -53,-50,47,2
+17500,6,0,0,-1
+
+[Begin Action 151]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-119,62,-76
+Clsn2[1] = -47,-80,51,-37
+Clsn2[2] = -60,-41,54,2
+17500,7,0,0,-1
+
+[Begin Action 152]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -45,-155,30,-103
+Clsn2[1] = -56,-107,44,-55
+Clsn2[2] = -46,-59,44,-6
+17500,8,0,0,-1
+
+[Begin Action 180]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -28,-163,67,-110
+Clsn2[1] = -46,-114,51,-60
+Clsn2[2] = -51,-64,56,-10
+17100,55,0,0,20
+Clsn2: 3
+Clsn2[0] = -28,-147,63,-98
+Clsn2[1] = -30,-102,60,-52
+Clsn2[2] = -36,-56,47,-6
+17000,0,0,0,-1
+
+[Begin Action 190]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -57,-166,68,-111
+Clsn2[1] = -44,-115,70,-60
+Clsn2[2] = -44,-64,51,-9
+17100,53,0,0,12
+Clsn2: 3
+Clsn2[0] = -28,-163,67,-110
+Clsn2[1] = -46,-114,51,-60
+Clsn2[2] = -51,-64,56,-10
+17100,55,0,0,12
+
+[Begin Action 195]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -57,-166,68,-111
+Clsn2[1] = -44,-115,70,-60
+Clsn2[2] = -44,-64,51,-9
+17100,53,0,0,12
+Clsn2: 3
+Clsn2[0] = -28,-163,67,-110
+Clsn2[1] = -46,-114,51,-60
+Clsn2[2] = -51,-64,56,-10
+17100,55,0,0,12
+
+[Begin Action 200]
+; Two genuine noncontact body bridges; original contact exact.
+Clsn2: 3
+Clsn2[0] = -34,-144,50,-99
+Clsn2[1] = -46,-99,39,-54
+Clsn2[2] = -40,-54,45,-8
+17100,10,0,0,2
+
+Clsn2: 6
+Clsn2[0] = -12,-145,29,-103
+Clsn2[1] = -18,-104,29,-67
+Clsn2[2] = -36,-108,-4,-87
+Clsn2[3] = 24,-97,47,-78
+Clsn2[4] = -12,-70,21,-14
+Clsn2[5] = 10,-49,41,-8
+33200,0,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -46,-144,24,-100
+Clsn2[1] = -46,-100,51,-55
+Clsn2[2] = -46,-55,24,-10
+Clsn1: 1
+Clsn1[0] = 8,-104,74,-86
+17100,11,0,0,4
+
+Clsn2: 6
+Clsn2[0] = -11,-147,28,-104
+Clsn2[1] = -16,-104,29,-68
+Clsn2[2] = -28,-100,6,-78
+Clsn2[3] = 27,-110,55,-85
+Clsn2[4] = -11,-69,23,-14
+Clsn2[5] = 12,-49,44,-8
+33200,1,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -35,-145,51,-100
+Clsn2[1] = -45,-100,32,-55
+Clsn2[2] = -46,-55,35,-10
+17100,13,0,0,11
+
+[Begin Action 201]
+; Two genuine noncontact body bridges; original contact exact.
+Clsn2: 3
+Clsn2[0] = -31,-150,34,-106
+Clsn2[1] = -41,-106,51,-61
+Clsn2[2] = -46,-61,42,-16
+17100,24,0,0,2
+
+Clsn2: 6
+Clsn2[0] = -11,-150,28,-108
+Clsn2[1] = -16,-107,30,-70
+Clsn2[2] = -33,-115,-9,-90
+Clsn2[3] = 20,-113,47,-85
+Clsn2[4] = -10,-71,24,-14
+Clsn2[5] = 11,-44,35,-8
+33200,2,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -30,-150,37,-106
+Clsn2[1] = -34,-106,51,-62
+Clsn2[2] = -46,-62,51,-17
+Clsn1: 1
+Clsn1[0] = 14,-114,66,-93
+17100,25,0,0,4
+
+Clsn2: 6
+Clsn2[0] = -4,-156,35,-112
+Clsn2[1] = -12,-111,31,-72
+Clsn2[2] = -19,-105,23,-81
+Clsn2[3] = 28,-107,53,-83
+Clsn2[4] = -6,-74,31,-14
+Clsn2[5] = 12,-46,33,-8
+33200,3,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -34,-141,51,-99
+Clsn2[1] = -46,-99,49,-57
+Clsn2[2] = -46,-57,33,-14
+17100,32,0,0,11
+
+[Begin Action 202]
+; Two genuine noncontact body bridges; original contact exact.
+Clsn2: 3
+Clsn2[0] = -39,-139,31,-100
+Clsn2[1] = -46,-100,51,-60
+Clsn2[2] = -46,-60,51,-20
+17100,80,0,0,2
+
+Clsn2: 6
+Clsn2[0] = -4,-128,38,-85
+Clsn2[1] = -15,-85,30,-54
+Clsn2[2] = -35,-98,-9,-71
+Clsn2[3] = 26,-85,81,-61
+Clsn2[4] = -31,-61,11,-16
+Clsn2[5] = 15,-55,73,-8
+33200,4,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -37,-143,51,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -46,-57,51,-13
+Clsn1: 1
+Clsn1[0] = 0,-95,90,-74
+17100,94,0,0,4
+
+Clsn2: 6
+Clsn2[0] = -3,-156,37,-114
+Clsn2[1] = -12,-112,34,-76
+Clsn2[2] = -21,-104,13,-83
+Clsn2[3] = 25,-120,53,-88
+Clsn2[4] = -8,-76,29,-16
+Clsn2[5] = 25,-68,52,-8
+33200,5,0,0,4
+
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,11
+
+[Begin Action 210]
+Clsn2: 3
+Clsn2[0] = -31,-150,34,-106
+Clsn2[1] = -41,-106,51,-61
+Clsn2[2] = -46,-61,42,-16
+17100,24,0,0,6
+Clsn2: 3
+Clsn2[0] = -30,-150,37,-106
+Clsn2[1] = -34,-106,51,-62
+Clsn2[2] = -46,-62,51,-17
+Clsn1: 1
+Clsn1[0] = 14,-114,66,-93
+17100,25,0,0,4
+Clsn2: 3
+Clsn2[0] = -34,-141,51,-99
+Clsn2[1] = -46,-99,49,-57
+Clsn2[2] = -46,-57,33,-14
+17100,32,0,0,15
+
+[Begin Action 211]
+Clsn2: 3
+Clsn2[0] = -39,-139,31,-100
+Clsn2[1] = -46,-100,51,-60
+Clsn2[2] = -46,-60,51,-20
+17100,80,0,0,6
+Clsn2: 3
+Clsn2[0] = -37,-143,51,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -46,-57,51,-13
+Clsn1: 1
+Clsn1[0] = 0,-95,90,-74
+17100,94,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 212]
+Clsn2: 3
+Clsn2[0] = -34,-144,50,-99
+Clsn2[1] = -46,-99,39,-54
+Clsn2[2] = -40,-54,45,-8
+17100,10,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-144,24,-100
+Clsn2[1] = -46,-100,51,-55
+Clsn2[2] = -46,-55,24,-10
+Clsn1: 1
+Clsn1[0] = 8,-104,74,-86
+17100,11,0,0,4
+Clsn2: 3
+Clsn2[0] = -35,-145,51,-100
+Clsn2[1] = -45,-100,32,-55
+Clsn2[2] = -46,-55,35,-10
+17100,13,0,0,15
+
+[Begin Action 220]
+Clsn2: 3
+Clsn2[0] = -39,-139,31,-100
+Clsn2[1] = -46,-100,51,-60
+Clsn2[2] = -46,-60,51,-20
+17100,80,0,0,6
+Clsn2: 3
+Clsn2[0] = -37,-143,51,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -46,-57,51,-13
+Clsn1: 1
+Clsn1[0] = 0,-95,90,-74
+17100,94,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 221]
+Clsn2: 3
+Clsn2[0] = -34,-144,50,-99
+Clsn2[1] = -46,-99,39,-54
+Clsn2[2] = -40,-54,45,-8
+17100,10,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-144,24,-100
+Clsn2[1] = -46,-100,51,-55
+Clsn2[2] = -46,-55,24,-10
+Clsn1: 1
+Clsn1[0] = 8,-104,74,-86
+17100,11,0,0,4
+Clsn2: 3
+Clsn2[0] = -35,-145,51,-100
+Clsn2[1] = -45,-100,32,-55
+Clsn2[2] = -46,-55,35,-10
+17100,13,0,0,15
+
+[Begin Action 222]
+Clsn2: 3
+Clsn2[0] = -31,-150,34,-106
+Clsn2[1] = -41,-106,51,-61
+Clsn2[2] = -46,-61,42,-16
+17100,24,0,0,6
+Clsn2: 3
+Clsn2[0] = -30,-150,37,-106
+Clsn2[1] = -34,-106,51,-62
+Clsn2[2] = -46,-62,51,-17
+Clsn1: 1
+Clsn1[0] = 14,-114,66,-93
+17100,25,0,0,4
+Clsn2: 3
+Clsn2[0] = -34,-141,51,-99
+Clsn2[1] = -46,-99,49,-57
+Clsn2[2] = -46,-57,33,-14
+17100,32,0,0,15
+
+[Begin Action 400]
+Clsn2: 3
+Clsn2[0] = -45,-139,21,-99
+Clsn2[1] = -46,-99,25,-59
+Clsn2[2] = -46,-59,51,-19
+17100,15,0,0,6
+Clsn2: 3
+Clsn2[0] = -10,-124,44,-89
+Clsn2[1] = -46,-89,46,-53
+Clsn2[2] = -46,-53,51,-17
+Clsn1: 1
+Clsn1[0] = 26,-55,77,-15
+17100,20,0,0,4
+Clsn2: 3
+Clsn2[0] = -28,-141,51,-99
+Clsn2[1] = -46,-99,39,-57
+Clsn2[2] = -46,-57,31,-14
+17100,22,0,0,15
+
+[Begin Action 401]
+Clsn2: 3
+Clsn2[0] = -46,-131,13,-92
+Clsn2[1] = -46,-92,51,-53
+Clsn2[2] = -46,-53,37,-13
+17100,42,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-141,51,-102
+Clsn2[1] = -46,-102,51,-63
+Clsn2[2] = -25,-63,51,-24
+Clsn1: 1
+Clsn1[0] = 7,-111,80,-87
+17100,50,0,0,4
+Clsn2: 3
+Clsn2[0] = -33,-144,14,-103
+Clsn2[1] = -38,-103,30,-61
+Clsn2[2] = -46,-61,51,-19
+17100,52,0,0,15
+
+[Begin Action 402]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 410]
+Clsn2: 3
+Clsn2[0] = -46,-131,13,-92
+Clsn2[1] = -46,-92,51,-53
+Clsn2[2] = -46,-53,37,-13
+17100,42,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-141,51,-102
+Clsn2[1] = -46,-102,51,-63
+Clsn2[2] = -25,-63,51,-24
+Clsn1: 1
+Clsn1[0] = 7,-111,80,-87
+17100,50,0,0,4
+Clsn2: 3
+Clsn2[0] = -33,-144,14,-103
+Clsn2[1] = -38,-103,30,-61
+Clsn2[2] = -46,-61,51,-19
+17100,52,0,0,15
+
+[Begin Action 411]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 412]
+Clsn2: 3
+Clsn2[0] = -45,-139,21,-99
+Clsn2[1] = -46,-99,25,-59
+Clsn2[2] = -46,-59,51,-19
+17100,15,0,0,6
+Clsn2: 3
+Clsn2[0] = -10,-124,44,-89
+Clsn2[1] = -46,-89,46,-53
+Clsn2[2] = -46,-53,51,-17
+Clsn1: 1
+Clsn1[0] = 26,-55,77,-15
+17100,20,0,0,4
+Clsn2: 3
+Clsn2[0] = -28,-141,51,-99
+Clsn2[1] = -46,-99,39,-57
+Clsn2[2] = -46,-57,31,-14
+17100,22,0,0,15
+
+[Begin Action 420]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 421]
+Clsn2: 3
+Clsn2[0] = -45,-139,21,-99
+Clsn2[1] = -46,-99,25,-59
+Clsn2[2] = -46,-59,51,-19
+17100,15,0,0,6
+Clsn2: 3
+Clsn2[0] = -10,-124,44,-89
+Clsn2[1] = -46,-89,46,-53
+Clsn2[2] = -46,-53,51,-17
+Clsn1: 1
+Clsn1[0] = 26,-55,77,-15
+17100,20,0,0,4
+Clsn2: 3
+Clsn2[0] = -28,-141,51,-99
+Clsn2[1] = -46,-99,39,-57
+Clsn2[2] = -46,-57,31,-14
+17100,22,0,0,15
+
+[Begin Action 422]
+Clsn2: 3
+Clsn2[0] = -46,-131,13,-92
+Clsn2[1] = -46,-92,51,-53
+Clsn2[2] = -46,-53,37,-13
+17100,42,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-141,51,-102
+Clsn2[1] = -46,-102,51,-63
+Clsn2[2] = -25,-63,51,-24
+Clsn1: 1
+Clsn1[0] = 7,-111,80,-87
+17100,50,0,0,4
+Clsn2: 3
+Clsn2[0] = -33,-144,14,-103
+Clsn2[1] = -38,-103,30,-61
+Clsn2[2] = -46,-61,51,-19
+17100,52,0,0,15
+
+[Begin Action 600]
+Clsn2: 3
+Clsn2[0] = -46,-144,46,-102
+Clsn2[1] = -46,-102,51,-59
+Clsn2[2] = -39,-59,31,-16
+17100,83,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-135,27,-97
+Clsn2[1] = -46,-97,45,-59
+Clsn2[2] = -16,-59,51,-20
+Clsn1: 2
+Clsn1[0] = 25,-80,58,-48
+Clsn1[1] = 55,-51,98,-16
+17100,84,0,0,4
+Clsn2: 3
+Clsn2[0] = -27,-139,37,-99
+Clsn2[1] = -46,-99,51,-59
+Clsn2[2] = -46,-59,51,-19
+17100,82,0,0,15
+
+[Begin Action 601]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 602]
+Clsn2: 3
+Clsn2[0] = -25,-144,27,-100
+Clsn2[1] = -37,-100,51,-55
+Clsn2[2] = -37,-55,51,-10
+17100,91,0,0,6
+Clsn2: 3
+Clsn2[0] = -31,-118,37,-82
+Clsn2[1] = -46,-82,29,-46
+Clsn2[2] = -38,-46,28,-9
+Clsn1: 1
+Clsn1[0] = -4,-70,22,-12
+17100,92,0,0,4
+Clsn2: 3
+Clsn2[0] = -39,-137,23,-102
+Clsn2[1] = -46,-102,31,-66
+Clsn2[2] = -46,-66,51,-30
+17100,93,0,0,15
+
+[Begin Action 610]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 611]
+Clsn2: 3
+Clsn2[0] = -25,-144,27,-100
+Clsn2[1] = -37,-100,51,-55
+Clsn2[2] = -37,-55,51,-10
+17100,91,0,0,6
+Clsn2: 3
+Clsn2[0] = -31,-118,37,-82
+Clsn2[1] = -46,-82,29,-46
+Clsn2[2] = -38,-46,28,-9
+Clsn1: 1
+Clsn1[0] = -4,-70,22,-12
+17100,92,0,0,4
+Clsn2: 3
+Clsn2[0] = -39,-137,23,-102
+Clsn2[1] = -46,-102,31,-66
+Clsn2[2] = -46,-66,51,-30
+17100,93,0,0,15
+
+[Begin Action 612]
+Clsn2: 3
+Clsn2[0] = -46,-144,46,-102
+Clsn2[1] = -46,-102,51,-59
+Clsn2[2] = -39,-59,31,-16
+17100,83,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-135,27,-97
+Clsn2[1] = -46,-97,45,-59
+Clsn2[2] = -16,-59,51,-20
+Clsn1: 2
+Clsn1[0] = 25,-80,58,-48
+Clsn1[1] = 55,-51,98,-16
+17100,84,0,0,4
+Clsn2: 3
+Clsn2[0] = -27,-139,37,-99
+Clsn2[1] = -46,-99,51,-59
+Clsn2[2] = -46,-59,51,-19
+17100,82,0,0,15
+
+[Begin Action 620]
+Clsn2: 3
+Clsn2[0] = -25,-144,27,-100
+Clsn2[1] = -37,-100,51,-55
+Clsn2[2] = -37,-55,51,-10
+17100,91,0,0,6
+Clsn2: 3
+Clsn2[0] = -31,-118,37,-82
+Clsn2[1] = -46,-82,29,-46
+Clsn2[2] = -38,-46,28,-9
+Clsn1: 1
+Clsn1[0] = -4,-70,22,-12
+17100,92,0,0,4
+Clsn2: 3
+Clsn2[0] = -39,-137,23,-102
+Clsn2[1] = -46,-102,31,-66
+Clsn2[2] = -46,-66,51,-30
+17100,93,0,0,15
+
+[Begin Action 621]
+Clsn2: 3
+Clsn2[0] = -46,-144,46,-102
+Clsn2[1] = -46,-102,51,-59
+Clsn2[2] = -39,-59,31,-16
+17100,83,0,0,6
+Clsn2: 3
+Clsn2[0] = -46,-135,27,-97
+Clsn2[1] = -46,-97,45,-59
+Clsn2[2] = -16,-59,51,-20
+Clsn1: 2
+Clsn1[0] = 25,-80,58,-48
+Clsn1[1] = 55,-51,98,-16
+17100,84,0,0,4
+Clsn2: 3
+Clsn2[0] = -27,-139,37,-99
+Clsn2[1] = -46,-99,51,-59
+Clsn2[2] = -46,-59,51,-19
+17100,82,0,0,15
+
+[Begin Action 622]
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,6
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+Clsn1: 2
+Clsn1[0] = 20,-92,58,-72
+Clsn1[1] = 52,-122,103,-92
+17100,90,0,0,4
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,15
+
+[Begin Action 1200]
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,11,0,0,24
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,12,0,0,12
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,13,0,0,30
+
+; projectile: shared radial staff spell, bounded by controller
+
+[Begin Action 1600]
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,11,0,0,8
+
+; JUS barrier legacy charge/recovery/hit art reuse
+
+[Begin Action 1602]
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,13,0,0,16
+
+; JUS barrier legacy charge/recovery/hit art reuse
+
+[Begin Action 1603]
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,17,0,0,20
+
+; JUS barrier dedicated deployment3phases8ticks
+
+[Begin Action 2005]
+Clsn1: 1
+Clsn1[0] = -6,-6,6,6
+12000,3,0,0,-1
+
+; effect: small spell miss expiry, no collision
+
+[Begin Action 2006]
+12000,4,0,0,6
+
+; effect: shared contact then decay; no attack
+
+[Begin Action 2007]
+12000,5,0,0,4
+12000,6,0,0,7
+
+; body: parent-approved4new super body keys; no interpolated art
+
+[Begin Action 3000]
+Clsn2: 2
+Clsn2[0] = -20,-104,22,-58
+Clsn2[1] = -28,-62,34,-12
+14000,0,0,0,10
+Clsn2: 2
+Clsn2[0] = -20,-104,22,-58
+Clsn2[1] = -28,-62,34,-12
+14000,1,0,0,14
+Clsn2: 2
+Clsn2[0] = -20,-104,22,-58
+Clsn2[1] = -28,-62,34,-12
+14000,2,0,0,20
+Clsn2: 2
+Clsn2[0] = -20,-104,22,-58
+Clsn2[1] = -28,-62,34,-12
+14000,3,0,0,30
+
+; projectile: beam short nonattacking onset then finite full-ray core; fallback decay harmless
+
+[Begin Action 3005]
+12000,0,0,0,4
+Clsn1: 1
+Clsn1[0] = 4,-14,248,14
+12000,1,0,0,8
+12000,2,0,0,8
+
+; effect: beam hit/cancel/expiry decay, never attacking
+
+[Begin Action 3006]
+12000,2,0,0,8
+
+; body: Obsidian Seal one delayed fixed locus; dedicated return art
+
+[Begin Action 3100]
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,31,0,0,20
+Clsn2: 2
+Clsn2[0] = -20,-84,24,-44
+Clsn2[1] = -32,-50,40,-2
+11000,32,0,0,34
+Clsn2: 2
+Clsn2[0] = -22,-98,24,-52
+Clsn2[1] = -32,-58,36,-2
+11000,33,0,0,30
+
+; projectile: native world scale1; dedicated second-super phase; old core/time unchanged
+
+[Begin Action 3105]
+15000,2,0,0,9
+15000,3,0,0,9
+Clsn1: 1
+Clsn1[0] = -24,-128,24,-6
+15000,4,0,0,3
+Clsn1: 1
+Clsn1[0] = -24,-128,24,-6
+15000,5,0,0,3
+15000,6,0,0,5
+15000,7,0,0,5
+
+; effect: native world scale1; dedicated second-super phase; old core/time unchanged
+
+[Begin Action 3106]
+15000,6,0,0,5
+15000,7,0,0,5
+
+; body: 
+
+[Begin Action 5000]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5001]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5002]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5005]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5006]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5007]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5010]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5011]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5012]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,12
+
+[Begin Action 5015]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5016]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5017]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,-1
+
+[Begin Action 5020]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,12
+
+[Begin Action 5021]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,12
+
+[Begin Action 5022]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,12
+
+[Begin Action 5025]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,-1
+
+[Begin Action 5026]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,-1
+
+[Begin Action 5027]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -48,-98,28,-62
+Clsn2[1] = -54,-66,58,-30
+Clsn2[2] = -56,-34,26,2
+17510,1,0,0,-1
+
+[Begin Action 5030]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -54,-100,46,-60
+Clsn2[1] = -65,-64,65,-24
+Clsn2[2] = -47,-28,61,12
+17510,2,0,0,12
+
+[Begin Action 5035]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,5
+
+[Begin Action 5040]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -54,-100,46,-60
+Clsn2[1] = -65,-64,65,-24
+Clsn2[2] = -47,-28,61,12
+17510,2,0,0,-1
+
+[Begin Action 5050]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5051]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5052]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5060]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5061]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5062]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,-1
+
+[Begin Action 5070]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -54,-100,46,-60
+Clsn2[1] = -65,-64,65,-24
+Clsn2[2] = -47,-28,61,12
+17510,2,0,0,10
+
+[Begin Action 5080]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,8
+
+[Begin Action 5081]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,8
+
+[Begin Action 5082]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,8
+
+[Begin Action 5090]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,8
+
+[Begin Action 5100]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5101]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5102]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5110]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5111]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5112]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5120]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-78,-8,-49
+Clsn2[1] = -63,-53,58,-24
+Clsn2[2] = -58,-28,64,2
+17510,5,0,0,8
+Clsn2: 3
+Clsn2[0] = -24,-105,52,-67
+Clsn2[1] = -31,-71,50,-33
+Clsn2[2] = -60,-37,40,2
+17510,6,0,0,8
+Clsn2: 3
+Clsn2[0] = -45,-115,52,-74
+Clsn2[1] = -48,-78,39,-36
+Clsn2[2] = -56,-40,35,2
+17510,7,0,0,8
+Clsn2: 3
+Clsn2[0] = -28,-147,63,-98
+Clsn2[1] = -30,-102,60,-52
+Clsn2[2] = -36,-56,47,-6
+17000,0,0,0,4
+
+[Begin Action 5121]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-78,-8,-49
+Clsn2[1] = -63,-53,58,-24
+Clsn2[2] = -58,-28,64,2
+17510,5,0,0,8
+Clsn2: 3
+Clsn2[0] = -24,-105,52,-67
+Clsn2[1] = -31,-71,50,-33
+Clsn2[2] = -60,-37,40,2
+17510,6,0,0,8
+Clsn2: 3
+Clsn2[0] = -45,-115,52,-74
+Clsn2[1] = -48,-78,39,-36
+Clsn2[2] = -56,-40,35,2
+17510,7,0,0,8
+Clsn2: 3
+Clsn2[0] = -28,-147,63,-98
+Clsn2[1] = -30,-102,60,-52
+Clsn2[2] = -36,-56,47,-6
+17000,0,0,0,4
+
+[Begin Action 5122]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-78,-8,-49
+Clsn2[1] = -63,-53,58,-24
+Clsn2[2] = -58,-28,64,2
+17510,5,0,0,8
+Clsn2: 3
+Clsn2[0] = -24,-105,52,-67
+Clsn2[1] = -31,-71,50,-33
+Clsn2[2] = -60,-37,40,2
+17510,6,0,0,8
+Clsn2: 3
+Clsn2[0] = -45,-115,52,-74
+Clsn2[1] = -48,-78,39,-36
+Clsn2[2] = -56,-40,35,2
+17510,7,0,0,8
+Clsn2: 3
+Clsn2[0] = -28,-147,63,-98
+Clsn2[1] = -30,-102,60,-52
+Clsn2[2] = -36,-56,47,-6
+17000,0,0,0,4
+
+[Begin Action 5140]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5150]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5151]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5152]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5156]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5157]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,-1
+
+[Begin Action 5160]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,8
+
+[Begin Action 5161]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,8
+
+[Begin Action 5162]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -61,-93,61,-61
+Clsn2[1] = -65,-65,57,-33
+Clsn2[2] = -60,-37,66,-4
+17510,3,0,0,8
+
+[Begin Action 5170]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5171]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5172]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -81,-39,72,-23
+Clsn2[1] = -76,-27,82,-11
+Clsn2[2] = -69,-15,82,2
+17510,4,0,0,3
+
+[Begin Action 5200]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -32,-106,24,-68
+Clsn2[1] = -41,-72,50,-33
+Clsn2[2] = -50,-37,48,2
+17500,5,0,0,8
+
+[Begin Action 5210]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -45,-135,18,-90
+Clsn2[1] = -64,-94,51,-48
+Clsn2[2] = -51,-52,34,-6
+17500,3,0,0,5
+Clsn2: 3
+Clsn2[0] = -38,-139,20,-92
+Clsn2[1] = -43,-96,44,-49
+Clsn2[2] = -43,-53,37,-6
+17500,4,0,0,-1
+
+[Begin Action 5300]
+; Production v2 clean model, original frame clocks and C1 preserved.
+Clsn2: 3
+Clsn2[0] = -53,-137,44,-88
+Clsn2[1] = -52,-92,53,-43
+Clsn2[2] = -47,-47,55,2
+17510,0,0,0,30
+
+[Begin Action 8160]
+13000,0,0,0,3
+13000,1,0,0,3
+13000,2,0,0,2
+
+; JUS barrier intact hold loop
+
+[Begin Action 8161]
+13000,3,0,0,4
+13000,4,0,0,4
+
+; JUS first actual guarded contact: crack response5ticks
+
+[Begin Action 8162]
+13000,5,0,0,3
+13000,6,0,0,2
+
+; JUS damaged hold alias; no extra unique art
+
+[Begin Action 8163]
+13000,6,0,0,-1
+
+; JUS second-contact shatter18ticks
+
+[Begin Action 8164]
+13000,7,0,0,5
+13000,8,0,0,6
+13000,9,0,0,7
+
+; JUS natural16tick fade aliases9/10; NOT independent natural-fade art
+
+[Begin Action 8165]
+13000,8,0,0,8
+13000,9,0,0,8
+
+; JUS super rear charge, no hitbox
+
+[Begin Action 8300]
+14001,2,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,3,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,4,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,3,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,4,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,3,0,0,4
+Clsn1: 1
+Clsn1[0] = 16,-40,560,40
+14001,4,0,0,4
+
+; JUS super harmless residual8ticks
+
+[Begin Action 8301]
+14001,7,0,0,8
+
+; JUS super independent actual victim-column impact, no extra damage
+
+[Begin Action 8305]
+14001,0,0,0,10
+
+; JUS super focus, no hitbox
+
+[Begin Action 8306]
+14001,1,0,0,14
+
+; JUS super onset4 then finite ray24ticks; one logical hit
+
+[Begin Action 8307]
+14001,5,0,0,5
+14001,6,0,0,9
+
+[Begin Action 8500]
+15000,0,0,0,10
+
+; effect: native world scale1; dedicated second-super phase; old core/time unchanged
+
+[Begin Action 8501]
+15000,1,0,0,10
+
+; projectile: one Projectile: visible birth4ticks then common-core pulsing orb; loop starts after birth
+
+[Begin Action 8600]
+Clsn1: 4
+Clsn1[0] = -90,-14,-84,-10
+Clsn1[1] = -84,-4,-54,4
+Clsn1[2] = -52,-4,-16,2
+Clsn1[3] = -12,-12,16,12
+16200,0,0,0,2
+Clsn1: 2
+Clsn1[0] = -30,-8,-12,0
+Clsn1[1] = -10,-12,16,14
+16200,1,0,0,2
+Loopstart
+Clsn1: 1
+Clsn1[0] = -20,-16,16,16
+16200,2,0,0,4
+Clsn1: 1
+Clsn1[0] = -20,-16,16,16
+16200,3,0,0,4
+
+; effect: single-cast contact rupture then harmless scatter, NO extra hit
+
+[Begin Action 8601]
+16200,4,0,0,4
+16200,5,0,0,6
+
+; effect: harmless miss/cancel scatter
+
+[Begin Action 8602]
+16200,5,0,0,6
+
+; projectile: shared birth only then original dedicated beam; old core narrowed to real opaque strip
+
+[Begin Action 8605]
+Clsn1: 4
+Clsn1[0] = -90,-14,-84,-10
+Clsn1[1] = -84,-4,-54,4
+Clsn1[2] = -52,-4,-16,2
+Clsn1[3] = -12,-12,16,12
+16200,0,0,0,2
+Clsn1: 2
+Clsn1[0] = -30,-8,-12,0
+Clsn1[1] = -10,-12,16,14
+16200,1,0,0,2
+Clsn1: 1
+Clsn1[0] = 4,-8,200,6
+12000,1,0,0,8
+12000,2,0,0,8
+
+; JUS barrier legacy charge/recovery/hit art reuse
+
+[Begin Action 11100]
+Clsn2: 3
+Clsn2[0] = -34,-144,50,-99
+Clsn2[1] = -46,-99,39,-54
+Clsn2[2] = -40,-54,45,-8
+17100,10,0,0,5
+Clsn2: 3
+Clsn2[0] = -46,-144,24,-100
+Clsn2[1] = -46,-100,51,-55
+Clsn2[2] = -46,-55,24,-10
+17100,11,0,0,4
+Clsn2: 3
+Clsn2[0] = -37,-138,22,-103
+Clsn2[1] = -46,-103,51,-68
+Clsn2[2] = -46,-68,11,-32
+17100,12,0,0,14
+Clsn2: 3
+Clsn2[0] = -35,-145,51,-100
+Clsn2[1] = -45,-100,32,-55
+Clsn2[2] = -46,-55,35,-10
+17100,13,0,0,5
+Clsn2: 3
+Clsn2[0] = -46,-146,29,-102
+Clsn2[1] = -46,-102,44,-57
+Clsn2[2] = -46,-57,45,-12
+17100,14,0,0,10
+
+[Begin Action 11110]
+Clsn2: 3
+Clsn2[0] = -45,-139,21,-99
+Clsn2[1] = -46,-99,25,-59
+Clsn2[2] = -46,-59,51,-19
+17100,15,0,0,6
+Clsn2: 3
+Clsn2[0] = -10,-124,44,-89
+Clsn2[1] = -46,-89,46,-53
+Clsn2[2] = -46,-53,51,-17
+17100,20,0,0,5
+Clsn2: 3
+Clsn2[0] = -18,-126,40,-90
+Clsn2[1] = -46,-90,35,-53
+Clsn2[2] = -43,-53,51,-16
+17100,21,0,0,18
+Clsn2: 3
+Clsn2[0] = -28,-141,51,-99
+Clsn2[1] = -46,-99,39,-57
+Clsn2[2] = -46,-57,31,-14
+17100,22,0,0,5
+Clsn2: 3
+Clsn2[0] = -28,-153,51,-108
+Clsn2[1] = -44,-108,48,-63
+Clsn2[2] = -39,-63,44,-18
+17100,23,0,0,12
+
+[Begin Action 11120]
+Clsn2: 3
+Clsn2[0] = -31,-150,34,-106
+Clsn2[1] = -41,-106,51,-61
+Clsn2[2] = -46,-61,42,-16
+17100,24,0,0,5
+Clsn2: 3
+Clsn2[0] = -30,-150,37,-106
+Clsn2[1] = -34,-106,51,-62
+Clsn2[2] = -46,-62,51,-17
+17100,25,0,0,5
+Clsn2: 3
+Clsn2[0] = -22,-141,49,-100
+Clsn2[1] = -46,-100,51,-59
+Clsn2[2] = -45,-59,39,-18
+17100,30,0,0,18
+Clsn2: 3
+Clsn2[0] = -31,-143,18,-98
+Clsn2[1] = -46,-98,33,-53
+Clsn2[2] = -46,-53,51,-7
+17100,31,0,0,5
+Clsn2: 3
+Clsn2[0] = -34,-141,51,-99
+Clsn2[1] = -46,-99,49,-57
+Clsn2[2] = -46,-57,33,-14
+17100,32,0,0,14
+
+[Begin Action 11130]
+Clsn2: 3
+Clsn2[0] = -30,-144,29,-109
+Clsn2[1] = -38,-109,51,-73
+Clsn2[2] = -40,-73,39,-37
+17100,33,0,0,4
+Clsn2: 3
+Clsn2[0] = -38,-132,39,-102
+Clsn2[1] = -40,-102,34,-72
+Clsn2[2] = -34,-72,35,-41
+17100,34,0,0,4
+Clsn2: 3
+Clsn2[0] = -39,-131,27,-90
+Clsn2[1] = -46,-90,51,-49
+Clsn2[2] = -46,-49,51,-8
+17100,40,0,0,3
+Clsn2: 3
+Clsn2[0] = -46,-151,51,-105
+Clsn2[1] = -46,-105,51,-58
+Clsn2[2] = -46,-58,51,-11
+17100,35,0,0,6
+Clsn2: 3
+Clsn2[0] = -44,-145,51,-100
+Clsn2[1] = -46,-100,49,-54
+Clsn2[2] = -46,-54,43,-8
+17100,41,0,0,12
+
+[Begin Action 11140]
+; BLACK MAGIC: 9 independent generated body poses; 0-31 charge,32 release.
+Clsn2: 5
+Clsn2[0] = -9,-139,30,-93
+Clsn2[1] = -34,-106,30,-56
+Clsn2[2] = 22,-88,49,-70
+Clsn2[3] = -30,-63,14,-9
+Clsn2[4] = 19,-58,59,-11
+17300,0,0,0,6
+Clsn2: 5
+Clsn2[0] = -3,-128,32,-86
+Clsn2[1] = -29,-93,34,-51
+Clsn2[2] = 9,-75,33,-53
+Clsn2[3] = -26,-56,13,-8
+Clsn2[4] = 25,-54,62,-11
+17300,1,0,0,8
+Clsn2: 5
+Clsn2[0] = -5,-138,32,-91
+Clsn2[1] = -33,-103,33,-56
+Clsn2[2] = 32,-92,57,-68
+Clsn2[3] = -24,-60,18,-8
+Clsn2[4] = 23,-56,61,-12
+17300,2,0,0,10
+Clsn2: 5
+Clsn2[0] = -6,-136,31,-88
+Clsn2[1] = -38,-101,33,-56
+Clsn2[2] = 27,-90,72,-73
+Clsn2[3] = -30,-59,15,-8
+Clsn2[4] = 27,-57,69,-12
+17300,3,0,0,8
+Clsn2: 5
+Clsn2[0] = -8,-141,28,-92
+Clsn2[1] = -38,-104,36,-55
+Clsn2[2] = 25,-103,77,-84
+Clsn2[3] = -72,-60,4,-8
+Clsn2[4] = 26,-54,71,-12
+17300,4,0,0,4
+Clsn2: 5
+Clsn2[0] = -15,-142,23,-94
+Clsn2[1] = -36,-104,33,-55
+Clsn2[2] = 24,-99,50,-75
+Clsn2[3] = -30,-59,18,-8
+Clsn2[4] = 35,-57,62,-12
+17300,8,0,0,3
+Clsn2: 5
+Clsn2[0] = -15,-144,18,-96
+Clsn2[1] = -40,-106,28,-57
+Clsn2[2] = 19,-106,34,-80
+Clsn2[3] = -21,-60,20,-8
+Clsn2[4] = 25,-53,58,-12
+17300,5,0,0,3
+Clsn2: 5
+Clsn2[0] = -8,-138,27,-92
+Clsn2[1] = -34,-105,30,-57
+Clsn2[2] = 11,-93,31,-71
+Clsn2[3] = -23,-60,17,-8
+Clsn2[4] = 25,-51,57,-12
+17300,6,0,0,10
+Clsn2: 5
+Clsn2[0] = -12,-150,24,-97
+Clsn2[1] = -29,-105,27,-60
+Clsn2[2] = 24,-78,41,-62
+Clsn2[3] = -23,-63,15,-8
+Clsn2[4] = 8,-62,33,-23
+17300,7,0,0,-1
+
+
+[Begin Action 11150]
+Clsn2: 3
+Clsn2[0] = -45,-164,51,-113
+Clsn2[1] = -41,-113,51,-62
+Clsn2[2] = -41,-62,48,-11
+17100,53,0,0,8
+Clsn2: 3
+Clsn2[0] = -22,-158,51,-109
+Clsn2[1] = -32,-109,51,-60
+Clsn2[2] = -37,-60,51,-11
+17100,54,0,0,8
+Clsn2: 3
+Clsn2[0] = -27,-160,51,-111
+Clsn2[1] = -43,-111,48,-62
+Clsn2[2] = -46,-62,51,-12
+17100,55,0,0,46
+Clsn2: 3
+Clsn2[0] = -39,-140,42,-104
+Clsn2[1] = -46,-104,51,-67
+Clsn2[2] = -46,-67,23,-30
+17100,60,0,0,22
+Clsn2: 3
+Clsn2[0] = -43,-143,39,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -41,-57,43,-14
+17100,61,0,0,22
+Clsn2: 3
+Clsn2[0] = -35,-144,51,-100
+Clsn2[1] = -43,-100,42,-56
+Clsn2[2] = -46,-56,46,-12
+17100,62,0,0,26
+
+[Begin Action 11160]
+Clsn2: 3
+Clsn2[0] = -36,-150,51,-107
+Clsn2[1] = -46,-107,51,-64
+Clsn2[2] = -46,-64,35,-20
+17100,63,0,0,8
+Clsn2: 3
+Clsn2[0] = -45,-150,51,-104
+Clsn2[1] = -46,-104,36,-58
+Clsn2[2] = -46,-58,45,-12
+17100,64,0,0,8
+Clsn2: 3
+Clsn2[0] = -36,-152,51,-105
+Clsn2[1] = -46,-105,51,-58
+Clsn2[2] = -46,-58,51,-10
+17100,65,0,0,12
+Clsn2: 3
+Clsn2[0] = -38,-144,51,-99
+Clsn2[1] = -42,-99,51,-53
+Clsn2[2] = -42,-53,47,-7
+17100,70,0,0,15
+Clsn2: 3
+Clsn2[0] = -32,-144,51,-100
+Clsn2[1] = -46,-100,29,-56
+Clsn2[2] = -46,-56,35,-11
+17100,71,0,0,37
+Clsn2: 3
+Clsn2[0] = -30,-130,21,-96
+Clsn2[1] = -46,-96,51,-61
+Clsn2[2] = -46,-61,13,-26
+17100,72,0,0,18
+Clsn2: 3
+Clsn2[0] = -34,-146,40,-110
+Clsn2[1] = -46,-110,46,-73
+Clsn2[2] = -46,-73,51,-36
+17100,73,0,0,19
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-102
+Clsn2[1] = -43,-102,51,-58
+Clsn2[2] = -33,-58,41,-14
+17100,74,0,0,19
+Clsn2: 3
+Clsn2[0] = -36,-150,51,-104
+Clsn2[1] = -36,-104,49,-58
+Clsn2[2] = -37,-58,51,-12
+17100,75,0,0,34
+
+[Begin Action 11170]
+Clsn2: 3
+Clsn2[0] = -39,-139,31,-100
+Clsn2[1] = -46,-100,51,-60
+Clsn2[2] = -46,-60,51,-20
+17100,80,0,0,10
+Clsn2: 3
+Clsn2[0] = -45,-141,39,-100
+Clsn2[1] = -46,-100,50,-59
+Clsn2[2] = -38,-59,43,-17
+Clsn1: 1
+Clsn1[0] = 0,-38,110,-8
+17100,81,0,0,4
+Clsn2: 3
+Clsn2[0] = -27,-139,37,-99
+Clsn2[1] = -46,-99,51,-59
+Clsn2[2] = -46,-59,51,-19
+17100,82,0,0,24
+
+[Begin Action 11171]
+Clsn2: 3
+Clsn2[0] = -27,-139,37,-99
+Clsn2[1] = -46,-99,51,-59
+Clsn2[2] = -46,-59,51,-19
+17100,82,0,0,70
+Clsn2: 3
+Clsn2[0] = -46,-144,46,-102
+Clsn2[1] = -46,-102,51,-59
+Clsn2[2] = -39,-59,31,-16
+17100,83,0,0,10
+Clsn2: 3
+Clsn2[0] = -46,-135,27,-97
+Clsn2[1] = -46,-97,45,-59
+Clsn2[2] = -16,-59,51,-20
+17100,84,0,0,12
+Clsn2: 3
+Clsn2[0] = -36,-141,34,-105
+Clsn2[1] = -46,-105,51,-69
+Clsn2[2] = -46,-69,51,-32
+17100,85,0,0,12
+Clsn2: 3
+Clsn2[0] = -12,-134,46,-95
+Clsn2[1] = -46,-95,51,-55
+Clsn2[2] = -46,-55,35,-15
+17100,90,0,0,16
+Clsn2: 3
+Clsn2[0] = -25,-144,27,-100
+Clsn2[1] = -37,-100,51,-55
+Clsn2[2] = -37,-55,51,-10
+17100,91,0,0,10
+Clsn2: 3
+Clsn2[0] = -31,-118,37,-82
+Clsn2[1] = -46,-82,29,-46
+Clsn2[2] = -38,-46,28,-9
+17100,92,0,0,14
+Clsn2: 3
+Clsn2[0] = -39,-137,23,-102
+Clsn2[1] = -46,-102,31,-66
+Clsn2[2] = -46,-66,51,-30
+17100,93,0,0,20
+Clsn2: 3
+Clsn2[0] = -37,-143,51,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -46,-57,51,-13
+17100,94,0,0,10
+Clsn2: 3
+Clsn2[0] = -29,-146,51,-103
+Clsn2[1] = -30,-103,51,-59
+Clsn2[2] = -36,-59,51,-15
+17100,95,0,0,11
+
+[Begin Action 11200]
+Clsn2: 3
+Clsn2[0] = -31,-150,34,-106
+Clsn2[1] = -41,-106,51,-61
+Clsn2[2] = -46,-61,42,-16
+17100,24,0,0,4
+Clsn2: 3
+Clsn2[0] = -30,-150,37,-106
+Clsn2[1] = -34,-106,51,-62
+Clsn2[2] = -46,-62,51,-17
+Clsn1: 1
+Clsn1[0] = 0,-92,55,-40
+17100,25,0,0,4
+Clsn2: 3
+Clsn2[0] = -34,-141,51,-99
+Clsn2[1] = -46,-99,49,-57
+Clsn2[2] = -46,-57,33,-14
+17100,32,0,0,14
+
+[Begin Action 11201]
+Clsn2: 3
+Clsn2[0] = -45,-141,39,-100
+Clsn2[1] = -46,-100,50,-59
+Clsn2[2] = -38,-59,43,-17
+17100,81,0,0,10
+Clsn2: 3
+Clsn2[0] = -37,-143,51,-100
+Clsn2[1] = -46,-100,51,-57
+Clsn2[2] = -46,-57,51,-13
+17100,94,0,0,10
+
+[Begin Action 11800]
+17200,0,0,0,5
+17200,1,0,0,4
+
+[Begin Action 11810]
+17200,4,0,0,6
+17200,5,0,0,5
+
+[Begin Action 11820]
+17420,0,0,0,4
+17420,1,0,0,6
+
+
+[Begin Action 11830]
+17200,14,0,0,4
+17200,15,0,0,4
+17200,16,0,0,9
+17200,17,0,0,12
+
+[Begin Action 11840]
+17310,0,0,0,-1
+
+[Begin Action 11842]
+; Single final damage event is CNS Time42, all art after it is nondamaging.
+17310,6,0,0,4
+17310,7,0,0,6
+17310,8,0,0,8
+
+[Begin Action 11850]
+17200,18,0,0,24
+
+[Begin Action 11860]
+17200,23,0,0,8
+17200,25,0,0,20
+17200,26,0,0,86
+17200,28,0,0,8
+17200,29,0,0,26
+
+[Begin Action 11861]
+17200,27,0,0,38
+
+[Begin Action 11870]
+17200,30,0,0,14
+
+[Begin Action 11871]
+17200,31,0,0,64
+17200,33,0,0,31
+17200,34,0,0,10
+17200,35,0,0,20
+
+[Begin Action 11872]
+17200,32,0,0,6
+
+[Begin Action 11900]
+; Moving portrait, same original sprite; not new artwork.
+17200,44,-320,0,2
+17200,44,-160,0,2
+17200,44,-64,0,2
+17200,44,0,0,2
+17200,44,0,0,10
+17200,44,2,0,10
+17200,44,0,0,9
+17200,44,-2,0,9
+17200,44,0,0,2
+17200,44,64,0,2
+17200,44,160,0,2
+17200,44,320,0,2
+
+[Begin Action 11901]
+; Moving portrait, same original sprite; not new artwork.
+17200,44,-320,0,2
+17200,44,-160,0,2
+17200,44,-64,0,2
+17200,44,0,0,2
+17200,44,0,0,14
+17200,44,2,0,14
+17200,44,0,0,14
+17200,44,-2,0,14
+17200,44,0,0,2
+17200,44,64,0,2
+17200,44,160,0,2
+17200,44,320,0,2
+
+[Begin Action 12100]
+Clsn1: 1
+Clsn1[0] = -25,-32,40,32
+17200,1,0,0,3
+Clsn1: 1
+Clsn1[0] = 0,-18,78,18
+17200,2,0,0,25
+
+[Begin Action 12101]
+17200,3,0,0,6
+
+[Begin Action 12110]
+Clsn1: 4
+Clsn1[0] = -96,-18,95,-2
+Clsn1[1] = -65,-58,-32,-18
+Clsn1[2] = -5,-58,25,-18
+Clsn1[3] = 50,-58,82,-18
+17200,6,0,0,24
+
+[Begin Action 12111]
+17200,7,0,0,3
+17200,8,0,0,3
+
+[Begin Action 12120]
+Clsn2: 1
+Clsn2[0] = -14,-110,14,110
+17420,1,0,0,18
+
+
+[Begin Action 12121]
+17420,2,0,0,2
+17420,3,0,0,3
+17200,13,0,0,3
+
+
+[Begin Action 12122]
+17420,3,0,0,4
+17200,13,0,0,4
+
+
+[Begin Action 12140]
+; Travelling sphere: collision cross sits inside opaque circular mass.
+Clsn1Default: 2
+Clsn1[0] = -58,-35,58,35
+Clsn1[1] = -36,-58,36,58
+LoopStart
+17310,1,0,0,4
+17310,2,0,0,4
+
+[Begin Action 12141]
+; Harmless inward fizzle only: never use final explosion for guard/miss.
+17310,9,0,0,12
+
+[Begin Action 12150]
+Clsn1: 1
+Clsn1[0] = -35,-58,40,58
+17200,19,0,0,44
+
+[Begin Action 12151]
+17200,22,0,0,6
+
+[Begin Action 12152]
+17200,20,0,0,4
+17200,24,0,0,4
+Clsn1: 4
+Clsn1[0] = -55,-42,-5,42
+Clsn1[1] = 5,-42,55,42
+Clsn1[2] = -35,-65,35,-30
+Clsn1[3] = -35,30,35,65
+17200,21,0,0,10
+
+[Begin Action 12160]
+Clsn1: 1
+Clsn1[0] = 0,-28,180,28
+17200,38,0,0,18
+Clsn1: 1
+Clsn1[0] = -10,-43,306,43
+17200,39,0,0,19
+Clsn1: 1
+Clsn1[0] = -10,-43,306,43
+17200,40,0,0,19
+
+[Begin Action 12161]
+17200,43,0,0,6
+
+[Begin Action 12142]
+; Initial contact6 then six2-keypulse cycles. Exactly3 unique art keys, not13.
+17310,3,0,0,6
+17310,4,0,0,3
+17310,5,0,0,3
+17310,4,0,0,3
+17310,5,0,0,3
+17310,4,0,0,3
+17310,5,0,0,3
+17310,4,0,0,3
+17310,5,0,0,3
+17310,4,0,0,3
+17310,5,0,0,3
+17310,4,0,0,3
+17310,5,0,0,3
+17310,5,0,0,-1
+
+
+[Begin Action 12145]
+; Helper own sprite is invisible in CNS; owned11842Explod finishes.
+17310,8,0,0,18
+
+[Begin Action 33400]
+; Native contact spark: no collision boxes; finite 7 ticks.
+33400,0,0,0,2
+33400,1,0,0,2
+33400,2,0,0,3

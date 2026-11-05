@@ -1,0 +1,144 @@
+; Relinquished common soul mechanic. Work in progress, integration not complete.
+; Helper 7000 owns its hit target until destruction; never retarget EnemyNear.
+; Helper vars: 0 current HP, 1 captured, 2 max HP, 3 previous parent life,
+; 4 captured opponent LifeMax, 5 captured opponent PlayerID, 6 spent flag.
+; AIR7000 = light-wave collision, AIR7001 = common soul appearance.
+[Statedef 7000]
+type = S
+movetype = A
+physics = N
+anim = 7000
+velset = 0,0
+ctrl = 0
+
+[State 7000, no helper collision or damage interception]
+type = PlayerPush
+trigger1 = 1
+value = 0
+ignorehitpause = 1
+
+[State 7000, follow caster]
+type = BindToParent
+trigger1 = 1
+time = 1
+pos = 0,-32
+ignorehitpause = 1
+
+[State 7000, capture light wave]
+type = HitDef
+trigger1 = Time = 0
+attr = S, HP
+hitflag = MAF
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+ground.type = High
+ground.slidetime = 0
+ground.hittime = 12
+ground.velocity = 0,0
+air.hittime = 12
+air.velocity = 0,0
+fall = 0
+getpower = 0,0
+givepower = 0,0
+id = 7000
+hitonce = 1
+numhits = 0
+kill = 0
+
+[State 7000, keep a single actually struck opponent]
+type = TargetDrop
+trigger1 = !var(1) && NumTarget(7000) > 0
+excludeID = 7000
+keepone = 1
+
+[State 7000, remember source ID]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 5
+value = Target(7000), ID
+
+[State 7000, remember source maximum HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 4
+value = Target(7000), LifeMax
+
+[State 7000, common soul max HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 2
+value = 300
+
+[State 7000, initialize soul HP]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 0
+value = var(2)
+
+[State 7000, sample starting parent life]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 3
+value = Parent, Life
+
+[State 7000, soul picture after capture]
+type = ChangeAnim
+trigger1 = !var(1) && NumTarget(7000) > 0
+value = 7001
+
+[State 7000, mark successful capture last]
+type = VarSet
+trigger1 = !var(1) && NumTarget(7000) > 0
+v = 1
+value = 1
+
+[State 7000, decrease soul by actual parent life loss]
+type = VarAdd
+triggerall = var(1) && !var(6)
+trigger1 = (Parent, Life) < var(3)
+v = 0
+value = -var(3)+(Parent, Life)
+ignorehitpause = 1
+
+[State 7000, clamp soul HP]
+type = VarSet
+trigger1 = var(0) < 0
+v = 0
+value = 0
+ignorehitpause = 1
+
+[State 7000, sample life after accounting]
+type = VarSet
+trigger1 = var(1)
+v = 3
+value = Parent, Life
+ignorehitpause = 1
+
+[State 7000, one exact twenty-percent retaliation]
+type = TargetLifeAdd
+triggerall = var(1) && !var(6) && var(0) <= 0
+triggerall = NumTarget(7000) > 0
+triggerall = (Target(7000), ID) = var(5)
+trigger1 = RoundState = 2
+ID = 7000
+value = -floor(var(4)*.20)
+absolute = 1
+kill = 1
+ignorehitpause = 1
+
+[State 7000, spent even when original opponent has disappeared]
+type = VarSet
+trigger1 = var(1) && var(0) <= 0
+v = 6
+value = 1
+ignorehitpause = 1
+
+[State 7000, release all references on end]
+type = DestroySelf
+trigger1 = !var(1) && Time > 24
+trigger2 = var(6)
+trigger3 = RoundState != 2
+trigger4 = !(Parent, Alive)
+ignorehitpause = 1

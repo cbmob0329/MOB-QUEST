@@ -1,0 +1,4594 @@
+; SHARED_EPISODE_NO_RETARGET_REFUND
+; CINEMATIC_PRELUDE_V2
+; Original MOB Patty Red v0.1 candidate. Engine execution intentionally not performed.
+[Data]
+life = 1000
+power = 3000
+attack = 100
+defence = 100
+fall.defence_up = 50
+liedown.time = 35
+airjuggle = 12
+sparkno = 2
+guard.sparkno = 40
+KO.echo = 0
+volume = 0
+IntPersistIndex = 60
+FloatPersistIndex = 40
+[Size]
+xscale = 0.75
+yscale = 0.75
+ground.back = 11
+ground.front = 12
+air.back = 11
+air.front = 11
+height = 83
+attack.dist = 75
+proj.attack.dist = 90
+proj.doscale = 0
+head.pos = 0,-62
+mid.pos = 0,-32
+shadowoffset = 0
+draw.offset = 0,0
+[Velocity]
+walk.fwd = 4.664
+walk.back = -4.346
+run.fwd = 6.466,0
+run.back = -4.982,-3.5
+jump.neu = 0,-9.612
+jump.back = -3.71
+jump.fwd = 4.028
+runjump.back = -3.71,-9.612
+runjump.fwd = 5.088,-9.612
+airjump.neu = 0,-7.452
+airjump.back = -3.71
+airjump.fwd = 4.028
+air.gethit.groundrecover = -.15,-3.2
+air.gethit.airrecover.mul = .5,.2
+air.gethit.airrecover.add = 0,-4
+air.gethit.airrecover.back = -1
+air.gethit.airrecover.fwd = 0
+air.gethit.airrecover.up = -2
+air.gethit.airrecover.down = 1.5
+[Movement]
+airjump.num = 1
+airjump.height = 20
+yaccel = .38
+stand.friction = .85
+crouch.friction = .82
+stand.friction.threshold = .05
+crouch.friction.threshold = .05
+air.gethit.groundlevel = 0
+air.gethit.groundrecover.ground.threshold = -16
+air.gethit.groundrecover.groundlevel = 0
+air.gethit.airrecover.threshold = -1
+air.gethit.airrecover.yaccel = .38
+air.gethit.trip.groundlevel = 0
+down.bounce.offset = 0,0
+down.bounce.yaccel = .4
+down.bounce.groundlevel = 0
+down.friction.threshold = .05
+
+[Statedef -3]
+
+[State -3, Owned tick stamp]
+type = VarSet
+trigger1 = 1
+v = 58
+value = GameTime
+ignorehitpause = 1
+
+
+[State -3, previous target air]
+type = VarSet
+triggerall = !IsHelper && NumEnemy > 0
+triggerall = HitPauseTime = 0
+triggerall = Alive && RoundState = 2
+trigger1 = 1
+v = 49
+value = var(48)
+
+[State -3, previous target ID]
+type = VarSet
+triggerall = !IsHelper && NumEnemy > 0
+triggerall = HitPauseTime = 0
+triggerall = Alive && RoundState = 2
+trigger1 = 1
+v = 50
+value = var(51)
+
+[State -3, current target air]
+type = VarSet
+triggerall = !IsHelper && NumEnemy > 0
+triggerall = HitPauseTime = 0
+triggerall = Alive && RoundState = 2
+trigger1 = 1
+v = 48
+value = P2StateType = A
+
+[State -3, current target ID]
+type = VarSet
+triggerall = !IsHelper && NumEnemy > 0
+triggerall = HitPauseTime = 0
+triggerall = Alive && RoundState = 2
+trigger1 = 1
+v = 51
+value = EnemyNear, ID
+
+[Statedef -2]
+
+[State -2, Remove physical cast effects on interrupt]
+type = RemoveExplod
+trigger1 = !Alive || RoundState != 2
+trigger2 = MoveType = H
+
+
+[State -2, Cutin 19001 ends outside authored super]
+type = RemoveExplod
+trigger1 = StateNo != 3000 && StateNo != 3100 && StateNo != 3200 && StateNo != 3300
+ID = 19001
+
+[State -2, Cutin 19002 ends outside authored super]
+type = RemoveExplod
+trigger1 = StateNo != 3000 && StateNo != 3100 && StateNo != 3200 && StateNo != 3300
+ID = 19002
+
+[State -2, Stop original cue channels on interrupt]
+type = StopSnd
+trigger1 = !Alive || RoundState != 2
+trigger2 = MoveType = H
+channel = 4
+
+
+[State -2, Reset jump only settled controllable ground or inactive round]
+type = VarSet
+trigger1 = RoundState != 2
+trigger2 = var(58) = GameTime
+trigger2 = Alive && MoveType != H && StateType != A && Pos Y >= 0
+trigger2 = StateNo = 0 || StateNo = 11 || StateNo = 20 || StateNo = 21 || StateNo = 52
+v = 0
+value = 0
+
+[State -2, Reset victim only round end or resolved target]
+type = VarSet
+trigger1 = RoundState != 2 || !Alive
+v = 40
+value = 0
+
+[State -2, Release episode only all 1 enemies resolved]
+type = VarSet
+triggerall = NumEnemy = 1
+triggerall = var(40) > 0
+trigger1 = (Enemy(0), Alive) = 0 || ((Enemy(0), StateType != A) && (Enemy(0), Pos Y) >= 0 && (Enemy(0), MoveType != H))
+v = 40
+value = 0
+
+[State -2, Release episode only all 2 enemies resolved]
+type = VarSet
+triggerall = NumEnemy = 2
+triggerall = var(40) > 0
+trigger1 = (Enemy(0), Alive) = 0 || ((Enemy(0), StateType != A) && (Enemy(0), Pos Y) >= 0 && (Enemy(0), MoveType != H))
+trigger1 = (Enemy(1), Alive) = 0 || ((Enemy(1), StateType != A) && (Enemy(1), Pos Y) >= 0 && (Enemy(1), MoveType != H))
+v = 40
+value = 0
+
+[State -2, Clear budget only inactive victim]
+type = VarSet
+trigger1 = var(40) = 0
+v = 41
+value = 0
+
+
+[State -2, Was this the first episode contact]
+type = VarSet
+triggerall = var(58) = GameTime
+triggerall = NumTarget > 0
+triggerall = HitCount > var(9)
+triggerall = (StateNo = [200,222]) || (StateNo = [400,422]) || (StateNo = [600,622]) || StateNo = 800 || StateNo = 801 || StateNo = 1000 || StateNo = 1100 || StateNo = 1200 || (StateNo = 1300 && Time >= 20) || StateNo = 3100
+trigger1 = Target, StateType = A
+v = 46
+value = var(40) = 0
+
+[State -2, Register actual airborne victim]
+type = VarSet
+triggerall = var(58) = GameTime
+triggerall = !IsHelper && RoundState = 2 && Alive
+triggerall = (StateNo = [200,222]) || (StateNo = [400,422]) || (StateNo = [600,622]) || StateNo = 800 || StateNo = 801 || StateNo = 1000 || StateNo = 1100 || StateNo = 1200 || (StateNo = 1300 && Time >= 20) || StateNo = 3100
+triggerall = NumTarget > 0
+triggerall = HitCount > var(9)
+trigger1 = (Target, StateType = A)
+v = 40
+value = Target, ID
+
+[State -2, Count actual airborne hit once]
+type = VarAdd
+triggerall = var(58) = GameTime
+triggerall = !IsHelper && RoundState = 2 && Alive
+triggerall = (StateNo = [200,222]) || (StateNo = [400,422]) || (StateNo = [600,622]) || StateNo = 800 || StateNo = 801 || StateNo = 1000 || StateNo = 1100 || StateNo = 1200 || (StateNo = 1300 && Time >= 20) || StateNo = 3100
+triggerall = StateNo < 1000 || var(42) = 0
+triggerall = NumTarget > 0
+triggerall = var(46) = 0 || var(50) != (Target, ID) || var(49) = 1
+triggerall = HitCount > var(9)
+trigger1 = (Target, StateType = A)
+v = 41
+value = ifelse(StateNo >= 1000,1,HitCount-var(9))
+
+[State -2, Mark skill air charge after shared ledger]
+type = VarSet
+triggerall = StateNo = 1000 || StateNo = 1100 || StateNo = 1200 || (StateNo = 1300 && Time >= 20) || StateNo = 3100
+triggerall = NumTarget > 0
+triggerall = HitCount > var(9)
+trigger1 = Target, StateType = A
+v = 42
+value = 1
+
+[State -2, Observe actual hit count]
+type = VarSet
+triggerall = (StateNo = [200,222]) || (StateNo = [400,422]) || (StateNo = [600,622]) || StateNo = 800 || StateNo = 801 || StateNo = 1000 || StateNo = 1100 || StateNo = 1200 || (StateNo = 1300 && Time >= 20) || StateNo = 3100
+trigger1 = HitCount > var(9)
+v = 9
+value = HitCount
+
+[State -2, Delayed public-state AI attack]
+type = VarSet
+triggerall = AILevel > 0 && !IsHelper && NumEnemy > 0
+triggerall = RoundState = 2 && Alive
+trigger1 = GameTime % 12 = 0
+v = 20
+value = (P2BodyDist X = [0,42]) && P2MoveType != A
+
+[State -2, Delayed public-state AI guard]
+type = VarSet
+triggerall = AILevel > 0 && !IsHelper && NumEnemy > 0
+triggerall = RoundState = 2 && Alive
+trigger1 = GameTime % 12 = 0
+v = 21
+value = P2MoveType = A && (P2BodyDist X = [0,75])
+
+[State -2, Delayed public-state AI approach]
+type = VarSet
+triggerall = AILevel > 0 && !IsHelper && NumEnemy > 0
+triggerall = RoundState = 2 && Alive
+trigger1 = GameTime % 12 = 0
+v = 22
+value = P2BodyDist X > 42
+
+[State -2, Delayed public-state AI jump]
+type = VarSet
+triggerall = AILevel > 0 && !IsHelper && NumEnemy > 0
+triggerall = RoundState = 2 && Alive
+trigger1 = GameTime % 12 = 0
+v = 23
+value = P2StateType = A && P2BodyDist X < 90
+
+[State -2, Delayed public-state AI choice]
+type = VarSet
+triggerall = AILevel > 0 && !IsHelper && NumEnemy > 0
+triggerall = RoundState = 2 && Alive
+trigger1 = GameTime % 12 = 0
+v = 24
+value = (GameTime / 12) % 4
+
+[State -2, Up released arms next jump press]
+type = VarSet
+trigger1 = command != "holdup"
+v = 11
+value = 0
+
+[State -2, Jump start consumes upward edge]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = StateNo = 40 || StateNo = 45 || StateNo = 700
+v = 11
+value = 1
+
+[State -2, Airjump starts consume exactly one extra jump]
+type = VarSet
+trigger1 = Time = 0
+trigger1 = StateNo = 45
+v = 10
+value = 1
+
+[State -2, Only actual grounded landing refunds extra jump]
+type = VarSet
+trigger1 = StateType != A
+trigger1 = Pos Y >= 0
+trigger1 = MoveType != H
+trigger1 = StateNo != 45
+v = 10
+value = 0
+
+
+[State -2, Delayed public guard height sample]
+type = VarSet
+triggerall = AILevel > 0 && NumEnemy > 0
+trigger1 = GameTime % 12 = 0
+v = 25
+value = P2StateType = C
+
+
+
+
+[State -2, Receive free projectile meter once per helper identity]
+type = PowerAdd
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = var(58) = GameTime && MoveType != H
+triggerall = NumHelper(1210) > 0
+triggerall = (Helper(1210), var(5)) > 0
+triggerall = var(54) != (Helper(1210), ID)
+trigger1 = 1
+value = Helper(1210), var(5)
+
+[State -2, Register actual projectile victim]
+type = VarSet
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = var(58) = GameTime && MoveType != H
+triggerall = NumHelper(1210) > 0
+triggerall = (Helper(1210), var(5)) > 0
+triggerall = var(54) != (Helper(1210), ID)
+trigger1 = 1
+triggerall = (Helper(1210), var(8)) = 1
+v = 40
+value = Helper(1210), var(6)
+
+[State -2, One shared air followup for this projectile cast]
+type = VarAdd
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = var(58) = GameTime && MoveType != H
+triggerall = NumHelper(1210) > 0
+triggerall = (Helper(1210), var(5)) > 0
+triggerall = var(54) != (Helper(1210), ID)
+trigger1 = 1
+triggerall = (Helper(1210), var(8)) = 1
+triggerall = (Helper(1210), var(7)) = 1
+triggerall = var(41) < 4
+v = 41
+value = 1
+
+[State -2, Commit projectile receipt last]
+type = VarSet
+triggerall = !IsHelper && Alive && RoundState = 2
+triggerall = var(58) = GameTime && MoveType != H
+triggerall = NumHelper(1210) > 0
+triggerall = (Helper(1210), var(5)) > 0
+triggerall = var(54) != (Helper(1210), ID)
+trigger1 = 1
+v = 54
+value = Helper(1210), ID
+
+[Statedef 40]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 40
+velset = 0,0
+poweradd = 0
+
+[State 40, Freeze intended jump direction]
+type = VarSet
+trigger1 = Time = 0
+v = 12
+value = ifelse(command = "holdfwd",1,ifelse(command = "holdback",-1,0))
+
+[State 40, Ground jump edge consumed]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = 1
+
+[State 40, Six tick authored takeoff]
+type = VelSet
+trigger1 = Time = 6
+x = ifelse(var(12) > 0,const(velocity.jump.fwd.x),ifelse(var(12) < 0,const(velocity.jump.back.x),0))
+y = const(velocity.jump.y)
+
+[State 40, Takeoff becomes airborne]
+type = StateTypeSet
+trigger1 = Time = 6
+statetype = A
+physics = A
+
+[State 40, Ordinary airborne control]
+type = ChangeState
+trigger1 = Time >= 6
+value = 50
+ctrl = 1
+
+
+[Statedef 45]
+type = A
+movetype = I
+physics = A
+ctrl = 0
+poweradd = 0
+
+[State 45, Spend extra jump immediately before handoff]
+type = VarSet
+trigger1 = Time = 0
+v = 10
+value = 1
+
+[State 45, Consume up edge immediately]
+type = VarSet
+trigger1 = Time = 0
+v = 11
+value = 1
+
+[State 45, Real second impulse]
+type = VelSet
+trigger1 = Time = 0
+x = ifelse(command = "holdfwd",const(velocity.airjump.fwd.x),ifelse(command = "holdback",const(velocity.airjump.back.x),0))
+y = const(velocity.airjump.y)
+
+[State 45, Visible rising body]
+type = ChangeAnim
+trigger1 = Time = 0
+value = 41
+
+[State 45, Resume actual flight]
+type = ChangeState
+trigger1 = Time = 0
+value = 50
+ctrl = 1
+
+[Statedef 130]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+anim = 130
+
+[State 130, Guard planted]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 130, Guard ends when threat ends]
+type = ChangeState
+trigger1 = AILevel = 0
+trigger1 = command != "holdback"
+trigger2 = AILevel > 0
+trigger2 = var(21) = 0
+trigger2 = Time > 8
+trigger3 = AILevel > 0
+trigger3 = var(21) = 0
+trigger4 = RoundState != 2
+value = 140
+
+[State 130, Guard height adjustment]
+type = ChangeState
+trigger1 = AILevel = 0
+trigger1 = command = "holddown"
+trigger2 = AILevel > 0
+trigger2 = var(25) = 1
+value = 131
+
+
+
+[Statedef 131]
+type = C
+movetype = I
+physics = C
+ctrl = 0
+anim = 131
+
+[State 131, Guard planted]
+type = VelSet
+trigger1 = Time = 0
+x = 0
+y = 0
+
+[State 131, Guard ends when threat ends]
+type = ChangeState
+trigger1 = AILevel = 0
+trigger1 = command != "holdback"
+trigger2 = AILevel > 0
+trigger2 = var(21) = 0
+trigger2 = Time > 8
+trigger3 = AILevel > 0
+trigger3 = var(21) = 0
+trigger4 = RoundState != 2
+value = 140
+
+[State 131, Guard height adjustment]
+type = ChangeState
+trigger1 = AILevel = 0
+trigger1 = command != "holddown"
+trigger2 = AILevel > 0
+trigger2 = var(25) = 0
+value = 130
+
+
+
+[Statedef 132]
+type = A
+movetype = I
+physics = A
+ctrl = 0
+anim = 132
+
+[State 132, Guard ends when threat ends]
+type = ChangeState
+trigger1 = AILevel = 0
+trigger1 = command != "holdback"
+trigger2 = AILevel > 0
+trigger2 = var(21) = 0
+trigger2 = Time > 8
+trigger3 = AILevel > 0
+trigger3 = var(21) = 0
+trigger4 = RoundState != 2
+value = 140
+
+
+
+[Statedef 3490]
+type = S
+movetype = I
+physics = S
+anim = 3490
+ctrl = 0
+
+[State 3490, Guard whiff recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+
+
+[Statedef 3491]
+type = A
+movetype = I
+physics = A
+anim = 44
+ctrl = 0
+
+[State 3491, Guard whiff recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+
+
+[Statedef 3500]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+[State 3500, Own hurt art]
+type = ChangeAnim
+trigger1 = Time = 0 && SelfAnimExist(5030)
+value = 5030
+[State 3500, Owner disappeared]
+type = SelfState
+trigger1 = !PlayerIDExist(GetHitVar(fall.envshake.ampl))
+value = 5050
+ctrl = 0
+[State 3500, Owner no longer valid]
+type = SelfState
+triggerall = PlayerIDExist(GetHitVar(fall.envshake.ampl))
+trigger1 = !(PlayerID(GetHitVar(fall.envshake.ampl)), Alive)
+trigger2 = (PlayerID(GetHitVar(fall.envshake.ampl)), StateNo) < 3000
+trigger3 = (PlayerID(GetHitVar(fall.envshake.ampl)), StateNo) > 3300
+trigger4 = !Alive || RoundState != 2
+trigger5 = Time > 1
+trigger5 = (PlayerID(GetHitVar(fall.envshake.ampl)), var(47)) != ID
+value = 5050
+ctrl = 0
+[State 3500, Hard capture deadline]
+type = SelfState
+trigger1 = Time >= 146
+value = 5050
+ctrl = 0
+
+
+[Statedef 3501]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+[State 3501, Bounded release]
+type = VelSet
+trigger1 = Time = 0
+x = -5
+y = -3.5
+[State 3501, Own fall art]
+type = ChangeAnim
+trigger1 = Time = 0 && SelfAnimExist(5030)
+value = 5030
+[State 3501, Positive gravity]
+type = VelAdd
+trigger1 = 1
+y = .48
+[State 3501, Actual floor]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5100
+ctrl = 0
+[State 3501, Hard handoff]
+type = SelfState
+trigger1 = Time >= 90
+value = 5050
+ctrl = 0
+
+
+
+[Statedef 180]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+juggle = 0
+anim = 180
+
+[State 180, Plant]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+
+[Statedef 191]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+juggle = 0
+anim = 190
+
+[State 191, Plant]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 191, Intro finite]
+type = AssertSpecial
+trigger1 = Time < 45
+flag = intro
+
+[State 191, Return]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+
+[Statedef 195]
+type = S
+movetype = I
+physics = S
+ctrl = 0
+juggle = 0
+anim = 195
+
+[State 195, Plant]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 195, Return]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+
+[Statedef 105]
+type = A
+movetype = I
+physics = N
+ctrl = 0
+juggle = 0
+anim = 105
+
+[State 105, Hop once]
+type = VelSet
+trigger1 = Time = 0
+x = Const(velocity.run.back.x)
+y = Const(velocity.run.back.y)
+
+[State 105, Gravity]
+type = VelAdd
+trigger1 = 1
+y = Const(movement.yaccel)
+
+[State 105, Land]
+type = ChangeState
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 601
+
+
+[Statedef 100]
+type = S
+movetype = I
+physics = N
+ctrl = 1
+anim = 100
+velset = 6.8,0
+poweradd = 0
+
+[State 100, Preserve controllable fast dash]
+type = AssertSpecial
+trigger1 = 1
+flag = NoWalk
+
+[State 100, Bounded fast dash]
+type = ChangeState
+trigger1 = Time >= 10
+value = 0
+ctrl = 1
+
+[Statedef 200]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 200
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 200, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 200, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 32,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 200
+getpower = 80,20
+givepower = 15,5
+
+[State 200, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 201]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 201
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 201, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 201, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 39,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 201
+getpower = 80,20
+givepower = 15,5
+
+[State 201, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 202]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 202
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 202, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 202, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 46,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 202
+getpower = 80,20
+givepower = 15,5
+
+[State 202, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 0
+ctrl = 1
+
+[Statedef 210]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 210
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 210, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 210, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 36,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 210
+getpower = 80,20
+givepower = 15,5
+
+[State 210, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 211]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 211
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 211, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 211, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 43,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 211
+getpower = 80,20
+givepower = 15,5
+
+[State 211, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 212]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 212
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 212, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 212, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 50,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 212
+getpower = 80,20
+givepower = 15,5
+
+[State 212, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 0
+ctrl = 1
+
+[Statedef 220]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 220
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 220, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 220, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 40,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 220
+getpower = 80,20
+givepower = 15,5
+
+[State 220, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 0
+ctrl = 1
+
+[Statedef 221]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 221
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 221, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 221, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 47,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 221
+getpower = 80,20
+givepower = 15,5
+
+[State 221, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 0
+ctrl = 1
+
+[Statedef 222]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 222
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 222, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 222, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = S, NA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 54,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 222
+getpower = 80,20
+givepower = 15,5
+
+[State 222, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 0
+ctrl = 1
+
+[Statedef 400]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 400
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 400, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 400, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 32,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 400
+getpower = 80,20
+givepower = 15,5
+
+[State 400, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 401]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 401
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 401, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 401, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 39,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 401
+getpower = 80,20
+givepower = 15,5
+
+[State 401, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 402]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 402
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 402, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 402, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 46,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,-8.4
+yaccel = .26
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 402
+getpower = 80,20
+givepower = 15,5
+
+[State 402, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 11
+ctrl = 1
+
+[Statedef 410]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 410
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 410, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 410, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 36,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 410
+getpower = 80,20
+givepower = 15,5
+
+[State 410, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 411]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 411
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 411, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 411, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 43,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 411
+getpower = 80,20
+givepower = 15,5
+
+[State 411, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 412]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 412
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 412, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 412, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 50,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,-8.4
+yaccel = .26
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 412
+getpower = 80,20
+givepower = 15,5
+
+[State 412, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 11
+ctrl = 1
+
+[Statedef 420]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 420
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 420, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 420, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 40,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 420
+getpower = 80,20
+givepower = 15,5
+
+[State 420, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 11
+ctrl = 1
+
+[Statedef 421]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 421
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 421, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 421, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 47,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 421
+getpower = 80,20
+givepower = 15,5
+
+[State 421, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 11
+ctrl = 1
+
+[Statedef 422]
+type = C
+movetype = A
+physics = C
+ctrl = 0
+anim = 422
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 422, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 422, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = C, NA
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 54,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,-8.4
+yaccel = .26
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 422
+getpower = 80,20
+givepower = 15,5
+
+[State 422, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 11
+ctrl = 1
+
+[Statedef 600]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 600
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 600, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 600, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 32,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 600
+getpower = 80,20
+givepower = 15,5
+
+[State 600, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 601]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 601
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 601, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 601, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 39,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 601
+getpower = 80,20
+givepower = 15,5
+
+[State 601, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 602]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 602
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 602, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 602, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 46,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 602
+getpower = 80,20
+givepower = 15,5
+
+[State 602, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 50
+ctrl = 1
+
+[Statedef 610]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 610
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 610, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 610, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 36,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 610
+getpower = 80,20
+givepower = 15,5
+
+[State 610, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 611]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 611
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 611, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 611, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 43,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 611
+getpower = 80,20
+givepower = 15,5
+
+[State 611, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 612]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 612
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 612, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 612, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 50,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 612
+getpower = 80,20
+givepower = 15,5
+
+[State 612, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 50
+ctrl = 1
+
+[Statedef 620]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 620
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 620, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 620, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 40,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 620
+getpower = 80,20
+givepower = 15,5
+
+[State 620, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 18
+value = 50
+ctrl = 1
+
+[Statedef 621]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 621
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 621, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 621, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 47,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 621
+getpower = 80,20
+givepower = 15,5
+
+[State 621, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 20
+value = 50
+ctrl = 1
+
+[Statedef 622]
+type = A
+movetype = A
+physics = A
+ctrl = 0
+anim = 622
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 622, Reset actual normal receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 622, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4
+trigger1 = Time = 6
+attr = A, NA
+hitflag = MAF
+guardflag = HA
+animtype = Hard
+damage = 54,0
+pausetime = 4,4
+sparkno = 2
+guard.sparkno = 40
+hitsound = S0,3
+guardsound = S0,1
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -4.5,-3
+air.velocity = -4.5,-3
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 622
+getpower = 80,20
+givepower = 15,5
+
+[State 622, Finite normal recovery]
+type = ChangeState
+trigger1 = Time >= 22
+value = 50
+ctrl = 1
+
+[Statedef 800]
+type = U
+movetype = A
+physics = N
+anim = 800
+ctrl = 0
+velset = 0,0
+juggle = 1
+poweradd = 0
+hitcountpersist = 0
+movehitpersist = 0
+
+
+[State 800, Air reach uses actual aerial posture]
+type = ChangeAnim
+triggerall = StateType = A
+trigger1 = Time = 0
+value = 803
+
+[State 800, Reset throw event observer]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 800, Reset captured ID]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 800, Actual close visible clinch]
+type = HitDef
+triggerall = Alive
+triggerall = RoundState = 2
+triggerall = var(41) < 4
+triggerall = NumEnemy > 0
+triggerall = P2Dist X = [0,32]
+triggerall = Abs(P2Dist Y) <= 24
+trigger1 = AnimElem = 2
+attr = SCA, NT
+hitflag = MAF
+hitonce = 1
+id = 700
+priority = 1,Miss
+damage = 0,0
+pausetime = 0,0
+sparkno = -1
+guard.sparkno = -1
+getpower = 80,20
+givepower = 0,0
+p1stateno = 801
+p2stateno = 810
+p2getp1state = 1
+fall = 1
+fall.recover = 1
+fall.envshake.time = 0
+fall.envshake.ampl = ID
+[State 800, Whiff finite recovery]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+
+
+
+
+[Statedef 801]
+movehitpersist = 1
+hitcountpersist = 1
+poweradd = 0
+type = U
+movetype = A
+physics = N
+anim = 801
+ctrl = 0
+velset = 0,0
+
+[State 801, Keep exactly one actual captured target]
+type = TargetDrop
+trigger1 = Time = 0
+excludeID = 700
+keepone = 1
+
+[State 801, Record fixed captured ID]
+type = VarSet
+triggerall = NumTarget(700) > 0
+trigger1 = Time = 0
+v = 47
+value = Target(700), ID
+
+[State 801, Freeze world release direction at capture]
+type = VarSet
+trigger1 = Time = 0
+v = 57
+value = Facing * ifelse(command = "holdback",-1,1)
+
+[State 801, Wrong target cannot be rebound]
+type = ChangeState
+triggerall = NumTarget(700) > 0
+trigger1 = (Target(700), ID) != var(47)
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+[State 801, Short visible ID-bound hold]
+type = TargetBind
+triggerall = NumTarget(700) > 0
+triggerall = (Target(700), ID) = var(47)
+triggerall = Target(700), StateNo = 810
+trigger1 = Time < 8
+ID = 700
+time = 1
+pos = 20,0
+
+[State 801, Air hold uses actual aerial posture]
+type = ChangeAnim
+triggerall = StateType = A
+trigger1 = Time = 0
+value = 804
+[State 801, Lost victim or KO]
+type = ChangeState
+trigger1 = NumTarget(700) = 0
+trigger2 = !Alive
+trigger3 = RoundState != 2
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+[State 801, Victim interrupted out of capture]
+type = ChangeState
+triggerall = NumTarget(700) > 0
+trigger1 = Target(700), StateNo != 810
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+[State 801, Victim faces captor direction convention]
+type = TargetFacing
+trigger1 = Time = 8
+ID = 700
+value = -var(57)*Facing
+[State 801, Exactly one damage event]
+type = TargetLifeAdd
+triggerall = Alive
+triggerall = NumTarget(700) > 0
+trigger1 = Time = 8
+ID = 700
+value = -90
+kill = 1
+absolute = 0
+[State 801, Release to short custom handoff]
+type = TargetState
+trigger1 = Time = 8
+ID = 700
+value = 812
+[State 801, Visible push release]
+type = ChangeState
+trigger1 = Time >= 8
+value = 802
+
+
+
+
+
+[Statedef 802]
+type = U
+movetype = I
+physics = N
+anim = 802
+ctrl = 0
+velset = 0,0
+
+[State 802, Air release uses actual aerial posture]
+type = ChangeAnim
+triggerall = StateType = A
+trigger1 = Time = 0
+value = 805
+
+[State 802, Release resumes real gravity]
+type = VelAdd
+trigger1 = StateType = A
+y = .44
+
+[State 802, Actual aerial release landing]
+type = ChangeState
+triggerall = StateType = A
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 52
+ctrl = 0
+[State 802, Finish release]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = ifelse(StateType = A,50,0)
+ctrl = 1
+
+; Victim custom state. No position adjustment or variable writes.
+
+
+
+
+[Statedef 810]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+[State 810, Victim own standing hurt animation]
+type = ChangeAnim
+trigger1 = Time = 0 && SelfAnimExist(5030)
+value = 5030
+[State 810, Missing captor safe release]
+type = SelfState
+trigger1 = !PlayerIDExist(GetHitVar(fall.envshake.ampl))
+value = 5050
+ctrl = 0
+[State 810, Interrupted or dead captor safe release]
+type = SelfState
+triggerall = PlayerIDExist(GetHitVar(fall.envshake.ampl))
+trigger1 = (PlayerID(GetHitVar(fall.envshake.ampl)), StateNo != 801) && (PlayerID(GetHitVar(fall.envshake.ampl)), StateNo != 800)
+trigger2 = !(PlayerID(GetHitVar(fall.envshake.ampl)), Alive)
+trigger3 = !Alive
+value = 5050
+ctrl = 0
+[State 810, Independent hard release deadline]
+type = SelfState
+trigger1 = Time >= 12
+value = 5050
+ctrl = 0
+
+
+
+[State 810, Fixed owner victim check]
+type = SelfState
+triggerall = PlayerIDExist(GetHitVar(fall.envshake.ampl))
+triggerall = Time > 1
+trigger1 = (PlayerID(GetHitVar(fall.envshake.ampl)), var(47)) != ID
+trigger2 = RoundState != 2
+value = 5050
+ctrl = 0
+
+
+
+[Statedef 812]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+[State 812, Own velocity after fixed opposing facing]
+type = VelSet
+trigger1 = Time = 0
+x = -4.8
+y = -3.2
+[State 812, Victim own visible fall animation]
+type = ChangeAnim
+trigger1 = Time = 0 && SelfAnimExist(5030)
+value = 5030
+[State 812, Guaranteed positive gravity]
+type = VelAdd
+trigger1 = 1
+y = .48
+[State 812, Return to own ground impact]
+type = SelfState
+trigger1 = Pos Y >= 0 && Vel Y > 0
+value = 5100
+ctrl = 0
+[State 812, Malformed stage or victim hard handoff]
+type = SelfState
+trigger1 = Time >= 90
+value = 5050
+ctrl = 0
+
+
+[Statedef 1000]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 1000
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 1000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 1000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 1000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 1000, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+trigger1 = MoveHit = 1
+value = 80
+
+[State 1000, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+trigger1 = MoveHit = 1
+v = 44
+value = 80
+
+[State 1000, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+trigger1 = MoveGuarded = 1
+value = 20
+
+[State 1000, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+trigger1 = MoveGuarded = 1
+v = 44
+value = 20
+
+[State 1000, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = Time = 11
+attr = S, SA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 60,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 1000
+getpower = 0,0
+givepower = 15,5
+
+[State 1000, Actual planted entry step]
+type = VelSet
+trigger1 = Time = [6,10]
+x = 3.8
+
+[State 1000, Plant at contact]
+type = VelSet
+trigger1 = Time >= 11
+x = 0
+
+[State 1000, Authored fire phase]
+type = Explod
+trigger1 = Time = 2
+anim = 9200
+ID = 11000
+pos = -6,-43
+postype = p1
+bindtime = 1
+removetime = 8
+scale = 0.18,0.18
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1000, Authored fire phase]
+type = Explod
+trigger1 = Time = 11
+anim = 9200
+ID = 11000
+pos = 45,-43
+postype = p1
+bindtime = 1
+removetime = 10
+scale = 0.38,0.38
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1000, Complete authored finite recovery]
+type = ChangeState
+trigger1 = Time >= 31
+value = 0
+ctrl = 1
+
+
+[State 1000, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 1000, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 1100]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 1100
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 1100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 1100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 1100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 1100, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+trigger1 = MoveHit = 1
+value = 80
+
+[State 1100, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+trigger1 = MoveHit = 1
+v = 44
+value = 80
+
+[State 1100, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+trigger1 = MoveGuarded = 1
+value = 20
+
+[State 1100, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+trigger1 = MoveGuarded = 1
+v = 44
+value = 20
+
+[State 1100, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = Time = 11
+attr = S, SA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 55,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 34
+ground.velocity = -1.5,-8.4
+yaccel = .26
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 1100
+getpower = 0,0
+givepower = 15,5
+
+[State 1100, Actual planted entry step]
+type = VelSet
+trigger1 = Time = [6,10]
+x = 2
+
+[State 1100, Plant at contact]
+type = VelSet
+trigger1 = Time >= 11
+x = 0
+
+[State 1100, Authored fire phase]
+type = Explod
+trigger1 = Time = 2
+anim = 9200
+ID = 11100
+pos = -6,-43
+postype = p1
+bindtime = 1
+removetime = 8
+scale = 0.18,0.18
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1100, Authored fire phase]
+type = Explod
+trigger1 = Time = 11
+anim = 9201
+ID = 11100
+pos = 25,-30
+postype = p1
+bindtime = 1
+removetime = 10
+scale = 0.8,0.8
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1100, Complete authored finite recovery]
+type = ChangeState
+trigger1 = Time >= 31
+value = 0
+ctrl = 1
+
+
+[State 1100, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 1100, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 1200]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 1200
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 1200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 1200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 1200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 1200, One finite visible ground-flame helper]
+type = Helper
+triggerall = NumHelper(1210) = 0
+trigger1 = Time = 12
+helpertype = normal
+name = "Patty ground flame"
+ID = 1210
+stateno = 1210
+pos = 18,0
+postype = p1
+ownpal = 1
+keyctrl = 0
+size.xscale = .4
+size.yscale = .4
+persistent = 0
+
+[State 1200, Authored fire phase]
+type = Explod
+trigger1 = Time = 11
+anim = 9202
+ID = 11200
+pos = 20,0
+postype = p1
+bindtime = 1
+removetime = 6
+scale = 0.2,0.2
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1200, Complete authored finite recovery]
+type = ChangeState
+trigger1 = Time >= 31
+value = 0
+ctrl = 1
+
+
+[State 1200, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 1200, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 1200, Visible ground-flame release cue]
+type = PlaySnd
+trigger1 = Time = 12
+value = 0,2
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 1300]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 1300
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 1300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 1300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 1300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 1300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 1300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 1300, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+triggerall = Time >= 20
+trigger1 = MoveHit = 1
+value = 60
+
+[State 1300, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+triggerall = Time >= 20
+trigger1 = MoveHit = 1
+v = 44
+value = 60
+
+[State 1300, Shared capped free meter]
+type = PowerAdd
+triggerall = var(44) < 240
+triggerall = Time >= 20
+trigger1 = MoveGuarded = 1
+value = 0
+
+[State 1300, Commit free cast meter]
+type = VarAdd
+triggerall = var(44) < 240
+triggerall = Time >= 20
+trigger1 = MoveGuarded = 1
+v = 44
+value = 0
+
+[State 1300, Localized forearm reception only]
+type = ReversalDef
+triggerall = Alive && RoundState = 2
+triggerall = NumEnemy > 0
+triggerall = P2Dist X >= 0
+trigger1 = Time = 6
+reversal.attr = SA,NA,SA
+pausetime = 0,0
+sparkno = -1
+hitsound = -1,0
+p1stateno = -1
+
+[State 1300, Real defense receipt20]
+type = PowerAdd
+triggerall = Time = [6,15]
+triggerall = var(55) = 0
+trigger1 = MoveHit = 1
+value = 20
+
+[State 1300, Commit defense meter20]
+type = VarAdd
+triggerall = Time = [6,15]
+triggerall = var(55) = 0
+trigger1 = MoveHit = 1
+v = 44
+value = 20
+
+[State 1300, Latch actual defense]
+type = VarSet
+triggerall = Time = [6,15]
+triggerall = var(55) = 0
+trigger1 = MoveHit = 1
+v = 55
+value = 1
+
+[State 1300, Consume reception after actual receipt]
+type = ChangeAnim
+triggerall = Time = [6,15]
+triggerall = var(55) = 1
+trigger1 = Anim != 1302
+value = 1302
+
+[State 1300, Resume counter body without resetting time]
+type = ChangeAnim
+triggerall = var(55) = 1
+trigger1 = Time = 16
+value = 1301
+elem = 3
+
+[State 1300, Defensive receipt not offensive contact]
+type = VarSet
+trigger1 = Time = 19
+v = 9
+value = HitCount
+
+[State 1300, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+triggerall = var(55) = 1
+trigger1 = Time = 20
+attr = S, SA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 55,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 1300
+getpower = 0,0
+givepower = 15,5
+
+[State 1300, Authored fire phase]
+type = Explod
+trigger1 = Time = 20
+triggerall = var(55) = 1
+anim = 9203
+ID = 11300
+pos = 32,-42
+postype = p1
+bindtime = 1
+removetime = 10
+scale = 0.45,0.45
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 1300, Complete authored finite recovery]
+type = ChangeState
+trigger1 = Time >= 42
+value = 0
+ctrl = 1
+
+
+[State 1300, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 1300, Actual contact fire cue]
+type = PlaySnd
+triggerall = Time >= 20
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 3000]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3000
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 3000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 3000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3000, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3000, Once approved tier cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+persistent = 0
+
+[State 3000, Wide face and fist cutin]
+type = Explod
+trigger1 = Time = 1
+anim = 9002
+ID = 19001
+pos = 0,22
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 72
+pausemovetime = 72
+scale = 1,1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Approved visible contact]
+triggerall = Time >= 54
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = (Time - 54) = 11
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 20,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 3000
+getpower = 0,0
+givepower = 15,5
+kill = 0
+p2stateno = 3500
+p2getp1state = 1
+fall.envshake.time = 0
+fall.envshake.ampl = ID
+
+[State 3000, One actual confirmed target]
+type = TargetDrop
+trigger1 = MoveHit = 1
+excludeID = 3000
+keepone = 1
+
+[State 3000, Freeze confirmed target ID]
+type = VarSet
+triggerall = NumTarget(3000) > 0
+trigger1 = MoveHit = 1
+v = 47
+value = Target(3000), ID
+
+[State 3000, Preserve captured episode]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 40
+value = var(47)
+
+[State 3000, Reserve remaining episode until settled]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 41
+value = 4
+
+[State 3000, Whiff guard recovery without capture]
+triggerall = Time >= 54
+type = ChangeState
+triggerall = (Time - 54) > 14
+trigger1 = var(47) = 0
+value = 3490
+ctrl = 0
+
+[State 3000, Lost capture finite release]
+triggerall = Time >= 54
+type = ChangeState
+triggerall = (Time - 54) > 14
+triggerall = (Time - 54) <= 61
+trigger1 = NumTarget(3000) = 0
+value = 3490
+ctrl = 0
+
+[State 3000, Interrupted victim never recaptured]
+triggerall = Time >= 54
+type = ChangeState
+triggerall = var(47) > 0
+triggerall = NumTarget(3000) > 0
+triggerall = (Time - 54) <= 61
+trigger1 = (Target(3000), ID) != var(47)
+trigger2 = (Target(3000), StateNo) != 3500
+value = 3490
+ctrl = 0
+
+[State 3000, Only fixed captured opponent binds]
+triggerall = Time >= 54
+type = TargetBind
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) < 61
+ID = 3000
+time = 1
+pos = 40,0
+
+[State 3000, Confirmed ordered fixed damage]
+triggerall = Time >= 54
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 18
+ID = 3000
+value = -35
+kill = 0
+absolute = 0
+persistent = 0
+
+[State 3000, Confirmed ordered fixed damage]
+triggerall = Time >= 54
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 25
+ID = 3000
+value = -35
+kill = 0
+absolute = 0
+persistent = 0
+
+[State 3000, Confirmed ordered fixed damage]
+triggerall = Time >= 54
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 32
+ID = 3000
+value = -35
+kill = 0
+absolute = 0
+persistent = 0
+
+[State 3000, Confirmed ordered fixed damage]
+triggerall = Time >= 54
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 61
+ID = 3000
+value = -75
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3000, Final fixed victim facing]
+triggerall = Time >= 54
+type = TargetFacing
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 61
+ID = 3000
+value = -1
+
+[State 3000, Final fixed victim release after damage]
+triggerall = Time >= 54
+type = TargetState
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+trigger1 = (Time - 54) = 61
+ID = 3000
+value = 3501
+
+[State 3000, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 18
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+anim = 9200
+ID = 13000
+pos = 38,-43
+postype = p1
+bindtime = 1
+removetime = 6
+scale = 0.34,0.34
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 25
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+anim = 9200
+ID = 13000
+pos = 38,-43
+postype = p1
+bindtime = 1
+removetime = 6
+scale = 0.34,0.34
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 32
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+anim = 9200
+ID = 13000
+pos = 38,-43
+postype = p1
+bindtime = 1
+removetime = 6
+scale = 0.34,0.34
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 40
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3000) > 0
+triggerall = (Target(3000), ID) = var(47)
+triggerall = (Target(3000), StateNo) = 3500
+anim = 9200
+ID = 13000
+pos = -7,-40
+postype = p1
+bindtime = 1
+removetime = 20
+scale = 0.23,0.23
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 61
+triggerall = var(47) > 0
+anim = 9200
+ID = 13000
+pos = 48,-42
+postype = p1
+bindtime = 1
+removetime = 14
+scale = 0.58,0.58
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3000, Complete authored finite recovery]
+triggerall = Time >= 54
+type = ChangeState
+trigger1 = (Time - 54) >= 94
+value = 0
+ctrl = 1
+
+
+[State 3000, Moving flame band light]
+type = Explod
+triggerall = 1
+trigger1 = Time = 1
+anim = 9004
+ID = 19002
+pos = 0,48
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 72
+pausemovetime = 72
+sprpriority = 6
+ontop = 1
+ownpal = 1
+scale = 1.2,.25
+removeongethit = 1
+persistent = 0
+
+
+[State 3000, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3000, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3000, Confirmed decisive flame cue]
+triggerall = Time >= 54
+type = PlaySnd
+triggerall = var(47) > 0
+trigger1 = (Time - 54) = 61
+value = 0,4
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 3100]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3100
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 3100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 3100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3100, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3100, Once approved tier cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -1000
+persistent = 0
+
+[State 3100, Wide face and fist cutin]
+type = Explod
+trigger1 = Time = 1
+anim = 9002
+ID = 19001
+pos = 0,22
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 72
+pausemovetime = 72
+scale = 1,1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3100, Real bounded fire rush]
+triggerall = Time >= 54
+type = VelSet
+triggerall = (Time - 54) = [16,39]
+triggerall = var(55) = 0
+trigger1 = 1
+x = 6.8
+
+[State 3100, Latch actual rush receipt]
+triggerall = Time >= 54
+type = VarSet
+triggerall = (Time - 54) = [16,39]
+trigger1 = MoveContact = 1
+v = 55
+value = 1
+
+[State 3100, Stop at actual contact or distance end]
+triggerall = Time >= 54
+type = VelSet
+trigger1 = var(55) = 1
+trigger2 = (Time - 54) >= 40
+x = 0
+
+[State 3100, Approved visible contact]
+triggerall = Time >= 54
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = (Time - 54) = 16
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 80,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 45
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 3100
+getpower = 0,0
+givepower = 15,5
+
+[State 3100, Approved visible contact]
+triggerall = Time >= 54
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+triggerall = var(55) = 1
+trigger1 = (Time - 54) = 60
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 120,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 3100
+getpower = 0,0
+givepower = 15,5
+
+[State 3100, Guard recoil without remote followup]
+triggerall = Time >= 54
+type = ChangeState
+triggerall = (Time - 54) >= 17
+trigger1 = MoveGuarded
+value = 3492
+ctrl = 0
+
+[State 3100, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 40
+triggerall = var(55) = 0
+anim = 9202
+ID = 13100
+pos = 20,0
+postype = p1
+bindtime = 1
+removetime = 8
+scale = 0.2,0.2
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3100, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 16
+anim = 9203
+ID = 13100
+pos = 25,-43
+postype = p1
+bindtime = 1
+removetime = 24
+scale = 0.48,0.48
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3100, Authored fire phase]
+triggerall = Time >= 54
+type = Explod
+trigger1 = (Time - 54) = 60
+triggerall = var(55) = 1
+anim = 9205
+ID = 13100
+pos = 48,-40
+postype = p1
+bindtime = 1
+removetime = 16
+scale = 0.65,0.65
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3100, Complete authored finite recovery]
+triggerall = Time >= 54
+type = ChangeState
+trigger1 = (Time - 54) >= 94
+value = 0
+ctrl = 1
+
+
+[State 3100, Moving flame band light]
+type = Explod
+triggerall = 1
+trigger1 = Time = 1
+anim = 9004
+ID = 19002
+pos = 0,48
+postype = left
+facing = 1
+bindtime = -1
+removetime = 54
+supermovetime = 72
+pausemovetime = 72
+sprpriority = 6
+ontop = 1
+ownpal = 1
+scale = 1.2,.25
+removeongethit = 1
+persistent = 0
+
+
+[State 3100, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3100, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3100, Confirmed decisive flame cue]
+triggerall = Time >= 54
+type = PlaySnd
+triggerall = var(55) > 0
+trigger1 = (Time - 54) = 60
+value = 0,4
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 3200]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3200
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 3200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 3200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3200, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3200, Once approved tier cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -2000
+persistent = 0
+
+[State 3200, Finite confirmed cinematic stop]
+type = SuperPause
+trigger1 = Time = 1
+time = 16
+movetime = 0
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3200, Wide face and fist cutin]
+type = Explod
+trigger1 = Time = 1
+anim = 9003
+ID = 19001
+pos = 0,22
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+scale = 1,1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Approved visible contact]
+triggerall = Time >= 56
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = (Time - 56) = 13
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 20,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 3200
+getpower = 0,0
+givepower = 15,5
+kill = 0
+p2stateno = 3500
+p2getp1state = 1
+fall.envshake.time = 0
+fall.envshake.ampl = ID
+
+[State 3200, One actual confirmed target]
+type = TargetDrop
+trigger1 = MoveHit = 1
+excludeID = 3200
+keepone = 1
+
+[State 3200, Freeze confirmed target ID]
+type = VarSet
+triggerall = NumTarget(3200) > 0
+trigger1 = MoveHit = 1
+v = 47
+value = Target(3200), ID
+
+[State 3200, Preserve captured episode]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 40
+value = var(47)
+
+[State 3200, Reserve remaining episode until settled]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 41
+value = 4
+
+[State 3200, Whiff guard recovery without capture]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = (Time - 56) > 16
+trigger1 = var(47) = 0
+value = 3490
+ctrl = 0
+
+[State 3200, Lost capture finite release]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = (Time - 56) > 16
+triggerall = (Time - 56) <= 104
+trigger1 = NumTarget(3200) = 0
+value = 3490
+ctrl = 0
+
+[State 3200, Interrupted victim never recaptured]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = var(47) > 0
+triggerall = NumTarget(3200) > 0
+triggerall = (Time - 56) <= 104
+trigger1 = (Target(3200), ID) != var(47)
+trigger2 = (Target(3200), StateNo) != 3500
+value = 3490
+ctrl = 0
+
+[State 3200, Only fixed captured opponent binds]
+triggerall = Time >= 56
+type = TargetBind
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+trigger1 = (Time - 56) < 104
+ID = 3200
+time = 1
+pos = 40,0
+
+[State 3200, Confirmed ordered fixed damage]
+triggerall = Time >= 56
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+trigger1 = (Time - 56) = 94
+ID = 3200
+value = -140
+kill = 0
+absolute = 0
+persistent = 0
+
+[State 3200, Confirmed ordered fixed damage]
+triggerall = Time >= 56
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+trigger1 = (Time - 56) = 104
+ID = 3200
+value = -200
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3200, Final fixed victim facing]
+triggerall = Time >= 56
+type = TargetFacing
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+trigger1 = (Time - 56) = 104
+ID = 3200
+value = -1
+
+[State 3200, Final fixed victim release after damage]
+triggerall = Time >= 56
+type = TargetState
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+trigger1 = (Time - 56) = 104
+ID = 3200
+value = 3501
+
+[State 3200, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 18
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+anim = 9200
+ID = 13200
+pos = -8,-40
+postype = p1
+bindtime = 1
+removetime = 42
+scale = 0.25,0.25
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 94
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3200) > 0
+triggerall = (Target(3200), ID) = var(47)
+triggerall = (Target(3200), StateNo) = 3500
+anim = 9200
+ID = 13200
+pos = 48,-42
+postype = p1
+bindtime = 1
+removetime = 10
+scale = 0.72,0.72
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 104
+triggerall = var(47) > 0
+anim = 9205
+ID = 13200
+pos = 48,-65
+postype = p1
+bindtime = 1
+removetime = 22
+scale = 1.15,1.15
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3200, Complete authored finite recovery]
+triggerall = Time >= 56
+type = ChangeState
+trigger1 = (Time - 56) >= 146
+value = 0
+ctrl = 1
+
+
+[State 3200, Moving flame band light]
+type = Explod
+trigger1 = Time = 1
+anim = 9005
+ID = 19002
+pos = 0,48
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+sprpriority = 6
+ontop = 1
+ownpal = 1
+scale = 1.2,.25
+removeongethit = 1
+persistent = 0
+
+
+[State 3200, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3200, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3200, Confirmed decisive flame cue]
+triggerall = Time >= 56
+type = PlaySnd
+triggerall = var(47) > 0
+trigger1 = (Time - 56) = 104
+value = 0,4
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 3300]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 3300
+velset = 0,0
+poweradd = 0
+movehitpersist = 0
+hitcountpersist = 0
+hitdefpersist = 0
+
+[State 3300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 9
+value = 0
+
+[State 3300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 42
+value = 0
+
+[State 3300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 44
+value = 0
+
+[State 3300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 47
+value = 0
+
+[State 3300, Reset cast-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 55
+value = 0
+
+[State 3300, Once approved tier cost]
+type = PowerAdd
+trigger1 = Time = 0
+value = -2000
+persistent = 0
+
+[State 3300, Finite confirmed cinematic stop]
+type = SuperPause
+trigger1 = Time = 1
+time = 16
+movetime = 0
+anim = -1
+sound = -1,0
+darken = 0
+p2defmul = 1
+poweradd = 0
+unhittable = 0
+persistent = 0
+
+[State 3300, Wide face and fist cutin]
+type = Explod
+trigger1 = Time = 1
+anim = 9003
+ID = 19001
+pos = 0,22
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+scale = 1,1
+sprpriority = 5
+ontop = 1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Approved visible contact]
+triggerall = Time >= 56
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = var(58) = GameTime
+triggerall = var(41) < 4 || var(42) = 1
+trigger1 = (Time - 56) = 13
+attr = S, HA
+hitflag = MAF
+guardflag = MA
+animtype = Hard
+damage = 20,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = High
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 1
+fall.recover = 0
+hitonce = 1
+id = 3300
+getpower = 0,0
+givepower = 15,5
+kill = 0
+p2stateno = 3500
+p2getp1state = 1
+fall.envshake.time = 0
+fall.envshake.ampl = ID
+
+[State 3300, One actual confirmed target]
+type = TargetDrop
+trigger1 = MoveHit = 1
+excludeID = 3300
+keepone = 1
+
+[State 3300, Freeze confirmed target ID]
+type = VarSet
+triggerall = NumTarget(3300) > 0
+trigger1 = MoveHit = 1
+v = 47
+value = Target(3300), ID
+
+[State 3300, Preserve captured episode]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 40
+value = var(47)
+
+[State 3300, Reserve remaining episode until settled]
+type = VarSet
+triggerall = var(47) > 0
+trigger1 = MoveHit = 1
+v = 41
+value = 4
+
+[State 3300, Whiff guard recovery without capture]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = (Time - 56) > 16
+trigger1 = var(47) = 0
+value = 3490
+ctrl = 0
+
+[State 3300, Lost capture finite release]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = (Time - 56) > 16
+triggerall = (Time - 56) <= 96
+trigger1 = NumTarget(3300) = 0
+value = 3490
+ctrl = 0
+
+[State 3300, Interrupted victim never recaptured]
+triggerall = Time >= 56
+type = ChangeState
+triggerall = var(47) > 0
+triggerall = NumTarget(3300) > 0
+triggerall = (Time - 56) <= 96
+trigger1 = (Target(3300), ID) != var(47)
+trigger2 = (Target(3300), StateNo) != 3500
+value = 3490
+ctrl = 0
+
+[State 3300, Only fixed captured opponent binds]
+triggerall = Time >= 56
+type = TargetBind
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+trigger1 = (Time - 56) < 96
+ID = 3300
+time = 1
+pos = 55,0
+
+[State 3300, Confirmed ordered fixed damage]
+triggerall = Time >= 56
+type = TargetLifeAdd
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+trigger1 = (Time - 56) = 96
+ID = 3300
+value = -340
+kill = 1
+absolute = 0
+persistent = 0
+
+[State 3300, Final fixed victim facing]
+triggerall = Time >= 56
+type = TargetFacing
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+trigger1 = (Time - 56) = 96
+ID = 3300
+value = -1
+
+[State 3300, Final fixed victim release after damage]
+triggerall = Time >= 56
+type = TargetState
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+trigger1 = (Time - 56) = 96
+ID = 3300
+value = 3501
+
+[State 3300, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 13
+anim = 9202
+ID = 13300
+pos = 18,0
+postype = p1
+bindtime = 1
+removetime = 8
+scale = 0.6,0.6
+sprpriority = 4
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 60
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+anim = 9204
+ID = 13300
+pos = 25,0
+postype = p1
+bindtime = 1
+removetime = 14
+scale = 0.58,0.58
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 72
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+anim = 9204
+ID = 13300
+pos = 50,0
+postype = p1
+bindtime = 1
+removetime = 14
+scale = 0.58,0.58
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 84
+triggerall = Alive && RoundState = 2
+triggerall = NumTarget(3300) > 0
+triggerall = (Target(3300), ID) = var(47)
+triggerall = (Target(3300), StateNo) = 3500
+anim = 9204
+ID = 13300
+pos = 75,0
+postype = p1
+bindtime = 1
+removetime = 14
+scale = 0.58,0.58
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Authored fire phase]
+triggerall = Time >= 56
+type = Explod
+trigger1 = (Time - 56) = 96
+triggerall = var(47) > 0
+anim = 9205
+ID = 13300
+pos = 55,-75
+postype = p1
+bindtime = 1
+removetime = 24
+scale = 1.25,1.25
+sprpriority = -1
+ownpal = 1
+removeongethit = 1
+persistent = 0
+
+[State 3300, Complete authored finite recovery]
+triggerall = Time >= 56
+type = ChangeState
+trigger1 = (Time - 56) >= 146
+value = 0
+ctrl = 1
+
+
+[State 3300, Moving flame band light]
+type = Explod
+trigger1 = Time = 1
+anim = 9005
+ID = 19002
+pos = 0,48
+postype = left
+facing = 1
+bindtime = -1
+removetime = 72
+supermovetime = 72
+pausemovetime = 72
+sprpriority = 6
+ontop = 1
+ownpal = 1
+scale = 1.2,.25
+removeongethit = 1
+persistent = 0
+
+
+[State 3300, Authored ember preparation cue]
+type = PlaySnd
+trigger1 = Time = 0
+value = 0,0
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3300, Actual contact fire cue]
+type = PlaySnd
+trigger1 = MoveHit = 1
+value = 0,3
+channel = 4
+volumescale = 100
+persistent = 0
+
+[State 3300, Confirmed decisive flame cue]
+triggerall = Time >= 56
+type = PlaySnd
+triggerall = var(47) > 0
+trigger1 = (Time - 56) = 96
+value = 0,4
+channel = 4
+volumescale = 100
+persistent = 0
+
+[Statedef 3492]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 3492
+poweradd = 0
+
+[State 3492, Actual guard recoil]
+type = VelSet
+trigger1 = Time < 4
+x = -2
+
+[State 3492, Plant recoil recovery]
+type = VelSet
+trigger1 = Time >= 4
+x = 0
+
+[State 3492, Bounded guard recovery]
+type = ChangeState
+trigger1 = Time >= 24
+value = 0
+ctrl = 1
+
+
+[Statedef 1210]
+type = S
+movetype = A
+physics = N
+ctrl = 0
+anim = 9210
+velset = 3.6,0
+poweradd = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 1
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 2
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 3
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 5
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 6
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 7
+value = 0
+
+[State 1210, Initialize helper-local receipt]
+type = VarSet
+trigger1 = Time = 0
+v = 8
+value = 0
+
+[State 1210, Cleanup if owner interrupted]
+type = DestroySelf
+trigger1 = (Root, Alive) = 0
+trigger2 = RoundState != 2
+trigger3 = (Root, MoveType = H)
+
+
+[State 1210, Exhausted air ledger disables live collision]
+type = ChangeState
+trigger1 = (Root, var(41)) >= 4
+value = 1211
+
+[State 1210, Keep one actual receipt target]
+type = TargetDrop
+triggerall = var(1) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+excludeID = 1210
+keepone = 1
+
+[State 1210, Record actual target identity]
+type = VarSet
+triggerall = var(1) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+v = 6
+value = Target, ID
+
+[State 1210, Read pre-contact airborne snapshot]
+type = VarSet
+triggerall = var(1) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+v = 7
+value = ifelse(var(3) = (Target, ID),var(2),1)
+
+[State 1210, Actual airborne result]
+type = VarSet
+triggerall = var(1) = 0
+triggerall = NumTarget > 0
+trigger1 = MoveHit = 1
+v = 8
+value = (Target, StateType = A)
+
+[State 1210, Pending root meter receipt no direct default gain]
+type = VarSet
+triggerall = var(1) = 0
+trigger1 = MoveContact = 1
+v = 5
+value = ifelse(MoveHit,80,20)
+
+[State 1210, Latch helper receipt]
+type = VarSet
+triggerall = var(1) = 0
+trigger1 = MoveContact = 1
+v = 1
+value = 1
+
+[State 1210, Single hit then visible harmless dissipation]
+type = ChangeState
+trigger1 = var(1) = 1
+trigger2 = Time >= 33
+value = 1211
+
+[State 1210, Pre-contact enemy air snapshot]
+type = VarSet
+triggerall = NumEnemy > 0
+trigger1 = 1
+v = 2
+value = P2StateType = A
+
+[State 1210, Pre-contact target identity]
+type = VarSet
+triggerall = NumEnemy > 0
+trigger1 = 1
+v = 3
+value = EnemyNear, ID
+
+[State 1210, Approved visible contact]
+type = HitDef
+triggerall = Alive && RoundState = 2
+triggerall = (Root, var(41)) < 4
+trigger1 = Time = 0
+attr = S, SP
+hitflag = MAF
+guardflag = L
+animtype = Hard
+damage = 55,0
+pausetime = 4,4
+sparkno = -1
+guard.sparkno = -1
+hitsound = -1,0
+guardsound = -1,0
+ground.type = Low
+ground.slidetime = 10
+ground.hittime = 22
+ground.velocity = -1.5,0
+air.velocity = -1.5,-4
+air.hittime = 24
+fall = 0
+fall.recover = 0
+hitonce = 1
+id = 1210
+getpower = 0,0
+givepower = 15,5
+
+[Statedef 1211]
+type = S
+movetype = I
+physics = N
+ctrl = 0
+anim = 9211
+velset = 0,0
+poweradd = 0
+
+[State 1211, Finite visual-only dissipation]
+type = DestroySelf
+trigger1 = Time >= 12
+trigger2 = (Root, Alive) = 0
+trigger3 = RoundState != 2
+trigger4 = (Root, MoveType = H)
+

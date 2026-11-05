@@ -1,0 +1,20 @@
+[Info]
+name = "Minotaur JUS"
+displayname = "Minotaur JUS"
+versiondate = 10,22,2026
+mugenversion = 1.0
+author = "Original fan character project"
+localcoord = 320,240
+pal.defaults = 1
+[Files]
+cmd = minotaur.cmd
+cns = minotaur.cns
+st = minotaur.cns
+stcommon = minotaur_common.cns
+sprite = minotaur.sff
+anim = minotaur.air
+sound = minotaur.snd
+; Per-sprite SFF2 palettes; no ACT override
+[Arcade]
+intro.storyboard =
+ending.storyboard =

@@ -1,0 +1,27 @@
+エルフの剣士 制作版 v1 — Astra 実機確認用（全体制作版）
+
+対象: candidates/elf_production_v1/elf_swordsman / elf_swordsman.def
+起点: existing22現選択 candidates/control/jus_inputs_20261025/elf_swordsman
+旧浮遊版へ戻していません。既知起動checkpointと元フォルダ/indexは未変更。
+
+保持: 現行待機Action0、接地336tick版のAction3110/3111と3100系CNS、入力優先度、全超必殺消費/所有ID/中断監視、既存攻撃絵/音声。
+変更:4枚の新規両手剣走り(23100,0–3)、Action20/100の4姿勢化、非接触待機18箇所の縮小旧姿勢除去、しゃがみ振り向き1箇所。
+立ち通常9状態の予備踏み込み、通常27状態の命中90、無料スキル80/ガード20/上限240維持。
+既存AI8技の範囲/高さ/ダウン/Helper数判定を調整。人間入力や技の水増しなし。
+新規無敵・装甲は追加しない。パリィは既存ReversalDefであり、ダメージを受ける装甲とは呼ばない。
+
+静的/実素材確認:336旧SFF entriesのraw/軸/palette/RGBA exact、追加4件は自前PCX palette、全AIR参照解決、Clsnゼロ宣言なし、正のhurtboxと足元の実SFF復号確認。
+AIR時間変更は20/100だけ。Action0/3110/3111は元と同一。
+旧116の19箇所はC1不在。802は捕獲解放後の4–12tick、3303は手元FX/Helper生成終了後109–124tickの待機で、TargetBindなし。94tickの地面塵は床座標で変更なし。
+Astra9種/見出し6fixtureの静的検査はPASS。native compiler/対戦保証ではありません。
+
+実機優先確認:
+1. このDEFで loaded OK と Match loop init。元ゲームプロセスを停止せず test_host を使う。
+2. AI-vs-AI、左右双方で通常連撃→4無料技→1/2barを選ぶか。3100の距離48–76、3200の28–56が小柄/大型両方で実用か。空振り連発なら実測調整。
+3. 3100接地336tickが浮かない、割込み/相手KO/自分KO/捕獲解除が正しい。
+4. 飛翔斬のhelper上限、反撃パリィ、頭上落下、十二方向瞬間斬、巨大剣の最終復帰。
+5. 通常90/無料スキル80/ガード20、1発動240上限、空振り0、超必殺自己獲得0、消費1回。
+6. 新しい歩き20tick/走り12tickは素材タイミングだけ確認。実移動との足滑り/テンポ/接触距離は実機確認。
+
+依存:従来の納品済み全体フォルダからcommon1.cnsを完全一致で同梱。global data/select.defは上書きしない。
+実機起動、入力、対戦、physics/frame-stepシミュレーション、uploaded probe scriptsは一切未実行。

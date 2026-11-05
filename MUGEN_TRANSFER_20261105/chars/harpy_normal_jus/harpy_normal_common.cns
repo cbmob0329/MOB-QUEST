@@ -1,0 +1,26 @@
+[Statedef 5900]
+type=S
+movetype=I
+physics=N
+ctrl=0
+poweradd=0
+
+[State 5900, round init integers only]
+type = VarRangeSet
+trigger1=Time=0
+first=0
+last=59
+value=0
+
+[State 5900, round init float registers]
+type = VarRangeSet
+trigger1=Time=0
+first=0
+last=39
+fvalue=0
+
+[State 5900, finite intro]
+type = ChangeState
+trigger1=1
+value=190
+ctrl=0

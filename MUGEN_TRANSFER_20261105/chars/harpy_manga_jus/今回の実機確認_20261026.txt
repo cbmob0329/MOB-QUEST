@@ -1,0 +1,5 @@
+﻿2026-10-26 今回の反映と確認範囲
+捕縛820/6080/6380の生存地上相手にCtrl1を返す修正。専用実HitDefで3つのカスタムstateへ実際に入り、非拘束解除後3つともCtrl1(ENTRYmask7/CTRLmask7)。被害側commonの自動Ctrl1をfixtureのみ抑え、解除自身の効果を確認。通常読込/対戦開始・本体表示確認。千年竜を識別する捕縛/解放アニメ分岐を追加、既存捕縛座標は保持。
+
+証跡はjus_updates_work/serizawa_revision/phase3b/dot_girl_harpy_load（旧版エラー）、dot_girl_fixed_load（修正版通常読込）、dot_baby_harpy_load、dot_release_a、dot_release_b_v2。実画面PNGとengine.log保存。A:ENTRYmask7 CTRLmask7 RELAN5050 FALL1、B:GIRL811FALL1 BABYan15020 BABY811FALL1 GIRLan5020 FORM1 PREform1。専用fixtureは強制技開始/フォーム/配置を設定する実接触試験であり、製品には計測コードを含めない。最初のBはSelfState後の試験VarSetへ到達せずFORM0だったためfixtureの設定tickを分け、製品を変更せず再試験。
+既存技/変身/common/CMD/画像/パレットを保持。通常入力による全投げ、HP50%変身境界、KO/割込/全相手、瞬間消失全般、全被弾やサイズ統一は未完。Harpyの必須AIR欠番5件とBaby common5900のRemapPal source/dest1,1警告が既存残件。千年竜は実表示が大きく、JUS寸法の再評価が必要。今回の限定修正を全画像/全モーション完成とは呼ばない。

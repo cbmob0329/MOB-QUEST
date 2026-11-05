@@ -1,0 +1,25 @@
+[Info]
+name = "Elf Swordsman"
+displayname = "Elf Swordsman approved168 WIP"
+versiondate = 10,24,2026
+mugenversion = 1.0
+author = "Original character project"
+pal.defaults = 1
+localcoord = 320,240
+[Files]
+cmd = elf_swordsman.cmd
+cns = elf_swordsman.cns
+st = elf_swordsman.cns
+stcommon = common1.cns
+sprite = elf_swordsman.sff
+anim = elf_swordsman.air
+sound = elf_swordsman.snd
+pal1 = elf_swordsman.act
+pal2 = elf_swordsman.act
+pal3 = elf_swordsman.act
+pal4 = elf_swordsman.act
+pal5 = elf_swordsman.act
+pal6 = elf_swordsman.act
+[Arcade]
+intro.storyboard =
+ending.storyboard =
