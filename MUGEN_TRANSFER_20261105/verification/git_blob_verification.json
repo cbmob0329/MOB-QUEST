@@ -1,0 +1,7 @@
+{
+  "time": "2026-11-05T19:20:33.624548",
+  "commit": "a1843c9c9d78ce7635f7d9f290c26675d564d8f0",
+  "git_blob_sha256_files": 402,
+  "result": "PASS",
+  "meaning": "Committed character/stage bytes match verified local full folders; gameplay scope remains limited"
+}

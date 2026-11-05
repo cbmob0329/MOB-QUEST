@@ -1,0 +1,6 @@
+{
+  "time": "2026-11-05T19:24:11.438010",
+  "method": "Real released CMD, dedicated engine, UI Pause/Scroll_Lock chords Down then Down+Left then Left+a",
+  "result": "NOT VERIFIED",
+  "observation": "Game ticks advanced but crouch/cylinder state entry was not observed. UI chord duration did not establish held direction; do not classify as a product failure or a successful natural-input test."
+}
