@@ -1,0 +1,15 @@
+{
+  "size": [
+    1312,
+    1199
+  ],
+  "alpha_mode": "RGBA",
+  "opaque_edge_pixels": {
+    "left": 0,
+    "right": 0,
+    "top": 0,
+    "bottom": 0
+  },
+  "runtime": "NOT IMPLEMENTED",
+  "inspection": "Four genuine wing positions. Upper-right spread-wing reaches sheet right edge; do not import that frame as-is. Other frames require individual cropping/axis/size checks before use."
+}

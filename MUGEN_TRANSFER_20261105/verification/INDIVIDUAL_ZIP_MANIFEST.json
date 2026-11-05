@@ -1,0 +1,179 @@
+{
+  "time": "2026-11-05T19:13:52.685803",
+  "characters": {
+    "baby_thousand_jus": {
+      "zip": "baby_thousand_jus_full.zip",
+      "bytes": 6918008,
+      "sha256": "4f226ccc21e6c9ec72cc360911e65480f5f378ad55cff7b3a4ed3ee4cf176a49",
+      "crc_and_contents": "PASS"
+    },
+    "Baki Hanma": {
+      "zip": "Baki Hanma_full.zip",
+      "bytes": 48553527,
+      "sha256": "69b4bce97c9c2c6945504fec1b1e1d57f035118a02827b7d10803aa1438aaeec",
+      "crc_and_contents": "PASS"
+    },
+    "bito_tatsuya_jus": {
+      "zip": "bito_tatsuya_jus_full.zip",
+      "bytes": 876261,
+      "sha256": "23c2573f60c7d05fc1f9a115991a05aa5b76398a19ccbaafea215a858f200e34",
+      "crc_and_contents": "PASS"
+    },
+    "blue_eyes_jus": {
+      "zip": "blue_eyes_jus_full.zip",
+      "bytes": 3722839,
+      "sha256": "8f503a5b8b8860025d59f702c37e62377f670005e310b70a8090ac4b0e05b77c",
+      "crc_and_contents": "PASS"
+    },
+    "bouya_harumichi_jus": {
+      "zip": "bouya_harumichi_jus_full.zip",
+      "bytes": 810563,
+      "sha256": "028edd32cf84e2c75df3015548b0e27f0e8c9cefe9887881d007c2703bca1691",
+      "crc_and_contents": "PASS"
+    },
+    "buster_blader_jus": {
+      "zip": "buster_blader_jus_full.zip",
+      "bytes": 1977620,
+      "sha256": "156cc1b6d4dfbd4a66d848eb13adcd16d60dcd702aadff3d21cd309542924fa1",
+      "crc_and_contents": "PASS"
+    },
+    "chaos_soldier_jus": {
+      "zip": "chaos_soldier_jus_full.zip",
+      "bytes": 1673832,
+      "sha256": "7c19a60c9dec1c8288f4c97f20ffa4ff3b5c073453bd416752e07edb0524cfd0",
+      "crc_and_contents": "PASS"
+    },
+    "dark_magician": {
+      "zip": "dark_magician_full.zip",
+      "bytes": 7930318,
+      "sha256": "8da33ef24b127fa102f6a50bc9de21529905e0189363ea1226f7f0aadbc34be1",
+      "crc_and_contents": "PASS"
+    },
+    "dark_magician_girl_jus": {
+      "zip": "dark_magician_girl_jus_full.zip",
+      "bytes": 4843322,
+      "sha256": "8ac1703fd8d7fe4a54588aeae30e89fea863d7c89620d1dc8942a62da4b61bf8",
+      "crc_and_contents": "PASS"
+    },
+    "DevilZoa_JUS": {
+      "zip": "DevilZoa_JUS_full.zip",
+      "bytes": 8566053,
+      "sha256": "428ab3af029b87e53f05153f659478b458fe9d747e3b086b751e82bdd1e57f0a",
+      "crc_and_contents": "PASS"
+    },
+    "elf_swordsman": {
+      "zip": "elf_swordsman_full.zip",
+      "bytes": 1841308,
+      "sha256": "3b430ceae28d1d9637774c23e0d99014cf5591a55a8b6644bb1498643a3512e3",
+      "crc_and_contents": "PASS"
+    },
+    "flame_swordsman_jus": {
+      "zip": "flame_swordsman_jus_full.zip",
+      "bytes": 2335207,
+      "sha256": "73063c72914a0386f8d80c05dbf3c5eeaf66705015b4aae88a667032bc9ef87d",
+      "crc_and_contents": "PASS"
+    },
+    "gaia": {
+      "zip": "gaia_full.zip",
+      "bytes": 994204,
+      "sha256": "21d510cbde90410dc91f2dfd4ef4a4e7ddcf8bc6ac2671c141e3f57023eed054",
+      "crc_and_contents": "PASS"
+    },
+    "GokuSSB": {
+      "zip": "GokuSSB_full.zip",
+      "bytes": 68100644,
+      "sha256": "bc7dc1af68a9ec274ab3fffe5d53e1266aa0fc1ff9dc800e3ccf391a40920855",
+      "crc_and_contents": "PASS"
+    },
+    "harpy_manga_jus": {
+      "zip": "harpy_manga_jus_full.zip",
+      "bytes": 8388829,
+      "sha256": "83c0f710b664f7ba998827c4b565103cd54d6975e2626302ee22fb7ee7c1182e",
+      "crc_and_contents": "PASS"
+    },
+    "harpy_normal_jus": {
+      "zip": "harpy_normal_jus_full.zip",
+      "bytes": 7643245,
+      "sha256": "1976836ee88b9a1a224a7f1de9691012b3d64829c883beb0a17f97dfd92de37c",
+      "crc_and_contents": "PASS"
+    },
+    "kanan_jus": {
+      "zip": "kanan_jus_full.zip",
+      "bytes": 1158568,
+      "sha256": "0d07f5f1e9413d561b11df22a86bf5bd227c33d89b905053bfb0d8183314ef21",
+      "crc_and_contents": "PASS"
+    },
+    "kuno_ryushin_jus": {
+      "zip": "kuno_ryushin_jus_full.zip",
+      "bytes": 748166,
+      "sha256": "d96ef113e58c0498c081ed68f64c16b3140ae824bc1ef1b59aa643ba08f4802c",
+      "crc_and_contents": "PASS"
+    },
+    "kyoro_ember": {
+      "zip": "kyoro_ember_full.zip",
+      "bytes": 3457164,
+      "sha256": "135f543b75aba9d1e262d07c3855144ceb65bb6b2fb259fb73dc551230360468",
+      "crc_and_contents": "PASS"
+    },
+    "kyoro_kyorozo": {
+      "zip": "kyoro_kyorozo_full.zip",
+      "bytes": 2622380,
+      "sha256": "ada2d7198d3cfb67c4389b6011e6f3edb645bec711181aad7bd7c85c0a3ecf08",
+      "crc_and_contents": "PASS"
+    },
+    "minotaur_jus": {
+      "zip": "minotaur_jus_full.zip",
+      "bytes": 5441958,
+      "sha256": "ee57581d205a07317938ce0b960e5b524627a466b88c9fd8223fd5a6b46439d1",
+      "crc_and_contents": "PASS"
+    },
+    "mob_denden_jus": {
+      "zip": "mob_denden_jus_full.zip",
+      "bytes": 1308829,
+      "sha256": "681c14e435a56140e2c1df8c148e9a947f2dccc91bbea40ab6c87b41e5f718eb",
+      "crc_and_contents": "PASS"
+    },
+    "mob_patty_red": {
+      "zip": "mob_patty_red_full.zip",
+      "bytes": 675859,
+      "sha256": "573a1ce23b9f7494444bbb0aedc80189dc6bfd0adb20e5080cf61fe3e003e392",
+      "crc_and_contents": "PASS"
+    },
+    "noctra": {
+      "zip": "noctra_full.zip",
+      "bytes": 2723522,
+      "sha256": "598a8c7fbf091925a3c54a37850d5c26567f400936ea6d635e978a30aa513014",
+      "crc_and_contents": "PASS"
+    },
+    "red_eyes_jus": {
+      "zip": "red_eyes_jus_full.zip",
+      "bytes": 3136434,
+      "sha256": "31fd6ed224b387254728baece71d7b5a98e3755135b09e6c32aaaeaf0e978ccd",
+      "crc_and_contents": "PASS"
+    },
+    "relinquished_jus": {
+      "zip": "relinquished_jus_full.zip",
+      "bytes": 789183,
+      "sha256": "6d8f2cda76196d025dc1895ce2c2fb802d185db3589fd07c15c5cce8e7e7dbb0",
+      "crc_and_contents": "PASS"
+    },
+    "saggi_jus": {
+      "zip": "saggi_jus_full.zip",
+      "bytes": 2329087,
+      "sha256": "c7243e480f6d930a9df914ab30dfaa379d77a8c2974b6b07cece733bc79edb3b",
+      "crc_and_contents": "PASS"
+    },
+    "serizawa_tamao_jus": {
+      "zip": "serizawa_tamao_jus_full.zip",
+      "bytes": 1628853,
+      "sha256": "2868be158618a794a49dba24586f2b9d882fc1f842ec38094209e2752470ec35",
+      "crc_and_contents": "PASS"
+    },
+    "toon_demon_jus": {
+      "zip": "toon_demon_jus_full.zip",
+      "bytes": 1295098,
+      "sha256": "0b0b53dcc80befc314910efa64b664ab7fd96fa643c2c5026420ed0e72034475",
+      "crc_and_contents": "PASS"
+    }
+  }
+}
