@@ -1,15 +1,15 @@
 {
-  "ASTRA_NATIVE_HANDOFF_日本語.txt": "44b6be4a044719c9ee337f7d94051a7d7e0cdac698fee7d6f93d28ad07736f17",
-  "CHANGELOG_20261026_日本語.txt": "47216b4995c59980fe4b04ae6668e25ecd54b067b772d7df9dea02a1730dbf55",
-  "common1.cns": "1b3fa7977d31884d3c7c3475a7238cdc6d463ac61f60a55daedaec757aff54d3",
+  "ASTRA_NATIVE_HANDOFF_\u65e5\u672c\u8a9e.txt": "44b6be4a044719c9ee337f7d94051a7d7e0cdac698fee7d6f93d28ad07736f17",
+  "CHANGELOG_20261026_\u65e5\u672c\u8a9e.txt": "47216b4995c59980fe4b04ae6668e25ecd54b067b772d7df9dea02a1730dbf55",
+  "common1.cns": "03b214eec5dbf7e3aca92d8b62cdb3595da23c3cd2ef8395774b804c14f16c83",
   "ENERGY_TEST_RESULTS_JP.txt": "6ada995fd226777119ca04a23ef96192d8d428264709ebd4e9805b345cfdd061",
-  "README_日本語.txt": "b3fae114492200b4b8b80744a0e7e3d27c96143017cf54a944ac9e35cd00cf89",
+  "README_\u65e5\u672c\u8a9e.txt": "b3fae114492200b4b8b80744a0e7e3d27c96143017cf54a944ac9e35cd00cf89",
   "saggi_jus.air": "d844a56b0d1dfb8d0b55a8b99bdb4ab4f5eca2e1acfc8bcdd5bfb4fee24a3382",
-  "saggi_jus.cmd": "e0643045c0f81259110c8713d62679170ab9220ae865c50f35bd17d095712f5b",
-  "saggi_jus.cns": "15fd869166bcec690bebe07ca4c398c0904a3871e48ff198f8e94c7da77f0f8a",
-  "saggi_jus.def": "3eee33cba102367ad302f5c21e64bd552ca9dcd375d2849982a9f51bd0242f25",
+  "saggi_jus.cmd": "e74d82567373b6e8e4b3583f90541194ea60a1de69adcc05dffbe5e39cce2630",
+  "saggi_jus.cns": "fe64b7ed02861111c651abc1349d9ccb039f11a3f1e328b2a4860e9381913aad",
+  "saggi_jus.def": "e2a6612b1a51c7b9de9f279d52168cb883edb9a0f63bce3c3516aee21eb1816a",
   "saggi_jus.sff": "4828cca91ee94c6ec2d18d44e6775a1d76f0f3f06b0e3f7bbecfb80f9550cd9e",
   "saggi_jus.snd": "1d0c06c3580286ef84ef3b8c3be4233fe1592a83ef9b407a9f628f2d007b36c8",
-  "UPDATE_6keys_20261025_日本語.txt": "2257f67138d864b175d13d697fb3e0639c2829c95c29a340f52b7e1de6076be0",
-  "今回の実機確認_追加更新_20261026.txt": "b3fac4bef18e8e3ca19637e79834cce9a2b4bd8b312e5f74b6c01ef1f784c6c0"
+  "UPDATE_6keys_20261025_\u65e5\u672c\u8a9e.txt": "2257f67138d864b175d13d697fb3e0639c2829c95c29a340f52b7e1de6076be0",
+  "\u4eca\u56de\u306e\u5b9f\u6a5f\u78ba\u8a8d_\u8ffd\u52a0\u66f4\u65b0_20261026.txt": "b3fac4bef18e8e3ca19637e79834cce9a2b4bd8b312e5f74b6c01ef1f784c6c0"
 }

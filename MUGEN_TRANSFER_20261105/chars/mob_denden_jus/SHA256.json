@@ -4,14 +4,14 @@
   "constants.cns": "6e85082e5893ba8de4f2664ebed1c846b28127be78ce76c049aee3a0a171a8a6",
   "mob_denden_jus.air": "ce27f841b404a318adcdb4a5cfe9d28df06d10fd6cfd14ee2b0d173ab8fa3428",
   "mob_denden_jus.cmd": "656fceb329a110f2bc2b2e8a29866e38dd15032c653c4094fd3d12231a9bfaea",
-  "mob_denden_jus.def": "9e79a62b04e94e8f5c50b9135da85cf8b07fa2dfe2b2883437a2104a70e963ec",
+  "mob_denden_jus.def": "fee58730936cbf1cd53edde34d473220501db330172a4cdfc55daccabfa6dae3",
   "mob_denden_jus.sff": "9222069d8f70cbc32c51914bfdb4946a6433c6adb7dc6479b7621a6cd6bcedcd",
   "mob_denden_jus.snd": "245b9a1020d2eb9e6746518cf1b024ff926ef574c2b3e3f2395f75e6fd6916ae",
   "projectiles.cns": "5f1a5317f06907088e34596f3cb25747a6ab517bd8acef70ed7389651d494909",
   "README_TEST_PROFILE.txt": "5cb752c64eabcb358971024d88b3db577d7035bdbb575a10aeeac02de3b68d75",
   "REQUIRED_AIR_FIX_20261027_JP.txt": "84a1e34e96eef570c5f3360cb0be4e5d95ec30ce6c7fefd4e53868a46b727660",
   "SPRITE_COMPAT_FIX_20261027_JP.txt": "f0cd11514420272c9d1236d7a374e3e72463dc750e149ae6c43c18ca2b372707",
-  "states.cns": "83ba0e3deceea68c8f58661e2771b65e47f4e6666c385d4835534deb0de1f21f",
+  "states.cns": "260ecbe7b43a1c7010cd481935422d42ba12bf0b0104ba38669c34481bda46bd",
   "TEST_PROFILE_MANIFEST.json": "1a3e8151b064dc01ae1125d8d940411eb298cfa15f12710338c8fa9dc141a1b2",
   "throw.cns": "de57f38c217e6ddae5ae890dbbb76af335c67300c8346df313cc18202d681113"
 }

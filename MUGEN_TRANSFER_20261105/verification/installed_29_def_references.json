@@ -1,0 +1,1434 @@
+[
+  {
+    "name": "baby_thousand_jus",
+    "def": "baby_thousand_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "baby_thousand.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "baby_thousand.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "baby_thousand.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "baby_thousand.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "baby_thousand.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "baby_thousand.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 16
+  },
+  {
+    "name": "Baki Hanma",
+    "def": "Baki Hanma.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "sprite",
+        "file": "Baki.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "Baki.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "Baki.snd",
+        "exists": true
+      },
+      {
+        "key": "cmd",
+        "file": "Baki.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "Baki.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "Baki.cns",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "1.act",
+        "exists": true
+      },
+      {
+        "key": "pal2",
+        "file": "2.act",
+        "exists": true
+      },
+      {
+        "key": "pal3",
+        "file": "3.act",
+        "exists": true
+      },
+      {
+        "key": "pal4",
+        "file": "4.act",
+        "exists": true
+      },
+      {
+        "key": "pal5",
+        "file": "5.act",
+        "exists": true
+      },
+      {
+        "key": "pal6",
+        "file": "6.act",
+        "exists": true
+      },
+      {
+        "key": "pal7",
+        "file": "7.act",
+        "exists": true
+      },
+      {
+        "key": "pal8",
+        "file": "8.act",
+        "exists": true
+      },
+      {
+        "key": "st1",
+        "file": "IA.cns",
+        "exists": true
+      },
+      {
+        "key": "st2",
+        "file": "Especiales.cns",
+        "exists": true
+      },
+      {
+        "key": "st3",
+        "file": "Supers.cns",
+        "exists": true
+      }
+    ],
+    "file_count": 23
+  },
+  {
+    "name": "bito_tatsuya_jus",
+    "def": "bito_tatsuya_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "bito_tatsuya_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "bito_tatsuya_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "bito_tatsuya_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "bito_tatsuya_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "bito_tatsuya_jus.air",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "bito_tatsuya_jus.act",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "bito_tatsuya_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "blue_eyes_jus",
+    "def": "blue_eyes_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "blue_eyes_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "blue_eyes_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "blue_eyes_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "blue_eyes_jus_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "blue_eyes_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "blue_eyes_jus.snd",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "blue_eyes_jus.air",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "bouya_harumichi_jus",
+    "def": "bouya_harumichi_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "bouya_harumichi_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "bouya_harumichi_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "bouya_harumichi_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "bouya_harumichi_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "bouya_harumichi_jus.air",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "bouya_harumichi_jus.act",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "bouya_harumichi_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "buster_blader_jus",
+    "def": "buster_blader_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "buster_blader.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "buster_blader.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "buster_blader.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "buster_blader.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "buster_blader.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "buster_blader.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "buster_blader.act",
+        "exists": true
+      }
+    ],
+    "file_count": 13
+  },
+  {
+    "name": "chaos_soldier_jus",
+    "def": "chaos_soldier_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "chaos_soldier_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "chaos_soldier_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "chaos_soldier_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "chaos_soldier_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "chaos_soldier_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "chaos_soldier_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 16
+  },
+  {
+    "name": "dark_magician",
+    "def": "dark_magician.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "dark_magician.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "dark_magician.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "dark_magician.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "dark_magician.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "dark_magician.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "dark_magician.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 12
+  },
+  {
+    "name": "dark_magician_girl_jus",
+    "def": "dark_magician_girl_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "dark_magician_girl_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "dark_magician_girl_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "dark_magician_girl_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "dark_magician_girl_jus_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "dark_magician_girl_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "dark_magician_girl_jus.air",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "dark_magician_girl_jus.act",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "dark_magician_girl_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 19
+  },
+  {
+    "name": "DevilZoa_JUS",
+    "def": "DevilZoa_JUS.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "DevilZoa_JUS.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "DevilZoa_JUS_constants.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "DevilZoa_JUS_states.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "DevilZoa_JUS_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "DevilZoa_JUS.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "DevilZoa_JUS.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "DevilZoa_JUS.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 10
+  },
+  {
+    "name": "elf_swordsman",
+    "def": "elf_swordsman.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "elf_swordsman.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "elf_swordsman.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "elf_swordsman.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "elf_swordsman.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "elf_swordsman.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "elf_swordsman.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "elf_swordsman.act",
+        "exists": true
+      },
+      {
+        "key": "pal2",
+        "file": "elf_swordsman.act",
+        "exists": true
+      },
+      {
+        "key": "pal3",
+        "file": "elf_swordsman.act",
+        "exists": true
+      },
+      {
+        "key": "pal4",
+        "file": "elf_swordsman.act",
+        "exists": true
+      },
+      {
+        "key": "pal5",
+        "file": "elf_swordsman.act",
+        "exists": true
+      },
+      {
+        "key": "pal6",
+        "file": "elf_swordsman.act",
+        "exists": true
+      }
+    ],
+    "file_count": 13
+  },
+  {
+    "name": "flame_swordsman_jus",
+    "def": "flame_swordsman_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "flame_swordsman_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "flame_swordsman_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "flame_swordsman_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "flame_swordsman_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "flame_swordsman_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "flame_swordsman_jus.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "flame_swordsman_jus.act",
+        "exists": true
+      }
+    ],
+    "file_count": 13
+  },
+  {
+    "name": "gaia",
+    "def": "gaia.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "gaia.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "gaia.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "gaia.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "gaia.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "gaia.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "gaia.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "gaia.act",
+        "exists": true
+      }
+    ],
+    "file_count": 11
+  },
+  {
+    "name": "GokuSSB",
+    "def": "GokuSSB.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "anim",
+        "file": "=/anim.air",
+        "exists": true
+      },
+      {
+        "key": "cmd",
+        "file": "=/cmd.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "=/main.cns",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "=/snd.snd",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "=/spr.sff",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "=/main.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "=/main.cns",
+        "exists": true
+      }
+    ],
+    "file_count": 7
+  },
+  {
+    "name": "harpy_manga_jus",
+    "def": "harpy_manga_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "harpy_manga.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "harpy_manga.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "harpy_manga.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "harpy_manga_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "harpy_manga.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "harpy_manga.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "harpy_manga.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "harpy_manga.act",
+        "exists": true
+      }
+    ],
+    "file_count": 17
+  },
+  {
+    "name": "harpy_normal_jus",
+    "def": "harpy_normal_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "harpy_normal.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "harpy_normal.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "harpy_normal.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "harpy_normal_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "harpy_normal.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "harpy_normal.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "harpy_normal.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "harpy_normal.act",
+        "exists": true
+      }
+    ],
+    "file_count": 27
+  },
+  {
+    "name": "kanan_jus",
+    "def": "kanan_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "kanan_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "kanan_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "kanan_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "kanan_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "kanan_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "kanan_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 16
+  },
+  {
+    "name": "kuno_ryushin_jus",
+    "def": "kuno_ryushin_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "kuno_ryushin_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "kuno_ryushin_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "kuno_ryushin_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "kuno_ryushin_jus_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "kuno_ryushin_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "kuno_ryushin_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "kuno_ryushin_jus.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "kuno_ryushin_jus.act",
+        "exists": true
+      }
+    ],
+    "file_count": 9
+  },
+  {
+    "name": "kyoro_ember",
+    "def": "kyoro_ember.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "ember.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "ember.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "ember.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "ember.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "ember.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "ember.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 7
+  },
+  {
+    "name": "kyoro_kyorozo",
+    "def": "kyoro_kyorozo.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "kyorozo.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "kyorozo.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "kyorozo.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "kyorozo.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "kyorozo.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "kyorozo.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 7
+  },
+  {
+    "name": "minotaur_jus",
+    "def": "minotaur_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "minotaur.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "minotaur.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "minotaur.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "minotaur_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "minotaur.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "minotaur.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "minotaur.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 15
+  },
+  {
+    "name": "mob_denden_jus",
+    "def": "mob_denden_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "mob_denden_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "constants.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "states.cns",
+        "exists": true
+      },
+      {
+        "key": "st1",
+        "file": "projectiles.cns",
+        "exists": true
+      },
+      {
+        "key": "st2",
+        "file": "ai.cns",
+        "exists": true
+      },
+      {
+        "key": "st3",
+        "file": "throw.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "mob_denden_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "mob_denden_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "mob_denden_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 16
+  },
+  {
+    "name": "mob_patty_red",
+    "def": "mob_patty_red.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "patty_red.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "patty_red.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "patty_red.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "patty_red.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "patty_red.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "patty_red.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "patty_red.act",
+        "exists": true
+      },
+      {
+        "key": "pal2",
+        "file": "patty_red.act",
+        "exists": true
+      },
+      {
+        "key": "pal3",
+        "file": "patty_red.act",
+        "exists": true
+      },
+      {
+        "key": "pal4",
+        "file": "patty_red.act",
+        "exists": true
+      },
+      {
+        "key": "pal5",
+        "file": "patty_red.act",
+        "exists": true
+      },
+      {
+        "key": "pal6",
+        "file": "patty_red.act",
+        "exists": true
+      }
+    ],
+    "file_count": 8
+  },
+  {
+    "name": "noctra",
+    "def": "noctra.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "noctra.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "noctra.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "noctra.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "noctra.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "noctra.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "noctra.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 7
+  },
+  {
+    "name": "red_eyes_jus",
+    "def": "red_eyes_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "red_eyes_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "red_eyes_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "red_eyes_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "red_eyes_jus_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "red_eyes_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "red_eyes_jus.snd",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "red_eyes_jus.air",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "relinquished_jus",
+    "def": "relinquished_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "relinquished_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "relinquished_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "relinquished_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st1",
+        "file": "soul.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "relinquished_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "relinquished_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "relinquished_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 12
+  },
+  {
+    "name": "saggi_jus",
+    "def": "saggi_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "saggi_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "saggi_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "saggi_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "saggi_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "saggi_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "saggi_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "serizawa_tamao_jus",
+    "def": "serizawa_tamao_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "serizawa_tamao_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "serizawa_tamao_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "serizawa_tamao_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "serizawa_tamao_jus_common.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "serizawa_tamao_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "serizawa_tamao_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "serizawa_tamao_jus.snd",
+        "exists": true
+      },
+      {
+        "key": "pal1",
+        "file": "serizawa_tamao_jus.act",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  },
+  {
+    "name": "toon_demon_jus",
+    "def": "toon_demon_jus.def",
+    "missing_def_files": [],
+    "references": [
+      {
+        "key": "cmd",
+        "file": "toon_demon_jus.cmd",
+        "exists": true
+      },
+      {
+        "key": "cns",
+        "file": "toon_demon_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "st",
+        "file": "toon_demon_jus.cns",
+        "exists": true
+      },
+      {
+        "key": "stcommon",
+        "file": "common1.cns",
+        "exists": true
+      },
+      {
+        "key": "sprite",
+        "file": "toon_demon_jus.sff",
+        "exists": true
+      },
+      {
+        "key": "anim",
+        "file": "toon_demon_jus.air",
+        "exists": true
+      },
+      {
+        "key": "sound",
+        "file": "toon_demon_jus.snd",
+        "exists": true
+      }
+    ],
+    "file_count": 14
+  }
+]

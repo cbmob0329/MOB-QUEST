@@ -45,6 +45,12 @@ stand.friction = .82
 crouch.friction = .82
 [Statedef -2]
 
+
+[State -2, Cylinder finite reuse interval]
+type=VarAdd
+trigger1=!IsHelper && fvar(35)>0
+fv=35
+value=-1
 [State -2, interrupted throw releases only its captured victim]
 type = TargetState
 triggerall = !IsHelper
@@ -12803,3 +12809,196 @@ type = SelfState
 trigger1 = Time >= 1
 value = 5050
 ctrl = 0
+
+[Statedef 1400]
+type=S
+movetype=I
+physics=N
+anim=1400
+ctrl=0
+velset=0,0
+poweradd=0
+[State 1400, Bounded reuse]
+type=VarSet
+trigger1=Time=0
+fv=35
+value=180
+[State 1400, Finite frontal deflection protection]
+type=NotHitBy
+triggerall=Time>=6 && Time<25
+trigger1=NumEnemy>0 && P2Dist X>=0
+value=SCA,NA,SA,HA,NP,SP,HP
+time=1
+
+[State 1400, Counter window after startup]
+type=ReversalDef
+trigger1=Time=6
+reversal.attr=SCA,NA,SA,HA,NP,SP,HP
+pausetime=4,4
+sparkno=-1
+hitsound=-1
+p1stateno=1410
+getpower=0,0
+givepower=0,0
+[State 1400, Close missed window]
+type=ChangeState
+trigger1=Time>=25
+value=1402
+ctrl=0
+
+[State 1400, Independent cylinder phase 0]
+type=Explod
+trigger1=Time=0
+anim=29210
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=6
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[State 1400, Independent cylinder phase 1]
+type=Explod
+trigger1=Time=6
+anim=29211
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=19
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[Statedef 1402]
+type=S
+movetype=I
+physics=N
+anim=1402
+ctrl=0
+velset=0,0
+[State 1402, Remove active cylinder]
+type=RemoveExplod
+trigger1=Time=0
+ID=29200
+
+[State 1402, Independent cylinder phase 3]
+type=Explod
+trigger1=Time=0
+anim=29213
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=18
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[State 1402, Whiff recovery]
+type=ChangeState
+trigger1=Time>=20
+value=0
+ctrl=1
+
+[Statedef 1410]
+type=S
+movetype=A
+physics=N
+anim=1410
+ctrl=0
+velset=0,0
+poweradd=0
+[State 1410, Clear reversal contact before retaliation]
+type=MoveHitReset
+trigger1=Time=0
+
+[State 1410, Remove intake effect]
+type=RemoveExplod
+trigger1=Time=0
+ID=29200
+[State 1410, Prevent immediate multi-hit during release startup only]
+type=NotHitBy
+trigger1=Time<14
+value=SCA,NA,SA,HA,NP,SP,HP
+time=1
+[State 1410, Single launch retaliation]
+type=HitDef
+trigger1=Time=6
+attr=S,SP
+hitflag=MAF
+guardflag=MA
+damage=110,12
+pausetime=8,10
+sparkno=2
+guard.sparkno=40
+ground.type=High
+ground.slidetime=18
+ground.hittime=24
+ground.velocity=-7,-5
+air.velocity=-7,-5
+fall=1
+fall.recover=0
+getpower=120,40
+givepower=20,10
+kill=1
+guard.kill=0
+[State 1410, Independent recoil]
+type=EnvShake
+trigger1=Time=6
+time=8
+ampl=3
+freq=65
+
+[State 1410, Independent cylinder phase 1]
+type=Explod
+trigger1=Time=0
+anim=29211
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=6
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[State 1410, Independent cylinder phase 2]
+type=Explod
+trigger1=Time=6
+anim=29212
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=16
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[State 1410, Independent cylinder phase 3]
+type=Explod
+trigger1=Time=22
+anim=29213
+ID=29200
+postype=p1
+pos=10,-32
+bindtime=-1
+removetime=12
+scale=.5,.5
+sprpriority=3
+ownpal=1
+removeongethit=1
+
+[State 1410, Return control]
+type=ChangeState
+trigger1=Time>=36
+value=0
+ctrl=1

@@ -1,0 +1,92 @@
+[
+  {
+    "pair": [
+      "chaos_soldier_jus",
+      "blue_eyes_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\1\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "dark_magician",
+      "kanan_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\2\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "toon_demon_jus",
+      "elf_swordsman"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\3\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "red_eyes_jus",
+      "saggi_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\4\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "dark_magician_girl_jus",
+      "minotaur_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\5\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "DevilZoa_JUS",
+      "flame_swordsman_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\6\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "buster_blader_jus",
+      "gaia"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\7\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "mob_denden_jus",
+      "baby_thousand_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\8\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "harpy_manga_jus",
+      "harpy_normal_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\9\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  },
+  {
+    "pair": [
+      "relinquished_jus",
+      "chaos_soldier_jus"
+    ],
+    "real_cmd_loaded_and_match_started": true,
+    "log": "C:\\Users\\user\\Downloads\\mugen-1.1b1\\jus_updates_work\\dash_detail_20261105\\real_command_batch\\10\\engine.log",
+    "limit": "24 second AI smoke test; not all moves or win-rate validation"
+  }
+]

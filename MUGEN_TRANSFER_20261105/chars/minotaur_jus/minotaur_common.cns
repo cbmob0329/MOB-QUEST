@@ -1269,3 +1269,38 @@ type = ChangeState
 trigger1 = 1
 value = 190
 ctrl = 0
+
+; Engine automatic crouch/guard entry routes. Existing authored poses retained.
+[Statedef 10]
+type=C
+movetype=I
+physics=C
+ctrl=0
+[State 10, Enter existing low stance]
+type=ChangeState
+trigger1=1
+value=11
+ctrl=1
+
+[Statedef 12]
+type=S
+movetype=I
+physics=S
+ctrl=0
+[State 12, Return to existing standing stance]
+type=ChangeState
+trigger1=1
+value=0
+ctrl=1
+
+[Statedef 120]
+type=U
+movetype=I
+physics=U
+ctrl=0
+poweradd=0
+[State 120, Enter corresponding authored guard]
+type=ChangeState
+trigger1=1
+value=ifelse(StateType=A,132,ifelse(StateType=C,131,130))
+ctrl=0

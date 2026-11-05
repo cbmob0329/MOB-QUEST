@@ -1564,6 +1564,20 @@ ctrl = 1
 poweradd = 0
 juggle = 0
 
+
+[State 100, Short bounded dash afterimages]
+type=AfterImage
+trigger1=Time=0
+time=12
+length=6
+timegap=2
+framegap=2
+palcolor=128
+palbright=0,0,0
+palcontrast=128,128,160
+paladd=0,0,0
+palmul=.65,.65,.7
+trans=add
 [State 100, Harpy manga bird-foot ground movement]
 type = VelSet
 trigger1 = 1

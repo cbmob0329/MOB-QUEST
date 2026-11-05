@@ -430,7 +430,7 @@ value = 130 + (statetype = C) + (statetype = A)*2
 
 [State 120, Stop Guarding]
 type = ChangeState
-trigger1 = command != "holdback"
+trigger1 = (AILevel=0 && command!="holdback") || (AILevel>0 && (P2MoveType!=A || P2BodyDist X<0))
 trigger2 = !inguarddist
 value = 140
 
@@ -447,12 +447,12 @@ value = 130
 
 [State 130, Hi to Lo]
 type = ChangeState
-trigger1 = command = "holddown"
+trigger1 = (AILevel=0 && command="holddown") || (AILevel>0 && P2StateType=C)
 value = 131
 
 [State 130, Stop Guarding]
 type = ChangeState
-trigger1 = command != "holdback"
+trigger1 = (AILevel=0 && command!="holdback") || (AILevel>0 && (P2MoveType!=A || P2BodyDist X<0))
 trigger2 = !inguarddist
 value = 140
 
@@ -469,12 +469,12 @@ value = 131
 
 [State 131, Lo to Hi]
 type = ChangeState
-trigger1 = command != "holddown"
+trigger1 = (AILevel=0 && command!="holddown") || (AILevel>0 && P2StateType!=C)
 value = 130
 
 [State 131, Stop Guarding]
 type = ChangeState
-trigger1 = command != "holdback"
+trigger1 = (AILevel=0 && command!="holdback") || (AILevel>0 && (P2MoveType!=A || P2BodyDist X<0))
 trigger2 = !inguarddist
 value = 140
 
@@ -523,7 +523,7 @@ value = 52
 
 [State 132, Stop Guarding]
 type = ChangeState
-trigger1 = command != "holdback"
+trigger1 = (AILevel=0 && command!="holdback") || (AILevel>0 && (P2MoveType!=A || P2BodyDist X<0))
 trigger2 = !inguarddist
 value = 140
 

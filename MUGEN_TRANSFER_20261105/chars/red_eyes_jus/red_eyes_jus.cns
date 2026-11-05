@@ -14,17 +14,17 @@ volume = 0
 IntPersistIndex = 60
 FloatPersistIndex = 40
 [Size]
-xscale = .35
-yscale = .35
-ground.back = 13
-ground.front = 17
-air.back = 13
-air.front = 17
-height = 44
+xscale = 0.47
+yscale = 0.47
+ground.back = 17.457
+ground.front = 22.829
+air.back = 17.457
+air.front = 22.829
+height = 59.086
 attack.dist = 70
 proj.attack.dist = 0
-head.pos = 20,-36
-mid.pos = 0,-21
+head.pos = 26.857,-48.343
+mid.pos = 0.0,-28.2
 shadowoffset = 0
 [Velocity]
 walk.fwd = 2.9
@@ -2601,6 +2601,20 @@ ctrl = 0
 poweradd = 0
 juggle = 0
 
+
+[State 100, Short bounded dash afterimages]
+type=AfterImage
+trigger1=Time=0
+time=12
+length=6
+timegap=2
+framegap=2
+palcolor=128
+palbright=0,0,0
+palcontrast=128,128,160
+paladd=0,0,0
+palmul=.65,.65,.7
+trans=add
 [State 100, Actual dash velocity]
 type = VelSet
 trigger1 = 1
@@ -2608,7 +2622,8 @@ x = 6.8
 
 [State 100, Dash release]
 type = ChangeState
-trigger1 = Time >= 8 && command != "holdfwd"
+trigger1 = Time >= 8 && AILevel=0 && command != "holdfwd"
+trigger2 = AILevel>0 && (Time>=18 || P2BodyDist X<55 || P2MoveType=A)
 value = 0
 ctrl = 1
 
@@ -2724,7 +2739,7 @@ trigger1 = Time = 0
 anim = 9200
 ID = 8800
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = -1
 removetime = 10
 scale = .5,.5
@@ -2740,7 +2755,7 @@ trigger1 = Time = 28
 anim = 9204
 ID = 8801
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 15
 scale = .5,.5
@@ -2756,7 +2771,7 @@ trigger1 = Time = 24
 anim = 9203
 ID = 8802
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 4
 scale = .5,.5
@@ -2783,7 +2798,7 @@ name = "S1 phase 0"
 ID = 10000
 stateno = 10000
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 ownpal = 1
 keyctrl = 0
 
@@ -2804,7 +2819,7 @@ name = "S1 phase 1"
 ID = 10001
 stateno = 10001
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 ownpal = 1
 keyctrl = 0
 
@@ -3155,7 +3170,7 @@ trigger1 = Time = 0
 anim = 9210
 ID = 8810
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = -1
 removetime = 12
 scale = .5,.5
@@ -3171,7 +3186,7 @@ trigger1 = Time = 35
 anim = 9214
 ID = 8811
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = 0
 removetime = 17
 scale = .5,.5
@@ -3187,7 +3202,7 @@ trigger1 = Time = 31
 anim = 9213
 ID = 8812
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = 0
 removetime = 4
 scale = .5,.5
@@ -3214,7 +3229,7 @@ name = "S2 phase 0"
 ID = 10100
 stateno = 10100
 postype = p1
-pos = 13,-8
+pos = 17.457,-10.743
 ownpal = 1
 keyctrl = 0
 
@@ -3468,7 +3483,7 @@ trigger1 = Time = 0
 anim = 9220
 ID = 8820
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = -1
 removetime = 11
 scale = .5,.5
@@ -3484,7 +3499,7 @@ trigger1 = Time = 28
 anim = 9224
 ID = 8821
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = 0
 removetime = 20
 scale = .5,.5
@@ -3500,7 +3515,7 @@ trigger1 = Time = 23
 anim = 9223
 ID = 8822
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = 0
 removetime = 5
 scale = .5,.5
@@ -3527,7 +3542,7 @@ name = "S3 phase 0"
 ID = 10200
 stateno = 10200
 postype = p1
-pos = 14,-24
+pos = 18.8,-32.229
 ownpal = 1
 keyctrl = 0
 
@@ -3548,7 +3563,7 @@ name = "S3 phase 1"
 ID = 10201
 stateno = 10201
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 ownpal = 1
 keyctrl = 0
 
@@ -3606,7 +3621,7 @@ y = 0
 [State 10200, Claw-local emitter follows authored motion]
 type = BindToRoot
 trigger1 = 1
-pos = 14,-24.5
+pos = 18.8,-32.9
 time = 1
 
 [State 10200, Destroy stale owner lifecycle]
@@ -3748,7 +3763,7 @@ y = 0
 [State 10201, Claw-local emitter follows authored motion]
 type = BindToRoot
 trigger1 = 1
-pos = 16.8,-32.2
+pos = 22.56,-43.24
 time = 1
 
 [State 10201, Destroy stale owner lifecycle]
@@ -4000,7 +4015,7 @@ trigger1 = Time = 0
 anim = 9230
 ID = 8830
 postype = p1
-pos = 0,-13
+pos = 0.0,-17.457
 bindtime = -1
 removetime = 9
 scale = .5,.5
@@ -4016,7 +4031,7 @@ trigger1 = Time = 24
 anim = 9234
 ID = 8831
 postype = p1
-pos = 0,-13
+pos = 0.0,-17.457
 bindtime = 0
 removetime = 18
 scale = .5,.5
@@ -4032,7 +4047,7 @@ trigger1 = Time = 19
 anim = 9233
 ID = 8832
 postype = p1
-pos = 0,-13
+pos = 0.0,-17.457
 bindtime = 0
 removetime = 5
 scale = .5,.5
@@ -4048,7 +4063,7 @@ trigger1 = Time = 9
 anim = 9231
 ID = 8833
 postype = p1
-pos = 0,-13
+pos = 0.0,-17.457
 bindtime = -1
 removetime = 6
 scale = .5,.5
@@ -4064,7 +4079,7 @@ trigger1 = Time = 15
 anim = 9232
 ID = 8834
 postype = p1
-pos = 0,-13
+pos = 0.0,-17.457
 bindtime = -1
 removetime = 4
 scale = .5,.5
@@ -4183,7 +4198,7 @@ trigger1 = Time = 0
 anim = 9240
 ID = 8840
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = -1
 removetime = 54
 scale = .5,.5
@@ -4199,7 +4214,7 @@ trigger1 = Time = 108
 anim = 9244
 ID = 8841
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 26
 scale = .5,.5
@@ -4226,7 +4241,7 @@ name = "U1 phase 0"
 ID = 10400
 stateno = 10400
 postype = p1
-pos = 17,-31
+pos = 22.829,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -4247,7 +4262,7 @@ name = "U1 phase 1"
 ID = 10401
 stateno = 10401
 postype = p1
-pos = 17,-31
+pos = 22.829,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -4268,7 +4283,7 @@ name = "U1 phase 2"
 ID = 10402
 stateno = 10402
 postype = p1
-pos = 17,-31
+pos = 22.829,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -4289,7 +4304,7 @@ name = "U1 phase 3"
 ID = 10403
 stateno = 10403
 postype = p1
-pos = 17,-31
+pos = 22.829,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -4850,7 +4865,7 @@ trigger1 = Time = 0
 anim = 9250
 ID = 8850
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = -1
 removetime = 54
 scale = .5,.5
@@ -4866,7 +4881,7 @@ trigger1 = Time = 118
 anim = 9254
 ID = 8851
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 24
 scale = .5,.5
@@ -4882,7 +4897,7 @@ trigger1 = Time = 54
 anim = 9251
 ID = 8852
 postype = p1
-pos = 17,-39
+pos = 22.829,-52.371
 bindtime = -1
 removetime = 18
 scale = .5,.5
@@ -4898,7 +4913,7 @@ trigger1 = Time = 60
 anim = 9255
 ID = 8853
 postype = p1
-pos = 32,0
+pos = 42.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4914,7 +4929,7 @@ trigger1 = Time = 66
 anim = 9255
 ID = 8854
 postype = p1
-pos = 67,0
+pos = 89.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4930,7 +4945,7 @@ trigger1 = Time = 72
 anim = 9255
 ID = 8855
 postype = p1
-pos = 102,0
+pos = 136.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4946,7 +4961,7 @@ trigger1 = Time = 78
 anim = 9255
 ID = 8856
 postype = p1
-pos = 137,0
+pos = 183.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4962,7 +4977,7 @@ trigger1 = Time = 84
 anim = 9255
 ID = 8857
 postype = p1
-pos = 172,0
+pos = 230.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4989,7 +5004,7 @@ name = "U2 phase 0"
 ID = 10500
 stateno = 10500
 postype = p1
-pos = 32,-126
+pos = 42.971,-169.2
 ownpal = 1
 keyctrl = 0
 
@@ -5010,7 +5025,7 @@ name = "U2 phase 1"
 ID = 10501
 stateno = 10501
 postype = p1
-pos = 67,-126
+pos = 89.971,-169.2
 ownpal = 1
 keyctrl = 0
 
@@ -5031,7 +5046,7 @@ name = "U2 phase 2"
 ID = 10502
 stateno = 10502
 postype = p1
-pos = 102,-126
+pos = 136.971,-169.2
 ownpal = 1
 keyctrl = 0
 
@@ -5052,7 +5067,7 @@ name = "U2 phase 3"
 ID = 10503
 stateno = 10503
 postype = p1
-pos = 137,-126
+pos = 183.971,-169.2
 ownpal = 1
 keyctrl = 0
 
@@ -5073,7 +5088,7 @@ name = "U2 phase 4"
 ID = 10504
 stateno = 10504
 postype = p1
-pos = 172,-126
+pos = 230.971,-169.2
 ownpal = 1
 keyctrl = 0
 
@@ -5751,7 +5766,7 @@ trigger1 = Time = 0
 anim = 9260
 ID = 8860
 postype = p1
-pos = 0,-110
+pos = 0.0,-147.714
 bindtime = -1
 removetime = 30
 scale = .5,.5
@@ -5767,7 +5782,7 @@ trigger1 = Time = 30
 anim = 9261
 ID = 8861
 postype = p1
-pos = 0,-110
+pos = 0.0,-147.714
 bindtime = -1
 removetime = 55
 scale = .5,.5
@@ -5783,7 +5798,7 @@ trigger1 = Time = 160
 anim = 9264
 ID = 8862
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 36
 scale = .5,.5
@@ -5810,7 +5825,7 @@ name = "U3 phase 0"
 ID = 10600
 stateno = 10600
 postype = p1
-pos = 0,-110
+pos = 0.0,-147.714
 ownpal = 1
 keyctrl = 0
 
@@ -6108,7 +6123,7 @@ trigger1 = Time = 0
 anim = 9270
 ID = 8870
 postype = p1
-pos = 13,-24
+pos = 17.457,-32.229
 bindtime = -1
 removetime = 72
 scale = .5,.5
@@ -6124,7 +6139,7 @@ trigger1 = Time = 172
 anim = 9274
 ID = 8871
 postype = p1
-pos = 13,-24
+pos = 17.457,-32.229
 bindtime = 0
 removetime = 34
 scale = .5,.5
@@ -6151,7 +6166,7 @@ name = "U4 phase 0"
 ID = 10700
 stateno = 10700
 postype = p1
-pos = 10,-21
+pos = 13.429,-28.2
 ownpal = 1
 keyctrl = 0
 
@@ -6172,7 +6187,7 @@ name = "U4 phase 1"
 ID = 10701
 stateno = 10701
 postype = p1
-pos = 24,-35
+pos = 32.229,-47.0
 ownpal = 1
 keyctrl = 0
 
@@ -6193,7 +6208,7 @@ name = "U4 phase 2"
 ID = 10702
 stateno = 10702
 postype = p1
-pos = 42,-46
+pos = 56.4,-61.771
 ownpal = 1
 keyctrl = 0
 
@@ -6214,7 +6229,7 @@ name = "U4 phase 3"
 ID = 10703
 stateno = 10703
 postype = p1
-pos = 46,-28
+pos = 61.771,-37.6
 ownpal = 1
 keyctrl = 0
 
@@ -6235,7 +6250,7 @@ name = "U4 phase 4"
 ID = 10704
 stateno = 10704
 postype = p1
-pos = 18,-31
+pos = 24.171,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -7690,6 +7705,42 @@ value = 5050
 
 [Statedef -2]
 
+
+[State -2, AI reaction clock]
+type=VarAdd
+triggerall=!IsHelper && AILevel>0 && NumEnemy>0 && RoundState=2
+trigger1=P2MoveType=A && fvar(36)<30
+fv=36
+value=1
+[State -2, AI reaction reset]
+type=VarSet
+triggerall=!IsHelper
+trigger1=RoundState!=2 || AILevel=0
+trigger2=NumEnemy>0 && P2MoveType!=A
+fv=36
+value=0
+[State -2, AI reuse clock]
+type=VarAdd
+trigger1=!IsHelper && fvar(37)>0
+fv=37
+value=-1
+[State -2, AI track selected technique]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[1000,1700]
+fv=38
+value=StateNo
+[State -2, AI finite technique interval]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[1000,1700]
+fv=37
+value=95
+[State -2, AI previous state]
+type=VarSet
+trigger1=!IsHelper
+fv=39
+value=StateNo
 [State -2, Original scale guard cue]
 type = PlaySnd
 trigger1 = !IsHelper && Time = 0 && StateNo >= 150 && StateNo <= 155
@@ -7928,7 +7979,7 @@ helpertype = normal
 name = "Air black flame orb"
 ID = 18500
 stateno = 18500
-pos = 36,-16
+pos = 48.343,-21.486
 postype = p1
 ownpal = 1
 keyctrl = 0

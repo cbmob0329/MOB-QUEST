@@ -304,6 +304,139 @@ trigger1 = command = "holdback"
 value = 120
 
 ; AI finish: shared legal cancel window, paid magic priority, finite tool gates.
+
+[State -1, AI read pressure before retreat]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=Ctrl && InGuardDist && P2BodyDist X>=0 && fvar(36)>=12-floor(AILevel/2)
+trigger1=P2MoveType=A && Random<250+AILevel*45
+value=ifelse(StateType=A,132,ifelse(P2StateType=C,131,130))
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=200 && MoveContact && Time>=8
+value=201
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=201 && MoveContact && Time>=8
+value=202
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=210 && MoveContact && Time>=8
+value=211
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=211 && MoveContact && Time>=8
+value=212
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=220 && MoveContact && Time>=8
+value=221
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=221 && MoveContact && Time>=8
+value=222
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=400 && MoveContact && Time>=8
+value=401
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=401 && MoveContact && Time>=8
+value=402
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=410 && MoveContact && Time>=8
+value=411
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=411 && MoveContact && Time>=8
+value=412
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=420 && MoveContact && Time>=8
+value=421
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=421 && MoveContact && Time>=8
+value=422
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=600 && MoveContact && Time>=8
+value=601
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=601 && MoveContact && Time>=8
+value=602
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=610 && MoveContact && Time>=8
+value=611
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=611 && MoveContact && Time>=8
+value=612
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=620 && MoveContact && Time>=8
+value=621
+
+[State -1, AI physical confirm]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && AILevel>0 && NumEnemy>0
+triggerall=var(24)=0
+trigger1=StateNo=621 && MoveContact && Time>=8
+value=622
 [State -1, AI warp evade]
 type = ChangeState
 triggerall = !IsHelper
@@ -337,6 +470,7 @@ value = 105
 
 [State -1, AI nightmare close punish]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11170
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -355,6 +489,7 @@ value = 11170
 
 [State -1, AI signature virus ranged punish]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11160
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -373,6 +508,7 @@ value = 11160
 
 [State -1, AI surround close punish]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11150
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -391,6 +527,7 @@ value = 11150
 
 [State -1, AI beam ranged punish]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11140
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -409,6 +546,7 @@ value = 11140
 
 [State -1, AI independent decoy setup]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11120
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -427,6 +565,7 @@ value = 11120
 
 [State -1, AI creeping smoke launcher]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11110
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0
@@ -444,6 +583,7 @@ value = 11110
 
 [State -1, AI virus shot]
 type = ChangeState
+triggerall=fvar(37)=0 && fvar(38)!=11100
 triggerall = !IsHelper
 triggerall = Alive && RoundState = 2
 triggerall = NumEnemy > 0

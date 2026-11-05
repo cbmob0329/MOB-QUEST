@@ -14,17 +14,17 @@ volume = 0
 IntPersistIndex = 60
 FloatPersistIndex = 40
 [Size]
-xscale = .35
-yscale = .35
-ground.back = 13
-ground.front = 17
-air.back = 13
-air.front = 17
-height = 44
+xscale = 0.47
+yscale = 0.47
+ground.back = 17.457
+ground.front = 22.829
+air.back = 17.457
+air.front = 22.829
+height = 59.086
 attack.dist = 70
 proj.attack.dist = 0
-head.pos = 20,-36
-mid.pos = 0,-21
+head.pos = 26.857,-48.343
+mid.pos = 0.0,-28.2
 shadowoffset = 0
 [Velocity]
 walk.fwd = 2.9
@@ -2601,6 +2601,20 @@ ctrl = 0
 poweradd = 0
 juggle = 0
 
+
+[State 100, Short bounded dash afterimages]
+type=AfterImage
+trigger1=Time=0
+time=12
+length=6
+timegap=2
+framegap=2
+palcolor=128
+palbright=0,0,0
+palcontrast=128,128,160
+paladd=0,0,0
+palmul=.65,.65,.7
+trans=add
 [State 100, Actual dash velocity]
 type = VelSet
 trigger1 = 1
@@ -2724,7 +2738,7 @@ trigger1 = Time = 0
 anim = 9200
 ID = 8800
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = -1
 removetime = 8
 scale = .5,.5
@@ -2740,7 +2754,7 @@ trigger1 = Time = 20
 anim = 9204
 ID = 8801
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 15
 scale = .5,.5
@@ -2756,7 +2770,7 @@ trigger1 = Time = 17
 anim = 9203
 ID = 8802
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 3
 scale = .5,.5
@@ -2783,7 +2797,7 @@ name = "S1 phase 0"
 ID = 10000
 stateno = 10000
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 ownpal = 1
 keyctrl = 0
 
@@ -2998,7 +3012,7 @@ trigger1 = Time = 0
 anim = 9210
 ID = 8810
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = -1
 removetime = 11
 scale = .5,.5
@@ -3014,7 +3028,7 @@ trigger1 = Time = 30
 anim = 9214
 ID = 8811
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = 0
 removetime = 18
 scale = .5,.5
@@ -3030,7 +3044,7 @@ trigger1 = Time = 26
 anim = 9213
 ID = 8812
 postype = p1
-pos = 0,-24
+pos = 0.0,-32.229
 bindtime = 0
 removetime = 4
 scale = .5,.5
@@ -3057,7 +3071,7 @@ name = "S2 phase 0"
 ID = 10100
 stateno = 10100
 postype = p1
-pos = 13,-13
+pos = 17.457,-17.457
 ownpal = 1
 keyctrl = 0
 
@@ -3272,7 +3286,7 @@ trigger1 = Time = 0
 anim = 9220
 ID = 8820
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = -1
 removetime = 9
 scale = .5,.5
@@ -3288,7 +3302,7 @@ trigger1 = Time = 23
 anim = 9224
 ID = 8821
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = 0
 removetime = 19
 scale = .5,.5
@@ -3304,7 +3318,7 @@ trigger1 = Time = 18
 anim = 9223
 ID = 8822
 postype = p1
-pos = 14,-21
+pos = 18.8,-28.2
 bindtime = 0
 removetime = 5
 scale = .5,.5
@@ -3331,7 +3345,7 @@ name = "S3 phase 0"
 ID = 10200
 stateno = 10200
 postype = p1
-pos = 11,-24
+pos = 14.771,-32.229
 ownpal = 1
 keyctrl = 0
 
@@ -3352,7 +3366,7 @@ name = "S3 phase 1"
 ID = 10201
 stateno = 10201
 postype = p1
-pos = 14,-38
+pos = 18.8,-51.029
 ownpal = 1
 keyctrl = 0
 
@@ -3410,7 +3424,7 @@ y = 0
 [State 10200, Claw-local emitter follows authored motion]
 type = BindToRoot
 trigger1 = 1
-pos = 11.2,-24.5
+pos = 15.04,-32.9
 time = 1
 
 [State 10200, Destroy stale owner lifecycle]
@@ -3552,7 +3566,7 @@ y = 0
 [State 10201, Claw-local emitter follows authored motion]
 type = BindToRoot
 trigger1 = 1
-pos = 14,-38.5
+pos = 18.8,-51.7
 time = 1
 
 [State 10201, Destroy stale owner lifecycle]
@@ -3726,7 +3740,7 @@ name = "White mouth floor connector"
 ID = 19020
 stateno = 19020
 postype = p1
-pos = 13,-11
+pos = 17.457,-14.771
 ownpal = 1
 keyctrl = 0
 
@@ -3736,7 +3750,7 @@ trigger1 = Time = 0
 anim = 9230
 ID = 8830
 postype = p1
-pos = 13,-11
+pos = 17.457,-14.771
 bindtime = -1
 removetime = 10
 scale = .5,.5
@@ -3752,7 +3766,7 @@ trigger1 = Time = 29
 anim = 9234
 ID = 8831
 postype = p1
-pos = 13,-11
+pos = 17.457,-14.771
 bindtime = 0
 removetime = 16
 scale = .5,.5
@@ -3768,7 +3782,7 @@ trigger1 = Time = 26
 anim = 9233
 ID = 8832
 postype = p1
-pos = 13,-11
+pos = 17.457,-14.771
 bindtime = 0
 removetime = 3
 scale = .5,.5
@@ -3795,7 +3809,7 @@ name = "S4 phase 0"
 ID = 10300
 stateno = 10300
 postype = p1
-pos = 39,0
+pos = 52.371,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -3959,7 +3973,7 @@ channel = 2
 
 [State 1400, Original release cue]
 type = PlaySnd
-trigger1 = Time = 54
+trigger1 = Time = 72
 value = 0,3
 channel = 3
 
@@ -4007,7 +4021,7 @@ value = var(12)
 [State 1400, Single bounded pause]
 type = SuperPause
 trigger1 = Time = 0
-time = 12
+time = 24
 movetime = 0
 anim = -1
 darken = 1
@@ -4044,9 +4058,9 @@ trigger1 = Time = 0
 anim = 9240
 ID = 8840
 postype = p1
-pos = 17,-32
+pos = 44,-70
 bindtime = -1
-removetime = 54
+removetime = 72
 scale = .5,.5
 sprpriority = 2
 ownpal = 1
@@ -4056,13 +4070,13 @@ removeongethit = 1
 
 [State 1400, Authored noncontact visual phase]
 type = Explod
-trigger1 = Time = 110
+trigger1 = Time = 148
 anim = 9244
 ID = 8841
 postype = p1
-pos = 17,-32
+pos = 61,-57
 bindtime = 0
-removetime = 24
+removetime = 42
 scale = .5,.5
 sprpriority = -1
 ownpal = 1
@@ -4081,34 +4095,13 @@ size.air.front = 24
 size.height = 63
 size.head.pos = 28,-52
 size.mid.pos = 0,-30
-trigger1 = Time = 54
+trigger1 = Time = 72
 helpertype = normal
 name = "U1 phase 0"
 ID = 10400
 stateno = 10400
 postype = p1
-pos = 18,-31
-ownpal = 1
-keyctrl = 0
-
-[State 1400, Dedicated visible emitter]
-type = Helper
-size.xscale = .5
-size.yscale = .5
-size.ground.back = 18
-size.ground.front = 24
-size.air.back = 18
-size.air.front = 24
-size.height = 63
-size.head.pos = 28,-52
-size.mid.pos = 0,-30
-trigger1 = Time = 68
-helpertype = normal
-name = "U1 phase 1"
-ID = 10401
-stateno = 10401
-postype = p1
-pos = 18,-31
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -4125,20 +4118,54 @@ size.head.pos = 28,-52
 size.mid.pos = 0,-30
 trigger1 = Time = 96
 helpertype = normal
+name = "U1 phase 1"
+ID = 10401
+stateno = 10401
+postype = p1
+pos = 61,-57
+ownpal = 1
+keyctrl = 0
+
+[State 1400, Dedicated visible emitter]
+type = Helper
+size.xscale = .5
+size.yscale = .5
+size.ground.back = 18
+size.ground.front = 24
+size.air.back = 18
+size.air.front = 24
+size.height = 63
+size.head.pos = 28,-52
+size.mid.pos = 0,-30
+trigger1 = Time = 124
+helpertype = normal
 name = "U1 phase 2"
 ID = 10402
 stateno = 10402
 postype = p1
-pos = 18,-31
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
 [State 1400, Finite exit]
 type = ChangeState
-trigger1 = Time >= 134
+trigger1 = Time >= 190
 value = 0
 ctrl = 1
 
+
+[State 1400, Burst recoil shake]
+type=EnvShake
+trigger1=Time=72 || Time=96 || Time=124
+time=8
+freq=70
+ampl=3
+[State 1400, Brief independent white flash]
+type=EnvColor
+trigger1=Time=72
+value=215,235,255
+time=2
+under=1
 [Statedef 10400]
 type = A
 movetype = A
@@ -4578,7 +4605,7 @@ trigger1 = Time = 0
 anim = 9250
 ID = 8850
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = -1
 removetime = 54
 scale = .5,.5
@@ -4594,7 +4621,7 @@ trigger1 = Time = 116
 anim = 9254
 ID = 8851
 postype = p1
-pos = 17,-32
+pos = 22.829,-42.971
 bindtime = 0
 removetime = 24
 scale = .5,.5
@@ -4610,7 +4637,7 @@ trigger1 = Time = 54
 anim = 9251
 ID = 8852
 postype = p1
-pos = 17,-39
+pos = 22.829,-52.371
 bindtime = -1
 removetime = 16
 scale = .5,.5
@@ -4626,7 +4653,7 @@ trigger1 = Time = 58
 anim = 9255
 ID = 8853
 postype = p1
-pos = 32,0
+pos = 42.971,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4642,7 +4669,7 @@ trigger1 = Time = 66
 anim = 9255
 ID = 8854
 postype = p1
-pos = 82,0
+pos = 110.114,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4658,7 +4685,7 @@ trigger1 = Time = 74
 anim = 9255
 ID = 8855
 postype = p1
-pos = 132,0
+pos = 177.257,0.0
 bindtime = 0
 removetime = 12
 scale = .5,.5
@@ -4685,7 +4712,7 @@ name = "U2 phase 0"
 ID = 10500
 stateno = 10500
 postype = p1
-pos = 32,0
+pos = 42.971,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -4706,7 +4733,7 @@ name = "U2 phase 1"
 ID = 10501
 stateno = 10501
 postype = p1
-pos = 82,0
+pos = 110.114,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -4727,7 +4754,7 @@ name = "U2 phase 2"
 ID = 10502
 stateno = 10502
 postype = p1
-pos = 132,0
+pos = 177.257,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -4748,7 +4775,7 @@ name = "U2 phase 3"
 ID = 10503
 stateno = 10503
 postype = p1
-pos = 17,-31
+pos = 22.829,-41.629
 ownpal = 1
 keyctrl = 0
 
@@ -5272,7 +5299,7 @@ value = var(12)
 [State 1600, Single bounded pause]
 type = SuperPause
 trigger1 = Time = 0
-time = 12
+time = 24
 movetime = 0
 anim = -1
 darken = 1
@@ -5309,7 +5336,7 @@ trigger1 = Time = 0
 anim = 9260
 ID = 8860
 postype = p1
-pos = 18,-27
+pos = 44,-70
 bindtime = -1
 removetime = 72
 scale = .5,.5
@@ -5325,7 +5352,7 @@ trigger1 = Time = 162
 anim = 9264
 ID = 8861
 postype = p1
-pos = 18,-27
+pos = 61,-57
 bindtime = 0
 removetime = 34
 scale = .5,.5
@@ -5352,7 +5379,7 @@ name = "U3 phase 0"
 ID = 10600
 stateno = 10600
 postype = p1
-pos = 20,-28
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5373,7 +5400,7 @@ name = "U3 phase 1"
 ID = 10601
 stateno = 10601
 postype = p1
-pos = 20,-28
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5394,7 +5421,7 @@ name = "U3 phase 2"
 ID = 10602
 stateno = 10602
 postype = p1
-pos = 27,-25
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5415,7 +5442,7 @@ name = "U3 phase 3"
 ID = 10603
 stateno = 10603
 postype = p1
-pos = 27,-25
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5436,7 +5463,7 @@ name = "U3 phase 4"
 ID = 10604
 stateno = 10604
 postype = p1
-pos = 19,-27
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5457,7 +5484,7 @@ name = "U3 phase 5"
 ID = 10605
 stateno = 10605
 postype = p1
-pos = 29,-34
+pos = 61,-57
 ownpal = 1
 keyctrl = 0
 
@@ -5467,6 +5494,19 @@ trigger1 = Time >= 196
 value = 0
 ctrl = 1
 
+
+[State 1600, Burst recoil shake]
+type=EnvShake
+trigger1=Time=72 || Time=84 || Time=96 || Time=112 || Time=128 || Time=144
+time=8
+freq=70
+ampl=3
+[State 1600, Brief independent white flash]
+type=EnvColor
+trigger1=Time=72
+value=215,235,255
+time=2
+under=1
 [Statedef 10600]
 type = A
 movetype = A
@@ -6242,7 +6282,7 @@ trigger1 = Time = 0
 anim = 9270
 ID = 8870
 postype = p1
-pos = 0,-42
+pos = 0.0,-56.4
 bindtime = -1
 removetime = 72
 scale = .5,.5
@@ -6258,7 +6298,7 @@ trigger1 = Time = 170
 anim = 9274
 ID = 8871
 postype = p1
-pos = 0,-42
+pos = 0.0,-56.4
 bindtime = 0
 removetime = 34
 scale = .5,.5
@@ -6274,7 +6314,7 @@ trigger1 = Time = 72
 anim = 9255
 ID = 8872
 postype = p1
-pos = 44,0
+pos = 59.086,0.0
 bindtime = 0
 removetime = 26
 scale = .5,.5
@@ -6290,7 +6330,7 @@ trigger1 = Time = 72
 anim = 9255
 ID = 8873
 postype = p1
-pos = 94,0
+pos = 126.229,0.0
 bindtime = 0
 removetime = 26
 scale = .5,.5
@@ -6306,7 +6346,7 @@ trigger1 = Time = 72
 anim = 9255
 ID = 8874
 postype = p1
-pos = 144,0
+pos = 193.371,0.0
 bindtime = 0
 removetime = 26
 scale = .5,.5
@@ -6333,7 +6373,7 @@ name = "U4 phase 0"
 ID = 10700
 stateno = 10700
 postype = p1
-pos = 44,0
+pos = 59.086,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -6354,7 +6394,7 @@ name = "U4 phase 1"
 ID = 10701
 stateno = 10701
 postype = p1
-pos = 94,0
+pos = 126.229,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -6375,7 +6415,7 @@ name = "U4 phase 2"
 ID = 10702
 stateno = 10702
 postype = p1
-pos = 144,0
+pos = 193.371,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -6396,7 +6436,7 @@ name = "U4 phase 3"
 ID = 10703
 stateno = 10703
 postype = p1
-pos = 94,0
+pos = 126.229,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -6417,7 +6457,7 @@ name = "U4 phase 4"
 ID = 10704
 stateno = 10704
 postype = p1
-pos = 94,0
+pos = 126.229,0.0
 ownpal = 1
 keyctrl = 0
 
@@ -6999,7 +7039,7 @@ juggle = 0
 [State 19020, Connector anatomical mouth origin]
 type = BindToRoot
 trigger1 = 1
-pos = 13.3,-11.2
+pos = 17.86,-15.04
 time = 1
 
 [State 19020, Connector runtime affine of authored down-ray]
@@ -7821,7 +7861,7 @@ helpertype = normal
 name = "Air breath pulse"
 ID = 18500
 stateno = 18500
-pos = 0,0
+pos = 0.0,0.0
 postype = p1
 ownpal = 1
 keyctrl = 0
@@ -7845,7 +7885,7 @@ helpertype = normal
 name = "Air breath pulse"
 ID = 18501
 stateno = 18501
-pos = 0,0
+pos = 0.0,0.0
 postype = p1
 ownpal = 1
 keyctrl = 0
@@ -8025,7 +8065,7 @@ type = BindToRoot
 trigger1 = 1
 time = 1
 facing = 1
-pos = 35,-31.5
+pos = 47.0,-42.3
 
 [State 18500, No physical push]
 type = PlayerPush
@@ -8172,7 +8212,7 @@ type = BindToRoot
 trigger1 = 1
 time = 1
 facing = 1
-pos = 35,-31.5
+pos = 47.0,-42.3
 
 [State 18501, No physical push]
 type = PlayerPush

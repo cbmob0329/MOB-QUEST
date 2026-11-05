@@ -14,18 +14,18 @@ volume = 0
 IntPersistIndex = 60
 FloatPersistIndex = 40
 [Size]
-xscale = .5
-yscale = .5
-ground.back = 19
-ground.front = 21
-air.back = 18
-air.front = 20
-height = 66
+xscale = 0.55
+yscale = 0.55
+ground.back = 20.9
+ground.front = 23.1
+air.back = 19.8
+air.front = 22.0
+height = 72.6
 attack.dist = 80
 proj.attack.dist = 80
 proj.doscale = 0
-head.pos = -4,-55
-mid.pos = -2,-31
+head.pos = -4.4,-60.5
+mid.pos = -2.2,-34.1
 shadowoffset = 0
 draw.offset = 0,0
 [Velocity]
@@ -643,7 +643,7 @@ value = 0
 type = VarSet
 triggerall = !IsHelper
 trigger1 = ((StateNo = 4000 || StateNo = 4300) || StateNo = 4100) && MoveHit > 0 && var(24) = 0 && NumTarget > 0
-trigger1 = (Target, ID) != var(52)
+trigger1 = Cond(NumTarget>0,((Target, ID) != var(52)),0)
 v = 27
 value = 1
 ignorehitpause = 1
@@ -657,7 +657,7 @@ triggerall = MoveHit > 0
 triggerall = var(24) = 0
 triggerall = NumTarget > 0
 trigger1 = var(20) = 1
-trigger1 = (Target, ID) = var(22)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(22)),0)
 trigger1 = var(21) < 4
 v = 21
 value = 1
@@ -1345,6 +1345,34 @@ ctrl = 1
 poweradd = 0
 juggle = 0
 
+
+[State 100, Short bounded dash afterimages]
+type=AfterImage
+trigger1=Time=0
+time=12
+length=6
+timegap=2
+framegap=2
+palcolor=128
+palbright=0,0,0
+palcontrast=128,128,160
+paladd=0,0,0
+palmul=.65,.65,.7
+trans=add
+
+[State 100, Small separate grounded foot dust]
+type=Explod
+triggerall=Pos Y=0 && Abs(Vel X)>1
+trigger1=Time=1 || Time=9
+anim=F120
+postype=p1
+pos=-8,0
+bindtime=1
+removetime=-2
+scale=.35,.35
+sprpriority=-1
+ownpal=1
+removeongethit=1
 [State 100, Minotaur heavy axe movement]
 type = VelSet
 trigger1 = 1
@@ -3114,7 +3142,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -3330,7 +3358,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -3546,7 +3574,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -3693,7 +3721,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -3909,7 +3937,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -4125,7 +4153,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -4272,7 +4300,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -4488,7 +4516,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -4704,7 +4732,7 @@ triggerall = Pos Y = 0
 triggerall = MoveType != H
 trigger1 = MoveHit > 0
 trigger1 = NumTarget > 0
-trigger1 = (Target, ID) = var(1)
+trigger1 = Cond(NumTarget>0,((Target, ID) = var(1)),0)
 v = 3
 value = 1
 persistent = 0
@@ -5295,7 +5323,7 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 7420, unknown actual contact conservative]
 type = VarSet
-trigger1 = MoveHit && NumTarget > 0 && (Target,ID) != var(1)
+trigger1 = Cond(NumTarget>0,(MoveHit && NumTarget > 0 && (Target,ID) != var(1)),0)
 v = 2
 value = 1
 
@@ -5356,7 +5384,7 @@ ignorehitpause = 1
 [State 7420, existing victim episode spends one cast]
 type = ParentVarAdd
 triggerall = MoveHit && NumTarget > 0 && !var(5)
-trigger1 = (Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4
+trigger1 = Cond(NumTarget>0,((Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -5696,7 +5724,7 @@ ownpal = 1
 [State 4300, actual shoulder impact puff only on owned target]
 type = Explod
 triggerall = NumTarget(4300) > 0
-triggerall = (Target(4300),ID) = var(54)
+triggerall = Cond(NumTarget(4300)>0,((Target(4300),ID) = var(54)),0)
 trigger1 = MoveHit = 1
 anim = 24300
 ID = 23341
@@ -5796,14 +5824,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 6000, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 6000, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -5811,7 +5839,7 @@ ignorehitpause = 1
 [State 6000, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -6131,7 +6159,7 @@ persistent = 0
 [State 6000, owned physical strike impact weight]
 type = EnvShake
 triggerall = NumTarget > 0
-triggerall = (Target,ID) = var(54)
+triggerall = Cond(NumTarget>0,((Target,ID) = var(54)),0)
 trigger1 = MoveHit = 1
 time = ifelse(Time >= 108,10,4)
 freq = 65
@@ -6140,7 +6168,7 @@ ampl = ifelse(Time >= 108,-5,-2)
 [State 6000, accepted heavy climax only on final owned axe hit]
 type = Explod
 triggerall = Time >= 108 && NumTarget(6004) > 0
-triggerall = (Target(6004),ID) = var(54)
+triggerall = Cond(NumTarget(6004)>0,((Target(6004),ID) = var(54)),0)
 trigger1 = MoveHit = 1
 anim = 8104
 ID = 23361
@@ -6566,7 +6594,7 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 7500, unknown actual target conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && NumTarget > 0 && (Target,ID) != var(1)
+trigger1 = Cond(NumTarget>0,(MoveHit && NumTarget > 0 && (Target,ID) != var(1)),0)
 v = 2
 value = 1
 
@@ -6600,7 +6628,7 @@ hitonce = 1
 [State 7500, shared cast existing episode spends once]
 type = ParentVarAdd
 triggerall = MoveHit && NumTarget > 0 && !var(3) && !(Parent,var(24))
-trigger1 = (Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4
+trigger1 = Cond(NumTarget>0,((Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -6769,7 +6797,7 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 7510, unknown actual target conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && NumTarget > 0 && (Target,ID) != var(1)
+trigger1 = Cond(NumTarget>0,(MoveHit && NumTarget > 0 && (Target,ID) != var(1)),0)
 v = 2
 value = 1
 
@@ -6803,7 +6831,7 @@ hitonce = 1
 [State 7510, shared cast existing episode spends once]
 type = ParentVarAdd
 triggerall = MoveHit && NumTarget > 0 && !var(3) && !(Parent,var(24))
-trigger1 = (Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4
+trigger1 = Cond(NumTarget>0,((Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -6972,7 +7000,7 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 7520, unknown actual target conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && NumTarget > 0 && (Target,ID) != var(1)
+trigger1 = Cond(NumTarget>0,(MoveHit && NumTarget > 0 && (Target,ID) != var(1)),0)
 v = 2
 value = 1
 
@@ -7006,7 +7034,7 @@ hitonce = 1
 [State 7520, shared cast existing episode spends once]
 type = ParentVarAdd
 triggerall = MoveHit && NumTarget > 0 && !var(3) && !(Parent,var(24))
-trigger1 = (Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4
+trigger1 = Cond(NumTarget>0,((Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -7194,14 +7222,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 6200, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 6200, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -7209,7 +7237,7 @@ ignorehitpause = 1
 [State 6200, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -7754,7 +7782,7 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 7600, unknown actual target conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && NumTarget > 0 && (Target,ID) != var(1)
+trigger1 = Cond(NumTarget>0,(MoveHit && NumTarget > 0 && (Target,ID) != var(1)),0)
 v = 2
 value = 1
 
@@ -7788,7 +7816,7 @@ hitonce = 1
 [State 7600, shared cast existing episode spends once]
 type = ParentVarAdd
 triggerall = MoveHit && NumTarget > 0 && !var(3) && !(Parent,var(24))
-trigger1 = (Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4
+trigger1 = Cond(NumTarget>0,((Parent,var(20)) && (Target,ID) = (Parent,var(22)) && (Parent,var(21)) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -7999,14 +8027,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 6300, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 6300, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -8014,7 +8042,7 @@ ignorehitpause = 1
 [State 6300, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -8186,14 +8214,14 @@ keepone = 1
 [State 6301, existing episode reservation]
 type = VarAdd
 triggerall = Time = 0 && NumTarget(6300)>0 && !var(24)
-trigger1 = var(20) && (Target(6300),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(6300)>0,(var(20) && (Target(6300),ID) = var(22) && var(21)<4),0)
 v = 21
 value = 1
 
 [State 6301, existing episode latch]
 type = VarSet
 triggerall = Time = 0 && NumTarget(6300)>0 && !var(24)
-trigger1 = var(20) && (Target(6300),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(6300)>0,(var(20) && (Target(6300),ID) = var(22) && var(21)<4),0)
 v = 24
 value = 1
 
@@ -8237,7 +8265,7 @@ value = 1
 type = ChangeState
 triggerall = Time < 72
 trigger1 = NumTarget(6300)=0
-trigger2 = NumTarget(6300)>0 && ((Target(6300),ID)!=var(17) || (Target(6300),StateNo)!=6380 || !(Target(6300),Alive))
+trigger2 = Cond(NumTarget(6300)>0,(NumTarget(6300)>0 && ((Target(6300),ID)!=var(17) || (Target(6300),StateNo)!=6380 || !(Target(6300),Alive))),0)
 trigger3 = !Alive || RoundState!=2
 value = 6302
 ctrl = 0
@@ -8255,21 +8283,21 @@ y = 0
 
 [State 6301, fixed victim continuous actual hand lease]
 type = TargetBind
-trigger1 = Time <= 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time <= 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 ID = 6300
 time = 1
 pos = ifelse(Time<56,30,ifelse(Time<64,47,ifelse(Time<72,34,53))),ifelse(Time<56,0,ifelse(Time<64,-25,ifelse(Time<72,-41,0)))
 
 [State 6301, actual contact count 32]
 type = HitAdd
-trigger1 = Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 value = 1
 persistent = 0
 
 
 [State 6301, actual fixed victim damage 32]
 type = TargetLifeAdd
-trigger1 = Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 ID = 6300
 value = -55
 kill = 1
@@ -8278,21 +8306,21 @@ persistent = 0
 
 [State 6301, short confirmed haft impact 32]
 type = Pause
-trigger1 = Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 32 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 time = 3
 movetime = 0
 persistent = 0
 
 [State 6301, actual contact count 48]
 type = HitAdd
-trigger1 = Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 value = 1
 persistent = 0
 
 
 [State 6301, actual fixed victim damage 48]
 type = TargetLifeAdd
-trigger1 = Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 ID = 6300
 value = -55
 kill = 1
@@ -8301,21 +8329,21 @@ persistent = 0
 
 [State 6301, short confirmed haft impact 48]
 type = Pause
-trigger1 = Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 48 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 time = 3
 movetime = 0
 persistent = 0
 
 [State 6301, actual contact count 72]
 type = HitAdd
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 value = 1
 persistent = 0
 
 
 [State 6301, actual fixed victim damage 72]
 type = TargetLifeAdd
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380 && (Target(6300),Alive) && Alive && RoundState=2),0)
 ID = 6300
 value = -160
 kill = 1
@@ -8324,28 +8352,28 @@ persistent = 0
 
 [State 6301, release facing coherent with away velocity]
 type = TargetFacing
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380),0)
 ID = 6300
 value = -1
 persistent = 0
 
 [State 6301, finisher closes followups without fake budget]
 type = VarSet
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380),0)
 fv = 21
 value = 1
 persistent = 0
 
 [State 6301, postfinisher forbidden threshold]
 type = VarSet
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380),0)
 fv = 22
 value = var(21)-1
 persistent = 0
 
 [State 6301, actual grounded slam release]
 type = TargetState
-trigger1 = Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380
+trigger1 = Cond(NumTarget(6300)>0,(Time = 72 && NumTarget(6300)>0 && (Target(6300),ID)=var(17) && (Target(6300),StateNo)=6380),0)
 ID = 6300
 value = 6381
 persistent = 0
@@ -8799,14 +8827,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 1000, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 1000, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -8814,7 +8842,7 @@ ignorehitpause = 1
 [State 1000, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -8896,7 +8924,7 @@ x = ifelse(P2BodyDist X > 11.8,1.8,P2BodyDist X-10)
 [State 1000, actual owned normal impact]
 type = EnvShake
 triggerall = NumTarget(1000) > 0
-triggerall = (Target(1000),ID) = var(54)
+triggerall = Cond(NumTarget(1000)>0,((Target(1000),ID) = var(54)),0)
 trigger1 = MoveHit = 1
 time = ifelse(var(12)=2,5,2)
 freq = 75
@@ -9040,14 +9068,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 1100, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 1100, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -9055,7 +9083,7 @@ ignorehitpause = 1
 [State 1100, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -9263,14 +9291,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 1200, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 1200, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -9278,7 +9306,7 @@ ignorehitpause = 1
 [State 1200, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -9486,14 +9514,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 800, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 800, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -9501,7 +9529,7 @@ ignorehitpause = 1
 [State 800, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -9641,14 +9669,14 @@ keepone = 1
 [State 801, existing episode reservation]
 type = VarAdd
 triggerall = Time = 0 && NumTarget(800)>0 && !var(24)
-trigger1 = var(20) && (Target(800),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(800)>0,(var(20) && (Target(800),ID) = var(22) && var(21)<4),0)
 v = 21
 value = 1
 
 [State 801, existing episode latch]
 type = VarSet
 triggerall = Time = 0 && NumTarget(800)>0 && !var(24)
-trigger1 = var(20) && (Target(800),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(800)>0,(var(20) && (Target(800),ID) = var(22) && var(21)<4),0)
 v = 24
 value = 1
 
@@ -9693,7 +9721,7 @@ value = 1
 type = ChangeState
 triggerall = Time<8
 trigger1 = NumTarget(800)=0
-trigger2 = NumTarget(800)>0 && ((Target(800),ID)!=var(17) || (Target(800),StateNo)!=820 || !(Target(800),Alive))
+trigger2 = Cond(NumTarget(800)>0,(NumTarget(800)>0 && ((Target(800),ID)!=var(17) || (Target(800),StateNo)!=820 || !(Target(800),Alive))),0)
 trigger3 = !Alive || RoundState!=2
 value = ifelse(StateType=A,50,0)
 ctrl = 0
@@ -9705,28 +9733,28 @@ persistent = 0
 
 [State 801, continuous fixed victim freehand binding]
 type = TargetBind
-trigger1 = Time<=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time<=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 ID = 800
 time = 1
 pos = ifelse(Time<4,ifelse(StateType=A,58,47),ifelse(Time<8,34,ifelse(StateType=A,65,53))),ifelse(Time<4,-25,ifelse(Time<8,-41,0))
 
 [State 801, normal throw meter once no HitDef gain]
 type = PowerAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 value = 80
 persistent = 0
 
 
 [State 801, actual normal throw contact]
 type = HitAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 value = 1
 persistent = 0
 
 
 [State 801, throw damage once at actual release]
 type = TargetLifeAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 ID = 800
 value = -80
 kill = 1
@@ -9735,14 +9763,14 @@ persistent = 0
 
 [State 801, release facing away]
 type = TargetFacing
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820),0)
 ID = 800
 value = -1
 persistent = 0
 
 [State 801, release actual target ownership]
 type = TargetState
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820),0)
 ID = 800
 value = 821
 persistent = 0
@@ -9862,14 +9890,14 @@ value = P2StateType = A || (EnemyNear,Pos Y) < 0
 
 [State 810, unknown actual contact conservatively airborne]
 type = VarSet
-trigger1 = MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)
+trigger1 = Cond(NumTarget>0,(MoveHit && !var(48) && NumTarget > 0 && (Target,ID) != var(52)),0)
 v = 27
 value = 1
 
 [State 810, existing episode one reservation for full cast]
 type = VarAdd
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 21
 value = 1
 ignorehitpause = 1
@@ -9877,7 +9905,7 @@ ignorehitpause = 1
 [State 810, existing episode reservation latch]
 type = VarSet
 triggerall = MoveHit && !var(48) && !var(24) && NumTarget > 0
-trigger1 = var(20) && (Target,ID) = var(22) && var(21) < 4
+trigger1 = Cond(NumTarget>0,(var(20) && (Target,ID) = var(22) && var(21) < 4),0)
 v = 24
 value = 1
 ignorehitpause = 1
@@ -9999,14 +10027,14 @@ keepone = 1
 [State 811, existing episode reservation]
 type = VarAdd
 triggerall = Time = 0 && NumTarget(800)>0 && !var(24)
-trigger1 = var(20) && (Target(800),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(800)>0,(var(20) && (Target(800),ID) = var(22) && var(21)<4),0)
 v = 21
 value = 1
 
 [State 811, existing episode latch]
 type = VarSet
 triggerall = Time = 0 && NumTarget(800)>0 && !var(24)
-trigger1 = var(20) && (Target(800),ID) = var(22) && var(21)<4
+trigger1 = Cond(NumTarget(800)>0,(var(20) && (Target(800),ID) = var(22) && var(21)<4),0)
 v = 24
 value = 1
 
@@ -10051,7 +10079,7 @@ value = 1
 type = ChangeState
 triggerall = Time<8
 trigger1 = NumTarget(800)=0
-trigger2 = NumTarget(800)>0 && ((Target(800),ID)!=var(17) || (Target(800),StateNo)!=820 || !(Target(800),Alive))
+trigger2 = Cond(NumTarget(800)>0,(NumTarget(800)>0 && ((Target(800),ID)!=var(17) || (Target(800),StateNo)!=820 || !(Target(800),Alive))),0)
 trigger3 = !Alive || RoundState!=2
 value = ifelse(StateType=A,50,0)
 ctrl = 0
@@ -10091,28 +10119,28 @@ persistent = 0
 
 [State 811, continuous fixed victim freehand binding]
 type = TargetBind
-trigger1 = Time<=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time<=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 ID = 800
 time = 1
 pos = ifelse(Time<4,ifelse(StateType=A,58,47),ifelse(Time<8,34,ifelse(StateType=A,65,53))),ifelse(Time<4,-25,ifelse(Time<8,-41,0))
 
 [State 811, normal throw meter once no HitDef gain]
 type = PowerAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 value = 80
 persistent = 0
 
 
 [State 811, actual normal throw contact]
 type = HitAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 value = 1
 persistent = 0
 
 
 [State 811, throw damage once at actual release]
 type = TargetLifeAdd
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820 && (Target(800),Alive) && Alive && RoundState=2),0)
 ID = 800
 value = -80
 kill = 1
@@ -10121,14 +10149,14 @@ persistent = 0
 
 [State 811, release facing away]
 type = TargetFacing
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820),0)
 ID = 800
 value = -1
 persistent = 0
 
 [State 811, release actual target ownership]
 type = TargetState
-trigger1 = Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820
+trigger1 = Cond(NumTarget(800)>0,(Time=8 && NumTarget(800)>0 && (Target(800),ID)=var(17) && (Target(800),StateNo)=820),0)
 ID = 800
 value = 821
 persistent = 0

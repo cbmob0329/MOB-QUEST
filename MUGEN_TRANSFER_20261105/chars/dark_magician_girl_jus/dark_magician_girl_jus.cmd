@@ -108,7 +108,20 @@ name = "xz"
 command = x+z
 time = 1
 
+[Command]
+name="Cylinder"
+command=~D,DB,B,x
+time=22
+
 [Statedef -1]
+
+[State -1, Magic Cylinder distinct counter]
+type=ChangeState
+triggerall=!IsHelper && Alive && RoundState=2 && Ctrl && StateType!=A && fvar(35)<=0
+trigger1=AILevel=0 && command="Cylinder"
+trigger2=AILevel>0 && NumEnemy>0 && P2MoveType=A && (P2BodyDist X=[15,100]) && Random<50
+value=1400
+
 
 [State -1, approved route 3300]
 type = ChangeState

@@ -1,7 +1,7 @@
 ; FIRST ENGINE TEST PROFILE, NOT FINAL: temporary standing intro; air-cross disabled.
 [Info]
 name = "mob_denden_jus"
-displayname = "MOB DENDEN JUS TEST"
+displayname = "Denden"
 versiondate = 10,25,2026
 mugenversion = 1.1
 author = "Original MOB DENDEN development"

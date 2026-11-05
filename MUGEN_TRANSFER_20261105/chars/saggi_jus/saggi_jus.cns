@@ -70,6 +70,42 @@ down.friction.threshold = .05
 
 [Statedef -2]
 
+
+[State -2, AI reaction clock]
+type=VarAdd
+triggerall=!IsHelper && AILevel>0 && NumEnemy>0 && RoundState=2
+trigger1=P2MoveType=A && fvar(36)<30
+fv=36
+value=1
+[State -2, AI reaction reset]
+type=VarSet
+triggerall=!IsHelper
+trigger1=RoundState!=2 || AILevel=0
+trigger2=NumEnemy>0 && P2MoveType!=A
+fv=36
+value=0
+[State -2, AI reuse clock]
+type=VarAdd
+trigger1=!IsHelper && fvar(37)>0
+fv=37
+value=-1
+[State -2, AI track selected technique]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[11100,11170]
+fv=38
+value=StateNo
+[State -2, AI finite technique interval]
+type=VarSet
+triggerall=!IsHelper && AILevel>0 && StateNo!=fvar(39)
+trigger1=StateNo=[11100,11170]
+fv=37
+value=90
+[State -2, AI previous state]
+type=VarSet
+trigger1=!IsHelper
+fv=39
+value=StateNo
 [State -2, normal receipt before command cancellation]
 type = PowerAdd
 triggerall = !IsHelper
@@ -355,6 +391,34 @@ anim = 100
 ctrl = 0
 poweradd = 0
 juggle = 0
+
+[State 100, Short bounded dash afterimages]
+type=AfterImage
+trigger1=Time=0
+time=12
+length=6
+timegap=2
+framegap=2
+palcolor=128
+palbright=0,0,0
+palcontrast=128,128,160
+paladd=0,0,0
+palmul=.65,.65,.7
+trans=add
+
+[State 100, Small separate grounded foot dust]
+type=Explod
+triggerall=Pos Y=0 && Abs(Vel X)>1
+trigger1=Time=1 || Time=9
+anim=F120
+postype=p1
+pos=-8,0
+bindtime=1
+removetime=-2
+scale=.35,.35
+sprpriority=-1
+ownpal=1
+removeongethit=1
 [State 100, finite three short warp dash pulses]
 type = VelSet
 trigger1 = 1

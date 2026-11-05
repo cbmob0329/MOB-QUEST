@@ -1,12 +1,13 @@
 {
-  "relinquished_jus.def": "1456d5bad78d2696a6b433342c32cb516a49dc3dccaf110b1feec20ccc63efee",
-  "relinquished_jus.cmd": "7a32b5bb3c40fc6c898059b85aa290c5e415a3f97c0943781dbbadeb734d00b9",
-  "relinquished_jus.cns": "2155528ecc82773b68912662a0bfa19477196e2117350ff6cd0d645677e8e4d7",
-  "soul.cns": "99d2a4c31c001531f50a6a6ca750b9e9958c73787dc4f09fd0aa1631c7352df3",
   "common1.cns": "1b3fa7977d31884d3c7c3475a7238cdc6d463ac61f60a55daedaec757aff54d3",
+  "README_JP.txt": "27c0c84e0b74dd46e9c49bbe6b7ffebf3ade396ee6e1c1bf64e0fc515385e37a",
   "relinquished_jus.air": "85f7d121b1f4b5b10f7a3174f271db6a3a8cef679ad029808bea027cbba64612",
+  "relinquished_jus.cmd": "7a32b5bb3c40fc6c898059b85aa290c5e415a3f97c0943781dbbadeb734d00b9",
+  "relinquished_jus.cns": "a5832c2d5ba20345ea9eece0fc4b11826720e5eb262d266dfdc17b047e98ff31",
+  "relinquished_jus.def": "1456d5bad78d2696a6b433342c32cb516a49dc3dccaf110b1feec20ccc63efee",
   "relinquished_jus.sff": "ea0852146aab8bcda61e98e72418e0f758da457394e9aeb0ff7bb9b8ce1f6011",
   "relinquished_jus.snd": "688ab487afb66e51c4a865608f3541106ad04020dd5ca278b0cdf1e2aa827115",
-  "README_JP.txt": "27c0c84e0b74dd46e9c49bbe6b7ffebf3ade396ee6e1c1bf64e0fc515385e37a",
+  "soul.before-retaliation-fix.cns": "cc0ef13912dd1931fd7d37c12686dca99745eb25ecac54806581ba06abec94a7",
+  "soul.cns": "99d2a4c31c001531f50a6a6ca750b9e9958c73787dc4f09fd0aa1631c7352df3",
   "TEST_RESULTS_JP.txt": "218c2d864546e2dee5fbc6387f95150f82e90a05006ae62b6ac3c927895f61e8"
 }
