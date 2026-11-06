@@ -23120,7 +23120,7 @@ const banditActionBaseV230=enemyAction;enemyAction=async function(index=1,uid){c
   if(k==='queen'&&index===1&&b.turn%3===0&&e.banditBuffTurnV230!==b.turn){e.banditBuffTurnV230=b.turn;await actionCutin('盗賊団のリーダー','buff',700);for(const ally of livingEnemies()){ally.atk*=1.1;ally.def*=1.1;ally.damageReduction=Math.min(.8,(ally.damageReduction||0)+.02);fx('buff',`enemy:${ally.uid}`);}}
   if(k==='healer'){await actionCutin('回復の魔法','heal',600);const t=livingEnemies().sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];if(t)eventHealV163(t,.15);return;}
   if(k==='hari'){if(index===1){await actionCutin('ゴレマソード','danger',600);await banditHitV230(e,1.3,false,'地',.4);}else await banditHitV230(e);}
-  if(k==='eri'){if(index===1&&b.turn%3===0&&e.banditHealTurnV230!==b.turn){e.banditHealTurnV230=b.turn;await actionCutin('マッキン・モッキン','heal',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));for(const t of livingEnemies()){eventHealV163(t,e.level===30?.08:.15);soulBuffV218(t,'atk',.15,2);}}else await banditHitV230(e,1,true);}
+  if(k==='eri'){if(index===1&&b.turn%3===0&&e.banditHealTurnV230!==b.turn){e.banditHealTurnV230=b.turn;await actionCutin('マッキン・モッキン','heal',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));for(const t of livingEnemies()){eventHealV163(t,e.level===30?.04:.15);soulBuffV218(t,'atk',.15,2);}}else await banditHitV230(e,1,true);}
   if(k==='pue'){if(index===1){await actionCutin('プエルトリガー','danger',700);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'),true);await banditHitV230(e,1.3,true,'水',.13);await banditHitV230(e,1,true,'水',.13);}else await banditHitV230(e,1,index===2&&Math.random()<.5,'水',.13);}
   if(k==='onbu'){if(index===1){await actionCutin('ポンポコ乱撃','danger',650);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'));await banditHitV230(e,1.1,false,e.attribute,.1,3);}else await banditHitV230(e,1,index===2);if(Math.random()<.1)await banditHitV230(e);}
   if(k==='queen'){if(index===1){await actionCutin('ホラ・ロック・クイーン','danger',750);await banditNotesV230(enemyVisual(e.uid)?.closest('.enemy-unit'),true);await banditHitV230(e,1.8,false,'風',0,1,.3);}else await banditHitV230(e,1,index===2,'風');}
@@ -25752,7 +25752,7 @@ const resistBaseV267=addAllElementResistV142;
 addAllElementResistV142=function(e,amount){if(['custard','riscustard'].includes(e?.story179Kind)&&amount>0){const used=e.custardResistGainV267||0;amount=Math.max(0,Math.min(amount,.25-used));e.custardResistGainV267=Math.min(.25,used+amount);}return resistBaseV267(e,amount);};
 
 const mochiBuildBaseV267=buildEnemyFromTemplate;buildEnemyFromTemplate=function(...args){const e=mochiBuildBaseV267(...args);if(e?.mochiV218!==undefined&&e.mochiV218!==4&&e.mochiDifficultyV218===0){e.hp=Math.round(e.hp*.9);e.maxHp=Math.round(e.maxHp*.9);e.atk=Math.round(e.atk*.9);e.mag=Math.round(e.mag*.9);}return e;};
-const banditBuildBaseV267=buildEnemyFromTemplate;buildEnemyFromTemplate=function(...args){const e=banditBuildBaseV267(...args);if(['hari','eri'].includes(e?.banditV230)&&e.level===30){e.hp=Math.round(e.hp*.8);e.maxHp=Math.round(e.maxHp*.8);e.atk=Math.round(e.atk*.85);}return e;};
+const banditBuildBaseV267=buildEnemyFromTemplate;buildEnemyFromTemplate=function(...args){const e=banditBuildBaseV267(...args);if(['hari','eri'].includes(e?.banditV230)&&e.level===30){e.hp=Math.round(e.hp*.6);e.maxHp=Math.round(e.maxHp*.6);e.atk=Math.round(e.atk*.85);}return e;};
 const macaronBuildBaseV267=buildEnemyFromTemplate;buildEnemyFromTemplate=function(...args){const e=macaronBuildBaseV267(...args);if(e?.macaronV247&&e.macaronV247!=='kiba'){e.atk=Math.round(e.atk*.9);if(e.macaronV247==='ris'){e.hp=Math.round(e.hp*.9);e.maxHp=Math.round(e.maxHp*.9);}}return e;};
 
 const DESCENT_HP_V267={"bilion": {"1": 1.3, "2": 1.2}, "xenon": {"1": 1.15, "2": 1.3}, "psychic": {"1": 1.25, "2": 1.2}, "marine": {"1": 1.3}, "leaf": {"1": 1.15}, "bubble": {"1": 1.15}, "bird": {"1": 1.15, "2": 1.15}, "demon": {"1": 1.15}, "barion": {"2": 1.15}, "cassette": {"1": 1.15}};
@@ -25762,6 +25762,8 @@ const earlyEventBaseV267=buildEnemyFromTemplate;buildEnemyFromTemplate=function(
 STORY179.bandits.diffs[2].level=75;
 window.__mobBuildVersion='v267';
 // UPDATE_V267_END
+// UPDATE_V268: shorten the Lv.30 bandit pair without changing their offensive actions.
+window.__mobBuildVersion='v268';
 })();
 </script>
 </body>
