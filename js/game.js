@@ -17537,4 +17537,18 @@ window.__mobBuildVersion='v267';
 // UPDATE_V267_END
 // UPDATE_V268: shorten the Lv.30 bandit pair without changing their offensive actions.
 window.__mobBuildVersion='v268';
+// UPDATE_V269_BEGIN
+// Keep each normal boss's attack cadence and mechanics while giving prepared parties more resistance.
+const NORMAL_DESCENT_V269={magrock:{hp:1.40,atk:1.18,mag:1.10},leaf:{hp:1.65,atk:1.18,mag:1.12},marine:{hp:1.60,atk:1.12,mag:1.10}};
+const normalDescentBaseV269=buildEnemyFromTemplate;
+buildEnemyFromTemplate=function(...args){
+ const e=normalDescentBaseV269(...args),t=e?.eventV163?.difficulty===0?NORMAL_DESCENT_V269[e.eventV163.key]:null;
+ if(!t)return e;
+ e.maxHp=Math.max(1,Math.round(e.maxHp*t.hp));e.hp=Math.max(1,Math.round(e.hp*t.hp));
+ e.atk=Math.max(1,Math.round(e.atk*t.atk));e.mag=Math.max(1,Math.round(e.mag*t.mag));
+ return e;
+};
+window.__mobBuildVersion='v269';
+// UPDATE_V269_END
+
 })();
